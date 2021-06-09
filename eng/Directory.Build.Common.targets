@@ -48,14 +48,18 @@
 
   <PropertyGroup>
     <OriginalReadmeMdPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</OriginalReadmeMdPath>
-    <EnableExperimentalNuGetReadmeMd Condition="'$(HasReleaseVersion)' == 'false' and Exists('$(OriginalReadmeMdPath)')">true</EnableExperimentalNuGetReadmeMd>
-    <ProcessedReadmeMdPath>$(OriginalReadmeMdPath)</ProcessedReadmeMdPath>
-    <ProcessedReadmeMdPath Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'">$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
-    <PackageReadmeFile Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
+    <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
+    <EnableNuGetReadmeMd Condition="'$(HasReleaseVersion)' == 'false' and Exists('$(OriginalReadmeMdPath)')">true</EnableNuGetReadmeMd>
+    <PackageReadmeFile Condition="'$(EnableNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Condition="'$(EnableNuGetReadmeMd)' != 'true' and Exists('$(OriginalReadmeMdPath)')" Include="$(OriginalReadmeMdPath)" Pack="true" PackagePath="/"/>
+    <None Condition="'$(EnableNuGetReadmeMd)' == 'true'" Include="$(ProcessedReadmeMdPath)" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+
   <!-- Process and pack README.md  -->
-  <Target Name="ProcessReadmeMd" BeforeTargets="GenerateNuspec" Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'" >
+  <Target Name="ProcessReadmeMd" BeforeTargets="GenerateNuspec" Condition="'$(EnableNuGetReadmeMd)' == 'true'" >
     <PropertyGroup>
       <ProcessReadmeMdScriptPath Condition=" '$(ProcessReadmeMdScriptPath)'=='' ">$(MSBuildThisFileDirectory)/scripts/Process-ReadmeMd.ps1</ProcessReadmeMdScriptPath>
     </PropertyGroup>
@@ -87,7 +91,6 @@
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
-    <None Condition="Exists('$(ProcessedReadmeMdPath)')" Include="$(ProcessedReadmeMdPath)" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <!-- Add App.config to enable server GC in net461 perf and stress projects -->
