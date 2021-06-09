@@ -278,10 +278,11 @@ namespace Azure.Storage.Test.Shared
             string containerName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default)
+            bool premium = default,
+            BlobClientOptions options = default)
         {
             containerName ??= GetNewContainerName();
-            service ??= GetServiceClient_SharedKey();
+            service ??= GetServiceClient_SharedKey(options);
 
             if (publicAccessType == default)
             {
