@@ -18,6 +18,7 @@
   - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
 - Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
 - Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
+- Renamed type `Results` to `DocumentsResults` in `AnalyzeSentimentActionResult`, `ExtractKeyPhrasesActionResult`, `RecognizeEntitiesActionResult`, `RecognizeLinkedEntitiesActionResult`, and `RecognizePiiEntitiesActionResult`.
 - Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
 - Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
 - Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
