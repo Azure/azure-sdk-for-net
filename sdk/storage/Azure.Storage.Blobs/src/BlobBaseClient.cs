@@ -5197,7 +5197,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
-        /// <param name="legalHoldEnabled">
+        /// <param name="hasLegalHold">
         /// Set to true to set a legal hold on the blob.
         /// Set to false to remove an existing legal hold.
         /// </param>
@@ -5213,10 +5213,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobLegalHoldResult> SetLegalHold(
-            bool legalHoldEnabled,
+            bool hasLegalHold,
             CancellationToken cancellationToken = default)
             => SetLegalHoldInternal(
-                legalHoldEnabled: legalHoldEnabled,
+                hasLegalHold: hasLegalHold,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -5227,7 +5227,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
-        /// <param name="legalHoldEnabled">
+        /// <param name="hasLegalHold">
         /// Set to true to set a legal hold on the blob.
         /// Set to false to remove an existing legal hold.
         /// </param>
@@ -5243,10 +5243,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobLegalHoldResult>> SetLegalHoldAsync(
-            bool legalHoldEnabled,
+            bool hasLegalHold,
             CancellationToken cancellationToken = default)
             => await SetLegalHoldInternal(
-                legalHoldEnabled: legalHoldEnabled,
+                hasLegalHold: hasLegalHold,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -5257,7 +5257,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
-        /// <param name="legalHoldEnabled">
+        /// <param name="hasLegalHold">
         /// Set to true to set a legal hold on the blob.
         /// Set to false to remove an existing legal hold.
         /// </param>
@@ -5276,7 +5276,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<BlobLegalHoldResult>> SetLegalHoldInternal(
-            bool legalHoldEnabled,
+            bool hasLegalHold,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -5286,7 +5286,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(legalHoldEnabled)}: {legalHoldEnabled}");
+                    $"{nameof(hasLegalHold)}: {hasLegalHold}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetLegalHold)}");
 
@@ -5298,7 +5298,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlobRestClient.SetLegalHoldAsync(
-                            legalHold: legalHoldEnabled,
+                            legalHold: hasLegalHold,
                             timeout: null,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -5306,7 +5306,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlobRestClient.SetLegalHold(
-                            legalHold: legalHoldEnabled,
+                            legalHold: hasLegalHold,
                             timeout: null,
                             cancellationToken: cancellationToken);
                     }

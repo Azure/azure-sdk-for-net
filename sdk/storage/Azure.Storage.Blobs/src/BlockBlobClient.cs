@@ -1224,7 +1224,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StageBlockFromUri
         /// <summary>
-        /// The <see cref="StageBlockFromUri(Uri, string, BlockBlobStageBlockFromUriOptions, CancellationToken)"/>
+        /// The <see cref="StageBlockFromUri(Uri, string, StageBlockFromUriOptions, CancellationToken)"/>
         /// operation creates a new block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
@@ -1248,7 +1248,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// URL-encoded.
         /// </param>
         /// <param name="options">
-        /// Optional parameters. <see cref="BlockBlobStageBlockFromUriOptions"/>.
+        /// Optional parameters. <see cref="StageBlockFromUriOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1265,7 +1265,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlockInfo> StageBlockFromUri(
             Uri sourceUri,
             string base64BlockId,
-            BlockBlobStageBlockFromUriOptions options,
+            StageBlockFromUriOptions options,
             CancellationToken cancellationToken = default) =>
             StageBlockFromUriInternal(
                 sourceUri,
@@ -1280,7 +1280,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="StageBlockFromUriAsync(Uri, string, BlockBlobStageBlockFromUriOptions, CancellationToken)"/>
+        /// The <see cref="StageBlockFromUriAsync(Uri, string, StageBlockFromUriOptions, CancellationToken)"/>
         /// operation creates a new block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
@@ -1304,7 +1304,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// URL-encoded.
         /// </param>
         /// <param name="options">
-        /// Optional parameters. <see cref="BlockBlobStageBlockFromUriOptions"/>.
+        /// Optional parameters. <see cref="StageBlockFromUriOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1321,7 +1321,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
             string base64BlockId,
-            BlockBlobStageBlockFromUriOptions options,
+            StageBlockFromUriOptions options,
             CancellationToken cancellationToken = default) =>
             await StageBlockFromUriInternal(
                 sourceUri,

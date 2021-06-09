@@ -58,8 +58,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
 
             // Validate we are correctly deserializing Blob Items.
             // Act
@@ -71,16 +71,16 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(1, blobItems.Count);
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, blobItems[0].Properties.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, blobItems[0].Properties.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, blobItems[0].Properties.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, blobItems[0].Properties.ImmutabilityPolicy.PolicyMode);
 
             // Validate we are correctly deserialzing Get Blob response.
             // Act
             Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
 
             // Assert
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, downloadResponse.Value.Details.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, downloadResponse.Value.Details.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, downloadResponse.Value.Details.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, downloadResponse.Value.Details.ImmutabilityPolicy.PolicyMode);
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
 
             // Act
-            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(legalHoldEnabled: false);
+            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(hasLegalHold: false);
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.HasLegalHold);
@@ -195,7 +195,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
 
             // Act
-            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(legalHoldEnabled: false);
+            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(hasLegalHold: false);
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.HasLegalHold);
@@ -238,7 +238,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
 
             // Act
-            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(legalHoldEnabled: false);
+            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(hasLegalHold: false);
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.HasLegalHold);
@@ -293,7 +293,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
 
             // Act
-            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobSnapshotClient.SetLegalHoldAsync(legalHoldEnabled: false);
+            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobSnapshotClient.SetLegalHoldAsync(hasLegalHold: false);
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.HasLegalHold);
@@ -354,7 +354,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
 
             // Act
-            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobSnapshotClient.SetLegalHoldAsync(legalHoldEnabled: false);
+            Response<BlobLegalHoldResult> legalHoldResponse = await sasBlobSnapshotClient.SetLegalHoldAsync(hasLegalHold: false);
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.HasLegalHold);
@@ -448,8 +448,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
         }
 
         [Test]
@@ -571,7 +571,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 ImmutabilityPolicy = immutabilityPolicy,
-                LegalHold = true
+                HasLegalHold = true
             };
 
             // Act
@@ -579,8 +579,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
@@ -612,8 +612,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await pageBlob.GetPropertiesAsync();
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
@@ -655,8 +655,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await blockBlob.GetPropertiesAsync();
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
@@ -703,8 +703,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await blockBlob.GetPropertiesAsync();
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
@@ -737,8 +737,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
@@ -772,8 +772,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();
-            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
@@ -863,7 +863,7 @@ namespace Azure.Storage.Blobs.Test
                         await blobClient.SetLegalHoldAsync(false);
                     }
 
-                    if (blobItem.Properties.ImmutabilityPolicyMode != null)
+                    if (blobItem.Properties.ImmutabilityPolicy.ExpiresOn != null)
                     {
                         await blobClient.DeleteImmutabilityPolicyAsync();
                     }

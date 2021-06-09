@@ -411,7 +411,7 @@ namespace Azure.Storage.Blobs.Specialized
                 tags: options?.Tags,
                 conditions: options?.Conditions,
                 immutabilityPolicy: options?.ImmutabilityPolicy,
-                legalHold: options?.LegalHold,
+                legalHold: options?.HasLegalHold,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -446,7 +446,7 @@ namespace Azure.Storage.Blobs.Specialized
                 tags: options?.Tags,
                 conditions: options?.Conditions,
                 immutabilityPolicy: options?.ImmutabilityPolicy,
-                legalHold: options?.LegalHold,
+                legalHold: options?.HasLegalHold,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -583,7 +583,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
                 immutabilityPolicy: options?.ImmutabilityPolicy,
-                legalHold: options?.LegalHold,
+                legalHold: options?.HasLegalHold,
                 tags: options?.Tags,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -622,7 +622,7 @@ namespace Azure.Storage.Blobs.Specialized
                 metadata: options?.Metadata,
                 tags: options?.Tags,
                 immutabilityPolicy: options?.ImmutabilityPolicy,
-                legalHold: options?.LegalHold,
+                legalHold: options?.HasLegalHold,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);

@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Models
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </summary>
-        public bool? LegalHold { get; set; }
+        public bool? HasLegalHold { get; set; }
 
         /// <summary>
         /// Optional <see cref="AppendBlobRequestConditions"/> to add

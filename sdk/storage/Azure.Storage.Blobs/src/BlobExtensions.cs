@@ -723,6 +723,10 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+
             return new BlobProperties
             {
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
@@ -769,8 +773,7 @@ namespace Azure.Storage.Blobs
                 IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
                 RehydratePriority = response.Headers.RehydratePriority,
                 LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
-                ImmutabilityPolicyExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn,
-                ImmutabilityPolicyMode = response.Headers.ImmutabilityPolicyMode,
+                ImmutabilityPolicy = immutabilityPolicy,
                 HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
             };
         }
@@ -838,6 +841,11 @@ namespace Azure.Storage.Blobs
             }
 
             response.GetRawResponse().Headers.ExtractMultiHeaderDownloadProperties(out var metadata, out var objectReplicationRules);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+
             return new BlobDownloadStreamingResult
             {
                 Content = response.Value,
@@ -879,8 +887,7 @@ namespace Azure.Storage.Blobs
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
-                    ImmutabilityPolicyExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn,
-                    ImmutabilityPolicyMode = response.Headers.ImmutabilityPolicyMode,
+                    ImmutabilityPolicy = immutabilityPolicy,
                     HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
                 }
             };
@@ -1170,6 +1177,10 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = blobPropertiesInternal.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = blobPropertiesInternal.ImmutabilityPolicyMode;
+
             return new BlobItemProperties
             {
                 LastModified = blobPropertiesInternal.LastModified,
@@ -1208,8 +1219,7 @@ namespace Azure.Storage.Blobs
                 CopyCompletedOn = blobPropertiesInternal.CopyCompletionTime,
                 DeletedOn = blobPropertiesInternal.DeletedTime,
                 AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime,
-                ImmutabilityPolicyExpiresOn = blobPropertiesInternal.ImmutabilityPolicyExpiresOn,
-                ImmutabilityPolicyMode = blobPropertiesInternal.ImmutabilityPolicyMode,
+                ImmutabilityPolicy = immutabilityPolicy,
                 HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault()
             };
         }
