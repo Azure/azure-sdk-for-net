@@ -24,6 +24,8 @@
 - Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
 - Removed property `StringIndexType` from `TextAnalyticsRequestOptions`. This SDK will keep using `UTF-16` code unit as the default encoding.
 - Removed type `ExtractKeyPhrasesOptions` and respective exposure.
+- Removed type `RecognizeEntitiesOptions` and respective exposure.
+- Removed type `RecognizeLinkedEntitiesOptions` and respective exposure.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features
