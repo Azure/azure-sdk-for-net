@@ -648,18 +648,40 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             // Passes service bus message from a queue to another queue
             public async Task SBQueue2SBQueue(
-                [ServiceBusTrigger(FirstQueueNameKey)] string start, int deliveryCount,
-                ServiceBusMessageActions messageActions,
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                string body,
+                int deliveryCount,
                 string lockToken,
+                string deadLetterSource,
+                DateTime expiresAtUtc,
+                DateTime enqueuedTimeUtc,
+                string contentType,
+                string replyTo,
+                string to,
+                string subject,
+                string label,
+                string correlationId,
+                IDictionary<string, object> applicationProperties,
+                IDictionary<string, object> userProperties,
+                ServiceBusMessageActions messageActions,
                 [ServiceBus(SecondQueueNameKey)] ServiceBusSender messageSender)
             {
+                Assert.AreEqual("E2E", body);
                 Assert.AreEqual(1, deliveryCount);
+                Assert.IsNotNull(lockToken);
+                Assert.IsNull(deadLetterSource);
+                Assert.AreEqual("replyTo", replyTo);
+                Assert.AreEqual("to", to);
+                Assert.AreEqual("subject", subject);
+                Assert.AreEqual("subject", label);
+                Assert.AreEqual("correlationId", correlationId);
+                Assert.AreEqual("application/json", contentType);
+                Assert.AreEqual("value", applicationProperties["key"]);
+                Assert.AreEqual("value", userProperties["key"]);
+                Assert.IsTrue(expiresAtUtc > DateTime.UtcNow);
+                Assert.IsTrue(enqueuedTimeUtc < DateTime.UtcNow);
 
-                // verify the message receiver and token are valid
-                // TODO lockToken overload not supported in new SDK
-                //await messageReceiver.RenewLockAsync(lockToken);
-
-                var message = SBQueue2SBQueue_GetOutputMessage(start);
+                var message = SBQueue2SBQueue_GetOutputMessage(body);
                 await messageSender.SendMessageAsync(message);
             }
 
@@ -811,8 +833,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void Run(
                 [ServiceBusTrigger(FirstQueueNameKey)]
                 ServiceBusReceivedMessage[] array,
+                int[] deliveryCountArray,
+                string[] lockTokenArray,
+                string[] deadLetterSourceArray,
+                DateTime[] expiresAtUtcArray,
+                DateTime[] enqueuedTimeUtcArray,
+                string[] contentTypeArray,
+                string[] replyToArray,
+                string[] toArray,
+                string[] subjectArray,
+                string[] labelArray,
+                string[] correlationIdArray,
+                IDictionary<string, object>[] applicationPropertiesArray,
+                IDictionary<string, object>[] userPropertiesArray,
                 ServiceBusMessageActions messageActions)
             {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Assert.AreEqual(1, deliveryCountArray[i]);
+                    Assert.IsNotNull(lockTokenArray[i]);
+                    Assert.IsNull(deadLetterSourceArray[i]);
+                    Assert.AreEqual("replyTo", replyToArray[i]);
+                    Assert.AreEqual("to", toArray[i]);
+                    Assert.AreEqual("subject", subjectArray[i]);
+                    Assert.AreEqual("subject", labelArray[i]);
+                    Assert.AreEqual("correlationId", correlationIdArray[i]);
+                    Assert.AreEqual("application/json", contentTypeArray[i]);
+                    Assert.AreEqual("value", applicationPropertiesArray[i]["key"]);
+                    Assert.AreEqual("value", userPropertiesArray[i]["key"]);
+                    Assert.IsTrue(expiresAtUtcArray[i] > DateTime.UtcNow);
+                    Assert.IsTrue(enqueuedTimeUtcArray[i] < DateTime.UtcNow);
+                }
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -877,7 +928,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             [NoAutomaticTrigger]
             public static void BindToString(
-                [ServiceBusTrigger(FirstQueueNameKey)] string input,
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                string input,
                 string messageId,
                 ILogger logger)
             {

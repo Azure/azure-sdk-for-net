@@ -1,5 +1,8 @@
 # Release History
 
+## 5.5.0-beta.2 (Unreleased)
+
+
 ## 5.5.0-beta.1 (2021-06-08)
 
 ### Acknowledgments

@@ -2,6 +2,19 @@
 
 ## 3.2.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 3.1.1 (2021-06-08)
+
+### Key Bug Fixes
+- Handles invoices and other recognition operations that return a `FormField` with `Text` and no `BoundingBox` or `Page` information.
 
 ## 3.1.0 (2021-05-26)
 
