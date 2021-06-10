@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// A custom class for Conditions, which define the logic contained in WHERE objects.
     /// </summary>
-    internal abstract class BaseCondition
+    internal abstract class ConditionBase
     {
     }
 }
