@@ -583,16 +583,25 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="result">Sets the <see cref="TextAnalytics.ExtractKeyPhrasesResultCollection"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="DateTimeOffset"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
+        public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
+            ExtractKeyPhrasesResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new ExtractKeyPhrasesActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.
+        /// </summary>
         /// <param name="code">Sets the code property.</param>
         /// <param name="message">Sets the message property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
         public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
-            ExtractKeyPhrasesResultCollection result,
-            DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new ExtractKeyPhrasesActionResult(result, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new ExtractKeyPhrasesActionResult(new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -600,31 +609,49 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="result">Sets the <see cref="TextAnalytics.AnalyzeSentimentResultCollection"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="DateTimeOffset"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
+        public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
+            AnalyzeSentimentResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new AnalyzeSentimentActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
+        /// </summary>
         /// <param name="code">Sets the code property.</param>
         /// <param name="message">Sets the message property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
         public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
-            AnalyzeSentimentResultCollection result,
-            DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new AnalyzeSentimentActionResult(result, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new AnalyzeSentimentActionResult(new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.TextAnalyticsActionResult"/> for mocking purposes.
         /// </summary>
         /// <param name="completedOn">Sets the <see cref="DateTimeOffset"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.TextAnalyticsActionResult"/> for mocking purposes.</returns>
+        public static TextAnalyticsActionResult TextAnalyticsActionResult(
+            DateTimeOffset completedOn)
+        {
+            return new TextAnalyticsActionResult(completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.TextAnalyticsActionResult"/> for mocking purposes.
+        /// </summary>
         /// <param name="code">Sets the code property.</param>
         /// <param name="message">Sets the message property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.TextAnalyticsActionResult"/> for mocking purposes.</returns>
         public static TextAnalyticsActionResult TextAnalyticsActionResult(
-            DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new TextAnalyticsActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new TextAnalyticsActionResult(new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -632,16 +659,25 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="result">Sets the <see cref="TextAnalytics.RecognizeLinkedEntitiesResultCollection"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="DateTimeOffset"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
+            RecognizeLinkedEntitiesResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizeLinkedEntitiesActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
         /// <param name="code">Sets the code property.</param>
         /// <param name="message">Sets the message property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
         public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
-            RecognizeLinkedEntitiesResultCollection result,
-            DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new RecognizeLinkedEntitiesActionResult(result, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeLinkedEntitiesActionResult(new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -649,16 +685,25 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="result">Sets the <see cref="TextAnalytics.RecognizeEntitiesResultCollection"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="DateTimeOffset"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
+        public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
+            RecognizeEntitiesResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new RecognizeEntitiesActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
         /// <param name="code">Sets the code property.</param>
         /// <param name="message">Sets the message property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
         public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
-            RecognizeEntitiesResultCollection result,
-            DateTimeOffset completedOn,
             string code,
             string message)
         {
-            return new RecognizeEntitiesActionResult(result, completedOn, new TextAnalyticsErrorInternal(code, message));
+            return new RecognizeEntitiesActionResult(new TextAnalyticsErrorInternal(code, message));
         }
 
         #endregion Action Result Models
