@@ -5,19 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class CallingServerClientsTests
+    public class CallingServerClientsTests : TestBase
     {
-        private const string connectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
-
-        private const string CreateOrJoinCallPayload = "{" +
-                                                 "\"callConnectionId\": \"cad9df7b-f3ac-4c53-96f7-c76e7437b3c1\"" +
-                                                 "}";
-
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsync_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)
         {
@@ -101,22 +94,6 @@ namespace Azure.Communication.CallingServer.Tests
                     }
                 },
             };
-        }
-
-        private CallingServerClient CreateMockCallingServerClient(int responseCode, string? responseContent = null)
-        {
-            var mockResponse = new MockResponse(responseCode);
-            if (responseContent != null)
-            {
-                mockResponse.SetContent(responseContent);
-            }
-
-            var callingServerClientOptions = new CallingServerClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
-
-            return new CallingServerClient(connectionString, callingServerClientOptions);
         }
     }
 }
