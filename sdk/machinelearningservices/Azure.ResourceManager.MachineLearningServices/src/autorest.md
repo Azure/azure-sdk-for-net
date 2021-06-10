@@ -39,7 +39,7 @@ operation-group-to-resource:
 operation-group-to-parent:
   Operations: tenant
   WorkspaceFeatures: Workspaces
-  Usages: Subscriptions
+  Usages: subscriptions
   VirtualMachineSizes: Locations
   Quotas: Locations
   Notebooks: Workspaces
