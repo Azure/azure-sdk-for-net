@@ -264,26 +264,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
         /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
         /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
-        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
-        {
-            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.
-        /// </summary>
-        /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
-        /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
-        /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
-        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
         /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
+        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
-        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset)
+        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, int offset, int length, double score)
         {
-            return new CategorizedEntity(new Entity(text, category, subCategory, offset, default, score));
+            return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score));
         }
 
         /// <summary>
@@ -342,12 +329,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="text">Sets the <see cref="PiiEntity.Text"/> property.</param>
         /// <param name="category">Sets the <see cref="PiiEntity.Category"/> property.</param>
         /// <param name="subCategory">Sets the <see cref="PiiEntity.SubCategory"/> property.</param>
+        /// <param name="offset">Sets the <see cref="PiiEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="PiiEntity.Length"/> property.</param>
         /// <param name="score">Sets the <see cref="PiiEntity.ConfidenceScore"/> property.</param>
-        /// /// <param name="offset">Sets the <see cref="PiiEntity.Offset"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.PiiEntity"/> for mocking purposes.</returns>
-        public static PiiEntity PiiEntity(string text, string category, string subCategory, double score, int offset)
+        public static PiiEntity PiiEntity(string text, string category, string subCategory, int offset, int length, double score)
         {
-            return new PiiEntity(new Entity(text, category, subCategory, offset, default, score));
+            return new PiiEntity(new Entity(text, category, subCategory, offset, length, score));
         }
 
         /// <summary>
