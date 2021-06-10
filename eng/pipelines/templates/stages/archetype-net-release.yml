@@ -56,7 +56,10 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - checkout: self
+                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                      parameters:
+                        Paths:
+                          - '${{ parameters.ServiceDirectory }}'
                     - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
                       parameters:
