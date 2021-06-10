@@ -15,8 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
-            writer.WriteStringValue(Endpoint);
+            if (Optional.IsDefined(Endpoint))
+            {
+                writer.WritePropertyName("endpoint");
+                writer.WriteStringValue(Endpoint);
+            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");

@@ -7,29 +7,6 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e3850d6aa56eecad65262d0fc7815be0773bfb85/specification/storage/data-plane/Microsoft.StorageDataLake/stable/2020-06-12/DataLakeStorage.json
 ```
 
-### Added FileSystem and Path as parameters
-``` yaml
-directive:
-- from: swagger-document
-  where: $["x-ms-paths"]
-  transform: >
-    for (const property in $)
-    {
-        if (property.includes('{filesystem}'))
-        {
-            $[property].parameters.push({
-                "$ref": "#/parameters/FileSystem"
-            });
-        };
-        if (property.includes('{path}'))
-        {
-            $[property].parameters.push({
-                "$ref": "#/parameters/Path"
-            });
-        };
-    }
-```
-
 ### Make sure Path is not encoded
 ``` yaml
 directive:
@@ -99,4 +76,37 @@ directive:
 - from: swagger-document
   where: $..[?(@.operationId=='Path_Read')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Don't include FileSystem and Path in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{filesystem}/{path}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{filesystem}/{path}', '');
+            if (!newName.includes('?'))
+            {
+              newName = newName + '?' + 'filesystem_path'
+            }
+            $[newName] = $[oldName];
+            delete $[oldName];
+        } 
+        else if (property.includes('/{filesystem}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{filesystem}', '');
+            if (!newName.includes('?'))
+            {
+              newName = newName + '?' + 'filesystem'
+            }
+            $[newName] = $[oldName];
+            delete $[oldName];
+        }
+    }
 ```

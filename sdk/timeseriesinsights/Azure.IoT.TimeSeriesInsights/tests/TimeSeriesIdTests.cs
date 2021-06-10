@@ -31,12 +31,18 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
             TimeSeriesInsightsInstances instancesClient = client.GetInstancesClient();
+            TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+            Response<TimeSeriesModelSettings> currentSettings = await modelSettingsClient.GetAsync().ConfigureAwait(false);
+            int numOfIdKeys = currentSettings.Value.TimeSeriesIdProperties.Count;
 
-            // Create a Time Series Id with 3 keys. Middle key is a null
-            var idWithNull = new TimeSeriesId(
-                Recording.GenerateAlphaNumericId(string.Empty, 5),
-                null,
-                Recording.GenerateAlphaNumericId(string.Empty, 5));
+            // Create a Time Series Id with first key being null.
+            TimeSeriesId idWithNull = numOfIdKeys switch
+            {
+                1 => new TimeSeriesId(null),
+                2 => new TimeSeriesId(null, Recording.GenerateAlphaNumericId(string.Empty, 5)),
+                3 => new TimeSeriesId(null, Recording.GenerateAlphaNumericId(string.Empty, 5), Recording.GenerateAlphaNumericId(string.Empty, 5)),
+                _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
+            };
 
             var timeSeriesInstances = new List<TimeSeriesInstance>
             {
@@ -66,8 +72,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                     InstancesOperationResult resultItem = getInstanceWithNullInId.Value.First();
                     resultItem.Instance.Should().NotBeNull();
-                    resultItem.Instance.TimeSeriesId.ToStringArray().Length.Should().Be(3);
-                    resultItem.Instance.TimeSeriesId.ToStringArray()[1].Should().BeNull();
+                    resultItem.Instance.TimeSeriesId.ToStringArray().Length.Should().Be(numOfIdKeys);
+                    resultItem.Instance.TimeSeriesId.ToStringArray()[0].Should().BeNull();
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);

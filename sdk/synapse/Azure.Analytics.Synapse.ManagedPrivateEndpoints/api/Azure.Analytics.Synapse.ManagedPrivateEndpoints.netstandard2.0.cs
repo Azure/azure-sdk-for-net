@@ -21,6 +21,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             V2019_06_01_preview = 1,
         }
     }
+    public static partial class ManagedPrivateEndpointsModelFactory
+    {
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint ManagedPrivateEndpoint(string id = null, string name = null, string type = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties properties = null) { throw null; }
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(string status = null, string description = null, string actionsRequired = null) { throw null; }
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties ManagedPrivateEndpointProperties(string privateLinkResourceId = null, string groupId = null, string provisioningState = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState connectionState = null, bool? isReserved = default(bool?)) { throw null; }
+    }
 }
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {

@@ -8,9 +8,8 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Data.Tables.Models;
 
-namespace Azure.Data.Tables
+namespace Azure.Data.Tables.Models
 {
     public partial class TableSignedIdentifier : IXmlSerializable
     {

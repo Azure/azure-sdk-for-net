@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core.TestFramework;
 using Newtonsoft.Json;
 
@@ -24,6 +25,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var options = new MetricsAdvisorClientsOptions() { Transport = new MockTransport(response) };
 
             return InstrumentClient(new MetricsAdvisorClient(fakeEndpoint, fakeCredential, options));
+        }
+
+        public MetricsAdvisorAdministrationClient CreateInstrumentedAdministrationClient(MockResponse response) =>
+            CreateInstrumentedAdministrationClient(new MockTransport(response));
+
+        public MetricsAdvisorAdministrationClient CreateInstrumentedAdministrationClient(MockTransport transport)
+        {
+            var fakeEndpoint = new Uri("http://notreal.azure.com");
+            var fakeCredential = new MetricsAdvisorKeyCredential("fakeSubscriptionKey", "fakeApiKey");
+            var options = new MetricsAdvisorClientsOptions() { Transport = transport };
+
+            return InstrumentClient(new MetricsAdvisorAdministrationClient(fakeEndpoint, fakeCredential, options));
         }
 
         public Stream CreateAnomalyJsonStream(double value = default, double? expectedValue = default)

@@ -109,6 +109,8 @@ public static class CloudEventTriggerFunction
     }
 }
 ```
+Note that creating a subscription of type Azure Function with the CloudEvent schema is not yet supported. Instead, you can select an Endpoint Type of Web Hook and use your function URL as the endpoint. The function URL can be found by going to the Code + Test blade of your function, and clicking the Get function URL button.
+
 
 ## Troubleshooting
 

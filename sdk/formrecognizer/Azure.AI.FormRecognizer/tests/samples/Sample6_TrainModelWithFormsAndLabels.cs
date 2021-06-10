@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
             // For instructions to create a label file for your training forms, please see:
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
 #if SNIPPET
             Uri trainingFileUri = <trainingFileUri>;

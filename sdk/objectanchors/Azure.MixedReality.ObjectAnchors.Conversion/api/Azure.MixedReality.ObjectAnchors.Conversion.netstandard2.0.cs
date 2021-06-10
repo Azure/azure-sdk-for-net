@@ -1,5 +1,10 @@
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
+    public static partial class AOAFrontEndAPIsModelFactory
+    {
+        public static Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionProperties AssetConversionProperties(string clientErrorDetails = null, string serverErrorDetails = null, Azure.MixedReality.ObjectAnchors.Conversion.Models.ConversionErrorCode errorCode = default(Azure.MixedReality.ObjectAnchors.Conversion.Models.ConversionErrorCode), System.Guid? jobIdInternal = default(System.Guid?), string outputModelUriString = null, Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionStatus? conversionStatus = default(Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionStatus?), string assetFileTypeString = null, string inputAssetUriString = null, System.Guid? accountIdInternal = default(System.Guid?), Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionConfiguration conversionConfiguration = null) { throw null; }
+        public static Azure.MixedReality.ObjectAnchors.Conversion.AssetUploadUriResult AssetUploadUriResult(string uploadUriString = null) { throw null; }
+    }
     public partial class AssetConversionConfiguration
     {
         internal AssetConversionConfiguration() { }

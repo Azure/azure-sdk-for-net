@@ -47,12 +47,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The identifier of the anomaly detection configuration to which this configuration applies.
         /// </summary>
         [CodeGenMember("AnomalyDetectionConfigurationId")]
-        public string DetectionConfigurationId { get; }
+        public string DetectionConfigurationId { get; set; }
 
         /// <summary>
         /// Selects which set of time series should trigger alerts.
         /// </summary>
-        public MetricAnomalyAlertScope AlertScope { get; }
+        public MetricAnomalyAlertScope AlertScope { get; set; }
 
         /// <summary>
         /// If defined, this <see cref="MetricAnomalyAlertConfiguration"/> won't trigger alerts by itself. It

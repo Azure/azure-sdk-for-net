@@ -19,8 +19,6 @@ namespace Azure.Storage.Files.DataLake
     internal partial class PathRestClient
     {
         private string url;
-        private string fileSystem;
-        private string path;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,23 +27,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
-        /// <param name="fileSystem"> The filesystem identifier. </param>
-        /// <param name="path"> The file or directory path. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="fileSystem"/>, <paramref name="path"/>, or <paramref name="version"/> is null. </exception>
-        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string fileSystem, string path, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
-            }
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
             }
             if (version == null)
             {
@@ -53,8 +41,6 @@ namespace Azure.Storage.Files.DataLake
             }
 
             this.url = url;
-            this.fileSystem = fileSystem;
-            this.path = path;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -67,10 +53,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -254,10 +236,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -483,10 +461,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -594,10 +568,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -699,10 +669,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -796,10 +762,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -893,10 +855,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "setAccessControl", true);
             if (timeout != null)
             {
@@ -1003,10 +961,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "setAccessControlRecursive", true);
             if (timeout != null)
             {
@@ -1096,10 +1050,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "flush", true);
             if (timeout != null)
             {
@@ -1238,10 +1188,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("action", "append", true);
             if (position != null)
             {
@@ -1340,10 +1286,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "expiry", true);
             if (timeout != null)
             {
@@ -1405,10 +1347,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "undelete", true);
             if (timeout != null)
             {

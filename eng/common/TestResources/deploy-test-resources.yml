@@ -33,10 +33,12 @@ parameters:
 
 
 steps:
-  - template: /eng/common/TestResources/setup-az-modules.yml
+  - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
+
+  - template: /eng/common/TestResources/setup-environments.yml
 
   - pwsh: |
-      eng/common/TestResources/Import-AzModules.ps1
+      eng/common/scripts/Import-AzModules.ps1
 
       $subscriptionConfiguration = @'
         ${{ parameters.SubscriptionConfiguration }}
