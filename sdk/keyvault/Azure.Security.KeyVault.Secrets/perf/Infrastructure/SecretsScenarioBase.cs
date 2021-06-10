@@ -39,12 +39,23 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Infrastructure
                     DeleteSecretOperation operation = null;
                     try
                     {
-                        // Delete secret, but do not purge since waiting for purge availability adds too much time to cleanup.
-                        // Deleted secrets will be automatically purged when the retention period expires.
                         operation = await Client.StartDeleteSecretAsync(name);
+                        await operation.WaitForCompletionAsync();
                     }
                     catch (RequestFailedException ex) when (ex.Status == 404)
                     {
+                    }
+
+                    // Purge deleted Secrets if soft delete is enabled.
+                    if (operation.Value.RecoveryId != null)
+                    {
+                        try
+                        {
+                            await Client.PurgeDeletedSecretAsync(name);
+                        }
+                        catch (RequestFailedException ex) when (ex.Status == 404)
+                        {
+                        }
                     }
                 });
 
