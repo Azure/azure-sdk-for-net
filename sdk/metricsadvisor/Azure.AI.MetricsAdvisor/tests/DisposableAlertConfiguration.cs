@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
-using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -25,39 +24,35 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// Initializes a new instance of the <see cref="DisposableAlertConfiguration"/> class.
         /// </summary>
         /// <param name="adminClient">The client to use for deleting the configuration upon disposal.</param>
-        /// <param name="id">The identifier of the alert configuration this instance is associated with.</param>
-        private DisposableAlertConfiguration(MetricsAdvisorAdministrationClient adminClient, string id)
+        /// <param name="configuration">The alert configuration this instance is associated with.</param>
+        private DisposableAlertConfiguration(MetricsAdvisorAdministrationClient adminClient, AnomalyAlertConfiguration configuration)
         {
             _adminClient = adminClient;
-            Id = id;
+            Configuration = configuration;
         }
 
         /// <summary>
-        /// The identifier of the alert configuration this instance is associated with.
+        /// The alert configuration this instance is associated with.
         /// </summary>
-        public string Id { get; }
+        public AnomalyAlertConfiguration Configuration { get; }
 
         /// <summary>
         /// Creates an alert configuration using the specified <see cref="MetricsAdvisorAdministrationClient"/>.
-        /// A <see cref="DisposableAlertConfiguration"/> instance is returned, from which the ID of the created
-        /// configuration can be obtained. Upon disposal, the associated configuration will be deleted.
+        /// A <see cref="DisposableAlertConfiguration"/> instance is returned, from which the created configuration
+        /// can be obtained. Upon disposal, the associated configuration will be deleted.
         /// </summary>
         /// <param name="adminClient">The client to use for creating and for deleting the configuration.</param>
-        /// <param name="hook">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
-        /// <returns>A <see cref="DisposableAlertConfiguration"/> instance from which the ID of the created configuration can be obtained.</returns>
+        /// <param name="configuration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
+        /// <returns>A <see cref="DisposableAlertConfiguration"/> instance from which the created configuration can be obtained.</returns>
         public static async Task<DisposableAlertConfiguration> CreateAlertConfigurationAsync(MetricsAdvisorAdministrationClient adminClient, AnomalyAlertConfiguration alertConfiguration)
         {
             AnomalyAlertConfiguration createdConfig = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
-
-            Assert.That(createdConfig, Is.Not.Null);
-            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
-
-            return new DisposableAlertConfiguration(adminClient, createdConfig.Id);
+            return new DisposableAlertConfiguration(adminClient, createdConfig);
         }
 
         /// <summary>
         /// Deletes the configuration this instance is associated with.
         /// </summary>
-        public async ValueTask DisposeAsync() => await _adminClient.DeleteAlertConfigurationAsync(Id);
+        public async ValueTask DisposeAsync() => await _adminClient.DeleteAlertConfigurationAsync(Configuration.Id);
     }
 }
