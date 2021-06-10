@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" InitialTargets="VerifyScope" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IsLegacyMgmtProject>true</IsLegacyMgmtProject>
+    <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
   </PropertyGroup>
   <Import Project="..\Directory.Build.props" />
   <Import Project="..\Directory.Build.targets" />
