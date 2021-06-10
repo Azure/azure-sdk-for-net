@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "3715",
         "Content-Type": "application/json",
-        "traceparent": "00-61696afa03f9c446a295aed844950b55-c61862baab6a0041-00",
+        "traceparent": "00-91853703a12a56419478cf6db53c0b50-600fb9ff31f16742-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210609.1",
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
           "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "8e39ba448961d14a4b538fa82f0f897a",
@@ -316,11 +316,11 @@
         "client-request-id": "8e39ba44-8961-d14a-4b53-8fa82f0f897a",
         "Content-Length": "6255",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 09 Jun 2021 19:17:11 GMT",
-        "elapsed-time": "69",
-        "ETag": "W/\u00220x8D92B7B2E98CEC6\u0022",
+        "Date": "Thu, 10 Jun 2021 21:23:34 GMT",
+        "elapsed-time": "72",
+        "ETag": "W/\u00220x8D92C56012836BC\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027lefvvewn\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027lefvvewn\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -330,7 +330,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D92B7B2E98CEC6\u0022",
+        "@odata.etag": "\u00220x8D92C56012836BC\u0022",
         "name": "lefvvewn",
         "description": null,
         "skills": [

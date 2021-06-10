@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "3715",
         "Content-Type": "application/json",
-        "traceparent": "00-80627b6ff9029e44aeea24b2c2c6a6e3-61ac4de4cdfcb444-00",
+        "traceparent": "00-ce9b115cff82154889a05a8702ec2de0-607a4d5d1f67084d-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210609.1",
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
           "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "5d016cb905478992346230c9ebac18e1",
@@ -316,11 +316,11 @@
         "client-request-id": "5d016cb9-0547-8992-3462-30c9ebac18e1",
         "Content-Length": "6255",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 09 Jun 2021 19:17:11 GMT",
-        "elapsed-time": "210",
-        "ETag": "W/\u00220x8D92B7B2E74C585\u0022",
+        "Date": "Thu, 10 Jun 2021 21:22:39 GMT",
+        "elapsed-time": "2162",
+        "ETag": "W/\u00220x8D92C55E0318BDC\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -330,7 +330,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D92B7B2E74C585\u0022",
+        "@odata.etag": "\u00220x8D92C55E0318BDC\u0022",
         "name": "fpmjeogx",
         "description": null,
         "skills": [
