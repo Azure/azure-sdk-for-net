@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static Pageable<Application> ListApplication(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources((baseUri, credential, options, pipeline) =>
+            return subscription.ListResources<Application>((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
@@ -319,18 +319,33 @@ namespace Azure.ResourceManager.NewResources
             return new PolicyAssignmentsRestOperations(clientDiagnostics, pipeline, endpoint);
         }
 
-        /// <summary> Lists the AvailabilitySets for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
+        /// <summary> Lists the PolicyAssignment for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static Pageable<PolicyAssignment> ListPolicyAssignment(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyAssignment> ListPolicyAssignment(this SubscriptionOperations subscription, string filter = null, CancellationToken cancellationToken = default)
         {
             return subscription.ListResources((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                var result = ListForSubscription(clientDiagnostics, restOperations, subscription.Id.SubscriptionId);
+                var result = ListForSubscription(clientDiagnostics, restOperations, subscription.Id.SubscriptionId, filter, cancellationToken);
                 return new PhWrappingPageable<PolicyAssignmentData, PolicyAssignment>(
+                result,
+                s => new PolicyAssignment(subscription, s));
+            }
+            );
+        }
+
+        public static AsyncPageable<PolicyAssignment> ListPolicyAssignmentAsync(this SubscriptionOperations subscription, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return subscription.ListResourcesAsync((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                var result = ListForSubscriptionAsync(clientDiagnostics, restOperations, subscription.Id.SubscriptionId, filter, cancellationToken);
+                return new PhWrappingAsyncPageable<PolicyAssignmentData, PolicyAssignment>(
                 result,
                 s => new PolicyAssignment(subscription, s));
             }
@@ -353,7 +368,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = restOperations.List(subscriptionId, cancellationToken: cancellationToken);
+                    var response = restOperations.List(subscriptionId, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -368,7 +383,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                    var response = restOperations.ListNextPage(nextLink, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -400,7 +415,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.ListAsync(subscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListAsync(subscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -415,7 +430,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
