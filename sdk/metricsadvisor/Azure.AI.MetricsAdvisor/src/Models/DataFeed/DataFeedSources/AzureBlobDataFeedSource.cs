@@ -53,8 +53,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(container, nameof(container));
             Argument.AssertNotNullOrEmpty(blobTemplate, nameof(blobTemplate));
 
-            Parameter = new AzureBlobParameter(connectionString, container, blobTemplate);
-
             ConnectionString = connectionString;
             Container = container;
             BlobTemplate = blobTemplate;
@@ -65,8 +63,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ConnectionString = parameter.ConnectionString;
             Container = parameter.Container;
             BlobTemplate = parameter.BlobTemplate;
@@ -75,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The name of the blob container.
         /// </summary>
-        public string Container { get; }
+        public string Container { get; set; }
 
         /// <summary>
         /// This is the template of the Blob file names. For example: /%Y/%m/X_%Y-%m-%d-%h-%M.json. The following parameters are supported:
@@ -102,7 +98,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </item>
         /// </list>
         /// </summary>
-        public string BlobTemplate { get; }
+        public string BlobTemplate { get; set; }
 
         /// <summary>
         /// The connection string for authenticating to the Azure Storage Account.
@@ -111,6 +107,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             get => Volatile.Read(ref _connectionString);
             private set => Volatile.Write(ref _connectionString, value);
+        }
+
+        /// <summary>
+        /// Updates the connection string.
+        /// </summary>
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            ConnectionString = connectionString;
         }
     }
 }

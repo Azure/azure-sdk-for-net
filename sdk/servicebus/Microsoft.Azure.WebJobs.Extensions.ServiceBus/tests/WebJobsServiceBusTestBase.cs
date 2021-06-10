@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         internal const int MaxAutoRenewDurationMin = 5;
         internal static TimeSpan HostShutdownTimeout = TimeSpan.FromSeconds(120);
 
-        protected static QueueScope _firstQueueScope;
+        internal static QueueScope _firstQueueScope;
         protected static QueueScope _secondaryNamespaceQueueScope;
         private QueueScope _secondQueueScope;
         private QueueScope _thirdQueueScope;
@@ -78,16 +79,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
+        ///   Performs the tasks needed to initialize the test.  This
+        ///   method runs once for for each test.
         /// </summary>
         ///
         [SetUp]
         public async Task FixtureSetUp()
         {
-            _firstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
-            _secondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
-            _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
+            _firstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
+            _secondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
+            _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             _topicScope = await CreateWithTopic(
                 enablePartitioning: false,
                 enableSession: _isSession,
@@ -95,7 +96,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _secondaryNamespaceQueueScope = await CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: _isSession,
-                overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace);
+                overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace,
+                lockDuration: TimeSpan.FromSeconds(15));
             _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
             _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
             _waitHandle1 = new ManualResetEvent(initialState: false);
@@ -105,8 +107,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
+        ///   Performs the tasks needed to cleanup the test after each
+        ///   test has run.
         /// </summary>
         ///
         [TearDown]
@@ -146,20 +148,25 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 settings.Add("AzureWebJobsServiceBus", ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
             }
+
             var hostBuilder = new HostBuilder()
-               .ConfigureAppConfiguration(builder =>
-               {
-                   builder.AddInMemoryCollection(settings);
-               })
-               .ConfigureDefaultTestHost<TJobClass>(b =>
-               {
-                   b.AddServiceBus(options => options.ClientRetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
-               })
-               .ConfigureServices(s =>
-               {
-                   s.Configure<HostOptions>(opts => opts.ShutdownTimeout = HostShutdownTimeout);
-                   s.AddHostedService<ServiceBusEndToEndTestService>();
-               });
+                .ConfigureServices(s =>
+                {
+                    s.Configure<HostOptions>(opts => opts.ShutdownTimeout = HostShutdownTimeout);
+                    // Configure ServiceBusEndToEndTestService before WebJobs stuff so that the ServiceBusEndToEndTestService.StopAsync will be called after
+                    // the WebJobsHost.StopAsync (service that is started first will be stopped last by the IHost).
+                    // This will allow the logs captured in StopAsync to include everything from WebJobs.
+                    s.AddHostedService<ServiceBusEndToEndTestService>();
+                })
+                .ConfigureAppConfiguration(builder =>
+                {
+                    builder.AddInMemoryCollection(settings);
+                })
+                .ConfigureDefaultTestHost<TJobClass>(b =>
+                {
+                    b.AddServiceBus(options => options.ClientRetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
+                });
+            // do this after the defaults so test-specific values will override the defaults
             configurationDelegate?.Invoke(hostBuilder);
             IHost host = hostBuilder.Build();
             if (startHost)
@@ -235,12 +242,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             return Task.CompletedTask;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
             var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
-            var errors = logs.Where(p => p.Level == LogLevel.Error);
+            var errors = logs.Where(
+                p => p.Level == LogLevel.Error &&
+                // Ignore this error that the SDK logs when cancelling batch receive
+                !p.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"));
             Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
-            return Task.CompletedTask;
+
+            var client = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            // wait for a few seconds to allow updated counts to propagate
+            await Task.Delay(TimeSpan.FromSeconds(2));
+
+            QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(WebJobsServiceBusTestBase._firstQueueScope.QueueName, CancellationToken.None);
+            Assert.AreEqual(0, properties.TotalMessageCount);
         }
     }
 }

@@ -80,7 +80,7 @@ serviceClient.SendToAll("Hello World!");
 ```C# Snippet:WebPubSubSendJson
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-serviceClient.SendToAll(
+serviceClient.SendToAll("application/json",
     RequestContent.Create(
         new
         {
@@ -95,9 +95,7 @@ serviceClient.SendToAll(
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
 Stream stream = BinaryData.FromString("Hello World!").ToStream();
-serviceClient.SendToAll(
-    RequestContent.Create(stream),
-    HttpHeader.Common.OctetStreamContentType.Value);
+serviceClient.SendToAll("application/octet-stream", RequestContent.Create(stream));
 ```
 
 ## Troubleshooting

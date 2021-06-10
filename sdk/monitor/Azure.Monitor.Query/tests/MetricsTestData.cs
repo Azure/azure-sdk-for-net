@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Tests
             }
 
             _initialized = true;
-            var metricClient = new MetricsClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
+            var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
             while (!await MetricsPropagated(metricClient))
             {
@@ -74,16 +74,16 @@ namespace Azure.Monitor.Query.Tests
             }
         }
 
-        private async Task<bool> MetricsPropagated(MetricsClient metricClient)
+        private async Task<bool> MetricsPropagated(MetricsQueryClient metricQueryClient)
         {
-            var nsExists =  (await metricClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource)).Value.Any(ns => ns.Name == MetricNamespace);
+            var nsExists =  (await metricQueryClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource)).Value.Any(ns => ns.Name == MetricNamespace);
 
             if (!nsExists)
             {
                 return false;
             }
 
-            var metrics = await metricClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
+            var metrics = await metricQueryClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
                 new MetricsQueryOptions()
                 {
                     TimeSpan = new DateTimeRange(StartTime, Duration),

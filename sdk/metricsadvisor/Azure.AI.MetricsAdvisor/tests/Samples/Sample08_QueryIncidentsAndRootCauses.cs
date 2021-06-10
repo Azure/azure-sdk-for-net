@@ -57,9 +57,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                     Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
                 }
 
-                Console.WriteLine("Series key:");
+                Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.DimensionKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey.AsDictionary())
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -94,6 +94,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await foreach (AnomalyIncident incident in client.GetIncidentsAsync(alertConfigurationId, alertId, options))
             {
                 Console.WriteLine($"Incident ID: {incident.Id}");
+                Console.WriteLine($"Data feed ID: {incident.DataFeedId}");
                 Console.WriteLine($"Metric ID: {incident.MetricId}");
                 Console.WriteLine($"Detection configuration ID: {incident.DetectionConfigurationId}");
                 Console.WriteLine($"First associated anomaly occurred at: {incident.StartTime}");
@@ -107,9 +108,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                     Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
                 }
 
-                Console.WriteLine("Series key:");
+                Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.DimensionKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey.AsDictionary())
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -142,7 +143,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await foreach (IncidentRootCause rootCause in client.GetIncidentRootCausesAsync(detectionConfigurationId, incidentId))
             {
                 Console.WriteLine($"Root cause description: {rootCause.Description}");
-                Console.WriteLine($"Score: {rootCause.Score}");
+                Console.WriteLine($"Score: {rootCause.ContributionScore}");
                 Console.WriteLine("Paths:");
 
                 foreach (string path in rootCause.Paths)
@@ -152,7 +153,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in rootCause.DimensionKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in rootCause.SeriesKey.AsDictionary())
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
