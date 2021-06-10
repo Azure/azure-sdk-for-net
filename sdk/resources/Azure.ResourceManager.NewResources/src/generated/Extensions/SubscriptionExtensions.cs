@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static AsyncPageable<DeploymentScript> ListDeploymentScriptAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources((baseUri, credential, options, pipeline) =>
+            return subscription.ListResourcesAsync((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static AsyncPageable<Application> ListApplicationAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources((baseUri, credential, options, pipeline) =>
+            return subscription.ListResourcesAsync((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);

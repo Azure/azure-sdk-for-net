@@ -8,16 +8,15 @@
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0107;CA2214;CA1036;CA1067;CA1065;SA1028;CS1591;CS1587</NoWarn>
-    <IncludeManagementSharedCode>true</IncludeManagementSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- <PackageReference Include="Azure.ResourceManager.Core" VersionOverride="1.0.0-alpha.20210526.3" /> -->
-    <ProjectReference Include="../../../resourcemanager/Azure.ResourceManager.Core/src/Azure.ResourceManager.Core.csproj" />
+    <ProjectReference Include="../../../resourcemanager/Azure.ResourceManager.Core/src/Azure.ResourceManager.Core.csproj"/>
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- <ItemGroup>
     <PackageReference Include="Azure.Core" VersionOverride="1.15.0" />
-  </ItemGroup>
+  </ItemGroup> -->
 
 </Project>
