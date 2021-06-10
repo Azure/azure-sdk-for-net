@@ -47,7 +47,5 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesOperationError InnerError { get; }
         /// <summary> Contains additional error information. May be null. </summary>
         public IReadOnlyList<TimeSeriesOperationErrorDetails> Details { get; }
-        /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

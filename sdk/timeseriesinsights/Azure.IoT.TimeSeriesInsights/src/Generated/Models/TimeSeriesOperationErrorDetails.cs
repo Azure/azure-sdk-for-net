@@ -34,7 +34,5 @@ namespace Azure.IoT.TimeSeriesInsights
         public string Code { get; }
         /// <summary> Human-readable, language-independent representation of the error. It is intended as an aid to developers and is not suitable for exposure to end users. </summary>
         public string Message { get; }
-        /// <summary> Additional Properties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }
