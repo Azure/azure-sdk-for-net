@@ -14,7 +14,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The latest version of the CallingServer service.
         /// </summary>
-        public const ServiceVersion LatestVersion = ServiceVersion.V2021_06_15_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_06_15_Preview;
 
         internal string ApiVersion { get; }
 

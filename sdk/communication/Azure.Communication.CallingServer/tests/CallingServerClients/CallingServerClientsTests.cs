@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class CallingServerClientsTests : TestBase
+    public class CallingServerClientsTests : CallingServerTestBase
     {
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsync_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
 
-            var response = await callingServerClient.JoinCallConnectionAsync(serverCallId, source, joinCallOptions).ConfigureAwait(false);
+            var response = await callingServerClient.JoinCallAsync(serverCallId, source, joinCallOptions).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual("cad9df7b-f3ac-4c53-96f7-c76e7437b3c1", response.Value.CallConnectionId);
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(202, CreateOrJoinCallPayload);
 
-            var response = callingServerClient.JoinCallConnection(serverCallId, source, joinCallOptions);
+            var response = callingServerClient.JoinCall(serverCallId, source, joinCallOptions);
 
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual("cad9df7b-f3ac-4c53-96f7-c76e7437b3c1", response.Value.CallConnectionId);
@@ -57,18 +57,26 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_CreateCall()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new CommunicationUserIdentifier("8:acs:resource_source"),
-                    new List<CommunicationIdentifier>()
+                    new CommunicationIdentifier[]
                     {
                         new CommunicationUserIdentifier("8:acs:resource_target"),
                         new PhoneNumberIdentifier("+14250001234")
                     },
                     new CreateCallOptions(
                         new Uri("https://bot.contoso.com/callback"),
-                        new List<CallModality>(){ CallModality.Video },
-                        new List<EventSubscriptionType>(){ EventSubscriptionType.ParticipantsUpdated }
+                        new[]
+                        {
+                            CallModality.Video
+                        },
+                        new[]
+                        {
+                            EventSubscriptionType.ParticipantsUpdated
+                        }
                     )
                     {
                         AlternateCallerId = new PhoneNumberIdentifier("+17781234567"),
@@ -80,14 +88,22 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_JoinCall()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "guid",
                     new CommunicationUserIdentifier("8:acs:resource_source"),
                     new JoinCallOptions(
                         new Uri("https://bot.contoso.com/callback"),
-                        new List<CallModality>(){ CallModality.Video },
-                        new List<EventSubscriptionType>(){ EventSubscriptionType.ParticipantsUpdated }
+                        new[]
+                        {
+                            CallModality.Video
+                        },
+                        new[]
+                        {
+                            EventSubscriptionType.ParticipantsUpdated
+                        }
                     )
                     {
                         Subject = "testsubject"

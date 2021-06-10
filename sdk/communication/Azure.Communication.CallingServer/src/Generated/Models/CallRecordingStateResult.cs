@@ -8,16 +8,16 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The response payload of get call recording state operation. </summary>
-    public partial class GetCallRecordingStateResponse
+    public partial class CallRecordingStateResult
     {
-        /// <summary> Initializes a new instance of GetCallRecordingStateResponse. </summary>
-        internal GetCallRecordingStateResponse()
+        /// <summary> Initializes a new instance of CallRecordingStateResult. </summary>
+        internal CallRecordingStateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GetCallRecordingStateResponse. </summary>
+        /// <summary> Initializes a new instance of CallRecordingStateResult. </summary>
         /// <param name="recordingState"> The recording state of the recording. </param>
-        internal GetCallRecordingStateResponse(CallRecordingState? recordingState)
+        internal CallRecordingStateResult(CallRecordingState? recordingState)
         {
             RecordingState = recordingState;
         }

@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class ServerCallTests : TestBase
+    public class ServerCallTests : CallingServerTestBase
     {
         private const string DummyStartRecordingResponse = "{" +
                                         "\"recordingId\": \"dummyRecordingId\"" +
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void StartRecording_Returns200Ok(string sampleConversationId, Uri sampleCallBackUri)
         {
             ServerCall serverCall = CreateMockServerCall(sampleConversationId, 200, DummyStartRecordingResponse);
-            StartCallRecordingResponse response = serverCall.StartRecording(sampleCallBackUri);
+            StartCallRecordingResult response = serverCall.StartRecording(sampleCallBackUri);
             Assert.AreEqual("dummyRecordingId", response.RecordingId);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task StartRecordingAsync_Returns200Ok(string sampleConversationId, Uri sampleCallBackUri)
         {
             ServerCall serverCall = CreateMockServerCall(sampleConversationId, 200, DummyStartRecordingResponse);
-            Response<StartCallRecordingResponse> response = await serverCall.StartRecordingAsync(sampleCallBackUri);
+            Response<StartCallRecordingResult> response = await serverCall.StartRecordingAsync(sampleCallBackUri);
             Assert.AreEqual("dummyRecordingId", response.Value.RecordingId);
         }
 
@@ -98,7 +98,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void GetRecordingState_Return200Ok(string sampleConversationId, string sampleRecordingId)
         {
             ServerCall serverCall = CreateMockServerCall(sampleConversationId, 200, DummyRecordingStateResponse);
-            GetCallRecordingStateResponse response = serverCall.GetRecordingState(sampleRecordingId);
+            CallRecordingStateResult response = serverCall.GetRecordingState(sampleRecordingId);
             Assert.AreEqual(CallRecordingState.Active, response.RecordingState);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task GetRecordingStateAsync_Return200Ok(string sampleConversationId, string sampleRecordingId)
         {
             ServerCall serverCall = CreateMockServerCall(sampleConversationId, 200, DummyRecordingStateResponse);
-            Response<GetCallRecordingStateResponse> response = await serverCall.GetRecordingStateAsync(sampleRecordingId);
+            Response<CallRecordingStateResult> response = await serverCall.GetRecordingStateAsync(sampleRecordingId);
             Assert.AreEqual(CallRecordingState.Active, response.Value.RecordingState);
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void PlayAudio_Return202Accepted(string sampleConversationId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
         {
             ServerCall serverCall = CreateMockServerCall(sampleConversationId, 202, DummyPlayAudioResponse);
-            PlayAudioResponse response = serverCall.PlayAudio(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            PlayAudioResult response = serverCall.PlayAudio(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
             VerifyPlayAudioResponse(response);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task PlayAudioAsync_Return202Accepted(string sampleConversationId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
         {
             ServerCall serverCall = CreateMockServerCall(sampleConversationId, 202, DummyPlayAudioResponse);
-            Response<PlayAudioResponse> response = await serverCall.PlayAudioAsync(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            Response<PlayAudioResult> response = await serverCall.PlayAudioAsync(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
             VerifyPlayAudioResponse(response);
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual((int)response.Status, 202);
         }
 
-        private void VerifyPlayAudioResponse(PlayAudioResponse response)
+        private void VerifyPlayAudioResponse(PlayAudioResult response)
         {
             Assert.AreEqual("dummyId", response.Id);
             Assert.AreEqual(OperationStatus.Running, response.Status);
@@ -177,8 +177,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_StartRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     new Uri("https://somecallbackurl"),
                 },
@@ -187,8 +189,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_StopRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     "sampleRecordingId",
                 },
@@ -197,8 +201,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_PauseRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     "sampleRecordingId",
                 },
@@ -207,8 +213,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_ResumeRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     "sampleRecordingId",
                 },
@@ -217,8 +225,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_GetRecordingState()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     "sampleRecordingId",
                 },
@@ -227,8 +237,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_PlayAudio()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     new Uri("https://av.ngrok.io/audio/sample-message.wav"),
                     "sampleAudioFileId",
@@ -240,8 +252,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_AddParticipant()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
                     new Uri("https://bot.contoso.com/callback"),
@@ -253,8 +267,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_ParticipantId()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleConversationId",
                     "66c76529-3e58-45bf-9592-84eadd52bc81"
                 },

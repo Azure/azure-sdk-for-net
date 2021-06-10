@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class CallConnectionTests : TestBase
+    public class CallConnectionTests : CallingServerTestBase
     {
         private const string CancelAllMediaOperaionsResponsePayload = "{" +
                                                 "\"id\": \"dummyId\"," +
@@ -190,7 +190,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual((int)response.Status, 202);
         }
 
-        private void VerifyCancelAllMediaOperationsResponse(CancelAllMediaOperationsResponse response)
+        private void VerifyCancelAllMediaOperationsResponse(CancelAllMediaOperationsResult response)
         {
             Assert.AreEqual("dummyId", response.Id);
             Assert.AreEqual(OperationStatus.Completed, response.Status);
@@ -199,7 +199,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual("dummyMessage", response.ResultInfo.Message);
         }
 
-        private void VerifyPlayAudioResponse(PlayAudioResponse response)
+        private void VerifyPlayAudioResponse(PlayAudioResult response)
         {
             Assert.AreEqual("dummyId", response.Id);
             Assert.AreEqual(OperationStatus.Running, response.Status);
@@ -215,8 +215,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_CallConnectionId()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
                 },
             };
@@ -224,8 +226,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_PlayAudio()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new Uri("https://bot.contoso.io/audio/sample-message.wav"),
                     "sampleAudioFileId",
                     new Uri("https://bot.contoso.io/callback"),
@@ -236,8 +240,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_AddParticipant()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
                     "+14250000000",
                     "dummycontext"
@@ -247,8 +253,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_ParticipantId()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "d09038e7-38f7-4aa1-9c5c-4bb07a65aa17",
                     "66c76529-3e58-45bf-9592-84eadd52bc81"
                 },
