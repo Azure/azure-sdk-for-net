@@ -175,6 +175,22 @@ function Confirm-ChangeLogEntry {
       LogError "Entry has no content. Please ensure to provide some content of what changed in this version."
       return $false
     }
+
+    $emptySections = @()
+    foreach ($key in $changeLogEntry.Sections.Keys)
+    {
+      $sectionContent = $changeLogEntry.Sections[$key]
+      if ([System.String]::IsNullOrWhiteSpace(($sectionContent | Out-String)))
+      {
+        $emptySections += $key
+      }
+    }
+    if ($emptySections.Count -gt 0)
+    {
+      LogError "Entry has empty changelog section(s) shown below. Please make sure there are no empty changelog section."
+      Write-Host ($emptySections -Join ", ")
+      return $false
+    }
   }
   return $true
 }
