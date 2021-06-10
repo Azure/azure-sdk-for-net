@@ -17,7 +17,11 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public class CallingServerClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        internal readonly ClientDiagnostics _clientDiagnostics;
+        internal readonly HttpPipeline _pipeline;
+        internal readonly string _resourceEndpoint;
+        internal readonly ContentDownloader _contentDownloader;
+
         internal CallConnectionRestClient CallConnectionRestClient { get; }
         internal ServerCallRestClient ServerCallRestClient { get; }
 
@@ -72,7 +76,10 @@ namespace Azure.Communication.CallingServer
 
         private CallingServerClient(string endpoint, HttpPipeline httpPipeline, CallingServerClientOptions options)
         {
+            _pipeline = httpPipeline;
+            _resourceEndpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _contentDownloader = new(this);
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ServerCallRestClient = new ServerCallRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
@@ -82,7 +89,10 @@ namespace Azure.Communication.CallingServer
         /// <summary>Initializes a new instance of <see cref="CallingServerClient"/> for mocking.</summary>
         protected CallingServerClient()
         {
+            _pipeline = null;
+            _resourceEndpoint = null;
             _clientDiagnostics = null;
+            _contentDownloader = new(this);
             CallConnectionRestClient = null;
             ServerCallRestClient = null;
         }
