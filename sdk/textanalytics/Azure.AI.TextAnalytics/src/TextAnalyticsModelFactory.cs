@@ -713,11 +713,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="id">Sets the id property.</param>
-        /// <param name="statistics">Sets the <see cref="TextAnalytics.TextDocumentStatistics"/> property.</param>
-        /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/> property.</param>
-        /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/> property.</param>
-        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/> property.</param>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/>.</param>
+        /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
         public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
             string id,
@@ -732,9 +732,9 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResultCollection"/> for mocking purposes.
         /// </summary>
-        /// <param name="list">Sets the collection of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> property.</param>
-        /// <param name="statistics">Sets the <see cref="TextAnalytics.TextDocumentBatchStatistics"/> property.</param>
-        /// <param name="modelVersion">Sets the modelVersion property.</param>
+        /// <param name="list">Sets the collection of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="AnalyzeHealthcareEntitiesResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="AnalyzeHealthcareEntitiesResultCollection.ModelVersion"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResultCollection"/> for mocking purposes.</returns>
         public static AnalyzeHealthcareEntitiesResultCollection AnalyzeHealthcareEntitiesResultCollection(
             IList<AnalyzeHealthcareEntitiesResult> list,
@@ -747,11 +747,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntity"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the text property.</param>
-        /// <param name="category">Sets the category property.</param>
-        /// <param name="offset">Sets the offset property.</param>
-        /// <param name="length">Sets the length property.</param>
-        /// <param name="confidenceScore">Sets the confidenceScore property.</param>
+        /// <param name="text">Sets the <see cref="HealthcareEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="HealthcareEntity.Category"/> property.</param>
+        /// <param name="offset">Sets the <see cref="HealthcareEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="HealthcareEntity.Length"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="HealthcareEntity.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntity"/> for mocking purposes.</returns>
         public static HealthcareEntity HealthcareEntity(
             string text,
@@ -766,12 +766,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntityRelationRole"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the text property.</param>
-        /// <param name="category">Sets the category property.</param>
-        /// <param name="offset">Sets the offset property.</param>
-        /// <param name="length">Sets the length property.</param>
-        /// <param name="confidenceScore">Sets the confidenceScore property.</param>
-        /// <param name="entityName">Sets the entityName property.</param>
+        /// <param name="text">Sets the <see cref="HealthcareEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="HealthcareEntity.Category"/> property.</param>
+        /// <param name="offset">Sets the <see cref="HealthcareEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="HealthcareEntity.Length"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="HealthcareEntity.ConfidenceScore"/> property.</param>
+        /// <param name="entityName">Sets the <see cref="HealthcareEntityRelationRole.Name"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntityRelationRole"/> for mocking purposes.</returns>
         public static HealthcareEntityRelationRole HealthcareEntityRelationRole(
             string text,
@@ -787,8 +787,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.
         /// </summary>
-        /// <param name="relationType">Sets the <see cref="HealthcareEntityRelationType"/> property.</param>
-        /// <param name="roles">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelationRole"/> property.</param>
+        /// <param name="relationType">Sets the <see cref="HealthcareEntityRelation.RelationType"/> property.</param>
+        /// <param name="roles">Sets the collection of <see cref="HealthcareEntityRelation.Roles"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.</returns>
         public static HealthcareEntityRelation HealthcareEntityRelation(
             HealthcareEntityRelationType relationType,
