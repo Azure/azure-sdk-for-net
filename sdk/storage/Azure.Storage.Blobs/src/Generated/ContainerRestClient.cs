@@ -20,7 +20,6 @@ namespace Azure.Storage.Blobs
     internal partial class ContainerRestClient
     {
         private string url;
-        private string containerName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,18 +28,13 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
-        /// <param name="containerName"> The container name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, or <paramref name="version"/> is null. </exception>
-        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-08-04")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-08-04")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
             }
             if (version == null)
             {
@@ -48,7 +42,6 @@ namespace Azure.Storage.Blobs
             }
 
             this.url = url;
-            this.containerName = containerName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -61,8 +54,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
             {
@@ -139,8 +130,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
             {
@@ -199,8 +188,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
             {
@@ -271,8 +258,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
@@ -344,8 +329,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -431,8 +414,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "acl", true);
             if (timeout != null)
@@ -524,8 +505,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "undelete", true);
             if (timeout != null)
@@ -591,8 +570,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "rename", true);
             if (timeout != null)
@@ -667,8 +644,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "batch", true);
             if (timeout != null)
@@ -757,8 +732,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -837,8 +810,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -920,8 +891,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -1003,8 +972,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -1077,8 +1044,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("comp", "lease", true);
             uri.AppendQuery("restype", "container", true);
             if (timeout != null)
@@ -1171,8 +1136,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "list", true);
             if (prefix != null)
@@ -1266,8 +1229,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "list", true);
             if (prefix != null)
@@ -1355,55 +1316,6 @@ namespace Azure.Storage.Blobs
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetAccountInfoRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendQuery("restype", "account", true);
-            uri.AppendQuery("comp", "properties", true);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Returns the sku name and account kind. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerGetAccountInfoHeaders>> GetAccountInfoAsync(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAccountInfoRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ContainerGetAccountInfoHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Returns the sku name and account kind. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerGetAccountInfoHeaders> GetAccountInfo(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAccountInfoRequest();
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ContainerGetAccountInfoHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

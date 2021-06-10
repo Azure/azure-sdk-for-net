@@ -1,5 +1,9 @@
 ﻿# Microsoft.Azure.Management.Media release notes
 
+## Changes in 3.0.5
+
+- Added KeyDelivery Access control property to Media Services that allows restricting KeyDelivery requests by IP address ranges
+
 ## Changes in 3.0.4
 
 This SDK is using 2020-05-01 version of the API.

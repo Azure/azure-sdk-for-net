@@ -17,6 +17,7 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
+        private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -60,51 +61,51 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> Query<T>(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = Query(workspaceId, query, timeRange, options, cancellationToken);
+            Response<LogsQueryResult> response = Query(workspace, query, timeRange, options, cancellationToken);
 
-            return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
+            return Response.FromValue(_rowBinder.BindResults<T>(response.Value.Tables), response.GetRawResponse());
         }
 
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
+            Response<LogsQueryResult> response = await QueryAsync(workspace, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
-            return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
+            return Response.FromValue(_rowBinder.BindResults<T>(response.Value.Tables), response.GetRawResponse());
         }
 
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
-        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return ExecuteAsync(workspaceId, query, timeRange, options, false, cancellationToken).EnsureCompleted();
+                return ExecuteAsync(workspace, query, timeRange, options, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -116,19 +117,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
-        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await ExecuteAsync(workspaceId, query, timeRange, options, true, cancellationToken).ConfigureAwait(false);
+                return await ExecuteAsync(workspace, query, timeRange, options, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -208,10 +209,7 @@ namespace Azure.Monitor.Query
 
             if (options != null)
             {
-                queryBody.Workspaces = options.AdditionalWorkspaceNames;
-                queryBody.WorkspaceIds = options.AdditionalWorkspaceIds;
-                queryBody.QualifiedNames = options.AdditionalWorkspaceQualifiedNames;
-                queryBody.AzureResourceIds = options.AdditionalResourceIds;
+                queryBody.Workspaces = options.AdditionalWorkspaces;
             }
 
             return queryBody;
@@ -227,11 +225,11 @@ namespace Azure.Monitor.Query
             QueryBody queryBody = CreateQueryBody(query, timeRange, options, out string prefer);
             using var message = _queryClient.CreateExecuteRequest(workspaceId, queryBody, prefer);
 
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/20859
-            // if (options?.Timeout != null)
-            // {
-            //     message.NetworkTimeout = options.Timeout;
-            // }
+            if (options?.ServerTimeout != null)
+            {
+                // Offset the service timeout a bit to make sure we have time to receive the response.
+                message.NetworkTimeout = options.ServerTimeout.Value.Add(_networkTimeoutOffset);
+            }
 
             if (async)
             {

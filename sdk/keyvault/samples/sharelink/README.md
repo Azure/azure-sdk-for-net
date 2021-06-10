@@ -14,6 +14,8 @@ extendedZipContent:
   target: /nuget.config
 
 # Shared
+- path: /sdk/core/Azure.Core/src/Shared/AuthorizationChallengeParser.cs
+  target: /Shared/AuthorizationChallengeParser.cs
 - path: /sdk/keyvault/Azure.Security.KeyVault.Shared/src/ChallengeBasedAuthenticationPolicy.cs
   target: /Shared/ChallengeBasedAuthenticationPolicy.cs
 ---

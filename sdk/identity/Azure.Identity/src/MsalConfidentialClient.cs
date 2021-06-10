@@ -21,8 +21,7 @@ namespace Azure.Identity
         /// </summary>
         protected MsalConfidentialClient()
             : base()
-        {
-        }
+        { }
 
         public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions)
             : base(pipeline, tenantId, clientId, cacheOptions)
@@ -30,7 +29,13 @@ namespace Azure.Identity
             _clientSecret = clientSecret;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions)
+        public MsalConfidentialClient(
+            CredentialPipeline pipeline,
+            string tenantId,
+            string clientId,
+            ClientCertificateCredential.IX509Certificate2Provider certificateProvider,
+            bool includeX5CClaimHeader,
+            ITokenCacheOptions cacheOptions)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
@@ -39,7 +44,9 @@ namespace Azure.Identity
 
         protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
-            ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId).WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId).WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline));
+            ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
+                .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId)
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline));
 
             if (_clientSecret != null)
             {
@@ -60,6 +67,47 @@ namespace Azure.Identity
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             return await client.AcquireTokenForClient(scopes).WithSendX5C(_includeX5CClaimHeader).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(
+            string[] scopes,
+            AuthenticationAccount account,
+            string tenantId,
+            string redirectUri,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+
+            var builder = client.AcquireTokenSilent(scopes, account);
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+            return await builder
+                .ExecuteAsync(async, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenByAuthorizationCodeAsync(
+            string[] scopes,
+            string code,
+            string tenantId,
+            string redirectUri,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+
+            var builder = client.AcquireTokenByAuthorizationCode(scopes, code);
+
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+            return await builder
+                .ExecuteAsync(async, cancellationToken)
+                .ConfigureAwait(false);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Azure.Identity
     /// <item><description><see cref="VisualStudioCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCodeCredential"/></description></item>
     /// <item><description><see cref="AzureCliCredential"/></description></item>
+    /// <item><description><see cref="AzurePowerShellCredential"/></description></item>
     /// <item><description><see cref="InteractiveBrowserCredential"/></description></item>
     /// </list>
     /// Consult the documentation of these credential types for more information on how they attempt authentication.

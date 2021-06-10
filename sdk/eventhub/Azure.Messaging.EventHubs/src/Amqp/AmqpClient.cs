@@ -174,7 +174,18 @@ namespace Azure.Messaging.EventHubs.Amqp
                 EventHubName = eventHubName;
                 Credential = credential;
                 MessageConverter = messageConverter ?? new AmqpMessageConverter();
-                ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, ConnectionEndpoint, eventHubName, credential, clientOptions.TransportType, clientOptions.Proxy);
+
+                ConnectionScope = connectionScope ?? new AmqpConnectionScope(
+                    ServiceEndpoint,
+                    ConnectionEndpoint,
+                    eventHubName,
+                    credential,
+                    clientOptions.TransportType,
+                    clientOptions.Proxy,
+                    null,
+                    clientOptions.SendBufferSizeInBytes,
+                    clientOptions.ReceiveBufferSizeInBytes,
+                    clientOptions.CertificateValidationCallback);
 
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                     timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None),
