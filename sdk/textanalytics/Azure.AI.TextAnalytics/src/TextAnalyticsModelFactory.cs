@@ -594,8 +594,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="code">Sets the code property.</param>
-        /// <param name="message">Sets the message property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
         public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
             string code,
@@ -620,8 +620,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="code">Sets the code property.</param>
-        /// <param name="message">Sets the message property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
         public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
             string code,
@@ -644,8 +644,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.TextAnalyticsActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="code">Sets the code property.</param>
-        /// <param name="message">Sets the message property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.TextAnalyticsActionResult"/> for mocking purposes.</returns>
         public static TextAnalyticsActionResult TextAnalyticsActionResult(
             string code,
@@ -670,8 +670,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="code">Sets the code property.</param>
-        /// <param name="message">Sets the message property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
         public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
             string code,
@@ -696,8 +696,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="code">Sets the code property.</param>
-        /// <param name="message">Sets the message property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
         public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
             string code,
