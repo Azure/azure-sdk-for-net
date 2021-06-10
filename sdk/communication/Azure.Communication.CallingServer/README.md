@@ -41,8 +41,8 @@ To make an outbound call, call the `CreateCallConnection` or `CreateCallConnecti
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCallOptions
 var createCallOption = new CreateCallOptions(
        new Uri(TestEnvironment.AppCallbackUrl),
-       new List<CallModality> { CallModality.Audio },
-       new List<EventSubscriptionType>
+       new[] { CallModality.Audio },
+       new[]
        {
            EventSubscriptionType.ParticipantsUpdated,
            EventSubscriptionType.DtmfReceived
