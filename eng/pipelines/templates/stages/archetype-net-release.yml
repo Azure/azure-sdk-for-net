@@ -150,7 +150,10 @@ stages:
                 runOnce:
                   deploy:
                     steps:
-                      - checkout: self
+                      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                        parameters:
+                          paths:
+                            - .github/CODEOWNERS
                       - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
                         parameters:
                           TargetVariable: "OwningGHUser"
@@ -172,6 +175,9 @@ stages:
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
+                          SparseCheckoutPaths:
+                            - api
+
 
           - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
             - deployment: PublishDocs
