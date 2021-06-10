@@ -50,8 +50,10 @@ namespace Azure.Storage.Tests
             AllowReadData(lockedChild, false, false);
             AllowReadData(lockedSubfolder, true, false);
 
+            FilesystemScanner scanner = new FilesystemScanner(folder);
+
             // Act
-            IEnumerable<string> result = FilesystemScanner.ScanLocation(folder);
+            IEnumerable<string> result = scanner.Scan();
 
             // Assert
             Assert.Multiple(() =>
@@ -78,8 +80,10 @@ namespace Azure.Storage.Tests
 
             AllowReadData(folder, true, false);
 
+            FilesystemScanner scanner = new FilesystemScanner(folder);
+
             // Act
-            IEnumerable<string> result = FilesystemScanner.ScanLocation(folder);
+            IEnumerable<string> result = scanner.Scan();
 
             // Assert
             Assert.Throws<UnauthorizedAccessException>(() => {
@@ -98,8 +102,10 @@ namespace Azure.Storage.Tests
             // Arrange
             string file = CreateRandomFile(_temp);
 
+            FilesystemScanner scanner = new FilesystemScanner(file);
+
             // Act
-            IEnumerable<string> result = FilesystemScanner.ScanLocation(file);
+            IEnumerable<string> result = scanner.Scan();
 
             // Assert
             CollectionAssert.IsNotEmpty(result);
@@ -114,13 +120,10 @@ namespace Azure.Storage.Tests
             // Arrange
             string file = Path.Combine(_temp, Path.GetRandomFileName());
 
-            // Act
-            IEnumerable<string> result = FilesystemScanner.ScanLocation(file);
-
-            // Assert
+            // Act/Assert
             Assert.IsFalse(File.Exists(file));
             Assert.Throws<FileNotFoundException>(() => {
-                result.GetEnumerator().MoveNext();
+                FilesystemScanner scanner = new FilesystemScanner(file);
             });
         }
 
@@ -142,10 +145,12 @@ namespace Azure.Storage.Tests
             AllowReadData(lockedSubfolder, true, false);
 
             string file = CreateRandomFile(_temp);
-            string[] paths = { folder, file };
+
+            FilesystemScanner scanFolder = new FilesystemScanner(folder);
+            FilesystemScanner scanFile = new FilesystemScanner(file);
 
             // Act
-            IEnumerable<string> result = FilesystemScanner.ScanLocations(paths);
+            IEnumerable<string> result = scanFolder.Scan().Concat(scanFile.Scan());
 
             // Assert
             Assert.Multiple(() =>

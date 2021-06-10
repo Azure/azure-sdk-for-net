@@ -11,44 +11,58 @@ namespace Azure.Storage.Common.DataMovement
     /// <summary>
     /// FilesystemScanner class.
     /// </summary>
-    public static class FilesystemScanner
+    internal class FilesystemScanner
     {
         /// <summary>
-        /// Enumerates all files pointed to by the provided path, including those in subdirectories (if path is a directory).
+        /// The fully qualified path to be scanned.
         /// </summary>
-        /// <param name="path">Filesystem location.</param>
-        /// <returns>Enumerable list of absolute paths containing all relevant files the user has permission to access.</returns>
-        public static IEnumerable<string> ScanLocation(string path)
-        {
-            // Path type is ambiguous at start
-            bool isDirectory = false;
+        private string _fullPath;
 
+        /// <summary>
+        /// Indicates whether the scan target is a directory.
+        /// </summary>
+        private bool _isDirectory;
+
+        /// <summary>
+        /// Constructor for FilesystemScanner.
+        /// </summary>
+        /// <param name="path"></param>
+        public FilesystemScanner(string path)
+        {
             try
             {
-                // Make sure we're dealing with absolute, well-formatted path
-                path = Path.GetFullPath(path);
+                // Ensure we're dealing with an absolute, well-formatted path
+                _fullPath = Path.GetFullPath(path);
 
-                // Check if path points to a directory
-                if ((File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory)
+                // Check if path exists and whether it points to a directory
+                if ((File.GetAttributes(_fullPath) & FileAttributes.Directory) == FileAttributes.Directory)
                 {
-                    isDirectory = true;
+                    _isDirectory = true;
                 }
             }
-            catch (Exception)
+            catch
             {
                 // If there's an error here, there aren't any valid entries to scan at the given path;
-                // the path is either invalid or nonexistant. In this case, throw the resulting exception.
+                // the path is either invalid or nonexistant. In this case, throw the exception.
                 //
-                // TODO: Logging for invalid path exceptions
+                // TODO: Logging for bad path exceptions
                 throw;
             }
+        }
 
+        /// <summary>
+        /// Enumerates files pointed to by path(s) passed to constructor.
+        /// </summary>
+        /// <returns>Enumerable list of absolute paths to all relevant files the user has permission to see.</returns>
+        /// <param name="skipSubdirectories">Indicates whether to continue processing if enumeration fails on a subdirectory; defaults to true.</param>
+        public IEnumerable<string> Scan(bool skipSubdirectories = true)
+        {
             // If we're given a directory, parse its children recursively
-            if (isDirectory)
+            if (_isDirectory)
             {
                 // Create a queue of folders to enumerate files from, starting with provided path
                 Queue<string> folders = new();
-                folders.Enqueue(path);
+                folders.Enqueue(_fullPath);
 
                 while (folders.Count > 0)
                 {
@@ -63,20 +77,19 @@ namespace Azure.Storage.Common.DataMovement
                             folders.Enqueue(subdir);
                         }
                     }
-                    // If we lack permissions to enumerate, skip the folder and continue processing
-                    // the rest of the queue
-                    catch (Exception)
+                    catch
                     {
+                        // If we lack permissions to enumerate, throw if we fail on the main directory or
+                        // if the user instructs us to do so on failing to enumerate a subdirectory.
+                        //
                         // TODO: Logging for missing permissions to enumerate folder
-                        if (dir == path)
+                        if ((dir == _fullPath) || !skipSubdirectories)
                         {
-                            // If we can't even enumerate the path supplied by the user, throw
-                            // the error
                             throw;
                         }
 
                         // Otherwise, just log the failed subdirectory and continue to list as many
-                        // files as accessible. Maybe let users decide whether to always throw here?
+                        // files as accessible.
                         continue;
                     }
 
@@ -90,24 +103,7 @@ namespace Azure.Storage.Common.DataMovement
             // Otherwise we can just return the original path
             else
             {
-                yield return path;
-            }
-        }
-
-        /// <summary>
-        /// Enumerates files pointed to by several paths.
-        /// </summary>
-        /// <param name="paths">Filesystem locations.</param>
-        /// <returns>Enumerable list of absolute paths containing all relevant files the user has permission to access.</returns>
-        public static IEnumerable<string> ScanLocations(string[] paths)
-        {
-            // Redirect all paths provided to ScanLocation(), and collect all results together
-            foreach (string path in paths)
-            {
-                foreach (string file in ScanLocation(path))
-                {
-                    yield return file;
-                }
+                yield return _fullPath;
             }
         }
     }
