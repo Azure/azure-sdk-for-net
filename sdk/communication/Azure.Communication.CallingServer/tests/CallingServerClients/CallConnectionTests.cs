@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -48,9 +49,17 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "{ \"identifier\": {\"rawId\": \"4:+14251234567\",  \"phoneNumber\": {\"value\":\"+14251234567\"}}, \"participantId\": \"e44ca273-079f-4759-8d6e-284ee8322625\", \"isMuted\": false }" +
                                                 "]";
 
-        private const string GetParticipantPayload1 = "{ \"identifier\": {\"rawId\": \"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\",  \"communicationUser\": {\"id\":\"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\"}}, \"participantId\": \"ef70f6b0-c052-4ab7-9fdc-2dedb5fd16ac\", \"isMuted\": true }";
+        private const string GetParticipantPayload1 = "{ " +
+                                                "\"identifier\": {\"rawId\": \"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\",  \"communicationUser\": {\"id\":\"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\"}}, " +
+                                                "\"participantId\": \"ef70f6b0-c052-4ab7-9fdc-2dedb5fd16ac\", " +
+                                                "\"isMuted\": true " +
+                                                "}";
 
-        private const string GetParticipantPayload2 = "{ \"identifier\": {\"rawId\": \"4:+14251234567\",  \"phoneNumber\": {\"value\":\"+14251234567\"}}, \"participantId\": \"e44ca273-079f-4759-8d6e-284ee8322625\", \"isMuted\": false }";
+        private const string GetParticipantPayload2 = "{ " +
+                                                "\"identifier\": {\"rawId\": \"4:+14251234567\",  \"phoneNumber\": {\"value\":\"+14251234567\"}}, " +
+                                                "\"participantId\": \"e44ca273-079f-4759-8d6e-284ee8322625\", " +
+                                                "\"isMuted\": false " +
+                                                "}";
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
         public async Task HangupCallAsync_Passes(string callConnectionId)
@@ -59,7 +68,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.HangupAsync().ConfigureAwait(false);
 
-            Assert.AreEqual((int)response.Status, 202);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
@@ -69,7 +78,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callConnection.Hangup();
 
-            Assert.AreEqual((int)response.Status, 202);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
@@ -157,7 +166,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.AddParticipantAsync(participant, alternateCallerId, operationContext).ConfigureAwait(false);
 
-            Assert.AreEqual((int)response.Status, 202);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
@@ -167,7 +176,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callConnection.AddParticipant(participant, alternateCallerId, operationContext);
 
-            Assert.AreEqual((int)response.Status, 202);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
@@ -177,7 +186,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false);
 
-            Assert.AreEqual((int)response.Status, 202);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
@@ -187,7 +196,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callConnection.RemoveParticipant(participantId);
 
-            Assert.AreEqual((int)response.Status, 202);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
         private void VerifyCancelAllMediaOperationsResponse(CancelAllMediaOperationsResponse response)
