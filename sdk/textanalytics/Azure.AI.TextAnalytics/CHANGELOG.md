@@ -6,6 +6,7 @@
 - Added value `None` to enum `PiiEntityDomainType` to allow user to specify no domain.
 
 ### Breaking changes
+- The client defaults to the latest supported service version, which currently is `3.1`.
 - Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.
 - Renamed `AnalyzeBatchActionsOperation` to `AnalyzeActionsOperation`.
 - Renamed `AnalyzeBatchActionsResult` to `AnalyzeActionsResult`.

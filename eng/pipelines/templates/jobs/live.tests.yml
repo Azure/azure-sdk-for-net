@@ -46,6 +46,9 @@ parameters:
 - name: UsePlatformContainer
   type: boolean
   default: false
+- name: DisableAzureResourceCreation
+  type: boolean
+  default: false
 
 jobs:
   - job:
@@ -87,18 +90,19 @@ jobs:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
 
-      - template: /eng/common/TestResources/build-test-resource-config.yml
-        parameters:
-          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
-          SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
+      - ${{ if ne(parameters.DisableAzureResourceCreation, 'true') }}:
+        - template: /eng/common/TestResources/build-test-resource-config.yml
+          parameters:
+            SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+            SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
 
-      - template: /eng/common/TestResources/deploy-test-resources.yml
-        parameters:
-          ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
-            Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
-          ArmTemplateParameters: $(ArmTemplateParameters)
+        - template: /eng/common/TestResources/deploy-test-resources.yml
+          parameters:
+            ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+              Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
+            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+            SubscriptionConfiguration: $(SubscriptionConfiguration)
+            ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
@@ -127,10 +131,11 @@ jobs:
           ${{ each var in parameters.EnvVars }}:
             ${{ var.key }}: ${{ var.value }}
 
-      - template: /eng/common/TestResources/remove-test-resources.yml
-        parameters:
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
+      - ${{ if ne(parameters.DisableAzureResourceCreation, 'true') }}:
+        - template: /eng/common/TestResources/remove-test-resources.yml
+          parameters:
+            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+            SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - task: PublishTestResults@2
         condition: always()
