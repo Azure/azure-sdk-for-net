@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerKnowledgeStoreTableProjectionSelector : IUtf8JsonSerializable
+    public partial class KnowledgeStoreObjectProjectionSelector : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tableName");
-            writer.WriteStringValue(TableName);
+            writer.WritePropertyName("storageContainer");
+            writer.WriteStringValue(StorageContainer);
             if (Optional.IsDefined(ReferenceKeyName))
             {
                 writer.WritePropertyName("referenceKeyName");
@@ -51,9 +51,9 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerKnowledgeStoreTableProjectionSelector DeserializeSearchIndexerKnowledgeStoreTableProjectionSelector(JsonElement element)
+        internal static KnowledgeStoreObjectProjectionSelector DeserializeKnowledgeStoreObjectProjectionSelector(JsonElement element)
         {
-            string tableName = default;
+            string storageContainer = default;
             Optional<string> referenceKeyName = default;
             Optional<string> generatedKeyName = default;
             Optional<string> source = default;
@@ -61,9 +61,9 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<InputFieldMappingEntry>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("storageContainer"))
                 {
-                    tableName = property.Value.GetString();
+                    storageContainer = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("referenceKeyName"))
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerKnowledgeStoreTableProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), tableName);
+            return new KnowledgeStoreObjectProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
         }
     }
 }

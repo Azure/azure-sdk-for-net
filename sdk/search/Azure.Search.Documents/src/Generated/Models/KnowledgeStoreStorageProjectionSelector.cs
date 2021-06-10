@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
-    public partial class SearchIndexerKnowledgeStoreBlobProjectionSelector : SearchIndexerKnowledgeStoreProjectionSelector
+    public partial class KnowledgeStoreStorageProjectionSelector : KnowledgeStoreProjectionSelector
     {
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStoreBlobProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of KnowledgeStoreStorageProjectionSelector. </summary>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
-        public SearchIndexerKnowledgeStoreBlobProjectionSelector(string storageContainer)
+        public KnowledgeStoreStorageProjectionSelector(string storageContainer)
         {
             if (storageContainer == null)
             {
@@ -26,14 +26,14 @@ namespace Azure.Search.Documents.Indexes.Models
             StorageContainer = storageContainer;
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStoreBlobProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of KnowledgeStoreStorageProjectionSelector. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
-        internal SearchIndexerKnowledgeStoreBlobProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs)
+        internal KnowledgeStoreStorageProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs)
         {
             StorageContainer = storageContainer;
         }
