@@ -1,4 +1,4 @@
-# Face preview client library for .NET
+# Azure Cognitive Services Face preview client library for .NET
 
 ## Getting started
 
