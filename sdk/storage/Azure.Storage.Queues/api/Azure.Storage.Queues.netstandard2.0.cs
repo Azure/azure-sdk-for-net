@@ -68,7 +68,7 @@ namespace Azure.Storage.Queues
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt>> UpdateMessageAsync(string messageId, string popReceipt, string messageText = null, System.TimeSpan visibilityTimeout = default(System.TimeSpan), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Queues.QueueClient WithClientSideEncryptionOptionsCore(Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
     }
-    public partial class QueueClientOptions : Azure.Core.ClientOptions, Azure.Core.ISupportsTenantIdChallenges
+    public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
         public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_08_04) { }
         public bool EnableTenantDiscovery { get { throw null; } set { } }

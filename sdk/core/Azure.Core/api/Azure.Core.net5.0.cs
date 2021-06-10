@@ -322,10 +322,6 @@ namespace Azure.Core
         PerCall = 0,
         PerRetry = 1,
     }
-    public partial interface ISupportsTenantIdChallenges
-    {
-        bool EnableTenantDiscovery { get; }
-    }
     public abstract partial class Request : System.IDisposable
     {
         protected Request() { }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Queues
 {

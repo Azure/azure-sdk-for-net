@@ -50,5 +50,6 @@
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />
     <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />
+    <Compile Include="Shared\ISupportsTenantIdChallenges.cs" />
   </ItemGroup>
 </Project>

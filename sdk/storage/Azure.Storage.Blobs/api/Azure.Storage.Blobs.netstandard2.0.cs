@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs
         public new Azure.Storage.Blobs.BlobClient WithSnapshot(string snapshot) { throw null; }
         public new Azure.Storage.Blobs.BlobClient WithVersion(string versionId) { throw null; }
     }
-    public partial class BlobClientOptions : Azure.Core.ClientOptions, Azure.Core.ISupportsTenantIdChallenges
+    public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
         public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_08_04) { }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
