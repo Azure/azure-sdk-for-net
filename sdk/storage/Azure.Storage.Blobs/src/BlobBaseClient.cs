@@ -5000,6 +5000,13 @@ namespace Azure.Storage.Blobs.Specialized
                     throw new ArgumentException($"{nameof(immutabilityPolicy.PolicyMode)} must be {BlobImmutabilityPolicyMode.Locked} or {BlobImmutabilityPolicyMode.Unlocked}");
                 }
 
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.IfMatch
+                    | BlobRequestConditionProperty.IfNoneMatch
+                    | BlobRequestConditionProperty.IfModifiedSince
+                    | BlobRequestConditionProperty.LeaseId
+                    | BlobRequestConditionProperty.TagConditions);
+
                 try
                 {
                     scope.Start();
