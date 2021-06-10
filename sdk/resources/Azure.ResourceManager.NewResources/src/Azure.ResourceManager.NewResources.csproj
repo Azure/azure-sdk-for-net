@@ -12,12 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core" VersionOverride="1.0.0-alpha.20210526.3" />
-    <!-- <ProjectReference Include="../../../resourcemanager/Azure.ResourceManager.Core/src/Azure.ResourceManager.Core.csproj" /> -->
+    <!-- <PackageReference Include="Azure.ResourceManager.Core" VersionOverride="1.0.0-alpha.20210526.3" /> -->
+    <ProjectReference Include="../../../resourcemanager/Azure.ResourceManager.Core/src/Azure.ResourceManager.Core.csproj" />
   </ItemGroup>
 
-  <!-- <ItemGroup>
-    <PackageReference Include="Azure.Core" Version="1.14.0" />
-  </ItemGroup> -->
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" VersionOverride="1.15.0" />
+  </ItemGroup>
 
 </Project>
