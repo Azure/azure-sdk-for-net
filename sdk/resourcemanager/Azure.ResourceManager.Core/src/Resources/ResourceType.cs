@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="childType"></param>
-        internal ResourceType(ResourceType parent, string childType) 
+        internal ResourceType(ResourceType parent, string childType)
             : this(parent.Namespace, $"{parent.Type}/{childType}")
         {
         }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Core
             {
                 compareResult = string.Compare(Type, other.Type, StringComparison.InvariantCultureIgnoreCase);
             }
-            
+
             return compareResult;
         }
 
@@ -215,9 +215,6 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceIdOrType"> String to be parsed. </param>
         private void Parse(string resourceIdOrType)
         {
-            // Note that this code will either parse a resource id to find the type, or a resource type
-            resourceIdOrType = resourceIdOrType.Trim('/');
-
             // split the path into segments
             var parts = resourceIdOrType.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
@@ -233,43 +230,8 @@ namespace Azure.ResourceManager.Core
                 Namespace = "Microsoft.Resources";
             }
 
-            // Handle resource identifiers from RPs (they have the /providers path segment)
-            if (parts.Contains(KnownKeys.ProviderNamespace) && !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
-            {
-                // it is a resource id from a provider
-                var index = parts.LastIndexOf(KnownKeys.ProviderNamespace);
-                for (var i = index; i >= 0; --i)
-                {
-                    parts.RemoveAt(i);
-                }
-
-                if (parts.Count < 3)
-                    throw new ArgumentOutOfRangeException(nameof(resourceIdOrType), "Invalid resource id.");
-
-                var type = new List<string>();
-                for (var i = 1; i < parts.Count; i += 2)
-                {
-                    type.Add(parts[i]);
-                }
-
-                Namespace = parts[0];
-                Type = string.Join("/", type);
-            }
-            else if (KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
-            {
-                if (parts.Count < 2)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
-                }
-                if (!parts[1].Contains('.'))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
-                }
-                Namespace = parts[1];
-
-                Type = string.Join("/", parts.Skip(2).Take(parts.Count - 3));
-            }
-            // Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)
+            // Handle resource types (Microsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)
+            // Type
             else if (parts[0].Contains('.'))
             {
                 // it is a full type name
@@ -277,21 +239,12 @@ namespace Azure.ResourceManager.Core
                 Type = string.Join("/", parts.Skip(1).Take(parts.Count - 1));
             }
 
-            // Handle built-in resource ids (e.g. /subscriptions/{sub}, /subscriptions/{sub}/resourceGroups/{rg})
-            else if (parts.Count % 2 == 0)
-            {
-                // primitive resource manager resource id
-                Namespace = "Microsoft.Resources";
-                Type = parts[parts.Count - 2];
-            }
-            else if (KnownKeys.Tenant.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
-            {
-                Namespace = "providers";
-                Type = parts[0];
-            }
+            // Check if ResourceIdentifier
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
+                ResourceIdentifier id = resourceIdOrType;
+                Type = id.ResourceType.Type;
+                Namespace = id.ResourceType.Namespace;
             }
         }
     }
