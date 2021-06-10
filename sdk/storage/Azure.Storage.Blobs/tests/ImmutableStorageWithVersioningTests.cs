@@ -117,6 +117,53 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        [TestCase(nameof(BlobRequestConditions.LeaseId))]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        public async Task SetImmutibilityPolicyAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            BlobBaseClient blobBaseClient = new BlobBaseClient(new Uri("https://www.doesntmatter.com"), GetOptions());
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiresOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+            };
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = Recording.UtcNow.AddMinutes(5);
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.LeaseId):
+                    conditions.LeaseId = string.Empty;
+                    break;
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = string.Empty;
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blobBaseClient.SetImmutabilityPolicyAsync(
+                    immutabilityPolicy,
+                    conditions),
+                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(AccountSasPermissions.All)]
         [TestCase(AccountSasPermissions.SetImmutabilityPolicy)]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_AccoutnSas(AccountSasPermissions sasPermissions)

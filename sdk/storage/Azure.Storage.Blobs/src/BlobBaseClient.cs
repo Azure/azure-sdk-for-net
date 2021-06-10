@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -4999,6 +5000,15 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     throw new ArgumentException($"{nameof(immutabilityPolicy.PolicyMode)} must be {BlobImmutabilityPolicyMode.Locked} or {BlobImmutabilityPolicyMode.Unlocked}");
                 }
+
+                conditions.ValidateConditionsNotPresent(new List<string>
+                {
+                    nameof(BlobRequestConditions.IfMatch),
+                    nameof(BlobRequestConditions.IfModifiedSince),
+                    nameof(BlobRequestConditions.IfNoneMatch),
+                    nameof(BlobRequestConditions.LeaseId),
+                    nameof(BlobRequestConditions.TagConditions),
+                });
 
                 try
                 {

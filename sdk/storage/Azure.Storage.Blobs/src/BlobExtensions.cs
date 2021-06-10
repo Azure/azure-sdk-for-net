@@ -1373,5 +1373,45 @@ namespace Azure.Storage.Blobs
             };
         }
         #endregion
+
+        #region ValidateConditionsNotPresent
+        internal static void ValidateConditionsNotPresent(this BlobRequestConditions requestConditions, List<string> conditions)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if (conditions.Contains(nameof(BlobRequestConditions.LeaseId)) && requestConditions.LeaseId != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.LeaseId)} is not applicable to this API.");
+            }
+
+            if (conditions.Contains(nameof(BlobRequestConditions.TagConditions)) && requestConditions.TagConditions != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.TagConditions)} is not applicable to this API.");
+            }
+
+            if (conditions.Contains(nameof(BlobRequestConditions.IfModifiedSince)) && requestConditions.IfModifiedSince != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfModifiedSince)} is not applicable to this API.");
+            }
+
+            if (conditions.Contains(nameof(BlobRequestConditions.IfUnmodifiedSince)) && requestConditions.IfUnmodifiedSince != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfUnmodifiedSince)} is not applicable to this API.");
+            }
+
+            if (conditions.Contains(nameof(BlobRequestConditions.IfMatch)) && requestConditions.IfMatch != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfMatch)} is not applicable to this API.");
+            }
+
+            if (conditions.Contains(nameof(BlobRequestConditions.IfNoneMatch)) && requestConditions.IfNoneMatch != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfNoneMatch)} is not applicable to this API.");
+            }
+        }
+        #endregion
     }
 }
