@@ -13,14 +13,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class FromQuery : QueryBase
     {
-        private readonly WhereQuery _delegationClause;
+        private readonly WhereQuery _upstreamWhereQuery;
         private readonly AdtQueryBuilder _parent;
         private FromClause _clause;
 
         internal FromQuery(AdtQueryBuilder parent, WhereQuery upstreamWhereQuery)
         {
             _parent = parent;
-            _delegationClause = upstreamWhereQuery;
+            _upstreamWhereQuery = upstreamWhereQuery;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public WhereQuery From(AdtCollection collection)
         {
             _clause = new FromClause(collection);
-            return _delegationClause;
+            return _upstreamWhereQuery;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public WhereQuery FromOverride(string collection)
         {
             _clause = new FromClause(collection);
-            return _delegationClause;
+            return _upstreamWhereQuery;
         }
 
         /// <inheritdoc/>

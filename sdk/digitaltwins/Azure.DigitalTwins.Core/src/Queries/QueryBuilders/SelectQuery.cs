@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class SelectQuery : QueryBase
     {
-        private readonly FromQuery _delegationClause;
+        private readonly FromQuery _upstreamFromQuery;
         private readonly AdtQueryBuilder _parent;
         private SelectClause _clause;
 
@@ -24,7 +24,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         internal SelectQuery(AdtQueryBuilder parent, FromQuery upstreamFromQuery)
         {
             _parent = parent;
-            _delegationClause = upstreamFromQuery;
+            _upstreamFromQuery = upstreamFromQuery;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery Select(params string[] args)
         {
             _clause = new SelectClause(args);
-            return _delegationClause;
+            return _upstreamFromQuery;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             topArg.Append(string.Join(", ", args));
 
             _clause = new SelectClause(new string[] { topArg.ToString() });
-            return _delegationClause;
+            return _upstreamFromQuery;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             string countArg = $"{QueryConstants.Count}() ";
 
             _clause = new SelectClause(new string[] { countArg });
-            return _delegationClause;
+            return _upstreamFromQuery;
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             // approach 2 - seperate method
             _clause = new SelectClause(new string[] { literalQuery });
 
-            return _delegationClause;
+            return _upstreamFromQuery;
         }
 
         /// <inheritdoc/>

@@ -137,14 +137,12 @@ namespace Azure.DigitalTwins.Core.Tests
                     await foreach (BasicDigitalTwin response in asyncPageableResponse)
                     {
                         digitalTwinFound = true;
-                        //bool isOccupied = ((JsonElement)response.Contents["IsOccupied"]).GetBoolean();
-                        //isOccupied.Should().BeTrue();
                         break;
                     }
 
                     if (!digitalTwinFound)
                     {
-                        throw new Exception($"Digital twin based not found");
+                        throw new Exception($"Digital twin not found.");
                     }
 
                     return null;
