@@ -59,6 +59,13 @@ namespace Azure
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
     }
+    public partial class HttpAuthorization
+    {
+        public HttpAuthorization(string scheme, string parameter) { }
+        public string Parameter { get { throw null; } }
+        public string Scheme { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpRange : System.IEquatable<Azure.HttpRange>
     {
