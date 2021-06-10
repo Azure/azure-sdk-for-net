@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class TestBase
+    public class CallingServerTestBase
     {
         protected const string dummyAccessKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ+SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV+adQssw5c=";
 
@@ -23,10 +22,14 @@ namespace Azure.Communication.CallingServer.Tests
 
             if (responseContent != null)
             {
-                if (responseContent.GetType() == typeof(string))
-                    mockResponse.SetContent((string)responseContent);
-                else if (responseContent.GetType() == typeof(byte[]))
-                    mockResponse.SetContent((byte[])responseContent);
+                if (responseContent is string responseContentString)
+                {
+                    mockResponse.SetContent(responseContentString);
+                }
+                else if (responseContent is byte[] responseContentObjectArr)
+                {
+                    mockResponse.SetContent(responseContentObjectArr);
+                }
             }
 
             if (httpHeaders != null)
@@ -47,17 +50,12 @@ namespace Azure.Communication.CallingServer.Tests
 
         internal CallingServerClient CreateMockCallingServerClient(MockResponse[] mockResponses)
         {
-            var uri = new Uri("https://acs.dummyresource.com");
-            var communicationTokenCredential =
-                new AzureKeyCredential(dummyAccessKey);
-
             var callingServerClientOptions = new CallingServerClientOptions
             {
                 Transport = new MockTransport(mockResponses)
             };
 
-            var callingserverClient = new CallingServerClient(uri, communicationTokenCredential, callingServerClientOptions);
-            return callingserverClient;
+            return new CallingServerClient(connectionString, callingServerClientOptions);
         }
     }
 }

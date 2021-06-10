@@ -8,19 +8,19 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The response payload of the cancel all media operations. </summary>
-    public partial class CancelAllMediaOperationsResponse
+    public partial class CancelAllMediaOperationsResult
     {
-        /// <summary> Initializes a new instance of CancelAllMediaOperationsResponse. </summary>
-        internal CancelAllMediaOperationsResponse()
+        /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
+        internal CancelAllMediaOperationsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CancelAllMediaOperationsResponse. </summary>
+        /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
         /// <param name="id"> Gets or sets the identifier. </param>
         /// <param name="status"> Gets or sets the status of the operation. </param>
         /// <param name="operationContext"> Gets or sets the operation context. </param>
         /// <param name="resultInfo"> Gets or sets the result info. </param>
-        internal CancelAllMediaOperationsResponse(string id, OperationStatus? status, string operationContext, ResultInfo resultInfo)
+        internal CancelAllMediaOperationsResult(string id, OperationStatus? status, string operationContext, ResultInfo resultInfo)
         {
             Id = id;
             Status = status;

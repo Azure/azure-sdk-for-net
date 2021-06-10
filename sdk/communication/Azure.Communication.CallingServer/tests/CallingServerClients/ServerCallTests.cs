@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class ServerCallTests : TestBase
+    public class ServerCallTests : CallingServerTestBase
     {
         private const string DummyStartRecordingResponse = "{" +
                                         "\"recordingId\": \"dummyRecordingId\"" +
@@ -33,16 +33,16 @@ namespace Azure.Communication.CallingServer.Tests
         public void StartRecording_Returns200Ok(Uri sampleCallBackUri)
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyStartRecordingResponse);
-            StartCallRecordingResponse response = serverCall.StartRecording(sampleCallBackUri);
-            Assert.AreEqual("dummyRecordingId", response.RecordingId);
+            StartCallRecordingResult result = serverCall.StartRecording(sampleCallBackUri);
+            Assert.AreEqual("dummyRecordingId", result.RecordingId);
         }
 
         [TestCaseSource(nameof(TestData_StartRecording))]
         public async Task StartRecordingAsync_Returns200Ok(Uri sampleCallBackUri)
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyStartRecordingResponse);
-            Response<StartCallRecordingResponse> response = await serverCall.StartRecordingAsync(sampleCallBackUri);
-            Assert.AreEqual("dummyRecordingId", response.Value.RecordingId);
+            Response<StartCallRecordingResult> result = await serverCall.StartRecordingAsync(sampleCallBackUri);
+            Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
         }
 
         [TestCaseSource(nameof(TestData_StopRecording))]
@@ -97,32 +97,32 @@ namespace Azure.Communication.CallingServer.Tests
         public void GetRecordingState_Return200Ok(string sampleRecordingId)
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyRecordingStateResponse);
-            GetCallRecordingStateResponse response = serverCall.GetRecordingState(sampleRecordingId);
-            Assert.AreEqual(CallRecordingState.Active, response.RecordingState);
+            CallRecordingStateResult result = serverCall.GetRecordingState(sampleRecordingId);
+            Assert.AreEqual(CallRecordingState.Active, result.RecordingState);
         }
 
         [TestCaseSource(nameof(TestData_GetRecordingState))]
         public async Task GetRecordingStateAsync_Return200Ok(string sampleRecordingId)
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyRecordingStateResponse);
-            Response<GetCallRecordingStateResponse> response = await serverCall.GetRecordingStateAsync(sampleRecordingId);
-            Assert.AreEqual(CallRecordingState.Active, response.Value.RecordingState);
+            Response<CallRecordingStateResult> result = await serverCall.GetRecordingStateAsync(sampleRecordingId);
+            Assert.AreEqual(CallRecordingState.Active, result.Value.RecordingState);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
         public void PlayAudio_Return202Accepted(Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
         {
             ServerCall serverCall = CreateMockServerCall(202, responseContent: DummyPlayAudioResponse);
-            PlayAudioResponse response = serverCall.PlayAudio(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
-            VerifyPlayAudioResponse(response);
+            PlayAudioResult result = serverCall.PlayAudio(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            VerifyPlayAudioResult(result);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
         public async Task PlayAudioAsync_Return202Accepted(Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
         {
             ServerCall serverCall = CreateMockServerCall(202, responseContent: DummyPlayAudioResponse);
-            Response<PlayAudioResponse> response = await serverCall.PlayAudioAsync(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
-            VerifyPlayAudioResponse(response);
+            Response<PlayAudioResult> result = await serverCall.PlayAudioAsync(sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            VerifyPlayAudioResult(result);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
@@ -165,7 +165,7 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
-        private void VerifyPlayAudioResponse(PlayAudioResponse response)
+        private void VerifyPlayAudioResult(PlayAudioResult response)
         {
             Assert.AreEqual("dummyId", response.Id);
             Assert.AreEqual(OperationStatus.Running, response.Status);
@@ -176,8 +176,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_StartRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new Uri("https://somecallbackurl"),
                 },
             };
@@ -185,8 +187,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_StopRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleRecordingId",
                 },
             };
@@ -194,8 +198,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_PauseRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleRecordingId",
                 },
             };
@@ -203,8 +209,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_ResumeRecording()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleRecordingId",
                 },
             };
@@ -212,8 +220,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_GetRecordingState()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "sampleRecordingId",
                 },
             };
@@ -221,8 +231,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_PlayAudio()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new Uri("https://av.ngrok.io/audio/sample-message.wav"),
                     "sampleAudioFileId",
                     new Uri("https://av.ngrok.io/someCallbackUri"),
@@ -233,8 +245,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_AddParticipant()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
                     new Uri("https://bot.contoso.com/callback"),
                     "+14250000000",
@@ -245,8 +259,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_ParticipantId()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "66c76529-3e58-45bf-9592-84eadd52bc81"
                 },
             };

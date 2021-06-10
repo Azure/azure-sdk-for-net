@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class JoinCallResponse
+    public partial class JoinCallResult
     {
-        internal static JoinCallResponse DeserializeJoinCallResponse(JsonElement element)
+        internal static JoinCallResult DeserializeJoinCallResult(JsonElement element)
         {
             Optional<string> callConnectionId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new JoinCallResponse(callConnectionId.Value);
+            return new JoinCallResult(callConnectionId.Value);
         }
     }
 }

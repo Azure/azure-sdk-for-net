@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
@@ -26,12 +25,12 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             var source = await communicationIdentityClient.CreateUserAsync();
-            var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
+            var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             #region Snippet:Azure_Communication_Call_Tests_CreateCallOptions
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType>
+                   new[] { CallModality.Audio },
+                   new[]
                    {
                        EventSubscriptionType.ParticipantsUpdated,
                        EventSubscriptionType.DtmfReceived
@@ -59,11 +58,11 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             var source = communicationIdentityClient.CreateUser();
-            var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
+            var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType> {
+                   new[] { CallModality.Audio },
+                   new[] {
                        EventSubscriptionType.ParticipantsUpdated,
                        EventSubscriptionType.DtmfReceived
                    });

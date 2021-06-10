@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class CallConnectionTests : TestBase
+    public class CallConnectionTests : CallingServerTestBase
     {
         private const string CancelAllMediaOperaionsResponsePayload = "{" +
                                                 "\"id\": \"dummyId\"," +
@@ -86,9 +86,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(200, CancelAllMediaOperaionsResponsePayload, callConnectionId: callConnectionId);
 
-            var response = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
+            var result = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
 
-            VerifyCancelAllMediaOperationsResponse(response);
+            VerifyCancelAllMediaOperationsResult(result);
         }
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
@@ -96,9 +96,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(200, CancelAllMediaOperaionsResponsePayload, callConnectionId: callConnectionId);
 
-            var response = callConnection.CancelAllMediaOperations();
+            var result = callConnection.CancelAllMediaOperations();
 
-            VerifyCancelAllMediaOperationsResponse(response);
+            VerifyCancelAllMediaOperationsResult(result);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
@@ -106,9 +106,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
 
-            var response = await callConnection.PlayAudioAsync(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext).ConfigureAwait(false);
+            var result = await callConnection.PlayAudioAsync(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext).ConfigureAwait(false);
 
-            VerifyPlayAudioResponse(response);
+            VerifyPlayAudioResult(result);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
@@ -116,9 +116,9 @@ namespace Azure.Communication.CallingServer.Tests
         {
             var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
 
-            var response = callConnection.PlayAudio(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            var result = callConnection.PlayAudio(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
 
-            VerifyPlayAudioResponse(response);
+            VerifyPlayAudioResult(result);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
@@ -135,9 +135,9 @@ namespace Azure.Communication.CallingServer.Tests
                 OperationContext = sampleOperationContext
             };
 
-            var response = await callConnection.PlayAudioAsync(playAudio).ConfigureAwait(false);
+            var result = await callConnection.PlayAudioAsync(playAudio).ConfigureAwait(false);
 
-            VerifyPlayAudioResponse(response);
+            VerifyPlayAudioResult(result);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
@@ -154,9 +154,9 @@ namespace Azure.Communication.CallingServer.Tests
                 OperationContext = sampleOperationContext
             };
 
-            var response = callConnection.PlayAudio(playAudio);
+            var result = callConnection.PlayAudio(playAudio);
 
-            VerifyPlayAudioResponse(response);
+            VerifyPlayAudioResult(result);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
@@ -199,22 +199,22 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
-        private void VerifyCancelAllMediaOperationsResponse(CancelAllMediaOperationsResponse response)
+        private void VerifyCancelAllMediaOperationsResult(CancelAllMediaOperationsResult result)
         {
-            Assert.AreEqual("dummyId", response.Id);
-            Assert.AreEqual(OperationStatus.Completed, response.Status);
-            Assert.AreEqual("dummyOperationContext", response.OperationContext);
-            Assert.AreEqual(200, response.ResultInfo.Code);
-            Assert.AreEqual("dummyMessage", response.ResultInfo.Message);
+            Assert.AreEqual("dummyId", result.Id);
+            Assert.AreEqual(OperationStatus.Completed, result.Status);
+            Assert.AreEqual("dummyOperationContext", result.OperationContext);
+            Assert.AreEqual(200, result.ResultInfo.Code);
+            Assert.AreEqual("dummyMessage", result.ResultInfo.Message);
         }
 
-        private void VerifyPlayAudioResponse(PlayAudioResponse response)
+        private void VerifyPlayAudioResult(PlayAudioResult result)
         {
-            Assert.AreEqual("dummyId", response.Id);
-            Assert.AreEqual(OperationStatus.Running, response.Status);
-            Assert.AreEqual("dummyOperationContext", response.OperationContext);
-            Assert.AreEqual(200, response.ResultInfo.Code);
-            Assert.AreEqual("dummyMessage", response.ResultInfo.Message);
+            Assert.AreEqual("dummyId", result.Id);
+            Assert.AreEqual(OperationStatus.Running, result.Status);
+            Assert.AreEqual("dummyOperationContext", result.OperationContext);
+            Assert.AreEqual(200, result.ResultInfo.Code);
+            Assert.AreEqual("dummyMessage", result.ResultInfo.Message);
         }
 
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
@@ -224,8 +224,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_CallConnectionId()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
                 },
             };
@@ -233,8 +235,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_PlayAudio()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new Uri("https://bot.contoso.io/audio/sample-message.wav"),
                     "sampleAudioFileId",
                     new Uri("https://bot.contoso.io/callback"),
@@ -245,8 +249,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_AddParticipant()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     new CommunicationUserIdentifier("8:acs:acsuserid"),
                     "+14250000000",
                     "dummycontext"
@@ -256,8 +262,10 @@ namespace Azure.Communication.CallingServer.Tests
 
         private static IEnumerable<object?[]> TestData_ParticipantId()
         {
-            return new List<object?[]>(){
-                new object?[] {
+            return new[]
+            {
+                new object?[]
+                {
                     "d09038e7-38f7-4aa1-9c5c-4bb07a65aa17",
                     "66c76529-3e58-45bf-9592-84eadd52bc81"
                 },

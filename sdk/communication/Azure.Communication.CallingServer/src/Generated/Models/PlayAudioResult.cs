@@ -8,19 +8,19 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The response payload for play audio operation. </summary>
-    public partial class PlayAudioResponse
+    public partial class PlayAudioResult
     {
-        /// <summary> Initializes a new instance of PlayAudioResponse. </summary>
-        internal PlayAudioResponse()
+        /// <summary> Initializes a new instance of PlayAudioResult. </summary>
+        internal PlayAudioResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PlayAudioResponse. </summary>
+        /// <summary> Initializes a new instance of PlayAudioResult. </summary>
         /// <param name="id"> Gets or sets the identifier. </param>
         /// <param name="status"> Gets or sets the status of the operation. </param>
         /// <param name="operationContext"> Gets or sets the operation context. </param>
         /// <param name="resultInfo"> Gets or sets the result info. </param>
-        internal PlayAudioResponse(string id, OperationStatus? status, string operationContext, ResultInfo resultInfo)
+        internal PlayAudioResult(string id, OperationStatus? status, string operationContext, ResultInfo resultInfo)
         {
             Id = id;
             Status = status;

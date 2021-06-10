@@ -13,7 +13,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Communication.CallingServer.Tests.ContentDownloadTests
 {
-    public class ContentDownloadTests : TestBase
+    public class ContentDownloadTests : CallingServerTestBase
     {
         private const string DummyRecordingMetadata = "{" +
                                                 "\"chunkDocumentId\": \"dummyDocId\"," +

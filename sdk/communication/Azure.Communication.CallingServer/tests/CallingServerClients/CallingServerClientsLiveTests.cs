@@ -130,11 +130,11 @@ namespace Azure.Communication.CallingServer.Tests
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var source = await CreateUserAsync(communicationIdentityClient).ConfigureAwait(false);
 
-            var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
+            var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
+                   new[] { CallModality.Audio },
+                   new[] { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
             createCallOption.AlternateCallerId = new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber);
 
             Console.WriteLine("Performing CreateCall operation");

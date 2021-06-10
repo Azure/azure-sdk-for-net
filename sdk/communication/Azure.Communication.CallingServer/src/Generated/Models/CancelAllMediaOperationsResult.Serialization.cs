@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CancelAllMediaOperationsResponse
+    public partial class CancelAllMediaOperationsResult
     {
-        internal static CancelAllMediaOperationsResponse DeserializeCancelAllMediaOperationsResponse(JsonElement element)
+        internal static CancelAllMediaOperationsResult DeserializeCancelAllMediaOperationsResult(JsonElement element)
         {
             Optional<string> id = default;
             Optional<OperationStatus> status = default;
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CancelAllMediaOperationsResponse(id.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
+            return new CancelAllMediaOperationsResult(id.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
         }
     }
 }

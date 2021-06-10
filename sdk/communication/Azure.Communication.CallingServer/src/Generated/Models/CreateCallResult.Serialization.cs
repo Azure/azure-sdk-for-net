@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class StartCallRecordingResponse
+    public partial class CreateCallResult
     {
-        internal static StartCallRecordingResponse DeserializeStartCallRecordingResponse(JsonElement element)
+        internal static CreateCallResult DeserializeCreateCallResult(JsonElement element)
         {
-            Optional<string> recordingId = default;
+            Optional<string> callConnectionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordingId"))
+                if (property.NameEquals("callConnectionId"))
                 {
-                    recordingId = property.Value.GetString();
+                    callConnectionId = property.Value.GetString();
                     continue;
                 }
             }
-            return new StartCallRecordingResponse(recordingId.Value);
+            return new CreateCallResult(callConnectionId.Value);
         }
     }
 }
