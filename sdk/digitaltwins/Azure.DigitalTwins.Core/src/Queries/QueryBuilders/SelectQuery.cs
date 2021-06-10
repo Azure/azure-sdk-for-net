@@ -88,7 +88,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override AdtQueryBuilder Build()
         {
             // Build can only be called on queries that have (at minimum) SELECT and FROM clauses
-            throw new InvalidOperationException("Queries that contain just a SELECT statement are not valid.");
+            throw new InvalidOperationException("Queries that contain just a SELECT must also contain a FROM clause.");
         }
 
         /// <inheritdoc/>
