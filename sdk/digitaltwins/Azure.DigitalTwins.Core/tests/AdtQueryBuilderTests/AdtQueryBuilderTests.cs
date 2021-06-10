@@ -35,19 +35,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
     }
 
         [Test]
-        public void AdtQueryBuilder_Select_MultipleProperties_Two()
-        {
-            new AdtQueryBuilder()
-                .Select("Room", "Factory")
-                .From(AdtCollection.DigitalTwins)
-                .Build()
-                .Stringify()
-                .Should()
-                .Be("SELECT Room, Factory FROM DigitalTwins");
-        }
-
-        [Test]
-        public void AdtQueryBuilder_Select_MultipleProperties_Four()
+        public void AdtQueryBuilder_Select_MultipleProperties()
         {
             new AdtQueryBuilder()
                 .Select("Room", "Factory", "Temperature", "Humidity")
