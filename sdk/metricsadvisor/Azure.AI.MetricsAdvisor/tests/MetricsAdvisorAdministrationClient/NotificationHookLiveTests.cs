@@ -527,13 +527,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
         public async Task GetHooksWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
