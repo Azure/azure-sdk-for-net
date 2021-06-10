@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Core.Tests
 
             var resourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1/providers/Microsoft.Compute/availabilitySets/foo-1";
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await genericResources.GetAsync(resourceId));
+            resourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1/providers/Microsoft.Compute/fake/foo-1";
+            Assert.ThrowsAsync<InvalidOperationException>(async () => _ = await genericResources.GetAsync(resourceId));
         }
 
         [TestCase]
@@ -51,11 +53,15 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             _ = await CreateGenericAvailabilitySetAsync(rg2.Id);
 
-            var count = await GetResourceCountAsync(Client.DefaultSubscription.GetGenericResources(), rg1);
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+
+            var count = await GetResourceCountAsync(genericResources, rg1);
             Assert.AreEqual(2, count);
 
-            count = await GetResourceCountAsync(Client.DefaultSubscription.GetGenericResources(), rg2);
+            count = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(1, count);
+
+            Assert.Throws<ArgumentNullException>(() => { genericResources.ListByResourceGroupAsync(null); });
         }
 
         [TestCase]
