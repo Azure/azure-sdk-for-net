@@ -47,15 +47,12 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
                 return await RestClient.PlayAudioAsync(
                     serverCallId: ServerCallId,
@@ -80,15 +77,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<PlayAudioResponse> PlayAudio(Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
                 return RestClient.PlayAudio(
                     serverCallId: ServerCallId,
@@ -97,37 +92,6 @@ namespace Azure.Communication.CallingServer
                     audioFileId: audioFileId,
                     callbackUri: callbackUri?.AbsoluteUri,
                     operationContext: operationContext,
-                    cancellationToken: cancellationToken
-                    );
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Play audio in the call. </summary>
-        /// <param name="options"> Play audio request. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<PlayAudioResponse> PlayAudio(PlayAudioOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(options, nameof(options));
-
-                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return RestClient.PlayAudio(
-                    serverCallId: ServerCallId,
-                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
-                    loop: false,
-                    audioFileId: options.AudioFileId,
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    operationContext: options.OperationContext,
                     cancellationToken: cancellationToken
                     );
             }
@@ -154,12 +118,10 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                var participantsInternal = new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) };
-                var alternateCallerIdInternal = string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId);
                 return RestClient.InviteParticipants(
                     serverCallId: ServerCallId,
-                    participants: participantsInternal,
-                    alternateCallerId: alternateCallerIdInternal,
+                    participants: new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) },
+                    alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     callbackUri: callbackUri?.AbsoluteUri,
                     operationContext: operationContext,
                     cancellationToken: cancellationToken
@@ -188,12 +150,10 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                var participantsInternal = new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) };
-                var alternateCallerIdInternal = string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId);
                 return await RestClient.InviteParticipantsAsync(
                     serverCallId: ServerCallId,
-                    participants: participantsInternal,
-                    alternateCallerId: alternateCallerIdInternal,
+                    participants: new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) },
+                    alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     callbackUri: callbackUri?.AbsoluteUri,
                     operationContext: operationContext,
                     cancellationToken: cancellationToken

@@ -12,9 +12,9 @@ namespace Azure.Communication.CallingServer
 {
     internal class ContentDownloader
     {
-        private readonly ConversationClient _client;
+        private readonly CallingServerClient _client;
 
-        internal ContentDownloader(ConversationClient client)
+        internal ContentDownloader(CallingServerClient client)
         {
             _client = client;
         }

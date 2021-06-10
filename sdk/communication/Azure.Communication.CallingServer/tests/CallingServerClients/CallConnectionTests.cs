@@ -3,20 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class CallConnectionTests
+    public class CallConnectionTests : TestBase
     {
-        private const string connectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
-
         private const string CancelAllMediaOperaionsResponsePayload = "{" +
                                                 "\"id\": \"dummyId\"," +
                                                 "\"status\": \"completed\"," +
@@ -213,22 +206,6 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual("dummyOperationContext", response.OperationContext);
             Assert.AreEqual(200, response.ResultInfo.Code);
             Assert.AreEqual("dummyMessage", response.ResultInfo.Message);
-        }
-
-        private CallingServerClient CreateMockCallingServerClient(int responseCode, string? responseContent = null)
-        {
-            var mockResponse = new MockResponse(responseCode);
-            if (responseContent != null)
-            {
-                mockResponse.SetContent(responseContent);
-            }
-
-            var callingServerClientOptions = new CallingServerClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
-
-            return new CallingServerClient(connectionString, callingServerClientOptions);
         }
 
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")

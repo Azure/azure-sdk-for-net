@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer.Tests
 
         [Test]
         [AsyncOnly]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
+        [Ignore("Ignore for now as we get build errors that block checking in.")]
         public async Task CreateCallAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallingServer.Tests
 
         [Test]
         [SyncOnly]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
+        [Ignore("Ignore for now as we get build errors that block checking in.")]
         public void CreateCall()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);

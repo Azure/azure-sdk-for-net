@@ -8,7 +8,6 @@ using System.Collections.Generic;
 #endregion Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
 using Azure.Communication.Identity;
 
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 

@@ -3,19 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class ServerCallTests
+    public class ServerCallTests : TestBase
     {
-        private const string connectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
-
         private const string DummyStartRecordingResponse = "{" +
                                         "\"recordingId\": \"dummyRecordingId\"" +
                                         "}";
@@ -264,22 +259,6 @@ namespace Azure.Communication.CallingServer.Tests
                     "66c76529-3e58-45bf-9592-84eadd52bc81"
                 },
             };
-        }
-
-        private CallingServerClient CreateMockCallingServerClient(int responseCode, string? responseContent = null)
-        {
-            var mockResponse = new MockResponse(responseCode);
-            if (responseContent != null)
-            {
-                mockResponse.SetContent(responseContent);
-            }
-
-            var callingServerClientOptions = new CallingServerClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
-
-            return new CallingServerClient(connectionString, callingServerClientOptions);
         }
 
         private ServerCall CreateMockServerCall(string serverCallId, int responseCode, string? responseContent = null)
