@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure
 {
     /// <summary>
@@ -34,6 +36,9 @@ namespace Azure
             string scheme,
             string parameter)
         {
+            Argument.AssertNotNullOrEmpty(scheme, nameof(scheme));
+            Argument.AssertNotNullOrEmpty(parameter, nameof(parameter));
+
             Scheme = scheme;
             Parameter = parameter;
         }
