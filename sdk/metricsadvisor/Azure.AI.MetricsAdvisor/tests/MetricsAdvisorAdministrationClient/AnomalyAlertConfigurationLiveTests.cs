@@ -25,7 +25,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
@@ -72,10 +73,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             DimensionKey groupKey = new DimensionKey();
-            groupKey.AddDimensionColumn("city", "Delhi");
+            groupKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Delhi");
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForSeriesGroup(groupKey);
@@ -108,12 +110,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig.AlertScope.ScopeType, Is.EqualTo(MetricAnomalyAlertScopeType.SeriesGroup));
             Assert.That(createdMetricAlertConfig.AlertScope.TopNGroupInScope, Is.Null);
 
-            ValidateGroupKey(createdMetricAlertConfig.AlertScope.SeriesGroupInScope);
-
-            Dictionary<string, string> dimensionColumns = createdMetricAlertConfig.AlertScope.SeriesGroupInScope.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+            ValidateTempDataFeedDimensionKey(createdMetricAlertConfig.AlertScope.SeriesGroupInScope, "Delhi");
 
             Assert.That(createdMetricAlertConfig.AlertConditions, Is.Not.Null);
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition, Is.Null);
@@ -128,7 +125,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var topNGroup = new TopNGroupScope(30, 20, 10);
@@ -180,7 +178,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             string hookName0 = Recording.GenerateAlphaNumericId("hook");
             string hookName1 = Recording.GenerateAlphaNumericId("hook");
@@ -205,7 +204,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     {
                         UpperBound = 20.0,
                         LowerBound = 10.0,
-                        CompanionMetricId = MetricId,
+                        CompanionMetricId = metricId,
                         ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
@@ -250,7 +249,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
+            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(metricId));
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
@@ -269,7 +268,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             // Configure the Metric Anomaly Alert Configurations to be used.
 
@@ -370,7 +370,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCrendential);
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             // Configure the Metric Anomaly Alert Configurations to be used.
 
@@ -390,7 +391,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     {
                         UpperBound = 20.0,
                         LowerBound = 10.0,
-                        CompanionMetricId = MetricId,
+                        CompanionMetricId = metricId,
                         ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
@@ -450,7 +451,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(metricId));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
@@ -487,7 +488,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             // Configure the Metric Anomaly Alert Configurations to be used.
 
@@ -506,7 +508,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     {
                         UpperBound = 20.0,
                         LowerBound = 10.0,
-                        CompanionMetricId = MetricId,
+                        CompanionMetricId = metricId,
                         ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
@@ -566,7 +568,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.Direction, Is.EqualTo(BoundaryDirection.Both));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(metricId));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
@@ -602,7 +604,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             // Configure the Metric Anomaly Alert Configurations to be used.
 
@@ -622,7 +625,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     {
                         UpperBound = 20.0,
                         LowerBound = 10.0,
-                        CompanionMetricId = MetricId,
+                        CompanionMetricId = metricId,
                         ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
@@ -746,7 +749,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             // Configure the Metric Anomaly Alert Configurations to be used.
 
@@ -765,7 +769,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     {
                         UpperBound = 20.0,
                         LowerBound = 10.0,
-                        CompanionMetricId = MetricId,
+                        CompanionMetricId = metricId,
                         ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
@@ -943,7 +947,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
             await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
-            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, disposableDataFeed);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             string configName = Recording.GenerateAlphaNumericId("config");
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
@@ -1049,13 +1054,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(configuration.UseDetectionResultToFilterAnomalies, Is.Not.Null);
         }
 
-        private async Task<DisposableDetectionConfiguration> CreateTempDetectionConfigurationAsync(MetricsAdvisorAdministrationClient adminClient, DisposableDataFeed disposableDataFeed)
+        private async Task<DisposableDetectionConfiguration> CreateTempDetectionConfigurationAsync(MetricsAdvisorAdministrationClient adminClient, string metricId)
         {
             var config = new AnomalyDetectionConfiguration()
             {
                 Name = Recording.GenerateAlphaNumericId("dataFeed"),
-                MetricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName],
+                MetricId = metricId,
                 WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Up, new SuppressCondition(1, 1.0))
+                    {
+                        UpperBound = 1.0
+                    }
+                }
             };
 
             return await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, config);
