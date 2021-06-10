@@ -6,8 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Communication.Pipeline;
-using System.Collections.Generic;
 
 namespace Azure.Communication.CallingServer
 {
@@ -47,7 +45,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -78,7 +76,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResponse> PlayAudio(Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudio(Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -120,7 +118,7 @@ namespace Azure.Communication.CallingServer
 
                 return RestClient.InviteParticipants(
                     serverCallId: ServerCallId,
-                    participants: new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
                     alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     callbackUri: callbackUri?.AbsoluteUri,
                     operationContext: operationContext,
@@ -152,7 +150,7 @@ namespace Azure.Communication.CallingServer
 
                 return await RestClient.InviteParticipantsAsync(
                     serverCallId: ServerCallId,
-                    participants: new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
                     alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     callbackUri: callbackUri?.AbsoluteUri,
                     operationContext: operationContext,
@@ -219,7 +217,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<StartCallRecordingResponse>> StartRecordingAsync(Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StartCallRecordingResult>> StartRecordingAsync(Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartRecording)}");
             scope.Start();
@@ -243,7 +241,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<StartCallRecordingResponse> StartRecording(Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
+        public virtual Response<StartCallRecordingResult> StartRecording(Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartRecording)}");
             scope.Start();
@@ -267,7 +265,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<GetCallRecordingStateResponse>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallRecordingStateResult>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetRecordingState)}");
             scope.Start();
@@ -291,7 +289,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<GetCallRecordingStateResponse> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response<CallRecordingStateResult> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetRecordingState)}");
             scope.Start();

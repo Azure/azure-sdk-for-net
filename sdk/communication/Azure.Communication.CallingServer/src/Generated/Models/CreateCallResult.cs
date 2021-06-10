@@ -7,17 +7,17 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The response payload of the join call operation. </summary>
-    public partial class JoinCallResponse
+    /// <summary> The response payload of the create call operation. </summary>
+    public partial class CreateCallResult
     {
-        /// <summary> Initializes a new instance of JoinCallResponse. </summary>
-        internal JoinCallResponse()
+        /// <summary> Initializes a new instance of CreateCallResult. </summary>
+        internal CreateCallResult()
         {
         }
 
-        /// <summary> Initializes a new instance of JoinCallResponse. </summary>
+        /// <summary> Initializes a new instance of CreateCallResult. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        internal JoinCallResponse(string callConnectionId)
+        internal CreateCallResult(string callConnectionId)
         {
             CallConnectionId = callConnectionId;
         }

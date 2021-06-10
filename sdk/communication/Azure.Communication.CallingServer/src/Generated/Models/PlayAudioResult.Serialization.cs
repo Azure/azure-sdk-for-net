@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class PlayAudioResponse
+    public partial class PlayAudioResult
     {
-        internal static PlayAudioResponse DeserializePlayAudioResponse(JsonElement element)
+        internal static PlayAudioResult DeserializePlayAudioResult(JsonElement element)
         {
             Optional<string> id = default;
             Optional<OperationStatus> status = default;
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new PlayAudioResponse(id.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
+            return new PlayAudioResult(id.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
         }
     }
 }

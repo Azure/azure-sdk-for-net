@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -84,7 +83,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CancelAllMediaOperationsResponse>> CancelAllMediaOperationsAsync(string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
             scope.Start();
@@ -107,7 +106,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CancelAllMediaOperationsResponse> CancelAllMediaOperations(string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual Response<CancelAllMediaOperationsResult> CancelAllMediaOperations(string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
             scope.Start();
@@ -134,7 +133,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(Uri audioFileUri, bool? loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(Uri audioFileUri, bool? loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
             => await PlayAudioAsync(
                 options: new PlayAudioOptions {
                     AudioFileUri = audioFileUri,
@@ -151,7 +150,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -184,7 +183,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResponse> PlayAudio(Uri audioFileUri, bool? loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudio(Uri audioFileUri, bool? loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
             => PlayAudio(
                 options: new PlayAudioOptions {
                     AudioFileUri = audioFileUri,
@@ -201,7 +200,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<PlayAudioResponse> PlayAudio(PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudio(PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -243,7 +242,7 @@ namespace Azure.Communication.CallingServer
 
                 return await RestClient.InviteParticipantsAsync(
                     callConnectionId: CallConnectionId,
-                    participants: new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
                     alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     operationContext: operationContext,
                     callbackUri: null,
@@ -274,7 +273,7 @@ namespace Azure.Communication.CallingServer
 
                 return RestClient.InviteParticipants(
                     callConnectionId: CallConnectionId,
-                    participants: new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
                     alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     operationContext: operationContext,
                     callbackUri: null,
