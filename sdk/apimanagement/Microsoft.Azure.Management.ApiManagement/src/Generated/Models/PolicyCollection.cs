@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the PolicyCollection class.
         /// </summary>
         /// <param name="value">Policy Contract value.</param>
+        /// <param name="count">Total record count number.</param>
         /// <param name="nextLink">Next page link if any.</param>
-        public PolicyCollection(IList<PolicyContract> value = default(IList<PolicyContract>), string nextLink = default(string))
+        public PolicyCollection(IList<PolicyContract> value = default(IList<PolicyContract>), long? count = default(long?), string nextLink = default(string))
         {
             Value = value;
+            Count = count;
             NextLink = nextLink;
             CustomInit();
         }
@@ -50,6 +52,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<PolicyContract> Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets total record count number.
+        /// </summary>
+        [JsonProperty(PropertyName = "count")]
+        public long? Count { get; set; }
 
         /// <summary>
         /// Gets or sets next page link if any.

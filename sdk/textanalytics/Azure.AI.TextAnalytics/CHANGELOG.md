@@ -1,6 +1,10 @@
 # Release History
 
 ## 5.1.0-beta.8 (Unreleased)
+### New features
+- Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
+- Added value `None` to enum `PiiEntityDomainType` to allow user to specify no domain.
+
 ### Breaking changes
 - Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.
 - Renamed `AnalyzeBatchActionsOperation` to `AnalyzeActionsOperation`.
@@ -13,6 +17,11 @@
   - `RecognizeLinkedEntitiesOptions` changed to new type `RecognizeLinkedEntitiesActions`.
   - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
 - Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
+- Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
+- Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
+- Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
+- Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
+- Removed property `StringIndexType` from `TextAnalyticsRequestOptions`. This SDK will keep using `UTF-16` code unit as the default encoding.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features

@@ -68,6 +68,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 ServiceBusEntityType.Queue,
                 _entityPath,
                 false,
+                config.AutoCompleteMessages,
                 _mockExecutor.Object,
                 config,
                 "connection",

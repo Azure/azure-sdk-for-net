@@ -46,13 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// "sys", "test2", "test3", "user4", "user5". &lt;br&gt;&lt;br&gt;
         /// **Minimum-length (Linux):** 1  character &lt;br&gt;&lt;br&gt;
         /// **Max-length (Linux):** 64 characters &lt;br&gt;&lt;br&gt;
-        /// **Max-length (Windows):** 20 characters
-        /// &lt;br&gt;&lt;br&gt;&lt;li&gt; For root access to the Linux VM, see
-        /// [Using root privileges on Linux virtual machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)&lt;br&gt;&lt;li&gt;
-        /// For a list of built-in system users on Linux that should not be
-        /// used in this field, see [Selecting User Names for Linux on
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)</param>
+        /// **Max-length (Windows):** 20 characters</param>
         /// <param name="adminPassword">Specifies the password of the
         /// administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length
         /// (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length
@@ -67,27 +61,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// "Password!", "Password1", "Password22", "iloveyou!"
         /// &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset
         /// the Remote Desktop service or its login password in a Windows
-        /// VM](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-reset-rdp?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp)
         /// &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage
         /// users, SSH, and check or repair disks on Azure Linux VMs using the
         /// VMAccess
-        /// Extension](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-vmaccess-extension?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#reset-root-password)</param>
+        /// Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection)</param>
         /// <param name="customData">Specifies a base-64 encoded string of
         /// custom data. The base-64 encoded string is decoded to a binary
         /// array that is saved as a file on the Virtual Machine. The maximum
         /// length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt; For
         /// using cloud-init for your VM, see [Using cloud-init to customize a
         /// Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)</param>
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)</param>
         /// <param name="windowsConfiguration">Specifies Windows operating
         /// system settings on the virtual machine.</param>
         /// <param name="linuxConfiguration">Specifies the Linux operating
         /// system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a
         /// list of supported Linux distributions, see [Linux on Azure-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-        /// &lt;br&gt;&lt;br&gt; For running non-endorsed distributions, see
-        /// [Information for Non-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).</param>
+        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).</param>
         /// <param name="secrets">Specifies set of certificates that should be
         /// installed onto the virtual machines in the scale set.</param>
         public VirtualMachineScaleSetOSProfile(string computerNamePrefix = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>))
@@ -128,13 +119,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// character &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Max-length
         /// (Linux):** 64 characters &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
         /// **Max-length (Windows):** 20 characters
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;&amp;lt;li&amp;gt; For root
-        /// access to the Linux VM, see [Using root privileges on Linux virtual
-        /// machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)&amp;lt;br&amp;gt;&amp;lt;li&amp;gt;
-        /// For a list of built-in system users on Linux that should not be
-        /// used in this field, see [Selecting User Names for Linux on
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
         /// </summary>
         [JsonProperty(PropertyName = "adminUsername")]
         public string AdminUsername { get; set; }
@@ -157,11 +141,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For resetting the password,
         /// see [How to reset the Remote Desktop service or its login password
         /// in a Windows
-        /// VM](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-reset-rdp?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For resetting root password,
         /// see [Manage users, SSH, and check or repair disks on Azure Linux
         /// VMs using the VMAccess
-        /// Extension](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-vmaccess-extension?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#reset-root-password)
+        /// Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection)
         /// </summary>
         [JsonProperty(PropertyName = "adminPassword")]
         public string AdminPassword { get; set; }
@@ -173,7 +157,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// array is 65535 bytes. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For
         /// using cloud-init for your VM, see [Using cloud-init to customize a
         /// Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)
         /// </summary>
         [JsonProperty(PropertyName = "customData")]
         public string CustomData { get; set; }
@@ -189,10 +173,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the Linux operating system settings on the
         /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For a list of
         /// supported Linux distributions, see [Linux on Azure-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For running non-endorsed
-        /// distributions, see [Information for Non-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
         /// </summary>
         [JsonProperty(PropertyName = "linuxConfiguration")]
         public LinuxConfiguration LinuxConfiguration { get; set; }

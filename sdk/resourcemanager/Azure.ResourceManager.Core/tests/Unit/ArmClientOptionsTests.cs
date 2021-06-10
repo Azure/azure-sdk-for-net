@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void VersionNonLoadedChanges()
         {
             var apiVersions = "2019-10-01";
-            var providerName = "providers/Microsoft.Logic/LogicApps";
+            var providerName = "Microsoft.Logic/LogicApps";
             ArmClientOptions options = new ArmClientOptions();
             options.ApiVersions.SetApiVersion(providerName, apiVersions);
             string result = options.ApiVersions.TryGetApiVersion(providerName);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestKeyDoesNotExist()
         {
-            var providerName = "providers/Microsoft.Logic/LogicApps";
+            var providerName = "Microsoft.Logic/LogicApps";
             ArmClientOptions options = new ArmClientOptions();
             string result = options.ApiVersions.TryGetApiVersion(providerName);
             Assert.Null(result);

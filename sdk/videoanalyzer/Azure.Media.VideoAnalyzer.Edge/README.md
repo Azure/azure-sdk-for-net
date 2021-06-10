@@ -1,8 +1,8 @@
-# Azure Video Analyzer for IoT Edge client library for .NET
+# Azure Video Analyzer Edge client library for .NET
 
-Azure Video Analyzer on IoT Edge provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules such as Cognitive services containers, custom edge modules built by you with open source machine learning models or custom models trained with your own data. You can then use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
+Azure Video Analyzer provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules such as Cognitive services containers, custom edge modules built by you with open source machine learning models or custom models trained with your own data. You can then use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
 
-Use the client library for Video Analyzer on IoT Edge to:
+Use the client library for Video Analyzer Edge to:
 
 -   Simplify interactions with the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks)
 -   Programmatically construct pipeline topologies and live pipelines
@@ -24,7 +24,7 @@ ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectio
 
 ### Install the package
 
-Install the Video Analyzer client library for .NET with NuGet:
+Install the Video Analyzer Edge client library for .NET with NuGet:
 
 ```bash
 dotnet add package Azure.Media.VideoAnalyzer.Edge --prerelease
@@ -32,14 +32,16 @@ dotnet add package Azure.Media.VideoAnalyzer.Edge --prerelease
 
 Install the Azure IoT Hub SDk for .NET with NuGet:
 
-`dotnet add package Microsoft.Azure.Devices`
+```bash
+dotnet add package Microsoft.Azure.Devices
+```
 
 ### Prerequisites
 
 -   You need an active [Azure subscription][azure_sub] and an IoT device connection string to use this package.
 -   You will need to use the version of the SDK that corresponds to the version of the Video Analyzer Edge module you are using.
 
-    | SDK          | Video Analyzer Edge Module |
+    | SDK          | Video Analyzer edge module |
     | ------------ | -------------------------- |
     | 1.0.0-beta.x | 1.0                        |
 
@@ -49,7 +51,7 @@ Please visit the [Examples](#examples) for starter code.
 
 ## Key concepts
 
-### Pipeline Topology vs Live Pipeline
+### Pipeline topology vs live pipeline
 
 A _pipeline topology_ is a blueprint or template for instantiating live pipelines. It defines the parameters of the pipeline using placeholders as values for them. A _live pipeline_ references a pipeline topology and specifies the parameters. This way you are able to have multiple live pipelines referencing the same topology but with different values for parameters. For more information please visit [pipeline topologies and live pipelines][doc_pipelines].
 
@@ -83,7 +85,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Creating a pipeline topology
 
-To create a pipeline topology you need to define parameters, sources, and sinks.
+To create a pipeline topology you need to define sources and sinks.
 
 ### Define Parameters
 
@@ -133,7 +135,7 @@ pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${h
 ```C# Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
 var pipelineTopologyProps = new PipelineTopologyProperties
 {
-    Description = "Continuous video recording to an Azure Media Services Asset",
+    Description = "Continuous video recording to a Video Analyzer video",
 };
 SetParameters(pipelineTopologyProps);
 SetSources(pipelineTopologyProps);
@@ -163,9 +165,9 @@ return new LivePipeline("livePIpeline")
 };
 ```
 
-### Invoking a direct method request
+### Invoking a direct method
 
-To invoke a direct method on your device you need to first define the request using the Video Analyzer SDK, then send that method request using the IoT SDK's `CloudToDeviceMethod`.
+To invoke a direct method on your device you need to first define the request using the Video Analyzer Edge SDK, then send that method request using the IoT SDK's `CloudToDeviceMethod`.
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
 var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
@@ -181,7 +183,6 @@ To try different pipeline topologies with the SDK, please see the official [Samp
 ## Troubleshooting
 
 -   When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `MethodRequestName.MethodName`
--   Make sure to serialize the entire method request before passing it to `CloudToDeviceMethod`
 
 ## Next steps
 
@@ -217,7 +218,7 @@ additional questions or comments.
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 [package]: https://aka.ms/ava/sdk/client/net
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/videoanalyzer
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
 [doc_direct_methods]: https://go.microsoft.com/fwlink/?linkid=2162396
 [doc_pipelines]: https://go.microsoft.com/fwlink/?linkid=2162396

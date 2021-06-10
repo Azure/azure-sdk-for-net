@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
-        public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
+        public ContainerRegistryClient CreateClient(bool anonymousAccess = false, string authenticationScope = null)
         {
             return anonymousAccess ?
 
