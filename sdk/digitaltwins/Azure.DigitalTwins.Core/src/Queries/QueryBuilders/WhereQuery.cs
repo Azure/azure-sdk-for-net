@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class WhereQuery : QueryBase
     {
-        private AdtQueryBuilder _parent;
+        private readonly AdtQueryBuilder _parent;
         private IList<WhereClause> _clauses;
 
         internal WhereQuery(AdtQueryBuilder parent)
@@ -120,13 +120,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             // TODO -- make this cleaner? design problem?
             if (_clauses.Any())
             {
-                StringBuilder whereComponents = new StringBuilder();
-                whereComponents.Append(QueryConstants.Where).Append(' ');
+                // TODO -- if appending more strings turn into a stringbuilder
+                string whereComponents = $"{QueryConstants.Where} ";
 
                 // TODO -- turn condition into a string
                 // add where arguments (conditions)
 
-                return whereComponents.ToString();
+                return whereComponents;
             }
 
             return string.Empty;

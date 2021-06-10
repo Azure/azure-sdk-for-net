@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core.Samples
         /// <summary>
         /// Main method.
         /// </summary>
-        public static void main()
+        public static void Main()
         {
             #region Snippet:DigitalTwinsQueryBuilder
 
@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
-                .ToString();
+                .Stringify();
 
             #endregion Snippet:DigitalTwinsQueryBuilderToString
 

@@ -19,6 +19,6 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         public const string Top = "TOP";
         public const string Count = "COUNT";
 
-        // other query keywords added in this same fasion as they are implemented
+        // other query keywords added in this same fashion as they are implemented
     }
 }

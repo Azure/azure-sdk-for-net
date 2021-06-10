@@ -29,7 +29,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <summary>
         /// Specifies the list of columns that the query will return
         /// </summary>
-        /// <param name="args"> The arguments that can be queried (eg *, somePropertyName, etc.) </param>
+        /// <param name="args"> The arguments that can be queried (e.g., *, somePropertyName, etc.) </param>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery Select(params string[] args)
         {
@@ -39,8 +39,8 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <summary>
         /// Used to return only a certain number of top items that meet the query requirements.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), i.e the number of instances to return. </param>
-        /// <param name="args"> The arguments that can be optionally passed with top (eg property name). </param>
+        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
+        /// <param name="args"> The arguments that can be optionally passed with top (e.g., property name). </param>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectTop(int count, params string[] args)
         {
@@ -59,6 +59,15 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <summary>
         /// Used to provide the entire SELECT clause as opposed to providing individual field (column) names.
         /// </summary>
+        /// <example>
+        /// <code snippet="Snippet:DigitalTwinsQueryByilderOverride" language="csharp">
+        /// // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
+        /// new AdtQueryBuilder()
+        /// .SelectOverride("TOP(3) Room, Temperature")
+        /// .From(AdtCollection.DigitalTwins)
+        /// .Build()
+        /// </code>
+        /// </example>
         /// <param name="literalQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectOverride(string literalQuery)
@@ -66,8 +75,11 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
             return _selectQuery.SelectOverride(literalQuery);
         }
 
-        /// <inheritdoc/>
-        public override string ToString()
+        /// <summary>
+        /// Turns AdtQueryBuilder into a string.
+        /// </summary>
+        /// <returns> String represenation of query. </returns>
+        public string Stringify()
         {
             StringBuilder finalQuery = new StringBuilder();
 

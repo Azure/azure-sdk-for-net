@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         private SelectClause _clause;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SelectQuery"/> class.
+        /// Initializes a new instance of this class.
         /// </summary>
         internal SelectQuery(AdtQueryBuilder parent, FromQuery upstreamFromQuery)
         {
@@ -30,7 +30,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to add a select clause (and its corresponding argument) to the query.
         /// </summary>
-        /// <param name="args"> The arguments that define what we select (eg. *). </param>
+        /// <param name="args"> The arguments that define what we select (e.g., *). </param>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery Select(params string[] args)
         {
@@ -39,11 +39,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Used when applying the TOP() aggregate from the ADT query language. Same functionality as select
+        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
         /// but inserts TOP() into the query structure as well.
         /// </summary>
         /// <param name="count"> The argument for TOP(), ie the number of instances to return. </param>
-        /// <param name="args"> The arguments that can be optionally passed with top (eg property name). </param>
+        /// <param name="args"> The arguments that can be optionally passed with top (e.g., property name). </param>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectTop(int count, params string[] args)
         {
@@ -58,12 +58,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Used when applying the COUNT() aggregate from the ADT query language. Similar to SelectTop().
+        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-count">COUNT()</see> aggregate from the ADT query language.
         /// </summary>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectCount()
         {
-            string countArg = new StringBuilder().Append($"{QueryConstants.Count}()").Append(' ').ToString();
+            string countArg = $"{QueryConstants.Count}() ";
 
             _clause = new SelectClause(new string[] { countArg });
             return _delegationClause;
@@ -87,13 +87,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
+            // Build can only be called on queries that have (at minimum) SELECT and FROM clauses
             throw new InvalidOperationException("Queries that contain just a SELECT statement are not valid.");
         }
 
         /// <inheritdoc/>
         public override string Stringify()
         {
-            StringBuilder selectComponents = new StringBuilder();
+            var selectComponents = new StringBuilder();
             selectComponents.Append(QueryConstants.Select).Append(' ');
             selectComponents.Append(string.Join(", ", _clause.ClauseArgs));
 

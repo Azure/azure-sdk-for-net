@@ -13,8 +13,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class FromQuery : QueryBase
     {
-        private WhereQuery _delegationClause;
-        private AdtQueryBuilder _parent;
+        private readonly WhereQuery _delegationClause;
+        private readonly AdtQueryBuilder _parent;
         private FromClause _clause;
 
         internal FromQuery(AdtQueryBuilder parent, WhereQuery upstreamWhereQuery)
@@ -55,7 +55,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string Stringify()
         {
-            StringBuilder fromComponents = new StringBuilder();
+            var fromComponents = new StringBuilder();
             fromComponents.Append(QueryConstants.From)
                 .Append(' ')
                 .Append(_clause.Collection);

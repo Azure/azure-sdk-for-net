@@ -11,12 +11,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     internal class FromClause : ClauseBase
     {
         /// <summary>
-        /// The collection to query from. Stored in an enum to give user some intellisense since there are only two possible collection types,
-        /// ADT instances or relationships.
-        /// </summary>
-        public string Collection { get; private set; }
-
-        /// <summary>
         /// Constructor for a FROM clause.
         /// </summary>
         /// <param name="collection"> Enum Collection that can be either a ADT instance or a relationship. </param>
@@ -31,5 +25,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             Type = ClauseType.FROM;
             Collection = literalCollection;
         }
+
+        /// <summary>
+        /// The collection to query from. Stored in an enum to give user some intellisense since there are only two possible collection types,
+        /// ADT instances or relationships.
+        /// </summary>
+        public string Collection { get; private set; }
     }
 }
