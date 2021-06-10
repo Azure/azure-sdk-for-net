@@ -203,12 +203,12 @@ namespace Azure.Data.Tables
                 _ => default
             };
 
-            HttpPipeline pipeline =
+            _pipeline =
                 HttpPipelineBuilder.Build(options, perCallPolicies, new HttpPipelinePolicy[] { policy }, new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             Name = tableName;
         }
 

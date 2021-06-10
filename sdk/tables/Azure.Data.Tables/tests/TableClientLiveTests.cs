@@ -549,6 +549,18 @@ namespace Azure.Data.Tables.Tests
             Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
         }
 
+        [RecordedTest]
+        public async Task DeleteEntityWithConnectionStringCtor()
+        {
+            var entity = new TableEntity("TestPartitionKey", "testRowKey")
+            {
+                { "Product", "Marker Set" }
+            };
+            await connectionStringClient.AddEntityAsync(entity);
+            entity = await connectionStringClient.GetEntityAsync<TableEntity>("TestPartitionKey", "testRowKey");
+            await connectionStringClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
