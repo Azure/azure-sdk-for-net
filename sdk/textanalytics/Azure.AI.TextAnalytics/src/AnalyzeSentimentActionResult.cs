@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics
             AnalyzeSentimentResultCollection result,
             DateTimeOffset completedOn) : base(completedOn)
         {
-            Result = result;
+            _documentsResults = result;
         }
 
         /// <summary>
