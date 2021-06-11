@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions/resourceGroups";
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class for mocking.
@@ -947,6 +950,18 @@ namespace Azure.ResourceManager.Core
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Provides a way to reuse the protected client context.
+        /// </summary>
+        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
+        /// <param name="func"> The method to pass the internal properties to. </param>
+        /// <returns> Whatever the delegate returns. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
+        {
+            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
     }
 }

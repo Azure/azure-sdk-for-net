@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.Core.Generated
+namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// A class representing an expanded generic azure resource along with the instance operations that can be performed on it.

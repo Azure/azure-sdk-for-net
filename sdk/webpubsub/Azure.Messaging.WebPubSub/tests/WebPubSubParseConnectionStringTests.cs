@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 
 using NUnit.Framework;
@@ -34,8 +30,8 @@ namespace Azure.Messaging.WebPubSub.Tests
         public void TestGenerateUriUseSameKidWithSameKey(string connectionString)
         {
             var serviceClient = new WebPubSubServiceClient(" Endpoint=http://localhost;Port=8080;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH;Version=1.0;", "hub");
-            var uri1 = serviceClient.GetClientAccessUri();
-            var uri2 = serviceClient.GetClientAccessUri();
+            var uri1 = serviceClient.GenerateClientAccessUri();
+            var uri2 = serviceClient.GenerateClientAccessUri();
 
             Assert.AreEqual("localhost:8080", uri1.Authority);
             Assert.AreEqual("/client/hubs/hub", uri1.AbsolutePath);

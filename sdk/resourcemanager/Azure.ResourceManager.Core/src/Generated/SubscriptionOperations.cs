@@ -49,25 +49,13 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// ListResources of type T
+        /// Provides a way to reuse the protected client context.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
+        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
+        /// <param name="func"> The method to pass the internal properties to. </param>
+        /// <returns> Whatever the delegate returns. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
-        {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
-        }
-
-        /// <summary>
-        /// ListResourcesAsync of type T
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, AsyncPageable<T>> func)
+        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }

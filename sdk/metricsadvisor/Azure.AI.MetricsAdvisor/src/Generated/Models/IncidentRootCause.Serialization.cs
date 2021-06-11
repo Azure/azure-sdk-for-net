@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("rootCause"))
                 {
-                    rootCause = Models.DimensionKey.DeserializeDimensionKey(property.Value);
+                    rootCause = DimensionKey.DeserializeDimensionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"))

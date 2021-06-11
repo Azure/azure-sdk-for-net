@@ -23,18 +23,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 
-            DimensionName = dimensionName;
+            Name = dimensionName;
         }
 
         /// <summary>
         /// The name of the data source's column to be used as a dimension. Values of
         /// this dimension will be read only from the specified column.
         /// </summary>
-        public string DimensionName { get; }
+        [CodeGenMember("DimensionName")]
+        public string Name { get; }
 
         /// <summary>
         /// The name to be displayed on the web portal instead of the original column name.
         /// </summary>
-        public string DimensionDisplayName { get; set; }
+        [CodeGenMember("DimensionDisplayName")]
+        public string DisplayName { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.Core.Generated
+namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific ArmResource.

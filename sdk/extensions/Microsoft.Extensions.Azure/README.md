@@ -125,7 +125,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddAzureClients(builder =>
     {
         // Register a client using MyApplicationOptions to get constructor parameters
-        builder.AddClient<SecretClient, SecretClientOptions>((provider, credential, options) =>
+        builder.AddClient<SecretClient, SecretClientOptions>((options, credential, provider) =>
         {
             var appOptions = provider.GetService<IOptions<MyApplicationOptions>>();
             return new SecretClient(appOptions.Value.KeyVaultEndpoint, credential, options);
