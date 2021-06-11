@@ -87,10 +87,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="sentenceSentiments">Sets the <see cref="DocumentSentiment.Sentences"/> property.</param>
         /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DocumentSentiment"/> for mocking purposes.</returns>
-        public static DocumentSentiment DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, IEnumerable<SentenceSentiment> sentenceSentiments, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static DocumentSentiment DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments.ToList(), warnings.ToList());
+            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments, warnings);
         }
 
         /// <summary>
@@ -214,10 +214,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="confidenceScore">Sets the <see cref="DetectedLanguage.ConfidenceScore"/> property.</param>
         /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.</returns>
-        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore), warnings.ToList());
+            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore), warnings);
         }
 
         /// <summary>
@@ -265,6 +265,20 @@ namespace Azure.AI.TextAnalytics
         /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
         /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
         /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
+        {
+            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
+        /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
+        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
         /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
         /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
@@ -279,10 +293,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entities">Sets the collection of <see cref="TextAnalytics.CategorizedEntity"/>.</param>
         /// <param name="warnings">Sets the <see cref="CategorizedEntityCollection.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntityCollection"/> for mocking purposes.</returns>
-        public static CategorizedEntityCollection CategorizedEntityCollection(IEnumerable<CategorizedEntity> entities, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static CategorizedEntityCollection CategorizedEntityCollection(IList<CategorizedEntity> entities, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new CategorizedEntityCollection(entities.ToList(), warnings.ToList());
+            return new CategorizedEntityCollection(entities, warnings);
         }
 
         /// <summary>
@@ -407,10 +421,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="keyPhrases">Sets the collection of <see cref="string"/> key phrases.</param>
         /// <param name="warnings">Sets the <see cref="KeyPhraseCollection.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.KeyPhraseCollection"/> for mocking purposes.</returns>
-        public static KeyPhraseCollection KeyPhraseCollection(IEnumerable<string> keyPhrases, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static KeyPhraseCollection KeyPhraseCollection(IList<string> keyPhrases, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new KeyPhraseCollection(keyPhrases.ToList(), warnings.ToList());
+            return new KeyPhraseCollection(keyPhrases, warnings);
         }
 
         /// <summary>
@@ -502,10 +516,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entities">Sets the collection of <see cref="TextAnalytics.LinkedEntity"/>.</param>
         /// <param name="warnings">Sets the <see cref="LinkedEntityCollection.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityCollection"/> for mocking purposes.</returns>
-        public static LinkedEntityCollection LinkedEntityCollection(IEnumerable<LinkedEntity> entities, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static LinkedEntityCollection LinkedEntityCollection(IList<LinkedEntity> entities, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new LinkedEntityCollection(entities.ToList(), warnings.ToList());
+            return new LinkedEntityCollection(entities, warnings);
         }
 
         /// <summary>
