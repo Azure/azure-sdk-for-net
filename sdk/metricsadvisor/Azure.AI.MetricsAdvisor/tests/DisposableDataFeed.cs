@@ -5,12 +5,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
-using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
     /// <summary>
-    /// Represents a <see cref="DataFeed"/> that has been created for testing purposes. In order to
+    /// Represents a <see cref="Models.DataFeed"/> that has been created for testing purposes. In order to
     /// create a new instance of this class, the <see cref="CreateDataFeedAsync"/> static method must
     /// be invoked. The created data feed will be deleted upon disposal.
     /// </summary>

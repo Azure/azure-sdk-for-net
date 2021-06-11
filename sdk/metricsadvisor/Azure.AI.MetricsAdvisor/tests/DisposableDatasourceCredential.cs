@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
-using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -48,10 +47,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public static async Task<DisposableDatasourceCredential> CreateDatasourceCredentialAsync(MetricsAdvisorAdministrationClient adminClient, DatasourceCredential credential)
         {
             DatasourceCredential createdCredential = await adminClient.CreateDatasourceCredentialAsync(credential);
-
-            Assert.That(createdCredential, Is.Not.Null);
-            Assert.That(createdCredential.Id, Is.Not.Null.And.Not.Empty);
-
             return new DisposableDatasourceCredential(adminClient, createdCredential);
         }
 

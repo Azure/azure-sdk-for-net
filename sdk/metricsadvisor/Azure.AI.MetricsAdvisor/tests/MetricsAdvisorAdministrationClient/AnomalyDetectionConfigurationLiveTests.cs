@@ -53,9 +53,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
 
-            AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.EqualTo(description));
@@ -97,9 +97,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
 
-            AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
@@ -165,9 +165,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Get the created configuration and validate top-level members.
 
-            AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
@@ -270,9 +270,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Get the created configuration and validate top-level members.
 
-            AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            AnomalyDetectionConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
@@ -380,7 +380,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created configuration.
 
-            AnomalyDetectionConfiguration configToUpdate = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
 
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
@@ -388,7 +388,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.Empty);
@@ -500,7 +500,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.Empty);
@@ -606,7 +606,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created configuration.
 
-            AnomalyDetectionConfiguration configToUpdate = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
 
             configToUpdate.Description = description;
 
@@ -630,7 +630,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
@@ -766,7 +766,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Validate top-level members.
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
