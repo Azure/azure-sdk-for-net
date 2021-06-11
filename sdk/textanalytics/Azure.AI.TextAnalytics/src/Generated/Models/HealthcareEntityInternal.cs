@@ -13,24 +13,20 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The HealthcareEntity. </summary>
-    internal partial class HealthcareEntityInternal : Entity
+    internal partial class HealthcareEntityInternal : HealthcareEntityProperties
     {
         /// <summary> Initializes a new instance of HealthcareEntityInternal. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
+        /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
-        internal HealthcareEntityInternal(string text, string category, int offset, int length, double confidenceScore) : base(text, category, offset, length, confidenceScore)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        internal HealthcareEntityInternal(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore) : base(text, category, offset, length, confidenceScore)
         {
             if (text == null)
             {
                 throw new ArgumentNullException(nameof(text));
-            }
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
             }
 
             Links = new ChangeTrackingList<EntityDataSource>();
@@ -38,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of HealthcareEntityInternal. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
+        /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
@@ -46,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="assertion"> . </param>
         /// <param name="name"> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        internal HealthcareEntityInternal(string text, string category, string subcategory, int offset, int length, double confidenceScore, HealthcareEntityAssertion assertion, string name, IReadOnlyList<EntityDataSource> links) : base(text, category, subcategory, offset, length, confidenceScore)
+        internal HealthcareEntityInternal(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareEntityAssertion assertion, string name, IReadOnlyList<EntityDataSource> links) : base(text, category, subcategory, offset, length, confidenceScore)
         {
             Assertion = assertion;
             Name = name;
