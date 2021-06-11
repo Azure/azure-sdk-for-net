@@ -84,6 +84,7 @@ namespace Azure.Test.Perf
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/stop"));
             message.Headers.Add("x-recording-id", _recordingId);
+            message.Headers.Add("x-purge-inmemory-recording", bool.TrueString);
 
             await _httpClient.SendAsync(message);
 
