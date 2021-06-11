@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
         /// <param name="func"> The method to pass the internal properties to. </param>
-        /// <returns>  whatever the delegate returns. </returns>
+        /// <returns> Whatever the delegate returns. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
