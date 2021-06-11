@@ -6,8 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: MachineLearningServices
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ecc8630f732fe34ef6bd963ef0834a6b85307582/specification/machinelearningservices/resource-manager/readme.md
-use: C:\Users\yeliu\code\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
-tag: package-2021-03-01-preview
+tag: package-2021-03-01-preview-without-services # should use official tag after ML team delete services.json from default tag
 clear-output-folder: true
 skip-csproj: true
 namespace: Azure.ResourceManager.MachineLearningServices
@@ -68,4 +67,25 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/services/{serviceName}'].put.parameters[5].schema
     transform: >
         $["$ref"] = "#/definitions/ServiceResource";
+# Following two transforms are temporary due to non-nullable properties (properties that do not declare x-nullable: true) being null in service response
+  - from: swagger-document
+    where: $.definitions.NotebookResourceInfo.properties.notebookPreparationError
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Workspace.properties.tags
+    transform: >
+        $["x-nullable"] = true;
+```
+
+### Tag: package-2021-03-01-preview-without-services
+
+These settings apply only when `--tag=package-2021-03-01-preview-without-services` is specified on the command line.
+
+```yaml $(tag) == 'package-2021-03-01-preview-without-services'
+input-file:
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ecc8630f732fe34ef6bd963ef0834a6b85307582/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2021-03-01-preview/machineLearningServices.json
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ecc8630f732fe34ef6bd963ef0834a6b85307582/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2021-03-01-preview/mfe.json
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ecc8630f732fe34ef6bd963ef0834a6b85307582/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2021-03-01-preview/workspaceFeatures.json
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ecc8630f732fe34ef6bd963ef0834a6b85307582/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2021-03-01-preview/workspaceSkus.json
 ```

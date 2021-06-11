@@ -756,12 +756,5 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             return new OnlineEndpointTrackedResourceContainer(this);
         }
-
-        /// <summary> Gets a list of ServiceResource in the Workspace. </summary>
-        /// <returns> An object representing collection of ServiceResources and their operations over a Workspace. </returns>
-        public ServiceResourceContainer GetServiceResources()
-        {
-            return new ServiceResourceContainer(this);
-        }
     }
 }
