@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Creates or updates an log search rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets an Log Search rule
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Update log search Rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Deletes a Log Search rule
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='ruleName'>
         /// The name of the rule.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// List the Log Search rules within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.

@@ -92,11 +92,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets the immutable ID of this data collection endpoint resource.
-        /// This property is READ-ONLY.
+        /// Gets or sets the immutable ID of this data collection endpoint
+        /// resource. This property is READ-ONLY.
         /// </summary>
         [JsonProperty(PropertyName = "properties.immutableId")]
-        public string ImmutableId { get; private set; }
+        public string ImmutableId { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint used by agents to access their
