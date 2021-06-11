@@ -557,13 +557,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="analyzeSentimentActionsResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
-            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
-            IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
-            IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
-            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
-            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
+            IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
+            IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
+            IEnumerable<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
+            IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
+            IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
         {
-            return new AnalyzeActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, recognizeLinkedEntitiesActionsResults, analyzeSentimentActionsResults);
+            return new AnalyzeActionsResult(
+                (IReadOnlyCollection<ExtractKeyPhrasesActionResult>)extractKeyPhrasesActionResult,
+                (IReadOnlyCollection<RecognizeEntitiesActionResult>)recognizeEntitiesActionResults,
+                (IReadOnlyCollection<RecognizePiiEntitiesActionResult>)recognizePiiEntitiesActionResults,
+                (IReadOnlyCollection<RecognizeLinkedEntitiesActionResult>)recognizeLinkedEntitiesActionsResults,
+                (IReadOnlyCollection<AnalyzeSentimentActionResult>)analyzeSentimentActionsResults);
         }
 
         /// <summary>
@@ -780,9 +785,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.</returns>
         public static HealthcareEntityRelation HealthcareEntityRelation(
             HealthcareEntityRelationType relationType,
-            IReadOnlyCollection<HealthcareEntityRelationRole> roles)
+            IEnumerable<HealthcareEntityRelationRole> roles)
         {
-            return new HealthcareEntityRelation(relationType, roles);
+            return new HealthcareEntityRelation(relationType, (IReadOnlyCollection<HealthcareEntityRelationRole>)roles);
         }
         #endregion Healthcare
     }
