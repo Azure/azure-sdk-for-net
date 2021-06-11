@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Models
             if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
             {
                 // LastSyncTime can be empty (see https://docs.microsoft.com/en-us/rest/api/storageservices/get-table-service-stats#response-body)
-                lastSyncedOn = lastSyncTimeElement.IsEmpty switch
+                lastSyncedOn = (lastSyncTimeElement.Value.Length == 0) switch
                 {
                     true => DateTimeOffset.MinValue,
                     false => lastSyncTimeElement.GetDateTimeOffsetValue("R")
