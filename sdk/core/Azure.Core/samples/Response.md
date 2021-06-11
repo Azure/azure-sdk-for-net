@@ -127,6 +127,51 @@ await foreach (Page<SecretProperties> page in allSecretProperties.AsPages())
 }
 ```
 
+## Using System.Linq.Async with AsyncPageable
+
+The [`System.Linq.Async`](https://www.nuget.org/packages/System.Linq.Async) package provides a set of LINQ methods that operate on `IAsyncEnumerable<T>` type.
+Because `AsyncPageable<T>` implements `IAsyncEnumerable<T>` you can use `System.Linq.Async` to easily query and transform the data.
+
+### Convert to a `List<T>`
+
+`ToListAsync` can be used to convert an `AsyncPageable` to a `List<T>`.
+
+```C# Snippet:SystemLinqAsyncToList
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+// ToListAsync would convert asynchronous enumerable into a List<T>
+List<SecretProperties> secretList = await allSecretProperties.ToListAsync();
+```
+
+### Receive first N elements
+
+`Take` can be used to enumerate only the first `N` elements of the `AsyncPageable`. When using `Take` we would receive the least amount of pages required to get `N` items.
+
+```C# Snippet:SystemLinqAsyncTake
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+// Take would request enough pages to get 30 items
+await foreach (var secretProperties in allSecretProperties.Take(30))
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+### More methods
+
+`System.Linq.Async` provides other useful methods like `Select`, `Where`, `OrderBy`, `GroupBy`, etc. that provide functionality equivalent to their synchronous `IEnumerable` counterparts.
+
+### Client side evaluation
+
+System.Linq.Async LINQ operations are executed on the client so, for example, the following query would receive all the items just to count them:
+
+```C# Snippet:SystemLinqAsyncCount
+// DANGER DANGER DANGER
+// DO NOT COPY
+// CountAsync would receive all the items to calculate the count.
+int secretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
+```
+
 ## Iterating over pageable
 
 `Pageable<T>` is a synchronous version of `AsyncPageable<T>`, it can be used with a normal `foreach` loop.
