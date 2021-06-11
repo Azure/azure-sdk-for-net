@@ -120,10 +120,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="length">Sets the <see cref="SentenceSentiment.Length"/> property.</param>
         /// <param name="opinions">Sets the <see cref="SentenceSentiment.Opinions"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
-        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> opinions)
+        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IEnumerable<SentenceOpinion> opinions)
         {
             opinions ??= new List<SentenceOpinion>();
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length, opinions);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length, (IReadOnlyList<SentenceOpinion>)opinions);
         }
 
         /// <summary>
@@ -163,9 +163,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="target">Sets the <see cref="SentenceOpinion.Target"/> property.</param>
         /// <param name="assessments">Sets the <see cref="SentenceOpinion.Assessments"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceOpinion"/> for mocking purposes.</returns>
-        public static SentenceOpinion SentenceOpinion(TargetSentiment target, IReadOnlyList<AssessmentSentiment> assessments)
+        public static SentenceOpinion SentenceOpinion(TargetSentiment target, IEnumerable<AssessmentSentiment> assessments)
         {
-            return new SentenceOpinion(target, assessments);
+            return new SentenceOpinion(target, (IReadOnlyList<AssessmentSentiment>)assessments);
         }
 
         /// <summary>
