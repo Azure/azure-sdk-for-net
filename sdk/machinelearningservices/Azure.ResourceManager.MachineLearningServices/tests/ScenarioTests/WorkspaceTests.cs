@@ -12,8 +12,7 @@ using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public class WorkspaceTests
-        : TestBase
+    public class WorkspaceTests : ManagementRecordedTestBase<MachineLearningTestEnvironment>
     {
         private readonly string _location = "southcentralus";
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private string _storageAccountId;
         private Workspace _workspace;
 
-        public WorkspaceTests(bool isAsync) : base(isAsync)
+        public WorkspaceTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {}
 
         [RecordedTest]
