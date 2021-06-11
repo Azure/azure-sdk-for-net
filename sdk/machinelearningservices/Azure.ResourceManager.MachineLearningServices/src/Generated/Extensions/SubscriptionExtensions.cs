@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -312,6 +313,358 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        #endregion
+        #region VirtualMachineSize
+        private static VirtualMachineSizesRestOperations GetVirtualMachineSizesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new VirtualMachineSizesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+        }
+
+        /// <summary> Returns supported VM Sizes in a location. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> placeholder. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Task<Response<VirtualMachineSizeListResult>> ListVirtualMachineSizeAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetVirtualMachineSizesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                return ListVirtualMachineSizeAsync(clientDiagnostics, restOperations, location, cancellationToken);
+            }
+            );
+        }
+
+        /// <summary> Returns supported VM Sizes in a location. </summary>
+        /// <param name="_clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="restOperations"> Resource client operations. </param>
+        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        private static async Task<Response<VirtualMachineSizeListResult>> ListVirtualMachineSizeAsync(ClientDiagnostics _clientDiagnostics, VirtualMachineSizesRestOperations restOperations, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineSize.ListVirtualMachineSize");
+            scope.Start();
+            try
+            {
+                return await restOperations.ListAsync(location, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns supported VM Sizes in a location. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> placeholder. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Response<VirtualMachineSizeListResult> ListVirtualMachineSize(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetVirtualMachineSizesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                return ListVirtualMachineSize(clientDiagnostics, restOperations, location, cancellationToken);
+            }
+            );
+        }
+
+        /// <summary> Returns supported VM Sizes in a location. </summary>
+        /// <param name="_clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="restOperations"> Resource client operations. </param>
+        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        private static Response<VirtualMachineSizeListResult> ListVirtualMachineSize(ClientDiagnostics _clientDiagnostics, VirtualMachineSizesRestOperations restOperations, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineSize.ListVirtualMachineSize");
+            scope.Start();
+            try
+            {
+                return restOperations.List(location, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+        #region Quotas
+        private static QuotasRestOperations GetQuotasRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new QuotasRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+        }
+
+        /// <summary> Lists the ResourceQuotas for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static AsyncPageable<ResourceQuota> ListResourceQuotaAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var result = ListQuotasAsync(clientDiagnostics, restOperations, location, cancellationToken);
+                return result;
+            }
+            );
+        }
+
+        /// <summary> Gets the currently assigned Workspace Quotas based on VMFamily. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="restOperations"> Resource client operations. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        private static AsyncPageable<ResourceQuota> ListQuotasAsync(ClientDiagnostics clientDiagnostics, QuotasRestOperations restOperations, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            async Task<Page<ResourceQuota>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = clientDiagnostics.CreateScope("Quotas.List");
+                scope.Start();
+                try
+                {
+                    var response = await restOperations.ListAsync(location, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ResourceQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = clientDiagnostics.CreateScope("Quotas.List");
+                scope.Start();
+                try
+                {
+                    var response = await restOperations.ListNextPageAsync(nextLink, location, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists the ResourceQuotas for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Pageable<ResourceQuota> ListResourceQuota(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                var result = ListQuotas(clientDiagnostics, restOperations, location, cancellationToken);
+                return result;
+            }
+            );
+        }
+
+        /// <summary> Gets the currently assigned Workspace Quotas based on VMFamily. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="restOperations"> Resource client operations. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        private static Pageable<ResourceQuota> ListQuotas(ClientDiagnostics clientDiagnostics, QuotasRestOperations restOperations, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            Page<ResourceQuota> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = clientDiagnostics.CreateScope("Quotas.List");
+                scope.Start();
+                try
+                {
+                    var response = restOperations.List(location, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ResourceQuota> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = clientDiagnostics.CreateScope("Quotas.List");
+                scope.Start();
+                try
+                {
+                    var response = restOperations.ListNextPage(nextLink, location, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Update quota for each VM family in workspace. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for update quota is queried. </param>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> placeholder. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Task<Response<UpdateWorkspaceQuotasResult>> UpdateQuotasAsync(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                return UpdateQuotasAsync(clientDiagnostics, restOperations, location, value, quotaUpdateParametersLocation, cancellationToken);
+            }
+            );
+        }
+
+        /// <summary> Update quota for each VM family in workspace. </summary>
+        /// <param name="_clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="restOperations"> Resource client operations. </param>
+        /// <param name="location"> The location for update quota is queried. </param>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        private static async Task<Response<UpdateWorkspaceQuotasResult>> UpdateQuotasAsync(ClientDiagnostics _clientDiagnostics, QuotasRestOperations restOperations, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Quotas.UpdateQuotas");
+            scope.Start();
+            try
+            {
+                return await restOperations.UpdateAsync(location, value, quotaUpdateParametersLocation, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update quota for each VM family in workspace. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for update quota is queried. </param>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> placeholder. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Response<UpdateWorkspaceQuotasResult> UpdateQuotas(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                return UpdateQuotas(clientDiagnostics, restOperations, location, value, quotaUpdateParametersLocation, cancellationToken);
+            }
+            );
+        }
+
+        /// <summary> Update quota for each VM family in workspace. </summary>
+        /// <param name="_clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="restOperations"> Resource client operations. </param>
+        /// <param name="location"> The location for update quota is queried. </param>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        private static Response<UpdateWorkspaceQuotasResult> UpdateQuotas(ClientDiagnostics _clientDiagnostics, QuotasRestOperations restOperations, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Quotas.UpdateQuotas");
+            scope.Start();
+            try
+            {
+                return restOperations.Update(location, value, quotaUpdateParametersLocation, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion

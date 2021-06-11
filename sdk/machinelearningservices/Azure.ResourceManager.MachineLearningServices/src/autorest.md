@@ -31,7 +31,7 @@ operation-group-to-resource:
   Operations: NonResource
   # WorkspaceFeatures: NonResource # no PUT
   # Usages: NonResource
-  VirtualMachineSizes: NonResource # list only, but value is not value
+  # VirtualMachineSizes: NonResource # list only, but value is not value
   Quotas: NonResource # POST and GET
   # WorkspaceSkus: NonResource # no PUT, Sub level
   # PrivateLinkResources: NonResource # no PUT
@@ -39,8 +39,8 @@ operation-group-to-parent:
   Operations: tenant
   WorkspaceFeatures: Workspaces
   Usages: subscriptions
-  VirtualMachineSizes: Locations
-  Quotas: Locations
+  VirtualMachineSizes: subscriptions
+  Quotas: subscriptions
   Notebooks: Workspaces
   WorkspaceSkus: Workspaces
   PrivateLinkResources: Workspaces
