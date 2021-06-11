@@ -22,9 +22,10 @@ namespace Azure.Storage.Tests
     public class FilesystemScannerTests
     {
         private readonly string _temp = Path.GetTempPath();
-        private readonly FileSystemAccessRule _winAcl;
+        private FileSystemAccessRule _winAcl;
 
-        public FilesystemScannerTests()
+        [SetUp]
+        public void SetUp()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

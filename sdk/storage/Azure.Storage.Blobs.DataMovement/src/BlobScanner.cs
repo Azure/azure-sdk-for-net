@@ -10,27 +10,26 @@ using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
-    /// <summary>
-    /// AzureContainerScanner class.
-    /// </summary>
-    public class BlobScanner
+    internal class BlobScanner
     {
+        /// <summary>
+        /// User-provided container client to be used for scanning.
+        /// </summary>
         private readonly BlobContainerClient _containerClient;
 
         /// <summary>
-        /// Constuctor for AzureContainerScanner.
+        /// Constructor for AzureContainerScanner.
         /// </summary>
-        /// <param name="client"></param>
+        /// <param name="client">A <see cref="BlobContainerClient"/> targeting the container to be scanned.</param>
         public BlobScanner(BlobContainerClient client)
         {
-            // Hacky deep-clone to prevent client changes mid-operation
-            _containerClient = client.GetParentBlobServiceClient().GetBlobContainerClient(client.Name);
+            _containerClient = client;
         }
 
         /// <summary>
-        /// Constuctor for AzureContainerScanner.
+        /// Scans the blob container passed to the scanner.
         /// </summary>
-        /// <returns>Async enumerable list containing the name of all blobs in the container.</returns>
+        /// <returns>An <see cref="IAsyncEnumerable{String}"/> containing the names of all blobs in the container.</returns>
         public async IAsyncEnumerable<string> Scan()
         {
             // Return the names of all blobs inside the container

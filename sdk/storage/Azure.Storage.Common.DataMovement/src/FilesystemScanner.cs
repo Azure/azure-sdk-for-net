@@ -8,9 +8,6 @@ using System.Text;
 
 namespace Azure.Storage.Common.DataMovement
 {
-    /// <summary>
-    /// FilesystemScanner class.
-    /// </summary>
     internal class FilesystemScanner
     {
         /// <summary>
@@ -26,7 +23,7 @@ namespace Azure.Storage.Common.DataMovement
         /// <summary>
         /// Constructor for FilesystemScanner.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">The local relative or absolute path to be scanned.</param>
         public FilesystemScanner(string path)
         {
             try
