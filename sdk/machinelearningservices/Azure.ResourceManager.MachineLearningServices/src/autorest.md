@@ -68,4 +68,13 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/services/{serviceName}'].put.parameters[5].schema
     transform: >
         $["$ref"] = "#/definitions/ServiceResource";
+# Following two transforms are temporary due to non-nullable properties (properties that do not declare x-nullable: true) being null in service response
+  - from: swagger-document
+    where: $.definitions.NotebookResourceInfo.properties.notebookPreparationError
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Workspace.properties.tags
+    transform: >
+        $["x-nullable"] = true;
 ```

@@ -1,11 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TestHelperProjects>;</TestHelperProjects>
+    <UseNewMgmtFramework>true</UseNewMgmtFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.ResourceManager.MachineLearningServices.csproj" />
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.MachineLearningServices.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>

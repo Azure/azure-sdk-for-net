@@ -27,15 +27,16 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists the Workspaces for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static AsyncPageable<Workspace> ListWorkspaceAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Workspace> ListWorkspaceAsync(this SubscriptionOperations subscription, string skip = null, CancellationToken cancellationToken = default)
         {
             return subscription.ListResourcesAsync((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                var result = ListBySubscriptionAsync(clientDiagnostics, restOperations);
+                var result = ListBySubscriptionAsync(clientDiagnostics, restOperations, skip, cancellationToken);
                 return new PhWrappingAsyncPageable<WorkspaceData, Workspace>(
                 result,
                 s => new Workspace(subscription, s));
@@ -85,15 +86,16 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists the Workspaces for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static Pageable<Workspace> ListWorkspace(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        public static Pageable<Workspace> ListWorkspace(this SubscriptionOperations subscription, string skip = null, CancellationToken cancellationToken = default)
         {
             return subscription.ListResources((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                var result = ListBySubscription(clientDiagnostics, restOperations);
+                var result = ListBySubscription(clientDiagnostics, restOperations, skip, cancellationToken);
                 return new PhWrappingPageable<WorkspaceData, Workspace>(
                 result,
                 s => new Workspace(subscription, s));

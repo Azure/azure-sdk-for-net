@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Specifies the location of the resource. </summary>
         public string Location { get; set; }
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> The sku of the workspace. </summary>
         public Sku Sku { get; set; }
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>

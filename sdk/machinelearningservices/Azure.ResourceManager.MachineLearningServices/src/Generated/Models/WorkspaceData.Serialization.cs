@@ -29,14 +29,21 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Tags != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             if (Optional.IsDefined(Sku))
             {
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
