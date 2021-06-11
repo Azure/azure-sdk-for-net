@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task TextWithEmoji()
         {
             TextAnalyticsClient client = GetClient();
@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task TextWithDiacriticsNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task TextInKoreanNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -80,6 +80,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task RotateApiKey()
         {
             // Instantiate a client that will be used to call the service.
