@@ -37,30 +37,45 @@ function Get-ChangeLogEntriesFromContent {
     return $null
   }
 
+  $changelogEntry = $null
+  $sectionName = $null
   $changeLogEntries = [Ordered]@{}
   try {
     # walk the document, finding where the version specifiers are and creating lists
-    $changeLogEntry = $null
     foreach ($line in $changeLogContent) {
       if ($line -match $RELEASE_TITLE_REGEX) {
-        $changeLogEntry = [pscustomobject]@{ 
+        $changeLogEntry = [pscustomobject]@{
           ReleaseVersion = $matches["version"]
           ReleaseStatus  =  $matches["releaseStatus"]
           ReleaseTitle   = "## {0} {1}" -f $matches["version"], $matches["releaseStatus"]
           ReleaseContent = @()
+          Sections = @{}
         }
         $changeLogEntries[$changeLogEntry.ReleaseVersion] = $changeLogEntry
       }
       else {
         if ($changeLogEntry) {
+          if ($line.Trim() -match "^###\s(?<sectionName>.*)")
+          {
+            $sectionName = $matches["sectionName"].Trim()
+            $changeLogEntry.Sections[$sectionName] = @()
+            $changeLogEntry.ReleaseContent += $line
+            continue
+          }
+
+          if ($sectionName)
+          {
+            $changeLogEntry.Sections[$sectionName] += $line
+          }
+
           $changeLogEntry.ReleaseContent += $line
         }
       }
     }
   }
   catch {
-    Write-Host "Error parsing Changelog."
-    Write-Host $_.Exception.Message
+    Write-Error "Error parsing Changelog."
+    Write-Error $_
   }
   return $changeLogEntries
 }
@@ -195,9 +210,21 @@ function New-ChangeLogEntry {
     return $null
   }
 
-  if (!$Content) { $Content = @() }
+  if (!$Content) {
+    $Content = @()
+    $Content += ""
+    $Content += "### Features Added"
+    $Content += ""
+    $Content += "### Breaking Changes"
+    $Content += ""
+    $Content += "### Key Bugs Fixed"
+    $Content += ""
+    $Content += "### Fixed"
+    $Content += ""
+    $Content += ""
+  }
 
-  $newChangeLogEntry = [pscustomobject]@{ 
+  $newChangeLogEntry = [pscustomobject]@{
     ReleaseVersion = $Version
     ReleaseStatus  = $Status
     ReleaseTitle   = "## $Version $Status"

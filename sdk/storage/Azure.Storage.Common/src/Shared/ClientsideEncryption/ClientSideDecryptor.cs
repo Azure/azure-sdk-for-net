@@ -240,7 +240,11 @@ namespace Azure.Storage.Cryptography
                         aesProvider.Padding = PaddingMode.None;
                     }
 
-                    return new CryptoStream(contentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read);
+                    // Buffer network stream. CryptoStream issues tiny (~16 byte) reads which can lead to resources churn.
+                    // By default buffer is 4KB.
+                    var bufferedContentStream = new BufferedStream(contentStream);
+
+                    return new CryptoStream(bufferedContentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read);
                 }
             }
 

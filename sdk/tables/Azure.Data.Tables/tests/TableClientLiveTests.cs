@@ -27,6 +27,31 @@ namespace Azure.Data.Tables.Tests
             endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
+        [RecordedTest]
+        public async Task UpsertAndQueryWithSingleQuoteNames([Values(true, false)] bool expressionQuery)
+        {
+            List<TableEntity> entityResults;
+            string partitionKeyValue = "PartitionWithi''singleQuote";
+            string rowKeyValue = "01''";
+            TableEntity entityToCreate = CreateTableEntities(partitionKeyValue, 1).First();
+            entityToCreate.RowKey = rowKeyValue;
+
+            // Create the new entities.
+            await client.UpsertEntityAsync(entityToCreate);
+
+            if (expressionQuery)
+            {
+                // Query the entities with expression.
+                entityResults = await client.QueryAsync<TableEntity>(e => e.PartitionKey == partitionKeyValue && e.RowKey == rowKeyValue).ToEnumerableAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                // Query the entities with string filter.
+                entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
+            }
+            Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
@@ -98,7 +123,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClient using the SAS URI.
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -138,7 +163,7 @@ namespace Azure.Data.Tables.Tests
             // Create the TableServiceClient using the SAS URI.
             // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -186,7 +211,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClient using the SAS URI.
             var sasAuthedService =
-                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Insert the entities
@@ -231,6 +256,30 @@ namespace Azure.Data.Tables.Tests
             entityResults = await client.QueryAsync<TableEntity>(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            entityResults.Clear();
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task CreateEntityWithETagProperty()
+        {
+            List<TableEntity> entityResults;
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue,1);
+            entitiesToCreate[0]["ETag"] = "foo";
+
+            // Create the new entities.
+
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
+
+            // Query the entities.
+
+            entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            Assert.AreEqual("foo", entityResults[0]["ETag"]);
+            Assert.AreNotEqual(entityResults[0]["ETag"], entityResults[0].ETag);
             entityResults.Clear();
         }
 
@@ -498,6 +547,18 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(mergedEntity[mergepropertyName], Is.EqualTo(mergeUpdatedValue));
             Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
+        }
+
+        [RecordedTest]
+        public async Task DeleteEntityWithConnectionStringCtor()
+        {
+            var entity = new TableEntity("TestPartitionKey", "testRowKey")
+            {
+                { "Product", "Marker Set" }
+            };
+            await connectionStringClient.AddEntityAsync(entity);
+            entity = await connectionStringClient.GetEntityAsync<TableEntity>("TestPartitionKey", "testRowKey");
+            await connectionStringClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
         }
 
         /// <summary>

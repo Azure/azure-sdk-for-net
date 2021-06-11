@@ -19,6 +19,15 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics
 ```
+> Note: This version of the client library defaults to the `v3.1-preview.5` version of the service.
+
+This table shows the relationship between SDK versions and supported API versions of the service:
+
+|SDK version|Supported API version of service
+|-|- |
+|5.1.0-beta.7 (latest Beta) | 3.0, 3.1-preview.5
+|5.0.0 (latest GA) | 3.0
+|1.0.0, 1.0.1 | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -427,6 +436,7 @@ catch (RequestFailedException exception)
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
 ```C# Snippet:Sample7_AnalyzeHealthcareEntitiesBatchConvenience
+    // get input documents
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                         HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -439,6 +449,7 @@ Text Analytics for health is a containerized service that extracts and labels re
 
     string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
+    // prepare analyze operation input
     List<string> batchInput = new List<string>()
     {
         document1,
@@ -447,17 +458,20 @@ Text Analytics for health is a containerized service that extracts and labels re
     };
     var options = new AnalyzeHealthcareEntitiesOptions { };
 
+    // start analysis process
     AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, "en", options);
 
     await healthOperation.WaitForCompletionAsync();
 
     Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
 
+    // view operation status
     Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
     Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
     Console.WriteLine($"Status       : {healthOperation.Status}");
     Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 
+    // view operation results
     foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
     {
         Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -475,6 +489,7 @@ Text Analytics for health is a containerized service that extracts and labels re
             {
                 Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
+                // view recognized healthcare entities
                 foreach (HealthcareEntity entity in result.Entities)
                 {
                     Console.WriteLine($"    Entity: {entity.Text}");
@@ -484,12 +499,14 @@ Text Analytics for health is a containerized service that extracts and labels re
                     Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                     Console.WriteLine($"    Links:");
 
+                    // view entity data sources
                     foreach (EntityDataSource entityDataSource in entity.DataSources)
                     {
                         Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                         Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
 
+                    // view assertion
                     if (entity.Assertion != null)
                     {
                         Console.WriteLine($"    Assertions:");
@@ -512,11 +529,13 @@ Text Analytics for health is a containerized service that extracts and labels re
                     Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
                     Console.WriteLine("");
 
+                    // view recognized healthcare relations
                     foreach (HealthcareEntityRelation relations in result.EntityRelations)
                     {
                         Console.WriteLine($"        Relation: {relations.RelationType}");
                         Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
 
+                        // view relation roles
                         foreach (HealthcareEntityRelationRole role in relations.Roles)
                         {
                             Console.WriteLine($"            Role Name: {role.Name}");
@@ -583,22 +602,22 @@ This functionality allows running multiple actions in one or more documents. Act
 
     await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
-        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
-        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;
-        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = documentsInPage.RecognizePiiEntitiesActionsResults;
-        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = documentsInPage.RecognizeLinkedEntitiesActionsResults;
-        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = documentsInPage.AnalyzeSentimentActionsResults;
+        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
+        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
+        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResults = documentsInPage.RecognizePiiEntitiesResults;
+        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingResults = documentsInPage.RecognizeLinkedEntitiesResults;
+        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentResults = documentsInPage.AnalyzeSentimentResults;
 
         Console.WriteLine("Recognized Entities");
         int docNumber = 1;
-        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
+        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
-            foreach (RecognizeEntitiesResult result in entitiesActionResults.Result)
+            foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
 
-                foreach (CategorizedEntity entity in result.Entities)
+                foreach (CategorizedEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -613,14 +632,14 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Recognized PII Entities");
         docNumber = 1;
-        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
+        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
         {
-            foreach (RecognizePiiEntitiesResult result in piiActionResults.Result)
+            foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} PII entities:");
 
-                foreach (PiiEntity entity in result.Entities)
+                foreach (PiiEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -635,14 +654,14 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Key Phrases");
         docNumber = 1;
-        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
+        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
         {
-            foreach (ExtractKeyPhrasesResult result in keyPhrasesActionResult.Result)
+            foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+                Console.WriteLine($"  Recognized the following {documentResults.KeyPhrases.Count} Keyphrases:");
 
-                foreach (string keyphrase in result.KeyPhrases)
+                foreach (string keyphrase in documentResults.KeyPhrases)
                 {
                     Console.WriteLine($"  {keyphrase}");
                 }
@@ -652,14 +671,14 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Recognized Linked Entities");
         docNumber = 1;
-        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
+        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
         {
-            foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesActionResults.Result)
+            foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} linked entities:");
 
-                foreach (LinkedEntity entity in result.Entities)
+                foreach (LinkedEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Name}");
                     Console.WriteLine($"  DataSource: {entity.DataSource}");
@@ -683,15 +702,15 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Analyze Sentiment");
         docNumber = 1;
-        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
+        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
         {
-            foreach (AnalyzeSentimentResult result in analyzeSentimentActionsResult.Result)
+            foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
+                Console.WriteLine($"  Sentiment is {documentResults.DocumentSentiment.Sentiment}, with confidence scores: ");
+                Console.WriteLine($"    Positive confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Positive}.");
+                Console.WriteLine($"    Neutral confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Neutral}.");
+                Console.WriteLine($"    Negative confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Negative}.");
                 Console.WriteLine("");
             }
         }
@@ -702,7 +721,6 @@ This functionality allows running multiple actions in one or more documents. Act
 ### Known Issues
 - `StartAnalyzeHealthcareEntities` is in gated preview and can not be used with AAD credentials. For more information, see [the Text Analytics for Health documentation](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
 - The parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions` is currently not working when used in `StartAnalyzeBatchActions`. [19237](https://github.com/Azure/azure-sdk-for-net/issues/19237).
-- `Statistics` for `AnalyzeActionsResult` are not currently returned even if the user passes `IncludeStatistics  = true`. [19268](https://github.com/Azure/azure-sdk-for-net/issues/19268).
 - At time of this SDK release, the `ModelVersion` option to `StartAnalyzeHealthcareEntities` is ignored by the service. The service always processes the operation using the `latest` model.
 
 ## Troubleshooting

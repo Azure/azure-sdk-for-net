@@ -34,6 +34,8 @@ namespace Azure.Data.Tables.Tests
 
         protected TableServiceClient service { get; private set; }
         protected TableClient client { get; private set; }
+        protected TableClient connectionStringClient { get; private set; }
+        protected string ConnectionString { get; private set; }
 
         protected string tableName { get; private set; }
         protected const string PartitionKeyValue = "somPartition";
@@ -60,6 +62,7 @@ namespace Azure.Data.Tables.Tests
             {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
+            {"CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405"}
         };
 
         /// <summary>
@@ -96,16 +99,24 @@ namespace Azure.Data.Tables.Tests
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
+            ConnectionString =_endpointType switch
+            {
+                TableEndpointType.Storage => TestEnvironment.StorageConnectionString,
+                TableEndpointType.CosmosTable => TestEnvironment.CosmosConnectionString,
+                _ => throw new NotSupportedException("Unknown endpoint type")
+            };
+            var options = InstrumentClientOptions(new TableClientOptions());
             service = InstrumentClient(new TableServiceClient(
                 new Uri(ServiceUri),
                 new TableSharedKeyCredential(AccountName, AccountKey),
-                InstrumentClientOptions(new TablesClientOptions())));
+                options));
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
             await CosmosThrottleWrapper(async () => await service.CreateTableAsync(tableName).ConfigureAwait(false));
 
             client = InstrumentClient(service.GetTableClient(tableName));
+            connectionStringClient = InstrumentClient(new TableClient(ConnectionString, tableName, options));
         }
 
         [TearDown]

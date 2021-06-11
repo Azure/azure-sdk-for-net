@@ -6,17 +6,26 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
 
 ## Table of contents
 
--   [Migration benefits](#migration-benefits)
--   [General changes](#general-changes)
-    -   [Package and namespaces](#package-and-namespaces)
-    -   [Client hierarchy](#client-hierarchy)
-    -   [Client constructors](#client-constructors)
-    -   [Sending messages](#sending-messages)
-    -   [Receiving messages](#receiving-messages)
-    -   [Working with sessions](#working-with-sessions)
-    -   [Cross-entity transactions](#cross-entity-transactions)
--   [Known gaps](#known-gaps-from-previous-library)
--   [Additional samples](#additional-samples)
+- [Guide for migrating to Azure.Messaging.ServiceBus from Microsoft.Azure.ServiceBus](#guide-for-migrating-to-azuremessagingservicebus-from-microsoftazureservicebus)
+  - [Table of contents](#table-of-contents)
+  - [Migration benefits](#migration-benefits)
+    - [Cross Service SDK improvements](#cross-service-sdk-improvements)
+    - [New features](#new-features)
+  - [General changes](#general-changes)
+    - [Package and namespaces](#package-and-namespaces)
+    - [Client hierarchy](#client-hierarchy)
+      - [Approachability](#approachability)
+      - [Consistency](#consistency)
+      - [Connection Pooling](#connection-pooling)
+    - [Client constructors](#client-constructors)
+      - [Service Bus client](#service-bus-client)
+      - [Administration client](#administration-client)
+    - [Sending messages](#sending-messages)
+    - [Receiving messages](#receiving-messages)
+    - [Working with sessions](#working-with-sessions)
+    - [Cross-Entity transactions](#cross-entity-transactions)
+  - [Known Gaps from Previous Library](#known-gaps-from-previous-library)
+  - [Additional samples](#additional-samples)
 
 ## Migration benefits
 
@@ -72,6 +81,8 @@ By making this connection sharing be implicit to a `ServiceBusClient` instance, 
 
 ### Client constructors
 
+#### Service Bus client
+
 While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory. We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
 
 Authenticate with Active Directory:
@@ -88,6 +99,27 @@ Authenticate with connection string:
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
 ServiceBusClient client = new ServiceBusClient(connectionString);
+```
+
+#### Administration client
+
+The `ServiceBusAdministrationClient` replaces the `ManagementClient` from `Microsoft.Azure.ServiceBus`. For example usage please see the sample for [CRUD operations using the `ServiceBusAdministrationClient`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample07_CrudOperations.md).
+
+
+Authenticate with Active Directory:
+
+```C# Snippet:ServiceBusAdministrationClientAAD
+// Create a ServiceBusAdministrationClient that will authenticate using default credentials
+string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+```
+
+Authenticate with connection string:
+
+```C# Snippet:ServiceBusAdministrationClientConnectionString
+// Create a ServiceBusAdministrationClient that will authenticate using a connection string
+string connectionString = "<connection_string>";
+ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
 ```
 
 ### Sending messages

@@ -81,37 +81,33 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateHookValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var hook = new EmailNotificationHook();
 
-            Assert.That(() => adminClient.UpdateHookAsync(null, hook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateHookAsync("", hook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateHookAsync("hookId", hook), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateHookAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHookAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHook(null), Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => adminClient.UpdateHook(null, hook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateHook("", hook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateHook("hookId", hook), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateHook(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            var hookWithNullId = new EmailNotificationHook();
+
+            Assert.That(() => adminClient.UpdateHookAsync(hookWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHook(hookWithNullId), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateHookRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var hook = new EmailNotificationHook();
+            var hook = new EmailNotificationHook(default, FakeGuid, default, default, default, new List<string>(), new EmailHookParameter(new List<string>()));
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => adminClient.UpdateHookAsync(FakeGuid, hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
-            Assert.That(() => adminClient.UpdateHook(FakeGuid, hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateHookAsync(hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateHook(hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]

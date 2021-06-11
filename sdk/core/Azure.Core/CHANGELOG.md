@@ -1,10 +1,17 @@
 # Release History
 
-## 1.15.0-beta.1 (Unreleased)
+## 1.16.0-beta.1 (Unreleased)
+
+
+## 1.15.0 (2021-06-08)
 
 ### Features Added
 
 - Types to represent `GeoJson` primitives.
+
+### Changed
+
+- `Response.Content` no longer throws `InvalidOperationException` when the response is backed by a `MemoryStream` with a non publicly visible buffer.
 
 ## 1.14.0 (2021-05-11)
 

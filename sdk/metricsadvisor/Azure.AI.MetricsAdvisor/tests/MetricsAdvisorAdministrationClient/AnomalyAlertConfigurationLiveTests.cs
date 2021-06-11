@@ -38,9 +38,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
 
-            AnomalyAlertConfiguration createdConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
@@ -85,9 +85,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
 
-            AnomalyAlertConfiguration createdConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
@@ -136,9 +136,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
 
-            AnomalyAlertConfiguration createdConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
@@ -174,8 +174,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName0 = Recording.GenerateAlphaNumericId("hook");
             string hookName1 = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate0 = new WebNotificationHook() { Name = hookName0, Endpoint = new Uri("http://contoso.com/") };
-            var hookToCreate1 = new WebNotificationHook() { Name = hookName1, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate0 = new EmailNotificationHook() { Name = hookName0 };
+            var hookToCreate1 = new EmailNotificationHook() { Name = hookName1 };
+
+            hookToCreate0.EmailsToAlert.Add("fake@email.com");
+            hookToCreate1.EmailsToAlert.Add("fake@email.com");
 
             await using var disposableHook0 = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate0);
             await using var disposableHook1 = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate1);
@@ -191,7 +194,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -203,22 +206,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
-                IdsOfHooksToAlert = { disposableHook0.Id, disposableHook1.Id },
+                IdsOfHooksToAlert = { disposableHook0.Hook.Id, disposableHook1.Hook.Id },
                 MetricAlertConfigurations = { metricAlertConfig },
                 Description = description
             };
 
             await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
 
-            AnomalyAlertConfiguration createdConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.EqualTo(description));
             Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert.Count, Is.EqualTo(2));
-            Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook0.Id));
-            Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook1.Id));
+            Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook0.Hook.Id));
+            Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook1.Hook.Id));
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
             MetricAnomalyAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
@@ -236,7 +239,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.True);
+            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
@@ -288,9 +291,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Get the created configuration and validate top-level members.
 
-            AnomalyAlertConfiguration createdConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            AnomalyAlertConfiguration createdConfig = disposableConfig.Configuration;
 
-            Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.Xor));
@@ -315,7 +318,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.Null);
             Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(createdMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Null);
 
             Assert.That(createdMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
@@ -338,7 +341,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.UpperBound, Is.Null);
             Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(createdMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
 
             Assert.That(createdMetricAlertConfig1.AlertSnoozeCondition, Is.Null);
@@ -348,7 +351,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateAlertConfigurationWithMinimumSetupAndGetInstance(bool useTokenCrendential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCrendential);
@@ -356,7 +358,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
+
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
@@ -370,7 +373,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -383,13 +386,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Create the Anomaly Alert Configuration.
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            var hookIds = new List<string>() { disposableHook.Id };
-            var metricAlertConfigs = new List<MetricAnomalyAlertConfiguration>() { metricAlertConfig0, metricAlertConfig1 };
+            var hookIds = new List<string>() { disposableHook.Hook.Id };
 
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
-                IdsOfHooksToAlert = { disposableHook.Id },
+                IdsOfHooksToAlert = { disposableHook.Hook.Id },
                 MetricAlertConfigurations = { metricAlertConfig0, metricAlertConfig1 },
                 CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Xor
             };
@@ -398,17 +400,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created configuration.
 
-            AnomalyAlertConfiguration configToUpdate = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            AnomalyAlertConfiguration configToUpdate = disposableConfig.Configuration;
 
             configToUpdate.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Or;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
+            // Validate top-level members.
 
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
-
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.Empty);
             Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.Or));
@@ -433,7 +433,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.True);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
@@ -486,7 +486,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -503,7 +503,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
-                IdsOfHooksToAlert = { disposableHook.Id },
+                IdsOfHooksToAlert = { disposableHook.Hook.Id },
                 MetricAlertConfigurations = { metricAlertConfig0, metricAlertConfig1 },
                 CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Xor
             };
@@ -517,17 +517,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Or
             };
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
+            // Validate top-level members.
 
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
-
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.Empty);
             Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.Or));
-            Assert.That(updatedConfig.IdsOfHooksToAlert.Single(), Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedConfig.IdsOfHooksToAlert.Single(), Is.EqualTo(disposableHook.Hook.Id));
             Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
             Assert.That(updatedConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
 
@@ -548,7 +546,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.True);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
@@ -579,7 +577,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateAlertConfigurationWithEveryMemberAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -587,7 +584,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
+
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
@@ -601,7 +599,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -615,13 +613,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string configName = Recording.GenerateAlphaNumericId("config");
             var description = "This hook was created to test the .NET client.";
-            var hookIds = new List<string>() { disposableHook.Id };
+            var hookIds = new List<string>() { disposableHook.Hook.Id };
             var metricAlertConfigs = new List<MetricAnomalyAlertConfiguration>() { metricAlertConfig0, metricAlertConfig1 };
 
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
-                IdsOfHooksToAlert = { disposableHook.Id },
+                IdsOfHooksToAlert = { disposableHook.Hook.Id },
                 MetricAlertConfigurations = { metricAlertConfig0, metricAlertConfig1 },
                 CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Xor
             };
@@ -630,7 +628,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created configuration.
 
-            AnomalyAlertConfiguration configToUpdate = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            AnomalyAlertConfiguration configToUpdate = disposableConfig.Configuration;
 
             configToUpdate.Description = description;
             configToUpdate.IdsOfHooksToAlert.Clear();
@@ -650,19 +648,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.UpperBound = 15.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.LowerBound = 5.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.CompanionMetricId = null;
-            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.TriggerForMissing = false;
+            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing = false;
 
             metricAlertConfigToUpdate.AlertConditions.SeverityCondition = new SeverityCondition(AnomalySeverity.Medium, AnomalySeverity.High);
 
             metricAlertConfigToUpdate.AlertSnoozeCondition = null;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
+            // Validate top-level members.
 
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
-
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
             Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.And));
@@ -686,7 +682,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(15.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(5.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.High));
@@ -743,7 +739,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -761,7 +757,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
-                IdsOfHooksToAlert = { disposableHook.Id },
+                IdsOfHooksToAlert = { disposableHook.Hook.Id },
                 MetricAlertConfigurations = { metricAlertConfig0, metricAlertConfig1 },
                 CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Xor
             };
@@ -792,19 +788,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.UpperBound = 15.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.LowerBound = 5.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.CompanionMetricId = null;
-            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.TriggerForMissing = false;
+            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing = false;
 
             metricAlertConfigToUpdate.AlertConditions.SeverityCondition = new SeverityCondition(AnomalySeverity.Medium, AnomalySeverity.High);
 
             metricAlertConfigToUpdate.AlertSnoozeCondition = null;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
+            // Validate top-level members.
 
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
-
-            Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
+            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
             Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.And));
@@ -828,7 +822,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(15.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(5.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.High));
@@ -1008,7 +1002,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(boundaryCondition.CompanionMetricId, Is.Not.Empty);
                 }
 
-                Assert.That(boundaryCondition.TriggerForMissing, Is.Not.Null);
+                Assert.That(boundaryCondition.ShouldAlertIfDataPointMissing, Is.Not.Null);
             }
 
             if (severityCondition != null)

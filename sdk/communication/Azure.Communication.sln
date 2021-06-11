@@ -41,6 +41,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNumbers.Tests", "Azure.Communication.PhoneNumbers\tests\Azure.Communication.PhoneNumbers.Tests.csproj", "{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallingServer", "Azure.Communication.CallingServer\src\Azure.Communication.CallingServer.csproj", "{B41D0602-4A84-479B-8369-D0E75E66E946}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallingServer.Tests", "Azure.Communication.CallingServer\tests\Azure.Communication.CallingServer.Tests.csproj", "{B7C0269B-1809-4713-A7BD-390098AB7135}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +111,14 @@ Global
 		{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B41D0602-4A84-479B-8369-D0E75E66E946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B41D0602-4A84-479B-8369-D0E75E66E946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B41D0602-4A84-479B-8369-D0E75E66E946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B41D0602-4A84-479B-8369-D0E75E66E946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7C0269B-1809-4713-A7BD-390098AB7135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C0269B-1809-4713-A7BD-390098AB7135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

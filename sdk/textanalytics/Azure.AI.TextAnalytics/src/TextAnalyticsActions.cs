@@ -14,27 +14,27 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Extract KeyPhrases actions.
+        /// The set of <see cref="ExtractKeyPhrasesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<ExtractKeyPhrasesAction> ExtractKeyPhrasesActions { get; set; }
 
         /// <summary>
-        /// Recognize Entities actions.
+        /// The set of <see cref="RecognizeEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<RecognizeEntitiesAction> RecognizeEntitiesActions { get; set; }
 
         /// <summary>
-        /// Recognize PII Entities actions.
+        /// The set of <see cref="RecognizePiiEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<RecognizePiiEntitiesAction> RecognizePiiEntitiesActions { get; set; }
 
         /// <summary>
-        /// Recognize Linked Entities actions.
+        /// The set of <see cref="RecognizeLinkedEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<RecognizeLinkedEntitiesAction> RecognizeLinkedEntitiesActions { get; set; }
 
         /// <summary>
-        /// Analyze Sentiment actions.
+        /// The set of <see cref="AnalyzeSentimentAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<AnalyzeSentimentAction> AnalyzeSentimentActions { get; set; }
     }
