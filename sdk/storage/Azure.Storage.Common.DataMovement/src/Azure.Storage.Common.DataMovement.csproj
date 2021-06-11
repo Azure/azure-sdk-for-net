@@ -4,7 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common.DataMovement client library</AssemblyTitle>
-    <Version>0.1.0-beta.1</Version>
+    <Version>12.0.0-preview.1</Version>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
