@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The WorkspaceGitRepoManagement service client. </summary>
     public partial class WorkspaceGitRepoManagementClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal WorkspaceGitRepoManagementRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of WorkspaceGitRepoManagementClient for mocking. </summary>
         protected WorkspaceGitRepoManagementClient()
@@ -44,33 +46,74 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new WorkspaceGitRepoManagementRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of WorkspaceGitRepoManagementClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal WorkspaceGitRepoManagementClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
-        {
-            RestClient = new WorkspaceGitRepoManagementRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GitHubAccessTokenResponse>> GetGitHubAccessTokenAsync(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>gitHubClientId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The GitHub Client Id. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>gitHubAccessCode</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The GitHub Access code. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>gitHubAccessTokenBaseUrl</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The GitHub access token base URL. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGitHubAccessTokenAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGitHubAccessTokenRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("WorkspaceGitRepoManagementClient.GetGitHubAccessToken");
             scope.Start();
             try
             {
-                return await RestClient.GetGitHubAccessTokenAsync(gitHubAccessTokenRequest, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -80,21 +123,91 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GitHubAccessTokenResponse> GetGitHubAccessToken(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>gitHubClientId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The GitHub Client Id. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>gitHubAccessCode</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The GitHub Access code. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>gitHubAccessTokenBaseUrl</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The GitHub access token base URL. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGitHubAccessToken(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGitHubAccessTokenRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("WorkspaceGitRepoManagementClient.GetGitHubAccessToken");
             scope.Start();
             try
             {
-                return RestClient.GetGitHubAccessToken(gitHubAccessTokenRequest, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Create Request for <see cref="GetGitHubAccessToken"/> and <see cref="GetGitHubAccessTokenAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGitHubAccessTokenRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/getGitHubAccessToken", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The Workspace service client. </summary>
     public partial class WorkspaceClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal WorkspaceRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of WorkspaceClient for mocking. </summary>
         protected WorkspaceClient()
@@ -44,32 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new WorkspaceRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of WorkspaceClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal WorkspaceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
-        {
-            RestClient = new WorkspaceRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Get Workspace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Workspace>> GetAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("WorkspaceClient.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -79,20 +93,58 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get Workspace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Workspace> Get(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Get(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("WorkspaceClient.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/workspace", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

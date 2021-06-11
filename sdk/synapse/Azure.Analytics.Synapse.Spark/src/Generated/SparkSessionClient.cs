@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,15 @@ namespace Azure.Analytics.Synapse.Spark
     /// <summary> The SparkSession service client. </summary>
     public partial class SparkSessionClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private string sparkPoolName;
+        private string livyApiVersion;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal SparkSessionRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of SparkSessionClient for mocking. </summary>
         protected SparkSessionClient()
@@ -54,22 +58,13 @@ namespace Azure.Analytics.Synapse.Spark
 
             options ??= new SparkClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SparkSessionRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
-        }
-
-        /// <summary> Initializes a new instance of SparkSessionClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="sparkPoolName"> Name of the spark pool. </param>
-        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        internal SparkSessionClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
-        {
-            RestClient = new SparkSessionRestClient(clientDiagnostics, pipeline, endpoint, sparkPoolName, livyApiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            this.sparkPoolName = sparkPoolName;
+            this.livyApiVersion = livyApiVersion;
+            apiVersion = options.Version;
         }
 
         /// <summary> List all spark sessions which are running under a particular spark pool. </summary>
@@ -80,14 +75,36 @@ namespace Azure.Analytics.Synapse.Spark
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkSessionCollection>> GetSparkSessionsAsync(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkSessionsAsync(int? @from = null, int? size = null, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkSessionsRequest(@from, size, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSessions");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkSessionsAsync(@from, size, detailed, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -104,14 +121,438 @@ namespace Azure.Analytics.Synapse.Spark
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkSessionCollection> GetSparkSessions(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkSessions(int? @from = null, int? size = null, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkSessionsRequest(@from, size, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSessions");
             scope.Start();
             try
             {
-                return RestClient.GetSparkSessions(@from, size, detailed, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetSparkSessions"/> and <see cref="GetSparkSessionsAsync"/> operations. </summary>
+        /// <param name="from"> Optional param specifying which index the list should begin from. </param>
+        /// <param name="size">
+        /// Optional param specifying the size of the returned list.
+        /// 
+        ///             By default it is 20 and that is the maximum.
+        /// </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkSessionsRequest(int? @from = null, int? size = null, bool? detailed = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions", false);
+            if (@from != null)
+            {
+                uri.AppendQuery("from", @from.Value, true);
+            }
+            if (size != null)
+            {
+                uri.AppendQuery("size", size.Value, true);
+            }
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Create new spark session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>tags</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>artifactId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>pyFiles</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateSparkSessionAsync(RequestContent requestBody, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateSparkSessionRequest(requestBody, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkSession");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create new spark session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>tags</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>artifactId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>pyFiles</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateSparkSession(RequestContent requestBody, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateSparkSessionRequest(requestBody, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkSession");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateSparkSession"/> and <see cref="CreateSparkSessionAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateSparkSessionRequest(RequestContent requestBody, bool? detailed = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions", false);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a single spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkSessionAsync(int sessionId, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkSessionRequest(sessionId, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSession");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -123,14 +564,36 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Gets a single spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkSession>> GetSparkSessionAsync(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkSession(int sessionId, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkSessionRequest(sessionId, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSession");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkSessionAsync(sessionId, detailed, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -139,17 +602,64 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Gets a single spark session. </summary>
+        /// <summary> Create Request for <see cref="GetSparkSession"/> and <see cref="GetSparkSessionAsync"/> operations. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkSession> GetSparkSession(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkSessionRequest(int sessionId, bool? detailed = null, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkSession");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancels a running spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CancelSparkSessionAsync(int sessionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelSparkSessionRequest(sessionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CancelSparkSession");
             scope.Start();
             try
             {
-                return RestClient.GetSparkSession(sessionId, detailed, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -160,14 +670,36 @@ namespace Azure.Analytics.Synapse.Spark
 
         /// <summary> Cancels a running spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelSparkSessionAsync(int sessionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CancelSparkSession(int sessionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelSparkSessionRequest(sessionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CancelSparkSession");
             scope.Start();
             try
             {
-                return await RestClient.CancelSparkSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -176,16 +708,58 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Cancels a running spark session. </summary>
+        /// <summary> Create Request for <see cref="CancelSparkSession"/> and <see cref="CancelSparkSessionAsync"/> operations. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelSparkSession(int sessionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCancelSparkSessionRequest(int sessionId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CancelSparkSession");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Sends a keep alive call to the current session to reset the session timeout. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ResetSparkSessionTimeoutAsync(int sessionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateResetSparkSessionTimeoutRequest(sessionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.ResetSparkSessionTimeout");
             scope.Start();
             try
             {
-                return RestClient.CancelSparkSession(sessionId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -196,14 +770,36 @@ namespace Azure.Analytics.Synapse.Spark
 
         /// <summary> Sends a keep alive call to the current session to reset the session timeout. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ResetSparkSessionTimeoutAsync(int sessionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ResetSparkSessionTimeout(int sessionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateResetSparkSessionTimeoutRequest(sessionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.ResetSparkSessionTimeout");
             scope.Start();
             try
             {
-                return await RestClient.ResetSparkSessionTimeoutAsync(sessionId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -212,16 +808,59 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Sends a keep alive call to the current session to reset the session timeout. </summary>
+        /// <summary> Create Request for <see cref="ResetSparkSessionTimeout"/> and <see cref="ResetSparkSessionTimeoutAsync"/> operations. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ResetSparkSessionTimeout(int sessionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateResetSparkSessionTimeoutRequest(int sessionId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.ResetSparkSessionTimeout");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/reset-timeout", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Gets a list of statements within a spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkStatementsAsync(int sessionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkStatementsRequest(sessionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatements");
             scope.Start();
             try
             {
-                return RestClient.ResetSparkSessionTimeout(sessionId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -232,14 +871,36 @@ namespace Azure.Analytics.Synapse.Spark
 
         /// <summary> Gets a list of statements within a spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkStatementCollection>> GetSparkStatementsAsync(int sessionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkStatements(int sessionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkStatementsRequest(sessionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatements");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkStatementsAsync(sessionId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -248,16 +909,214 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Gets a list of statements within a spark session. </summary>
+        /// <summary> Create Request for <see cref="GetSparkStatements"/> and <see cref="GetSparkStatementsAsync"/> operations. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkStatementCollection> GetSparkStatements(int sessionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkStatementsRequest(int sessionId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatements");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Create statement within a spark session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>code</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>kind</term>
+        ///     <term>&quot;spark&quot; | &quot;pyspark&quot; | &quot;dotnetspark&quot; | &quot;sql&quot;</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateSparkStatementAsync(int sessionId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateSparkStatementRequest(sessionId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkStatement");
             scope.Start();
             try
             {
-                return RestClient.GetSparkStatements(sessionId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create statement within a spark session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>code</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>kind</term>
+        ///     <term>&quot;spark&quot; | &quot;pyspark&quot; | &quot;dotnetspark&quot; | &quot;sql&quot;</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateSparkStatement(int sessionId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateSparkStatementRequest(sessionId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkStatement");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateSparkStatement"/> and <see cref="CreateSparkStatementAsync"/> operations. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateSparkStatementRequest(int sessionId, RequestContent requestBody, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a single statement within a spark session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="statementId"> Identifier for the statement. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkStatementAsync(int sessionId, int statementId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkStatementRequest(sessionId, statementId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatement");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -269,14 +1128,36 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Gets a single statement within a spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="statementId"> Identifier for the statement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkStatement>> GetSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkStatement(int sessionId, int statementId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkStatementRequest(sessionId, statementId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatement");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkStatementAsync(sessionId, statementId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -285,17 +1166,63 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Gets a single statement within a spark session. </summary>
+        /// <summary> Create Request for <see cref="GetSparkStatement"/> and <see cref="GetSparkStatementAsync"/> operations. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="statementId"> Identifier for the statement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkStatement> GetSparkStatement(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkStatementRequest(int sessionId, int statementId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.GetSparkStatement");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements/", false);
+            uri.AppendPath(statementId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Kill a statement within a session. </summary>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        /// <param name="statementId"> Identifier for the statement. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CancelSparkStatementAsync(int sessionId, int statementId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelSparkStatementRequest(sessionId, statementId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CancelSparkStatement");
             scope.Start();
             try
             {
-                return RestClient.GetSparkStatement(sessionId, statementId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -307,14 +1234,36 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Kill a statement within a session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="statementId"> Identifier for the statement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkStatementCancellationResult>> CancelSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CancelSparkStatement(int sessionId, int statementId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelSparkStatementRequest(sessionId, statementId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CancelSparkStatement");
             scope.Start();
             try
             {
-                return await RestClient.CancelSparkStatementAsync(sessionId, statementId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -323,23 +1272,29 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Kill a statement within a session. </summary>
+        /// <summary> Create Request for <see cref="CancelSparkStatement"/> and <see cref="CancelSparkStatementAsync"/> operations. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="statementId"> Identifier for the statement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkStatementCancellationResult> CancelSparkStatement(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCancelSparkStatementRequest(int sessionId, int statementId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CancelSparkStatement");
-            scope.Start();
-            try
-            {
-                return RestClient.CancelSparkStatement(sessionId, statementId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements/", false);
+            uri.AppendPath(statementId, true);
+            uri.AppendPath("/cancel", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

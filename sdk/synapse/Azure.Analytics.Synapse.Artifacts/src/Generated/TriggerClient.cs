@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The Trigger service client. </summary>
     public partial class TriggerClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal TriggerRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of TriggerClient for mocking. </summary>
         protected TriggerClient()
@@ -44,89 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new TriggerRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of TriggerClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal TriggerClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists triggers. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetTriggersByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new TriggerRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TriggerResource>> GetTriggerAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTrigger");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTriggersByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTriggersByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.GetTriggerAsync(triggerName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TriggerResource> GetTrigger(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTrigger");
-            scope.Start();
-            try
-            {
-                return RestClient.GetTrigger(triggerName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a trigger&apos;s event subscription status. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(string triggerName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetEventSubscriptionStatus");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetEventSubscriptionStatusAsync(triggerName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a trigger&apos;s event subscription status. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TriggerSubscriptionOperationStatus> GetEventSubscriptionStatus(string triggerName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetEventSubscriptionStatus");
-            scope.Start();
-            try
-            {
-                return RestClient.GetEventSubscriptionStatus(triggerName, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -136,102 +93,169 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists triggers. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<TriggerResource> GetTriggersByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetTriggersByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<TriggerResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTriggersByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTriggersByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetTriggersByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<TriggerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTriggersByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetTriggersByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists triggers. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<TriggerResource> GetTriggersByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<TriggerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTriggersByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetTriggersByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TriggerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTriggersByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetTriggersByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates or updates a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="trigger"> Trigger resource definition. </param>
-        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
-        public virtual async Task<TriggerCreateOrUpdateTriggerOperation> StartCreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (trigger == null)
-            {
-                throw new ArgumentNullException(nameof(trigger));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartCreateOrUpdateTrigger");
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTriggersByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateTriggerAsync(triggerName, trigger, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new TriggerCreateOrUpdateTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateTriggerRequest(triggerName, trigger, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetTriggersByWorkspace"/> and <see cref="GetTriggersByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetTriggersByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a trigger. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Trigger</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of the trigger. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Trigger</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Trigger type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Trigger description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>runtimeState</term>
+        ///     <term>&quot;Started&quot; | &quot;Stopped&quot; | &quot;Disabled&quot;</term>
+        ///     <term></term>
+        ///     <term> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the trigger. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateTriggerAsync(string triggerName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateTriggerRequest(triggerName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.CreateOrUpdateTrigger");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -241,28 +265,289 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a trigger. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Trigger</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of the trigger. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Trigger</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Trigger type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Trigger description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>runtimeState</term>
+        ///     <term>&quot;Started&quot; | &quot;Stopped&quot; | &quot;Disabled&quot;</term>
+        ///     <term></term>
+        ///     <term> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the trigger. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="trigger"> Trigger resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
-        public virtual TriggerCreateOrUpdateTriggerOperation StartCreateOrUpdateTrigger(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateTrigger(string triggerName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (triggerName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateTriggerRequest(triggerName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(triggerName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (trigger == null)
-            {
-                throw new ArgumentNullException(nameof(trigger));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartCreateOrUpdateTrigger");
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdateTrigger(triggerName, trigger, ifMatch, cancellationToken);
-                return new TriggerCreateOrUpdateTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateTriggerRequest(triggerName, trigger, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateTrigger"/> and <see cref="CreateOrUpdateTriggerAsync"/> operations. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateTriggerRequest(string triggerName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetTriggerAsync(string triggerName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTriggerRequest(triggerName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTrigger");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetTrigger(string triggerName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTriggerRequest(triggerName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTrigger");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetTrigger"/> and <see cref="GetTriggerAsync"/> operations. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetTriggerRequest(string triggerName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteTriggerAsync(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTriggerRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.DeleteTrigger");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -273,21 +558,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual async Task<TriggerDeleteTriggerOperation> StartDeleteTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteTrigger(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (triggerName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTriggerRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(triggerName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartDeleteTrigger");
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.DeleteTrigger");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteTriggerAsync(triggerName, cancellationToken).ConfigureAwait(false);
-                return new TriggerDeleteTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteTriggerRequest(triggerName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -296,23 +598,57 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a trigger. </summary>
+        /// <summary> Create Request for <see cref="DeleteTrigger"/> and <see cref="DeleteTriggerAsync"/> operations. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual TriggerDeleteTriggerOperation StartDeleteTrigger(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteTriggerRequest(string triggerName, RequestOptions requestOptions = null)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartDeleteTrigger");
+        /// <summary> Subscribe event trigger to events. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> SubscribeTriggerToEventsAsync(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateSubscribeTriggerToEventsRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.SubscribeTriggerToEvents");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeleteTrigger(triggerName, cancellationToken);
-                return new TriggerDeleteTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteTriggerRequest(triggerName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -323,21 +659,37 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual async Task<TriggerSubscribeTriggerToEventsOperation> StartSubscribeTriggerToEventsAsync(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response SubscribeTriggerToEvents(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (triggerName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateSubscribeTriggerToEventsRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(triggerName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartSubscribeTriggerToEvents");
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.SubscribeTriggerToEvents");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.SubscribeTriggerToEventsAsync(triggerName, cancellationToken).ConfigureAwait(false);
-                return new TriggerSubscribeTriggerToEventsOperation(_clientDiagnostics, _pipeline, RestClient.CreateSubscribeTriggerToEventsRequest(triggerName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -346,23 +698,157 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Subscribe event trigger to events. </summary>
+        /// <summary> Create Request for <see cref="SubscribeTriggerToEvents"/> and <see cref="SubscribeTriggerToEventsAsync"/> operations. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual TriggerSubscribeTriggerToEventsOperation StartSubscribeTriggerToEvents(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateSubscribeTriggerToEventsRequest(string triggerName, RequestOptions requestOptions = null)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/subscribeToEvents", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartSubscribeTriggerToEvents");
+        /// <summary> Get a trigger&apos;s event subscription status. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetEventSubscriptionStatusAsync(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetEventSubscriptionStatusRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetEventSubscriptionStatus");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.SubscribeTriggerToEvents(triggerName, cancellationToken);
-                return new TriggerSubscribeTriggerToEventsOperation(_clientDiagnostics, _pipeline, RestClient.CreateSubscribeTriggerToEventsRequest(triggerName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a trigger&apos;s event subscription status. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetEventSubscriptionStatus(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetEventSubscriptionStatusRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetEventSubscriptionStatus");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetEventSubscriptionStatus"/> and <see cref="GetEventSubscriptionStatusAsync"/> operations. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetEventSubscriptionStatusRequest(string triggerName, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/getEventSubscriptionStatus", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Unsubscribe event trigger from events. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> UnsubscribeTriggerFromEventsAsync(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUnsubscribeTriggerFromEventsRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.UnsubscribeTriggerFromEvents");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -373,21 +859,37 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual async Task<TriggerUnsubscribeTriggerFromEventsOperation> StartUnsubscribeTriggerFromEventsAsync(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response UnsubscribeTriggerFromEvents(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (triggerName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUnsubscribeTriggerFromEventsRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(triggerName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartUnsubscribeTriggerFromEvents");
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.UnsubscribeTriggerFromEvents");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.UnsubscribeTriggerFromEventsAsync(triggerName, cancellationToken).ConfigureAwait(false);
-                return new TriggerUnsubscribeTriggerFromEventsOperation(_clientDiagnostics, _pipeline, RestClient.CreateUnsubscribeTriggerFromEventsRequest(triggerName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -396,23 +898,57 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Unsubscribe event trigger from events. </summary>
+        /// <summary> Create Request for <see cref="UnsubscribeTriggerFromEvents"/> and <see cref="UnsubscribeTriggerFromEventsAsync"/> operations. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual TriggerUnsubscribeTriggerFromEventsOperation StartUnsubscribeTriggerFromEvents(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateUnsubscribeTriggerFromEventsRequest(string triggerName, RequestOptions requestOptions = null)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/unsubscribeFromEvents", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartUnsubscribeTriggerFromEvents");
+        /// <summary> Starts a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> StartTriggerAsync(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateStartTriggerRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartTrigger");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.UnsubscribeTriggerFromEvents(triggerName, cancellationToken);
-                return new TriggerUnsubscribeTriggerFromEventsOperation(_clientDiagnostics, _pipeline, RestClient.CreateUnsubscribeTriggerFromEventsRequest(triggerName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -423,21 +959,36 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual async Task<TriggerStartTriggerOperation> StartStartTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response StartTrigger(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (triggerName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateStartTriggerRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(triggerName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartStartTrigger");
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartTrigger");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.StartTriggerAsync(triggerName, cancellationToken).ConfigureAwait(false);
-                return new TriggerStartTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateStartTriggerRequest(triggerName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -446,23 +997,57 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Starts a trigger. </summary>
+        /// <summary> Create Request for <see cref="StartTrigger"/> and <see cref="StartTriggerAsync"/> operations. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual TriggerStartTriggerOperation StartStartTrigger(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateStartTriggerRequest(string triggerName, RequestOptions requestOptions = null)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartStartTrigger");
+        /// <summary> Stops a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> StopTriggerAsync(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateStopTriggerRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StopTrigger");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.StartTrigger(triggerName, cancellationToken);
-                return new TriggerStartTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateStartTriggerRequest(triggerName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -473,21 +1058,36 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual async Task<TriggerStopTriggerOperation> StartStopTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response StopTrigger(string triggerName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (triggerName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateStopTriggerRequest(triggerName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(triggerName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartStopTrigger");
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StopTrigger");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.StopTriggerAsync(triggerName, cancellationToken).ConfigureAwait(false);
-                return new TriggerStopTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateStopTriggerRequest(triggerName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -496,29 +1096,23 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Stops a trigger. </summary>
+        /// <summary> Create Request for <see cref="StopTrigger"/> and <see cref="StopTriggerAsync"/> operations. </summary>
         /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual TriggerStopTriggerOperation StartStopTrigger(string triggerName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateStopTriggerRequest(string triggerName, RequestOptions requestOptions = null)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartStopTrigger");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.StopTrigger(triggerName, cancellationToken);
-                return new TriggerStopTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateStopTriggerRequest(triggerName).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

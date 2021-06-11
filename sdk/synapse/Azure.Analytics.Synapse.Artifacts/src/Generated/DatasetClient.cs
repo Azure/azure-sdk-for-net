@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The Dataset service client. </summary>
     public partial class DatasetClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal DatasetRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of DatasetClient for mocking. </summary>
         protected DatasetClient()
@@ -44,53 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new DatasetRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of DatasetClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal DatasetClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists datasets. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDatasetsByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new DatasetRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a dataset. </summary>
-        /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatasetResource>> GetDatasetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDataset");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDatasetsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.GetDatasetAsync(datasetName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a dataset. </summary>
-        /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatasetResource> GetDataset(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDataset");
-            scope.Start();
-            try
-            {
-                return RestClient.GetDataset(datasetName, ifNoneMatch, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -100,102 +93,256 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists datasets. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DatasetResource> GetDatasetsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDatasetsByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<DatasetResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDatasetsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDatasetsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<DatasetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDatasetsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists datasets. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DatasetResource> GetDatasetsByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<DatasetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDatasetsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatasetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDatasetsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates or updates a dataset. </summary>
-        /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="dataset"> Dataset resource definition. </param>
-        /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="dataset"/> is null. </exception>
-        public virtual async Task<DatasetCreateOrUpdateDatasetOperation> StartCreateOrUpdateDatasetAsync(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (datasetName == null)
-            {
-                throw new ArgumentNullException(nameof(datasetName));
-            }
-            if (dataset == null)
-            {
-                throw new ArgumentNullException(nameof(dataset));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartCreateOrUpdateDataset");
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateDatasetAsync(datasetName, dataset, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new DatasetCreateOrUpdateDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDatasetRequest(datasetName, dataset, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDatasetsByWorkspace"/> and <see cref="GetDatasetsByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDatasetsByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/datasets", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a dataset. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Dataset</term>
+        ///     <term>Yes</term>
+        ///     <term> Dataset properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Dataset</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Dataset description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>structure</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>schema</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>linkedServiceName</term>
+        ///     <term>LinkedServiceReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the Dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DatasetFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;LinkedServiceReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference LinkedService name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for LinkedService. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DatasetFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this Dataset is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateDatasetAsync(string datasetName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateDatasetRequest(datasetName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.CreateOrUpdateDataset");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -205,28 +352,376 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a dataset. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Dataset</term>
+        ///     <term>Yes</term>
+        ///     <term> Dataset properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Dataset</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Dataset description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>structure</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>schema</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>linkedServiceName</term>
+        ///     <term>LinkedServiceReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the Dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DatasetFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;LinkedServiceReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference LinkedService name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for LinkedService. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DatasetFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this Dataset is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="dataset"> Dataset resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="dataset"/> is null. </exception>
-        public virtual DatasetCreateOrUpdateDatasetOperation StartCreateOrUpdateDataset(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateDataset(string datasetName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (datasetName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateDatasetRequest(datasetName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(datasetName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (dataset == null)
-            {
-                throw new ArgumentNullException(nameof(dataset));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartCreateOrUpdateDataset");
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.CreateOrUpdateDataset");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdateDataset(datasetName, dataset, ifMatch, cancellationToken);
-                return new DatasetCreateOrUpdateDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDatasetRequest(datasetName, dataset, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateDataset"/> and <see cref="CreateOrUpdateDatasetAsync"/> operations. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateDatasetRequest(string datasetName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/datasets/", false);
+            uri.AppendPath(datasetName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDatasetAsync(string datasetName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDatasetRequest(datasetName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDataset");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDataset(string datasetName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDatasetRequest(datasetName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDataset");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDataset"/> and <see cref="GetDatasetAsync"/> operations. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDatasetRequest(string datasetName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/datasets/", false);
+            uri.AppendPath(datasetName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteDatasetAsync(string datasetName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDatasetRequest(datasetName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.DeleteDataset");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -237,21 +732,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a dataset. </summary>
         /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual async Task<DatasetDeleteDatasetOperation> StartDeleteDatasetAsync(string datasetName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteDataset(string datasetName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (datasetName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDatasetRequest(datasetName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(datasetName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartDeleteDataset");
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.DeleteDataset");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteDatasetAsync(datasetName, cancellationToken).ConfigureAwait(false);
-                return new DatasetDeleteDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDatasetRequest(datasetName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -260,23 +772,75 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a dataset. </summary>
+        /// <summary> Create Request for <see cref="DeleteDataset"/> and <see cref="DeleteDatasetAsync"/> operations. </summary>
         /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual DatasetDeleteDatasetOperation StartDeleteDataset(string datasetName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteDatasetRequest(string datasetName, RequestOptions requestOptions = null)
         {
-            if (datasetName == null)
-            {
-                throw new ArgumentNullException(nameof(datasetName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/datasets/", false);
+            uri.AppendPath(datasetName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartDeleteDataset");
+        /// <summary> Renames a dataset. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RenameDatasetAsync(string datasetName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameDatasetRequest(datasetName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.RenameDataset");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeleteDataset(datasetName, cancellationToken);
-                return new DatasetDeleteDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDatasetRequest(datasetName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -286,27 +850,56 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Renames a dataset. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
-        public virtual async Task<DatasetRenameDatasetOperation> StartRenameDatasetAsync(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RenameDataset(string datasetName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (datasetName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameDatasetRequest(datasetName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(datasetName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartRenameDataset");
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.RenameDataset");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.RenameDatasetAsync(datasetName, request, cancellationToken).ConfigureAwait(false);
-                return new DatasetRenameDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDatasetRequest(datasetName, request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -315,34 +908,26 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Renames a dataset. </summary>
+        /// <summary> Create Request for <see cref="RenameDataset"/> and <see cref="RenameDatasetAsync"/> operations. </summary>
         /// <param name="datasetName"> The dataset name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
-        public virtual DatasetRenameDatasetOperation StartRenameDataset(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRenameDatasetRequest(string datasetName, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (datasetName == null)
-            {
-                throw new ArgumentNullException(nameof(datasetName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartRenameDataset");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.RenameDataset(datasetName, request, cancellationToken);
-                return new DatasetRenameDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDatasetRequest(datasetName, request).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/datasets/", false);
+            uri.AppendPath(datasetName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

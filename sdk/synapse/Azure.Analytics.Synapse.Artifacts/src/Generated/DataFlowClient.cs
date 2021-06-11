@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The DataFlow service client. </summary>
     public partial class DataFlowClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal DataFlowRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of DataFlowClient for mocking. </summary>
         protected DataFlowClient()
@@ -44,158 +46,137 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new DataFlowRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of DataFlowClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal DataFlowClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
-        {
-            RestClient = new DataFlowRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a data flow. </summary>
-        /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataFlowResource>> GetDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlow");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetDataFlowAsync(dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a data flow. </summary>
-        /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataFlowResource> GetDataFlow(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlow");
-            scope.Start();
-            try
-            {
-                return RestClient.GetDataFlow(dataFlowName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists data flows. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DataFlowResource> GetDataFlowsByWorkspaceAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DataFlowResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDataFlowsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataFlowResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDataFlowsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists data flows. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DataFlowResource> GetDataFlowsByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<DataFlowResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDataFlowsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataFlowResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDataFlowsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Creates or updates a data flow. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>DataFlow</term>
+        ///     <term>Yes</term>
+        ///     <term> Data flow properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlow</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DataFlowFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this data flow is in. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="dataFlow"> Data flow resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="dataFlow"/> is null. </exception>
-        public virtual async Task<DataFlowCreateOrUpdateDataFlowOperation> StartCreateOrUpdateDataFlowAsync(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateDataFlowAsync(string dataFlowName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (dataFlowName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateDataFlowRequest(dataFlowName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(dataFlowName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (dataFlow == null)
-            {
-                throw new ArgumentNullException(nameof(dataFlow));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartCreateOrUpdateDataFlow");
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.CreateOrUpdateDataFlow");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateDataFlowAsync(dataFlowName, dataFlow, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new DataFlowCreateOrUpdateDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDataFlowRequest(dataFlowName, dataFlow, ifMatch).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -205,28 +186,302 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a data flow. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>DataFlow</term>
+        ///     <term>Yes</term>
+        ///     <term> Data flow properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlow</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DataFlowFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this data flow is in. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="dataFlow"> Data flow resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="dataFlow"/> is null. </exception>
-        public virtual DataFlowCreateOrUpdateDataFlowOperation StartCreateOrUpdateDataFlow(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateDataFlow(string dataFlowName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (dataFlowName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateDataFlowRequest(dataFlowName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(dataFlowName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (dataFlow == null)
-            {
-                throw new ArgumentNullException(nameof(dataFlow));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartCreateOrUpdateDataFlow");
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.CreateOrUpdateDataFlow");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdateDataFlow(dataFlowName, dataFlow, ifMatch, cancellationToken);
-                return new DataFlowCreateOrUpdateDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDataFlowRequest(dataFlowName, dataFlow, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateDataFlow"/> and <see cref="CreateOrUpdateDataFlowAsync"/> operations. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateDataFlowRequest(string dataFlowName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a data flow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDataFlowAsync(string dataFlowName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDataFlowRequest(dataFlowName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlow");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a data flow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDataFlow(string dataFlowName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDataFlowRequest(dataFlowName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlow");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDataFlow"/> and <see cref="GetDataFlowAsync"/> operations. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDataFlowRequest(string dataFlowName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a data flow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteDataFlowAsync(string dataFlowName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDataFlowRequest(dataFlowName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.DeleteDataFlow");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -237,21 +492,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a data flow. </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
-        public virtual async Task<DataFlowDeleteDataFlowOperation> StartDeleteDataFlowAsync(string dataFlowName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteDataFlow(string dataFlowName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (dataFlowName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDataFlowRequest(dataFlowName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(dataFlowName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartDeleteDataFlow");
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.DeleteDataFlow");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteDataFlowAsync(dataFlowName, cancellationToken).ConfigureAwait(false);
-                return new DataFlowDeleteDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDataFlowRequest(dataFlowName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -260,23 +532,75 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a data flow. </summary>
+        /// <summary> Create Request for <see cref="DeleteDataFlow"/> and <see cref="DeleteDataFlowAsync"/> operations. </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
-        public virtual DataFlowDeleteDataFlowOperation StartDeleteDataFlow(string dataFlowName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteDataFlowRequest(string dataFlowName, RequestOptions requestOptions = null)
         {
-            if (dataFlowName == null)
-            {
-                throw new ArgumentNullException(nameof(dataFlowName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartDeleteDataFlow");
+        /// <summary> Renames a dataflow. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RenameDataFlowAsync(string dataFlowName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameDataFlowRequest(dataFlowName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.RenameDataFlow");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeleteDataFlow(dataFlowName, cancellationToken);
-                return new DataFlowDeleteDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDataFlowRequest(dataFlowName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -286,27 +610,56 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Renames a dataflow. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="request"/> is null. </exception>
-        public virtual async Task<DataFlowRenameDataFlowOperation> StartRenameDataFlowAsync(string dataFlowName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RenameDataFlow(string dataFlowName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (dataFlowName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameDataFlowRequest(dataFlowName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(dataFlowName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartRenameDataFlow");
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.RenameDataFlow");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.RenameDataFlowAsync(dataFlowName, request, cancellationToken).ConfigureAwait(false);
-                return new DataFlowRenameDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDataFlowRequest(dataFlowName, request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -315,34 +668,120 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Renames a dataflow. </summary>
+        /// <summary> Create Request for <see cref="RenameDataFlow"/> and <see cref="RenameDataFlowAsync"/> operations. </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="request"/> is null. </exception>
-        public virtual DataFlowRenameDataFlowOperation StartRenameDataFlow(string dataFlowName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRenameDataFlowRequest(string dataFlowName, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (dataFlowName == null)
-            {
-                throw new ArgumentNullException(nameof(dataFlowName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartRenameDataFlow");
+        /// <summary> Lists data flows. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDataFlowsByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDataFlowsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.RenameDataFlow(dataFlowName, request, cancellationToken);
-                return new DataFlowRenameDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDataFlowRequest(dataFlowName, request).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Lists data flows. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDataFlowsByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDataFlowsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.GetDataFlowsByWorkspace");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDataFlowsByWorkspace"/> and <see cref="GetDataFlowsByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDataFlowsByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/dataflows", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The SqlScript service client. </summary>
     public partial class SqlScriptClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal SqlScriptRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of SqlScriptClient for mocking. </summary>
         protected SqlScriptClient()
@@ -44,53 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SqlScriptRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of SqlScriptClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal SqlScriptClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists sql scripts. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSqlScriptsByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new SqlScriptRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a sql script. </summary>
-        /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlScriptResource>> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScript");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSqlScriptsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.GetSqlScriptAsync(sqlScriptName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a sql script. </summary>
-        /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlScriptResource> GetSqlScript(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScript");
-            scope.Start();
-            try
-            {
-                return RestClient.GetSqlScript(sqlScriptName, ifNoneMatch, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -100,102 +93,226 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists sql scripts. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<SqlScriptResource> GetSqlScriptsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSqlScriptsByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<SqlScriptResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSqlScriptsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSqlScriptsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<SqlScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSqlScriptsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists sql scripts. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<SqlScriptResource> GetSqlScriptsByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<SqlScriptResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSqlScriptsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSqlScriptsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates or updates a Sql Script. </summary>
-        /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="sqlScript"> Sql Script resource definition. </param>
-        /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
-        public virtual async Task<SqlScriptCreateOrUpdateSqlScriptOperation> StartCreateOrUpdateSqlScriptAsync(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (sqlScriptName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlScriptName));
-            }
-            if (sqlScript == null)
-            {
-                throw new ArgumentNullException(nameof(sqlScript));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartCreateOrUpdateSqlScript");
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateSqlScriptAsync(sqlScriptName, sqlScript, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new SqlScriptCreateOrUpdateSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSqlScriptRequest(sqlScriptName, sqlScript, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetSqlScriptsByWorkspace"/> and <see cref="GetSqlScriptsByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSqlScriptsByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sqlScripts", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a Sql Script. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>SqlScript</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of sql script. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlScript</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the SQL script. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;SqlQuery&quot;</term>
+        ///     <term></term>
+        ///     <term> The type of the SQL script. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>content</term>
+        ///     <term>SqlScriptContent</term>
+        ///     <term>Yes</term>
+        ///     <term> The content of the SQL script. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlScriptContent</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>query</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> SQL query to execute. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>currentConnection</term>
+        ///     <term>SqlConnection</term>
+        ///     <term>Yes</term>
+        ///     <term> The connection used to execute the SQL script. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>SqlScriptMetadata</term>
+        ///     <term></term>
+        ///     <term> The metadata of the SQL script. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlConnection</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;SqlOnDemand&quot; | &quot;SqlPool&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> The type of the connection. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The identifier of the connection. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlScriptMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>language</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The language of the SQL script. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateSqlScriptAsync(string sqlScriptName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateSqlScriptRequest(sqlScriptName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.CreateOrUpdateSqlScript");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -205,28 +322,346 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a Sql Script. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>SqlScript</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of sql script. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlScript</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the SQL script. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;SqlQuery&quot;</term>
+        ///     <term></term>
+        ///     <term> The type of the SQL script. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>content</term>
+        ///     <term>SqlScriptContent</term>
+        ///     <term>Yes</term>
+        ///     <term> The content of the SQL script. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlScriptContent</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>query</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> SQL query to execute. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>currentConnection</term>
+        ///     <term>SqlConnection</term>
+        ///     <term>Yes</term>
+        ///     <term> The connection used to execute the SQL script. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>SqlScriptMetadata</term>
+        ///     <term></term>
+        ///     <term> The metadata of the SQL script. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlConnection</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;SqlOnDemand&quot; | &quot;SqlPool&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> The type of the connection. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The identifier of the connection. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SqlScriptMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>language</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The language of the SQL script. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="sqlScript"> Sql Script resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
-        public virtual SqlScriptCreateOrUpdateSqlScriptOperation StartCreateOrUpdateSqlScript(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateSqlScript(string sqlScriptName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sqlScriptName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateSqlScriptRequest(sqlScriptName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sqlScriptName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (sqlScript == null)
-            {
-                throw new ArgumentNullException(nameof(sqlScript));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartCreateOrUpdateSqlScript");
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.CreateOrUpdateSqlScript");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdateSqlScript(sqlScriptName, sqlScript, ifMatch, cancellationToken);
-                return new SqlScriptCreateOrUpdateSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSqlScriptRequest(sqlScriptName, sqlScript, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateSqlScript"/> and <see cref="CreateOrUpdateSqlScriptAsync"/> operations. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateSqlScriptRequest(string sqlScriptName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a sql script. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSqlScriptRequest(sqlScriptName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScript");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a sql script. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSqlScript(string sqlScriptName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSqlScriptRequest(sqlScriptName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScript");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetSqlScript"/> and <see cref="GetSqlScriptAsync"/> operations. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSqlScriptRequest(string sqlScriptName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a Sql Script. </summary>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteSqlScriptAsync(string sqlScriptName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteSqlScriptRequest(sqlScriptName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.DeleteSqlScript");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -237,21 +672,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a Sql Script. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
-        public virtual async Task<SqlScriptDeleteSqlScriptOperation> StartDeleteSqlScriptAsync(string sqlScriptName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteSqlScript(string sqlScriptName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sqlScriptName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteSqlScriptRequest(sqlScriptName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sqlScriptName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartDeleteSqlScript");
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.DeleteSqlScript");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteSqlScriptAsync(sqlScriptName, cancellationToken).ConfigureAwait(false);
-                return new SqlScriptDeleteSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlScriptRequest(sqlScriptName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -260,23 +712,75 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a Sql Script. </summary>
+        /// <summary> Create Request for <see cref="DeleteSqlScript"/> and <see cref="DeleteSqlScriptAsync"/> operations. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
-        public virtual SqlScriptDeleteSqlScriptOperation StartDeleteSqlScript(string sqlScriptName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteSqlScriptRequest(string sqlScriptName, RequestOptions requestOptions = null)
         {
-            if (sqlScriptName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlScriptName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartDeleteSqlScript");
+        /// <summary> Renames a sqlScript. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="sqlScriptName"> The sql script name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RenameSqlScriptAsync(string sqlScriptName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameSqlScriptRequest(sqlScriptName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.RenameSqlScript");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeleteSqlScript(sqlScriptName, cancellationToken);
-                return new SqlScriptDeleteSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlScriptRequest(sqlScriptName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -286,27 +790,56 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Renames a sqlScript. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="request"/> is null. </exception>
-        public virtual async Task<SqlScriptRenameSqlScriptOperation> StartRenameSqlScriptAsync(string sqlScriptName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RenameSqlScript(string sqlScriptName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sqlScriptName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameSqlScriptRequest(sqlScriptName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sqlScriptName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartRenameSqlScript");
+            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.RenameSqlScript");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.RenameSqlScriptAsync(sqlScriptName, request, cancellationToken).ConfigureAwait(false);
-                return new SqlScriptRenameSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameSqlScriptRequest(sqlScriptName, request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -315,34 +848,26 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Renames a sqlScript. </summary>
+        /// <summary> Create Request for <see cref="RenameSqlScript"/> and <see cref="RenameSqlScriptAsync"/> operations. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="request"/> is null. </exception>
-        public virtual SqlScriptRenameSqlScriptOperation StartRenameSqlScript(string sqlScriptName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRenameSqlScriptRequest(string sqlScriptName, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (sqlScriptName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlScriptName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.StartRenameSqlScript");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.RenameSqlScript(sqlScriptName, request, cancellationToken);
-                return new SqlScriptRenameSqlScriptOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameSqlScriptRequest(sqlScriptName, request).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

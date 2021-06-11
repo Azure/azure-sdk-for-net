@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,15 @@ namespace Azure.Analytics.Synapse.Spark
     /// <summary> The SparkBatch service client. </summary>
     public partial class SparkBatchClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private string sparkPoolName;
+        private string livyApiVersion;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal SparkBatchRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of SparkBatchClient for mocking. </summary>
         protected SparkBatchClient()
@@ -54,22 +58,13 @@ namespace Azure.Analytics.Synapse.Spark
 
             options ??= new SparkClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SparkBatchRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
-        }
-
-        /// <summary> Initializes a new instance of SparkBatchClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="sparkPoolName"> Name of the spark pool. </param>
-        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        internal SparkBatchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
-        {
-            RestClient = new SparkBatchRestClient(clientDiagnostics, pipeline, endpoint, sparkPoolName, livyApiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            this.sparkPoolName = sparkPoolName;
+            this.livyApiVersion = livyApiVersion;
+            apiVersion = options.Version;
         }
 
         /// <summary> List all spark batch jobs which are running under a particular spark pool. </summary>
@@ -80,14 +75,36 @@ namespace Azure.Analytics.Synapse.Spark
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkBatchJobCollection>> GetSparkBatchJobsAsync(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkBatchJobsAsync(int? @from = null, int? size = null, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkBatchJobsRequest(@from, size, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJobs");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkBatchJobsAsync(@from, size, detailed, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -104,14 +121,438 @@ namespace Azure.Analytics.Synapse.Spark
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkBatchJobCollection> GetSparkBatchJobs(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkBatchJobs(int? @from = null, int? size = null, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkBatchJobsRequest(@from, size, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJobs");
             scope.Start();
             try
             {
-                return RestClient.GetSparkBatchJobs(@from, size, detailed, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetSparkBatchJobs"/> and <see cref="GetSparkBatchJobsAsync"/> operations. </summary>
+        /// <param name="from"> Optional param specifying which index the list should begin from. </param>
+        /// <param name="size">
+        /// Optional param specifying the size of the returned list.
+        /// 
+        ///             By default it is 20 and that is the maximum.
+        /// </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkBatchJobsRequest(int? @from = null, int? size = null, bool? detailed = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/batches", false);
+            if (@from != null)
+            {
+                uri.AppendQuery("from", @from.Value, true);
+            }
+            if (size != null)
+            {
+                uri.AppendQuery("size", size.Value, true);
+            }
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Create new spark batch job. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>tags</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>artifactId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>pyFiles</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateSparkBatchJobAsync(RequestContent requestBody, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateSparkBatchJobRequest(requestBody, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CreateSparkBatchJob");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create new spark batch job. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>tags</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>artifactId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>pyFiles</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term></term>
+        ///     <term> Dictionary of &lt;string&gt;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateSparkBatchJob(RequestContent requestBody, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateSparkBatchJobRequest(requestBody, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CreateSparkBatchJob");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateSparkBatchJob"/> and <see cref="CreateSparkBatchJobAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateSparkBatchJobRequest(RequestContent requestBody, bool? detailed = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/batches", false);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a single spark batch job. </summary>
+        /// <param name="batchId"> Identifier for the batch job. </param>
+        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkBatchJobAsync(int batchId, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkBatchJobRequest(batchId, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJob");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -123,14 +564,36 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Gets a single spark batch job. </summary>
         /// <param name="batchId"> Identifier for the batch job. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkBatchJob>> GetSparkBatchJobAsync(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkBatchJob(int batchId, bool? detailed = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkBatchJobRequest(batchId, detailed, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJob");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkBatchJobAsync(batchId, detailed, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -139,17 +602,64 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Gets a single spark batch job. </summary>
+        /// <summary> Create Request for <see cref="GetSparkBatchJob"/> and <see cref="GetSparkBatchJobAsync"/> operations. </summary>
         /// <param name="batchId"> Identifier for the batch job. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkBatchJob> GetSparkBatchJob(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkBatchJobRequest(int batchId, bool? detailed = null, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.GetSparkBatchJob");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(batchId, true);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancels a running spark batch job. </summary>
+        /// <param name="batchId"> Identifier for the batch job. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CancelSparkBatchJobAsync(int batchId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelSparkBatchJobRequest(batchId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CancelSparkBatchJob");
             scope.Start();
             try
             {
-                return RestClient.GetSparkBatchJob(batchId, detailed, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -160,14 +670,36 @@ namespace Azure.Analytics.Synapse.Spark
 
         /// <summary> Cancels a running spark batch job. </summary>
         /// <param name="batchId"> Identifier for the batch job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelSparkBatchJobAsync(int batchId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CancelSparkBatchJob(int batchId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelSparkBatchJobRequest(batchId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CancelSparkBatchJob");
             scope.Start();
             try
             {
-                return await RestClient.CancelSparkBatchJobAsync(batchId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -176,22 +708,24 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
-        /// <summary> Cancels a running spark batch job. </summary>
+        /// <summary> Create Request for <see cref="CancelSparkBatchJob"/> and <see cref="CancelSparkBatchJobAsync"/> operations. </summary>
         /// <param name="batchId"> Identifier for the batch job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelSparkBatchJob(int batchId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCancelSparkBatchJobRequest(int batchId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("SparkBatchClient.CancelSparkBatchJob");
-            scope.Start();
-            try
-            {
-                return RestClient.CancelSparkBatchJob(batchId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/livyApi/versions/", false);
+            uri.AppendRaw(livyApiVersion, false);
+            uri.AppendRaw("/sparkPools/", false);
+            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(batchId, true);
+            request.Uri = uri;
+            return message;
         }
     }
 }

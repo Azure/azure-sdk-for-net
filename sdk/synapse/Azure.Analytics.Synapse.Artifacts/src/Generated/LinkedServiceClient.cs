@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The LinkedService service client. </summary>
     public partial class LinkedServiceClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal LinkedServiceRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of LinkedServiceClient for mocking. </summary>
         protected LinkedServiceClient()
@@ -44,53 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new LinkedServiceRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal LinkedServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists linked services. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetLinkedServicesByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new LinkedServiceRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a linked service. </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkedServiceResource>> GetLinkedServiceAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedService");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLinkedServicesByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedServicesByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.GetLinkedServiceAsync(linkedServiceName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a linked service. </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkedServiceResource> GetLinkedService(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedService");
-            scope.Start();
-            try
-            {
-                return RestClient.GetLinkedService(linkedServiceName, ifNoneMatch, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -100,102 +93,223 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists linked services. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<LinkedServiceResource> GetLinkedServicesByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetLinkedServicesByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<LinkedServiceResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLinkedServicesByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedServicesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetLinkedServicesByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<LinkedServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedServicesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetLinkedServicesByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists linked services. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<LinkedServiceResource> GetLinkedServicesByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<LinkedServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedServicesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetLinkedServicesByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LinkedServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedServicesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetLinkedServicesByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates or updates a linked service. </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="linkedService"> Linked service resource definition. </param>
-        /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="linkedService"/> is null. </exception>
-        public virtual async Task<LinkedServiceCreateOrUpdateLinkedServiceOperation> StartCreateOrUpdateLinkedServiceAsync(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedService == null)
-            {
-                throw new ArgumentNullException(nameof(linkedService));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartCreateOrUpdateLinkedService");
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedServicesByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateLinkedServiceAsync(linkedServiceName, linkedService, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new LinkedServiceCreateOrUpdateLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateLinkedServiceRequest(linkedServiceName, linkedService, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetLinkedServicesByWorkspace"/> and <see cref="GetLinkedServicesByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetLinkedServicesByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/linkedservices", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a linked service. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>LinkedService</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedService</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectVia</term>
+        ///     <term>IntegrationRuntimeReference</term>
+        ///     <term></term>
+        ///     <term> The integration runtime reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Linked service description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>IntegrationRuntimeReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;IntegrationRuntimeReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of integration runtime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference integration runtime name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for integration runtime. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateLinkedServiceAsync(string linkedServiceName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateLinkedServiceRequest(linkedServiceName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.CreateOrUpdateLinkedService");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -205,28 +319,343 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a linked service. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>LinkedService</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedService</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectVia</term>
+        ///     <term>IntegrationRuntimeReference</term>
+        ///     <term></term>
+        ///     <term> The integration runtime reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Linked service description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>IntegrationRuntimeReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;IntegrationRuntimeReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of integration runtime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference integration runtime name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for integration runtime. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="linkedService"> Linked service resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="linkedService"/> is null. </exception>
-        public virtual LinkedServiceCreateOrUpdateLinkedServiceOperation StartCreateOrUpdateLinkedService(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateLinkedService(string linkedServiceName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (linkedServiceName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateLinkedServiceRequest(linkedServiceName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(linkedServiceName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (linkedService == null)
-            {
-                throw new ArgumentNullException(nameof(linkedService));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartCreateOrUpdateLinkedService");
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.CreateOrUpdateLinkedService");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdateLinkedService(linkedServiceName, linkedService, ifMatch, cancellationToken);
-                return new LinkedServiceCreateOrUpdateLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateLinkedServiceRequest(linkedServiceName, linkedService, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateLinkedService"/> and <see cref="CreateOrUpdateLinkedServiceAsync"/> operations. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateLinkedServiceRequest(string linkedServiceName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a linked service. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetLinkedServiceAsync(string linkedServiceName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLinkedServiceRequest(linkedServiceName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedService");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a linked service. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetLinkedService(string linkedServiceName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLinkedServiceRequest(linkedServiceName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.GetLinkedService");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetLinkedService"/> and <see cref="GetLinkedServiceAsync"/> operations. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetLinkedServiceRequest(string linkedServiceName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a linked service. </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteLinkedServiceAsync(string linkedServiceName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteLinkedServiceRequest(linkedServiceName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.DeleteLinkedService");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -237,21 +666,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a linked service. </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public virtual async Task<LinkedServiceDeleteLinkedServiceOperation> StartDeleteLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteLinkedService(string linkedServiceName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (linkedServiceName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteLinkedServiceRequest(linkedServiceName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(linkedServiceName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartDeleteLinkedService");
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.DeleteLinkedService");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteLinkedServiceAsync(linkedServiceName, cancellationToken).ConfigureAwait(false);
-                return new LinkedServiceDeleteLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteLinkedServiceRequest(linkedServiceName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -260,23 +706,75 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a linked service. </summary>
+        /// <summary> Create Request for <see cref="DeleteLinkedService"/> and <see cref="DeleteLinkedServiceAsync"/> operations. </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public virtual LinkedServiceDeleteLinkedServiceOperation StartDeleteLinkedService(string linkedServiceName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteLinkedServiceRequest(string linkedServiceName, RequestOptions requestOptions = null)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartDeleteLinkedService");
+        /// <summary> Renames a linked service. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RenameLinkedServiceAsync(string linkedServiceName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameLinkedServiceRequest(linkedServiceName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.RenameLinkedService");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeleteLinkedService(linkedServiceName, cancellationToken);
-                return new LinkedServiceDeleteLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteLinkedServiceRequest(linkedServiceName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -286,27 +784,56 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Renames a linked service. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="request"/> is null. </exception>
-        public virtual async Task<LinkedServiceRenameLinkedServiceOperation> StartRenameLinkedServiceAsync(string linkedServiceName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RenameLinkedService(string linkedServiceName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (linkedServiceName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameLinkedServiceRequest(linkedServiceName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(linkedServiceName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartRenameLinkedService");
+            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.RenameLinkedService");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.RenameLinkedServiceAsync(linkedServiceName, request, cancellationToken).ConfigureAwait(false);
-                return new LinkedServiceRenameLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameLinkedServiceRequest(linkedServiceName, request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -315,34 +842,26 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Renames a linked service. </summary>
+        /// <summary> Create Request for <see cref="RenameLinkedService"/> and <see cref="RenameLinkedServiceAsync"/> operations. </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="request"/> is null. </exception>
-        public virtual LinkedServiceRenameLinkedServiceOperation StartRenameLinkedService(string linkedServiceName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRenameLinkedServiceRequest(string linkedServiceName, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LinkedServiceClient.StartRenameLinkedService");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.RenameLinkedService(linkedServiceName, request, cancellationToken);
-                return new LinkedServiceRenameLinkedServiceOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameLinkedServiceRequest(linkedServiceName, request).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The PipelineRun service client. </summary>
     public partial class PipelineRunClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal PipelineRunRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of PipelineRunClient for mocking. </summary>
         protected PipelineRunClient()
@@ -44,33 +46,134 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new PipelineRunRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of PipelineRunClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal PipelineRunClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
-        {
-            RestClient = new PipelineRunRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>
-        /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PipelineRunsQueryResponse>> QueryPipelineRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>continuationToken</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The continuation token for getting the next page of results. Null for first page. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedAfter</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedBefore</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filters</term>
+        ///     <term>RunQueryFilter[]</term>
+        ///     <term></term>
+        ///     <term> List of filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>RunQueryOrderBy[]</term>
+        ///     <term></term>
+        ///     <term> List of OrderBy option. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryFilter</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>operand</term>
+        ///     <term>&quot;PipelineName&quot; | &quot;Status&quot; | &quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;ActivityType&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot; | &quot;RunGroupId&quot; | &quot;LatestOnly&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>operator</term>
+        ///     <term>&quot;Equals&quot; | &quot;NotEquals&quot; | &quot;In&quot; | &quot;NotIn&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Operator to be used for filter. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>values</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> List of filter values. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryOrderBy</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>&quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;PipelineName&quot; | &quot;Status&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>order</term>
+        ///     <term>&quot;ASC&quot; | &quot;DESC&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Sorting order of the parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> QueryPipelineRunsByWorkspaceAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryPipelineRunsByWorkspaceRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryPipelineRunsByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.QueryPipelineRunsByWorkspaceAsync(filterParameters, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -80,15 +183,185 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>
-        /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PipelineRunsQueryResponse> QueryPipelineRunsByWorkspace(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>continuationToken</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The continuation token for getting the next page of results. Null for first page. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedAfter</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedBefore</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filters</term>
+        ///     <term>RunQueryFilter[]</term>
+        ///     <term></term>
+        ///     <term> List of filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>RunQueryOrderBy[]</term>
+        ///     <term></term>
+        ///     <term> List of OrderBy option. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryFilter</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>operand</term>
+        ///     <term>&quot;PipelineName&quot; | &quot;Status&quot; | &quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;ActivityType&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot; | &quot;RunGroupId&quot; | &quot;LatestOnly&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>operator</term>
+        ///     <term>&quot;Equals&quot; | &quot;NotEquals&quot; | &quot;In&quot; | &quot;NotIn&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Operator to be used for filter. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>values</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> List of filter values. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryOrderBy</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>&quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;PipelineName&quot; | &quot;Status&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>order</term>
+        ///     <term>&quot;ASC&quot; | &quot;DESC&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Sorting order of the parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response QueryPipelineRunsByWorkspace(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryPipelineRunsByWorkspaceRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryPipelineRunsByWorkspace");
             scope.Start();
             try
             {
-                return RestClient.QueryPipelineRunsByWorkspace(filterParameters, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="QueryPipelineRunsByWorkspace"/> and <see cref="QueryPipelineRunsByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateQueryPipelineRunsByWorkspaceRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/queryPipelineRuns", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Get a pipeline run by its run ID. </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetPipelineRunAsync(string runId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetPipelineRunRequest(runId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.GetPipelineRun");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -99,14 +372,36 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Get a pipeline run by its run ID. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PipelineRun>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetPipelineRun(string runId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetPipelineRunRequest(runId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.GetPipelineRun");
             scope.Start();
             try
             {
-                return await RestClient.GetPipelineRunAsync(runId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -115,16 +410,147 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Get a pipeline run by its run ID. </summary>
+        /// <summary> Create Request for <see cref="GetPipelineRun"/> and <see cref="GetPipelineRunAsync"/> operations. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PipelineRun> GetPipelineRun(string runId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetPipelineRunRequest(string runId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.GetPipelineRun");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelineruns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Query activity runs based on input filter conditions. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>continuationToken</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The continuation token for getting the next page of results. Null for first page. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedAfter</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedBefore</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filters</term>
+        ///     <term>RunQueryFilter[]</term>
+        ///     <term></term>
+        ///     <term> List of filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>RunQueryOrderBy[]</term>
+        ///     <term></term>
+        ///     <term> List of OrderBy option. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryFilter</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>operand</term>
+        ///     <term>&quot;PipelineName&quot; | &quot;Status&quot; | &quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;ActivityType&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot; | &quot;RunGroupId&quot; | &quot;LatestOnly&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>operator</term>
+        ///     <term>&quot;Equals&quot; | &quot;NotEquals&quot; | &quot;In&quot; | &quot;NotIn&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Operator to be used for filter. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>values</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> List of filter values. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryOrderBy</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>&quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;PipelineName&quot; | &quot;Status&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>order</term>
+        ///     <term>&quot;ASC&quot; | &quot;DESC&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Sorting order of the parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> QueryActivityRunsAsync(string pipelineName, string runId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryActivityRunsRequest(pipelineName, runId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryActivityRuns");
             scope.Start();
             try
             {
-                return RestClient.GetPipelineRun(runId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -134,17 +560,128 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Query activity runs based on input filter conditions. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>continuationToken</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The continuation token for getting the next page of results. Null for first page. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedAfter</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedBefore</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filters</term>
+        ///     <term>RunQueryFilter[]</term>
+        ///     <term></term>
+        ///     <term> List of filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>RunQueryOrderBy[]</term>
+        ///     <term></term>
+        ///     <term> List of OrderBy option. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryFilter</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>operand</term>
+        ///     <term>&quot;PipelineName&quot; | &quot;Status&quot; | &quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;ActivityType&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot; | &quot;RunGroupId&quot; | &quot;LatestOnly&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>operator</term>
+        ///     <term>&quot;Equals&quot; | &quot;NotEquals&quot; | &quot;In&quot; | &quot;NotIn&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Operator to be used for filter. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>values</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> List of filter values. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryOrderBy</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>&quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;PipelineName&quot; | &quot;Status&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>order</term>
+        ///     <term>&quot;ASC&quot; | &quot;DESC&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Sorting order of the parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ActivityRunsQueryResponse>> QueryActivityRunsAsync(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response QueryActivityRuns(string pipelineName, string runId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryActivityRunsRequest(pipelineName, runId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryActivityRuns");
             scope.Start();
             try
             {
-                return await RestClient.QueryActivityRunsAsync(pipelineName, runId, filterParameters, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -153,18 +690,64 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Query activity runs based on input filter conditions. </summary>
+        /// <summary> Create Request for <see cref="QueryActivityRuns"/> and <see cref="QueryActivityRunsAsync"/> operations. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ActivityRunsQueryResponse> QueryActivityRuns(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateQueryActivityRunsRequest(string pipelineName, string runId, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryActivityRuns");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendPath("/pipelineruns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/queryActivityruns", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Cancel a pipeline run by its run ID. </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CancelPipelineRunAsync(string runId, bool? isRecursive = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelPipelineRunRequest(runId, isRecursive, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.CancelPipelineRun");
             scope.Start();
             try
             {
-                return RestClient.QueryActivityRuns(pipelineName, runId, filterParameters, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -176,14 +759,36 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Cancel a pipeline run by its run ID. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelPipelineRunAsync(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CancelPipelineRun(string runId, bool? isRecursive = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelPipelineRunRequest(runId, isRecursive, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.CancelPipelineRun");
             scope.Start();
             try
             {
-                return await RestClient.CancelPipelineRunAsync(runId, isRecursive, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -192,23 +797,28 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Cancel a pipeline run by its run ID. </summary>
+        /// <summary> Create Request for <see cref="CancelPipelineRun"/> and <see cref="CancelPipelineRunAsync"/> operations. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelPipelineRun(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCancelPipelineRunRequest(string runId, bool? isRecursive = null, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.CancelPipelineRun");
-            scope.Start();
-            try
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelineruns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/cancel", false);
+            if (isRecursive != null)
             {
-                return RestClient.CancelPipelineRun(runId, isRecursive, cancellationToken);
+                uri.AppendQuery("isRecursive", isRecursive.Value, true);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

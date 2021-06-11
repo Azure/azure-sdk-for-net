@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The DataFlowDebugSession service client. </summary>
     public partial class DataFlowDebugSessionClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal DataFlowDebugSessionRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of DataFlowDebugSessionClient for mocking. </summary>
         protected DataFlowDebugSessionClient()
@@ -44,33 +46,219 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new DataFlowDebugSessionRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugSessionClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal DataFlowDebugSessionClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Creates a data flow debug session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>dataFlowName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>existingClusterId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ID of existing Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>clusterTimeout</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Timeout setting for Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>newClusterName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of new Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>newClusterNodeType</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of new Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataBricksLinkedService</term>
+        ///     <term>LinkedServiceResource</term>
+        ///     <term></term>
+        ///     <term> Data bricks linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>LinkedService</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedService</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectVia</term>
+        ///     <term>IntegrationRuntimeReference</term>
+        ///     <term></term>
+        ///     <term> The integration runtime reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Linked service description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>IntegrationRuntimeReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;IntegrationRuntimeReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of integration runtime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference integration runtime name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for integration runtime. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateDataFlowDebugSessionAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new DataFlowDebugSessionRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Add a data flow into debug session. </summary>
-        /// <param name="request"> Data flow debug session definition with debug content. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AddDataFlowToDebugSessionResponse>> AddDataFlowAsync(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.AddDataFlow");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataFlowDebugSessionRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.CreateDataFlowDebugSession");
             scope.Start();
             try
             {
-                return await RestClient.AddDataFlowAsync(request, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -79,16 +267,212 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Add a data flow into debug session. </summary>
-        /// <param name="request"> Data flow debug session definition with debug content. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AddDataFlowToDebugSessionResponse> AddDataFlow(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
+        /// <summary> Creates a data flow debug session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>dataFlowName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>existingClusterId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ID of existing Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>clusterTimeout</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Timeout setting for Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>newClusterName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of new Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>newClusterNodeType</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of new Databricks cluster. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataBricksLinkedService</term>
+        ///     <term>LinkedServiceResource</term>
+        ///     <term></term>
+        ///     <term> Data bricks linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>LinkedService</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedService</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectVia</term>
+        ///     <term>IntegrationRuntimeReference</term>
+        ///     <term></term>
+        ///     <term> The integration runtime reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Linked service description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>IntegrationRuntimeReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;IntegrationRuntimeReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of integration runtime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference integration runtime name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for integration runtime. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateDataFlowDebugSession(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.AddDataFlow");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataFlowDebugSessionRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.CreateDataFlowDebugSession");
             scope.Start();
             try
             {
-                return RestClient.AddDataFlow(request, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -97,34 +481,56 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a data flow debug session. </summary>
-        /// <param name="request"> Data flow debug session definition for deletion. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteDataFlowDebugSessionAsync(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        /// <summary> Create Request for <see cref="CreateDataFlowDebugSession"/> and <see cref="CreateDataFlowDebugSessionAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateDataFlowDebugSessionRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.DeleteDataFlowDebugSession");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteDataFlowDebugSessionAsync(request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/createDataFlowDebugSession", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
 
-        /// <summary> Deletes a data flow debug session. </summary>
-        /// <param name="request"> Data flow debug session definition for deletion. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteDataFlowDebugSession(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        /// <summary> Query all active data flow debug sessions. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> QueryDataFlowDebugSessionsByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.DeleteDataFlowDebugSession");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryDataFlowDebugSessionsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace");
             scope.Start();
             try
             {
-                return RestClient.DeleteDataFlowDebugSession(request, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -134,96 +540,36 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Query all active data flow debug sessions. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DataFlowDebugSessionInfo> QueryDataFlowDebugSessionsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response QueryDataFlowDebugSessionsByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<DataFlowDebugSessionInfo>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryDataFlowDebugSessionsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.QueryDataFlowDebugSessionsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<DataFlowDebugSessionInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.QueryDataFlowDebugSessionsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Query all active data flow debug sessions. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DataFlowDebugSessionInfo> QueryDataFlowDebugSessionsByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<DataFlowDebugSessionInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.QueryDataFlowDebugSessionsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataFlowDebugSessionInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.QueryDataFlowDebugSessionsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates a data flow debug session. </summary>
-        /// <param name="request"> Data flow debug session definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<DataFlowDebugSessionCreateDataFlowDebugSessionOperation> StartCreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
-        {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.StartCreateDataFlowDebugSession");
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateDataFlowDebugSessionAsync(request, cancellationToken).ConfigureAwait(false);
-                return new DataFlowDebugSessionCreateDataFlowDebugSessionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateDataFlowDebugSessionRequest(request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -232,23 +578,1160 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Creates a data flow debug session. </summary>
-        /// <param name="request"> Data flow debug session definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual DataFlowDebugSessionCreateDataFlowDebugSessionOperation StartCreateDataFlowDebugSession(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        /// <summary> Create Request for <see cref="QueryDataFlowDebugSessionsByWorkspace"/> and <see cref="QueryDataFlowDebugSessionsByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateQueryDataFlowDebugSessionsByWorkspaceRequest(RequestOptions requestOptions = null)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/queryDataFlowDebugSessions", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.StartCreateDataFlowDebugSession");
+        /// <summary> Add a data flow into debug session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sessionId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ID of data flow debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataFlow</term>
+        ///     <term>DataFlowDebugResource</term>
+        ///     <term></term>
+        ///     <term> Data flow instance. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>datasets</term>
+        ///     <term>DatasetDebugResource[]</term>
+        ///     <term></term>
+        ///     <term> List of datasets. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>linkedServices</term>
+        ///     <term>LinkedServiceDebugResource[]</term>
+        ///     <term></term>
+        ///     <term> List of linked services. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>staging</term>
+        ///     <term>DataFlowStagingInfo</term>
+        ///     <term></term>
+        ///     <term> Staging info for debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>debugSettings</term>
+        ///     <term>DataFlowDebugPackageDebugSettings</term>
+        ///     <term></term>
+        ///     <term> Data flow debug settings. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowDebugResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The resource name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>DataFlow</term>
+        ///     <term>Yes</term>
+        ///     <term> Data flow properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowStagingInfo</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>linkedService</term>
+        ///     <term>LinkedServiceReference</term>
+        ///     <term></term>
+        ///     <term> Staging linked service reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folderPath</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Folder path for staging blob. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowDebugPackageDebugSettings</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sourceSettings</term>
+        ///     <term>DataFlowSourceSetting[]</term>
+        ///     <term></term>
+        ///     <term> Source setting for data flow debug. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Data flow parameters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>datasetParameters</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Parameters for dataset. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlow</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DataFlowFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DatasetDebugResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The resource name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Dataset</term>
+        ///     <term>Yes</term>
+        ///     <term> Dataset properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceDebugResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The resource name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>LinkedService</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;LinkedServiceReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference LinkedService name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for LinkedService. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this data flow is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Dataset</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Dataset description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>structure</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>schema</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>linkedServiceName</term>
+        ///     <term>LinkedServiceReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the Dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DatasetFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedService</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectVia</term>
+        ///     <term>IntegrationRuntimeReference</term>
+        ///     <term></term>
+        ///     <term> The integration runtime reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Linked service description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowSourceSetting</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sourceName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The data flow source name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>rowLimit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Defines the row limit of data flow source in debug. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DatasetFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this Dataset is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>IntegrationRuntimeReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;IntegrationRuntimeReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of integration runtime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference integration runtime name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for integration runtime. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> AddDataFlowAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateAddDataFlowRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.AddDataFlow");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateDataFlowDebugSession(request, cancellationToken);
-                return new DataFlowDebugSessionCreateDataFlowDebugSessionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateDataFlowDebugSessionRequest(request).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a data flow into debug session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sessionId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ID of data flow debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataFlow</term>
+        ///     <term>DataFlowDebugResource</term>
+        ///     <term></term>
+        ///     <term> Data flow instance. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>datasets</term>
+        ///     <term>DatasetDebugResource[]</term>
+        ///     <term></term>
+        ///     <term> List of datasets. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>linkedServices</term>
+        ///     <term>LinkedServiceDebugResource[]</term>
+        ///     <term></term>
+        ///     <term> List of linked services. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>staging</term>
+        ///     <term>DataFlowStagingInfo</term>
+        ///     <term></term>
+        ///     <term> Staging info for debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>debugSettings</term>
+        ///     <term>DataFlowDebugPackageDebugSettings</term>
+        ///     <term></term>
+        ///     <term> Data flow debug settings. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowDebugResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The resource name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>DataFlow</term>
+        ///     <term>Yes</term>
+        ///     <term> Data flow properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowStagingInfo</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>linkedService</term>
+        ///     <term>LinkedServiceReference</term>
+        ///     <term></term>
+        ///     <term> Staging linked service reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folderPath</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Folder path for staging blob. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowDebugPackageDebugSettings</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sourceSettings</term>
+        ///     <term>DataFlowSourceSetting[]</term>
+        ///     <term></term>
+        ///     <term> Source setting for data flow debug. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Data flow parameters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>datasetParameters</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Parameters for dataset. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlow</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the data flow. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DataFlowFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DatasetDebugResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The resource name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Dataset</term>
+        ///     <term>Yes</term>
+        ///     <term> Dataset properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceDebugResource</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The resource name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>LinkedService</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedServiceReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;LinkedServiceReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference LinkedService name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for LinkedService. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this data flow is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Dataset</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Dataset description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>structure</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>schema</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>linkedServiceName</term>
+        ///     <term>LinkedServiceReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Linked service reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the Dataset. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>DatasetFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>LinkedService</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectVia</term>
+        ///     <term>IntegrationRuntimeReference</term>
+        ///     <term></term>
+        ///     <term> The integration runtime reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Linked service description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> Parameters for linked service. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the linked service. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DataFlowSourceSetting</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sourceName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The data flow source name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>rowLimit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Defines the row limit of data flow source in debug. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>DatasetFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this Dataset is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>IntegrationRuntimeReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;IntegrationRuntimeReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of integration runtime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference integration runtime name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Arguments for integration runtime. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response AddDataFlow(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateAddDataFlowRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.AddDataFlow");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="AddDataFlow"/> and <see cref="AddDataFlowAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateAddDataFlowRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/addDataFlowToDebugSession", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Deletes a data flow debug session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sessionId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ID of data flow debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataFlowName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The data flow which contains the debug session. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteDataFlowDebugSessionAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDataFlowDebugSessionRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.DeleteDataFlowDebugSession");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a data flow debug session. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sessionId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ID of data flow debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataFlowName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The data flow which contains the debug session. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteDataFlowDebugSession(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDataFlowDebugSessionRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.DeleteDataFlowDebugSession");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="DeleteDataFlowDebugSession"/> and <see cref="DeleteDataFlowDebugSessionAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteDataFlowDebugSessionRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/deleteDataFlowDebugSession", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Execute a data flow debug command. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sessionId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The ID of data flow debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataFlowName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The data flow which contains the debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>commandName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The command name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>commandPayload</term>
+        ///     <term>AnyObject</term>
+        ///     <term>Yes</term>
+        ///     <term> The command payload object. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ExecuteCommandAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateExecuteCommandRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.ExecuteCommand");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -258,22 +1741,73 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Execute a data flow debug command. </summary>
-        /// <param name="request"> Data flow debug command definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<DataFlowDebugSessionExecuteCommandOperation> StartExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>sessionId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The ID of data flow debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dataFlowName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The data flow which contains the debug session. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>commandName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The command name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>commandPayload</term>
+        ///     <term>AnyObject</term>
+        ///     <term>Yes</term>
+        ///     <term> The command payload object. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ExecuteCommand(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (request == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateExecuteCommandRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(request));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.StartExecuteCommand");
+            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.ExecuteCommand");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.ExecuteCommandAsync(request, cancellationToken).ConfigureAwait(false);
-                return new DataFlowDebugSessionExecuteCommandOperation(_clientDiagnostics, _pipeline, RestClient.CreateExecuteCommandRequest(request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -282,29 +1816,23 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Execute a data flow debug command. </summary>
-        /// <param name="request"> Data flow debug command definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual DataFlowDebugSessionExecuteCommandOperation StartExecuteCommand(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
+        /// <summary> Create Request for <see cref="ExecuteCommand"/> and <see cref="ExecuteCommandAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateExecuteCommandRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.StartExecuteCommand");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.ExecuteCommand(request, cancellationToken);
-                return new DataFlowDebugSessionExecuteCommandOperation(_clientDiagnostics, _pipeline, RestClient.CreateExecuteCommandRequest(request).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/executeDataFlowDebugCommand", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

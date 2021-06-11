@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The SparkJobDefinition service client. </summary>
     public partial class SparkJobDefinitionClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal SparkJobDefinitionRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of SparkJobDefinitionClient for mocking. </summary>
         protected SparkJobDefinitionClient()
@@ -44,53 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SparkJobDefinitionRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of SparkJobDefinitionClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal SparkJobDefinitionClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists spark job definitions. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkJobDefinitionsByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new SparkJobDefinitionRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a Spark Job Definition. </summary>
-        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkJobDefinitionResource>> GetSparkJobDefinitionAsync(string sparkJobDefinitionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinition");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkJobDefinitionsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkJobDefinitionAsync(sparkJobDefinitionName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a Spark Job Definition. </summary>
-        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkJobDefinitionResource> GetSparkJobDefinition(string sparkJobDefinitionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinition");
-            scope.Start();
-            try
-            {
-                return RestClient.GetSparkJobDefinition(sparkJobDefinitionName, ifNoneMatch, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -100,102 +93,283 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists spark job definitions. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<SparkJobDefinitionResource> GetSparkJobDefinitionsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkJobDefinitionsByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<SparkJobDefinitionResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkJobDefinitionsByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSparkJobDefinitionsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<SparkJobDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSparkJobDefinitionsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists spark job definitions. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<SparkJobDefinitionResource> GetSparkJobDefinitionsByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<SparkJobDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSparkJobDefinitionsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SparkJobDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSparkJobDefinitionsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates or updates a Spark Job Definition. </summary>
-        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
-        /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
-        public virtual async Task<SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation> StartCreateOrUpdateSparkJobDefinitionAsync(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (sparkJobDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
-            }
-            if (sparkJobDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJobDefinition));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartCreateOrUpdateSparkJobDefinition");
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateSparkJobDefinitionAsync(sparkJobDefinitionName, sparkJobDefinition, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSparkJobDefinitionRequest(sparkJobDefinitionName, sparkJobDefinition, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetSparkJobDefinitionsByWorkspace"/> and <see cref="GetSparkJobDefinitionsByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkJobDefinitionsByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sparkJobDefinitions", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a Spark Job Definition. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>SparkJobDefinition</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of spark job definition. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobDefinition</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the Spark job definition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>targetBigDataPool</term>
+        ///     <term>BigDataPoolReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>requiredSparkVersion</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The required Spark version of the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>language</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The language of the Spark application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jobProperties</term>
+        ///     <term>SparkJobProperties</term>
+        ///     <term>Yes</term>
+        ///     <term> The properties of the Spark job. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>BigDataPoolReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;BigDataPoolReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference big data pool name. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> File containing the application to execute. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Main class for Java/Scala application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Spark configuration properties. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Command line arguments for the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Jars to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> files to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Archives to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use for the driver process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for the driver. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use per executor process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for each executor. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of executors to launch for this job. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateSparkJobDefinitionAsync(string sparkJobDefinitionName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateSparkJobDefinitionRequest(sparkJobDefinitionName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -205,28 +379,403 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a Spark Job Definition. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>SparkJobDefinition</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of spark job definition. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobDefinition</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the Spark job definition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>targetBigDataPool</term>
+        ///     <term>BigDataPoolReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>requiredSparkVersion</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The required Spark version of the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>language</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The language of the Spark application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jobProperties</term>
+        ///     <term>SparkJobProperties</term>
+        ///     <term>Yes</term>
+        ///     <term> The properties of the Spark job. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>BigDataPoolReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;BigDataPoolReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference big data pool name. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> File containing the application to execute. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Main class for Java/Scala application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Spark configuration properties. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Command line arguments for the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Jars to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> files to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Archives to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use for the driver process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for the driver. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use per executor process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for each executor. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of executors to launch for this job. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
-        public virtual SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation StartCreateOrUpdateSparkJobDefinition(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateSparkJobDefinition(string sparkJobDefinitionName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sparkJobDefinitionName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateSparkJobDefinitionRequest(sparkJobDefinitionName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (sparkJobDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJobDefinition));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartCreateOrUpdateSparkJobDefinition");
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdateSparkJobDefinition(sparkJobDefinitionName, sparkJobDefinition, ifMatch, cancellationToken);
-                return new SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateSparkJobDefinitionRequest(sparkJobDefinitionName, sparkJobDefinition, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateSparkJobDefinition"/> and <see cref="CreateOrUpdateSparkJobDefinitionAsync"/> operations. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateSparkJobDefinitionRequest(string sparkJobDefinitionName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a Spark Job Definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetSparkJobDefinitionAsync(string sparkJobDefinitionName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkJobDefinitionRequest(sparkJobDefinitionName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a Spark Job Definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetSparkJobDefinition(string sparkJobDefinitionName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetSparkJobDefinitionRequest(sparkJobDefinitionName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetSparkJobDefinition"/> and <see cref="GetSparkJobDefinitionAsync"/> operations. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetSparkJobDefinitionRequest(string sparkJobDefinitionName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a Spark Job Definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteSparkJobDefinitionAsync(string sparkJobDefinitionName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteSparkJobDefinitionRequest(sparkJobDefinitionName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.DeleteSparkJobDefinition");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -237,21 +786,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a Spark Job Definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
-        public virtual async Task<SparkJobDefinitionDeleteSparkJobDefinitionOperation> StartDeleteSparkJobDefinitionAsync(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteSparkJobDefinition(string sparkJobDefinitionName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sparkJobDefinitionName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteSparkJobDefinitionRequest(sparkJobDefinitionName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartDeleteSparkJobDefinition");
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.DeleteSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteSparkJobDefinitionAsync(sparkJobDefinitionName, cancellationToken).ConfigureAwait(false);
-                return new SparkJobDefinitionDeleteSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSparkJobDefinitionRequest(sparkJobDefinitionName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -260,23 +826,57 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a Spark Job Definition. </summary>
+        /// <summary> Create Request for <see cref="DeleteSparkJobDefinition"/> and <see cref="DeleteSparkJobDefinitionAsync"/> operations. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
-        public virtual SparkJobDefinitionDeleteSparkJobDefinitionOperation StartDeleteSparkJobDefinition(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteSparkJobDefinitionRequest(string sparkJobDefinitionName, RequestOptions requestOptions = null)
         {
-            if (sparkJobDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartDeleteSparkJobDefinition");
+        /// <summary> Executes the spark job definition. </summary>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ExecuteSparkJobDefinitionAsync(string sparkJobDefinitionName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateExecuteSparkJobDefinitionRequest(sparkJobDefinitionName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.ExecuteSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeleteSparkJobDefinition(sparkJobDefinitionName, cancellationToken);
-                return new SparkJobDefinitionDeleteSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSparkJobDefinitionRequest(sparkJobDefinitionName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -287,21 +887,37 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Executes the spark job definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
-        public virtual async Task<SparkJobDefinitionExecuteSparkJobDefinitionOperation> StartExecuteSparkJobDefinitionAsync(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ExecuteSparkJobDefinition(string sparkJobDefinitionName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sparkJobDefinitionName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateExecuteSparkJobDefinitionRequest(sparkJobDefinitionName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartExecuteSparkJobDefinition");
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.ExecuteSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.ExecuteSparkJobDefinitionAsync(sparkJobDefinitionName, cancellationToken).ConfigureAwait(false);
-                return new SparkJobDefinitionExecuteSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateExecuteSparkJobDefinitionRequest(sparkJobDefinitionName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -310,23 +926,76 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Executes the spark job definition. </summary>
+        /// <summary> Create Request for <see cref="ExecuteSparkJobDefinition"/> and <see cref="ExecuteSparkJobDefinitionAsync"/> operations. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
-        public virtual SparkJobDefinitionExecuteSparkJobDefinitionOperation StartExecuteSparkJobDefinition(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateExecuteSparkJobDefinitionRequest(string sparkJobDefinitionName, RequestOptions requestOptions = null)
         {
-            if (sparkJobDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendPath("/execute", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartExecuteSparkJobDefinition");
+        /// <summary> Renames a sparkJobDefinition. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RenameSparkJobDefinitionAsync(string sparkJobDefinitionName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameSparkJobDefinitionRequest(sparkJobDefinitionName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.RenameSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.ExecuteSparkJobDefinition(sparkJobDefinitionName, cancellationToken);
-                return new SparkJobDefinitionExecuteSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateExecuteSparkJobDefinitionRequest(sparkJobDefinitionName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -336,27 +1005,56 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Renames a sparkJobDefinition. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="request"/> is null. </exception>
-        public virtual async Task<SparkJobDefinitionRenameSparkJobDefinitionOperation> StartRenameSparkJobDefinitionAsync(string sparkJobDefinitionName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RenameSparkJobDefinition(string sparkJobDefinitionName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sparkJobDefinitionName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameSparkJobDefinitionRequest(sparkJobDefinitionName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartRenameSparkJobDefinition");
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.RenameSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.RenameSparkJobDefinitionAsync(sparkJobDefinitionName, request, cancellationToken).ConfigureAwait(false);
-                return new SparkJobDefinitionRenameSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameSparkJobDefinitionRequest(sparkJobDefinitionName, request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -365,28 +1063,249 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Renames a sparkJobDefinition. </summary>
+        /// <summary> Create Request for <see cref="RenameSparkJobDefinition"/> and <see cref="RenameSparkJobDefinitionAsync"/> operations. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="request"/> is null. </exception>
-        public virtual SparkJobDefinitionRenameSparkJobDefinitionOperation StartRenameSparkJobDefinition(string sparkJobDefinitionName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRenameSparkJobDefinitionRequest(string sparkJobDefinitionName, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (sparkJobDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartRenameSparkJobDefinition");
+        /// <summary> Debug the spark job definition. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>SparkJobDefinition</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of spark job definition. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobDefinition</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the Spark job definition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>targetBigDataPool</term>
+        ///     <term>BigDataPoolReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>requiredSparkVersion</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The required Spark version of the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>language</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The language of the Spark application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jobProperties</term>
+        ///     <term>SparkJobProperties</term>
+        ///     <term>Yes</term>
+        ///     <term> The properties of the Spark job. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>BigDataPoolReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;BigDataPoolReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference big data pool name. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> File containing the application to execute. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Main class for Java/Scala application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Spark configuration properties. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Command line arguments for the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Jars to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> files to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Archives to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use for the driver process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for the driver. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use per executor process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for each executor. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of executors to launch for this job. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DebugSparkJobDefinitionAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDebugSparkJobDefinitionRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.DebugSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.RenameSparkJobDefinition(sparkJobDefinitionName, request, cancellationToken);
-                return new SparkJobDefinitionRenameSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameSparkJobDefinitionRequest(sparkJobDefinitionName, request).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -396,22 +1315,226 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Debug the spark job definition. </summary>
-        /// <param name="sparkJobDefinitionAzureResource"> Spark Job Definition resource definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionAzureResource"/> is null. </exception>
-        public virtual async Task<SparkJobDefinitionDebugSparkJobDefinitionOperation> StartDebugSparkJobDefinitionAsync(SparkJobDefinitionResource sparkJobDefinitionAzureResource, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>SparkJobDefinition</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of spark job definition. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobDefinition</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the Spark job definition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>targetBigDataPool</term>
+        ///     <term>BigDataPoolReference</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>requiredSparkVersion</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The required Spark version of the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>language</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The language of the Spark application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jobProperties</term>
+        ///     <term>SparkJobProperties</term>
+        ///     <term>Yes</term>
+        ///     <term> The properties of the Spark job. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>BigDataPoolReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;BigDataPoolReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference big data pool name. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SparkJobProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>file</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> File containing the application to execute. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>className</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Main class for Java/Scala application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>conf</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Spark configuration properties. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>args</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Command line arguments for the application. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>jars</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Jars to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> files to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>archives</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///     <term> Archives to be used in this job. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use for the driver process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for the driver. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use per executor process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for each executor. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of executors to launch for this job. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DebugSparkJobDefinition(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (sparkJobDefinitionAzureResource == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDebugSparkJobDefinitionRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionAzureResource));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartDebugSparkJobDefinition");
+            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.DebugSparkJobDefinition");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DebugSparkJobDefinitionAsync(sparkJobDefinitionAzureResource, cancellationToken).ConfigureAwait(false);
-                return new SparkJobDefinitionDebugSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDebugSparkJobDefinitionRequest(sparkJobDefinitionAzureResource).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -420,29 +1543,23 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Debug the spark job definition. </summary>
-        /// <param name="sparkJobDefinitionAzureResource"> Spark Job Definition resource definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionAzureResource"/> is null. </exception>
-        public virtual SparkJobDefinitionDebugSparkJobDefinitionOperation StartDebugSparkJobDefinition(SparkJobDefinitionResource sparkJobDefinitionAzureResource, CancellationToken cancellationToken = default)
+        /// <summary> Create Request for <see cref="DebugSparkJobDefinition"/> and <see cref="DebugSparkJobDefinitionAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDebugSparkJobDefinitionRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (sparkJobDefinitionAzureResource == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJobDefinitionAzureResource));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.StartDebugSparkJobDefinition");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.DebugSparkJobDefinition(sparkJobDefinitionAzureResource, cancellationToken);
-                return new SparkJobDefinitionDebugSparkJobDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDebugSparkJobDefinitionRequest(sparkJobDefinitionAzureResource).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/debugSparkJobDefinition", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

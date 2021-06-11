@@ -6,11 +6,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The Pipeline service client. </summary>
     public partial class PipelineClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal PipelineRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of PipelineClient for mocking. </summary>
         protected PipelineClient()
@@ -45,97 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new PipelineRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of PipelineClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal PipelineClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists pipelines. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetPipelinesByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new PipelineRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PipelineResource>> GetPipelineAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipeline");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetPipelinesByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.GetPipelineAsync(pipelineName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PipelineResource> GetPipeline(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipeline");
-            scope.Start();
-            try
-            {
-                return RestClient.GetPipeline(pipelineName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a run of a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreatePipelineRunAsync(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a run of a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreateRunResponse> CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
-            scope.Start();
-            try
-            {
-                return RestClient.CreatePipelineRun(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -145,102 +93,316 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists pipelines. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PipelineResource> GetPipelinesByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetPipelinesByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<PipelineResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetPipelinesByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetPipelinesByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<PipelineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetPipelinesByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists pipelines. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PipelineResource> GetPipelinesByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<PipelineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetPipelinesByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PipelineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetPipelinesByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates or updates a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="pipeline"> Pipeline resource definition. </param>
-        /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="pipeline"/> is null. </exception>
-        public virtual async Task<PipelineCreateOrUpdatePipelineOperation> StartCreateOrUpdatePipelineAsync(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipeline == null)
-            {
-                throw new ArgumentNullException(nameof(pipeline));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreateOrUpdatePipeline");
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipelinesByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdatePipelineAsync(pipelineName, pipeline, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new PipelineCreateOrUpdatePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdatePipelineRequest(pipelineName, pipeline, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetPipelinesByWorkspace"/> and <see cref="GetPipelinesByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetPipelinesByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelines", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a pipeline. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>activities</term>
+        ///     <term>Activity[]</term>
+        ///     <term></term>
+        ///     <term> List of activities in pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> List of parameters for pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>variables</term>
+        ///     <term>Dictionary&lt;string, VariableSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> List of variables for pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>concurrency</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The max number of concurrent runs for the pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the Pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>runDimensions</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Dimensions emitted by Pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>PipelineFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>PipelineFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this Pipeline is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Activity</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Activity name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of activity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Activity description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dependsOn</term>
+        ///     <term>ActivityDependency[]</term>
+        ///     <term></term>
+        ///     <term> Activity depends on condition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>userProperties</term>
+        ///     <term>UserProperty[]</term>
+        ///     <term></term>
+        ///     <term> Activity user properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>VariableSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;String&quot; | &quot;Bool&quot; | &quot;Boolean&quot; | &quot;Array&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Variable type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of variable. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ActivityDependency</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>activity</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Activity name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dependencyConditions</term>
+        ///     <term>&quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Skipped&quot; | &quot;Completed&quot;[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Match-Condition for the dependency. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>UserProperty</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> User property name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>value</term>
+        ///     <term>AnyObject</term>
+        ///     <term>Yes</term>
+        ///     <term> User property value. Type: string (or Expression with resultType string). </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdatePipelineAsync(string pipelineName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdatePipelineRequest(pipelineName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreateOrUpdatePipeline");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -250,28 +412,436 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a pipeline. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>activities</term>
+        ///     <term>Activity[]</term>
+        ///     <term></term>
+        ///     <term> List of activities in pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>parameters</term>
+        ///     <term>Dictionary&lt;string, ParameterSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> List of parameters for pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>variables</term>
+        ///     <term>Dictionary&lt;string, VariableSpecification&gt;</term>
+        ///     <term></term>
+        ///     <term> List of variables for pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>concurrency</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The max number of concurrent runs for the pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>annotations</term>
+        ///     <term>AnyObject[]</term>
+        ///     <term></term>
+        ///     <term> List of tags that can be used for describing the Pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>runDimensions</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> Dimensions emitted by Pipeline. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>folder</term>
+        ///     <term>PipelineFolder</term>
+        ///     <term></term>
+        ///     <term> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>PipelineFolder</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the folder that this Pipeline is in. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Activity</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Activity name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Type of activity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Activity description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dependsOn</term>
+        ///     <term>ActivityDependency[]</term>
+        ///     <term></term>
+        ///     <term> Activity depends on condition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>userProperties</term>
+        ///     <term>UserProperty[]</term>
+        ///     <term></term>
+        ///     <term> Activity user properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ParameterSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;Object&quot; | &quot;String&quot; | &quot;Int&quot; | &quot;Float&quot; | &quot;Bool&quot; | &quot;Array&quot; | &quot;SecureString&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of parameter. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>VariableSpecification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;String&quot; | &quot;Bool&quot; | &quot;Boolean&quot; | &quot;Array&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Variable type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>defaultValue</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Default value of variable. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ActivityDependency</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>activity</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Activity name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>dependencyConditions</term>
+        ///     <term>&quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Skipped&quot; | &quot;Completed&quot;[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Match-Condition for the dependency. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>UserProperty</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> User property name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>value</term>
+        ///     <term>AnyObject</term>
+        ///     <term>Yes</term>
+        ///     <term> User property value. Type: string (or Expression with resultType string). </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="pipeline"> Pipeline resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="pipeline"/> is null. </exception>
-        public virtual PipelineCreateOrUpdatePipelineOperation StartCreateOrUpdatePipeline(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdatePipeline(string pipelineName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (pipelineName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdatePipelineRequest(pipelineName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(pipelineName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (pipeline == null)
-            {
-                throw new ArgumentNullException(nameof(pipeline));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreateOrUpdatePipeline");
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreateOrUpdatePipeline");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdatePipeline(pipelineName, pipeline, ifMatch, cancellationToken);
-                return new PipelineCreateOrUpdatePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdatePipelineRequest(pipelineName, pipeline, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdatePipeline"/> and <see cref="CreateOrUpdatePipelineAsync"/> operations. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdatePipelineRequest(string pipelineName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetPipelineAsync(string pipelineName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetPipelineRequest(pipelineName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipeline");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetPipeline(string pipelineName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetPipelineRequest(pipelineName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipeline");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetPipeline"/> and <see cref="GetPipelineAsync"/> operations. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetPipelineRequest(string pipelineName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeletePipelineAsync(string pipelineName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeletePipelineRequest(pipelineName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.DeletePipeline");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -282,21 +852,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a pipeline. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual async Task<PipelineDeletePipelineOperation> StartDeletePipelineAsync(string pipelineName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeletePipeline(string pipelineName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (pipelineName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeletePipelineRequest(pipelineName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(pipelineName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartDeletePipeline");
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.DeletePipeline");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeletePipelineAsync(pipelineName, cancellationToken).ConfigureAwait(false);
-                return new PipelineDeletePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeletePipelineRequest(pipelineName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -305,23 +892,75 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a pipeline. </summary>
+        /// <summary> Create Request for <see cref="DeletePipeline"/> and <see cref="DeletePipelineAsync"/> operations. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual PipelineDeletePipelineOperation StartDeletePipeline(string pipelineName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeletePipelineRequest(string pipelineName, RequestOptions requestOptions = null)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartDeletePipeline");
+        /// <summary> Renames a pipeline. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RenamePipelineAsync(string pipelineName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenamePipelineRequest(pipelineName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.RenamePipeline");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeletePipeline(pipelineName, cancellationToken);
-                return new PipelineDeletePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeletePipelineRequest(pipelineName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -331,27 +970,56 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Renames a pipeline. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
-        public virtual async Task<PipelineRenamePipelineOperation> StartRenamePipelineAsync(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RenamePipeline(string pipelineName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (pipelineName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenamePipelineRequest(pipelineName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(pipelineName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.RenamePipeline");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.RenamePipelineAsync(pipelineName, request, cancellationToken).ConfigureAwait(false);
-                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -360,34 +1028,151 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Renames a pipeline. </summary>
+        /// <summary> Create Request for <see cref="RenamePipeline"/> and <see cref="RenamePipelineAsync"/> operations. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
-        public virtual PipelineRenamePipelineOperation StartRenamePipeline(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRenamePipelineRequest(string pipelineName, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
+        /// <summary> Creates a run of a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
+        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
+        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreatePipelineRunAsync(string pipelineName, RequestContent requestBody, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreatePipelineRunRequest(pipelineName, requestBody, referencePipelineRunId, isRecovery, startActivityName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.RenamePipeline(pipelineName, request, cancellationToken);
-                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Creates a run of a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
+        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
+        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreatePipelineRun(string pipelineName, RequestContent requestBody, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreatePipelineRunRequest(pipelineName, requestBody, referencePipelineRunId, isRecovery, startActivityName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreatePipelineRun"/> and <see cref="CreatePipelineRunAsync"/> operations. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
+        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
+        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreatePipelineRunRequest(string pipelineName, RequestContent requestBody, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendPath("/createRun", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            if (referencePipelineRunId != null)
+            {
+                uri.AppendQuery("referencePipelineRunId", referencePipelineRunId, true);
+            }
+            if (isRecovery != null)
+            {
+                uri.AppendQuery("isRecovery", isRecovery.Value, true);
+            }
+            if (startActivityName != null)
+            {
+                uri.AppendQuery("startActivityName", startActivityName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

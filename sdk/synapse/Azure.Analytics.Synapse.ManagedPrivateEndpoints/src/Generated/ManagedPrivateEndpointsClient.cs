@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
     /// <summary> The ManagedPrivateEndpoints service client. </summary>
     public partial class ManagedPrivateEndpointsClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal ManagedPrivateEndpointsRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient for mocking. </summary>
         protected ManagedPrivateEndpointsClient()
@@ -44,34 +46,46 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 
             options ??= new ManagedPrivateEndpointsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new ManagedPrivateEndpointsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal ManagedPrivateEndpointsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
-        {
-            RestClient = new ManagedPrivateEndpointsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Get Managed Private Endpoints. </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedPrivateEndpoint>> GetAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(managedPrivateEndpointName, managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -83,14 +97,200 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <summary> Get Managed Private Endpoints. </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedPrivateEndpoint> Get(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Get(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(managedPrivateEndpointName, managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
+        /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetRequest(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Create Managed Private Endpoints. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>ManagedPrivateEndpointProperties</term>
+        ///     <term></term>
+        ///     <term> Managed private endpoint properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ManagedPrivateEndpointProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>privateLinkResourceId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ARM resource ID of the resource to which the managed private endpoint is created. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>groupId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The groupId to which the managed private endpoint is created. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>provisioningState</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The managed private endpoint provisioning state. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectionState</term>
+        ///     <term>ManagedPrivateEndpointConnectionState</term>
+        ///     <term></term>
+        ///     <term> The managed private endpoint connection state. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isReserved</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Denotes whether the managed private endpoint is reserved. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ManagedPrivateEndpointConnectionState</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>status</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The approval status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The managed private endpoint description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>actionsRequired</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The actions required on the managed private endpoint. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateAsync(string managedPrivateEndpointName, RequestContent requestBody, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateRequest(managedPrivateEndpointName, requestBody, managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Create");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -100,17 +300,140 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Create Managed Private Endpoints. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>ManagedPrivateEndpointProperties</term>
+        ///     <term></term>
+        ///     <term> Managed private endpoint properties. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ManagedPrivateEndpointProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>privateLinkResourceId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The ARM resource ID of the resource to which the managed private endpoint is created. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>groupId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The groupId to which the managed private endpoint is created. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>provisioningState</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The managed private endpoint provisioning state. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>connectionState</term>
+        ///     <term>ManagedPrivateEndpointConnectionState</term>
+        ///     <term></term>
+        ///     <term> The managed private endpoint connection state. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isReserved</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Denotes whether the managed private endpoint is reserved. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ManagedPrivateEndpointConnectionState</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>status</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The approval status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The managed private endpoint description. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>actionsRequired</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The actions required on the managed private endpoint. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
-        /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Create(string managedPrivateEndpointName, RequestContent requestBody, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateRequest(managedPrivateEndpointName, requestBody, managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Create");
             scope.Start();
             try
             {
-                return await RestClient.CreateAsync(managedPrivateEndpointName, managedPrivateEndpoint, managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -119,18 +442,64 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             }
         }
 
-        /// <summary> Create Managed Private Endpoints. </summary>
+        /// <summary> Create Request for <see cref="Create"/> and <see cref="CreateAsync"/> operations. </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
-        /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedPrivateEndpoint> Create(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateRequest(string managedPrivateEndpointName, RequestContent requestBody, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Create");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Delete Managed Private Endpoints. </summary>
+        /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(managedPrivateEndpointName, managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Delete");
             scope.Start();
             try
             {
-                return RestClient.Create(managedPrivateEndpointName, managedPrivateEndpoint, managedVirtualNetworkName, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -142,14 +511,37 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <summary> Delete Managed Private Endpoints. </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Delete(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(managedPrivateEndpointName, managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Delete");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -158,17 +550,58 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             }
         }
 
-        /// <summary> Delete Managed Private Endpoints. </summary>
+        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Delete");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> List Managed Private Endpoints. </summary>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ListAsync(string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.List");
             scope.Start();
             try
             {
-                return RestClient.Delete(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -179,90 +612,61 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 
         /// <summary> List Managed Private Endpoints. </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual AsyncPageable<ManagedPrivateEndpoint> ListAsync(string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response List(string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (managedVirtualNetworkName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(managedVirtualNetworkName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            async Task<Page<ManagedPrivateEndpoint>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.List");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.List");
-                scope.Start();
-                try
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = await RestClient.ListAsync(managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedPrivateEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.List");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListNextPageAsync(nextLink, managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> List Managed Private Endpoints. </summary>
+        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual Pageable<ManagedPrivateEndpoint> List(string managedVirtualNetworkName = "default", CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateListRequest(string managedVirtualNetworkName = "default", RequestOptions requestOptions = null)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-
-            Page<ManagedPrivateEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.List(managedVirtualNetworkName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedPrivateEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListNextPage(nextLink, managedVirtualNetworkName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

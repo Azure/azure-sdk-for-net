@@ -15,6 +15,7 @@ security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
   lenient-model-deduplication: true
+low-level-client: true
 ```
 
 ### Make Endpoint type as Uri

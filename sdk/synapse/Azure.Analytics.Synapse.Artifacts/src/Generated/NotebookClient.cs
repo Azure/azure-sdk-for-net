@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The Notebook service client. </summary>
     public partial class NotebookClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal NotebookRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of NotebookClient for mocking. </summary>
         protected NotebookClient()
@@ -44,53 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new NotebookRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of NotebookClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal NotebookClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists Notebooks. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetNotebooksByWorkspaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new NotebookRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Gets a Note Book. </summary>
-        /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="ifNoneMatch"> ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotebookResource>> GetNotebookAsync(string notebookName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebook");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNotebooksByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebooksByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.GetNotebookAsync(notebookName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a Note Book. </summary>
-        /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="ifNoneMatch"> ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotebookResource> GetNotebook(string notebookName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebook");
-            scope.Start();
-            try
-            {
-                return RestClient.GetNotebook(notebookName, ifNoneMatch, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -100,176 +93,488 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists Notebooks. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<NotebookResource> GetNotebooksByWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetNotebooksByWorkspace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<NotebookResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNotebooksByWorkspaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebooksByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetNotebooksByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            async Task<Page<NotebookResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebooksByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetNotebooksByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists Notebooks. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<NotebookResource> GetNotebooksByWorkspace(CancellationToken cancellationToken = default)
-        {
-            Page<NotebookResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebooksByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetNotebooksByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NotebookResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebooksByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetNotebooksByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists a summary of Notebooks. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<NotebookResource> GetNotebookSummaryByWorkSpaceAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<NotebookResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebookSummaryByWorkSpace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetNotebookSummaryByWorkSpaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NotebookResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebookSummaryByWorkSpace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetNotebookSummaryByWorkSpaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists a summary of Notebooks. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<NotebookResource> GetNotebookSummaryByWorkSpace(CancellationToken cancellationToken = default)
-        {
-            Page<NotebookResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebookSummaryByWorkSpace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetNotebookSummaryByWorkSpace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NotebookResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebookSummaryByWorkSpace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetNotebookSummaryByWorkSpaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Creates or updates a Note Book. </summary>
-        /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="notebook"> Note book resource definition. </param>
-        /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="notebook"/> is null. </exception>
-        public virtual async Task<NotebookCreateOrUpdateNotebookOperation> StartCreateOrUpdateNotebookAsync(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (notebookName == null)
-            {
-                throw new ArgumentNullException(nameof(notebookName));
-            }
-            if (notebook == null)
-            {
-                throw new ArgumentNullException(nameof(notebook));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartCreateOrUpdateNotebook");
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebooksByWorkspace");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateOrUpdateNotebookAsync(notebookName, notebook, ifMatch, cancellationToken).ConfigureAwait(false);
-                return new NotebookCreateOrUpdateNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateNotebookRequest(notebookName, notebook, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetNotebooksByWorkspace"/> and <see cref="GetNotebooksByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetNotebooksByWorkspaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/notebooks", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Lists a summary of Notebooks. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetNotebookSummaryByWorkSpaceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNotebookSummaryByWorkSpaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebookSummaryByWorkSpace");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists a summary of Notebooks. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetNotebookSummaryByWorkSpace(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNotebookSummaryByWorkSpaceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebookSummaryByWorkSpace");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetNotebookSummaryByWorkSpace"/> and <see cref="GetNotebookSummaryByWorkSpaceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetNotebookSummaryByWorkSpaceRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/notebooks/summary", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a Note Book. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Notebook</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of Notebook. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Notebook</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the notebook. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>bigDataPool</term>
+        ///     <term>BigDataPoolReference</term>
+        ///     <term></term>
+        ///     <term> Big data pool reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sessionProperties</term>
+        ///     <term>NotebookSessionProperties</term>
+        ///     <term></term>
+        ///     <term> Session properties. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>NotebookMetadata</term>
+        ///     <term>Yes</term>
+        ///     <term> Notebook root-level metadata. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>nbformat</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>nbformat_minor</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>cells</term>
+        ///     <term>NotebookCell[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Array of cells of the current notebook. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>BigDataPoolReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;BigDataPoolReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference big data pool name. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookSessionProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use for the driver process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for the driver. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use per executor process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for each executor. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of executors to launch for this session. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>kernelspec</term>
+        ///     <term>NotebookKernelSpec</term>
+        ///     <term></term>
+        ///     <term> Kernel information. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>language_info</term>
+        ///     <term>NotebookLanguageInfo</term>
+        ///     <term></term>
+        ///     <term> Language info. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookKernelSpec</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Name of the kernel specification. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>display_name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Name to display in UI. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookLanguageInfo</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The programming language which this kernel runs. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>codemirror_mode</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The codemirror mode to use for code in this language. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookCell</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>cell_type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> String identifying the type of cell. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>AnyObject</term>
+        ///     <term>Yes</term>
+        ///     <term> Cell-level metadata. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>source</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Contents of the cell, represented as an array of lines. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>attachments</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Attachments associated with the cell. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>outputs</term>
+        ///     <term>NotebookCellOutputItem[]</term>
+        ///     <term></term>
+        ///     <term> Cell-level output items. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookCellOutputItem</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> For output_type=stream, determines the name of stream (stdout / stderr). </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>execution_count</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Execution sequence number. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>output_type</term>
+        ///     <term>&quot;execute_result&quot; | &quot;display_data&quot; | &quot;stream&quot; | &quot;error&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Execution, display, or stream outputs. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>text</term>
+        ///     <term>object</term>
+        ///     <term></term>
+        ///     <term> For output_type=stream, the stream&apos;s text output, represented as a string or an array of strings. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>data</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Output data. Use MIME type as key, and content as value. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Metadata for the output item. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateNotebookAsync(string notebookName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateNotebookRequest(notebookName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.CreateOrUpdateNotebook");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -279,28 +584,514 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Creates or updates a Note Book. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The name of the resource. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>etag</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Resource Etag. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>properties</term>
+        ///     <term>Notebook</term>
+        ///     <term>Yes</term>
+        ///     <term> Properties of Notebook. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>Notebook</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>description</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The description of the notebook. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>bigDataPool</term>
+        ///     <term>BigDataPoolReference</term>
+        ///     <term></term>
+        ///     <term> Big data pool reference. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sessionProperties</term>
+        ///     <term>NotebookSessionProperties</term>
+        ///     <term></term>
+        ///     <term> Session properties. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>NotebookMetadata</term>
+        ///     <term>Yes</term>
+        ///     <term> Notebook root-level metadata. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>nbformat</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>nbformat_minor</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>cells</term>
+        ///     <term>NotebookCell[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Array of cells of the current notebook. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>BigDataPoolReference</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>type</term>
+        ///     <term>&quot;BigDataPoolReference&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Big data pool reference type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>referenceName</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Reference big data pool name. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookSessionProperties</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>driverMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use for the driver process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>driverCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for the driver. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorMemory</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Amount of memory to use per executor process. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>executorCores</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of cores to use for each executor. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>numExecutors</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> Number of executors to launch for this session. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>kernelspec</term>
+        ///     <term>NotebookKernelSpec</term>
+        ///     <term></term>
+        ///     <term> Kernel information. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>language_info</term>
+        ///     <term>NotebookLanguageInfo</term>
+        ///     <term></term>
+        ///     <term> Language info. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookKernelSpec</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Name of the kernel specification. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>display_name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Name to display in UI. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookLanguageInfo</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> The programming language which this kernel runs. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>codemirror_mode</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The codemirror mode to use for code in this language. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookCell</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>cell_type</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> String identifying the type of cell. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>AnyObject</term>
+        ///     <term>Yes</term>
+        ///     <term> Cell-level metadata. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>source</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Contents of the cell, represented as an array of lines. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>attachments</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Attachments associated with the cell. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>outputs</term>
+        ///     <term>NotebookCellOutputItem[]</term>
+        ///     <term></term>
+        ///     <term> Cell-level output items. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>NotebookCellOutputItem</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> For output_type=stream, determines the name of stream (stdout / stderr). </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>execution_count</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Execution sequence number. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>output_type</term>
+        ///     <term>&quot;execute_result&quot; | &quot;display_data&quot; | &quot;stream&quot; | &quot;error&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Execution, display, or stream outputs. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>text</term>
+        ///     <term>object</term>
+        ///     <term></term>
+        ///     <term> For output_type=stream, the stream&apos;s text output, represented as a string or an array of strings. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>data</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Output data. Use MIME type as key, and content as value. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>metadata</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Metadata for the output item. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="notebook"> Note book resource definition. </param>
+        /// <param name="requestBody"> The request body. </param>
         /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="notebook"/> is null. </exception>
-        public virtual NotebookCreateOrUpdateNotebookOperation StartCreateOrUpdateNotebook(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateNotebook(string notebookName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (notebookName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateNotebookRequest(notebookName, requestBody, ifMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(notebookName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (notebook == null)
-            {
-                throw new ArgumentNullException(nameof(notebook));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartCreateOrUpdateNotebook");
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.CreateOrUpdateNotebook");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.CreateOrUpdateNotebook(notebookName, notebook, ifMatch, cancellationToken);
-                return new NotebookCreateOrUpdateNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateNotebookRequest(notebookName, notebook, ifMatch).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateNotebook"/> and <see cref="CreateOrUpdateNotebookAsync"/> operations. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateNotebookRequest(string notebookName, RequestContent requestBody, string ifMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Gets a Note Book. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="ifNoneMatch"> ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetNotebookAsync(string notebookName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNotebookRequest(notebookName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebook");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a Note Book. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="ifNoneMatch"> ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetNotebook(string notebookName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNotebookRequest(notebookName, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.GetNotebook");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetNotebook"/> and <see cref="GetNotebookAsync"/> operations. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="ifNoneMatch"> ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetNotebookRequest(string notebookName, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a Note book. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteNotebookAsync(string notebookName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteNotebookRequest(notebookName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.DeleteNotebook");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -311,21 +1102,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Deletes a Note book. </summary>
         /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> is null. </exception>
-        public virtual async Task<NotebookDeleteNotebookOperation> StartDeleteNotebookAsync(string notebookName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteNotebook(string notebookName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (notebookName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteNotebookRequest(notebookName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(notebookName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartDeleteNotebook");
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.DeleteNotebook");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteNotebookAsync(notebookName, cancellationToken).ConfigureAwait(false);
-                return new NotebookDeleteNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteNotebookRequest(notebookName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -334,23 +1142,75 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Deletes a Note book. </summary>
+        /// <summary> Create Request for <see cref="DeleteNotebook"/> and <see cref="DeleteNotebookAsync"/> operations. </summary>
         /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> is null. </exception>
-        public virtual NotebookDeleteNotebookOperation StartDeleteNotebook(string notebookName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteNotebookRequest(string notebookName, RequestOptions requestOptions = null)
         {
-            if (notebookName == null)
-            {
-                throw new ArgumentNullException(nameof(notebookName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartDeleteNotebook");
+        /// <summary> Renames a notebook. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RenameNotebookAsync(string notebookName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameNotebookRequest(notebookName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.RenameNotebook");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.DeleteNotebook(notebookName, cancellationToken);
-                return new NotebookDeleteNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteNotebookRequest(notebookName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -360,27 +1220,56 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Renames a notebook. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>newName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> New name of the artifact. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="request"/> is null. </exception>
-        public virtual async Task<NotebookRenameNotebookOperation> StartRenameNotebookAsync(string notebookName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RenameNotebook(string notebookName, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (notebookName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRenameNotebookRequest(notebookName, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(notebookName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartRenameNotebook");
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.RenameNotebook");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.RenameNotebookAsync(notebookName, request, cancellationToken).ConfigureAwait(false);
-                return new NotebookRenameNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameNotebookRequest(notebookName, request).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -389,34 +1278,26 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Renames a notebook. </summary>
+        /// <summary> Create Request for <see cref="RenameNotebook"/> and <see cref="RenameNotebookAsync"/> operations. </summary>
         /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="request"> proposed new name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="request"/> is null. </exception>
-        public virtual NotebookRenameNotebookOperation StartRenameNotebook(string notebookName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRenameNotebookRequest(string notebookName, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            if (notebookName == null)
-            {
-                throw new ArgumentNullException(nameof(notebookName));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartRenameNotebook");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.RenameNotebook(notebookName, request, cancellationToken);
-                return new NotebookRenameNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameNotebookRequest(notebookName, request).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

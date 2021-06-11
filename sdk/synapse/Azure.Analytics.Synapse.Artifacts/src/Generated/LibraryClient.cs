@@ -6,11 +6,8 @@
 #nullable disable
 
 using System;
-using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The Library service client. </summary>
     public partial class LibraryClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal LibraryRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of LibraryClient for mocking. </summary>
         protected LibraryClient()
@@ -45,127 +46,44 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new LibraryRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of LibraryClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal LibraryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
+        /// <summary> Lists Library. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ListAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            RestClient = new LibraryRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
-
-        /// <summary> Get Operation result for Library. </summary>
-        /// <param name="operationId"> operation id for which status is requested. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<object>> GetOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.GetOperationResult");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.List");
             scope.Start();
             try
             {
-                return await RestClient.GetOperationResultAsync(operationId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Operation result for Library. </summary>
-        /// <param name="operationId"> operation id for which status is requested. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<object> GetOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                return RestClient.GetOperationResult(operationId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Library. </summary>
-        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LibraryResource>> GetAsync(string libraryName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Get");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetAsync(libraryName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Library. </summary>
-        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LibraryResource> Get(string libraryName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Get");
-            scope.Start();
-            try
-            {
-                return RestClient.Get(libraryName, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
-        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="content"> Library file chunk. </param>
-        /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> AppendAsync(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
-            scope.Start();
-            try
-            {
-                return await RestClient.AppendAsync(libraryName, content, blobConditionAppendPosition, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
-        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="content"> Library file chunk. </param>
-        /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Append(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
-            scope.Start();
-            try
-            {
-                return RestClient.Append(libraryName, content, blobConditionAppendPosition, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -175,96 +93,93 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Lists Library. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<LibraryResource> ListAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response List(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<LibraryResource>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("LibraryClient.List");
-                scope.Start();
-                try
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.List");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            async Task<Page<LibraryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("LibraryClient.List");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists Library. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<LibraryResource> List(CancellationToken cancellationToken = default)
+        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateListRequest(RequestOptions requestOptions = null)
         {
-            Page<LibraryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LibraryClient.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.List(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LibraryResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LibraryClient.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/libraries", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         /// <summary> Flush Library. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual async Task<LibraryFlushOperation> StartFlushAsync(string libraryName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> FlushAsync(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (libraryName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateFlushRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(libraryName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartFlush");
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Flush");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.FlushAsync(libraryName, cancellationToken).ConfigureAwait(false);
-                return new LibraryFlushOperation(_clientDiagnostics, _pipeline, RestClient.CreateFlushRequest(libraryName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -275,21 +190,198 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Flush Library. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual LibraryFlushOperation StartFlush(string libraryName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Flush(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (libraryName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateFlushRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(libraryName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartFlush");
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Flush");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.Flush(libraryName, cancellationToken);
-                return new LibraryFlushOperation(_clientDiagnostics, _pipeline, RestClient.CreateFlushRequest(libraryName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="Flush"/> and <see cref="FlushAsync"/> operations. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateFlushRequest(string libraryName, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendPath("/flush", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get Operation result for Library. </summary>
+        /// <param name="operationId"> operation id for which status is requested. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetOperationResultAsync(string operationId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetOperationResultRequest(operationId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.GetOperationResult");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get Operation result for Library. </summary>
+        /// <param name="operationId"> operation id for which status is requested. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetOperationResult(string operationId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetOperationResultRequest(operationId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.GetOperationResult");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetOperationResult"/> and <see cref="GetOperationResultAsync"/> operations. </summary>
+        /// <param name="operationId"> operation id for which status is requested. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetOperationResultRequest(string operationId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/libraryOperationResults/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Delete Library. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteAsync(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Delete");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 409:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -300,21 +392,38 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Delete Library. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual async Task<LibraryDeleteOperation> StartDeleteAsync(string libraryName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Delete(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (libraryName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(libraryName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Delete");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.DeleteAsync(libraryName, cancellationToken).ConfigureAwait(false);
-                return new LibraryDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(libraryName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                        case 409:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -323,23 +432,157 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Delete Library. </summary>
+        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual LibraryDeleteOperation StartDelete(string libraryName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(string libraryName, RequestOptions requestOptions = null)
         {
-            if (libraryName == null)
-            {
-                throw new ArgumentNullException(nameof(libraryName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartDelete");
+        /// <summary> Get Library. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAsync(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Get");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.Delete(libraryName, cancellationToken);
-                return new LibraryDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(libraryName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get Library. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Get(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Get");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetRequest(string libraryName, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates a library with the library name. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateAsync(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Create");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -350,21 +593,37 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Creates a library with the library name. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual async Task<LibraryCreateOperation> StartCreateAsync(string libraryName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Create(string libraryName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (libraryName == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateRequest(libraryName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(libraryName));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartCreate");
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Create");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.CreateAsync(libraryName, cancellationToken).ConfigureAwait(false);
-                return new LibraryCreateOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateRequest(libraryName).Request, originalResponse);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -373,29 +632,133 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Creates a library with the library name. </summary>
+        /// <summary> Create Request for <see cref="Create"/> and <see cref="CreateAsync"/> operations. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
-        public virtual LibraryCreateOperation StartCreate(string libraryName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateRequest(string libraryName, RequestOptions requestOptions = null)
         {
-            if (libraryName == null)
-            {
-                throw new ArgumentNullException(nameof(libraryName));
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
 
-            using var scope = _clientDiagnostics.CreateScope("LibraryClient.StartCreate");
+        /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> AppendAsync(string libraryName, RequestContent requestBody, long? blobConditionAppendPosition = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateAppendRequest(libraryName, requestBody, blobConditionAppendPosition, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.Create(libraryName, cancellationToken);
-                return new LibraryCreateOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateRequest(libraryName).Request, originalResponse);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Append(string libraryName, RequestContent requestBody, long? blobConditionAppendPosition = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateAppendRequest(libraryName, requestBody, blobConditionAppendPosition, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="Append"/> and <see cref="AppendAsync"/> operations. </summary>
+        /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateAppendRequest(string libraryName, RequestContent requestBody, long? blobConditionAppendPosition = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("comp", "appendblock", true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            if (blobConditionAppendPosition != null)
+            {
+                request.Headers.Add("x-ms-blob-condition-appendpos", blobConditionAppendPosition.Value);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/octet-stream");
+            request.Content = requestBody;
+            return message;
         }
     }
 }

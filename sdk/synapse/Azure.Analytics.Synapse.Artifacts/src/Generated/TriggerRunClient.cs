@@ -6,10 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,9 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> The TriggerRun service client. </summary>
     public partial class TriggerRunClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private Uri endpoint;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal TriggerRunRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of TriggerRunClient for mocking. </summary>
         protected TriggerRunClient()
@@ -44,34 +46,46 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             options ??= new ArtifactsClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://dev.azuresynapse.net/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new TriggerRunRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of TriggerRunClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal TriggerRunClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
-        {
-            RestClient = new TriggerRunRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Rerun single trigger instance by runId. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RerunTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RerunTriggerInstanceAsync(string triggerName, string runId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRerunTriggerInstanceRequest(triggerName, runId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.RerunTriggerInstance");
             scope.Start();
             try
             {
-                return await RestClient.RerunTriggerInstanceAsync(triggerName, runId, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -83,14 +97,99 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Rerun single trigger instance by runId. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RerunTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RerunTriggerInstance(string triggerName, string runId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRerunTriggerInstanceRequest(triggerName, runId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.RerunTriggerInstance");
             scope.Start();
             try
             {
-                return RestClient.RerunTriggerInstance(triggerName, runId, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="RerunTriggerInstance"/> and <see cref="RerunTriggerInstanceAsync"/> operations. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRerunTriggerInstanceRequest(string triggerName, string runId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/triggerRuns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/rerun", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CancelTriggerInstanceAsync(string triggerName, string runId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelTriggerInstanceRequest(triggerName, runId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.CancelTriggerInstance");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -102,14 +201,36 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Cancel single trigger instance by runId. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CancelTriggerInstance(string triggerName, string runId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelTriggerInstanceRequest(triggerName, runId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.CancelTriggerInstance");
             scope.Start();
             try
             {
-                return await RestClient.CancelTriggerInstanceAsync(triggerName, runId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -118,17 +239,149 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <summary> Create Request for <see cref="CancelTriggerInstance"/> and <see cref="CancelTriggerInstanceAsync"/> operations. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCancelTriggerInstanceRequest(string triggerName, string runId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.CancelTriggerInstance");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/triggerRuns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Query trigger runs. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>continuationToken</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The continuation token for getting the next page of results. Null for first page. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedAfter</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedBefore</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filters</term>
+        ///     <term>RunQueryFilter[]</term>
+        ///     <term></term>
+        ///     <term> List of filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>RunQueryOrderBy[]</term>
+        ///     <term></term>
+        ///     <term> List of OrderBy option. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryFilter</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>operand</term>
+        ///     <term>&quot;PipelineName&quot; | &quot;Status&quot; | &quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;ActivityType&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot; | &quot;RunGroupId&quot; | &quot;LatestOnly&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>operator</term>
+        ///     <term>&quot;Equals&quot; | &quot;NotEquals&quot; | &quot;In&quot; | &quot;NotIn&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Operator to be used for filter. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>values</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> List of filter values. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryOrderBy</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>&quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;PipelineName&quot; | &quot;Status&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>order</term>
+        ///     <term>&quot;ASC&quot; | &quot;DESC&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Sorting order of the parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> QueryTriggerRunsByWorkspaceAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryTriggerRunsByWorkspaceRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.QueryTriggerRunsByWorkspace");
             scope.Start();
             try
             {
-                return RestClient.CancelTriggerInstance(triggerName, runId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -138,15 +391,126 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Query trigger runs. </summary>
-        /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TriggerRunsQueryResponse>> QueryTriggerRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>continuationToken</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The continuation token for getting the next page of results. Null for first page. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedAfter</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastUpdatedBefore</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filters</term>
+        ///     <term>RunQueryFilter[]</term>
+        ///     <term></term>
+        ///     <term> List of filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>RunQueryOrderBy[]</term>
+        ///     <term></term>
+        ///     <term> List of OrderBy option. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryFilter</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>operand</term>
+        ///     <term>&quot;PipelineName&quot; | &quot;Status&quot; | &quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;ActivityType&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot; | &quot;RunGroupId&quot; | &quot;LatestOnly&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>operator</term>
+        ///     <term>&quot;Equals&quot; | &quot;NotEquals&quot; | &quot;In&quot; | &quot;NotIn&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Operator to be used for filter. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>values</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> List of filter values. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>RunQueryOrderBy</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>orderBy</term>
+        ///     <term>&quot;RunStart&quot; | &quot;RunEnd&quot; | &quot;PipelineName&quot; | &quot;Status&quot; | &quot;ActivityName&quot; | &quot;ActivityRunStart&quot; | &quot;ActivityRunEnd&quot; | &quot;TriggerName&quot; | &quot;TriggerRunTimestamp&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>order</term>
+        ///     <term>&quot;ASC&quot; | &quot;DESC&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Sorting order of the parameter. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response QueryTriggerRunsByWorkspace(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateQueryTriggerRunsByWorkspaceRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.QueryTriggerRunsByWorkspace");
             scope.Start();
             try
             {
-                return await RestClient.QueryTriggerRunsByWorkspaceAsync(filterParameters, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -155,22 +519,23 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Query trigger runs. </summary>
-        /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TriggerRunsQueryResponse> QueryTriggerRunsByWorkspace(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        /// <summary> Create Request for <see cref="QueryTriggerRunsByWorkspace"/> and <see cref="QueryTriggerRunsByWorkspaceAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateQueryTriggerRunsByWorkspaceRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.QueryTriggerRunsByWorkspace");
-            scope.Start();
-            try
-            {
-                return RestClient.QueryTriggerRunsByWorkspace(filterParameters, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/queryTriggerRuns", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
     }
 }
