@@ -155,19 +155,7 @@ namespace Azure.Storage.Test.Shared
                 case RecordedTestMode.Playback:
                     if (!_playbackConfigCache.TryGetValue(name, out config))
                     {
-                        try
-                        {
-                            text = Recording.GetVariable(name, null);
-                        }
-                        catch
-                        {
-                            // If we can't find the variable, treat it as a mismatch recording.
-                            throw new TestRecordingMismatchException("no recordings found");
-                        }
-                        if (text == null)
-                        {
-                            throw new TestRecordingMismatchException($"Could not find variable '{name}'");
-                        }
+                        text = Recording.GetVariable(name, null);
                         config = TenantConfiguration.Parse(text);
                         _playbackConfigCache[name] = config;
                     }
@@ -181,7 +169,6 @@ namespace Azure.Storage.Test.Shared
                     }
                     Recording.GetVariable(name, text);
                     break;
-                case RecordedTestMode.Live:
                 default:
                     config = getTenant();
                     break;
