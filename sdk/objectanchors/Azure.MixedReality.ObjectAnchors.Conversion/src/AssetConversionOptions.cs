@@ -77,6 +77,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 throw new ArgumentException(assetConfigurationInvalidMessage, nameof(conversionConfiguration));
             }
 
+            if (!inputAssetFileType.IsValid())
+            {
+                throw new UnsupportedAssetFileTypeException(inputAssetFileType);
+            }
+
             this.InputAssetUri = inputAssetUri;
             this.InputAssetFileType = inputAssetFileType;
             this.ConversionConfiguration = conversionConfiguration;
