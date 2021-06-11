@@ -76,6 +76,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType Gltf { get { throw null; } }
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType Obj { get { throw null; } }
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType Ply { get { throw null; } }
+        public static System.Collections.Generic.IEnumerable<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
         public bool Equals(Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -146,6 +147,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+    }
+    public partial class UnsupportedAssetFileTypeException : System.Exception
+    {
+        internal UnsupportedAssetFileTypeException() { }
     }
 }
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
