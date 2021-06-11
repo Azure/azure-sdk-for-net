@@ -123,7 +123,7 @@ namespace Azure.AI.TextAnalytics
         public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IEnumerable<SentenceOpinion> opinions)
         {
             opinions ??= new List<SentenceOpinion>();
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length, (IReadOnlyList<SentenceOpinion>)opinions);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length, opinions.ToList());
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceOpinion"/> for mocking purposes.</returns>
         public static SentenceOpinion SentenceOpinion(TargetSentiment target, IEnumerable<AssessmentSentiment> assessments)
         {
-            return new SentenceOpinion(target, (IReadOnlyList<AssessmentSentiment>)assessments);
+            return new SentenceOpinion(target, assessments.ToList());
         }
 
         /// <summary>
@@ -564,11 +564,11 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
         {
             return new AnalyzeActionsResult(
-                (IReadOnlyCollection<ExtractKeyPhrasesActionResult>)extractKeyPhrasesActionResult,
-                (IReadOnlyCollection<RecognizeEntitiesActionResult>)recognizeEntitiesActionResults,
-                (IReadOnlyCollection<RecognizePiiEntitiesActionResult>)recognizePiiEntitiesActionResults,
-                (IReadOnlyCollection<RecognizeLinkedEntitiesActionResult>)recognizeLinkedEntitiesActionsResults,
-                (IReadOnlyCollection<AnalyzeSentimentActionResult>)analyzeSentimentActionsResults);
+                extractKeyPhrasesActionResult.ToList(),
+                recognizeEntitiesActionResults.ToList(),
+                recognizePiiEntitiesActionResults.ToList(),
+                recognizeLinkedEntitiesActionsResults.ToList(),
+                analyzeSentimentActionsResults.ToList());
         }
 
         /// <summary>
@@ -787,7 +787,7 @@ namespace Azure.AI.TextAnalytics
             HealthcareEntityRelationType relationType,
             IEnumerable<HealthcareEntityRelationRole> roles)
         {
-            return new HealthcareEntityRelation(relationType, (IReadOnlyCollection<HealthcareEntityRelationRole>)roles);
+            return new HealthcareEntityRelation(relationType, roles.ToList());
         }
         #endregion Healthcare
     }
