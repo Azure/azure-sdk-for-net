@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class RecognizePiiEntitiesTests : TextAnalyticsClientLiveTestBase
     {
         public RecognizePiiEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -53,6 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21782")]
         public async Task RecognizePiiEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);

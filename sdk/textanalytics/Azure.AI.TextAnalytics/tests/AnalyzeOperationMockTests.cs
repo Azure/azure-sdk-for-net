@@ -218,35 +218,35 @@ namespace Azure.AI.TextAnalytics.Tests
                       ""entityRecognitionTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""name"": ""something"",
+                          ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
                       ],
                       ""entityRecognitionPiiTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""name"": ""something"",
+                          ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
                       ],
                       ""keyPhraseExtractionTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""name"": ""something"",
+                          ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
                       ],
                       ""entityLinkingTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""name"": ""something"",
+                          ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
                       ],
                       ""sentimentAnalysisTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""name"": ""something"",
+                          ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
                       ]

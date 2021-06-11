@@ -300,10 +300,7 @@ namespace Azure.AI.TextAnalytics
 
             Response rawResponse = response.GetRawResponse();
 
-            // TODO - Remove PartiallySucceeded once service deploys this to WestUS2
             if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
-                response.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded ||
-                response.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted ||
                 response.Value.Status == TextAnalyticsOperationStatus.Failed)
             {
                 string nextLink = response.Value.NextLink;
