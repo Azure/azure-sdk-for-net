@@ -63,6 +63,20 @@ namespace Azure.Storage.Blobs.Models
         public bool? ShouldSealDestination { get; set; }
 
         /// <summary>
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </summary>
+        public BlobImmutabilityPolicy DestinationImmutabilityPolicy { get; set; }
+
+        /// <summary>
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </summary>
+        public bool? LegalHold { get; set; }
+
+        /// <summary>
         /// Optional.  Source authentication used to access the source blob.
         /// Note that is parameter does not apply to
         /// <see cref="BlobBaseClient.StartCopyFromUriAsync(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/>.

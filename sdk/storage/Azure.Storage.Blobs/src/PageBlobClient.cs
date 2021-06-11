@@ -393,6 +393,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Metadata,
                 options?.Tags,
                 options?.Conditions,
+                options?.ImmutabilityPolicy,
+                options?.LegalHold,
                 async: false,
                 cancellationToken)
             .EnsureCompleted();
@@ -436,6 +438,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Metadata,
                 options?.Tags,
                 options?.Conditions,
+                options?.ImmutabilityPolicy,
+                options?.LegalHold,
                 async: true,
                 cancellationToken)
             .ConfigureAwait(false);
@@ -490,14 +494,16 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
-                size,
-                sequenceNumber,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                false, // async
-                cancellationToken)
+                size: size,
+                sequenceNumber: sequenceNumber,
+                httpHeaders: httpHeaders,
+                metadata: metadata,
+                tags: default,
+                conditions: conditions,
+                immutabilityPolicy: default,
+                legalHold: default,
+                async: false,
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
@@ -550,14 +556,16 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
-                size,
-                sequenceNumber,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                true, // async
-                cancellationToken)
+                size: size,
+                sequenceNumber: sequenceNumber,
+                httpHeaders: httpHeaders,
+                metadata: metadata,
+                tags: default,
+                conditions: conditions,
+                immutabilityPolicy: default,
+                legalHold: default,
+                async: true,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -598,7 +606,9 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.HttpHeaders,
                 options?.Metadata,
                 options?.Tags,
-                false, // async
+                options?.ImmutabilityPolicy,
+                options?.LegalHold,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -640,7 +650,9 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.HttpHeaders,
                 options?.Metadata,
                 options?.Tags,
-                true, // async
+                options?.ImmutabilityPolicy,
+                options?.LegalHold,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -689,13 +701,15 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
-                size,
-                sequenceNumber,
-                httpHeaders,
-                metadata,
-                default,
-                false, // async
-                cancellationToken)
+                size: size,
+                sequenceNumber: sequenceNumber,
+                httpHeaders: httpHeaders,
+                metadata: metadata,
+                tags: default,
+                immutabilityPolicy: default,
+                legalHold: default,
+                async: false,
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
@@ -743,13 +757,15 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
-                size,
-                sequenceNumber,
-                httpHeaders,
-                metadata,
-                default,
-                true, // async
-                cancellationToken)
+                size: size,
+                sequenceNumber: sequenceNumber,
+                httpHeaders: httpHeaders,
+                metadata: metadata,
+                tags: default,
+                immutabilityPolicy: default,
+                legalHold: default,
+                async: true,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -781,6 +797,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="tags">
         /// Optional tags to set for this page blob.
         /// </param>
+        /// <param name="immutabilityPolicy">
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
+        /// <param name="legalHold">
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -802,6 +828,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders httpHeaders,
             Metadata metadata,
             Tags tags,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool? legalHold,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -829,6 +857,8 @@ namespace Azure.Storage.Blobs.Specialized
                         metadata,
                         tags,
                         conditions,
+                        immutabilityPolicy,
+                        legalHold,
                         async,
                         cancellationToken,
                         $"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}")
@@ -885,6 +915,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the creation of this new page blob.
         /// </param>
+        /// <param name="immutabilityPolicy">
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
+        /// <param name="legalHold">
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -910,6 +950,8 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata,
             Tags tags,
             PageBlobRequestConditions conditions,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool? legalHold,
             bool async,
             CancellationToken cancellationToken,
             string operationName = null)
@@ -957,6 +999,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -985,6 +1030,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3474,6 +3522,8 @@ namespace Azure.Storage.Blobs.Specialized
                         metadata: default,
                         tags: default,
                         conditions: options?.OpenConditions,
+                        immutabilityPolicy: default,
+                        legalHold: default,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -3507,6 +3557,8 @@ namespace Azure.Storage.Blobs.Specialized
                             metadata: default,
                             tags: default,
                             conditions: options?.OpenConditions,
+                            immutabilityPolicy: default,
+                            legalHold: default,
                             async: async,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);

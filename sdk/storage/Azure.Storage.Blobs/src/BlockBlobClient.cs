@@ -789,6 +789,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
+        /// <param name="immutabilityPolicy">
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
+        /// <param name="legalHold">
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
         /// <param name="operationName">
         /// The name of the calling operation.
         /// </param>
@@ -814,6 +824,8 @@ namespace Azure.Storage.Blobs.Specialized
             Tags tags,
             BlobRequestConditions conditions,
             AccessTier? accessTier,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool? legalHold,
             IProgress<long> progressHandler,
             string operationName,
             bool async,
@@ -860,6 +872,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -887,6 +902,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1177,7 +1195,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StageBlockFromUri
         /// <summary>
-        /// The <see cref="StageBlockFromUri(Uri, string, BlockBlobStageBlockFromUriOptions, CancellationToken)"/>
+        /// The <see cref="StageBlockFromUri(Uri, string, StageBlockFromUriOptions, CancellationToken)"/>
         /// operation creates a new block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
@@ -1201,7 +1219,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// URL-encoded.
         /// </param>
         /// <param name="options">
-        /// Optional parameters. <see cref="BlockBlobStageBlockFromUriOptions"/>.
+        /// Optional parameters. <see cref="StageBlockFromUriOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1218,7 +1236,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlockInfo> StageBlockFromUri(
             Uri sourceUri,
             string base64BlockId,
-            BlockBlobStageBlockFromUriOptions options,
+            StageBlockFromUriOptions options,
             CancellationToken cancellationToken = default) =>
             StageBlockFromUriInternal(
                 sourceUri,
@@ -1233,7 +1251,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="StageBlockFromUriAsync(Uri, string, BlockBlobStageBlockFromUriOptions, CancellationToken)"/>
+        /// The <see cref="StageBlockFromUriAsync(Uri, string, StageBlockFromUriOptions, CancellationToken)"/>
         /// operation creates a new block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
@@ -1257,7 +1275,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// URL-encoded.
         /// </param>
         /// <param name="options">
-        /// Optional parameters. <see cref="BlockBlobStageBlockFromUriOptions"/>.
+        /// Optional parameters. <see cref="StageBlockFromUriOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1274,7 +1292,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
             string base64BlockId,
-            BlockBlobStageBlockFromUriOptions options,
+            StageBlockFromUriOptions options,
             CancellationToken cancellationToken = default) =>
             await StageBlockFromUriInternal(
                 sourceUri,
@@ -1657,7 +1675,9 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Tags,
                 options?.Conditions,
                 options?.AccessTier,
-                false, // async
+                options?.ImmutabilityPolicy,
+                options?.LegalHold,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -1722,14 +1742,16 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             CommitBlockListInternal(
-                base64BlockIds,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                accessTier,
-                false, // async
-                cancellationToken)
+                base64BlockIds: base64BlockIds,
+                blobHttpHeaders: httpHeaders,
+                metadata: metadata,
+                tags: default,
+                conditions: conditions,
+                accessTier: accessTier,
+                immutabilityPolicy: default,
+                legalHold: default,
+                async: false,
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
@@ -1783,7 +1805,9 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Tags,
                 options?.Conditions,
                 options?.AccessTier,
-                true, // async
+                options?.ImmutabilityPolicy,
+                options?.LegalHold,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1848,14 +1872,16 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             await CommitBlockListInternal(
-                base64BlockIds,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                accessTier,
-                true, // async
-                cancellationToken)
+                base64BlockIds: base64BlockIds,
+                blobHttpHeaders: httpHeaders,
+                metadata: metadata,
+                tags: default,
+                conditions: conditions,
+                accessTier: accessTier,
+                immutabilityPolicy: default,
+                legalHold: default,
+                async: true,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -1901,6 +1927,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
+        /// <param name="immutabilityPolicy">
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
+        /// <param name="legalHold">
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1923,6 +1959,8 @@ namespace Azure.Storage.Blobs.Specialized
             Tags tags,
             BlobRequestConditions conditions,
             AccessTier? accessTier,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool? legalHold,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1968,6 +2006,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1994,6 +2035,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2523,6 +2567,8 @@ namespace Azure.Storage.Blobs.Specialized
                     tags: options?.Tags,
                     conditions: options?.OpenConditions,
                     accessTier: default,
+                    immutabilityPolicy: default,
+                    legalHold: default,
                     progressHandler: default,
                     operationName: operationName,
                     async: async,
@@ -2906,6 +2952,8 @@ namespace Azure.Storage.Blobs.Specialized
                         args?.Tags,
                         args?.Conditions,
                         args?.AccessTier,
+                        args?.ImmutabilityPolicy,
+                        args?.LegalHold,
                         progressHandler,
                         operationName,
                         async,
@@ -2927,6 +2975,8 @@ namespace Azure.Storage.Blobs.Specialized
                         args?.Tags,
                         args?.Conditions,
                         args?.AccessTier,
+                        args?.ImmutabilityPolicy,
+                        args?.LegalHold,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName

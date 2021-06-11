@@ -108,6 +108,14 @@ namespace Azure.Storage.Blobs
             {
                 items.Add(ListBlobsIncludeItem.Tags);
             }
+            if ((traits & BlobTraits.ImmutabilityPolicy) == BlobTraits.ImmutabilityPolicy)
+            {
+                items.Add(ListBlobsIncludeItem.Immutabilitypolicy);
+            }
+            if ((traits & BlobTraits.LegalHold) == BlobTraits.LegalHold)
+            {
+                items.Add(ListBlobsIncludeItem.Legalhold);
+            }
             if ((states & BlobStates.Uncommitted) == BlobStates.Uncommitted)
             {
                 items.Add(ListBlobsIncludeItem.Uncommittedblobs);

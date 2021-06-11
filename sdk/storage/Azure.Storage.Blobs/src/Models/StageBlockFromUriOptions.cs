@@ -7,9 +7,9 @@ using Azure.Storage.Blobs.Specialized;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for <see cref="BlockBlobClient.StageBlockFromUriAsync(System.Uri, string, BlockBlobStageBlockFromUriOptions, System.Threading.CancellationToken)"/>.
+    /// Optional parameters for <see cref="BlockBlobClient.StageBlockFromUriAsync(System.Uri, string, StageBlockFromUriOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
-    public class BlockBlobStageBlockFromUriOptions
+    public class StageBlockFromUriOptions
     {
         /// <summary>
         /// Optionally uploads only the bytes of the blob in the

@@ -625,7 +625,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
-            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
                 SourceRange = new HttpRange(256, 256)
             };
@@ -660,7 +660,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
-            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
                 SourceContentHash = MD5.Create().ComputeHash(data)
             };
@@ -691,7 +691,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
-            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
                 SourceContentHash = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))
             };
@@ -733,7 +733,7 @@ namespace Azure.Storage.Blobs.Test
                 LeaseId = await SetupBlobLeaseCondition(destBlob, ReceivedLeaseId, garbageLeaseId)
             };
 
-            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
                 DestinationConditions = leaseAccessConditions
             };
@@ -772,7 +772,7 @@ namespace Azure.Storage.Blobs.Test
                 LeaseId = garbageLeaseId
             };
 
-            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
                 DestinationConditions = leaseAccessConditions
             };
@@ -811,7 +811,7 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
-                BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+                StageBlockFromUriOptions options = new StageBlockFromUriOptions
                 {
                     SourceConditions = sourceAccessConditions
                 };
@@ -848,7 +848,7 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
-                BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+                StageBlockFromUriOptions options = new StageBlockFromUriOptions
                 {
                     SourceConditions = sourceAccessConditions
                 };
@@ -913,7 +913,7 @@ namespace Azure.Storage.Blobs.Test
                 "Bearer",
                 sourceBearerToken);
 
-            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
                 SourceAuthentication = sourceAuth
             };
@@ -950,7 +950,7 @@ namespace Azure.Storage.Blobs.Test
                 "Bearer",
                 string.Empty);
 
-            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
                 SourceAuthentication = sourceAuth
             };

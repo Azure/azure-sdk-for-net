@@ -44,6 +44,16 @@ namespace Azure.Storage.Blobs.Models
         Tags,
 
         /// <summary>
+        /// Immutability policy.
+        /// </summary>
+        Immutabilitypolicy,
+
+        /// <summary>
+        /// Legal hold.
+        /// </summary>
+        Legalhold,
+
+        /// <summary>
         /// deleted with versions.
         /// </summary>
         DeletedWithVersions,
