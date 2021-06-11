@@ -288,7 +288,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeEntitiesActionResult entitiesActionsResults = resultCollection.RecognizeEntitiesResults.FirstOrDefault();
             ExtractKeyPhrasesActionResult keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults.FirstOrDefault();
             RecognizePiiEntitiesActionResult piiActionsResults = resultCollection.RecognizePiiEntitiesResults.FirstOrDefault();
-            RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesActionsResults.FirstOrDefault();
+            RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
