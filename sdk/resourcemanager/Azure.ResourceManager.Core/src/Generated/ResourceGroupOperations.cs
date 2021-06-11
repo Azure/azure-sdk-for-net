@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// ListResources of type T.
+        /// Provides a way to reuse the protected client context.
         /// </summary>
         /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
         /// <param name="func"> The method to pass the internal properties to. </param>
