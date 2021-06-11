@@ -252,5 +252,30 @@ namespace Azure.ResourceManager.Core.Tests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/virtualMachines/myVmName", "Microsoft.Compute", "virtualMachines", 1)]
+        [TestCase("Microsoft.Compute/virtualMachines", "Microsoft.Compute", "virtualMachines", 1)]
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/virtualMachines/myVmName/fooType/fooName", "Microsoft.Compute", "virtualMachines/fooType", 2)]
+        [TestCase("Microsoft.Compute/virtualMachines/fooType", "Microsoft.Compute", "virtualMachines/fooType", 2)]
+        [TestCase("/providers/Microsoft.Insights/providers/Microsoft.Compute/virtualMachines/myVmName", "Microsoft.Compute", "virtualMachines", 1)]
+        [TestCase("/providers/Microsoft.Insights/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testsubnet", "Microsoft.Network", "virtualNetworks/subnets", 2)]
+        [TestCase("/providers/Microsoft.Compute/virtualMachines/myVmName/fooType/fooName", "Microsoft.Compute", "virtualMachines/fooType", 2)]
+        public void ValidateParse(string idOrType, string expectedNamespace, string expectedType, int expectedTypesCount)
+        {
+            ResourceType rt = idOrType;
+            Assert.AreEqual(expectedNamespace, rt.Namespace);
+            Assert.AreEqual(expectedType, rt.Type);
+            Assert.AreEqual(expectedTypesCount, rt.Types.Count);
+        }
+
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/virtualMachines/myVmName/fooType/fooName",
+        "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/virtualMachines/myVmName",
+        true)]
+        public void ValidateIsParentOf(string childId, string parentId, bool expectedEquals)
+        {
+            ResourceType childRt = childId;
+            ResourceType parentRt = parentId;
+            Assert.AreEqual(expectedEquals, parentRt.IsParentOf(childRt));
+        }
     }
 }

@@ -35,6 +35,20 @@ namespace Azure.ResourceManager.Core
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
+        /// <param name="resourceType"> The simple type of this resource, for example 'subnets'. </param>
+        /// <param name="resourceName"> The name of this resource. </param>
+        /// <returns> The resource identifier for the given child resource. </returns>
+        internal SubscriptionResourceIdentifier(SubscriptionResourceIdentifier parent, ResourceType resourceType, string resourceName)
+            : base(parent, resourceType, resourceName)
+        {
+            SubscriptionId = parent.SubscriptionId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class 
+        /// for resources in the sanem namespace as their parent resource.
+        /// </summary>
+        /// <param name="parent"> The resource id of the parent resource. </param>
         /// <param name="childResourceType"> The simple type of this resource, for example 'subnets'. </param>
         /// <param name="childResourceName"> The name of this resource. </param>
         /// <returns> The resource identifier for the given child resource. </returns>
