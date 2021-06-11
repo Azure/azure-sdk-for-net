@@ -9,13 +9,13 @@ namespace Azure.Core.Tests
     public class HttpAuthorizationTests
     {
         [Test]
-        public void NullorEmptyParameters()
+        public void NullorWhiteSpaceParameters()
         {
             Assert.Throws<ArgumentNullException>(() => new HttpAuthorization(null, "parameter"));
             Assert.Throws<ArgumentNullException>(() => new HttpAuthorization("scheme", null));
 
-            Assert.Throws<ArgumentException>(() => new HttpAuthorization(string.Empty, "parameter"));
-            Assert.Throws<ArgumentException>(() => new HttpAuthorization("scheme", string.Empty));
+            Assert.Throws<ArgumentException>(() => new HttpAuthorization(" ", "parameter"));
+            Assert.Throws<ArgumentException>(() => new HttpAuthorization("scheme", " "));
         }
 
         [Test]

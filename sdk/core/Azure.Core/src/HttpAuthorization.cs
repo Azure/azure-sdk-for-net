@@ -36,8 +36,8 @@ namespace Azure
             string scheme,
             string parameter)
         {
-            Argument.AssertNotNullOrEmpty(scheme, nameof(scheme));
-            Argument.AssertNotNullOrEmpty(parameter, nameof(parameter));
+            Argument.AssertNotNullOrWhiteSpace(scheme, nameof(scheme));
+            Argument.AssertNotNullOrWhiteSpace(parameter, nameof(parameter));
 
             Scheme = scheme;
             Parameter = parameter;
