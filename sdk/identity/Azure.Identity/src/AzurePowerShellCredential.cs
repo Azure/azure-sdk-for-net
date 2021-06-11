@@ -121,7 +121,7 @@ namespace Azure.Identity
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
 
             ScopeUtilities.ValidateScope(resource);
-            var tenantId = TenantIdResolver.Resolve(null, context, _options);
+            var tenantId = TenantIdResolver.Resolve(_options.TenantId, context, _options);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);

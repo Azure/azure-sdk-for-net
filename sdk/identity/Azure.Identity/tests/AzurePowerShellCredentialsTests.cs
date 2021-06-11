@@ -21,34 +21,46 @@ namespace Azure.Identity.Tests
             "<Object Type=\"Microsoft.Azure.Commands.Profile.Models.PSAccessToken\"><Property Name=\"Token\" Type=\"System.String\">Kg==</Property><Property Name=\"ExpiresOn\" Type=\"System.DateTimeOffset\">5/11/2021 8:20:03 PM +00:00</Property><Property Name=\"TenantId\" Type=\"System.String\">72f988bf-86f1-41af-91ab-2d7cd011db47</Property><Property Name=\"UserId\" Type=\"System.String\">chriss@microsoft.com</Property><Property Name=\"Type\" Type=\"System.String\">Bearer</Property></Object>";
 
         private const string Scope = "https://vault.azure.net/.default";
+        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
         private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
 
         public AzurePowerShellCredentialsTests(bool isAsync) : base(isAsync)
         { }
 
         [Test]
-        public async Task AuthenticateWithAzurePowerShellCredential([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
+        public async Task AuthenticateWithAzurePowerShellCredential(
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true, false)] bool preferHint,
+            [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            string expectedTenantId = TenantIdResolver.Resolve(null, context, null) ;
+            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = preferHint};
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
             var testProcess = new TestProcess { Output = processOutput };
             AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+                new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
             AccessToken actualToken = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
-            if (expectedTenantId != null)
+
+            var iStart = testProcess.StartInfo.Arguments.IndexOf("EncodedCommand");
+            iStart = testProcess.StartInfo.Arguments.IndexOf('\"', iStart) + 1;
+            var iEnd = testProcess.StartInfo.Arguments.IndexOf('\"', iStart);
+            var commandString = testProcess.StartInfo.Arguments.Substring(iStart, iEnd - iStart);
+            var b = Convert.FromBase64String(commandString);
+            commandString = Encoding.Unicode.GetString(b);
+
+            var expectTenantId = expectedTenantId != null;
+            if (expectTenantId)
             {
-                var iStart = testProcess.StartInfo.Arguments.IndexOf("EncodedCommand");
-                iStart = testProcess.StartInfo.Arguments.IndexOf('\"',  iStart) + 1;
-                var iEnd = testProcess.StartInfo.Arguments.IndexOf('\"', iStart);
-                var commandString = testProcess.StartInfo.Arguments.Substring(iStart, iEnd - iStart);
-                var b = Convert.FromBase64String(commandString);
-                commandString = Encoding.Unicode.GetString(b);
-                Assert.That(commandString, Does.Contain(expectedTenantId));
+                Assert.That(commandString, Does.Contain($"-TenantId {expectedTenantId}"));
+            }
+            else
+            {
+                Assert.That(commandString, Does.Not.Contain("-TenantId"));
             }
         }
 

@@ -20,6 +20,7 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredential : TokenCredential
     {
+        private readonly AzureCliCredentialOptions _options;
         internal const string AzureCLINotInstalled = "Azure CLI not installed";
         internal const string AzNotLogIn = "Please run 'az login' to set up account";
         private const string WinAzureCLIError = "'az' is not recognized";
@@ -51,11 +52,20 @@ namespace Azure.Identity
             : this(CredentialPipeline.GetInstance(null), default)
         { }
 
-        internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService)
+        /// <summary>
+        /// Create an instance of CliCredential class.
+        /// </summary>
+        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        public AzureCliCredential(AzureCliCredentialOptions options)
+            : this(CredentialPipeline.GetInstance(null), default, options)
+        { }
+
+        internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureCliCredentialOptions options = null)
         {
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
+            _options = options ?? new AzureCliCredentialOptions();
         }
 
         /// <summary>
@@ -98,7 +108,7 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
-            string tenantId = TenantIdResolver.Resolve(null, context, null);
+            string tenantId = TenantIdResolver.Resolve(_options.TenantId, context, _options);
 
             ScopeUtilities.ValidateScope(resource);
 

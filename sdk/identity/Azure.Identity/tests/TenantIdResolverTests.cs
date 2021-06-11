@@ -18,10 +18,10 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> ResolveInputs()
         {
-            yield return new object[] { TenantId, Context_Hint, Options_True, TenantId };
+            yield return new object[] { TenantId, Context_Hint, Options_True, Context_Hint.TenantId };
             yield return new object[] { TenantId, Context_NoHint, Options_True, TenantId };
-            yield return new object[] { TenantId, Context_Hint, Options_False, Context_Hint.TenantId };
-            yield return new object[] { TenantId, Context_Hint, Options_False, Context_Hint.TenantId };
+            yield return new object[] { TenantId, Context_Hint, Options_False, TenantId };
+            yield return new object[] { TenantId, Context_NoHint, Options_False, TenantId };
             yield return new object[] { null, Context_Hint, Options_True, Context_Hint.TenantId };
             yield return new object[] { null, Context_NoHint, Options_True, null };
             yield return new object[] { null, Context_Hint, Options_False, Context_Hint.TenantId };

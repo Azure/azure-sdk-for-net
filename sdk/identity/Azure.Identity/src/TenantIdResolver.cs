@@ -18,7 +18,7 @@ namespace Azure.Identity
         {
             return options?.AllowMultiTenantAuthentication switch
             {
-                true => explicitTenantId ?? context.TenantId,
+                false => explicitTenantId ?? context.TenantId,
                 _ => context.TenantId ?? explicitTenantId
             };
         }
