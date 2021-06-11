@@ -87,10 +87,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="sentenceSentiments">Sets the <see cref="DocumentSentiment.Sentences"/> property.</param>
         /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DocumentSentiment"/> for mocking purposes.</returns>
-        public static DocumentSentiment DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments, IEnumerable<TextAnalyticsWarning> warnings = default)
+        public static DocumentSentiment DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, IEnumerable<SentenceSentiment> sentenceSentiments, IEnumerable<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments, warnings.ToList());
+            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments.ToList(), warnings.ToList());
         }
 
         /// <summary>
