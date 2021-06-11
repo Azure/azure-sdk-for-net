@@ -15,18 +15,30 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
+        /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, taskName, status)
         {
+            if (taskName == null)
+            {
+                throw new ArgumentNullException(nameof(taskName));
+            }
         }
 
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
+        /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, name, status)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, taskName, status)
         {
+            if (taskName == null)
+            {
+                throw new ArgumentNullException(nameof(taskName));
+            }
+
             Results = results;
         }
 

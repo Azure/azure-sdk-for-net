@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/linking?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1/entities/linking?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "190",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c9cac19918a17341839714397bb56a26-9f337b36cb70094d-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-8a7f03d4ee8c464fa90d21ea02e83b87-0811221c6c69e349-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210610.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "70aff255bc0a587f23734ec6facb2924",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d1ba43cc-0820-4af2-b18b-90e6643ddff7",
+        "apim-request-id": "91e87fb8-3829-467c-a4b8-b7fa0206a05e",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Tue, 11 May 2021 16:08:43 GMT",
+        "Date": "Thu, 10 Jun 2021 18:00:05 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "2529"
+        "x-envoy-upstream-service-time": "37"
       },
       "ResponseBody": {
         "documents": [
@@ -150,13 +150,13 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2020-02-01"
+        "modelVersion": "2021-06-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "1863021454",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
   }
 }
