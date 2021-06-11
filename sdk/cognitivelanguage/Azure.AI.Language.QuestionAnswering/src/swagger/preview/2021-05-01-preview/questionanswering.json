@@ -1,0 +1,533 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Microsoft Cognitive Language Service - Question Answering",
+    "description": "The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in <a href=\"https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview\">https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview</a>.",
+    "version": "2021-05-01-preview"
+  },
+  "securityDefinitions": {
+    "apim_key": {
+      "type": "apiKey",
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apim_key": []
+    }
+  ],
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{Endpoint}/language",
+    "useSchemePrefix": false,
+    "parameters": [
+      {
+        "$ref": "common.json#/parameters/Endpoint"
+      }
+    ]
+  },
+  "paths": {
+    "/:query-knowledgebases": {
+      "post": {
+        "summary": "Answers the specified question using your knowledgebase.",
+        "operationId": "QuestionAnsweringKnowledgebase_Query",
+        "parameters": [
+          {
+            "$ref": "#/parameters/KnowledgebaseQueryParameters"
+          },
+          {
+            "$ref": "common.json#/parameters/ProjectNameQueryParameter"
+          },
+          {
+            "$ref": "common.json#/parameters/DeploymentNameQueryParameter"
+          },
+          {
+            "$ref": "common.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response to get answers from knowledgebases.",
+            "schema": {
+              "$ref": "#/definitions/KnowledgebaseAnswers"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "common.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Successful query": {
+            "$ref": "./examples/questionanswering/SuccessfulQueryKnowledgebases.json"
+          }
+        }
+      }
+    },
+    "/:query-text": {
+      "post": {
+        "summary": "Answers the specified question using the provided text in the body.",
+        "operationId": "QuestionAnsweringText_Query",
+        "parameters": [
+          {
+            "$ref": "#/parameters/TextQueryParameters"
+          },
+          {
+            "$ref": "common.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response to get answers from input text.",
+            "schema": {
+              "$ref": "#/definitions/TextAnswers"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "common.json#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Successful query": {
+            "$ref": "./examples/questionanswering/SuccessfulQueryText.json"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "KnowledgebaseQueryParameters": {
+      "type": "object",
+      "description": "The question parameters to answer using a knowledgebase.",
+      "additionalProperties": false,
+      "properties": {
+        "qnaId": {
+          "type": "integer",
+          "description": "Exact QnA ID to fetch from the knowledgebase, this field takes priority over question.",
+          "format": "int32"
+        },
+        "question": {
+          "type": "string",
+          "description": "User question to query against the knowledge base."
+        },
+        "top": {
+          "type": "integer",
+          "description": "Max number of answers to be returned for the question.",
+          "format": "int32"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "confidenceScoreThreshold": {
+          "type": "number",
+          "format": "double",
+          "description": "Minimum threshold score for answers, value ranges from 0 to 1.",
+          "maximum": 1,
+          "minimum": 0
+        },
+        "context": {
+          "description": "Context object with previous QnA's information.",
+          "$ref": "#/definitions/KnowledgebaseAnswerRequestContext"
+        },
+        "rankerType": {
+          "type": "string",
+          "description": "(Optional) Set to 'QuestionOnly' for using a question only Ranker.",
+          "x-ms-enum": {
+            "name": "RankerType",
+            "modelAsString": true
+          },
+          "enum": [
+            "Default",
+            "QuestionOnly"
+          ]
+        },
+        "strictFilters": {
+          "description": "Filter QnAs based on give metadata list and knowledgebase source names.",
+          "$ref": "#/definitions/StrictFilters"
+        },
+        "answerSpanRequest": {
+          "description": "To configure Answer span prediction feature.",
+          "$ref": "#/definitions/AnswerSpanRequest"
+        },
+        "includeUnstructuredSources": {
+          "type": "boolean",
+          "description": "(Optional) Flag to enable Query over Unstructured Sources."
+        }
+      }
+    },
+    "AnswerSpanRequest": {
+      "type": "object",
+      "description": "To configure Answer span prediction feature.",
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Enable or disable Answer Span prediction."
+        },
+        "confidenceScoreThreshold": {
+          "type": "number",
+          "format": "double",
+          "description": "Minimum threshold score required to include an answer span, value ranges from 0 to 1.",
+          "maximum": 1,
+          "minimum": 0
+        },
+        "topAnswersWithSpan": {
+          "type": "integer",
+          "description": "Number of Top answers to be considered for span prediction from 1 to 10.",
+          "format": "int32",
+          "maximum": 10,
+          "minimum": 1
+        }
+      }
+    },
+    "KnowledgebaseAnswerRequestContext": {
+      "type": "object",
+      "description": "Context object with previous QnA's information.",
+      "additionalProperties": false,
+      "required": [
+        "previousQnaId"
+      ],
+      "properties": {
+        "previousQnaId": {
+          "type": "integer",
+          "description": "Previous turn top answer result QnA ID.",
+          "format": "int32"
+        },
+        "previousUserQuery": {
+          "type": "string",
+          "description": "Previous user query."
+        }
+      }
+    },
+    "KnowledgebaseAnswers": {
+      "type": "object",
+      "description": "Represents List of Question Answers.",
+      "additionalProperties": false,
+      "properties": {
+        "answers": {
+          "type": "array",
+          "description": "Represents Answer Result list.",
+          "items": {
+            "$ref": "#/definitions/KnowledgebaseAnswer"
+          }
+        }
+      }
+    },
+    "KnowledgebaseAnswer": {
+      "type": "object",
+      "description": "Represents Knowledgebase Answer.",
+      "additionalProperties": false,
+      "properties": {
+        "questions": {
+          "type": "array",
+          "description": "List of questions.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "answer": {
+          "type": "string",
+          "description": "The Answer."
+        },
+        "confidenceScore": {
+          "type": "number",
+          "description": "Answer confidence score, value ranges from 0 to 1.",
+          "format": "double",
+          "maximum": 1,
+          "minimum": 0
+        },
+        "id": {
+          "type": "integer",
+          "description": "ID of the QnA result.",
+          "format": "int32"
+        },
+        "source": {
+          "type": "string",
+          "description": "Source of QnA result."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Metadata associated with the answer, useful to categorize or filter question answers.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "dialog": {
+          "type": "object",
+          "$ref": "#/definitions/KnowledgebaseAnswerDialog"
+        },
+        "answerSpan": {
+          "type": "object",
+          "description": "Answer span object of QnA with respect to user's question.",
+          "$ref": "#/definitions/AnswerSpan"
+        }
+      }
+    },
+    "KnowledgebaseAnswerDialog": {
+      "type": "object",
+      "description": "Dialog associated with Answer.",
+      "properties": {
+        "isContextOnly": {
+          "type": "boolean",
+          "description": "To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result."
+        },
+        "prompts": {
+          "type": "array",
+          "description": "List of 0 to 20 prompts associated with the answer.",
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/definitions/KnowledgebaseAnswerPrompt"
+          }
+        }
+      }
+    },
+    "KnowledgebaseAnswerPrompt": {
+      "type": "object",
+      "description": "Prompt for an answer.",
+      "properties": {
+        "displayOrder": {
+          "type": "integer",
+          "description": "Index of the prompt - used in ordering of the prompts.",
+          "format": "int32"
+        },
+        "qnaId": {
+          "type": "integer",
+          "description": "QnA ID corresponding to the prompt.",
+          "format": "int32"
+        },
+        "displayText": {
+          "type": "string",
+          "description": "Text displayed to represent a follow up question prompt.",
+          "maxLength": 200
+        }
+      }
+    },
+    "StrictFilters": {
+      "type": "object",
+      "description": "filters over knowledgebase.",
+      "additionalProperties": false,
+      "properties": {
+        "metadataFilter": {
+          "type": "object",
+          "$ref": "#/definitions/MetadataFilter"
+        },
+        "sourceFilter": {
+          "type": "object",
+          "$ref": "#/definitions/SourceFilter"
+        },
+        "compoundOperation": {
+          "type": "string",
+          "$ref": "#/definitions/CompoundOperationType",
+          "default": "AND"
+        }
+      }
+    },
+    "MetadataFilter": {
+      "type": "object",
+      "description": "Find QnAs that are associated with the given list of metadata.",
+      "additionalProperties": false,
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 500
+          }
+        },
+        "compoundOperation": {
+          "type": "string",
+          "$ref": "#/definitions/CompoundOperationType",
+          "default": "AND"
+        }
+      }
+    },
+    "CompoundOperationType": {
+      "type": "string",
+      "description": "(Optional) Set to 'OR' for joining metadata using 'OR' operation.",
+      "x-ms-enum": {
+        "name": "CompoundOperationType",
+        "modelAsString": true
+      },
+      "enum": [
+        "AND",
+        "OR"
+      ]
+    },
+    "SourceFilter": {
+      "type": "array",
+      "description": "Find QnAs that are associated with the given list of sources in knowledgebase.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "AnswerSpan": {
+      "type": "object",
+      "description": "Answer span object of QnA.",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Predicted text of answer span."
+        },
+        "confidenceScore": {
+          "type": "number",
+          "description": "Predicted score of answer span, value ranges from 0 to 1.",
+          "format": "double",
+          "maximum": 1,
+          "minimum": 0
+        },
+        "offset": {
+          "type": "integer",
+          "description": "The answer span offset from the start of answer.",
+          "format": "int32"
+        },
+        "length": {
+          "type": "integer",
+          "description": "The length of the answer span.",
+          "format": "int32"
+        }
+      }
+    },
+    "TextQueryParameters": {
+      "type": "object",
+      "description": "The question and text record parameters to answer.",
+      "required": [
+        "question",
+        "records"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "question": {
+          "type": "string",
+          "description": "User question to query against the given text records."
+        },
+        "records": {
+          "type": "array",
+          "description": "Text records to be searched for given question.",
+          "items": {
+            "$ref": "#/definitions/TextInput"
+          }
+        },
+        "language": {
+          "$ref": "common.json#/definitions/Language"
+        },
+        "stringIndexType": {
+          "$ref": "common.json#/definitions/StringIndexType"
+        }
+      }
+    },
+    "TextAnswers": {
+      "type": "object",
+      "description": "Represents the answer results.",
+      "additionalProperties": false,
+      "properties": {
+        "answers": {
+          "type": "array",
+          "description": "Represents the answer results.",
+          "items": {
+            "$ref": "#/definitions/TextAnswer"
+          }
+        }
+      }
+    },
+    "TextAnswer": {
+      "type": "object",
+      "description": "Represents answer result.",
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "type": "string",
+          "description": "Answer."
+        },
+        "confidenceScore": {
+          "type": "number",
+          "description": "answer confidence score, value ranges from 0 to 1.",
+          "format": "double",
+          "maximum": 1,
+          "minimum": 0
+        },
+        "id": {
+          "type": "string",
+          "description": "record ID."
+        },
+        "answerSpan": {
+          "type": "object",
+          "description": "Answer span object with respect to user's question.",
+          "$ref": "#/definitions/AnswerSpan"
+        },
+        "offset": {
+          "type": "integer",
+          "description": "The sentence offset from the start of the document.",
+          "format": "int32"
+        },
+        "length": {
+          "type": "integer",
+          "description": "The length of the sentence.",
+          "format": "int32"
+        }
+      }
+    },
+    "TextInput": {
+      "type": "object",
+      "description": "Represent input text record to be queried.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "text"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the text record."
+        },
+        "text": {
+          "type": "string",
+          "description": "Text contents of the record."
+        }
+      }
+    }
+  },
+  "parameters": {
+    "KnowledgebaseQueryParameters": {
+      "name": "knowledgebaseQueryParameters",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/KnowledgebaseQueryParameters"
+      },
+      "x-nullable": true,
+      "description": "Post body of the request.",
+      "x-ms-parameter-location": "method"
+    },
+    "TextQueryParameters": {
+      "name": "textQueryParameters",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/TextQueryParameters"
+      },
+      "x-nullable": true,
+      "description": "Post body of the request.",
+      "x-ms-parameter-location": "method"
+    }
+  }
+}
