@@ -17,20 +17,25 @@ using Azure.ResourceManager.Core.Resources;
 
 namespace Azure.ResourceManager.NewResources
 {
-    /// <summary> A class representing collection of PolicyAssignment and their operations over a Tenant. </summary>
-    public partial class PolicyAssignmentTenantContainer : ResourceContainerBase<TenantResourceIdentifier, PolicyAssignment, PolicyAssignmentData>
+    /// <summary> A class representing collection of PolicyAssignment and their operations over a scope. </summary>
+    public partial class PolicyAssignmentContainer : ContainerBase
     {
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentTenantContainer"/> class for mocking. </summary>
-        protected PolicyAssignmentTenantContainer()
+        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentContainer"/> class for mocking. </summary>
+        protected PolicyAssignmentContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentTenantContainer class. </summary>
+        /// <summary> Initializes a new instance of PolicyAssignmentContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PolicyAssignmentTenantContainer(ResourceOperationsBase parent) : base(parent)
+        /// <param name="scope"> Typed scope Identifier for the container. </param>
+        internal PolicyAssignmentContainer(OperationsBase parent, ResourceIdentifier scope):base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            // TODO: Validate scope
+            _scope = scope;
         }
+
+        private readonly ResourceIdentifier _scope;
 
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -38,7 +43,7 @@ namespace Azure.ResourceManager.NewResources
         private PolicyAssignmentsRestOperations _restClient => new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline);
 
         /// <summary> Typed Resource Identifier for the container. </summary>
-        public new TenantResourceIdentifier Id => base.Id as TenantResourceIdentifier;
+        public new ResourceIdentifier Id => base.Id as ResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public Response<PolicyAssignment> CreateOrUpdate(string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -79,7 +84,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<Response<PolicyAssignment>> CreateOrUpdateAsync(string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public PolicyAssignmentsCreateOperation StartCreateOrUpdate(string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
@@ -121,8 +126,8 @@ namespace Azure.ResourceManager.NewResources
                     throw new ArgumentNullException(nameof(parameters));
                 }
 
-                var originalResponse = _restClient.Create(Id.Name, policyAssignmentName, parameters, cancellationToken: cancellationToken);
-                return new PolicyAssignmentsCreateOperation(Parent, originalResponse);
+                var originalResponse = _restClient.Create(_scope, policyAssignmentName, parameters, cancellationToken: cancellationToken);
+                return new PolicyAssignmentsCreateOperation(OperationParent, originalResponse);
             }
             catch (Exception e)
             {
@@ -137,7 +142,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<PolicyAssignmentsCreateOperation> StartCreateOrUpdateAsync(string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,8 +155,8 @@ namespace Azure.ResourceManager.NewResources
                     throw new ArgumentNullException(nameof(parameters));
                 }
 
-                var originalResponse = await _restClient.CreateAsync(Id.Name, policyAssignmentName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new PolicyAssignmentsCreateOperation(Parent, originalResponse);
+                var originalResponse = await _restClient.CreateAsync(_scope, policyAssignmentName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return new PolicyAssignmentsCreateOperation(OperationParent, originalResponse);
             }
             catch (Exception e)
             {
@@ -163,9 +168,9 @@ namespace Azure.ResourceManager.NewResources
         /// <inheritdoc />
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public override Response<PolicyAssignment> Get(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignment> Get(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.Get");
             scope.Start();
             try
             {
@@ -174,8 +179,8 @@ namespace Azure.ResourceManager.NewResources
                     throw new ArgumentNullException(nameof(policyAssignmentName));
                 }
 
-                var response = _restClient.Get(Id.Name, policyAssignmentName, cancellationToken: cancellationToken);
-                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+                var response = _restClient.Get(_scope, policyAssignmentName, cancellationToken: cancellationToken);
+                return Response.FromValue(new PolicyAssignment(OperationParent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,9 +192,9 @@ namespace Azure.ResourceManager.NewResources
         /// <inheritdoc />
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async override Task<Response<PolicyAssignment>> GetAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignment>> GetAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.Get");
             scope.Start();
             try
             {
@@ -198,8 +203,8 @@ namespace Azure.ResourceManager.NewResources
                     throw new ArgumentNullException(nameof(policyAssignmentName));
                 }
 
-                var response = await _restClient.GetAsync(Id.Name, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+                var response = await _restClient.GetAsync(_scope, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new PolicyAssignment(OperationParent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,49 +213,49 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        /// <summary> Filters the list of PolicyAssignment for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<Core.GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(PolicyAssignment.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        // /// <summary> Filters the list of PolicyAssignment for this resource group represented as generic resources. </summary>
+        // /// <param name="nameFilter"> The filter used in this operation. </param>
+        // /// <param name="top"> The number of results to return. </param>
+        // /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        // /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
+        // public Pageable<Core.GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
+        // {
+        //     using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.ListAsGenericResource");
+        //     scope.Start();
+        //     try
+        //     {
+        //         var filters = new ResourceFilterCollection(PolicyAssignment.ResourceType);
+        //         filters.SubstringFilter = nameFilter;
+        //         return ResourceListOperations.ListAtContext(OperationParent as ResourceGroupOperations, filters, top, cancellationToken);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         scope.Failed(e);
+        //         throw;
+        //     }
+        // }
 
-        /// <summary> Filters the list of PolicyAssignment for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Core.GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(PolicyAssignment.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        // /// <summary> Filters the list of PolicyAssignment for this resource group represented as generic resources. </summary>
+        // /// <param name="nameFilter"> The filter used in this operation. </param>
+        // /// <param name="top"> The number of results to return. </param>
+        // /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        // /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
+        // public AsyncPageable<Core.GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
+        // {
+        //     using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.ListAsGenericResource");
+        //     scope.Start();
+        //     try
+        //     {
+        //         var filters = new ResourceFilterCollection(PolicyAssignment.ResourceType);
+        //         filters.SubstringFilter = nameFilter;
+        //         return ResourceListOperations.ListAtContextAsync(OperationParent as ResourceGroupOperations, filters, top, cancellationToken);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         scope.Failed(e);
+        //         throw;
+        //     }
+        // }
 
         // Builders.
         // public ArmBuilder<ResourceGroupResourceIdentifier, PolicyAssignment, PolicyAssignmentData> Construct() { }

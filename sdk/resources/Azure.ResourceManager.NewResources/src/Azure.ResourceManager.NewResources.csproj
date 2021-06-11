@@ -8,6 +8,7 @@
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0107;CA2214;CA1036;CA1067;CA1065;SA1028;CS1591;CS1587</NoWarn>
+    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
   <ItemGroup>

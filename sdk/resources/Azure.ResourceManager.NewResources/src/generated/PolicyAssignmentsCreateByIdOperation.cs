@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NewResources
         {
         }
 
-        internal PolicyAssignmentsCreateByIdOperation(ResourceOperationsBase operationsBase, Response<PolicyAssignmentData> response)
+        internal PolicyAssignmentsCreateByIdOperation(OperationsBase operationsBase, Response<PolicyAssignmentData> response)
         {
             _operation = new OperationOrResponseInternals<PolicyAssignment>(Response.FromValue(new PolicyAssignment(operationsBase, response.Value), response.GetRawResponse()));
         }
