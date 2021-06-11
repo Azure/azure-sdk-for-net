@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
 {
 
     /// <summary>
-    /// Defines values for ServerEndpointCloudTieringHealthState.
+    /// Defines values for CloudEndpointChangeEnumerationTotalCountsState.
     /// </summary>
-    public static class ServerEndpointCloudTieringHealthState
+    public static class CloudEndpointChangeEnumerationTotalCountsState
     {
-        public const string Healthy = "Healthy";
-        public const string Error = "Error";
+        public const string Calculating = "Calculating";
+        public const string Final = "Final";
     }
 }

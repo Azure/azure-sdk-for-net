@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         /// <param name="lastUpdatedTimestamp">Last updated timestamp</param>
         /// <param name="health">Cloud tiering health state. Possible values
-        /// include: 'Healthy', 'Error'</param>
+        /// include: 'Unavailable', 'Healthy', 'Error'</param>
         /// <param name="healthLastUpdatedTimestamp">The last updated timestamp
         /// of health state</param>
         /// <param name="lastCloudTieringResult">Last cloud tiering result
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
 
         /// <summary>
         /// Gets cloud tiering health state. Possible values include:
-        /// 'Healthy', 'Error'
+        /// 'Unavailable', 'Healthy', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "health")]
         public string Health { get; private set; }

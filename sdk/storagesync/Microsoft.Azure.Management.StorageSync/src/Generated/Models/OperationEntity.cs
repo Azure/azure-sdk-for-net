@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="display">The operation supported by storage
         /// sync.</param>
         /// <param name="origin">The origin.</param>
-        public OperationEntity(string name = default(string), OperationDisplayInfo display = default(OperationDisplayInfo), string origin = default(string))
+        /// <param name="properties">Properties of the operations
+        /// resource.</param>
+        public OperationEntity(string name = default(string), OperationDisplayInfo display = default(OperationDisplayInfo), string origin = default(string), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
             Display = display;
             Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the operations resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public OperationProperties Properties { get; set; }
 
     }
 }
