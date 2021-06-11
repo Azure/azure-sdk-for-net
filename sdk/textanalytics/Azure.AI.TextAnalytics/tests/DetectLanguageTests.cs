@@ -54,6 +54,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21782")]
         public async Task DetectLanguageWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -65,6 +66,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -76,6 +78,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageWithCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -87,6 +90,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public void DetectLanguageWithErrorCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -97,6 +101,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageWithNoneCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -108,6 +113,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageWithNoneDefaultCountryHintTest()
         {
             var options = new TextAnalyticsClientOptions(_serviceVersion)
@@ -124,6 +130,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -139,6 +146,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -160,6 +168,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -176,6 +185,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -198,6 +208,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -220,6 +231,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public void DetectLanguageBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -231,6 +243,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task DetectLanguageBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();
