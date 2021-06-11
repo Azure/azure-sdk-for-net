@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task Sample7_AnalyzeHealthcareEntitiesBatch()
+        public async Task Sample7_AnalyzeHealthcareEntities()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
