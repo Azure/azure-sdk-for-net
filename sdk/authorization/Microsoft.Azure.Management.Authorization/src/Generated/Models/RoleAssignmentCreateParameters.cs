@@ -34,31 +34,43 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// Initializes a new instance of the RoleAssignmentCreateParameters
         /// class.
         /// </summary>
-        /// <param name="roleDefinitionId">The role definition ID used in the
-        /// role assignment.</param>
-        /// <param name="principalId">The principal ID assigned to the role.
-        /// This maps to the ID inside the Active Directory. It can point to a
-        /// user, service principal, or security group.</param>
+        /// <param name="roleDefinitionId">The role definition ID.</param>
+        /// <param name="principalId">The principal ID.</param>
+        /// <param name="scope">The role assignment scope.</param>
         /// <param name="principalType">The principal type of the assigned
         /// principal ID. Possible values include: 'User', 'Group',
         /// 'ServicePrincipal', 'Unknown', 'DirectoryRoleTemplate',
         /// 'ForeignGroup', 'Application', 'MSI', 'DirectoryObjectOrGroup',
         /// 'Everyone'</param>
-        /// <param name="canDelegate">The delegation flag used for creating a
-        /// role assignment</param>
         /// <param name="description">Description of role assignment</param>
-        /// <param name="condition">The conditions on the role
+        /// <param name="condition">The conditions on the role assignment. This
+        /// limits the resources it can be assigned to. e.g.:
+        /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
+        /// StringEqualsIgnoreCase 'foo_storage_container'</param>
+        /// <param name="conditionVersion">Version of the condition. Currently
+        /// accepted value is '2.0'</param>
+        /// <param name="createdOn">Time it was created</param>
+        /// <param name="updatedOn">Time it was updated</param>
+        /// <param name="createdBy">Id of the user who created the
         /// assignment</param>
-        /// <param name="conditionVersion">Version of the condition</param>
-        public RoleAssignmentCreateParameters(string roleDefinitionId, string principalId, string principalType = default(string), bool? canDelegate = default(bool?), string description = default(string), string condition = default(string), string conditionVersion = default(string))
+        /// <param name="updatedBy">Id of the user who updated the
+        /// assignment</param>
+        /// <param name="delegatedManagedIdentityResourceId">Id of the
+        /// delegated managed identity resource</param>
+        public RoleAssignmentCreateParameters(string roleDefinitionId, string principalId, string scope = default(string), string principalType = default(string), string description = default(string), string condition = default(string), string conditionVersion = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? updatedOn = default(System.DateTime?), string createdBy = default(string), string updatedBy = default(string), string delegatedManagedIdentityResourceId = default(string))
         {
+            Scope = scope;
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
             PrincipalType = principalType;
-            CanDelegate = canDelegate;
             Description = description;
             Condition = condition;
             ConditionVersion = conditionVersion;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            CreatedBy = createdBy;
+            UpdatedBy = updatedBy;
+            DelegatedManagedIdentityResourceId = delegatedManagedIdentityResourceId;
             CustomInit();
         }
 
@@ -68,15 +80,19 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the role definition ID used in the role assignment.
+        /// Gets the role assignment scope.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scope")]
+        public string Scope { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the role definition ID.
         /// </summary>
         [JsonProperty(PropertyName = "properties.roleDefinitionId")]
         public string RoleDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the principal ID assigned to the role. This maps to
-        /// the ID inside the Active Directory. It can point to a user, service
-        /// principal, or security group.
+        /// Gets or sets the principal ID.
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalId")]
         public string PrincipalId { get; set; }
@@ -91,29 +107,56 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string PrincipalType { get; set; }
 
         /// <summary>
-        /// Gets or sets the delegation flag used for creating a role
-        /// assignment
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.canDelegate")]
-        public bool? CanDelegate { get; set; }
-
-        /// <summary>
         /// Gets or sets description of role assignment
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the conditions on the role assignment
+        /// Gets or sets the conditions on the role assignment. This limits the
+        /// resources it can be assigned to. e.g.:
+        /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
+        /// StringEqualsIgnoreCase 'foo_storage_container'
         /// </summary>
         [JsonProperty(PropertyName = "properties.condition")]
         public string Condition { get; set; }
 
         /// <summary>
-        /// Gets or sets version of the condition
+        /// Gets or sets version of the condition. Currently accepted value is
+        /// '2.0'
         /// </summary>
         [JsonProperty(PropertyName = "properties.conditionVersion")]
         public string ConditionVersion { get; set; }
+
+        /// <summary>
+        /// Gets time it was created
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdOn")]
+        public System.DateTime? CreatedOn { get; private set; }
+
+        /// <summary>
+        /// Gets time it was updated
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.updatedOn")]
+        public System.DateTime? UpdatedOn { get; private set; }
+
+        /// <summary>
+        /// Gets id of the user who created the assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdBy")]
+        public string CreatedBy { get; private set; }
+
+        /// <summary>
+        /// Gets id of the user who updated the assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.updatedBy")]
+        public string UpdatedBy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets id of the delegated managed identity resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.delegatedManagedIdentityResourceId")]
+        public string DelegatedManagedIdentityResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

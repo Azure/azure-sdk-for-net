@@ -7,16 +7,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "880baddf-ebaa-43d8-9e68-ee71d2532d89"
+          "82412dc9-6bfb-447c-b6e0-b6608635f540"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.11.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.12.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "bfc0827c-7b02-477d-9e82-c9c1039e8efd"
+          "38629af4-ba72-47cf-8d2c-3882c4258939"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -36,19 +36,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Set-Cookie": [
-          "x-ms-gateway-slice=Production; path=/; SameSite=None; secure; HttpOnly"
+          "x-ms-gateway-slice=Production; path=/; secure; samesite=none; httponly"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "6d053a7b-8187-4742-8fe1-5948284b8b17"
+          "54fb79dd-a2ab-4015-a9f0-7c02aeec61d3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200626T172102Z:6d053a7b-8187-4742-8fe1-5948284b8b17"
+          "WESTUS2:20210612T003308Z:54fb79dd-a2ab-4015-a9f0-7c02aeec61d3"
         ],
         "Date": [
-          "Fri, 26 Jun 2020 17:21:01 GMT"
+          "Sat, 12 Jun 2021 00:33:08 GMT"
         ],
         "Content-Length": [
           "963"
