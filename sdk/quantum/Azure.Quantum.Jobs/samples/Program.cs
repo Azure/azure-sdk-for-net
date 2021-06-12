@@ -20,11 +20,12 @@ namespace Azure.Quantum.Jobs.Samples
         {
             #region Snippet:Azure_Quantum_Jobs_CreateClient
             // Create a QuantumJobClient
-            var subscriptionId = "916dfd6d-030c-4bd9-b579-7bb6d1926e97";
-            var resourceGroupName = "e2e-scenarios";
-            var workspaceName = "e2e-qsharp-tests";
-            var location = "westus2";
-            var storageContainerName = "csharpsample";
+            var subscriptionId = "your_subscription_id";
+            var resourceGroupName = "your_resource_group_name";
+            var workspaceName = "your_quantum_workspace_name";
+            var location = "your_location";
+            var storageContainerName = "your_container_name";
+
             var credential = new DefaultAzureCredential(true);
 
             var quantumJobClient =
@@ -180,20 +181,17 @@ namespace Azure.Quantum.Jobs.Samples
     OutputDataUri: {myJob.OutputDataUri}
 ");
 
-            if (String.IsNullOrEmpty(null))
-                return;
+            //Console.WriteLine($@"Getting list of Quantum jobs...");
 
-            Console.WriteLine($@"Getting list of Quantum jobs...");
+            //#region Snippet:Azure_Quantum_Jobs_GetJobs
+            //foreach (JobDetails job in quantumJobClient.GetJobs())
+            //{
+            //    Console.WriteLine($"{job.Name}");
+            //}
+            //#endregion
 
-            #region Snippet:Azure_Quantum_Jobs_GetJobs
-            foreach (JobDetails job in quantumJobClient.GetJobs())
-            {
-                Console.WriteLine($"{job.Name}");
-            }
-            #endregion
-
-            Console.WriteLine("Press [Enter] to exit...");
-            Console.ReadLine();
+            //Console.WriteLine("Press [Enter] to exit...");
+            //Console.ReadLine();
         }
     }
 }
