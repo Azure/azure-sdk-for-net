@@ -14,7 +14,7 @@ using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Queryable;
 using Azure.Data.Tables.Sas;
 
-namespace Azure.Data.Tables
+namespace Azure.Data.Tables 
 {
     /// <summary>
     /// The <see cref="TableClient"/> allows you to interact with Azure Tables hosted in either Azure storage accounts or Azure Cosmos DB table API.
