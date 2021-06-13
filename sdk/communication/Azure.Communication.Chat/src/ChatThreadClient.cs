@@ -673,7 +673,7 @@ namespace Azure.Communication.Chat
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <param name="options"> Typing notification options. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> SendTypingNotificationAsync(SendTypingNotificationOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendTypingNotificationAsync(TypingNotificationOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendTypingNotification)}");
             scope.Start();
@@ -692,7 +692,7 @@ namespace Azure.Communication.Chat
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <param name="options"> Typing notification options. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response SendTypingNotification(SendTypingNotificationOptions options, CancellationToken cancellationToken = default)
+        public virtual Response SendTypingNotification(TypingNotificationOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendTypingNotification)}");
             scope.Start();

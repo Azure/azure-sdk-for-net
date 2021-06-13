@@ -190,8 +190,8 @@ namespace Azure.Communication.Chat.Tests
 
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
 
-            SendTypingNotificationOptions sendTypingNotificationOptions = new() { SenderDisplayName = "sender diplay name" };
-            Response typingNotificationWithOptionsResponse = await chatThreadClient.SendTypingNotificationAsync(sendTypingNotificationOptions);
+            TypingNotificationOptions typingNotificationOptions = new() { SenderDisplayName = "sender diplay name" };
+            Response typingNotificationWithOptionsResponse = await chatThreadClient.SendTypingNotificationAsync(typingNotificationOptions);
 
             AsyncPageable<ChatThreadItem> threads = chatClient.GetChatThreadsAsync();
             var threadsCount = threads.ToEnumerableAsync().Result.Count;
