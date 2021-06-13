@@ -4,7 +4,7 @@
 namespace Azure.Communication.Chat
 {
     /// <summary> Options for the typing notification. </summary>
-    public class SendTypingNotificationOptions
+    public class TypingNotificationOptions
     {
         /// <summary>The display name of the message sender. This property is used to populate sender name for push notifications.</summary>
         public string SenderDisplayName { get; set; }

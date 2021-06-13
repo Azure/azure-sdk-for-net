@@ -253,7 +253,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             //arrange
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200);
-            SendTypingNotificationOptions options = new SendTypingNotificationOptions { SenderDisplayName = "display name test" };
+            TypingNotificationOptions options = new TypingNotificationOptions { SenderDisplayName = "display name test" };
 
             //act
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync(options);
