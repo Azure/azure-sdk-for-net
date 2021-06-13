@@ -80,7 +80,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, TableClientOptions options = null)
+        public TableClientError(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, null, default, default, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
