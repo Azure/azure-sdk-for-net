@@ -88,7 +88,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public BlobIndexerPdfTextRotationAlgorithm? PdfTextRotationAlgorithm { get; set; }
         /// <summary> Specifies the environment in which the indexer should execute. </summary>
         public IndexerExecutionEnvironment? ExecutionEnvironment { get; set; }
-        /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

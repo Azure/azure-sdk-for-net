@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("QueryTimeout")]
         private string _queryTimeout;
 
+        internal IDictionary<string, object> AdditionalProperties { get; }
+
         /// <summary>
         /// Increases the timeout beyond the 5-minute default for Azure SQL database data sources.
         /// </summary>

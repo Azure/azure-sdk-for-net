@@ -812,7 +812,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexingParametersConfiguration : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public IndexingParametersConfiguration() { }
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public bool? AllowSkillsetToReadFileData { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract? DataToExtract { get { throw null; } set { } }
         public string DelimitedTextDelimiter { get { throw null; } set { } }
