@@ -2321,21 +2321,14 @@ namespace Azure.Search.Documents.Indexes.Models
 }
 namespace Azure.Search.Documents.Models
 {
-    public partial class AnswerResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
+    public partial class AnswerResult
     {
         internal AnswerResult() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> AdditionalProperties { get { throw null; } }
         public string Highlights { get { throw null; } }
-        public object this[string key] { get { throw null; } }
         public string Key { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
         public double? Score { get { throw null; } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
         public string Text { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
-        public bool ContainsKey(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out object value) { throw null; }
     }
     public partial class AutocompleteItem
     {
@@ -2355,19 +2348,12 @@ namespace Azure.Search.Documents.Models
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AutocompleteItem> Results { get { throw null; } }
     }
-    public partial class CaptionResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
+    public partial class CaptionResult
     {
         internal CaptionResult() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> AdditionalProperties { get { throw null; } }
         public string Highlights { get { throw null; } }
-        public object this[string key] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
         public string Text { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
-        public bool ContainsKey(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out object value) { throw null; }
     }
     public partial class FacetResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
     {

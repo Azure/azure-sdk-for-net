@@ -42,5 +42,7 @@ namespace Azure.Search.Documents.Models
         public string Text { get; }
         /// <summary> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </summary>
         public string Highlights { get; }
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }
