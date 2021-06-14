@@ -364,6 +364,8 @@ namespace Azure.Search.Documents.Tests
                         AutoFlushInterval = null
                     });
 
+            int removeFailedCount = 0;
+
             List<IndexDocumentsAction<SimpleDocument>> pending = new List<IndexDocumentsAction<SimpleDocument>>();
             indexer.ActionAdded +=
                 (IndexActionEventArgs<SimpleDocument> e) =>
@@ -374,13 +376,15 @@ namespace Azure.Search.Documents.Tests
             indexer.ActionCompleted +=
                 (IndexActionCompletedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(e.Action);
+                    if (!pending.Remove(e.Action))
+                    { removeFailedCount++; }
                     return Task.CompletedTask;
                 };
             indexer.ActionFailed +=
                 (IndexActionFailedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(e.Action);
+                    if (!pending.Remove(e.Action))
+                    { removeFailedCount++; }
                     return Task.CompletedTask;
                 };
 
@@ -389,10 +393,20 @@ namespace Azure.Search.Documents.Tests
             await indexer.UploadDocumentsAsync(data.Skip(500));
 
             await DelayAsync(TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(250));
-            Assert.AreEqual(1001 - BatchSize, pending.Count);
+
+            Assert.AreEqual(0, removeFailedCount);
+            if ((pending.Count == 1001) && (Mode != RecordedTestMode.Playback))
+            {
+                Assert.Inconclusive("Publishing has not started.");
+            }
+            else
+            {
+                Assert.AreEqual(1001 - BatchSize, pending.Count);
+            }
 
             await indexer.FlushAsync();
             Assert.AreEqual(0, pending.Count);
+            Assert.AreEqual(0, removeFailedCount);
         }
         #endregion
 
