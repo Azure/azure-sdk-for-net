@@ -19,5 +19,16 @@ namespace Azure.Storage.Blobs.DataMovement
                 yield return blob.Name;
             }
         }
+
+        public static async IAsyncEnumerable<string> GetBlobsByName(this BlobServiceClient client)
+        {
+            await foreach (Models.BlobContainerItem container in client.GetBlobContainersAsync().ConfigureAwait(false))
+            {
+                await foreach (Models.BlobItem blob in client.GetBlobContainerClient(container.Name).GetBlobsAsync().ConfigureAwait(false))
+                {
+                    yield return container.Name + "/" + blob.Name;
+                }
+            }
+        }
     }
 }

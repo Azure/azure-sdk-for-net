@@ -24,7 +24,7 @@ namespace Azure.Storage.Tests
         }
 
         [RecordedTest]
-        public async Task ScanBlobContainer()
+        public async Task ScanBlobsInContainer()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -38,6 +38,22 @@ namespace Azure.Storage.Tests
             // Assert
             CollectionAssert.Contains(containerBlobs, blobName);
             Assert.That(containerBlobs, Has.Exactly(1).Items);
+        }
+
+        [RecordedTest]
+        public async Task ScanBlobsInAccount()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            string blobName = test.Container.Name + "/" + blob.Name;
+
+            // Act
+            IEnumerable<string> accountBlobs = await test.Container.GetParentBlobServiceClient().GetBlobsByName().ToListAsync();
+
+            // Assert
+            CollectionAssert.Contains(accountBlobs, blobName);
         }
     }
 }
