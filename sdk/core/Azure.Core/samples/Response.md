@@ -134,7 +134,7 @@ Because `AsyncPageable<T>` implements `IAsyncEnumerable<T>` you can use `System.
 
 ### Convert to a `List<T>`
 
-`ToListAsync` can be used to convert an `AsyncPageable` to a `List<T>`.
+`ToListAsync` can be used to convert an `AsyncPageable` to a `List<T>`.  This might make several service calls if the data isn't returned in a single page.
 
 ```C# Snippet:SystemLinqAsyncToList
 AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
@@ -143,9 +143,9 @@ AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecr
 List<SecretProperties> secretList = await allSecretProperties.ToListAsync();
 ```
 
-### Receive first N elements
+### Take the first N elements
 
-`Take` can be used to enumerate only the first `N` elements of the `AsyncPageable`. When using `Take` we would receive the least amount of pages required to get `N` items.
+`Take` can be used to get only the first `N` elements of the `AsyncPageable`.  Using `Take` will make the fewest service calls required to get `N` items.
 
 ```C# Snippet:SystemLinqAsyncTake
 AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
@@ -159,19 +159,17 @@ await foreach (var secretProperties in allSecretProperties.Take(30))
 
 ### More methods
 
-`System.Linq.Async` provides other useful methods like `Select`, `Where`, `OrderBy`, `GroupBy`, etc. that provide functionality equivalent to their synchronous `IEnumerable` counterparts.
+`System.Linq.Async` provides other useful methods like `Select`, `Where`, `OrderBy`, `GroupBy`, etc. that provide functionality equivalent to their synchronous [`Enumerable` counterparts](https://docs.microsoft.com/dotnet/api/system.linq.enumerable).
 
-### Client side evaluation
+### Beware client-side evaluation
 
-System.Linq.Async LINQ operations are executed on the client so, for example, the following query would receive all the items just to count them:
+`System.Linq.Async` LINQ operations are executed on the client so the following query would fetch all the items just to count them:
 
 ```C# Snippet:SystemLinqAsyncCount
-// DANGER DANGER DANGER
-// DO NOT COPY
-// CountAsync would receive all the items to calculate the count.
-int secretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
+// DANGER! DO NOT COPY: CountAsync as used here fetches all the secrets locally to count them.
+int expensiveSecretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
 ```
-
+The same warning applies to operators like `Where`.  Always prefer server-side filtering, aggregation, or projections of data if available.
 ## Iterating over pageable
 
 `Pageable<T>` is a synchronous version of `AsyncPageable<T>`, it can be used with a normal `foreach` loop.

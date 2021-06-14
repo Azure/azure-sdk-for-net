@@ -147,10 +147,8 @@ namespace Azure.Core.Samples
             var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
             #region Snippet:SystemLinqAsyncCount
-            // DANGER DANGER DANGER
-            // DO NOT COPY
-            // CountAsync would receive all the items to calculate the count.
-            int secretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
+            // DANGER! DO NOT COPY: CountAsync as used here fetches all the secrets locally to count them.
+            int expensiveSecretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
             #endregion
         }
 
