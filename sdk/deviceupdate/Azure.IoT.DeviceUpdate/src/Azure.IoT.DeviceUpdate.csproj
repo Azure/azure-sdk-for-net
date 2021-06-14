@@ -8,11 +8,12 @@
     <PackageTags>Azure Device Update</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0012;AZC0005</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
