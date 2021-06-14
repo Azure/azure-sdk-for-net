@@ -513,8 +513,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupPolicy>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupPolicy>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatabaseAccountCreateUpdateProperties>("createMode"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatabaseAccountCreateUpdateProperties>("createMode"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

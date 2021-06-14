@@ -109,14 +109,11 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     Location = location,
                     Kind = DatabaseAccountKind.GlobalDocumentDB,
-                    Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties()
+                    Locations = new List<Location>()
                     {
-                        Locations = new List<Location>()
-                        {
-                            {new Location(locationName: location) }
-                        },
-                        BackupPolicy = new ContinuousModeBackupPolicy()
-                    }
+                        {new Location(locationName: location) }
+                    },
+                    BackupPolicy = new ContinuousModeBackupPolicy()
                 };
 
                 databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;

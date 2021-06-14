@@ -24,7 +24,10 @@ namespace CosmosDB.Tests.ScenarioTests
 
         const string databaseName = "databaseName";
         const string databaseName2 = "databaseName2";
+        const string databaseName3 = "databaseName3";
         const string containerName = "containerName";
+        const string containerName2 = "containerName2";
+        const string containerName3 = "TestContainer3";
         const string storedProcedureName = "storedProcedureName";
         const string triggerName = "triggerName";
         const string userDefinedFunctionName = "userDefinedFunctionName";
@@ -69,12 +72,9 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties()
+                        Locations = new List<Location>()
                         {
-                            Locations = new List<Location>()
-                            {
-                                {new Location(locationName: location) }
-                            }
+                            {new Location(locationName: location) }
                         }
                     };
 
@@ -125,7 +125,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     Resource = new SqlContainerResource
                     {
-                        Id = containerName,
+                        Id = containerName2,
                         PartitionKey = new ContainerPartitionKey
                         {
                             Kind = "Hash",
@@ -164,7 +164,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                SqlContainerGetResults sqlContainerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlContainerGetResults sqlContainerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlContainerGetResults);
 
                 IEnumerable<SqlContainerGetResults> sqlContainers = cosmosDBManagementClient.SqlResources.ListSqlContainersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
@@ -183,7 +183,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Options = new CreateUpdateOptions()
                 };
 
-                SqlStoredProcedureGetResults sqlStoredProcedureGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlStoredProcedureGetResults sqlStoredProcedureGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlStoredProcedureGetResults);
                 Assert.Equal(sqlStoredProcedureGetResults.Resource.Body, sqlStoredProcedureGetResults.Resource.Body);
 
@@ -192,7 +192,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 foreach (SqlStoredProcedureGetResults sqlStoredProcedure in sqlStoredProcedures)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlStoredProcedure.Name);
+                    cosmosDBManagementClient.SqlResources.DeleteSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlStoredProcedure.Name);
                 }
 
                 SqlUserDefinedFunctionCreateUpdateParameters sqlUserDefinedFunctionCreateUpdateParameters = new SqlUserDefinedFunctionCreateUpdateParameters
@@ -218,7 +218,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 foreach (SqlUserDefinedFunctionGetResults sqlUserDefinedFunction in sqlUserDefinedFunctions)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlUserDefinedFunction.Name);
+                    cosmosDBManagementClient.SqlResources.DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlUserDefinedFunction.Name);
                 }
 
                 SqlTriggerCreateUpdateParameters sqlTriggerCreateUpdateParameters = new SqlTriggerCreateUpdateParameters
@@ -247,7 +247,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 foreach (SqlTriggerGetResults sqlTrigger in sqlTriggers)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlTriggerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlTrigger.Name);
+                    cosmosDBManagementClient.SqlResources.DeleteSqlTriggerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlTrigger.Name);
                 }
 
                 foreach (SqlContainerGetResults sqlContainer in sqlContainers)
@@ -417,7 +417,10 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 foreach (SqlRoleDefinitionGetResults sqlRoleDefinition in sqlRoleDefinitions)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlRoleDefinitionWithHttpMessagesAsync(sqlRoleDefinition.Name, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult();
+                    if (sqlRoleDefinition.Name == sqlRoleDefinitionGetResults3.Name || sqlRoleDefinition.Name == sqlRoleDefinitionGetResults4.Name)
+                    {
+                        cosmosDBManagementClient.SqlResources.DeleteSqlRoleDefinitionWithHttpMessagesAsync(sqlRoleDefinition.Name, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult();
+                    }
                 }
 
                 const string InvalidActionName = "invalid-action-name";
@@ -465,32 +468,32 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
                 {
-                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Resource = new SqlDatabaseResource { Id = databaseName3 },
                     Options = new CreateUpdateOptions()
                 };
 
-                SqlDatabaseGetResults sqlDatabaseGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, sqlDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlDatabaseGetResults sqlDatabaseGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName3, sqlDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults);
-                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
+                Assert.Equal(databaseName3, sqlDatabaseGetResults.Name);
 
                 string startTime = DateTime.UtcNow.AddHours(-1).ToString();
                 string endTime = DateTime.UtcNow.ToString();
                 List<RestorableSqlContainerGetResult> restorableContainerResult = (await cosmosDBManagementClient.RestorableSqlContainers.ListAsync(
                     location,
                     databaseAccount.InstanceId,
-                    sqlDatabaseGetResults.Resource.Id,
+                    sqlDatabaseGetResults.Resource._rid,
                     startTime,
                     endTime)).ToList();
                 Assert.NotNull(restorableContainerResult);
                 Assert.Single(restorableContainerResult);
 
-                cosmosDBManagementClient.SqlResources.DeleteSqlContainer(resourceGroupName, databaseAccountName, databaseName, containerName);
+                cosmosDBManagementClient.SqlResources.DeleteSqlContainer(resourceGroupName, databaseAccountName, databaseName3, containerName3);
 
                 endTime = DateTime.UtcNow.ToString();
                 restorableContainerResult = (await cosmosDBManagementClient.RestorableSqlContainers.ListAsync(
                     location,
                     databaseAccount.InstanceId,
-                    sqlDatabaseGetResults.Resource.Id,
+                    sqlDatabaseGetResults.Resource._rid,
                     startTime,
                     endTime)).ToList();
                 Assert.NotNull(restorableContainerResult);

@@ -40,11 +40,8 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties()
-                        {
-                            Locations = new List<Location> { new Location { LocationName = location } },
-                            BackupPolicy = new ContinuousModeBackupPolicy(),
-                        }
+                        Locations = new List<Location> { new Location { LocationName = location } },
+                        BackupPolicy = new ContinuousModeBackupPolicy(),
                     };
 
                     databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, sourceDatabaseAccountName, databaseAccountCreateUpdateParameters1).GetAwaiter().GetResult().Body;
@@ -67,18 +64,16 @@ namespace CosmosDB.Tests.ScenarioTests
                         {"key2","value2"}
                     },
                     Kind = "GlobalDocumentDB",
-                    Properties = new RestoreReqeustDatabaseAccountCreateUpdateProperties
+                    Locations = new List<Location>
                     {
-                        Locations = new List<Location>
-                        {
-                            new Location(locationName: location)
-                        },
-                        RestoreParameters = new RestoreParameters()
-                        {
-                            RestoreMode = "PointInTime",
-                            RestoreTimestampInUtc = restoreTs,
-                            RestoreSource = restorableDatabaseAccount.Id
-                        }
+                        new Location(locationName: location)
+                    },
+                    CreateMode = CreateMode.Restore,
+                    RestoreParameters = new RestoreParameters()
+                    {
+                        RestoreMode = "PointInTime",
+                        RestoreTimestampInUtc = restoreTs,
+                        RestoreSource = restorableDatabaseAccount.Id
                     }
                 };
 
@@ -176,11 +171,8 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     Location = armLocation,
                     Kind = databaseKind,
-                    Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties()
-                    {
-                        Locations = locations,
-                        BackupPolicy = new ContinuousModeBackupPolicy(),
-                    }
+                    Locations = locations,
+                    BackupPolicy = new ContinuousModeBackupPolicy()
                 };
 
                 databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;

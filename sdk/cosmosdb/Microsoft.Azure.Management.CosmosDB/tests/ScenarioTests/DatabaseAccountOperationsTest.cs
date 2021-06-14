@@ -41,30 +41,25 @@ namespace CosmosDB.Tests.ScenarioTests
                         {"key2","value2"}
                     },
                     Kind = "MongoDB",
-                    Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties()
+                    ConsistencyPolicy = new ConsistencyPolicy
                     {
-                        ConsistencyPolicy = new ConsistencyPolicy
-                        {
-                            DefaultConsistencyLevel = DefaultConsistencyLevel.BoundedStaleness,
-                            MaxStalenessPrefix = 300,
-                            MaxIntervalInSeconds = 1000
-                        },
-                        Locations = locations,
-                        IpRules = new List<IpAddressOrRange>
-                        {
-                            new IpAddressOrRange("23.43.230.120")
-                        },
-                        IsVirtualNetworkFilterEnabled = true,
-                        EnableAutomaticFailover = false,
-                        EnableMultipleWriteLocations = true,
-                        EnableCassandraConnector = true,
-                        ConnectorOffer = "Small",
-                        DisableKeyBasedMetadataWriteAccess = false,
-                        NetworkAclBypass = NetworkAclBypass.AzureServices,
-                        NetworkAclBypassResourceIds = new List<string>
-                        {
-                            "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName"
-                        }
+                        DefaultConsistencyLevel = DefaultConsistencyLevel.BoundedStaleness,
+                        MaxStalenessPrefix = 300,
+                        MaxIntervalInSeconds = 1000
+                    },
+                    Locations = locations,
+                    IpRules = new List<IpAddressOrRange>
+                    {
+                        new IpAddressOrRange("23.43.230.120")
+                    },
+                    IsVirtualNetworkFilterEnabled = true,
+                    EnableAutomaticFailover = false,
+                    EnableMultipleWriteLocations = true,
+                    DisableKeyBasedMetadataWriteAccess = false,
+                    NetworkAclBypass = NetworkAclBypass.AzureServices,
+                    NetworkAclBypassResourceIds = new List<string>
+                    {
+                        "/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName"
                     }
                 };
 
@@ -98,8 +93,6 @@ namespace CosmosDB.Tests.ScenarioTests
                     },
                     IsVirtualNetworkFilterEnabled = false,
                     EnableAutomaticFailover = true,
-                    EnableCassandraConnector = true,
-                    ConnectorOffer = "Small",
                     DisableKeyBasedMetadataWriteAccess = true,
                     NetworkAclBypass = NetworkAclBypass.AzureServices,
                     NetworkAclBypassResourceIds = new List<string>
@@ -173,16 +166,13 @@ namespace CosmosDB.Tests.ScenarioTests
                         {"key2","value2"}
                     },
                     Kind = "MongoDB",
-                    Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties()
+                    ConsistencyPolicy = new ConsistencyPolicy
                     {
-                        ConsistencyPolicy = new ConsistencyPolicy
-                        {
-                            DefaultConsistencyLevel = DefaultConsistencyLevel.BoundedStaleness,
-                            MaxStalenessPrefix = 300,
-                            MaxIntervalInSeconds = 1000
-                        },
-                        Locations = locations,
-                    }
+                        DefaultConsistencyLevel = DefaultConsistencyLevel.BoundedStaleness,
+                        MaxStalenessPrefix = 300,
+                        MaxIntervalInSeconds = 1000
+                    },
+                    Locations = locations
                 };
 
                 DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -212,8 +202,6 @@ namespace CosmosDB.Tests.ScenarioTests
                     },
                     IsVirtualNetworkFilterEnabled = false,
                     EnableAutomaticFailover = true,
-                    EnableCassandraConnector = true,
-                    ConnectorOffer = "Small",
                     DisableKeyBasedMetadataWriteAccess = true,
                     NetworkAclBypass = NetworkAclBypass.AzureServices,
                     NetworkAclBypassResourceIds = new List<string>
@@ -226,7 +214,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(updatedDatabaseAccount);
 
                 databaseFeedResult = (await cosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName)).ToList();
-                Assert.Equal(2, databaseFeedResult.Count);
+                Assert.Single(databaseFeedResult);
 
                 await cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
             }
@@ -238,14 +226,12 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(databaseAccount.Tags.Count, parameters.Tags.Count);
             Assert.True(databaseAccount.Tags.SequenceEqual(parameters.Tags));
             Assert.Equal(databaseAccount.Kind, parameters.Kind);
-            VerifyConsistencyPolicy(databaseAccount.ConsistencyPolicy, parameters.Properties.ConsistencyPolicy);
-            Assert.Equal(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.Properties.IsVirtualNetworkFilterEnabled);
-            Assert.Equal(databaseAccount.EnableAutomaticFailover, parameters.Properties.EnableAutomaticFailover);
-            Assert.Equal(databaseAccount.EnableMultipleWriteLocations, parameters.Properties.EnableMultipleWriteLocations);
-            Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.Properties.EnableCassandraConnector);
-            Assert.Equal(databaseAccount.ConnectorOffer, parameters.Properties.ConnectorOffer);
-            Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.Properties.DisableKeyBasedMetadataWriteAccess);
-            Assert.Equal(databaseAccount.NetworkAclBypassResourceIds.Count, parameters.Properties.NetworkAclBypassResourceIds.Count);
+            VerifyConsistencyPolicy(databaseAccount.ConsistencyPolicy, parameters.ConsistencyPolicy);
+            Assert.Equal(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
+            Assert.Equal(databaseAccount.EnableAutomaticFailover, parameters.EnableAutomaticFailover);
+            Assert.Equal(databaseAccount.EnableMultipleWriteLocations, parameters.EnableMultipleWriteLocations);
+            Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
+            Assert.Equal(databaseAccount.NetworkAclBypassResourceIds.Count, parameters.NetworkAclBypassResourceIds.Count);
         }
 
         private static void VerifyCosmosDBAccount(DatabaseAccountGetResults databaseAccount, DatabaseAccountUpdateParameters parameters)
@@ -256,8 +242,6 @@ namespace CosmosDB.Tests.ScenarioTests
             VerifyConsistencyPolicy(databaseAccount.ConsistencyPolicy, parameters.ConsistencyPolicy);
             Assert.Equal(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
             Assert.Equal(databaseAccount.EnableAutomaticFailover, parameters.EnableAutomaticFailover);
-            Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.EnableCassandraConnector);
-            Assert.Equal(databaseAccount.ConnectorOffer, parameters.ConnectorOffer);
             Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
         }
 
