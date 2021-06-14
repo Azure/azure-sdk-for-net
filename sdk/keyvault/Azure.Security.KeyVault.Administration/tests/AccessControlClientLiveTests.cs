@@ -12,6 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
+    [NonParallelizable]
     public class AccessControlClientLiveTests : AccessControlTestBase
     {
         public AccessControlClientLiveTests(bool isAsync)

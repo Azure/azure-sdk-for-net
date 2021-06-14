@@ -20,6 +20,23 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal ExtractKeyPhrasesActionResult(
+            ExtractKeyPhrasesResultCollection result,
+            DateTimeOffset completedOn) : base(completedOn)
+        {
+            _documentsResults = result;
+        }
+
+        /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal ExtractKeyPhrasesActionResult(TextAnalyticsErrorInternal error) : base(error)
+        {
+        }
+
+        /// <summary>
         /// Gets the result of the execution of an <see cref="ExtractKeyPhrasesAction"/> per each input document.
         /// </summary>
         public ExtractKeyPhrasesResultCollection DocumentsResults
