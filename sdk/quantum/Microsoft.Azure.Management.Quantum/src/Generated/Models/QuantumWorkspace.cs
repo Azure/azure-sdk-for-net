@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.Quantum.Models
         /// <param name="endpointUri">The URI of the workspace
         /// endpoint.</param>
         /// <param name="identity">Managed Identity information.</param>
-        public QuantumWorkspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<Provider> providers = default(IList<Provider>), string usable = default(string), string provisioningState = default(string), string storageAccount = default(string), string endpointUri = default(string), QuantumWorkspaceIdentity identity = default(QuantumWorkspaceIdentity))
+        /// <param name="systemData">System metadata</param>
+        public QuantumWorkspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<Provider> providers = default(IList<Provider>), string usable = default(string), string provisioningState = default(string), string storageAccount = default(string), string endpointUri = default(string), QuantumWorkspaceIdentity identity = default(QuantumWorkspaceIdentity), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Providers = providers;
@@ -66,6 +67,7 @@ namespace Microsoft.Azure.Management.Quantum.Models
             StorageAccount = storageAccount;
             EndpointUri = endpointUri;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -113,6 +115,12 @@ namespace Microsoft.Azure.Management.Quantum.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public QuantumWorkspaceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets system metadata
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.
