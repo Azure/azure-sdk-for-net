@@ -47,10 +47,10 @@ namespace Azure.Storage.Tests
 
             // Arrange
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-            string blobName = test.Container.Name + "/" + blob.Name;
+            string[] blobName = { test.Container.Name, blob.Name };
 
             // Act
-            IEnumerable<string> accountBlobs = await test.Container.GetParentBlobServiceClient().GetBlobsByName().ToListAsync();
+            IEnumerable<string[]> accountBlobs = await test.Container.GetParentBlobServiceClient().GetBlobsByName().ToListAsync();
 
             // Assert
             CollectionAssert.Contains(accountBlobs, blobName);
