@@ -1,0 +1,67 @@
+Example: Managing Resource Groups
+--------------------------------------
+
+When you first create your armClient you will want to choose which subscription you are going to work in.  There is a convenient **DefaultSubscription** property which will return
+the default subscription configured for your user.
+```csharp
+    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+    Subscription subscription = armClient.DefaultSubscription;
+```
+
+This is a scoped operations object, and any operations you perform will be done under that subscription.  From this object you have access to all children via container objects
+or you can access individual children by id.
+```csharp
+    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+    Subscription subscription = armClient.DefaultSubscription;
+    ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+    ...
+    string rgName = "myRgName";
+    ResourceGroup resourceGroup = rgContainer.Get(rgName);
+```
+
+Using the container object we can perform collection level operations such as list all of the resource groups or create new ones under our subscription
+
+***Create a resource group***
+
+```csharp
+    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+    Subscription subscription = armClient.DefaultSubscription;
+    ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+    
+    LocationData location = LocationData.WestUS2;
+    string rgName = "myRgName";
+    ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateAsync(rgName);
+```
+
+***List all resource groups***
+
+```csharp
+    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+    Subscription subscription = armClient.DefaultSubscription;
+    ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+    AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
+    await foreach (ResourceGroup rg in response)
+    {
+        Console.WriteLine(rg.Data.Name);
+    }
+```
+
+Using the operation object we can perform entity level operations such as updating existing resource groups or deleting them
+
+***Update a resource group***
+
+```csharp
+    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+    Subscription subscription = armClient.DefaultSubscription;
+    ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(rgName);
+    resourceGroup = await rgOperation.StartAddTag("key", "value").WaitForCompletionAsync();
+```
+
+***Delete a resource group***
+
+```csharp
+    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+    Subscription subscription = armClient.DefaultSubscription;
+    ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(rgName);
+    await resourceGroup.DeleteAsync();
+```
