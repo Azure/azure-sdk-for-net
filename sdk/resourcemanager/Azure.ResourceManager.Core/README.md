@@ -21,7 +21,7 @@ You will need the following values to authenticate to Azure
 -   **Client Secret**
 -   **Tenant ID**
 
-The detailed instructions on how to get and set this values can be found in the [Prerequisites guide](docs/Perequisites.md). 
+The detailed instructions on how to get and set this values can be found in the [Prerequisites guide](docs/Prerequisites.md). 
 
 ### Authentication and Creating Resource Management Client
 
@@ -137,7 +137,7 @@ await foreach (ResourceGroup rg in response)
 }
 ```
 
-For more detailed examples, take a look at [samples](/Samples) we have available.
+For more detailed examples, take a look at [samples](Samples/) we have available.
 
 ## Troubleshooting
 
@@ -151,14 +151,12 @@ For more detailed examples, take a look at [samples](/Samples) we have available
 ## Next Steps
 ### More sample code
 
-- [Managing Resource Groups](/Samples/ManagingResourceGroups.md)
-- [Creating a Virtual Network](/Samples/CreatingAVirtualNetwork.md)
-
-> NOTE: How to incorporate this?
-Code samples for using the management library for .NET can be found in the following locations - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [Managing Resource Groups](Samples/ManagingResourceGroups.md)
+- [Creating a Virtual Network](Samples/CreatingAVirtualNetwork.md)
+- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
-For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
+For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 
