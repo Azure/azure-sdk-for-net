@@ -197,7 +197,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="filter">An interpolated query string.</param>
         /// <returns>A valid Kusto query.</returns>
-        public static string CreateQueryFilter(FormattableString filter)
+        public static string CreateQuery(FormattableString filter)
         {
             if (filter == null) { return null; }
 

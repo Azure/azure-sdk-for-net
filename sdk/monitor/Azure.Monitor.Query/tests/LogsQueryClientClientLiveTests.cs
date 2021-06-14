@@ -543,7 +543,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var response = await client.QueryAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQueryFilter(query), _logsTestData.DataTimeRange);
+            var response = await client.QueryAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query), _logsTestData.DataTimeRange);
             Assert.True(response.Value.Single());
         }
 
