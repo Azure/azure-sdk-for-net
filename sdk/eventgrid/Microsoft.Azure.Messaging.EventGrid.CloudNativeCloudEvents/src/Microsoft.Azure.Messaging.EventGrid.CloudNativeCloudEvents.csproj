@@ -14,6 +14,9 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
+<!-- This is required to prevent version conflict stemming from The CloudNative.CloudEvents.SystemTestJson depending on -->
+<!-- version 5.0.0.-->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride = "5.0.0" />
   </ItemGroup>
 </Project>
