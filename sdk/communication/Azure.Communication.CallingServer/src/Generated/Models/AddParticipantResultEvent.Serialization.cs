@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class InviteParticipantsResultEvent : IUtf8JsonSerializable
+    public partial class AddParticipantResultEvent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndObject();
         }
 
-        internal static InviteParticipantsResultEvent DeserializeInviteParticipantsResultEvent(JsonElement element)
+        internal static AddParticipantResultEvent DeserializeAddParticipantResultEvent(JsonElement element)
         {
             Optional<ResultInfo> resultInfo = default;
             Optional<string> operationContext = default;
@@ -66,7 +66,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new InviteParticipantsResultEvent(resultInfo.Value, operationContext.Value, Optional.ToNullable(status));
+            return new AddParticipantResultEvent(resultInfo.Value, operationContext.Value, Optional.ToNullable(status));
         }
     }
 }

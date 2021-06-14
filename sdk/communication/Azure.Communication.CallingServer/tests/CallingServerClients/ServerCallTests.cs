@@ -97,7 +97,7 @@ namespace Azure.Communication.CallingServer.Tests
         public void GetRecordingState_Return200Ok(string sampleRecordingId)
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyRecordingStateResponse);
-            CallRecordingStateResult result = serverCall.GetRecordingState(sampleRecordingId);
+            CallRecordingProperties result = serverCall.GetRecordingState(sampleRecordingId);
             Assert.AreEqual(CallRecordingState.Active, result.RecordingState);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task GetRecordingStateAsync_Return200Ok(string sampleRecordingId)
         {
             ServerCall serverCall = CreateMockServerCall(200, responseContent: DummyRecordingStateResponse);
-            Response<CallRecordingStateResult> result = await serverCall.GetRecordingStateAsync(sampleRecordingId);
+            Response<CallRecordingProperties> result = await serverCall.GetRecordingStateAsync(sampleRecordingId);
             Assert.AreEqual(CallRecordingState.Active, result.Value.RecordingState);
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Communication.CallingServer.Tests
 
         private void VerifyPlayAudioResult(PlayAudioResult response)
         {
-            Assert.AreEqual("dummyId", response.Id);
+            Assert.AreEqual("dummyId", response.OperationId);
             Assert.AreEqual(OperationStatus.Running, response.Status);
             Assert.AreEqual("dummyOperationContext", response.OperationContext);
             Assert.AreEqual(200, response.ResultInfo.Code);

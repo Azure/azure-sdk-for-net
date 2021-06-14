@@ -19,7 +19,7 @@ To make a call, call the `CreateCall` or `CreateCallAsync` function from the `Ca
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCallOptions
 var createCallOption = new CreateCallOptions(
        new Uri(TestEnvironment.AppCallbackUrl),
-       new[] { CallModality.Audio },
+       new[] { MediaType.Audio },
        new[]
        {
            EventSubscriptionType.ParticipantsUpdated,

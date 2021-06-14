@@ -29,7 +29,7 @@ namespace Azure.Communication.CallingServer.Tests
             #region Snippet:Azure_Communication_Call_Tests_CreateCallOptions
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new[] { CallModality.Audio },
+                   new[] { MediaType.Audio },
                    new[]
                    {
                        EventSubscriptionType.ParticipantsUpdated,
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallingServer.Tests
             var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new[] { CallModality.Audio },
+                   new[] { MediaType.Audio },
                    new[] {
                        EventSubscriptionType.ParticipantsUpdated,
                        EventSubscriptionType.DtmfReceived

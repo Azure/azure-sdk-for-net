@@ -16,13 +16,13 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
         internal ParticipantsUpdatedEventInternal()
         {
-            Participants = new ChangeTrackingList<CommunicationParticipantInternal>();
+            Participants = new ChangeTrackingList<CallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="participants"> The list of participants. </param>
-        internal ParticipantsUpdatedEventInternal(string callConnectionId, IReadOnlyList<CommunicationParticipantInternal> participants)
+        internal ParticipantsUpdatedEventInternal(string callConnectionId, IReadOnlyList<CallParticipantInternal> participants)
         {
             CallConnectionId = callConnectionId;
             Participants = participants;
@@ -31,6 +31,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> The call connection id. </summary>
         public string CallConnectionId { get; }
         /// <summary> The list of participants. </summary>
-        public IReadOnlyList<CommunicationParticipantInternal> Participants { get; }
+        public IReadOnlyList<CallParticipantInternal> Participants { get; }
     }
 }

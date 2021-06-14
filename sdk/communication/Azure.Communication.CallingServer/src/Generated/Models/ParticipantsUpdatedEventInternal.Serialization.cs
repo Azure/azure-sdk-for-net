@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         internal static ParticipantsUpdatedEventInternal DeserializeParticipantsUpdatedEventInternal(JsonElement element)
         {
             Optional<string> callConnectionId = default;
-            Optional<IReadOnlyList<CommunicationParticipantInternal>> participants = default;
+            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
@@ -31,10 +31,10 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationParticipantInternal> array = new List<CommunicationParticipantInternal>();
+                    List<CallParticipantInternal> array = new List<CallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationParticipantInternal.DeserializeCommunicationParticipantInternal(item));
+                        array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
                     }
                     participants = array;
                     continue;

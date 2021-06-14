@@ -71,7 +71,7 @@ namespace Azure.Communication.CallingServer.Tests
                         new Uri("https://bot.contoso.com/callback"),
                         new[]
                         {
-                            CallModality.Video
+                            MediaType.Video
                         },
                         new[]
                         {
@@ -98,7 +98,7 @@ namespace Azure.Communication.CallingServer.Tests
                         new Uri("https://bot.contoso.com/callback"),
                         new[]
                         {
-                            CallModality.Video
+                            MediaType.Video
                         },
                         new[]
                         {
