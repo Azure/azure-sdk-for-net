@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -195,22 +196,51 @@ namespace Azure.Monitor.Query
                 queryBody.Timespan = timeRange.ToString();
             }
 
-            prefer = null;
-
-            if (options?.ServerTimeout is TimeSpan timeout)
-            {
-                prefer = "wait=" + (int) timeout.TotalSeconds;
-            }
-
-            if (options?.IncludeStatistics == true)
-            {
-                prefer += " include-statistics=true";
-            }
-
             if (options != null)
             {
                 queryBody.Workspaces = options.AdditionalWorkspaces;
             }
+
+            prefer = null;
+
+            StringBuilder preferBuilder = null;
+
+            if (options?.ServerTimeout is TimeSpan timeout)
+            {
+                preferBuilder ??= new();
+                preferBuilder.Append("wait=");
+                preferBuilder.Append((int) timeout.TotalSeconds);
+            }
+
+            if (options?.IncludeStatistics == true)
+            {
+                if (preferBuilder == null)
+                {
+                    preferBuilder = new();
+                }
+                else
+                {
+                    preferBuilder.Append(',');
+                }
+
+                preferBuilder.Append("include-statistics=true");
+            }
+
+            if (options?.IncludeVisualization == true)
+            {
+                if (preferBuilder == null)
+                {
+                    preferBuilder = new();
+                }
+                else
+                {
+                    preferBuilder.Append(',');
+                }
+
+                preferBuilder.Append("include-render=true");
+            }
+
+            prefer = preferBuilder?.ToString();
 
             return queryBody;
         }

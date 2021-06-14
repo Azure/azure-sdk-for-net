@@ -19,6 +19,7 @@ namespace Azure.Monitor.Query.Models
             Optional<ErrorInfo> error = default;
             IReadOnlyList<LogsQueryResultTable> tables = default;
             Optional<JsonElement> statistics = default;
+            Optional<JsonElement> render = default;
 
             // This is the workaround to remove the double-encoding
             if (element.ValueKind == JsonValueKind.String)
@@ -61,8 +62,13 @@ namespace Azure.Monitor.Query.Models
                     statistics = property.Value.Clone();
                     continue;
                 }
+                if (property.NameEquals("render"))
+                {
+                    render = property.Value.Clone();
+                    continue;
+                }
             }
-            return new LogsBatchQueryResultInternal(tables, statistics, error.Value);
+            return new LogsBatchQueryResultInternal(tables, statistics, render, error.Value);
         }
     }
 }
