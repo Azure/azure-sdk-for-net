@@ -8,7 +8,7 @@
         public static readonly FakeResourceApiVersions V2019_12_01_preview_1 = new FakeResourceApiVersions("2019-12-01-preview-1");
         public static readonly FakeResourceApiVersions V2019_12_01_foobar = new FakeResourceApiVersions("2019-12-01-foobar");
         public static readonly FakeResourceApiVersions Default = V2020_06_01;
-        public override ResourceType ResourceType => "providers/Microsoft.fakedService/fakedApi";
+        public override ResourceType ResourceType => "Microsoft.fakedService/fakedApi";
 
         private FakeResourceApiVersions(string value) : base(value) { }
 
