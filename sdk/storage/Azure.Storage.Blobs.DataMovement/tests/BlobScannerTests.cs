@@ -32,10 +32,8 @@ namespace Azure.Storage.Tests
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
             string blobName = blob.Name;
 
-            BlobScanner scanner = new BlobScanner(test.Container);
-
             // Act
-            IEnumerable<string> containerBlobs = await scanner.Scan().ToListAsync();
+            IEnumerable<string> containerBlobs = await test.Container.GetBlobsByName().ToListAsync();
 
             // Assert
             CollectionAssert.Contains(containerBlobs, blobName);
