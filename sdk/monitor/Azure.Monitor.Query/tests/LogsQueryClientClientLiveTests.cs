@@ -585,31 +585,6 @@ namespace Azure.Monitor.Query.Tests
             }
         }
 
-        // Response<IReadOnlyList<TestModelForTypes>> results = await client.QueryAsync<TestModelForTypes>(TestEnvironment.WorkspaceId,
-        //     $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
-        //     "[" +
-        //     "datetime(2015-12-31 23:59:59.9)," +
-        //     "false," +
-        //     "guid(74be27de-1e4e-49d9-b579-fe0b331d3642)," +
-        //     "12345," +
-        //     "1234567890123," +
-        //     "12345.6789," +
-        //     "'string value'," +
-        //     "10s," +
-        //     "decimal(0.10101)" +
-        //     "]", _logsTestData.DataTimeRange);
-        //
-        // TestModelForTypes row = results.Value[0];
-        //
-        // Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.DateTime);
-        // Assert.AreEqual(false, row.Bool);
-        // Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.Guid);
-        // Assert.AreEqual(12345, row.Int);
-        // Assert.AreEqual(1234567890123, row.Long);
-        // Assert.AreEqual(12345.6789d, row.Double);
-        // Assert.AreEqual("string value", row.String);
-        // Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
-        // Assert.AreEqual(0.10101m, row.Decimal);
         private record TestModel
         {
             public string Name { get; set; }
