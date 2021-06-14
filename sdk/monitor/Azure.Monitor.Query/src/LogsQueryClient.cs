@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
-        private static Uri _defaultEndpoint = new Uri("https://api.loganalytics.io");
+        private static readonly Uri _defaultEndpoint = new Uri("https://api.loganalytics.io");
         private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query
         private readonly RowBinder _rowBinder;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
