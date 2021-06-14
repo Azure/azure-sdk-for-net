@@ -508,7 +508,7 @@ namespace Azure.Monitor.Query.Tests
             }
             else
             {
-                Assert.AreEqual(default, response.Value.Statistics);
+                Assert.AreEqual(default, response.Value.Visualization);
             }
         }
 
