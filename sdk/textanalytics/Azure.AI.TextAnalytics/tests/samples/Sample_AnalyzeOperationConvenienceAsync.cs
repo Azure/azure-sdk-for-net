@@ -66,15 +66,15 @@ namespace Azure.AI.TextAnalytics.Samples
 
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
-                IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;
-                IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = documentsInPage.RecognizePiiEntitiesActionsResults;
-                IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = documentsInPage.RecognizeLinkedEntitiesActionsResults;
-                IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = documentsInPage.AnalyzeSentimentActionsResults;
+                IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
+                IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
+                IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResults = documentsInPage.RecognizePiiEntitiesResults;
+                IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingResults = documentsInPage.RecognizeLinkedEntitiesResults;
+                IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentResults = documentsInPage.AnalyzeSentimentResults;
 
                 Console.WriteLine("Recognized Entities");
                 int docNumber = 1;
-                foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
+                foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
                 {
                     foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
                     {
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Recognized PII Entities");
                 docNumber = 1;
-                foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
+                foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
                 {
                     foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
                     {
@@ -118,7 +118,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Key Phrases");
                 docNumber = 1;
-                foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
+                foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
                 {
                     foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
                     {
@@ -135,7 +135,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Recognized Linked Entities");
                 docNumber = 1;
-                foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
+                foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
                 {
                     foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
                     {
@@ -166,7 +166,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Analyze Sentiment");
                 docNumber = 1;
-                foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
+                foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
                 {
                     foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
                     {

@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
-    public partial class SearchIndexerKnowledgeStoreProjectionSelector
+    public partial class KnowledgeStoreProjectionSelector
     {
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStoreProjectionSelector. </summary>
-        public SearchIndexerKnowledgeStoreProjectionSelector()
+        /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
+        public KnowledgeStoreProjectionSelector()
         {
             Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStoreProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
-        internal SearchIndexerKnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs)
+        internal KnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs)
         {
             ReferenceKeyName = referenceKeyName;
             GeneratedKeyName = generatedKeyName;

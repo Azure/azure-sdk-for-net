@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Definition of additional projections to azure blob, table, or files, of enriched data. </summary>
-    public partial class SearchIndexerKnowledgeStore
+    public partial class KnowledgeStore
     {
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStore. </summary>
+        /// <summary> Initializes a new instance of KnowledgeStore. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
         /// <param name="projections"> A list of additional projections to perform during indexing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageConnectionString"/> or <paramref name="projections"/> is null. </exception>
-        public SearchIndexerKnowledgeStore(string storageConnectionString, IEnumerable<SearchIndexerKnowledgeStoreProjection> projections)
+        public KnowledgeStore(string storageConnectionString, IEnumerable<KnowledgeStoreProjection> projections)
         {
             if (storageConnectionString == null)
             {
@@ -33,10 +33,10 @@ namespace Azure.Search.Documents.Indexes.Models
             Projections = projections.ToList();
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStore. </summary>
+        /// <summary> Initializes a new instance of KnowledgeStore. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
         /// <param name="projections"> A list of additional projections to perform during indexing. </param>
-        internal SearchIndexerKnowledgeStore(string storageConnectionString, IList<SearchIndexerKnowledgeStoreProjection> projections)
+        internal KnowledgeStore(string storageConnectionString, IList<KnowledgeStoreProjection> projections)
         {
             StorageConnectionString = storageConnectionString;
             Projections = projections;
@@ -45,6 +45,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The connection string to the storage account projections will be stored in. </summary>
         public string StorageConnectionString { get; set; }
         /// <summary> A list of additional projections to perform during indexing. </summary>
-        public IList<SearchIndexerKnowledgeStoreProjection> Projections { get; }
+        public IList<KnowledgeStoreProjection> Projections { get; }
     }
 }

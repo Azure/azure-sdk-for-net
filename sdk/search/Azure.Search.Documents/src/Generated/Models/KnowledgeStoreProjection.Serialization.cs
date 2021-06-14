@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerKnowledgeStoreProjection : IUtf8JsonSerializable
+    public partial class KnowledgeStoreProjection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,11 +49,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerKnowledgeStoreProjection DeserializeSearchIndexerKnowledgeStoreProjection(JsonElement element)
+        internal static KnowledgeStoreProjection DeserializeKnowledgeStoreProjection(JsonElement element)
         {
-            Optional<IList<SearchIndexerKnowledgeStoreTableProjectionSelector>> tables = default;
-            Optional<IList<SearchIndexerKnowledgeStoreObjectProjectionSelector>> objects = default;
-            Optional<IList<SearchIndexerKnowledgeStoreFileProjectionSelector>> files = default;
+            Optional<IList<KnowledgeStoreTableProjectionSelector>> tables = default;
+            Optional<IList<KnowledgeStoreObjectProjectionSelector>> objects = default;
+            Optional<IList<KnowledgeStoreFileProjectionSelector>> files = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"))
@@ -63,10 +63,10 @@ namespace Azure.Search.Documents.Indexes.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SearchIndexerKnowledgeStoreTableProjectionSelector> array = new List<SearchIndexerKnowledgeStoreTableProjectionSelector>();
+                    List<KnowledgeStoreTableProjectionSelector> array = new List<KnowledgeStoreTableProjectionSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerKnowledgeStoreTableProjectionSelector.DeserializeSearchIndexerKnowledgeStoreTableProjectionSelector(item));
+                        array.Add(KnowledgeStoreTableProjectionSelector.DeserializeKnowledgeStoreTableProjectionSelector(item));
                     }
                     tables = array;
                     continue;
@@ -78,10 +78,10 @@ namespace Azure.Search.Documents.Indexes.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SearchIndexerKnowledgeStoreObjectProjectionSelector> array = new List<SearchIndexerKnowledgeStoreObjectProjectionSelector>();
+                    List<KnowledgeStoreObjectProjectionSelector> array = new List<KnowledgeStoreObjectProjectionSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerKnowledgeStoreObjectProjectionSelector.DeserializeSearchIndexerKnowledgeStoreObjectProjectionSelector(item));
+                        array.Add(KnowledgeStoreObjectProjectionSelector.DeserializeKnowledgeStoreObjectProjectionSelector(item));
                     }
                     objects = array;
                     continue;
@@ -93,16 +93,16 @@ namespace Azure.Search.Documents.Indexes.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SearchIndexerKnowledgeStoreFileProjectionSelector> array = new List<SearchIndexerKnowledgeStoreFileProjectionSelector>();
+                    List<KnowledgeStoreFileProjectionSelector> array = new List<KnowledgeStoreFileProjectionSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerKnowledgeStoreFileProjectionSelector.DeserializeSearchIndexerKnowledgeStoreFileProjectionSelector(item));
+                        array.Add(KnowledgeStoreFileProjectionSelector.DeserializeKnowledgeStoreFileProjectionSelector(item));
                     }
                     files = array;
                     continue;
                 }
             }
-            return new SearchIndexerKnowledgeStoreProjection(Optional.ToList(tables), Optional.ToList(objects), Optional.ToList(files));
+            return new KnowledgeStoreProjection(Optional.ToList(tables), Optional.ToList(objects), Optional.ToList(files));
         }
     }
 }
