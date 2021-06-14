@@ -6,47 +6,325 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.IoT.DeviceUpdate.Models;
 
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Updates service client. </summary>
     public partial class UpdatesClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private string accountEndpoint;
+        private string instanceId;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal UpdatesRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of UpdatesClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="accountEndpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
-        internal UpdatesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string accountEndpoint, string instanceId)
+        /// <param name="options"> The options for configuring the client. </param>
+        public UpdatesClient(string accountEndpoint, string instanceId, DeviceUpdateClientOptions options = null)
         {
-            RestClient = new UpdatesRestClient(clientDiagnostics, pipeline, accountEndpoint, instanceId);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            if (accountEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(accountEndpoint));
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+
+            options ??= new DeviceUpdateClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.accountEndpoint = accountEndpoint;
+            this.instanceId = instanceId;
+            apiVersion = options.Version;
+        }
+
+        /// <summary> Import new update version. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>importManifest</term>
+        ///     <term>ImportManifestMetadata</term>
+        ///     <term>Yes</term>
+        ///     <term> Import manifest metadata like source URL, file size/hashes, etc. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>FileImportMetadata[]</term>
+        ///     <term>Yes</term>
+        ///     <term> One or more update file properties like filename and source URL. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ImportManifestMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>url</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sizeInBytes</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> File size in number of bytes. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>hashes</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term>Yes</term>
+        ///     <term> A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>FileImportMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>filename</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update file name as specified inside import manifest. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>url</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ImportUpdateAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateImportUpdateRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.ImportUpdate");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import new update version. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>importManifest</term>
+        ///     <term>ImportManifestMetadata</term>
+        ///     <term>Yes</term>
+        ///     <term> Import manifest metadata like source URL, file size/hashes, etc. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>files</term>
+        ///     <term>FileImportMetadata[]</term>
+        ///     <term>Yes</term>
+        ///     <term> One or more update file properties like filename and source URL. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>ImportManifestMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>url</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sizeInBytes</term>
+        ///     <term>number</term>
+        ///     <term>Yes</term>
+        ///     <term> File size in number of bytes. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>hashes</term>
+        ///     <term>Dictionary&lt;string, string&gt;</term>
+        ///     <term>Yes</term>
+        ///     <term> A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>FileImportMetadata</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>filename</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update file name as specified inside import manifest. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>url</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ImportUpdate(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateImportUpdateRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.ImportUpdate");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="ImportUpdate"/> and <see cref="ImportUpdateAsync"/> operations. </summary>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateImportUpdateRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates", false);
+            uri.AppendQuery("action", "import", true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
         }
 
         /// <summary> Get a specific update version. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Update>> GetUpdateAsync(string provider, string name, string version, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetUpdateRequest(provider, name, version, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetUpdate");
             scope.Start();
             try
             {
-                return await RestClient.GetUpdateAsync(provider, name, version, accessCondition, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -59,15 +337,637 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Update> GetUpdate(string provider, string name, string version, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetUpdate(string provider, string name, string version, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetUpdateRequest(provider, name, version, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetUpdate");
             scope.Start();
             try
             {
-                return RestClient.GetUpdate(provider, name, version, accessCondition, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetUpdate"/> and <see cref="GetUpdateAsync"/> operations. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetUpdateRequest(string provider, string name, string version, string ifNoneMatch = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Delete a specific update version. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteUpdateAsync(string provider, string name, string version, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.DeleteUpdate");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a specific update version. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteUpdate(string provider, string name, string version, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.DeleteUpdate");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="DeleteUpdate"/> and <see cref="DeleteUpdateAsync"/> operations. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteUpdateRequest(string provider, string name, string version, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetProvidersAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetProvidersRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetProviders(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetProvidersRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetProviders"/> and <see cref="GetProvidersAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetProvidersRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/providers", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get a list of all update names that match the specified provider. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetNamesAsync(string provider, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNamesRequest(provider, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a list of all update names that match the specified provider. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetNames(string provider, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetNamesRequest(provider, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetNames"/> and <see cref="GetNamesAsync"/> operations. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetNamesRequest(string provider, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetVersionsAsync(string provider, string name, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetVersionsRequest(provider, name, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetVersions(string provider, string name, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetVersionsRequest(provider, name, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetVersions"/> and <see cref="GetVersionsAsync"/> operations. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetVersionsRequest(string provider, string name, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get a list of all update file identifiers for the specified version. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetFilesAsync(string provider, string name, string version, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetFilesRequest(provider, name, version, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a list of all update file identifiers for the specified version. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetFiles(string provider, string name, string version, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetFilesRequest(provider, name, version, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetFiles"/> and <see cref="GetFilesAsync"/> operations. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetFilesRequest(string provider, string name, string version, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/files", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get a specific update file from the version. </summary>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
+        /// <param name="fileId"> File identifier. </param>
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetFileRequest(provider, name, version, fileId, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFile");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -81,15 +981,38 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="fileId"> File identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<File>> GetFileAsync(string provider, string name, string version, string fileId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetFile(string provider, string name, string version, string fileId, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetFileRequest(provider, name, version, fileId, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFile");
             scope.Start();
             try
             {
-                return await RestClient.GetFileAsync(provider, name, version, fileId, accessCondition, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -98,20 +1021,184 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Get a specific update file from the version. </summary>
+        /// <summary> Create Request for <see cref="GetFile"/> and <see cref="GetFileAsync"/> operations. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
         /// <param name="fileId"> File identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<File> GetFile(string provider, string name, string version, string fileId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetFileRequest(string provider, string name, string version, string fileId, string ifNoneMatch = null, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFile");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileId, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
+        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
+        /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetOperationsAsync(string filter = null, int? top = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetOperationsRequest(filter, top, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
             scope.Start();
             try
             {
-                return RestClient.GetFile(provider, name, version, fileId, accessCondition, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
+        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
+        /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetOperations(string filter = null, int? top = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetOperationsRequest(filter, top, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetOperations"/> and <see cref="GetOperationsAsync"/> operations. </summary>
+        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
+        /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetOperationsRequest(string filter = null, int? top = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/operations", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Retrieve operation status. </summary>
+        /// <param name="operationId"> Operation identifier. </param>
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetOperationAsync(string operationId, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -122,15 +1209,38 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Retrieve operation status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Models.Operation>> GetOperationAsync(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetOperation(string operationId, string ifNoneMatch = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
             scope.Start();
             try
             {
-                return await RestClient.GetOperationAsync(operationId, accessCondition, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 304:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -139,469 +1249,29 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Retrieve operation status. </summary>
+        /// <summary> Create Request for <see cref="GetOperation"/> and <see cref="GetOperationAsync"/> operations. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="accessCondition"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Models.Operation> GetOperation(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetOperationRequest(string operationId, string ifNoneMatch = null, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
-            scope.Start();
-            try
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/updates/operations/", false);
+            uri.AppendPath(operationId, true);
+            request.Uri = uri;
+            if (ifNoneMatch != null)
             {
-                return RestClient.GetOperation(operationId, accessCondition, cancellationToken);
+                request.Headers.Add("If-None-Match", ifNoneMatch);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<string> GetProvidersAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetProvidersAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetProvidersNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<string> GetProviders(CancellationToken cancellationToken = default)
-        {
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetProviders(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetProviders");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetProvidersNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all update names that match the specified provider. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
-        public virtual AsyncPageable<string> GetNamesAsync(string provider, CancellationToken cancellationToken = default)
-        {
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetNamesAsync(provider, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetNamesNextPageAsync(nextLink, provider, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all update names that match the specified provider. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
-        public virtual Pageable<string> GetNames(string provider, CancellationToken cancellationToken = default)
-        {
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetNames(provider, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetNames");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetNamesNextPage(nextLink, provider, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
-        public virtual AsyncPageable<string> GetVersionsAsync(string provider, string name, CancellationToken cancellationToken = default)
-        {
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetVersionsAsync(provider, name, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetVersionsNextPageAsync(nextLink, provider, name, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
-        public virtual Pageable<string> GetVersions(string provider, string name, CancellationToken cancellationToken = default)
-        {
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetVersions(provider, name, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetVersions");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetVersionsNextPage(nextLink, provider, name, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all update file identifiers for the specified version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
-        public virtual AsyncPageable<string> GetFilesAsync(string provider, string name, string version, CancellationToken cancellationToken = default)
-        {
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetFilesAsync(provider, name, version, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetFilesNextPageAsync(nextLink, provider, name, version, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all update file identifiers for the specified version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
-        public virtual Pageable<string> GetFiles(string provider, string name, string version, CancellationToken cancellationToken = default)
-        {
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetFiles(provider, name, version, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetFiles");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetFilesNextPage(nextLink, provider, name, version, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
-        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
-        /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Models.Operation> GetOperationsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Models.Operation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetOperationsAsync(filter, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Models.Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetOperationsNextPageAsync(nextLink, filter, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
-        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
-        /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Models.Operation> GetOperations(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<Models.Operation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetOperations(filter, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Models.Operation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetOperationsNextPage(nextLink, filter, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

@@ -6,172 +6,78 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.IoT.DeviceUpdate.Models;
 
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Deployments service client. </summary>
     public partial class DeploymentsClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private string accountEndpoint;
+        private string instanceId;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal DeploymentsRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of DeploymentsClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="accountEndpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
-        internal DeploymentsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string accountEndpoint, string instanceId)
+        /// <param name="options"> The options for configuring the client. </param>
+        public DeploymentsClient(string accountEndpoint, string instanceId, DeviceUpdateClientOptions options = null)
         {
-            RestClient = new DeploymentsRestClient(clientDiagnostics, pipeline, accountEndpoint, instanceId);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            if (accountEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(accountEndpoint));
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+
+            options ??= new DeviceUpdateClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.accountEndpoint = accountEndpoint;
+            this.instanceId = instanceId;
+            apiVersion = options.Version;
         }
 
-        /// <summary> Gets the properties of a deployment. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Deployment>> GetDeploymentAsync(string deploymentId, CancellationToken cancellationToken = default)
+        /// <summary> Gets a list of deployments. </summary>
+        /// <param name="filter"> Restricts the set of deployments returned. You can filter on update Provider, Name and Version property. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAllDeploymentsAsync(string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeployment");
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDeploymentsRequest(filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetAllDeployments");
             scope.Start();
             try
             {
-                return await RestClient.GetDeploymentAsync(deploymentId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the properties of a deployment. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Deployment> GetDeployment(string deploymentId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeployment");
-            scope.Start();
-            try
-            {
-                return RestClient.GetDeployment(deploymentId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a deployment. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="deployment"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Deployment>> CreateOrUpdateDeploymentAsync(string deploymentId, Deployment deployment, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.CreateOrUpdateDeployment");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateDeploymentAsync(deploymentId, deployment, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a deployment. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="deployment"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Deployment> CreateOrUpdateDeployment(string deploymentId, Deployment deployment, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.CreateOrUpdateDeployment");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateDeployment(deploymentId, deployment, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a deployment. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteDeploymentAsync(string deploymentId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.DeleteDeployment");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteDeploymentAsync(deploymentId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a deployment. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteDeployment(string deploymentId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.DeleteDeployment");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteDeployment(deploymentId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentStatus>> GetDeploymentStatusAsync(string deploymentId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentStatus");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetDeploymentStatusAsync(deploymentId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentStatus> GetDeploymentStatus(string deploymentId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentStatus");
-            scope.Start();
-            try
-            {
-                return RestClient.GetDeploymentStatus(deploymentId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -182,168 +88,976 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of deployments. </summary>
         /// <param name="filter"> Restricts the set of deployments returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Deployment> GetAllDeploymentsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetAllDeployments(string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            async Task<Page<Deployment>> FirstPageFunc(int? pageSizeHint)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDeploymentsRequest(filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetAllDeployments");
-                scope.Start();
-                try
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetAllDeployments");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = await RestClient.GetAllDeploymentsAsync(filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            async Task<Page<Deployment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetAllDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllDeploymentsNextPageAsync(nextLink, filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of deployments. </summary>
+        /// <summary> Create Request for <see cref="GetAllDeployments"/> and <see cref="GetAllDeploymentsAsync"/> operations. </summary>
         /// <param name="filter"> Restricts the set of deployments returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Deployment> GetAllDeployments(string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetAllDeploymentsRequest(string filter = null, RequestOptions requestOptions = null)
         {
-            Page<Deployment> FirstPageFunc(int? pageSizeHint)
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments", false);
+            if (filter != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetAllDeployments");
-                scope.Start();
-                try
+                uri.AppendQuery("$filter", filter, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the properties of a deployment. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeploymentAsync(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeployment");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = RestClient.GetAllDeployments(filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            Page<Deployment> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetAllDeployments");
-                scope.Start();
-                try
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties of a deployment. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDeployment(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeployment");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = RestClient.GetAllDeploymentsNextPage(nextLink, filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDeployment"/> and <see cref="GetDeploymentAsync"/> operations. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeploymentRequest(string deploymentId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates or updates a deployment. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>deploymentId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the deployment identifier. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deploymentType</term>
+        ///     <term>&quot;Complete&quot; | &quot;Download&quot; | &quot;Install&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the deployment type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceClassId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Gets or sets the device class identifier. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>startDateTime</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the Deployment start datetime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceGroupType</term>
+        ///     <term>&quot;All&quot; | &quot;Devices&quot; | &quot;DeviceGroupDefinitions&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the device group type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceGroupDefinition</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the device group definition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updateId</term>
+        ///     <term>UpdateId</term>
+        ///     <term>Yes</term>
+        ///     <term> Update identity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isCanceled</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Boolean flag indicating whether the deployment was canceled. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isRetried</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Boolean flag indicating whether the deployment has been retried. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isCompleted</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Boolean flag indicating whether the deployment was completed. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>UpdateId</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>provider</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update provider. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>version</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update version. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateDeploymentAsync(string deploymentId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateDeploymentRequest(deploymentId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.CreateOrUpdateDeployment");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a deployment. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>deploymentId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the deployment identifier. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deploymentType</term>
+        ///     <term>&quot;Complete&quot; | &quot;Download&quot; | &quot;Install&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the deployment type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceClassId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Gets or sets the device class identifier. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>startDateTime</term>
+        ///     <term>string (ISO 8601 Format)</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the Deployment start datetime. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceGroupType</term>
+        ///     <term>&quot;All&quot; | &quot;Devices&quot; | &quot;DeviceGroupDefinitions&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the device group type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceGroupDefinition</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> Gets or sets the device group definition. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updateId</term>
+        ///     <term>UpdateId</term>
+        ///     <term>Yes</term>
+        ///     <term> Update identity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isCanceled</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Boolean flag indicating whether the deployment was canceled. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isRetried</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Boolean flag indicating whether the deployment has been retried. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>isCompleted</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Boolean flag indicating whether the deployment was completed. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>UpdateId</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>provider</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update provider. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update name. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>version</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Update version. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateDeployment(string deploymentId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateDeploymentRequest(deploymentId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.CreateOrUpdateDeployment");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CreateOrUpdateDeployment"/> and <see cref="CreateOrUpdateDeploymentAsync"/> operations. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateDeploymentRequest(string deploymentId, RequestContent requestBody, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Deletes a deployment. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteDeploymentAsync(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a deployment. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteDeployment(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="DeleteDeployment"/> and <see cref="DeleteDeploymentAsync"/> operations. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteDeploymentRequest(string deploymentId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeploymentStatusAsync(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeploymentStatusRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentStatus");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDeploymentStatus(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeploymentStatusRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentStatus");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDeploymentStatus"/> and <see cref="GetDeploymentStatusAsync"/> operations. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeploymentStatusRequest(string deploymentId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath("/status", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         /// <summary> Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and/or deviceState. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> is null. </exception>
-        public virtual AsyncPageable<DeploymentDeviceState> GetDeploymentDevicesAsync(string deploymentId, string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeploymentDevicesAsync(string deploymentId, string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (deploymentId == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeploymentDevicesRequest(deploymentId, filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(deploymentId));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            async Task<Page<DeploymentDeviceState>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentDevices");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentDevices");
-                scope.Start();
-                try
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = await RestClient.GetDeploymentDevicesAsync(deploymentId, filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeploymentDeviceState>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentDevices");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDeploymentDevicesNextPageAsync(nextLink, deploymentId, filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and/or deviceState. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> is null. </exception>
-        public virtual Pageable<DeploymentDeviceState> GetDeploymentDevices(string deploymentId, string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDeploymentDevices(string deploymentId, string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (deploymentId == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeploymentDevicesRequest(deploymentId, filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(deploymentId));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentDevices");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-            Page<DeploymentDeviceState> FirstPageFunc(int? pageSizeHint)
+        /// <summary> Create Request for <see cref="GetDeploymentDevices"/> and <see cref="GetDeploymentDevicesAsync"/> operations. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and/or deviceState. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeploymentDevicesRequest(string deploymentId, string filter = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath("/devicestates", false);
+            if (filter != null)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentDevices");
-                scope.Start();
-                try
+                uri.AppendQuery("$filter", filter, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancels a deployment. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CancelDeploymentAsync(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.CancelDeployment");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = RestClient.GetDeploymentDevices(deploymentId, filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            Page<DeploymentDeviceState> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.GetDeploymentDevices");
-                scope.Start();
-                try
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancels a deployment. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CancelDeployment(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCancelDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.CancelDeployment");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = RestClient.GetDeploymentDevicesNextPage(nextLink, deploymentId, filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="CancelDeployment"/> and <see cref="CancelDeploymentAsync"/> operations. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCancelDeploymentRequest(string deploymentId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendQuery("action", "cancel", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Retries a deployment with failed devices. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RetryDeploymentAsync(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRetryDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.RetryDeployment");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retries a deployment with failed devices. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RetryDeployment(string deploymentId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRetryDeploymentRequest(deploymentId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DeploymentsClient.RetryDeployment");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="RetryDeployment"/> and <see cref="RetryDeploymentAsync"/> operations. </summary>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRetryDeploymentRequest(string deploymentId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendQuery("action", "retry", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }

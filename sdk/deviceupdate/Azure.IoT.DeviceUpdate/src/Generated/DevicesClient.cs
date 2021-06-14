@@ -6,44 +6,174 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.IoT.DeviceUpdate.Models;
 
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Devices service client. </summary>
     public partial class DevicesClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+        private string accountEndpoint;
+        private string instanceId;
+        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal DevicesRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of DevicesClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="accountEndpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
-        internal DevicesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string accountEndpoint, string instanceId)
+        /// <param name="options"> The options for configuring the client. </param>
+        public DevicesClient(string accountEndpoint, string instanceId, DeviceUpdateClientOptions options = null)
         {
-            RestClient = new DevicesRestClient(clientDiagnostics, pipeline, accountEndpoint, instanceId);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            if (accountEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(accountEndpoint));
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+
+            options ??= new DeviceUpdateClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.accountEndpoint = accountEndpoint;
+            this.instanceId = instanceId;
+            apiVersion = options.Version;
+        }
+
+        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAllDeviceClassesAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDeviceClassesRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceClasses");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetAllDeviceClasses(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDeviceClassesRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceClasses");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetAllDeviceClasses"/> and <see cref="GetAllDeviceClassesAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetAllDeviceClassesRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deviceclasses", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         /// <summary> Gets the properties of a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeviceClass>> GetDeviceClassAsync(string deviceClassId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeviceClassAsync(string deviceClassId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceClassRequest(deviceClassId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClass");
             scope.Start();
             try
             {
-                return await RestClient.GetDeviceClassAsync(deviceClassId, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -54,14 +184,401 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the properties of a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeviceClass> GetDeviceClass(string deviceClassId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDeviceClass(string deviceClassId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceClassRequest(deviceClassId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClass");
             scope.Start();
             try
             {
-                return RestClient.GetDeviceClass(deviceClassId, cancellationToken);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDeviceClass"/> and <see cref="GetDeviceClassAsync"/> operations. </summary>
+        /// <param name="deviceClassId"> Device class identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeviceClassRequest(string deviceClassId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deviceclasses/", false);
+            uri.AppendPath(deviceClassId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of device identifiers in a device class. </summary>
+        /// <param name="deviceClassId"> Device class identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeviceClassDeviceIdsAsync(string deviceClassId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceClassDeviceIdsRequest(deviceClassId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassDeviceIds");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of device identifiers in a device class. </summary>
+        /// <param name="deviceClassId"> Device class identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDeviceClassDeviceIds(string deviceClassId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceClassDeviceIdsRequest(deviceClassId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassDeviceIds");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDeviceClassDeviceIds"/> and <see cref="GetDeviceClassDeviceIdsAsync"/> operations. </summary>
+        /// <param name="deviceClassId"> Device class identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeviceClassDeviceIdsRequest(string deviceClassId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deviceclasses/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deviceids", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of installable updates for a device class. </summary>
+        /// <param name="deviceClassId"> Device class identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeviceClassInstallableUpdatesAsync(string deviceClassId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceClassInstallableUpdatesRequest(deviceClassId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassInstallableUpdates");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of installable updates for a device class. </summary>
+        /// <param name="deviceClassId"> Device class identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDeviceClassInstallableUpdates(string deviceClassId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceClassInstallableUpdatesRequest(deviceClassId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassInstallableUpdates");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetDeviceClassInstallableUpdates"/> and <see cref="GetDeviceClassInstallableUpdatesAsync"/> operations. </summary>
+        /// <param name="deviceClassId"> Device class identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeviceClassInstallableUpdatesRequest(string deviceClassId, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/deviceclasses/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/installableupdates", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="filter"> Restricts the set of devices returned. You can only filter on device GroupId. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAllDevicesAsync(string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDevicesRequest(filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDevices");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="filter"> Restricts the set of devices returned. You can only filter on device GroupId. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetAllDevices(string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDevicesRequest(filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDevices");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetAllDevices"/> and <see cref="GetAllDevicesAsync"/> operations. </summary>
+        /// <param name="filter"> Restricts the set of devices returned. You can only filter on device GroupId. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetAllDevicesRequest(string filter = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/devices", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub. </summary>
+        /// <param name="deviceId"> Device identifier in Azure IOT Hub. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeviceAsync(string deviceId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceRequest(deviceId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDevice");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -72,14 +589,36 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IOT Hub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Device>> GetDeviceAsync(string deviceId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDevice(string deviceId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceRequest(deviceId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDevice");
             scope.Start();
             try
             {
-                return await RestClient.GetDeviceAsync(deviceId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -88,16 +627,57 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub. </summary>
+        /// <summary> Create Request for <see cref="GetDevice"/> and <see cref="GetDeviceAsync"/> operations. </summary>
         /// <param name="deviceId"> Device identifier in Azure IOT Hub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Device> GetDevice(string deviceId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeviceRequest(string deviceId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDevice");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/devices/", false);
+            uri.AppendPath(deviceId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetUpdateComplianceAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetUpdateComplianceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetUpdateCompliance");
             scope.Start();
             try
             {
-                return RestClient.GetDevice(deviceId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -107,14 +687,36 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UpdateCompliance>> GetUpdateComplianceAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetUpdateCompliance(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetUpdateComplianceRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetUpdateCompliance");
             scope.Start();
             try
             {
-                return await RestClient.GetUpdateComplianceAsync(cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -123,15 +725,152 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpdateCompliance> GetUpdateCompliance(CancellationToken cancellationToken = default)
+        /// <summary> Create Request for <see cref="GetUpdateCompliance"/> and <see cref="GetUpdateComplianceAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetUpdateComplianceRequest(RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetUpdateCompliance");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/updatecompliance", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAllDeviceTagsAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDeviceTagsRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceTags");
             scope.Start();
             try
             {
-                return RestClient.GetUpdateCompliance(cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetAllDeviceTags(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllDeviceTagsRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceTags");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetAllDeviceTags"/> and <see cref="GetAllDeviceTagsAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetAllDeviceTagsRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/devicetags", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a count of how many devices have a device tag. </summary>
+        /// <param name="tagName"> Tag name. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDeviceTagAsync(string tagName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceTagRequest(tagName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceTag");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -142,14 +881,36 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a count of how many devices have a device tag. </summary>
         /// <param name="tagName"> Tag name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeviceTag>> GetDeviceTagAsync(string tagName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDeviceTag(string tagName, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDeviceTagRequest(tagName, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceTag");
             scope.Start();
             try
             {
-                return await RestClient.GetDeviceTagAsync(tagName, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -158,16 +919,154 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets a count of how many devices have a device tag. </summary>
+        /// <summary> Create Request for <see cref="GetDeviceTag"/> and <see cref="GetDeviceTagAsync"/> operations. </summary>
         /// <param name="tagName"> Tag name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeviceTag> GetDeviceTag(string tagName, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDeviceTagRequest(string tagName, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceTag");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/devicetags/", false);
+            uri.AppendPath(tagName, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of all device groups. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetAllGroupsAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllGroupsRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllGroups");
             scope.Start();
             try
             {
-                return RestClient.GetDeviceTag(tagName, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of all device groups. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetAllGroups(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetAllGroupsRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllGroups");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetAllGroups"/> and <see cref="GetAllGroupsAsync"/> operations. </summary>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetAllGroupsRequest(RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/groups", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the properties of a group. </summary>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGroupAsync(string groupId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGroupRequest(groupId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroup");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -178,14 +1077,36 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the properties of a group. </summary>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Group>> GetGroupAsync(string groupId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGroup(string groupId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGroupRequest(groupId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroup");
             scope.Start();
             try
             {
-                return await RestClient.GetGroupAsync(groupId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -194,16 +1115,100 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets the properties of a group. </summary>
+        /// <summary> Create Request for <see cref="GetGroup"/> and <see cref="GetGroupAsync"/> operations. </summary>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Group> GetGroup(string groupId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGroupRequest(string groupId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroup");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Create or update a device group. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>groupId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Group identity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>groupType</term>
+        ///     <term>&quot;IoTHubTag&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Group type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>tags</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> IoT Hub tags. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createdDateTime</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Date and time when the update was created. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceCount</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The number of devices in the group. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateGroupAsync(string groupId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateGroupRequest(groupId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.CreateOrUpdateGroup");
             scope.Start();
             try
             {
-                return RestClient.GetGroup(groupId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -213,16 +1218,79 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Create or update a device group. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>groupId</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Group identity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>groupType</term>
+        ///     <term>&quot;IoTHubTag&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Group type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>tags</term>
+        ///     <term>string[]</term>
+        ///     <term>Yes</term>
+        ///     <term> IoT Hub tags. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createdDateTime</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Date and time when the update was created. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>deviceCount</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The number of devices in the group. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="group"> The group properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Group>> CreateOrUpdateGroupAsync(string groupId, Group group, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateGroup(string groupId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateGroupRequest(groupId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.CreateOrUpdateGroup");
             scope.Start();
             try
             {
-                return await RestClient.CreateOrUpdateGroupAsync(groupId, group, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -231,17 +1299,62 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Create or update a device group. </summary>
+        /// <summary> Create Request for <see cref="CreateOrUpdateGroup"/> and <see cref="CreateOrUpdateGroupAsync"/> operations. </summary>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="group"> The group properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Group> CreateOrUpdateGroup(string groupId, Group group, CancellationToken cancellationToken = default)
+        /// <param name="requestBody"> The request body. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateGroupRequest(string groupId, RequestContent requestBody, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DevicesClient.CreateOrUpdateGroup");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Deletes a device group. </summary>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteGroupAsync(string groupId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGroupRequest(groupId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.DeleteGroup");
             scope.Start();
             try
             {
-                return RestClient.CreateOrUpdateGroup(groupId, group, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -252,14 +1365,37 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Deletes a device group. </summary>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteGroupAsync(string groupId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteGroup(string groupId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGroupRequest(groupId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.DeleteGroup");
             scope.Start();
             try
             {
-                return await RestClient.DeleteGroupAsync(groupId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -268,16 +1404,57 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Deletes a device group. </summary>
+        /// <summary> Create Request for <see cref="DeleteGroup"/> and <see cref="DeleteGroupAsync"/> operations. </summary>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteGroup(string groupId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteGroupRequest(string groupId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DevicesClient.DeleteGroup");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Get group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGroupUpdateComplianceAsync(string groupId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGroupUpdateComplianceRequest(groupId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupUpdateCompliance");
             scope.Start();
             try
             {
-                return RestClient.DeleteGroup(groupId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -288,14 +1465,36 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UpdateCompliance>> GetGroupUpdateComplianceAsync(string groupId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGroupUpdateCompliance(string groupId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGroupUpdateComplianceRequest(groupId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
             using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupUpdateCompliance");
             scope.Start();
             try
             {
-                return await RestClient.GetGroupUpdateComplianceAsync(groupId, cancellationToken).ConfigureAwait(false);
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -304,16 +1503,60 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Get group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
+        /// <summary> Create Request for <see cref="GetGroupUpdateCompliance"/> and <see cref="GetGroupUpdateComplianceAsync"/> operations. </summary>
         /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpdateCompliance> GetGroupUpdateCompliance(string groupId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGroupUpdateComplianceRequest(string groupId, RequestOptions requestOptions = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupUpdateCompliance");
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/updateCompliance", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get the best available updates for a group and a count of how many devices need each update. </summary>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGroupBestUpdatesAsync(string groupId, string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGroupBestUpdatesRequest(groupId, filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupBestUpdates");
             scope.Start();
             try
             {
-                return RestClient.GetGroupUpdateCompliance(groupId, cancellationToken);
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -322,568 +1565,71 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DeviceClass> GetAllDeviceClassesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeviceClass>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceClasses");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllDeviceClassesAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeviceClass>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceClasses");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllDeviceClassesNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DeviceClass> GetAllDeviceClasses(CancellationToken cancellationToken = default)
-        {
-            Page<DeviceClass> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceClasses");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllDeviceClasses(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeviceClass> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceClasses");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllDeviceClassesNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of device identifiers in a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        public virtual AsyncPageable<string> GetDeviceClassDeviceIdsAsync(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            if (deviceClassId == null)
-            {
-                throw new ArgumentNullException(nameof(deviceClassId));
-            }
-
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassDeviceIds");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDeviceClassDeviceIdsAsync(deviceClassId, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassDeviceIds");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDeviceClassDeviceIdsNextPageAsync(nextLink, deviceClassId, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of device identifiers in a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        public virtual Pageable<string> GetDeviceClassDeviceIds(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            if (deviceClassId == null)
-            {
-                throw new ArgumentNullException(nameof(deviceClassId));
-            }
-
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassDeviceIds");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDeviceClassDeviceIds(deviceClassId, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassDeviceIds");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDeviceClassDeviceIdsNextPage(nextLink, deviceClassId, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of installable updates for a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        public virtual AsyncPageable<UpdateId> GetDeviceClassInstallableUpdatesAsync(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            if (deviceClassId == null)
-            {
-                throw new ArgumentNullException(nameof(deviceClassId));
-            }
-
-            async Task<Page<UpdateId>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassInstallableUpdates");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDeviceClassInstallableUpdatesAsync(deviceClassId, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<UpdateId>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassInstallableUpdates");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDeviceClassInstallableUpdatesNextPageAsync(nextLink, deviceClassId, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of installable updates for a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        public virtual Pageable<UpdateId> GetDeviceClassInstallableUpdates(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            if (deviceClassId == null)
-            {
-                throw new ArgumentNullException(nameof(deviceClassId));
-            }
-
-            Page<UpdateId> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassInstallableUpdates");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDeviceClassInstallableUpdates(deviceClassId, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<UpdateId> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetDeviceClassInstallableUpdates");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDeviceClassInstallableUpdatesNextPage(nextLink, deviceClassId, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="filter"> Restricts the set of devices returned. You can only filter on device GroupId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Device> GetAllDevicesAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Device>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDevices");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllDevicesAsync(filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Device>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDevices");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllDevicesNextPageAsync(nextLink, filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="filter"> Restricts the set of devices returned. You can only filter on device GroupId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Device> GetAllDevices(string filter = null, CancellationToken cancellationToken = default)
-        {
-            Page<Device> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDevices");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllDevices(filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Device> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDevices");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllDevicesNextPage(nextLink, filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DeviceTag> GetAllDeviceTagsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeviceTag>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceTags");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllDeviceTagsAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeviceTag>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceTags");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllDeviceTagsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DeviceTag> GetAllDeviceTags(CancellationToken cancellationToken = default)
-        {
-            Page<DeviceTag> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceTags");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllDeviceTags(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeviceTag> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllDeviceTags");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllDeviceTagsNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of all device groups. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Group> GetAllGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Group>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllGroups");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllGroupsAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Group>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllGroups");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetAllGroupsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of all device groups. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Group> GetAllGroups(CancellationToken cancellationToken = default)
-        {
-            Page<Group> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllGroups");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllGroups(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Group> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetAllGroups");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetAllGroupsNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
         /// <summary> Get the best available updates for a group and a count of how many devices need each update. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual AsyncPageable<UpdatableDevices> GetGroupBestUpdatesAsync(string groupId, string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGroupBestUpdates(string groupId, string filter = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            if (groupId == null)
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGroupBestUpdatesRequest(groupId, filter, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
             {
-                throw new ArgumentNullException(nameof(groupId));
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-
-            async Task<Page<UpdatableDevices>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupBestUpdates");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupBestUpdates");
-                scope.Start();
-                try
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
                 {
-                    var response = await RestClient.GetGroupBestUpdatesAsync(groupId, filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<UpdatableDevices>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupBestUpdates");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetGroupBestUpdatesNextPageAsync(nextLink, groupId, filter, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
+                    return message.Response;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get the best available updates for a group and a count of how many devices need each update. </summary>
+        /// <summary> Create Request for <see cref="GetGroupBestUpdates"/> and <see cref="GetGroupBestUpdatesAsync"/> operations. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Pageable<UpdatableDevices> GetGroupBestUpdates(string groupId, string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGroupBestUpdatesRequest(string groupId, string filter = null, RequestOptions requestOptions = null)
         {
-            if (groupId == null)
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(accountEndpoint, false);
+            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath(instanceId, false);
+            uri.AppendPath("/v2/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/bestUpdates", false);
+            if (filter != null)
             {
-                throw new ArgumentNullException(nameof(groupId));
+                uri.AppendQuery("$filter", filter, true);
             }
-
-            Page<UpdatableDevices> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupBestUpdates");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetGroupBestUpdates(groupId, filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<UpdatableDevices> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DevicesClient.GetGroupBestUpdates");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetGroupBestUpdatesNextPage(nextLink, groupId, filter, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
     }
 }
