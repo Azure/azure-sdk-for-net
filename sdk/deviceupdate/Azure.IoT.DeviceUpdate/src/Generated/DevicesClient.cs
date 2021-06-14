@@ -18,16 +18,24 @@ namespace Azure.IoT.DeviceUpdate
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://management.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private string accountEndpoint;
         private string instanceId;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
+        /// <summary> Initializes a new instance of DevicesClient for mocking. </summary>
+        protected DevicesClient()
+        {
+        }
+
         /// <summary> Initializes a new instance of DevicesClient. </summary>
         /// <param name="accountEndpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public DevicesClient(string accountEndpoint, string instanceId, DeviceUpdateClientOptions options = null)
+        public DevicesClient(string accountEndpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
         {
             if (accountEndpoint == null)
             {
@@ -37,10 +45,16 @@ namespace Azure.IoT.DeviceUpdate
             {
                 throw new ArgumentNullException(nameof(instanceId));
             }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             options ??= new DeviceUpdateClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.accountEndpoint = accountEndpoint;
             this.instanceId = instanceId;
             apiVersion = options.Version;

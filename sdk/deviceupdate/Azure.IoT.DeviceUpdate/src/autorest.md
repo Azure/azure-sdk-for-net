@@ -8,4 +8,5 @@ Run `generate.ps1` or `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 low-level-client: true
 input-file: $(this-folder)/deviceupdate.json
+security: AADToken
 ```

@@ -5,6 +5,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Identity;
 using Azure.IoT.DeviceUpdate;
 using Newtonsoft.Json;
@@ -131,8 +132,8 @@ namespace ConsoleTest
 
         private async Task<string> ImportUpdateStepAsync(string version)
         {
-            ContentFactory contentFactory = new ContentFactory(_connectionString, BlobContainer);
-            ImportUpdateInput update = await contentFactory.CreateImportUpdate(SimulatorProvider, SimulatorModel, version);
+            StubContentFactory contentFactory = new StubContentFactory(_connectionString, BlobContainer);
+            (string sample_manifest, string manifest_hash, string sample_content, string content_hash) = await contentFactory.CreateImportUpdate(SimulatorProvider, SimulatorModel, version);
 
             ConsoleEx.WriteLine(ConsoleColor.Yellow, "Importing update...");
             Response<string> operationIdResponse = await _updatesClient.ImportUpdateAsync(update);
@@ -143,6 +144,9 @@ namespace ConsoleTest
             bool repeat = true;
             while (repeat)
             {
+                var opreationRequest = RequestContent.Create(new {
+                    name = "Buddy"
+                });
                 Response<Operation> operationResponse = await _updatesClient.GetOperationAsync(operationIdResponse.Value);
                 if (operationResponse.Value.Status == OperationStatus.Succeeded)
                 {
