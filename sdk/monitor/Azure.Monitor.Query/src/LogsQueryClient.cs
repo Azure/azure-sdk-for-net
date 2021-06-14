@@ -3,9 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.Query.Models;
@@ -187,6 +191,110 @@ namespace Azure.Monitor.Query
                 throw;
             }
         }
+
+        /// <summary>
+        /// Create a Kusto query from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
+        /// </summary>
+        /// <param name="filter">An interpolated query string.</param>
+        /// <returns>A valid Kusto query.</returns>
+        public static string CreateQueryFilter(FormattableString filter)
+        {
+            if (filter == null) { return null; }
+
+            string[] args = new string[filter.ArgumentCount];
+            for (int i = 0; i < filter.ArgumentCount; i++)
+            {
+                args[i] = filter.GetArgument(i) switch
+                {
+                    // Null
+                    null => throw new ArgumentException(
+                        $"Unable to convert argument {i} to an Kusto literal. " +
+                        $"Unable to format an untyped null value, please use typed-null expression " +
+                        $"(bool(null), datetime(null), dynamic(null), guid(null), int(null), long(null), real(null), double(null), time(null))"),
+
+                    // Boolean
+                    true => "true",
+                    false => "false",
+
+                    // Numeric
+                    sbyte x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    byte x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    short x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    ushort x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    int x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    uint x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    float x => $"real({x.ToString(CultureInfo.InvariantCulture)})",
+                    double x => $"real({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    // Int64
+                    long x => $"long({x.ToString(CultureInfo.InvariantCulture)})",
+                    ulong x => $"long({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    decimal x => $"decimal({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    // Guid
+                    Guid x => $"guid({x.ToString("D", CultureInfo.InvariantCulture)})",
+
+                    // Dates as 8601 with a time zone
+                    DateTimeOffset x => $"datetime({x.UtcDateTime.ToString("O", CultureInfo.InvariantCulture)})",
+                    DateTime x => $"datetime({x.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture)})",
+                    TimeSpan x => $"time({x.ToString("c", CultureInfo.InvariantCulture)})",
+
+                    // Text
+                    string x => EscapeStringValue(x),
+                    char x => EscapeStringValue(x),
+
+                    // Everything else
+                    object x => throw new ArgumentException(
+                        $"Unable to convert argument {i} from type {x.GetType()} to an Kusto literal.")
+                };
+            }
+
+            return string.Format(CultureInfo.InvariantCulture, filter.Format, args);
+        }
+
+        private static string EscapeStringValue(string s)
+        {
+            StringBuilder escaped = new();
+            escaped.Append('"');
+
+            foreach (char c in s)
+            {
+                switch (c)
+                {
+                    case '"':
+                        escaped.Append("\\\"");
+                        break;
+                    case '\\':
+                        escaped.Append("\\\\");
+                        break;
+                    case '\r':
+                        escaped.Append("\\r");
+                        break;
+                    case '\n':
+                        escaped.Append("\\n");
+                        break;
+                    case '\t':
+                        escaped.Append("\\t");
+                        break;
+                    default:
+                        escaped.Append(c);
+                        break;
+                }
+            }
+
+            escaped.Append('"');
+            return escaped.ToString();
+        }
+
+        private static string EscapeStringValue(char s) =>
+            s switch
+            {
+                _ when s == '"' => "'\"'",
+                _ => $"\"{s}\""
+            };
+
         internal static QueryBody CreateQueryBody(string query, DateTimeRange timeRange, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);

@@ -537,6 +537,79 @@ namespace Azure.Monitor.Query.Tests
             }
         }
 
+        [RecordedTest]
+        [TestCaseSource(nameof(Queries))]
+        public async Task CanQueryWithFormattedQuery(FormattableString query)
+        {
+            var client = CreateClient();
+
+            var response = await client.QueryAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQueryFilter(query), _logsTestData.DataTimeRange);
+            Assert.True(response.Value.Single());
+        }
+
+        public static IEnumerable<FormattableString> Queries
+        {
+            get
+            {
+                yield return $"print {true} == true";
+                yield return $"print {false} == false";
+                yield return $"print {(byte)1} == int(1)";
+                yield return $"print {(sbyte)1} == int(1)";
+                yield return $"print {(ushort)1} == int(1)";
+                yield return $"print {(short)1} == int(1)";
+                yield return $"print {(uint)1} == int(1)";
+                yield return $"print {(int)1} == int(1)";
+
+                yield return $"print {1000000000} == int(1000000000)";
+                yield return $"print {1.1F} == real(1.1)";
+                yield return $"print {1.1D} == real(1.1)";
+                yield return $"print {1.1M} == decimal(1.1)";
+                yield return $"print {1000000000000000000L} == long(1000000000000000000)";
+                yield return $"print {1000000000000000000UL} == long(1000000000000000000)";
+
+                yield return $"print {Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")} == guid(74be27de-1e4e-49d9-b579-fe0b331d3642)";
+
+                yield return $"print {DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00")} == datetime(2015-12-31 23:59:59.9)";
+                yield return $"print {DateTime.Parse("2015-12-31 23:59:59.9+00:00")} == datetime(2015-12-31 23:59:59.9)";
+
+                yield return $"print {TimeSpan.FromSeconds(10)} == 10s";
+
+                yield return $"print {"hello world"} == \"hello world\"";
+                yield return $"print {"hello \" world"} == \"hello \\\" world\"";
+                yield return $"print {"\\\""} == \"\\\\\\\"\"";
+
+                yield return $"print {"\r\n\t"} == \"\\r\\n\\t\"";
+
+                yield return $"print {'"'} == \"\\\"\"";
+                yield return $"print {'\''} == \"'\"";
+            }
+        }
+
+        // Response<IReadOnlyList<TestModelForTypes>> results = await client.QueryAsync<TestModelForTypes>(TestEnvironment.WorkspaceId,
+        //     $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
+        //     "[" +
+        //     "datetime(2015-12-31 23:59:59.9)," +
+        //     "false," +
+        //     "guid(74be27de-1e4e-49d9-b579-fe0b331d3642)," +
+        //     "12345," +
+        //     "1234567890123," +
+        //     "12345.6789," +
+        //     "'string value'," +
+        //     "10s," +
+        //     "decimal(0.10101)" +
+        //     "]", _logsTestData.DataTimeRange);
+        //
+        // TestModelForTypes row = results.Value[0];
+        //
+        // Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.DateTime);
+        // Assert.AreEqual(false, row.Bool);
+        // Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.Guid);
+        // Assert.AreEqual(12345, row.Int);
+        // Assert.AreEqual(1234567890123, row.Long);
+        // Assert.AreEqual(12345.6789d, row.Double);
+        // Assert.AreEqual("string value", row.String);
+        // Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
+        // Assert.AreEqual(0.10101m, row.Decimal);
         private record TestModel
         {
             public string Name { get; set; }
