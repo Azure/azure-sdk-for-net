@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
@@ -31,6 +32,7 @@
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
     <Compile Include="Shared\GeoRedundantReadPolicy.cs" />
+    <Compile Include="Shared\HttpAuthorization.cs" />
     <Compile Include="Shared\SasExtensions.cs" />
     <Compile Include="Shared\SasQueryParametersInternals.cs" />
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />
