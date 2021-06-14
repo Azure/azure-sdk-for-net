@@ -184,96 +184,98 @@ namespace ConsoleTest
 
         private async Task RetrieveUpdateStepAsync(string provider, string name, string version, bool notFoundExpected = false)
         {
-            // ConsoleEx.WriteLine(ConsoleColor.Yellow, "Retrieving update...");
-            // try
-            // {
-            //     Response<Update> response = await _updatesClient.GetUpdateAsync(provider, name, version);
-            //     if (notFoundExpected)
-            //     {
-            //         throw new ApplicationException($"Service returned valid update even though NotFound response was expected");
-            //     }
-            //     Console.WriteLine(JsonConvert.SerializeObject(response.Value, Formatting.Indented));
-            // }
-            // catch (RequestFailedException e)
-            // {
-            //     if (notFoundExpected && e.Status == (int)HttpStatusCode.NotFound)
-            //     {
-            //         Console.WriteLine($"Received an expected NotFound response");
-            //     }
-            //     else
-            //     {
-            //         throw new ApplicationException($"Service returned unexpected error status code: {e.Status}", e);
-            //     }
-            // }
+            ConsoleEx.WriteLine(ConsoleColor.Yellow, "Retrieving update...");
+            try
+            {
+                Response response = await _updatesClient.GetUpdateAsync(provider, name, version);
+                if (notFoundExpected)
+                {
+                    throw new ApplicationException($"Service returned valid update even though NotFound response was expected");
+                }
+                var doc = JsonDocument.Parse(response.Content.ToMemory());
+                Console.WriteLine(JsonConvert.SerializeObject(doc.RootElement.GetProperty("Value").GetString(), Formatting.Indented));
+            }
+            catch (RequestFailedException e)
+            {
+                if (notFoundExpected && e.Status == (int)HttpStatusCode.NotFound)
+                {
+                    Console.WriteLine($"Received an expected NotFound response");
+                }
+                else
+                {
+                    throw new ApplicationException($"Service returned unexpected error status code: {e.Status}", e);
+                }
+            }
 
-            // Console.WriteLine();
+            Console.WriteLine();
         }
 
         private async Task<string> CreateDeploymentGroupStepAsync()
         {
-            // string groupId = _deviceTag;
-            // bool createNewGroup = false;
+            string groupId = _deviceTag;
+            bool createNewGroup = false;
 
-            // ConsoleEx.WriteLine(ConsoleColor.Yellow, "Querying deployment group...");
-            // try
-            // {
-            //     Response<Group> groupResponse = await _devicesClient.GetGroupAsync(groupId);
-            //     Console.WriteLine($"Deployment group {groupId} already exists.");
-            // }
-            // catch (RequestFailedException e)
-            // {
-            //     if (e.Status == (int)HttpStatusCode.NotFound)
-            //     {
-            //         createNewGroup = true;
-            //     }
-            // }
+            ConsoleEx.WriteLine(ConsoleColor.Yellow, "Querying deployment group...");
+            try
+            {
+                Response groupResponse = await _devicesClient.GetGroupAsync(groupId);
+                Console.WriteLine($"Deployment group {groupId} already exists.");
+            }
+            catch (RequestFailedException e)
+            {
+                if (e.Status == (int)HttpStatusCode.NotFound)
+                {
+                    createNewGroup = true;
+                }
+            }
 
-            // if (createNewGroup)
-            // {
-            //     ConsoleEx.WriteLine(ConsoleColor.Yellow, "Creating deployment group...");
-            //     Response<Group> groupResponse = await _devicesClient.CreateOrUpdateGroupAsync(
-            //                                         groupId,
-            //                                         new Group(
-            //                                             groupId,
-            //                                             GroupType.IoTHubTag,
-            //                                             new[]
-            //                                             {
-            //                                                 groupId
-            //                                             },
-            //                                             DateTimeOffset.UtcNow.ToString()));
+            if (createNewGroup)
+            {
+                ConsoleEx.WriteLine(ConsoleColor.Yellow, "Creating deployment group...");
+                var group = RequestContent.Create(new {
+                    groupId = groupId,
+                    groupType = "IoTHubTag",
+                    tags = new [] {
+                        groupId
+                    },
+                    createdDateTime  = DateTimeOffset.UtcNow.ToString()
+                });
 
-            //     if (groupResponse.Value != null)
-            //     {
-            //         Console.WriteLine($"Group {groupId} created.");
-            //         Console.WriteLine();
+                Response groupResponse = await _devicesClient.CreateOrUpdateGroupAsync(groupId, group);
+                var groupDoc = JsonDocument.Parse(groupResponse.Content.ToMemory());
 
-            //         ConsoleEx.WriteLine(ConsoleColor.Yellow, "Waiting for the group to be populated with devices...");
-            //         Console.WriteLine("(this may take about five minutes to complete)");
-            //         bool repeat = true;
-            //         while (repeat)
-            //         {
-            //             groupResponse = await _devicesClient.GetGroupAsync(groupId);
-            //             if (groupResponse.Value.DeviceCount > 0)
-            //             {
-            //                 Console.WriteLine($"Deployment group {groupId} now has {groupResponse.Value.DeviceCount} devices.");
-            //                 repeat = false;
-            //             }
-            //             else
-            //             {
-            //                 Console.Write(".");
-            //                 await Task.Delay(DefaultRetryAfterValue);
-            //             }
-            //         }
-            //     }
-            // }
+                if (groupDoc.RootElement.TryGetProperty("value", out var groupValue))
+                {
+                    Console.WriteLine($"Group {groupId} created.");
+                    Console.WriteLine();
 
-            // Console.WriteLine();
-            // return groupId;
-            return "a";
+                    ConsoleEx.WriteLine(ConsoleColor.Yellow, "Waiting for the group to be populated with devices...");
+                    Console.WriteLine("(this may take about five minutes to complete)");
+                    bool repeat = true;
+                    while (repeat)
+                    {
+                        groupResponse = await _devicesClient.GetGroupAsync(groupId);
+                        if (groupValue.TryGetProperty("deviceCount", out var deviceCountValue) && deviceCountValue.GetInt32() > 0)
+                        {
+                            Console.WriteLine($"Deployment group {groupId} now has {deviceCountValue.GetInt32()} devices.");
+                            repeat = false;
+                        }
+                        else
+                        {
+                            Console.Write(".");
+                            await Task.Delay(DefaultRetryAfterValue);
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine();
+            return groupId;
         }
 
         private async Task CheckGroupDevicesAreUpToDateStepAsync(string groupId, string provider, string name, string version, bool isCompliant)
         {
+            // TODO - LLC still developping pageable
             // ConsoleEx.WriteLine(ConsoleColor.Yellow, $"Check group {groupId} device compliance with update {provider}/{name}/{version}...");
             // bool updateFound = false;
             // int counter = 0;
@@ -323,81 +325,96 @@ namespace ConsoleTest
 
         private async Task<string> DeployUpdateStepAsync(string provider, string name, string version, string groupId)
         {
-            // ConsoleEx.WriteLine(ConsoleColor.Yellow, "Deploying the update to a device...");
-            // string deploymentId = $"{_deviceId}-{version.Replace(".", "-")}";
-            // Response<Deployment> deployment = await _deploymentsClient.CreateOrUpdateDeploymentAsync(
-            //                                       deploymentId,
-            //                                       new Deployment(
-            //                                           deploymentId,
-            //                                           DeploymentType.Complete,
-            //                                           DateTimeOffset.UtcNow,
-            //                                           DeviceGroupType.DeviceGroupDefinitions,
-            //                                           new[] { groupId },
-            //                                           new UpdateId(provider, name, version)));
-            // Console.WriteLine($"Deployment '{deployment.Value.DeploymentId}' is created.");
-            // await Task.Delay(DefaultRetryAfterValue);
-            
-            // Console.WriteLine("Checking the deployment status...");
-            // Response<DeploymentStatus> deploymentStatus = await _deploymentsClient.GetDeploymentStatusAsync(deploymentId);
-            // Console.WriteLine($"  {deploymentStatus.Value.DeploymentState}");
+            ConsoleEx.WriteLine(ConsoleColor.Yellow, "Deploying the update to a device...");
+            string deploymentId = $"{_deviceId}-{version.Replace(".", "-")}";
+            var deploymentItem = RequestContent.Create(new {
+                deploymentId = deploymentId,
+                deploymentType = "Complete",
+                startDateTime = DateTimeOffset.UtcNow.ToString(),
+                deviceGroupType = "DeviceGroupDefinitions",
+                deviceGroupDefinition = new [] {
+                    groupId
+                },
+                updateId = new {
+                    provider = provider,
+                    name = name,
+                    version = version
+                }
 
-            // Console.WriteLine();
-            // return deploymentId;
-            return "";
+            });
+            Response deployment = await _deploymentsClient.CreateOrUpdateDeploymentAsync(deploymentId, deploymentItem);
+            var deploymentDoc = JsonDocument.Parse(deployment.Content.ToMemory());
+
+            Console.WriteLine($"Deployment '{deploymentDoc.RootElement.GetProperty("deploymentId").GetString()}' is created.");
+            await Task.Delay(DefaultRetryAfterValue);
+            
+            Console.WriteLine("Checking the deployment status...");
+            Response deploymentStatus = await _deploymentsClient.GetDeploymentStatusAsync(deploymentId);
+            var deploymentStatusDoc = JsonDocument.Parse(deployment.Content.ToMemory());
+            Console.WriteLine($"  {deploymentStatusDoc.RootElement.GetProperty("deploymentState").GetString()}");
+
+            Console.WriteLine();
+            return deploymentId;
         }
 
         private async Task CheckDeviceUpdateStepAsync(string provider, string name, string version)
         {
-            // ConsoleEx.WriteLine(ConsoleColor.Yellow, $"Checking device {_deviceId} status...");
-            // Console.WriteLine("Waiting for the update to be installed...");
-            // var repeat = true;
-            // while (repeat)
-            // {
-            //     Response<Device> deviceResponse = await _devicesClient.GetDeviceAsync(_deviceId);
-            //     var installedUpdateId = deviceResponse.Value.InstalledUpdateId;
-            //     if (installedUpdateId != null && 
-            //         installedUpdateId.Provider == provider &&
-            //         installedUpdateId.Name == name && 
-            //         installedUpdateId.Version == version)
-            //     {
-            //         repeat = false;
-            //     }
-            //     else
-            //     {
-            //         Console.Write(".");
-            //         await Task.Delay(DefaultRetryAfterValue);
-            //     }
-            // }
+            ConsoleEx.WriteLine(ConsoleColor.Yellow, $"Checking device {_deviceId} status...");
+            Console.WriteLine("Waiting for the update to be installed...");
+            var repeat = true;
+            while (repeat)
+            {
+                Response deviceResponse = await _devicesClient.GetDeviceAsync(_deviceId);
+                var deviceResponseDoc = JsonDocument.Parse(deviceResponse.Content.ToMemory());
 
-            // Console.WriteLine();
+                if (deviceResponseDoc.RootElement.TryGetProperty("installedUpdateId", out var installedUpdateId))
+                {
+                    if (installedUpdateId.GetProperty("provider").GetString() == provider &&
+                        installedUpdateId.GetProperty("name").GetString() == name && 
+                        installedUpdateId.GetProperty("version").GetString() == version)
+                    {
+                        repeat = false;
+                    }
+                    else
+                    {
+                        Console.Write(".");
+                        await Task.Delay(DefaultRetryAfterValue);
+                    }
+                }
+            }
+
+            Console.WriteLine();
         }
 
         private async Task DeleteUpdateStepAsync(string provider, string name, string version)
         {
-            // Console.WriteLine("Deleting the update...");
-            // Response<string> operationIdResponse = await _updatesClient.DeleteUpdateAsync(provider, name, version);
-            // Console.WriteLine($"Delete operation id: {operationIdResponse.Value}");
+            Console.WriteLine("Deleting the update...");
+            Response operationIdResponse = await _updatesClient.DeleteUpdateAsync(provider, name, version);
+            var operationIdResponseContent = JsonDocument.Parse(operationIdResponse.Content.ToMemory());
+            string operationIdResponseValue = operationIdResponseContent.RootElement.GetString();
 
-            // Console.WriteLine("Waiting for delete to finish...");
-            // var repeat = true;
-            // while (repeat)
-            // {
-            //     Response<Operation> operationResponse = await _updatesClient.GetOperationAsync(operationIdResponse.Value);
-            //     if (operationResponse.Value.Status == OperationStatus.Succeeded)
-            //     {
-            //         Console.WriteLine();
-            //         repeat = false;
-            //     }
-            //     else if (operationResponse.Value.Status == OperationStatus.Failed)
-            //     {
-            //         throw new ApplicationException("Delete failed with error: \n" + JsonConvert.SerializeObject(operationResponse.Value.Error, Formatting.Indented));
-            //     }
-            //     else
-            //     {
-            //         Console.Write(".");
-            //         await Task.Delay(GetRetryAfterFromResponse(operationIdResponse));
-            //     }
-            // }
+            Console.WriteLine($"Delete operation id: {operationIdResponseValue}");
+
+            Console.WriteLine("Waiting for delete to finish...");
+            var repeat = true;
+            while (repeat)
+            {
+                Response operationResponse = await _updatesClient.GetOperationAsync(operationIdResponseValue);
+                var operationDoc = JsonDocument.Parse(operationIdResponse.Content.ToMemory());
+                switch (operationDoc.RootElement.GetProperty("status").GetString())
+                {
+                    case "Succeeded":
+                        Console.WriteLine();
+                        repeat = false;
+                        break;
+                    case "Failed":
+                        throw new ApplicationException("Delete failed with error: \n" + JsonConvert.SerializeObject(operationDoc.RootElement.GetProperty("error"), Formatting.Indented));
+                    default:
+                        Console.Write(".");
+                        await Task.Delay(GetRetryAfterFromResponse(operationIdResponse));
+                        break;
+                }
+            }
         }
 
         private void OutputTestData(string version, string operationId, string deploymentId)
