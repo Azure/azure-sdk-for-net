@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static AsyncPageable<DeploymentScript> ListDeploymentScriptAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResourcesAsync((baseUri, credential, options, pipeline) =>
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static Pageable<DeploymentScript> ListDeploymentScript(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources((baseUri, credential, options, pipeline) =>
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static AsyncPageable<Application> ListApplicationAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResourcesAsync((baseUri, credential, options, pipeline) =>
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static Pageable<Application> ListApplication(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources<Application>((baseUri, credential, options, pipeline) =>
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static Pageable<PolicyAssignment> ListPolicyAssignment(this SubscriptionOperations subscription, string filter = null, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources((baseUri, credential, options, pipeline) =>
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.NewResources
 
         public static AsyncPageable<PolicyAssignment> ListPolicyAssignmentAsync(this SubscriptionOperations subscription, string filter = null, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResourcesAsync((baseUri, credential, options, pipeline) =>
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);

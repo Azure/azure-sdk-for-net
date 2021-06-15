@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NewResources
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static Pageable<PolicyAssignment> ListPolicyAssignment(this ResourceGroupOperations resourceGroup, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.ListResources((baseUri, credential, options, pipeline) =>
+            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
