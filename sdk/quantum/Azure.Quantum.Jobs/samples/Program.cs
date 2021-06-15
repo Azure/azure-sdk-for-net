@@ -129,7 +129,7 @@ namespace Azure.Quantum.Jobs.Samples
             var outputDataFormat = "microsoft.qio-results.v2";
             var providerId = "microsoft";
             var target = "microsoft.paralleltempering-parameterfree.cpu";
-            var inputParams = new Dictionary<string, object>() { { "params", "{}" } };
+            var inputParams = new Dictionary<string, object>() { { "params", new Dictionary<string, object>() } };
             var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
             {
                 Id = jobId,
