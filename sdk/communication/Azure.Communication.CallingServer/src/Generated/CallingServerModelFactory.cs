@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Model factory for read-only models. </summary>
@@ -16,6 +18,27 @@ namespace Azure.Communication.CallingServer
         public static CreateCallResult CreateCallResult(string callConnectionId = default)
         {
             return new CreateCallResult(callConnectionId);
+        }
+
+        /// <summary> Initializes new instance of CallingServerErrorResponse class. </summary>
+        /// <param name="error"> The Communication Services error. </param>
+        /// <returns> A new <see cref="CallingServer.CallingServerErrorResponse"/> instance for mocking. </returns>
+        public static CallingServerErrorResponse CallingServerErrorResponse(CallingServerError error = default)
+        {
+            return new CallingServerErrorResponse(error);
+        }
+
+        /// <summary> Initializes new instance of CallingServerError class. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> Further details about specific errors that led to this error. </param>
+        /// <param name="innerError"> The inner error if any. </param>
+        /// <returns> A new <see cref="CallingServer.CallingServerError"/> instance for mocking. </returns>
+        public static CallingServerError CallingServerError(string code = default, string message = default, string target = default, IReadOnlyList<CallingServerError> details = default, CallingServerError innerError = default)
+        {
+            details ??= new List<CallingServerError>();
+            return new CallingServerError(code, message, target, details, innerError);
         }
 
         /// <summary> Initializes new instance of PlayAudioResult class. </summary>
@@ -60,6 +83,14 @@ namespace Azure.Communication.CallingServer
         public static CancelAllMediaOperationsResult CancelAllMediaOperationsResult(string operationId = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
         {
             return new CancelAllMediaOperationsResult(operationId, status, operationContext, resultInfo);
+        }
+
+        /// <summary> Initializes new instance of AddParticipantResult class. </summary>
+        /// <param name="participantId"> The id of the added participant. </param>
+        /// <returns> A new <see cref="CallingServer.AddParticipantResult"/> instance for mocking. </returns>
+        public static AddParticipantResult AddParticipantResult(string participantId = default)
+        {
+            return new AddParticipantResult(participantId);
         }
 
         /// <summary> Initializes new instance of StartCallRecordingResult class. </summary>

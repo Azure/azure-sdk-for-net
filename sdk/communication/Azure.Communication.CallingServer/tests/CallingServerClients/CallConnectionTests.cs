@@ -166,7 +166,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.AddParticipantAsync(participant, alternateCallerId, operationContext).ConfigureAwait(false);
 
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
@@ -176,7 +176,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callConnection.AddParticipant(participant, alternateCallerId, operationContext);
 
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]

@@ -180,10 +180,11 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath("/:hangup", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Hangup a call. </summary>
+        /// <summary> Hangup the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -205,7 +206,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Hangup a call. </summary>
+        /// <summary> Hangup the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -255,7 +256,7 @@ namespace Azure.Communication.CallingServer
             return message;
         }
 
-        /// <summary> Play audio in a call. </summary>
+        /// <summary> Play audio in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
@@ -295,7 +296,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Play audio in a call. </summary>
+        /// <summary> Play audio in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
@@ -427,6 +428,7 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath("/participants", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var model = new AddParticipantRequest()
             {
@@ -449,7 +451,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response> AddParticipantAsync(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AddParticipantResult>> AddParticipantAsync(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -461,7 +463,12 @@ namespace Azure.Communication.CallingServer
             switch (message.Response.Status)
             {
                 case 202:
-                    return message.Response;
+                    {
+                        AddParticipantResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AddParticipantResult.DeserializeAddParticipantResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -475,7 +482,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response AddParticipant(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        public Response<AddParticipantResult> AddParticipant(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -487,7 +494,12 @@ namespace Azure.Communication.CallingServer
             switch (message.Response.Status)
             {
                 case 202:
-                    return message.Response;
+                    {
+                        AddParticipantResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AddParticipantResult.DeserializeAddParticipantResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -506,10 +518,11 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath(participantId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Remove participant from the call. </summary>
+        /// <summary> Remove a participant from the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="participantId"> The participant id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -536,7 +549,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Remove participant from the call. </summary>
+        /// <summary> Remove a participant from the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="participantId"> The participant id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
