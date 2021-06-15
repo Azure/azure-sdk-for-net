@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class InviteParticipantsRequestInternal : IUtf8JsonSerializable
+    internal partial class AddParticipantRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,13 +20,11 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("alternateCallerId");
                 writer.WriteObjectValue(AlternateCallerId);
             }
-            writer.WritePropertyName("participants");
-            writer.WriteStartArray();
-            foreach (var item in Participants)
+            if (Optional.IsDefined(Participant))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("participant");
+                writer.WriteObjectValue(Participant);
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");

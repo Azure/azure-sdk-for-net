@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CommunicationParticipantInternal
+    internal partial class CallParticipantInternal
     {
-        internal static CommunicationParticipantInternal DeserializeCommunicationParticipantInternal(JsonElement element)
+        internal static CallParticipantInternal DeserializeCallParticipantInternal(JsonElement element)
         {
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<string> participantId = default;
@@ -46,7 +46,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CommunicationParticipantInternal(identifier.Value, participantId.Value, Optional.ToNullable(isMuted));
+            return new CallParticipantInternal(identifier.Value, participantId.Value, Optional.ToNullable(isMuted));
         }
     }
 }

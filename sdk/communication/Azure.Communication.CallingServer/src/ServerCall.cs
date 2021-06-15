@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     public class ServerCall
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal ServerCallRestClient RestClient { get; }
+        internal ServerCallsRestClient RestClient { get; }
 
         /// <summary>
         /// The server call id.
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
         internal virtual string ServerCallId { get; set; }
 
         /// <summary>Initializes a new instance of <see cref="ServerCall"/>.</summary>
-        internal ServerCall(string serverCallId, ServerCallRestClient serverCallRestClient, ClientDiagnostics clientDiagnostics)
+        internal ServerCall(string serverCallId, ServerCallsRestClient serverCallRestClient, ClientDiagnostics clientDiagnostics)
         {
             ServerCallId = serverCallId;
             RestClient = serverCallRestClient;
@@ -116,9 +116,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                return RestClient.InviteParticipants(
+                return RestClient.AddParticipant(
                     serverCallId: ServerCallId,
-                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participant: CommunicationIdentifierSerializer.Serialize(participant),
                     alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     callbackUri: callbackUri?.AbsoluteUri,
                     operationContext: operationContext,
@@ -148,9 +148,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                return await RestClient.InviteParticipantsAsync(
+                return await RestClient.AddParticipantAsync(
                     serverCallId: ServerCallId,
-                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participant: CommunicationIdentifierSerializer.Serialize(participant),
                     alternateCallerId: string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     callbackUri: callbackUri?.AbsoluteUri,
                     operationContext: operationContext,
@@ -265,13 +265,13 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<CallRecordingStateResult>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallRecordingProperties>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetRecordingState)}");
             scope.Start();
             try
             {
-                return await RestClient.RecordingStateAsync(
+                return await RestClient.GetRecordingPropertiesAsync(
                     serverCallId: ServerCallId,
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
@@ -289,13 +289,13 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<CallRecordingStateResult> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response<CallRecordingProperties> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetRecordingState)}");
             scope.Start();
             try
             {
-                return RestClient.RecordingState(
+                return RestClient.GetRecordingProperties(
                     serverCallId: ServerCallId,
                     recordingId: recordingId,
                     cancellationToken: cancellationToken

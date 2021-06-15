@@ -14,15 +14,15 @@ namespace Azure.Communication.CallingServer
     {
         internal static CancelAllMediaOperationsResult DeserializeCancelAllMediaOperationsResult(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<string> operationId = default;
             Optional<OperationStatus> status = default;
             Optional<string> operationContext = default;
             Optional<ResultInfo> resultInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("operationId"))
                 {
-                    id = property.Value.GetString();
+                    operationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CancelAllMediaOperationsResult(id.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
+            return new CancelAllMediaOperationsResult(operationId.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
         }
     }
 }

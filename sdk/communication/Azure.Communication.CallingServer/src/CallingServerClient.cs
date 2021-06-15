@@ -22,8 +22,8 @@ namespace Azure.Communication.CallingServer
         internal readonly string _resourceEndpoint;
         internal readonly ContentDownloader _contentDownloader;
 
-        internal CallConnectionRestClient CallConnectionRestClient { get; }
-        internal ServerCallRestClient ServerCallRestClient { get; }
+        internal CallConnectionsRestClient CallConnectionRestClient { get; }
+        internal ServerCallsRestClient ServerCallRestClient { get; }
 
         #region public constructors
 
@@ -58,8 +58,8 @@ namespace Azure.Communication.CallingServer
             _resourceEndpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
             _contentDownloader = new(this);
-            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            ServerCallRestClient = new ServerCallRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallConnectionRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ServerCallRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion

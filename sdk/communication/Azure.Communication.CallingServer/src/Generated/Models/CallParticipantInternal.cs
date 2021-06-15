@@ -10,18 +10,18 @@ using Azure.Communication;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> A participant in a call. </summary>
-    internal partial class CommunicationParticipantInternal
+    internal partial class CallParticipantInternal
     {
-        /// <summary> Initializes a new instance of CommunicationParticipantInternal. </summary>
-        internal CommunicationParticipantInternal()
+        /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
+        internal CallParticipantInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="participantId"> Participant id. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal CommunicationParticipantInternal(CommunicationIdentifierModel identifier, string participantId, bool? isMuted)
+        internal CallParticipantInternal(CommunicationIdentifierModel identifier, string participantId, bool? isMuted)
         {
             Identifier = identifier;
             ParticipantId = participantId;

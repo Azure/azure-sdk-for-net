@@ -133,7 +133,7 @@ namespace Azure.Communication.CallingServer.Tests
             var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new[] { CallModality.Audio },
+                   new[] { MediaType.Audio },
                    new[] { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
             createCallOption.AlternateCallerId = new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber);
 

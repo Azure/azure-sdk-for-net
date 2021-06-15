@@ -15,14 +15,14 @@ namespace Azure.Communication.CallingServer
     public class CallConnection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal CallConnectionRestClient RestClient { get; }
+        internal CallConnectionsRestClient RestClient { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ClientDiagnostics clientDiagnostics)
         {
             this.CallConnectionId = callConnectionId;
             this.RestClient = callConnectionRestClient;
@@ -240,9 +240,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                return await RestClient.InviteParticipantsAsync(
+                return await RestClient.AddParticipantAsync(
                     callConnectionId: CallConnectionId,
-                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participant: CommunicationIdentifierSerializer.Serialize(participant),
                     alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     operationContext: operationContext,
                     callbackUri: null,
@@ -271,9 +271,9 @@ namespace Azure.Communication.CallingServer
             {
                 Argument.AssertNotNull(participant, nameof(participant));
 
-                return RestClient.InviteParticipants(
+                return RestClient.AddParticipant(
                     callConnectionId: CallConnectionId,
-                    participants: new[] { CommunicationIdentifierSerializer.Serialize(participant) },
+                    participant: CommunicationIdentifierSerializer.Serialize(participant),
                     alternateCallerId: alternateCallerId == null ? null : new PhoneNumberIdentifierModel(alternateCallerId),
                     operationContext: operationContext,
                     callbackUri: null,
