@@ -8,7 +8,6 @@ While the `ObservableDataBatch` may seem desirable, there are several nuances th
 
 In order to make sure that once an event is successfully added to the batch it will be sent, the `EventDataBatch` creates a hidden copy of the events which it uses to send to the `EventHub`. Without this, the application could make changes to them, and potentially make the batch too large and completely invalidate it. So this approach cannot be used. If the list of original events was accessible to the user through the `EventDataBatch` methods, altering them would cause the original list of events to no longer match the copy. This would cause the events in the batch as seen by the application to be out of sync from the events that will actually be sent to the `EventHub`. 
 
-#### Issue: Equality
 
 Another issue is with equality. `EventData` objects do not have a strong and deterministic way to define equality, since the meaning of two events being equal can be different depending on the application. This creates confusion and can cause unnecessary issues in some applications.
 
