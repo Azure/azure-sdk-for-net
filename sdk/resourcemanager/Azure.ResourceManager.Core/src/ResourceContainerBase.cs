@@ -49,6 +49,12 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Gets the parent resource of this resource.
+        /// This hides the Parent from base class ContainerBase.
+        /// </summary>
+        protected new ResourceOperationsBase Parent { get {return base.Parent as ResourceOperationsBase;} }
+
+        /// <summary>
         /// Verify that the input resource Id is a valid container for this type.
         /// </summary>
         /// <param name="identifier"> The input resource Id to check. </param>

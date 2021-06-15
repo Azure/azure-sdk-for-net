@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var originalResponse = _restClient.Create(_scope, policyAssignmentName, parameters, cancellationToken: cancellationToken);
-                return new PolicyAssignmentsCreateOperation(OperationParent, originalResponse);
+                return new PolicyAssignmentsCreateOperation(Parent, originalResponse);
             }
             catch (Exception e)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var originalResponse = await _restClient.CreateAsync(_scope, policyAssignmentName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new PolicyAssignmentsCreateOperation(OperationParent, originalResponse);
+                return new PolicyAssignmentsCreateOperation(Parent, originalResponse);
             }
             catch (Exception e)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var response = _restClient.Get(_scope, policyAssignmentName, cancellationToken: cancellationToken);
-                return Response.FromValue(new PolicyAssignment(OperationParent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var response = await _restClient.GetAsync(_scope, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicyAssignment(OperationParent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NewResources
         //     {
         //         var filters = new ResourceFilterCollection(PolicyAssignment.ResourceType);
         //         filters.SubstringFilter = nameFilter;
-        //         return ResourceListOperations.ListAtContext(OperationParent as ResourceGroupOperations, filters, top, cancellationToken);
+        //         return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         //     }
         //     catch (Exception e)
         //     {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.NewResources
         //     {
         //         var filters = new ResourceFilterCollection(PolicyAssignment.ResourceType);
         //         filters.SubstringFilter = nameFilter;
-        //         return ResourceListOperations.ListAtContextAsync(OperationParent as ResourceGroupOperations, filters, top, cancellationToken);
+        //         return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         //     }
         //     catch (Exception e)
         //     {
