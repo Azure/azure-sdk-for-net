@@ -113,6 +113,11 @@
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
+  <!-- Packages intended for Management libraries only -->
+  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
+    <PackageReference Update="Azure.ResourceManager.Core" Version="1.0.0-alpha.20210526.3" />
+  </ItemGroup>
+
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />

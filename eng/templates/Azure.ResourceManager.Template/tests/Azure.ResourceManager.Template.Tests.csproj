@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TestHelperProjects>;</TestHelperProjects>
+    <UseNewMgmtFramework>true</UseNewMgmtFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.Template.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources"/>
   </ItemGroup>
 </Project>
