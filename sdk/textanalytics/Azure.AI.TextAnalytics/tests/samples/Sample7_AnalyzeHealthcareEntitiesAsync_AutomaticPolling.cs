@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task Sample7_AnalyzeHealthcareEntities_AutomaticPolling()
+        public async Task Sample7_AnalyzeHealthcareEntitiesAsync_AutomaticPolling()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             #region Snippet:RecognizeHealthcareEntitiesAsyncAutomaticPolling
             // get input documents
-            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+            string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
                                 The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
@@ -33,8 +33,28 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
+            string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+
+            // prepare analyze operation input
+            List<TextDocumentInput> batchInput = new List<TextDocumentInput>()
+            {
+                new TextDocumentInput("1", document1)
+                {
+                    Language = "en"
+                },
+                new TextDocumentInput("2", document2)
+                {
+                    Language = "en"
+                }
+            };
+
+            AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
+            {
+                IncludeStatistics = true
+            };
+
             // start analysis process
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document });
+            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, options);
 
             // wait for operation completion with automatic polling
             TimeSpan pollingInterval = new TimeSpan(1000);
@@ -112,9 +132,20 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine("");
                     }
 
-                    Console.WriteLine("");
+                    // document statistics
+                    Console.WriteLine($"    Document statistics:");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }
+
+                // batch operation statistics
+                Console.WriteLine($"Batch operation statistics:");
+                Console.WriteLine($"  Document count: {documentsInPage.Statistics.DocumentCount}");
+                Console.WriteLine($"  Valid document count: {documentsInPage.Statistics.ValidDocumentCount}");
+                Console.WriteLine($"  Invalid document count: {documentsInPage.Statistics.InvalidDocumentCount}");
+                Console.WriteLine($"  Transaction count: {documentsInPage.Statistics.TransactionCount}");
+                Console.WriteLine("");
             }
         }
 

@@ -14,14 +14,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task Sample7_AnalyzeHealthcareEntitiesBatchAsync_AutomaticPolling()
+        public async Task Sample7_AnalyzeHealthcareEntities()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:RecognizeHealthcareEntitiesAsyncAutomaticPolling
+            #region Snippet:TextAnalyticsSampleHealthcare
             // get input documents
             string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("2", document2)
                 {
                     Language = "en"
-                }
+                },
             };
 
             AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
@@ -54,17 +54,14 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // start analysis process
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, options);
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, options);
 
-            // wait for operation completion with automatic polling
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            await healthOperation.WaitForCompletionAsync(pollingInterval);
+            await healthOperation.WaitForCompletionAsync();
 
             // view operation results
-            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
+            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
-                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
 
                 foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
@@ -132,19 +129,19 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine("");
                     }
 
-                    // document statistics
+                    // current document statistics
                     Console.WriteLine($"    Document statistics:");
                     Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
                     Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }
 
-                // batch operation statistics
-                Console.WriteLine($"Batch operation statistics:");
-                Console.WriteLine($"  Document count: {documentsInPage.Statistics.DocumentCount}");
-                Console.WriteLine($"  Valid document count: {documentsInPage.Statistics.ValidDocumentCount}");
-                Console.WriteLine($"  Invalid document count: {documentsInPage.Statistics.InvalidDocumentCount}");
-                Console.WriteLine($"  Transaction count: {documentsInPage.Statistics.TransactionCount}");
+                // view statistics about documents in current page
+                Console.WriteLine($"Request statistics:");
+                Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
+                Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
+                Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
+                Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
                 Console.WriteLine("");
             }
         }
