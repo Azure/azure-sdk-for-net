@@ -58,5 +58,15 @@ namespace Azure.ResourceManager.Core
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
+
+        //TODO:
+        ///// <summary>
+        ///// Gets the provider container under this subscription.
+        ///// </summary>
+        ///// <returns> The provider container. </returns>
+        ////public ProviderContainer GetProviders()
+        ////{
+        ////    return new ProviderContainer(this);
+        ////}
     }
 }

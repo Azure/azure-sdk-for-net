@@ -103,8 +103,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> The provider container. </returns>
         public ProviderContainer GetProviders()
         {
-            //follow pattern from resourcegroupcontainer
-            return new ProviderContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+            return new ProviderContainer(this);
         }
 
         /// <inheritdoc/>

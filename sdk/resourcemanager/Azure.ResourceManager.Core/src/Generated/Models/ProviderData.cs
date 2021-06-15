@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Resource provider information. </summary>
-    public partial class ProviderData
+    public partial class ProviderData : SubResource<TenantProviderIdentifier>
     {
         /// <summary> Initializes a new instance of Provider. </summary>
         internal ProviderData()
@@ -26,16 +26,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
         internal ProviderData(string id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes)
+            : base(id)
         {
-            Id = id;
             Namespace = @namespace;
             RegistrationState = registrationState;
             RegistrationPolicy = registrationPolicy;
             ResourceTypes = resourceTypes;
         }
 
-        /// <summary> The provider ID. </summary>
-        public string Id { get; }
         /// <summary> The namespace of the resource provider. </summary>
         public string Namespace { get; }
         /// <summary> The registration state of the resource provider. </summary>

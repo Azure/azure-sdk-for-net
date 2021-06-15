@@ -19,16 +19,15 @@ namespace Azure.ResourceManager.Core.Tests
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
             Assert.IsNotNull(providerContainer.Id);
-            providerContainer.List();
         }
 
         [TestCase]
         [RecordedTest]
-        public void List()
+        public async Task List()
         {
             var providerContainer = Client.DefaultSubscription.GetProviders();
-            var x = providerContainer.List();
-            foreach (var p in x)
+            var x = providerContainer.ListAsync(); // x is null?
+            await foreach (var p in x)
             {
                 Console.WriteLine(p.Id);
             }

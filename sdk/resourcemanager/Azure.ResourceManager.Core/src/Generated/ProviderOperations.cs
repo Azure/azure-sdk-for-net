@@ -8,15 +8,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The Providers service client. </summary>
-    public partial class ProviderOperations : ResourceOperationsBase<TenantResourceIdentifier, Provider>
+    public partial class ProviderOperations : ResourceOperationsBase<TenantProviderIdentifier, Provider>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.

@@ -59,5 +59,12 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
             return id;
         }
+
+        /// <inheritdoc/>
+        public override bool TryGetProvider(out string providerId)
+        {
+            providerId = Provider;
+            return true;
+        }
     }
 }
