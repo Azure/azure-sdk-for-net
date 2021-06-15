@@ -108,7 +108,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
         /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response AddParticipant(CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<AddParticipantResult> AddParticipant(CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -140,7 +140,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
         /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response> AddParticipantAsync(CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(AddParticipant)}");
             scope.Start();
