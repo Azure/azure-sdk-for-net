@@ -44,9 +44,9 @@ A table requires a [unique table name](https://docs.microsoft.com/rest/api/stora
 To create a table, invoke `CreateTable` with the table name.
 
 ```C# Snippet:TablesSample1CreateTable
-// Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+// Create a new table. The TableItem class stores properties of the created table.
 string tableName = "OfficeSupplies1p1";
-TableItem table = serviceClient.CreateTable(tableName);
+TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
@@ -55,7 +55,7 @@ Console.WriteLine($"The created table's name is {table.Name}.");
 To create a table, invoke `Create` with the table name.
 
 ```C# Snippet:TablesSample1TableClientCreateTable
-tableClient.Create();
+tableClient.CreateIfNotExists();
 ```
 
 ## Delete a table

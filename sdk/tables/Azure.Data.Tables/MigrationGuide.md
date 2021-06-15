@@ -62,9 +62,9 @@ table.CreateIfNotExists()
 With `Azure.Data.Tables` we can complete all table level operations directly from the `TableServiceClient`.
 
 ```C# Snippet:TablesSample1CreateTable
-// Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+// Create a new table. The TableItem class stores properties of the created table.
 string tableName = "OfficeSupplies1p1";
-TableItem table = serviceClient.CreateTable(tableName);
+TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
@@ -75,53 +75,148 @@ It's also possible to create a table from the `TableClient`.
 
 ### Adding data to the table
 
-Let's define a new `TableEntity` so that we can add it to the table.
+Let's define an office supply entity so that we can add it to the table. First we need to define our custom entity types.
 
-```C# Snippet:TablesSample2CreateDictionaryEntity
-// Make a dictionary entity by defining a <see cref="TableEntity">.
+In `Microsoft.Azure.Comsmos.Table` our entity will inherit from the `TableEntity` base class and look like this:
 
-var entity = new TableEntity(partitionKey, rowKey)
+```c#
+public class OfficeSupplyOld : Microsoft.Azure.Cosmos.Table.TableEntity
 {
-    { "Product", "Marker Set" },
-    { "Price", 5.00 },
-    { "Quantity", 21 }
-};
-
-Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
-```
-
-Using the `TableClient` we can now add our new entity to the table.
-
-```C# Snippet:TablesSample2AddEntity
-// Add the newly created entity.
-
-tableClient.AddEntity(entity);
-```
-
-### Query table entities
-
-To inspect the set of existing table entities, we can query the table using an OData filter.
-
-```C# Snippet:TablesSample4QueryEntitiesFilter
-Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
-
-// Iterate the <see cref="Pageable"> to access all queried entities.
-
-foreach (TableEntity qEntity in queryResultsFilter)
-{
-    Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
+	public string Product { get; set; }
+	public double Price { get; set; }
+	public int Quantity { get; set; }
 }
-
-Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ```
 
-If you prefer LINQ style query expressions, we can query the table using that syntax as well.
+In `Azure.Data.Tables` we will implement the `ITableEntity` interface to define our entity
 
-```C# Snippet:TablesSample4QueryEntitiesExpression
-// Use the <see cref="TableClient"> to query the table using a filter expression.
+```C# Snippet:TablesSample2DefineStronglyTypedEntity
+// Define a strongly typed entity by extending the <see cref="ITableEntity"> class.
 
-double priceCutOff = 6.00;
-Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+public class OfficeSupplyEntity : ITableEntity
+{
+    public string Product { get; set; }
+    public double Price { get; set; }
+    public int Quantity { get; set; }
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
+    public ETag ETag { get; set; }
+}
+```
+
+Now let's populate an entity to add to the table for each version of the client.
+
+For `Microsoft.Azure.Cosmos.Table.TableEntity`:
+
+```c#
+string partitionKey = "Stationery";
+string rowKey = "A1";
+
+// Create an instance of the strongly-typed entity and set their properties.
+var entity = new OfficeSupplyOld
+{
+    PartitionKey = partitionKey,
+    RowKey = rowKey,
+    Product = "Marker Set",
+    Price = 5.00,
+    Quantity = 21
+};
+```
+
+For `ITableEntity`:
+
+```C# Snippet:TablesMigrationCreateEntity
+// Create an instance of the strongly-typed entity and set their properties.
+var entity = new OfficeSupplyEntity
+{
+    PartitionKey = partitionKey,
+    RowKey = rowKey,
+    Product = "Marker Set",
+    Price = 5.00,
+    Quantity = 21
+};
+```
+
+In `Microsoft.Azure.Comsmos.Table` we'll create a `TableOperation` and execute it with the table client.
+The result of the operation must be casted back to the entity type.
+
+```c#
+// Create the InsertOrReplace table operation
+TableOperation insertOrMergeOperation = TableOperation.InsertOrMerge(entity);
+
+// Execute the operation.
+TableResult result = await table.ExecuteAsync(insertOrMergeOperation);
+
+// Cast the result.
+OfficeSupplyOld insertedCustomer = result.Result as OfficeSupplyOld;
+```
+
+In `Azure.Data.Tables`, using the `TableClient`, we can imply pass our entity to the Upsert method which will create or update the entity depending on whether or not it already exists.
+
+```C# Snippet:TablesMigrationUpsertEntity
+// Upsert the newly created entity.
+tableClient.UpsertEntity(entity);
+```
+
+### Fetching a single entity from the table
+
+Both clients allow for fetching a single entity from the table if the PartitionKey and RowKey is known.
+
+In the old client, we create an operation and execute it, similar to when we added the item to the table.
+```c#
+// Create the operation.
+TableOperation retrieveOperation = TableOperation.Retrieve<OfficeSupplyOld>(partitionKey, rowKey);
+
+// Execute the operation.
+TableResult queryResult = await table.ExecuteAsync(retrieveOperation);
+
+// Cast the result.
+OfficeSupplyOld marker = queryResult.Result as OfficeSupplyOld;
+
+// Display the values.
+Console.WriteLine($"{marker.PartitionKey}, {marker.RowKey}, {marker.Product}, {marker.Price}, {marker.Quantity}");
+}
+```
+
+In the new client, the generic GetEntity method is a one liner.
+```C# Snippet:MigrationGetEntity
+// Get the entity.
+OfficeSupplyEntity marker = tableClient.GetEntity<OfficeSupplyEntity>(partitionKey, rowKey);
+
+// Display the values.
+Console.WriteLine($"{marker.PartitionKey}, {marker.RowKey}, {marker.Product}, {marker.Price}, {marker.Quantity}");
+```
+
+### Querying data from the table
+
+In the old client, creating an executing a query looks as follows.
+
+```c#
+// Create the query.
+var query = table.CreateQuery<OfficeSupplyOld>().Where(e => e.PartitionKey == "Markers" && e.RowKey == "A1");
+
+// Execute the query.
+var queryResults = query.ToList();
+
+// Diesplay the results.
+foreach (var item in queryResults)
+{
+    Console.WriteLine($"{item.PartitionKey}, {item.RowKey}, {item.Product}, {item.Price}, {item.Quantity}");
+}
+```
+
+With the new client, we again query with a single line of code and return the results as a `Pagageable<T>`. You'll find the `Pageable` type used consistently throughout all the new Azure SDK clients where an operation returns a paged result.
+
+```C# Snippet:TablesMigrationQuery
+// Execute the query.
+Pageable<OfficeSupplyEntity> queryResults = tableClient.Query<OfficeSupplyEntity>(e => e.PartitionKey == partitionKey && e.RowKey == rowKey);
+
+// Display the results
+foreach (var item in queryResults.ToList())
+{
+    Console.WriteLine($"{item.PartitionKey}, {item.RowKey}, {item.Product}, {item.Price}, {item.Quantity}");
+}
 ```
 
 ### Delete table entities
@@ -132,34 +227,4 @@ If we no longer need our new table entity, it can be deleted.
 // Delete the entity given the partition and row key.
 
 tableClient.DeleteEntity(partitionKey, rowKey);
-```
-
-## Troubleshooting
-
-When you interact with the Azure table library using the .NET SDK, errors returned by the service correspond to the same HTTP
-status codes returned for [REST API][tables_rest] requests.
-
-For example, if you try to create a table that already exists, a `409` error is returned, indicating "Conflict".
-
-```C# Snippet:CreateDuplicateTable
-// Construct a new TableClient using a connection string.
-
-var client = new TableClient(
-    connectionString,
-    tableName);
-
-// Create the table if it doesn't already exist.
-
-client.CreateIfNotExists();
-
-// Now attempt to create the same table unconditionally.
-
-try
-{
-    client.Create();
-}
-catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
-{
-    Console.WriteLine(ex.ToString());
-}
 ```

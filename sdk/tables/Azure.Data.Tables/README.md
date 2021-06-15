@@ -107,9 +107,9 @@ var serviceClient = new TableServiceClient(
 Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
-// Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+// Create a new table. The TableItem class stores properties of the created table.
 string tableName = "OfficeSupplies1p1";
-TableItem table = serviceClient.CreateTable(tableName);
+TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
@@ -202,8 +202,6 @@ Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 If you prefer LINQ style query expressions, we can query the table using that syntax as well.
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
-// Use the <see cref="TableClient"> to query the table using a filter expression.
-
 double priceCutOff = 6.00;
 Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
 ```

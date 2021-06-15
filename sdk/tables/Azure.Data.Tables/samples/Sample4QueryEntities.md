@@ -59,8 +59,6 @@ foreach (TableEntity qEntity in queryResultsFilter)
 }
 
 Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
-
-// It handles esca
 ```
 
 ### LINQ expression
@@ -70,8 +68,6 @@ Here is a query returning a collection of the strongly-typed `OfficeSupplyEntity
 To define the strongly-typed class, refer to the sample on [creating classes](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample2CreateDeleteEntities.md).
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
-// Use the <see cref="TableClient"> to query the table using a filter expression.
-
 double priceCutOff = 6.00;
 Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
 ```

@@ -53,6 +53,11 @@ namespace Azure.Data.Tables.Samples
             tableClient.AddEntity(entity);
             #endregion
 
+            #region Snippet:TablesMigrationUpsertEntity
+            // Upsert the newly created entity.
+            tableClient.UpsertEntity(entity);
+            #endregion
+
             #region Snippet:TablesSample2CreateStronglyTypedEntity
             // Create an instance of the strongly-typed entity and set their properties.
 
@@ -68,9 +73,33 @@ namespace Azure.Data.Tables.Samples
             Console.WriteLine($"{entity.RowKey}: {strongEntity.Product} costs ${strongEntity.Price}.");
             #endregion
 
+            #region Snippet:TablesMigrationCreateEntity
+            // Create an instance of the strongly-typed entity and set their properties.
+#if SNIPPET
+            var entity = new OfficeSupplyEntity
+#else
+            var fooEntity = new OfficeSupplyEntity
+#endif
+            {
+                PartitionKey = partitionKey,
+                RowKey = rowKey,
+                Product = "Marker Set",
+                Price = 5.00,
+                Quantity = 21
+            };
+            #endregion
+
             // Add the newly created entity.
 
             tableClient.AddEntity(strongEntity);
+
+            #region Snippet:MigrationGetEntity
+            // Get the entity.
+            OfficeSupplyEntity marker = tableClient.GetEntity<OfficeSupplyEntity>(partitionKey, rowKey);
+
+            // Display the values.
+            Console.WriteLine($"{marker.PartitionKey}, {marker.RowKey}, {marker.Product}, {marker.Price}, {marker.Quantity}");
+            #endregion
 
             #region Snippet:TablesSample2DeleteEntity
             // Delete the entity given the partition and row key.
