@@ -211,7 +211,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 var contains = false;
                 foreach (var singleEvent in newbatch.Events)
                 {
-                    contains = contains || (Int32.TryParse(singleEvent.Properties["ApplicationID"].ToString(), out Int32 id) && id == 1);
+                      contains |= (int.TryParse(singleEvent.Properties["ApplicationId"].ToString(), out int id) && id == 1);
                 }
                 Assert.IsTrue(contains);
 
