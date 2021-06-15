@@ -453,7 +453,7 @@ namespace Azure.AI.TextAnalytics
             {
                 throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
             }
-            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+            Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
             // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
             Match targetMatch = _targetRegex.Match(targetReference);
@@ -463,8 +463,9 @@ namespace Azure.AI.TextAnalytics
             {
                 taskNameIdPair[0] = targetMatch.Groups[1].Value;
                 taskNameIdPair[1] = targetMatch.Groups[2].Value;
+                return taskNameIdPair;
             }
-            return taskNameIdPair;
+            return null;
         }
 
         internal static AnalyzeActionsResult ConvertToAnalyzeActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
@@ -480,6 +481,9 @@ namespace Azure.AI.TextAnalytics
                 foreach (TextAnalyticsErrorInternal error in jobState.Errors)
                 {
                     string[] targetPair = parseActionErrorTarget(error.Target);
+                    if (targetPair == null)
+                        throw new InvalidOperationException("Invalid action/id error");
+
                     string taskName = targetPair[0];
                     int taskIndex = int.Parse(targetPair[1], CultureInfo.InvariantCulture);
 

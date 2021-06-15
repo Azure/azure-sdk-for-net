@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -32,7 +33,10 @@ namespace Azure.Monitor.Query.Tests
             return InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new LogsQueryClientOptions())
+                InstrumentClientOptions(new LogsQueryClientOptions()
+                {
+                    Diagnostics = { IsLoggingContentEnabled = true }
+                })
             ));
         }
 
@@ -182,7 +186,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             Response<LogsQueryResult> results = await client.QueryAsync(TestEnvironment.WorkspaceId,
-                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal, NullBool: bool)" +
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal, NullBool: bool, Dynamic: dynamic)" +
                 "[" +
                 "datetime(2015-12-31 23:59:59.9)," +
                 "false," +
@@ -193,7 +197,8 @@ namespace Azure.Monitor.Query.Tests
                 "\"string value\"," +
                 "10s," +
                 "decimal(0.10101)," +
-                "bool(null)" +
+                "bool(null)," +
+                "dynamic({\"a\":123, \"b\":\"hello\", \"c\":[1,2,3], \"d\":{}})" +
                 "]", _logsTestData.DataTimeRange);
 
             LogsQueryResultRow row = results.Value.PrimaryTable.Rows[0];
@@ -229,6 +234,9 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(row.IsNull("NullBool"));
             Assert.True(row.IsNull(9));
             Assert.IsNull(row.GetObject("NullBool"));
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic(10).ToString());
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetDynamic("Dynamic").ToString());
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.GetObject("Dynamic").ToString());
         }
 
         [RecordedTest]
@@ -237,7 +245,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypes>> results = await client.QueryAsync<TestModelForTypes>(TestEnvironment.WorkspaceId,
-                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal, Dynamic: dynamic)" +
                 "[" +
                 "datetime(2015-12-31 23:59:59.9)," +
                 "false," +
@@ -247,7 +255,8 @@ namespace Azure.Monitor.Query.Tests
                 "12345.6789," +
                 "'string value'," +
                 "10s," +
-                "decimal(0.10101)" +
+                "decimal(0.10101)," +
+                "dynamic({\"a\":123, \"b\":\"hello\", \"c\":[1,2,3], \"d\":{}})" +
                 "]", _logsTestData.DataTimeRange);
 
             TestModelForTypes row = results.Value[0];
@@ -261,6 +270,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("string value", row.String);
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
             Assert.AreEqual(0.10101m, row.Decimal);
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.Dynamic.ToString());
         }
 
         [RecordedTest]
@@ -269,7 +279,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
-                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal, Dynamic: dynamic)" +
                 "[" +
                 "datetime(2015-12-31 23:59:59.9)," +
                 "false," +
@@ -279,8 +289,9 @@ namespace Azure.Monitor.Query.Tests
                 "12345.6789," +
                 "'string value'," +
                 "10s," +
-                "decimal(0.10101)" +
-                "]", _logsTestData.DataTimeRange);
+                "decimal(0.10101)," +
+                "dynamic({\"a\":123, \"b\":\"hello\", \"c\":[1,2,3], \"d\":{}})" +
+            "]", _logsTestData.DataTimeRange);
 
             TestModelForTypesNullable row = results.Value[0];
 
@@ -293,6 +304,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("string value", row.String);
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
             Assert.AreEqual(0.10101m, row.Decimal);
+            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", row.Dynamic.ToString());
         }
 
         [RecordedTest]
@@ -301,7 +313,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
-                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal, Dynamic: dynamic)" +
                 "[" +
                 "datetime(null)," +
                 "bool(null)," +
@@ -312,6 +324,7 @@ namespace Azure.Monitor.Query.Tests
                 "'I cant be null'," +
                 "timespan(null)," +
                 "decimal(null)," +
+                "dynamic(null)" +
                 "]", _logsTestData.DataTimeRange);
 
             TestModelForTypesNullable row = results.Value[0];
@@ -325,6 +338,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("I cant be null", row.String);
             Assert.IsNull(row.Timespan);
             Assert.IsNull(row.Decimal);
+            Assert.IsNull(row.Dynamic);
         }
 
         [RecordedTest]
@@ -444,6 +458,7 @@ namespace Azure.Monitor.Query.Tests
 
             LogsBatchQuery batch = new LogsBatchQuery();
             batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange);
+
             var batchResult = await client.QueryBatchAsync(batch);
 
             var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
@@ -478,6 +493,29 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        public async Task CanQueryWithVisualization(bool include)
+        {
+            var client = CreateClient();
+
+            var response = await client.QueryAsync(TestEnvironment.WorkspaceId, "datatable (s: string, i: long) [ \"a\", 1, \"b\", 2, \"c\", 3 ] | render columnchart", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
+            {
+                IncludeVisualization = include
+            });
+
+            if (include)
+            {
+                using JsonDocument document = JsonDocument.Parse(response.Value.Visualization);
+                Assert.AreNotEqual(JsonValueKind.Undefined, document.RootElement.GetProperty("visualization").ValueKind);
+            }
+            else
+            {
+                Assert.AreEqual(default, response.Value.Visualization);
+            }
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task CanQueryWithStatisticsBatch(bool include)
         {
             var client = CreateClient();
@@ -502,16 +540,99 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        public void CanSetServiceTimeout()
+        public async Task CanSetServiceTimeout()
         {
             var client = CreateClient();
 
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryAsync(TestEnvironment.WorkspaceId, "range x from 1 to 100000000000 step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
+            // Sometimes the service doesn't abort the query quickly enough
+            // and the request gets aborted instead
+            // Retry until we get the service to abort
+            while (true)
             {
-                ServerTimeout = TimeSpan.FromSeconds(1)
-            }));
+                // Punch through caching
+                var cnt = 100000000000 + Recording.Random.Next(10000);
+                try
+                {
+                    await client.QueryAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
+                    {
+                        ServerTimeout = TimeSpan.FromSeconds(1)
+                    });
+                }
+                catch (TaskCanceledException)
+                {
+                    // The client cancelled, retry.
+                    continue;
+                }
+                catch (RequestFailedException exception)
+                {
+                    Assert.AreEqual(504, exception.Status);
+                    return;
+                }
+            }
+        }
 
-            Assert.AreEqual(504, exception.Status);
+        [RecordedTest]
+        [TestCaseSource(nameof(Queries))]
+        public async Task CanQueryWithFormattedQuery(FormattableStringWrapper query)
+        {
+            var client = CreateClient();
+
+            var response = await client.QueryAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);
+            Assert.True(response.Value.Single());
+        }
+
+        public static IEnumerable<FormattableStringWrapper> Queries
+        {
+            get
+            {
+                yield return new($"print {true} == true");
+                yield return new($"print {false} == false");
+                yield return new($"print {(byte)1} == int(1)");
+                yield return new($"print {(sbyte)2} == int(2)");
+                yield return new($"print {(ushort)3} == int(3)");
+                yield return new($"print {(short)4} == int(4)");
+                yield return new($"print {(uint)5} == int(5)");
+                yield return new($"print {(int)6} == int(6)");
+
+                yield return new($"print {1000000000} == int(1000000000)");
+                yield return new($"print {1.1F} == real(1.1)");
+                yield return new($"print {1.2D} == real(1.2)");
+                yield return new($"print {1.3M} == decimal(1.3)");
+                yield return new($"print {1000000000000000000L} == long(1000000000000000000)");
+                yield return new($"print {1000000000000000001UL} == long(1000000000000000001)");
+
+                yield return new($"print {Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")} == guid(74be27de-1e4e-49d9-b579-fe0b331d3642)");
+
+                yield return new($"print {DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.RoundtripKind)} == datetime(2015-12-31 23:59:59.9)");
+                yield return new($"print {DateTime.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.RoundtripKind)} == datetime(2015-12-31 23:59:59.9)");
+
+                yield return new($"print {TimeSpan.FromSeconds(10)} == 10s");
+
+                yield return new($"print {"hello world"} == \"hello world\"");
+                yield return new($"print {"hello \" world"} == \"hello \\\" world\"");
+                yield return new($"print {"\\\""} == \"\\\\\\\"\"");
+
+                yield return new($"print {"\r\n\t"} == \"\\r\\n\\t\"");
+
+                yield return new($"print {'"'} == \"\\\"\"");
+                yield return new($"print {'\''} == \"'\"");
+            }
+        }
+
+        // To fix recording names
+        public readonly struct FormattableStringWrapper
+        {
+            public FormattableString Value { get; }
+
+            public FormattableStringWrapper(FormattableString value)
+            {
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+                return string.Format(Value.Format, Value.GetArguments().Select(a => a?.GetType().Name).ToArray());
+            }
         }
 
         private record TestModel
@@ -531,6 +652,7 @@ namespace Azure.Monitor.Query.Tests
             public String String { get; set; }
             public TimeSpan Timespan { get; set; }
             public Decimal Decimal { get; set; }
+            public BinaryData Dynamic { get; set; }
         }
 
         private record TestModelForTypesNullable
@@ -544,6 +666,7 @@ namespace Azure.Monitor.Query.Tests
             public String String { get; set; }
             public TimeSpan? Timespan { get; set; }
             public Decimal? Decimal { get; set; }
+            public BinaryData Dynamic { get; set; }
         }
     }
 }

@@ -66,22 +66,22 @@ namespace Azure.AI.TextAnalytics.Samples
 
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
-                IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;
-                IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = documentsInPage.RecognizePiiEntitiesActionsResults;
-                IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = documentsInPage.RecognizeLinkedEntitiesActionsResults;
-                IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = documentsInPage.AnalyzeSentimentActionsResults;
+                IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
+                IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
+                IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResults = documentsInPage.RecognizePiiEntitiesResults;
+                IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingResults = documentsInPage.RecognizeLinkedEntitiesResults;
+                IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentResults = documentsInPage.AnalyzeSentimentResults;
 
                 Console.WriteLine("Recognized Entities");
                 int docNumber = 1;
-                foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
+                foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
                 {
-                    foreach (RecognizeEntitiesResult result in entitiesActionResults.Result)
+                    foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
+                        Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
 
-                        foreach (CategorizedEntity entity in result.Entities)
+                        foreach (CategorizedEntity entity in documentResults.Entities)
                         {
                             Console.WriteLine($"  Entity: {entity.Text}");
                             Console.WriteLine($"  Category: {entity.Category}");
@@ -96,14 +96,14 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Recognized PII Entities");
                 docNumber = 1;
-                foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
+                foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
                 {
-                    foreach (RecognizePiiEntitiesResult result in piiActionResults.Result)
+                    foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
+                        Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} PII entities:");
 
-                        foreach (PiiEntity entity in result.Entities)
+                        foreach (PiiEntity entity in documentResults.Entities)
                         {
                             Console.WriteLine($"  Entity: {entity.Text}");
                             Console.WriteLine($"  Category: {entity.Category}");
@@ -118,14 +118,14 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Key Phrases");
                 docNumber = 1;
-                foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
+                foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
                 {
-                    foreach (ExtractKeyPhrasesResult result in keyPhrasesActionResult.Result)
+                    foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+                        Console.WriteLine($"  Recognized the following {documentResults.KeyPhrases.Count} Keyphrases:");
 
-                        foreach (string keyphrase in result.KeyPhrases)
+                        foreach (string keyphrase in documentResults.KeyPhrases)
                         {
                             Console.WriteLine($"  {keyphrase}");
                         }
@@ -135,14 +135,14 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Recognized Linked Entities");
                 docNumber = 1;
-                foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
+                foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
                 {
-                    foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesActionResults.Result)
+                    foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
+                        Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} linked entities:");
 
-                        foreach (LinkedEntity entity in result.Entities)
+                        foreach (LinkedEntity entity in documentResults.Entities)
                         {
                             Console.WriteLine($"  Entity: {entity.Name}");
                             Console.WriteLine($"  DataSource: {entity.DataSource}");
@@ -166,15 +166,15 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine("Analyze Sentiment");
                 docNumber = 1;
-                foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
+                foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
                 {
-                    foreach (AnalyzeSentimentResult result in analyzeSentimentActionsResult.Result)
+                    foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                        Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                        Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                        Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
+                        Console.WriteLine($"  Sentiment is {documentResults.DocumentSentiment.Sentiment}, with confidence scores: ");
+                        Console.WriteLine($"    Positive confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Positive}.");
+                        Console.WriteLine($"    Neutral confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Neutral}.");
+                        Console.WriteLine($"    Negative confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Negative}.");
                         Console.WriteLine("");
                     }
                 }

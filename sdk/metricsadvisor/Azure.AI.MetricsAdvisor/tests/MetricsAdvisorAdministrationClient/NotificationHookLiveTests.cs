@@ -35,9 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
-            NotificationHook createdHook = await adminClient.GetHookAsync(disposableHook.Id);
+            NotificationHook createdHook = disposableHook.Hook;
 
-            Assert.That(createdHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(createdHook.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.Empty);
             Assert.That(createdHook.ExternalLink, Is.Null);
@@ -70,9 +70,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
-            NotificationHook createdHook = await adminClient.GetHookAsync(disposableHook.Id);
+            NotificationHook createdHook = disposableHook.Hook;
 
-            Assert.That(createdHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(createdHook.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.EqualTo(description));
             Assert.That(createdHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
@@ -99,9 +99,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
-            NotificationHook createdHook = await adminClient.GetHookAsync(disposableHook.Id);
+            NotificationHook createdHook = disposableHook.Hook;
 
-            Assert.That(createdHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(createdHook.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.Empty);
             Assert.That(createdHook.ExternalLink, Is.Null);
@@ -153,9 +153,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
-            NotificationHook createdHook = await adminClient.GetHookAsync(disposableHook.Id);
+            NotificationHook createdHook = disposableHook.Hook;
 
-            Assert.That(createdHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(createdHook.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.EqualTo(description));
             Assert.That(createdHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
@@ -194,7 +194,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created hook.
 
-            var hookToUpdate = (await adminClient.GetHookAsync(disposableHook.Id)).Value as EmailNotificationHook;
+            var hookToUpdate = disposableHook.Hook as EmailNotificationHook;
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
@@ -202,7 +202,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedEmailHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.Empty);
             Assert.That(updatedEmailHook.ExternalLink, Is.Null);
@@ -241,7 +241,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedEmailHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.Empty);
             Assert.That(updatedEmailHook.ExternalLink, Is.Null);
@@ -270,7 +270,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created hook.
 
-            var hookToUpdate = (await adminClient.GetHookAsync(disposableHook.Id)).Value as EmailNotificationHook;
+            var hookToUpdate = disposableHook.Hook as EmailNotificationHook;
 
             hookToUpdate.Description = description;
             hookToUpdate.ExternalLink = new Uri("http://fake.endpoint.com/");
@@ -280,7 +280,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedEmailHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.EqualTo(description));
             Assert.That(updatedEmailHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
@@ -324,7 +324,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedEmailHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.EqualTo(description));
             Assert.That(updatedEmailHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
@@ -349,7 +349,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created hook.
 
-            var hookToUpdate = (await adminClient.GetHookAsync(disposableHook.Id)).Value as WebNotificationHook;
+            var hookToUpdate = disposableHook.Hook as WebNotificationHook;
 
             hookToUpdate.Username = "fakeUsername";
 
@@ -357,7 +357,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedWebHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.Empty);
             Assert.That(updatedWebHook.ExternalLink, Is.Null);
@@ -395,7 +395,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedWebHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.Empty);
             Assert.That(updatedWebHook.ExternalLink, Is.Null);
@@ -433,7 +433,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created hook.
 
-            var hookToUpdate = (await adminClient.GetHookAsync(disposableHook.Id)).Value as WebNotificationHook;
+            var hookToUpdate = disposableHook.Hook as WebNotificationHook;
 
             hookToUpdate.Description = description;
             hookToUpdate.ExternalLink = new Uri("http://fake.endpoint.com/");
@@ -451,7 +451,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedWebHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.EqualTo(description));
             Assert.That(updatedWebHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
@@ -509,7 +509,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Check if updates are in place.
 
-            Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
+            Assert.That(updatedWebHook.Id, Is.EqualTo(hookToUpdate.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.EqualTo(description));
             Assert.That(updatedWebHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));

@@ -1,7 +1,12 @@
 # Release History
 
-## 11.3.0-beta.3 (Unreleased)
+## 11.4.0-beta.1 (Unreleased)
 
+
+## 11.3.0 (2021-06-08)
+
+### Added
+- Adds stable features and bug fixes from the [11.3.0-beta.1](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.1/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta1-2021-04-06) and [11.3.0-beta.2](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.2/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta2-2021-05-11) releases. Preview service features not generally available yet, like Semantic Search and Normalizers, are not included in this GA release.
 
 ## 11.3.0-beta.2 (2021-05-11)
 

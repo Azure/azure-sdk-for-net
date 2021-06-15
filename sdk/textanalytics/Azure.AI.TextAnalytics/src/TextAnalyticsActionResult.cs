@@ -18,6 +18,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal TextAnalyticsActionResult(DateTimeOffset completedOn)
+        {
+            CompletedOn = completedOn;
+        }
+
+        /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal TextAnalyticsActionResult(TextAnalyticsErrorInternal error)
+        {
+            Error = Transforms.ConvertToError(error);
+        }
+
+        /// <summary>
         /// Indicates the time at which the action was last updated on.
         /// </summary>
         public DateTimeOffset CompletedOn { get; }

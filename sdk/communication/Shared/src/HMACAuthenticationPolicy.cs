@@ -63,7 +63,17 @@ namespace Azure.Communication.Pipeline
         private void AddHeaders(HttpMessage message, string contentHash)
         {
             var utcNowString = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
-            var authorization = GetAuthorizationHeader(message.Request.Method, message.Request.Uri.ToUri(), contentHash, utcNowString);
+            string authorization;
+
+            message.TryGetProperty("uriToSignRequestWith", out var uriToSignWith);
+            if (uriToSignWith != null && uriToSignWith.GetType() == typeof(Uri))
+            {
+                authorization = GetAuthorizationHeader(message.Request.Method, (Uri)uriToSignWith, contentHash, utcNowString);
+            }
+            else
+            {
+                authorization = GetAuthorizationHeader(message.Request.Method, message.Request.Uri.ToUri(), contentHash, utcNowString);
+            }
 
             message.Request.Headers.SetValue("x-ms-content-sha256", contentHash);
             message.Request.Headers.SetValue(HttpHeader.Names.Date, utcNowString);

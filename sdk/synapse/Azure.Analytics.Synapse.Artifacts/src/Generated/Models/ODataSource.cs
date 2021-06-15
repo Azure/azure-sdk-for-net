@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> OData query. For example, &quot;$top=1&quot;. Type: string (or Expression with resultType string). </param>
         /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
