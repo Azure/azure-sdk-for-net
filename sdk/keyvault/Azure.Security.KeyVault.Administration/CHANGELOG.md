@@ -2,9 +2,8 @@
 
 ## 4.0.0 (2021-06-15)
 
-- Initial release of Azure.Security.KeyVault.Administration
-- Added `KeyVaultAccessControlClient` to managed role assignments and definitions for Managed HSM.
-- Added `KeyVaultBackupClient` to backup and restore Managed HSM.
+- Initial release of `KeyVaultAccessControlClient` to managed role assignments and definitions for Managed HSM.
+- Initial release of `KeyVaultBackupClient` to backup and restore Managed HSM.
 
 ### Breaking Changes since 4.0.0-beta.5
 
