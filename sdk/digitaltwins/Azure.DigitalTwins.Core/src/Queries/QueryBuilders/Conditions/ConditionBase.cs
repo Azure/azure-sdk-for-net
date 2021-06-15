@@ -12,5 +12,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     internal abstract class ConditionBase
     {
+        public abstract string Stringify();
     }
 }

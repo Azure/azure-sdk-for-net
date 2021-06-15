@@ -24,15 +24,30 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds a WHERE and its conditional argument(s) clause to the query object. Meant to be used for simple
-        /// conditions involving operators or with basic ADT functions. Multiple WHERE clauses are appended using
-        /// the AND logical operator.
+        /// Adds a WHERE and the conditional arguments for a comparison to the query object. Used to compare ADT properties
+        /// using the query language's comparison operators.
         /// </summary>
-        /// <param name="condition"> A custom object that encodes the logical statement nested within the WHERE clause. </param>
+        /// <param name="field"> The field being checked against a certain value. </param>
+        /// <param name="comparisonOperator"> The comparison operator being invoked. </param>
+        /// <param name="value"> The value being checked against a Field. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        internal WhereQuery Where(ConditionBase condition)
+        public WhereQuery WhereComparison(string field, QueryComparisonOperator comparisonOperator, string value)
         {
-            Console.WriteLine(condition);
+            _clauses.Add(new WhereClause(new ComparisonCondition(field, comparisonOperator, value)));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a WHERE and the conditional arugments for a contains conditional statement to the query object. Used to search
+        /// a field for a user specified property.
+        /// </summary>
+        /// <param name="value"> User specified property to look for. </param>
+        /// <param name="containOperator"> ADT contains operator defined by the ADT query language. </param>
+        /// <param name="searched"> Field of possible options to check for the 'value' parameter. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery WhereContains(string value, QueryContainOperator containOperator, string[] searched)
+        {
+            _clauses.Add(new WhereClause(new ContainsCondition(value, containOperator, searched)));
             return this;
         }
 
@@ -41,9 +56,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="condition"> The verbatim condition (SQL-like syntax) in string format. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereQuery Where(string condition)
+        public WhereQuery WhereOverride(string condition)
         {
-            Console.WriteLine(condition);
+            _clauses.Add(new WhereClause(condition));
             return this;
         }
 
@@ -54,7 +69,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereQuery WhereIsDefined(string property)
         {
-            Console.WriteLine(property);
+            _clauses.Add(new WhereClause($"{QueryConstants.IsDefined}({property})"));
             return this;
         }
 
@@ -65,7 +80,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereQuery WhereIsNull(string expression)
         {
-            Console.WriteLine(expression);
+            _clauses.Add(new WhereClause($"{QueryConstants.IsNull}({expression})"));
             return this;
         }
 
@@ -77,14 +92,21 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereQuery WhereStartsWith(string stringToCheck, string beginningString)
         {
-            Console.Write(stringToCheck);
-            Console.WriteLine(beginningString);
+            _clauses.Add(new WhereClause($"{QueryConstants.StartsWith}({stringToCheck}, '{beginningString}')"));
             return this;
         }
 
-        /*
-         WhereEndsWith defined in a similar manner.
-         */
+        /// <summary>
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#endswith">ENDSWITH</see> function to the condition statement of the query.
+        /// </summary>
+        /// <param name="stringToCheck"> String to check the ending of. </param>
+        /// <param name="endingString"> String representing the ending to check for. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery WhereEndsWith(string stringToCheck, string endingString)
+        {
+            _clauses.Add(new WhereClause($"{QueryConstants.EndsWith}({stringToCheck}, '{endingString}')"));
+            return this;
+        }
 
         /// <summary>
         /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_of_model">IS_OF_MODEL</see> function to the condition statement of the query.
@@ -94,8 +116,70 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereQuery WhereIsOfModel(string model, bool exact = false)
         {
-            Console.WriteLine(model);
-            Console.WriteLine(exact);
+            if (exact)
+            {
+                _clauses.Add(new WhereClause($"{QueryConstants.IsOfModel}('{model}', exact)"));
+            }
+            else
+            {
+                _clauses.Add(new WhereClause($"{QueryConstants.IsOfModel}('{model}')"));
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_bool">IS_BOOL</see> function to the condition statement of the query.
+        /// </summary>
+        /// <param name="expression"> The expression that the query is looking for as boolean. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery WhereIsBool(string expression)
+        {
+            _clauses.Add(new WhereClause($"{QueryConstants.IsBool}({expression})"));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_number">IS_NUMBER</see> function to the condition statement of the query.
+        /// </summary>
+        /// <param name="expression"> The expression that the query is looking for as a number. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery WhereIsNumber(string expression)
+        {
+            _clauses.Add(new WhereClause($"{QueryConstants.IsNumber}({expression})"));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_string">IS_STRING</see> function to the condition statement of the query.
+        /// </summary>
+        /// <param name="expression"> The expression that the query is looking for as a string. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery WhereIsString(string expression)
+        {
+            _clauses.Add(new WhereClause($"{QueryConstants.IsString}({expression})"));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_primative">IS_PRIMATIVE</see> function to the condition statement of the query.
+        /// </summary>
+        /// <param name="expression"> The expression that the query is looking for as primative. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery WhereIsPrimative(string expression)
+        {
+            _clauses.Add(new WhereClause($"{QueryConstants.IsPrimative}({expression})"));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_object">IS_OBJECT</see> function to the condition statement of the query.
+        /// </summary>
+        /// <param name="expression"> The expression that the query is looking for as an object. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery WhereIsObject(string expression)
+        {
+            _clauses.Add(new WhereClause($"{QueryConstants.IsObject}({expression})"));
             return this;
         }
 
@@ -117,16 +201,24 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string Stringify()
         {
-            // TODO -- make this cleaner? design problem?
             if (_clauses.Any())
             {
-                // TODO -- if appending more strings turn into a stringbuilder
-                string whereComponents = $"{QueryConstants.Where} ";
+                // Where keyword only needs to be appened one time, happends outside of loop
+                StringBuilder whereComponents = new StringBuilder();
+                whereComponents.Append($"{QueryConstants.Where} ");
 
-                // TODO -- turn condition into a string
-                // add where arguments (conditions)
+                // Parse each Where conditional statement
+                for (int i = 0; i < _clauses.Count - 1; i++)
+                {
+                    whereComponents.Append(_clauses[i].Condition);
 
-                return whereComponents;
+                    // Add AND logical operator by default for multiple WHERE coditions
+                    whereComponents.Append($" {QueryConstants.And} ");
+                }
+
+                // Attach final argument (outside of loop to avoid an extra And operator
+                whereComponents.Append(_clauses[_clauses.Count - 1].Condition);
+                return whereComponents.ToString().Trim();
             }
 
             return string.Empty;

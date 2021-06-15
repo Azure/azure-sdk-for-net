@@ -306,7 +306,7 @@ AdtQueryBuilder sample3 = new AdtQueryBuilder()
     .From(AdtCollection.Relationships)
     .Build();
 
-// SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
+// SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1')
 AdtQueryBuilder query2 = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
@@ -322,7 +322,8 @@ string string1 = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
     .Build()
-    .ToString();
+    .Stringify();
+```
 
 ### Delete digital twins
 
