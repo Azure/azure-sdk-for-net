@@ -11,9 +11,9 @@ using System.Linq;
 using System.Net;
 using Xunit;
 
-namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
+namespace Compute.Tests
 {
-    public class RestorePointsTest : VMTestBase
+    public class RestorePointTests : VMTestBase
     {
         /// <summary>
         /// Covers following Operations:
