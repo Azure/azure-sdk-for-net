@@ -123,7 +123,7 @@ finally
 #### Comparing Identity
 
 This sample demonstrates how to add an `EventData` identification property that can be used to verify that a given event ID was added to the observable batch. 
-```C# Snippet: Sample09_CheckingBatch
+```C# Snippet:Sample09_CheckingBatch
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var producer = new EventHubProducerClient(connectionString, eventHubName);
