@@ -127,6 +127,37 @@ namespace Azure.Communication.CallingServer.Tests.ContentDownloadTests
         }
 
         [Test]
+        public void DownloadRecordingToStream_ContentTransferOptions_Test()
+        {
+            ContentTransferOptions options = new()
+            {
+                InitialTransferSize = 10,
+                MaximumConcurrency = 1,
+                MaximumTransferSize = 5
+            };
+
+            ContentTransferOptions options_copy = new()
+            {
+                InitialTransferSize = 10,
+                MaximumConcurrency = 1,
+                MaximumTransferSize = 5
+            };
+
+            ContentTransferOptions options_updated = new()
+            {
+                InitialTransferSize = 11,
+                MaximumConcurrency = 1,
+                MaximumTransferSize = 5
+            };
+
+            Assert.AreNotEqual(options.GetHashCode(), options_updated.GetHashCode());
+            Assert.AreEqual(options.GetHashCode(), options_copy.GetHashCode());
+            Assert.True(options.Equals(options_copy));
+            Assert.True(options.Equals((object)options_copy));
+            Assert.False(options.Equals(options_updated));
+        }
+
+        [Test]
         public void DownloadNotExistentContent_Failure_Test()
         {
             CallingServerClient _callingserverClient = CreateMockCallingServerClient(404);
