@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "}";
 
         private const string DummyPlayAudioResponse = "{" +
-                                                "\"id\": \"dummyId\"," +
+                                                "\"operationId\": \"dummyId\"," +
                                                 "\"status\": \"running\"," +
                                                 "\"operationContext\": \"dummyOperationContext\"," +
                                                 "\"resultInfo\": {" +
@@ -28,6 +28,10 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "\"message\": \"dummyMessage\"" +
                                                   "}" +
                                                 "}";
+
+        private const string AddParticipantResultPayload = "{" +
+                                                                "\"participantId\": \"dummyparticipantid\"" +
+                                                            "}";
 
         [TestCaseSource(nameof(TestData_StartRecording))]
         public void StartRecording_Returns200Ok(Uri sampleCallBackUri)
@@ -128,21 +132,23 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_AddParticipant))]
         public async Task AddParticipantsAsync_Return202Accepted(CommunicationIdentifier participant, Uri callBack, string alternateCallerId, string operationContext)
         {
-            var serverCall = CreateMockServerCall(202);
+            var serverCall = CreateMockServerCall(202, AddParticipantResultPayload);
 
             var response = await serverCall.AddParticipantAsync(participant, callBack, alternateCallerId, operationContext).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
         public void AddParticipants_Return202Accepted(CommunicationIdentifier participant, Uri callBack, string alternateCallerId, string operationContext)
         {
-            var serverCall = CreateMockServerCall(202);
+            var serverCall = CreateMockServerCall(202, AddParticipantResultPayload);
 
             var response = serverCall.AddParticipant(participant, callBack, alternateCallerId, operationContext);
 
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]

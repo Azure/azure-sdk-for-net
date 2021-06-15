@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer.Tests
     public class CallConnectionTests : CallingServerTestBase
     {
         private const string CancelAllMediaOperaionsResponsePayload = "{" +
-                                                "\"id\": \"dummyId\"," +
+                                                "\"operationId\": \"dummyId\"," +
                                                 "\"status\": \"completed\"," +
                                                 "\"operationContext\": \"dummyOperationContext\"," +
                                                 "\"resultInfo\": {" +
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer.Tests
                                                 "}";
 
         private const string PlayAudioResponsePayload = "{" +
-                                                "\"id\": \"dummyId\"," +
+                                                "\"operationId\": \"dummyId\"," +
                                                 "\"status\": \"running\"," +
                                                 "\"operationContext\": \"dummyOperationContext\"," +
                                                 "\"resultInfo\": {" +
@@ -33,33 +33,9 @@ namespace Azure.Communication.CallingServer.Tests
                                                   "}" +
                                                 "}";
 
-        private const string GetCallConnectionDetailsPayload = "{" +
-                                                "\"callConnectionId\": \"411f6d00-1d3f-425b-9d7d-df971f16564b\", " +
-                                                "\"source\":{ \"rawId\": \"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d376\",  \"communicationUser\": {\"id\":\"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d376\"}}," +
-                                                "\"targets\":[{ \"rawId\": \"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000009-9189-b73c-edbe-a43a0d0050e3\", \"communicationUser\": {\"id\":\"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000009-9189-b73c-edbe-a43a0d0050e3\"}}]," +
-                                                "\"callState\":\"establishing\"," +
-                                                "\"subject\":\"testsubject\"," +
-                                                "\"callbackUri\":\"https://bot.contoso.io/callback\"," +
-                                                "\"requestedMediaTypes\":[\"audio\", \"video\"]," +
-                                                "\"requestedCallEvents\":[\"dtmfReceived\"]" +
-                                                "}";
-
-        private const string GetParticipantsPayload = "[" +
-                                                "{ \"identifier\": {\"rawId\": \"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\",  \"communicationUser\": {\"id\":\"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\"}}, \"participantId\": \"ef70f6b0-c052-4ab7-9fdc-2dedb5fd16ac\", \"isMuted\": true }, " +
-                                                "{ \"identifier\": {\"rawId\": \"4:+14251234567\",  \"phoneNumber\": {\"value\":\"+14251234567\"}}, \"participantId\": \"e44ca273-079f-4759-8d6e-284ee8322625\", \"isMuted\": false }" +
-                                                "]";
-
-        private const string GetParticipantPayload1 = "{ " +
-                                                "\"identifier\": {\"rawId\": \"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\",  \"communicationUser\": {\"id\":\"8:acs:024a7064-0581-40b9-be73-6dde64d69d89_00000008-ddad-a008-b8ba-a43a0d00d371\"}}, " +
-                                                "\"participantId\": \"ef70f6b0-c052-4ab7-9fdc-2dedb5fd16ac\", " +
-                                                "\"isMuted\": true " +
-                                                "}";
-
-        private const string GetParticipantPayload2 = "{ " +
-                                                "\"identifier\": {\"rawId\": \"4:+14251234567\",  \"phoneNumber\": {\"value\":\"+14251234567\"}}, " +
-                                                "\"participantId\": \"e44ca273-079f-4759-8d6e-284ee8322625\", " +
-                                                "\"isMuted\": false " +
-                                                "}";
+        private const string AddParticipantResultPayload = "{" +
+                                                                "\"participantId\": \"dummyparticipantid\"" +
+                                                            "}";
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
         public async Task HangupCallAsync_Passes(string callConnectionId)
@@ -162,21 +138,23 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_AddParticipant))]
         public async Task AddParticipantsAsync_Passes(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
         {
-            var callConnection = CreateMockCallConnection(202);
+            var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
             var response = await callConnection.AddParticipantAsync(participant, alternateCallerId, operationContext).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
         public void AddParticipants_Passes(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
         {
-            var callConnection = CreateMockCallConnection(202);
+            var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
             var response = callConnection.AddParticipant(participant, alternateCallerId, operationContext);
 
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
