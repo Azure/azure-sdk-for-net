@@ -14,6 +14,9 @@ namespace Azure.Monitor.Query.Models
         [CodeGenMember("Statistics")]
         private readonly JsonElement _statistics;
 
+        [CodeGenMember("render")]
+        private readonly JsonElement _visualization;
+
         // TODO: Handle not found
         /// <summary>
         /// Returns the primary result of the query.
@@ -21,8 +24,13 @@ namespace Azure.Monitor.Query.Models
         public LogsQueryResultTable PrimaryTable => Tables.Single(t => t.Name == "PrimaryResult");
 
         /// <summary>
-        /// Returns the query statistics if the <see cref="LogsQueryOptions.IncludeStatistics"/> is set to <c>true</c>.
+        /// Returns the query statistics if the <see cref="LogsQueryOptions.IncludeStatistics"/> is set to <c>true</c>. Null otherwise.
         /// </summary>
         public BinaryData Statistics => _statistics.ValueKind == JsonValueKind.Undefined ? null : new BinaryData(_statistics.ToString());
+
+        /// <summary>
+        /// Returns the query visualization if the <see cref="LogsQueryOptions.IncludeVisualization"/> is set to <c>true</c>. Null otherwise.
+        /// </summary>
+        public BinaryData Visualization => _visualization.ValueKind == JsonValueKind.Undefined ? null : new BinaryData(_visualization.ToString());
     }
 }

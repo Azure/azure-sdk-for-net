@@ -33,6 +33,7 @@ namespace Azure.Monitor.Query
         public LogsQueryOptions() { }
         public System.Collections.Generic.IList<string> AdditionalWorkspaces { get { throw null; } }
         public bool IncludeStatistics { get { throw null; } set { } }
+        public bool IncludeVisualization { get { throw null; } set { } }
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
     }
     public partial class MetricsQueryClient
@@ -68,7 +69,7 @@ namespace Azure.Monitor.Query
     }
     public static partial class QueryModelFactory
     {
-        public static Azure.Monitor.Query.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> tables = null, System.Text.Json.JsonElement Statistics = default(System.Text.Json.JsonElement)) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> tables = null, System.Text.Json.JsonElement Statistics = default(System.Text.Json.JsonElement), System.Text.Json.JsonElement Visualization = default(System.Text.Json.JsonElement)) { throw null; }
         public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, Azure.Monitor.Query.Models.LogColumnTypes type = default(Azure.Monitor.Query.Models.LogColumnTypes)) { throw null; }
         public static Azure.Monitor.Query.Models.LogsQueryResultTable LogsQueryResultTable(string name = null, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultColumn> columns = null, System.Text.Json.JsonElement internalRows = default(System.Text.Json.JsonElement)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? timeGrain = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
@@ -113,6 +114,7 @@ namespace Azure.Monitor.Query.Models
         public Azure.Monitor.Query.Models.LogsQueryResultTable PrimaryTable { get { throw null; } }
         public System.BinaryData Statistics { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> Tables { get { throw null; } }
+        public System.BinaryData Visualization { get { throw null; } }
     }
     public partial class LogsQueryResultColumn
     {
@@ -134,6 +136,8 @@ namespace Azure.Monitor.Query.Models
         public decimal GetDecimal(string name) { throw null; }
         public double GetDouble(int index) { throw null; }
         public double GetDouble(string name) { throw null; }
+        public System.BinaryData GetDynamic(int index) { throw null; }
+        public System.BinaryData GetDynamic(string name) { throw null; }
         public System.Guid GetGuid(int index) { throw null; }
         public System.Guid GetGuid(string name) { throw null; }
         public int GetInt32(int index) { throw null; }
