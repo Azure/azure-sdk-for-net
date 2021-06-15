@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
             foreach (var cloudEvent in cloudEvents)
             {
                 if (activityId != null &&
-                    !(cloudEvent.GetPopulatedAttributes().Any(attr => attr.Name == TraceParentHaderName || attr.Name == TraceStateHeaderName))
+                    !cloudEvent.GetPopulatedAttributes().Any(attr => attr.Name == TraceParentHaderName || attr.Name == TraceStateHeaderName))
                 {
                     cloudEvent.SetAttributeFromString(TraceParentHeaderName, activityId);
                     if (traceState != null)
