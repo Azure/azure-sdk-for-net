@@ -878,13 +878,13 @@ namespace Azure.Storage.Blobs.Test
                 return;
             }
 
-            string subscriptionId = "ba45b233-e2ef-4169-8808-49eb0d8eba0d";
+            string subscriptionId = _tenantConfiguration.SubscriptionId;
             string token = await GetAuthToken();
             TokenCredentials tokenCredentials = new TokenCredentials(token);
             _storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
 
             await _storageManagementClient.BlobContainers.CreateAsync(
-                resourceGroupName: "XClient",
+                resourceGroupName: _tenantConfiguration.ResourceGroupName,
                 accountName: _tenantConfiguration.AccountName,
                 containerName: Container.Name,
                 new Microsoft.Azure.Management.Storage.Models.BlobContainer(
