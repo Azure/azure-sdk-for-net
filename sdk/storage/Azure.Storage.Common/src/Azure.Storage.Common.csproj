@@ -18,7 +18,7 @@
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- TODO: Remove this after HttpAuthorization moves to Core -->
+    <!-- TODO: Remove this after HttpAuthorization moves to Core https://github.com/Azure/azure-sdk-for-net/issues/21875 -->
     <NoWarn>$(NoWarn);AZC0001;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
