@@ -2,7 +2,9 @@
 
 This sample demonstrates how to write an `ObservableEventDataBatch` class wraps an `EventDataBatch` to allow an application to read events that have been added to a batch. This is unlike the standard `EventDataBatch` class which restricts the application from accessing `EventData` instances once they have been accepted into the batch. `EventDataBatch` has this limitation to ensure that the state of the batch remains consistent and valid as events are added, and that it can successfully be published.
 
-#### Issues: Batch Invalidation and Observable Events Sync
+## Considerations
+
+While the `ObservableDataBatch` may seem desirable, there are several nuances that should be considered before using it in your application.   In order to .... _(your content starting on line 7)_
 
 In order to make sure that once an event is successfully added to the batch it will be sent, the `EventDataBatch` creates a hidden copy of the events which it uses to send to the `EventHub`. Without this, the application could make changes to them, and potentially make the batch too large and completely invalidate it. So this approach cannot be used. If the list of original events was accessible to the user through the `EventDataBatch` methods, altering them would cause the original list of events to no longer match the copy. This would cause the events in the batch as seen by the application to be out of sync from the events that will actually be sent to the `EventHub`. 
 
