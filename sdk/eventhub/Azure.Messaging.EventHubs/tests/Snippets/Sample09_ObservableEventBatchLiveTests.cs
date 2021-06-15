@@ -213,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 {
                       contains |= (int.TryParse(singleEvent.Properties["ApplicationId"].ToString(), out int id) && id == 1);
                 }
-                Assert.IsTrue(contains);
+                Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
 
                 // check count is set, this means that events were successfully added to _batch
                 Assert.Greater(newbatch.Count, 0);
