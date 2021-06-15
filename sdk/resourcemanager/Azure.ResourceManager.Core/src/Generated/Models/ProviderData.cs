@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Resource provider information. </summary>
-    public partial class ProviderData : SubResource<TenantProviderIdentifier>
+    public partial class ProviderData : SubResource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of Provider. </summary>
         internal ProviderData()

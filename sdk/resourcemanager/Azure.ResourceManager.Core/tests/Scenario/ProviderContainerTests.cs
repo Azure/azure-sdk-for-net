@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task List()
         {
             var providerContainer = Client.DefaultSubscription.GetProviders();
-            var x = providerContainer.ListAsync(); // x is null?
+            var x = providerContainer.ListAsync();
             await foreach (var p in x)
             {
                 Console.WriteLine(p.Id);

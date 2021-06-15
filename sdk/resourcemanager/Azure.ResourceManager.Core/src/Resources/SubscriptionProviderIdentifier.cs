@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = providerNamespace;
             IsChild = true;
+            ResourceType = ProviderOperations.ResourceType;
         }
 
         internal SubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, string providerNamespace, string typeName, string resourceName)
