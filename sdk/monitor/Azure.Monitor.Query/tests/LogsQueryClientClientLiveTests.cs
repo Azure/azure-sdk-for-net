@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -554,23 +555,23 @@ namespace Azure.Monitor.Query.Tests
                 yield return $"print {true} == true";
                 yield return $"print {false} == false";
                 yield return $"print {(byte)1} == int(1)";
-                yield return $"print {(sbyte)1} == int(1)";
-                yield return $"print {(ushort)1} == int(1)";
-                yield return $"print {(short)1} == int(1)";
-                yield return $"print {(uint)1} == int(1)";
-                yield return $"print {(int)1} == int(1)";
+                yield return $"print {(sbyte)2} == int(2)";
+                yield return $"print {(ushort)3} == int(3)";
+                yield return $"print {(short)4} == int(4)";
+                yield return $"print {(uint)5} == int(5)";
+                yield return $"print {(int)6} == int(6)";
 
                 yield return $"print {1000000000} == int(1000000000)";
                 yield return $"print {1.1F} == real(1.1)";
-                yield return $"print {1.1D} == real(1.1)";
-                yield return $"print {1.1M} == decimal(1.1)";
+                yield return $"print {1.2D} == real(1.2)";
+                yield return $"print {1.3M} == decimal(1.3)";
                 yield return $"print {1000000000000000000L} == long(1000000000000000000)";
-                yield return $"print {1000000000000000000UL} == long(1000000000000000000)";
+                yield return $"print {1000000000000000001UL} == long(1000000000000000001)";
 
                 yield return $"print {Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")} == guid(74be27de-1e4e-49d9-b579-fe0b331d3642)";
 
-                yield return $"print {DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00")} == datetime(2015-12-31 23:59:59.9)";
-                yield return $"print {DateTime.Parse("2015-12-31 23:59:59.9+00:00")} == datetime(2015-12-31 23:59:59.9)";
+                yield return $"print {DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.AssumeUniversal)} == datetime(2015-12-31 23:59:59.9)";
+                yield return $"print {DateTime.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.AssumeUniversal)} == datetime(2015-12-31 23:59:59.9)";
 
                 yield return $"print {TimeSpan.FromSeconds(10)} == 10s";
 

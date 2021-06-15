@@ -8,12 +8,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "76",
         "Content-Type": "application/json",
-        "traceparent": "00-f323db172d29ff408cd4c1896131b5dd-865c3c538aca8f47-00",
+        "traceparent": "00-40f753e8c2d95a41aa02e903f3a4b9e1-de690f0da77b1d4e-00",
         "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210614.1",
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210615.1",
           "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "124131f0b0b9ae073e3c418e756c0ad2",
+        "x-ms-client-request-id": "95651d8617bf8f4d08566046471d6591",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,14 +24,14 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "34",
+        "Age": "18",
         "Connection": "keep-alive",
         "Content-Length": "98",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 14 Jun 2021 23:15:39 GMT",
+        "Date": "Tue, 15 Jun 2021 16:12:31 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7d56d985c5-625mm",
+        "Via": "1.1 draft-oms-7d56d985c5-l4qdf",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -55,12 +55,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-06-14T16:15:38.0607473-07:00",
+    "DateTimeOffsetNow": "2021-06-15T09:12:30.9646136-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1252900800",
-    "SECONDARY_WORKSPACE_ID": "0cf963f0-c6a5-4ced-8cd8-93a8d6e3e9d3",
-    "SECONDARY_WORKSPACE_KEY": "Kg==",
-    "WORKSPACE_ID": "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131",
-    "WORKSPACE_KEY": "Kg=="
+    "RandomSeed": "1492761601",
+    "WORKSPACE_ID": "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131"
   }
 }

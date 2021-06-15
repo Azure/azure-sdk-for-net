@@ -8,12 +8,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "116",
         "Content-Type": "application/json",
-        "traceparent": "00-b9bf65f31aab51459efa125f3ea6e996-7003865b3e093c4f-00",
+        "traceparent": "00-4f63727a97bd294abe572e25ed3403ad-0dd15a601d99a149-00",
         "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210614.1",
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210615.1",
           "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "74e5e1d18515efb5ec393164e1835ea0",
+        "x-ms-client-request-id": "dffe6adf218ef5430c68ff2a0a1fd60d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,14 +24,14 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "28",
+        "Age": "5",
         "Connection": "keep-alive",
         "Content-Length": "98",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 14 Jun 2021 23:15:42 GMT",
+        "Date": "Tue, 15 Jun 2021 16:12:33 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-7d56d985c5-8gs5z",
+        "Via": "1.1 draft-oms-7d56d985c5-g46bx",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -55,9 +55,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-06-14T16:15:41.8366959-07:00",
+    "DateTimeOffsetNow": "2021-06-15T09:12:33.5987058-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1924530282",
+    "RandomSeed": "1543100933",
     "WORKSPACE_ID": "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131"
   }
 }
