@@ -14,14 +14,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task Sample7_AnalyzeHealthcareEntities_ManualPolling()
+        public async Task Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_AutomaticPolling()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:RecognizeHealthcareEntitiesAsyncManualPolling
+            #region Snippet:RecognizeHealthcareEntitiesAsyncAutomaticPolling
             // get input documents
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
@@ -36,19 +36,10 @@ namespace Azure.AI.TextAnalytics.Samples
             // start analysis process
             AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document });
 
-            // wait for completion with manual polling
+            // wait for operation completion with automatic polling
             TimeSpan pollingInterval = new TimeSpan(1000);
 
-            while (true)
-            {
-                await healthOperation.UpdateStatusAsync();
-                if (healthOperation.HasCompleted)
-                {
-                    break;
-                }
-
-                await Task.Delay(pollingInterval);
-            }
+            await healthOperation.WaitForCompletionAsync(pollingInterval);
 
             // view operation results
             await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
@@ -96,32 +87,32 @@ namespace Azure.AI.TextAnalytics.Samples
                                 Console.WriteLine($"        Conditionality: {entity.Assertion?.Conditionality}");
                             }
                         }
+                    }
 
-                        Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
-                        Console.WriteLine("");
+                    Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
+                    Console.WriteLine("");
 
-                        // view recognized healthcare relations
-                        foreach (HealthcareEntityRelation relations in result.EntityRelations)
+                    // view recognized healthcare relations
+                    foreach (HealthcareEntityRelation relations in result.EntityRelations)
+                    {
+                        Console.WriteLine($"        Relation: {relations.RelationType}");
+                        Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
+
+                        // view relation roles
+                        foreach (HealthcareEntityRelationRole role in relations.Roles)
                         {
-                            Console.WriteLine($"        Relation: {relations.RelationType}");
-                            Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
+                            Console.WriteLine($"            Role Name: {role.Name}");
 
-                            // view relation roles
-                            foreach (HealthcareEntityRelationRole role in relations.Roles)
-                            {
-                                Console.WriteLine($"            Role Name: {role.Name}");
-
-                                Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
-                                Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
-
-                                Console.WriteLine("");
-                            }
+                            Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
+                            Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
 
                             Console.WriteLine("");
                         }
 
                         Console.WriteLine("");
                     }
+
+                    Console.WriteLine("");
                     Console.WriteLine("");
                 }
             }

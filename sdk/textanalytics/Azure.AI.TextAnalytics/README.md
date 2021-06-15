@@ -435,7 +435,7 @@ catch (RequestFailedException exception)
 ### Recognize Healthcare Entities Asynchronously
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
-```C# Snippet:Sample7_AnalyzeHealthcareEntitiesBatchConvenience
+```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenience
     // get input documents
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \

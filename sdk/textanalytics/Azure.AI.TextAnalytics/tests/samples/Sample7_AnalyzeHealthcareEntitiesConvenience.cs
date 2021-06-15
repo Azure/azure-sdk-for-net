@@ -14,14 +14,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task Sample7_AnalyzeHealthcareEntitiesBatchConvenience()
+        public async Task Sample7_AnalyzeHealthcareEntitiesConvenience()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:Sample7_AnalyzeHealthcareEntitiesBatchConvenience
+            #region Snippet:Sample7_AnalyzeHealthcareEntitiesConvenience
             // get input documents
             string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \

@@ -21,11 +21,29 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
+        private static readonly Uri _defaultEndpoint = new Uri("https://api.loganalytics.io");
         private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly RowBinder _rowBinder;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        public LogsQueryClient(TokenCredential credential) : this(credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
+        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>.
@@ -50,7 +68,9 @@ namespace Azure.Monitor.Query
             options ??= new LogsQueryClientOptions();
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(
+                credential,
+                options.AuthenticationScope ?? "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
             _rowBinder = new RowBinder();
         }
@@ -303,22 +323,51 @@ namespace Azure.Monitor.Query
                 queryBody.Timespan = timeRange.ToString();
             }
 
-            prefer = null;
-
-            if (options?.ServerTimeout is TimeSpan timeout)
-            {
-                prefer = "wait=" + (int) timeout.TotalSeconds;
-            }
-
-            if (options?.IncludeStatistics == true)
-            {
-                prefer += " include-statistics=true";
-            }
-
             if (options != null)
             {
                 queryBody.Workspaces = options.AdditionalWorkspaces;
             }
+
+            prefer = null;
+
+            StringBuilder preferBuilder = null;
+
+            if (options?.ServerTimeout is TimeSpan timeout)
+            {
+                preferBuilder ??= new();
+                preferBuilder.Append("wait=");
+                preferBuilder.Append((int) timeout.TotalSeconds);
+            }
+
+            if (options?.IncludeStatistics == true)
+            {
+                if (preferBuilder == null)
+                {
+                    preferBuilder = new();
+                }
+                else
+                {
+                    preferBuilder.Append(',');
+                }
+
+                preferBuilder.Append("include-statistics=true");
+            }
+
+            if (options?.IncludeVisualization == true)
+            {
+                if (preferBuilder == null)
+                {
+                    preferBuilder = new();
+                }
+                else
+                {
+                    preferBuilder.Append(',');
+                }
+
+                preferBuilder.Append("include-render=true");
+            }
+
+            prefer = preferBuilder?.ToString();
 
             return queryBody;
         }

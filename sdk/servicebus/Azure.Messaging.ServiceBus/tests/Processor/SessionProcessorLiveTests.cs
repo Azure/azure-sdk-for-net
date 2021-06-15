@@ -172,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(5));
+                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
 
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed

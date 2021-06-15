@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
@@ -75,6 +77,55 @@ namespace Azure.Monitor.Query.Tests
 
             LogsBatchQueryResult batchResult = await client.QueryBatchAsync(batch);
             Assert.NotNull(batchResult.GetResult("0"));
+        }
+
+        [Test]
+        public async Task UsesDefaultEndpoint()
+        {
+            string uri = null;
+            var mockTransport = MockTransport.FromMessageCallback(message =>
+            {
+                uri = message.Request.Uri.ToString();
+                var mockResponse = new MockResponse(200);
+                mockResponse.SetContent("{\"tables\":[]}");
+                return mockResponse;
+            });
+
+            var client = new LogsQueryClient(new MockCredential(), new LogsQueryClientOptions()
+            {
+                Transport = mockTransport
+            });
+
+            await client.QueryAsync("", "", DateTimeRange.All);
+            StringAssert.StartsWith("https://api.loganalytics.io", uri);
+        }
+
+        [TestCase(null, "https://api.loganalytics.io//.default")]
+        [TestCase("https://api.loganalytics.gov//.default", "https://api.loganalytics.gov//.default")]
+        public async Task UsesDefaultAuthScope(string scope, string expectedScope)
+        {
+            var mockTransport = MockTransport.FromMessageCallback(message =>
+            {
+                var mockResponse = new MockResponse(200);
+                mockResponse.SetContent("{\"tables\":[]}");
+                return mockResponse;
+            });
+
+            Mock<MockCredential> mock = new() { CallBase = true };
+
+            string[] scopes = null;
+            mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                .Callback<TokenRequestContext, CancellationToken>((c, _) => scopes = c.Scopes)
+                .CallBase();
+
+            var client = new LogsQueryClient(mock.Object, new LogsQueryClientOptions()
+            {
+                Transport = mockTransport,
+                AuthenticationScope = scope
+            });
+
+            await client.QueryAsync("", "", DateTimeRange.All);
+            Assert.AreEqual(new[] { expectedScope }, scopes);
         }
     }
 }
