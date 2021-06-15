@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
         /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
         /// <param name="password"> The password corresponding to the user name that you provided in the username key. </param>

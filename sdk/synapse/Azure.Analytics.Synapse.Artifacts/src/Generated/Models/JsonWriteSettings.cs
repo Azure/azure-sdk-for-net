@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of JsonWriteSettings. </summary>
         /// <param name="type"> The write setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="filePattern"> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </param>
         internal JsonWriteSettings(string type, IDictionary<string, object> additionalProperties, JsonWriteFilePattern? filePattern) : base(type, additionalProperties)
         {

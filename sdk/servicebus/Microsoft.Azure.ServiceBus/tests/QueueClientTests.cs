@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -102,7 +103,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 try
                 {
-                    await this.ReceiveDeleteTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                    await this.ReceiveDeleteTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount, TimeSpan.FromSeconds(10));
                 }
                 finally
                 {

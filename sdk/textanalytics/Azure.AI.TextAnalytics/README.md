@@ -435,7 +435,7 @@ catch (RequestFailedException exception)
 ### Recognize Healthcare Entities Asynchronously
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
-```C# Snippet:Sample7_AnalyzeHealthcareEntitiesBatchConvenience
+```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenience
     // get input documents
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
@@ -602,15 +602,15 @@ This functionality allows running multiple actions in one or more documents. Act
 
     await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
-        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
-        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;
-        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = documentsInPage.RecognizePiiEntitiesActionsResults;
-        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = documentsInPage.RecognizeLinkedEntitiesActionsResults;
-        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = documentsInPage.AnalyzeSentimentActionsResults;
+        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
+        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
+        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResults = documentsInPage.RecognizePiiEntitiesResults;
+        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingResults = documentsInPage.RecognizeLinkedEntitiesResults;
+        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentResults = documentsInPage.AnalyzeSentimentResults;
 
         Console.WriteLine("Recognized Entities");
         int docNumber = 1;
-        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
+        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
             foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
             {
@@ -632,7 +632,7 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Recognized PII Entities");
         docNumber = 1;
-        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
+        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
         {
             foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
             {
@@ -654,7 +654,7 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Key Phrases");
         docNumber = 1;
-        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
+        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
         {
             foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
@@ -671,7 +671,7 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Recognized Linked Entities");
         docNumber = 1;
-        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
+        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
         {
             foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
             {
@@ -702,7 +702,7 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Analyze Sentiment");
         docNumber = 1;
-        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
+        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
         {
             foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
             {

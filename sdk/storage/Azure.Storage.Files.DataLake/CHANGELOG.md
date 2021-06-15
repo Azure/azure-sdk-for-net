@@ -17,7 +17,7 @@
 - Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in DataLakeFileClient.ReadTo.
 - Fixed bug where specifying conditions in DataLakeFileClient.OpenRead could override allowModifications flag in DataLakeOpenReadOptions leading to inconsistent read.
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
-    - A new property is now available on the ClientOptions called `DisableTenantDiscovery`. If set to true, the client will not attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
+    - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
 
 ## 12.6.2 (2021-05-20)
 - This release contains bug fixes to improve quality.

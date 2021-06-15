@@ -27,7 +27,7 @@ namespace Azure.Storage.Tests
             expectedTenantId = null;
             cred = new MockCredential
             {
-                GetTokenCalledWith = (trc, _) =>
+                GetTokenCallback = (trc, _) =>
                 {
                     Assert.AreEqual(scopes, trc.Scopes);
                     Assert.AreEqual(expectedTenantId, trc.TenantId);

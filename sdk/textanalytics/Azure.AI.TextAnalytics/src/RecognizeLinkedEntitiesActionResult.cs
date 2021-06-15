@@ -20,6 +20,24 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal RecognizeLinkedEntitiesActionResult(
+            RecognizeLinkedEntitiesResultCollection result,
+            DateTimeOffset completedOn) : base(completedOn)
+        {
+            _documentsResults = result;
+        }
+
+        /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal RecognizeLinkedEntitiesActionResult(
+            TextAnalyticsErrorInternal error) : base(error)
+        {
+        }
+
+        /// <summary>
         /// Gets the result of the execution of a <see cref="RecognizeLinkedEntitiesAction"/> per each input document.
         /// </summary>
         public RecognizeLinkedEntitiesResultCollection DocumentsResults
