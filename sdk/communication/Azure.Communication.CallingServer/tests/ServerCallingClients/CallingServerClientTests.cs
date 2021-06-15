@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
-    public class CallingServerClientsTests : CallingServerTestBase
+    public class CallingServerClientTests : CallingServerTestBase
     {
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsync_Returns201Created(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions createCallOptions)

@@ -1,0 +1,101 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://acstestbot3.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "Date": "Mon, 14 Jun 2021 17:21:12 GMT",
+        "traceparent": "00-dfd06ede7e0f0449a7d35af75ef5e3e9-9a26d983c0174042-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20210611.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "4a8dfd3263738ac9bffadf76b525e2b8",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Jun 2021 17:21:13 GMT",
+        "MS-CV": "dRut8b/SOE6\u002BS0PzwJhk8w.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0CZDHYAAAAADSVFTO97wUR7cgQUImNqJ1V1NURURHRTA4MjAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "4a8dfd3263738ac9bffadf76b525e2b8",
+        "X-Processing-Time": "61ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-ab6c-4ade-ceb1-a43a0d0055e7"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://acstestbot3.communication.azure.com/calling/callConnections?api-version=2021-06-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "388",
+        "Content-Type": "application/json",
+        "Date": "Mon, 14 Jun 2021 17:21:14 GMT",
+        "traceparent": "00-de3de5ac2badb94aaf6ddc8f99ef4980-419d20be67129d48-00",
+        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210611.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "6f1a9c7f58aee91b1ace0cb4c270235f",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "alternateCallerId": {
+          "value": "Sanitized"
+        },
+        "targets": [
+          {
+            "phoneNumber": {
+              "value": "Sanitized"
+            }
+          }
+        ],
+        "source": {
+          "communicationUser": {
+            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-ab6c-4ade-ceb1-a43a0d0055e7"
+          }
+        },
+        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
+        "requestedMediaTypes": [
+          "audio"
+        ],
+        "requestedCallEvents": [
+          "participantsUpdated",
+          "dtmfReceived"
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "110",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Jun 2021 17:21:15 GMT",
+        "X-Azure-Ref": "0CpDHYAAAAABTFocA3f5JQpGIllR73wb9V1NURURHRTA4MjAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Microsoft-Skype-Chain-ID": "788ab75a-a432-4de9-9816-22f6ce735be2",
+        "x-ms-client-request-id": "6f1a9c7f58aee91b1ace0cb4c270235f"
+      },
+      "ResponseBody": {
+        "callLegId": "c21f1300-5796-408d-8886-d1bc52bf8d15",
+        "callConnectionId": "c21f1300-5796-408d-8886-d1bc52bf8d15"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_PHONE_NUMBER": "Sanitized",
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://acstestbot3.communication.azure.com/;accesskey=Kg==",
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acstestbot3.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1509644270"
+  }
+}
