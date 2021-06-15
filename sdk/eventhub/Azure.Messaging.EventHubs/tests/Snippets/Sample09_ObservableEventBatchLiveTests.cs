@@ -208,7 +208,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     }
                 }
 
-                // check if event 1 is in the batch, check that events are observable
                 var contains = false;
                 foreach (var singleEvent in newbatch.Events)
                 {
