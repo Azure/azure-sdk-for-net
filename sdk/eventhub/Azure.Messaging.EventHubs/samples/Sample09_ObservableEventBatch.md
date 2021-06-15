@@ -23,7 +23,7 @@ The benefit of this approach is that it utilizes all of the existing methods for
 
 #### Trade-offs
 
-The trade-off of this approach is that as mentioned above it does not prevent issues where the two disntinct set of events (the actual `EventBatch` events and the visible list of events) go out of sync. There are two ways that this could happen, the first is if the events returned by `ObservableDataBatch.Events` are mutated by the application. The second way this could happen is if `TryAdd` is called on the reference to the `EventDataBatch` after it has been casted, this would call `EventDataBatch.TryAdd()` rather than `ObservableEventDataBatch.TryAdd()` leading to the events being in the batch that are not reflected in the visible `ObservableDataBatch.Events` variable.
+The trade-off of this approach is that as mentioned above it does not prevent issues where the two disntinct set of events (the actual `EventBatch` events and the visible list of events) go out of sync. There are two ways that this could happen, the first is if the events returned by `ObservableDataBatch.Events` are mutated by the application. The second way this could happen is if `TryAdd` is called on the reference to the `EventDataBatch` after it has been casted from an `ObservableEventDataBatch`, this would call `EventDataBatch.TryAdd()` rather than `ObservableEventDataBatch.TryAdd()` leading to added events being in the actual batch to send that are not reflected in the visible `ObservableDataBatch.Events` variable.
 
 ```C# Snippet:Sample09_ObservableEventBatch
 public class ObservableEventDataBatch : IDisposable
