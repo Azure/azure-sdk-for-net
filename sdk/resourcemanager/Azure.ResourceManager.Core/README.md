@@ -73,9 +73,14 @@ This represents a full resource object which contains a **Data** property exposi
 It also has access to all of the operations and like the **[Resource]Operations** object is already scoped
 to a specific resource in Azure.
 
-### Additional concepts
+### Migrating from current to preview versions
+There are core differences between the current and new preview SDK.
+The main ones are:
+- The introduction of Resource Operations.
+- An structured Resource Identifier.
 
-> Put the old vs new here
+You can learn more about the main differences [in this document](docs\MigratingFromCurrentToPreview.md) and reading the examples below.
+
 
 ## Examples
 ### Add a tag to a virtual machine
