@@ -17,6 +17,10 @@
     </Description>
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- TODO: Remove this after HttpAuthorization moves to Core -->
+    <NoWarn>$(NoWarn);AZC0001;</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
@@ -32,7 +36,6 @@
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
     <Compile Include="Shared\GeoRedundantReadPolicy.cs" />
-    <Compile Include="Shared\HttpAuthorization.cs" />
     <Compile Include="Shared\SasExtensions.cs" />
     <Compile Include="Shared\SasQueryParametersInternals.cs" />
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />
