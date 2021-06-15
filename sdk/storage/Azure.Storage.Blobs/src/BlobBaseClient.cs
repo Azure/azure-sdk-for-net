@@ -2952,7 +2952,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions destinationConditions,
             BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
-            AuthenticationHeaderValue sourceAuthentication,
+            HttpAuthorization sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {

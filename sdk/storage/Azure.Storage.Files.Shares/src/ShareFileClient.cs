@@ -4185,7 +4185,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range,
             HttpRange sourceRange,
             ShareFileRequestConditions conditions,
-            AuthenticationHeaderValue sourceAuthentication,
+            HttpAuthorization sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {

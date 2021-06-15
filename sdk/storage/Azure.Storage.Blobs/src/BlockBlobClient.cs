@@ -1541,7 +1541,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             RequestConditions sourceConditions,
             BlobRequestConditions conditions,
-            AuthenticationHeaderValue sourceAuthentication,
+            HttpAuthorization sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2832,12 +2832,6 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
 
-                    string sourceAuthString = null;
-                    if (options?.SourceAuthentication != null)
-                    {
-                        sourceAuthString = $"{options.SourceAuthentication.Scheme} {options.SourceAuthentication.Parameter}";
-                    }
-
                     if (async)
                     {
                         response = await BlockBlobRestClient.PutBlobFromUrlAsync(
@@ -2870,7 +2864,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2906,7 +2900,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 

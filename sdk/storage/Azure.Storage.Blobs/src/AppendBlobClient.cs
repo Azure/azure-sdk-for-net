@@ -1507,7 +1507,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             AppendBlobRequestConditions conditions,
             AppendBlobRequestConditions sourceConditions,
-            AuthenticationHeaderValue sourceAuthentication,
+            HttpAuthorization sourceAuthentication,
             bool async,
             CancellationToken cancellationToken = default)
         {

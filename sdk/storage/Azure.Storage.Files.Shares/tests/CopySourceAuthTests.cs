@@ -54,7 +54,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 string sourceBearerToken = await GetAuthToken();
 
-                AuthenticationHeaderValue sourceAuthHeader = new AuthenticationHeaderValue(
+                HttpAuthorization sourceAuthHeader = new HttpAuthorization(
                     "Bearer",
                     sourceBearerToken);
 
@@ -107,9 +107,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareFileClient fileClient = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
                 await fileClient.CreateAsync(Constants.KB);
 
-                AuthenticationHeaderValue sourceAuthHeader = new AuthenticationHeaderValue(
+                HttpAuthorization sourceAuthHeader = new HttpAuthorization(
                     "Bearer",
-                    string.Empty);
+                    "auth token");
 
                 ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
                 {

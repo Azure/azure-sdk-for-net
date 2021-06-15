@@ -541,7 +541,7 @@ namespace Azure.Storage.Test.Shared
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                return string.Empty;
+                return "auth token";
             }
 
             IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)

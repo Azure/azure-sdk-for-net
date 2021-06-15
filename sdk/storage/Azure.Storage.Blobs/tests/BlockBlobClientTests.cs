@@ -909,7 +909,7 @@ namespace Azure.Storage.Blobs.Test
 
             string sourceBearerToken = await GetAuthToken();
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
                 sourceBearerToken);
 
@@ -946,9 +946,9 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
-                string.Empty);
+                "auth token");
 
             StageBlockFromUriOptions options = new StageBlockFromUriOptions
             {
@@ -3535,7 +3535,7 @@ namespace Azure.Storage.Blobs.Test
 
             string sourceBearerToken = await GetAuthToken();
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
                 sourceBearerToken);
 
@@ -3568,9 +3568,9 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
             await sourceBlob.UploadAsync(stream);
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
-                string.Empty);
+                "auth token");
 
             BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {

@@ -2934,7 +2934,7 @@ namespace Azure.Storage.Blobs.Test
 
             string sourceBearerToken = await GetAuthToken();
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
                 sourceBearerToken);
 
@@ -2972,9 +2972,9 @@ namespace Azure.Storage.Blobs.Test
             await destBlob.CreateIfNotExistsAsync(Constants.KB);
             HttpRange range = new HttpRange(0, Constants.KB);
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
-                string.Empty);
+                "auth token");
 
             PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
             {

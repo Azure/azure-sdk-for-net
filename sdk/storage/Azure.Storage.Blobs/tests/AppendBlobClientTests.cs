@@ -1383,7 +1383,7 @@ namespace Azure.Storage.Blobs.Test
 
             string sourceBearerToken = await GetAuthToken();
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
                 sourceBearerToken);
 
@@ -1416,9 +1416,9 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             await destBlob.CreateIfNotExistsAsync();
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
-                string.Empty);
+                "auth token");
 
             AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
             {

@@ -3314,7 +3314,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             string sourceBearerToken = await GetAuthToken();
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
                 sourceBearerToken);
 
@@ -3352,9 +3352,9 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             string sourceTokenCredential = await GetAuthToken();
 
-            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+            HttpAuthorization sourceAuth = new HttpAuthorization(
                 "Bearer",
-                string.Empty);
+                "auth token");
 
             BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
             {

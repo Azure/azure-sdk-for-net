@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.Http.Headers;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
@@ -38,6 +37,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional.  Source authentication used to access the source blob.
         /// </summary>
-        public AuthenticationHeaderValue SourceAuthentication { get; set; }
+        public HttpAuthorization SourceAuthentication { get; set; }
     }
 }
