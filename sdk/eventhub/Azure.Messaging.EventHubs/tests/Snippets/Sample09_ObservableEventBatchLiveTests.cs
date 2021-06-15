@@ -216,11 +216,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 Assert.IsTrue(contains);
 
                 // check count is set, this means that events were successfully added to _batch
-                Assert.IsTrue(newbatch.Count > 0);
+                Assert.Greater(newbatch.Count, 0);
 
                 // check that the number of events is the same in both the observable wrapper
                 // class and the internal EventDataBatch class
-                Assert.IsTrue(newbatch.Count == newbatch.Events.Count);
+                Assert.AreEqual(newbatch.Count, newbatch.Events.Count);
 
                 // check implicit casting by verifying batch can be sent using built in
                 // producer method
