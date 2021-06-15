@@ -26,7 +26,7 @@ In the case of Tables, the modern client library is named `Azure.Data.Tables` an
 
 ### Constructing the clients
 
-Previously in `Microsoft.Azure.Comsmos.Table`, you would create a `CloudStorageAccount` in order to get an instance of the `CloudTableClient`.
+Previously in `Microsoft.Azure.Comsmos.Table`, you would create a `CloudStorageAccount` in order to get an instance of the `CloudTableClient` in order to perform service level operations.
 
 ```C#
 // Create the CloudStorageAccount using StorageCredentials.
@@ -34,9 +34,11 @@ CloudStorageAccount storageAccount = new CloudStorageAccount(
     new StorageCredentials(accountName, storageAccountKey),
     storageUri);
  
+ // Get a reference to the cloud table client.
+ CloudTableClient tableClient = storageAccount.CreateCloudTableClient(new TableClientConfiguration());
 ```
 
-Now, in `Azure.Data.Tables`, we have the `TableServiceClient` and `TableClient`. Note that according to our guidelines, these types always end with "Client".
+Now, in `Azure.Data.Tables`, we only need a `TableServiceClient` for service level operations.
 
 ```C# Snippet:TablesSample1CreateClient
 // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
@@ -46,14 +48,18 @@ var serviceClient = new TableServiceClient(
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
-```C#
-// Create a table client.
-CloudTableClient tableClient = storageAccount.CreateCloudTableClient(new TableClientConfiguration());
+### Creating a table
 
+In `Microsoft.Azure.Comsmos.Table` need a `CloudTable` instance to create a table, which is returned from the `CloudTableClient`.
+
+```C#
+// Create a table client and create the table if it doesn't already exist.
+string tableName = "OfficeSupplies1p1";
+CloudTable table = tableClient.GetTableReference(tableName);
+table.CreateIfNotExists()
 ```
 
-### Create an Azure table
-Next, we can create a new table.
+With `Azure.Data.Tables` we can complete all table level operations directly from the `TableServiceClient`.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
@@ -62,51 +68,12 @@ TableItem table = serviceClient.CreateTable(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
-### Get an Azure table
-The set of existing Azure tables can be queries using an OData filter.
+It's also possible to create a table from the `TableClient`.
+```Snippet:TablesMigrationCreateTableWithClient
 
-```C# Snippet:TablesSample3QueryTables
-// Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
-
-Pageable<TableItem> queryTableResults = serviceClient.Query(filter: $"TableName eq '{tableName}'");
-
-Console.WriteLine("The following are the names of the tables in the query results:");
-
-// Iterate the <see cref="Pageable"> in order to access queried tables.
-
-foreach (TableItem table in queryTableResults)
-{
-    Console.WriteLine(table.Name);
-}
 ```
 
-### Delete an Azure table
-
-Individual tables can be deleted from the service.
-
-```C# Snippet:TablesSample1DeleteTable
-// Deletes the table made previously.
-string tableName = "OfficeSupplies1p1";
-serviceClient.DeleteTable(tableName);
-```
-
-### Create the Table client
-
-To interact with table entities, we must first construct a `TableClient`.
-
-```C# Snippet:TablesSample2CreateTableWithTableClient
-// Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
-
-var tableClient = new TableClient(
-    new Uri(storageUri),
-    tableName,
-    new TableSharedKeyCredential(accountName, storageAccountKey));
-
-// Create the table in the service.
-tableClient.Create();
-```
-
-### Add table entities
+### Adding data to the table
 
 Let's define a new `TableEntity` so that we can add it to the table.
 
