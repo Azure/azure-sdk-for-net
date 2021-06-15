@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="key"> The key of the document the answer was extracted from. </param>
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.AnswerResult"/> instance for mocking. </returns>
         public static AnswerResult AnswerResult(double? score = default, string key = default, string text = default, string highlights = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes new instance of CaptionResult class. </summary>
         /// <param name="text"> A representative text passage extracted from the document most relevant to the search query. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.CaptionResult"/> instance for mocking. </returns>
         public static CaptionResult CaptionResult(string text = default, string highlights = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
