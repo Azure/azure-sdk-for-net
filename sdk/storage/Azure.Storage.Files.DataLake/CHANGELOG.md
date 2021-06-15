@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.8.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
+- Added support for Parquet as an input format in DataLakeFileClient.Query().
 
 
 ## 12.7.0 (2021-06-08)

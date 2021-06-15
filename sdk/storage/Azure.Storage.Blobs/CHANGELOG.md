@@ -1,15 +1,13 @@
 # Release History
 
 ## 12.10.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- Added support for Immutable Storage with Versioning
+    - Added BlobBaseClient.SetImmutibilityPolicy()
+    - Added BlobBaseClient.DeleteImmutabilityPolicy()
+    - Added BlobBaseClient.SetLegalHold()
+- Added support for listing deleted root blobs with versions to BlobContainerClient.GetBlobs() and .GetBlobsByHierarchy()
+- Added support for OAuth copy sources for synchronous copy operations.
+- Added support for Parquet as an input format in BlockBlobClient.Query().
 
 ## 12.9.0 (2021-06-08)
 - Includes all features from 12.9.0-beta.4.
