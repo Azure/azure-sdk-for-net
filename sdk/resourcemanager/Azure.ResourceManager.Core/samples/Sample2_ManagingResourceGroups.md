@@ -8,8 +8,8 @@ When you first create your ARM client, choose the subscription you're going to w
     Subscription subscription = armClient.DefaultSubscription;
 ```
 
-This is a scoped operations object, and any operations you perform will be done under that subscription.  From this object you have access to all children via container objects
-or you can access individual children by id.
+This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
+
 ```csharp
     ArmClient armClient = new ArmClient(new DefaultAzureCredential());
     Subscription subscription = armClient.DefaultSubscription;
