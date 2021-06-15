@@ -215,12 +215,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 }
                 Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
 
-                // check count is set, this means that events were successfully added to _batch
-                Assert.Greater(newbatch.Count, 0);
-
-                // check that the number of events is the same in both the observable wrapper
-                // class and the internal EventDataBatch class
-                Assert.AreEqual(newbatch.Count, newbatch.Events.Count);
+                Assert.Greater(newbatch.Count, 0, "Events were not successfully added to the batch");
+                Assert.AreEqual(newbatch.Count, newbatch.Events.Count, "The observable batch events are out of sync with the event batch data");
 
                 // check implicit casting by verifying batch can be sent using built in
                 // producer method
