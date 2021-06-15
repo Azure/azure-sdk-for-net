@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -27,21 +29,46 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task Create()
+        public async Task CreateOrUpdate()
         {
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value"}
+            };
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2, tags).CreateOrUpdateAsync(rgName);
             Assert.AreEqual(rgName, rg.Data.Name);
+
+            Assert.Throws<ArgumentNullException>(() => { Client.DefaultSubscription.GetResourceGroups().Construct(null); });
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(null, new ResourceGroupData(LocationData.WestUS2)));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(" ", new ResourceGroupData(LocationData.WestUS2)));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task StartCreate()
+        public async Task StartCreateOrUpdate()
         {
             string rgName = Recording.GenerateAssetName("testRg-");
             var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(rgName);
             ResourceGroup rg = await rgOp.WaitForCompletionAsync();
             Assert.AreEqual(rgName, rg.Data.Name);
+
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                var rgOp = await Client.DefaultSubscription.GetResourceGroups().StartCreateOrUpdateAsync(null, new ResourceGroupData(LocationData.WestUS2));
+                _ = await rgOp.WaitForCompletionAsync();
+            });
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                var rgOp = await Client.DefaultSubscription.GetResourceGroups().StartCreateOrUpdateAsync(" ", new ResourceGroupData(LocationData.WestUS2));
+                _ = await rgOp.WaitForCompletionAsync();
+            });
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var rgOp = await Client.DefaultSubscription.GetResourceGroups().StartCreateOrUpdateAsync(rgName, null);
+                _ = await rgOp.WaitForCompletionAsync();
+            });
         }
 
         [TestCase]
