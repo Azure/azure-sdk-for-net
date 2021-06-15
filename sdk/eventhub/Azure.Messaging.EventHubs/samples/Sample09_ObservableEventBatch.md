@@ -1,6 +1,6 @@
 # Observable Event Data Batch
 
-This sample demonstrates how to write an `ObservableEventDataBatch` wrapper class that allows an application to read events that have been added to a batch. This is unlike the standard `EventDataBatch` class which restricts the application from accessing `EventData` instances once they have been added successfully. There are two main reasons for this. The first being due to the goal of the `EventDataBatch` class, which is to verify that a batch of events does not exceed the size limits set by the `EventHub`. The second reason for this stems from the mutable nature of  `EventData` objects. 
+This sample demonstrates how to write an `ObservableEventDataBatch` class wraps an `EventDataBatch` to allow an application to read events that have been added to a batch. This is unlike the standard `EventDataBatch` class which restricts the application from accessing `EventData` instances once they have been accepted into the batch. `EventDataBatch` has this limitation to ensure that the state of the batch remains consistent and valid as events are added, and that it can successfully be published.
 
 #### Issues: Batch Invalidation and Observable Events Sync
 
