@@ -187,8 +187,7 @@ function Confirm-ChangeLogEntry {
     }
     if ($emptySections.Count -gt 0)
     {
-      LogError "Entry has empty changelog section(s) shown below. Please make sure there are no empty changelog section."
-      Write-Host ($emptySections -Join ", ")
+      LogError "The changelog entry has the following sections with no content ($($emptySections -join ', ')). Please ensure to either remove the empty sections or add content to the section."
       return $false
     }
   }
