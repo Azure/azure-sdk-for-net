@@ -7,9 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Azure.Core;
-using Azure.Core.Pipeline;
-
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
@@ -950,28 +947,6 @@ namespace Azure.ResourceManager.Core
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// ListResources of type T
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
-        {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
-        }
-
-        /// <summary>
-        /// ListResourcesAsync of type T
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, AsyncPageable<T>> func)
-        {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
     }
 }
