@@ -133,9 +133,10 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
-        private BlobClientOptions GetBlobOptions(bool parallelRange = false)
+        private BlobClientOptions GetBlobOptions(
+            bool parallelRange = false)
         {
-            var options = new BlobClientOptions()
+            var options = new BlobClientOptions(ToBlobServiceVersion(_serviceVersion))
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
@@ -154,5 +155,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             return InstrumentClientOptions(options);
         }
+
+        private BlobClientOptions.ServiceVersion ToBlobServiceVersion(ShareClientOptions.ServiceVersion shareServiceVersion)
+            => (BlobClientOptions.ServiceVersion)Enum.Parse(typeof(BlobClientOptions.ServiceVersion), shareServiceVersion.ToString());
     }
 }
