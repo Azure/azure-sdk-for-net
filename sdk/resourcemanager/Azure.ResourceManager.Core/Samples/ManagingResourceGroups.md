@@ -46,7 +46,7 @@ Using the container object we can perform collection level operations such as li
     }
 ```
 
-Using the operation object we can perform entity level operations such as updating existing resource groups or deleting them
+Using the operation object we can perform entity-level operations, such as updating or deleting existing resource groups.
 
 ***Update a resource group***
 
