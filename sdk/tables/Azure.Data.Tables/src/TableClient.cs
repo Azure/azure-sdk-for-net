@@ -14,7 +14,7 @@ using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Queryable;
 using Azure.Data.Tables.Sas;
 
-namespace Azure.Data.Tables
+namespace Azure.Data.Tables 
 {
     /// <summary>
     /// The <see cref="TableClient"/> allows you to interact with Azure Tables hosted in either Azure storage accounts or Azure Cosmos DB table API.
@@ -80,7 +80,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, TableClientOptions options = null)
+        public TableClientError(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, null, default, default, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
