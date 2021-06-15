@@ -1,8 +1,8 @@
 Example: Managing Resource Groups
 --------------------------------------
 
-When you first create your armClient you will want to choose which subscription you are going to work in.  There is a convenient **DefaultSubscription** property which will return
-the default subscription configured for your user.
+When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
+
 ```csharp
     ArmClient armClient = new ArmClient(new DefaultAzureCredential());
     Subscription subscription = armClient.DefaultSubscription;

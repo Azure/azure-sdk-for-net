@@ -142,7 +142,7 @@ await foreach (ResourceGroup rg in response)
 }
 ```
 
-For more detailed examples, take a look at [samples](Samples/) we have available.
+For more detailed examples, take a look at [samples](samples/) we have available.
 
 ## Troubleshooting
 
@@ -156,8 +156,8 @@ For more detailed examples, take a look at [samples](Samples/) we have available
 ## Next Steps
 ### More sample code
 
-- [Managing Resource Groups](Samples/ManagingResourceGroups.md)
-- [Creating a Virtual Network](Samples/CreatingAVirtualNetwork.md)
+- [Managing Resource Groups](samples/ManagingResourceGroups.md)
+- [Creating a Virtual Network](samples/CreatingAVirtualNetwork.md)
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
