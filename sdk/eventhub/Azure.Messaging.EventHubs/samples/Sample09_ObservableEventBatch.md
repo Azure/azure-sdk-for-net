@@ -11,7 +11,6 @@ In order to make sure that once an event is successfully added to the batch it w
 
 Another issue is with equality. `EventData` objects do not have a strong and deterministic way to define equality, since the meaning of two events being equal can be different depending on the application. This creates confusion and can cause unnecessary issues in some applications.
 
-#### Considerations:
 Using this approach **does not** protect from the inherent risks as discussed above. If the application decides to alter `EventData` objects found in the `Events` variable, these changes will not be reflected in the events in the actual Batch. The issues with equality also still apply to the events in the `ObservableDataBatch` since these are different instances than the ones actually found in the underlying `_batch` variable. 
 
 #  Implicit Casting
