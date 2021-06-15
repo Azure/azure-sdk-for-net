@@ -15,8 +15,9 @@ namespace CosmosDB.Tests.ScenarioTests
     {
         const string location = "eastus2";
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "sqltestaccount";
-        const string databaseName = "database1";
+        const string databaseAccountName = "sqltestaccount124";
+        const string databaseName = "TestDB1";
+        const string containerName = "TestContainer2";
 
         [Fact]
         public void RetrieveContinuousBackupInfoTest()
@@ -28,7 +29,6 @@ namespace CosmosDB.Tests.ScenarioTests
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
                 ContinuousBackupRestoreLocation restoreLocation = new ContinuousBackupRestoreLocation(location);
 
-                string containerName = Guid.NewGuid().ToString();
                 SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters()
                 {
                     Resource = new SqlContainerResource(containerName, partitionKey: new ContainerPartitionKey(new List<String>() { "/id" })),
@@ -64,7 +64,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new ThroughputSettingsResource()
                     {
                         Throughput = 4000
-                    },
+                    }
                 };
                 ThroughputSettingsGetResults throughputSettingsGetResults = cosmosDBManagementClient.SqlResources.UpdateSqlContainerThroughput(
                     resourceGroupName,

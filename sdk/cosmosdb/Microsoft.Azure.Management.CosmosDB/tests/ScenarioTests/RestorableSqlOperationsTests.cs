@@ -18,7 +18,7 @@ namespace CosmosDB.Tests.ScenarioTests
     {
         const string location = "eastus2";
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "sqltestaccount";
+        const string databaseAccountName = "sqltestaccount124";
 
         [Fact]
         public async Task RestorableSqlTests()
@@ -50,16 +50,16 @@ namespace CosmosDB.Tests.ScenarioTests
                 RestorableSqlDatabaseGetResult restorableSqlDatabase = restorableSqlDatabases.Where(account => account.Resource.Database.Id.Equals("database1")).SingleOrDefault();
                 Assert.NotNull(restorableSqlDatabase);
 
-                Assert.Equal(2, restorableSqlDatabases.Count());
+                Assert.Equal(3, restorableSqlDatabases.Count());
 
                 string dbRid = restorableSqlDatabase.Resource.OwnerResourceId;
 
                 List<RestorableSqlContainerGetResult> restorableSqlContainers =
                     (await cosmosDBManagementClient.RestorableSqlContainers.ListAsync(location, restorableDatabaseAccount.Name, dbRid)).ToList();
 
-                Assert.True(restorableSqlContainers.Count() > 0);
+                Assert.Equal(2, restorableSqlContainers.Count());
 
-                string restoreTimestamp = DateTime.UtcNow.AddMinutes(-1).ToString();
+                string restoreTimestamp = DateTime.ParseExact("16-06-21 06:20:00", "dd-MM-yy HH:mm:ss", null).ToString(); // use - DateTime.UtcNow.AddMinutes(-1).ToString() when generating json file
                 List<DatabaseRestoreResource> restorableSqlResources =
                     (await cosmosDBManagementClient.RestorableSqlResources.ListAsync(location, restorableDatabaseAccount.Name, location, restoreTimestamp.ToString())).ToList();
 
@@ -75,10 +75,17 @@ namespace CosmosDB.Tests.ScenarioTests
                     CollectionNames = new List<string>()
                 };
 
+                DatabaseRestoreResource databaseRestoreResource3 = new DatabaseRestoreResource()
+                {
+                    DatabaseName = "TestDB1",
+                    CollectionNames = new List<string>() { "TestContainer1" }
+                };
+
                 List<DatabaseRestoreResource> resources = new List<DatabaseRestoreResource>()
                 {
                     databaseRestoreResource1,
-                    databaseRestoreResource2
+                    databaseRestoreResource2,
+                    databaseRestoreResource3
                 };
 
                 ValidateDatabaseRestoreResource(resources, restorableSqlResources);

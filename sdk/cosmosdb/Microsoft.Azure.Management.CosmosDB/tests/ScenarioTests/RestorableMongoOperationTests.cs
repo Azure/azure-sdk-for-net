@@ -47,8 +47,8 @@ namespace CosmosDB.Tests.ScenarioTests
                 // Create client
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler);
                 DatabaseAccountGetResults databaseaccount = await RestorableMongoOperationsTests.CreateDatabaseAccountIfNotExists(cosmosDBManagementClient);
-
-                await RestorableMongodbTestHelper(cosmosDBManagementClient, databaseaccount.InstanceId, DateTime.UtcNow.AddMinutes(-1), resources);
+                DateTime restoreTime = DateTime.ParseExact("15-06-21 23:30:00", "dd-MM-yy HH:mm:ss", null); // use - DateTime.UtcNow.AddMinutes(-1) when generating json file
+                await RestorableMongodbTestHelper(cosmosDBManagementClient, databaseaccount.InstanceId, restoreTime, resources);
             }
         }
 
@@ -81,7 +81,8 @@ namespace CosmosDB.Tests.ScenarioTests
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler);
                 DatabaseAccountGetResults databaseaccount = await RestorableMongoOperationsTests.CreateDatabaseAccountIfNotExists(cosmosDBManagementClient);
 
-                await RestorableMongodbTestHelper(cosmosDBManagementClient, databaseaccount.InstanceId, DateTime.UtcNow.AddMinutes(-1), resources);
+                DateTime restoreTime = DateTime.ParseExact("15-06-21 23:30:00", "dd-MM-yy HH:mm:ss", null); // use - DateTime.UtcNow.AddMinutes(-1) when generating json file
+                await RestorableMongodbTestHelper(cosmosDBManagementClient, databaseaccount.InstanceId, restoreTime, resources);
             }
         }
 

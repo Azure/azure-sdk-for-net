@@ -21,13 +21,12 @@ namespace CosmosDB.Tests.ScenarioTests
         const string resourceGroupName = "CosmosDBResourceGroup3668";
         const string databaseAccountName = "cli126";
         const string databaseAccountName2 = "rbac126";
+        const string databaseAccountName3 = "cli127";
 
         const string databaseName = "databaseName";
         const string databaseName2 = "databaseName2";
-        const string databaseName3 = "databaseName3";
         const string containerName = "containerName";
         const string containerName2 = "containerName2";
-        const string containerName3 = "TestContainer3";
         const string storedProcedureName = "storedProcedureName";
         const string triggerName = "triggerName";
         const string userDefinedFunctionName = "userDefinedFunctionName";
@@ -464,42 +463,29 @@ namespace CosmosDB.Tests.ScenarioTests
             {
                 // Create client
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
-                DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.GetWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.GetWithHttpMessagesAsync(resourceGroupName, databaseAccountName3).GetAwaiter().GetResult().Body;
 
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
                 {
-                    Resource = new SqlDatabaseResource { Id = databaseName3 },
+                    Resource = new SqlDatabaseResource { Id = databaseName },
                     Options = new CreateUpdateOptions()
                 };
 
-                SqlDatabaseGetResults sqlDatabaseGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName3, sqlDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlDatabaseGetResults sqlDatabaseGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName3, databaseName, sqlDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults);
-                Assert.Equal(databaseName3, sqlDatabaseGetResults.Name);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
 
-                string startTime = DateTime.UtcNow.AddHours(-1).ToString();
-                string endTime = DateTime.UtcNow.ToString();
+                string startTime = DateTime.ParseExact("15-06-21 21:30:00", "dd-MM-yy HH:mm:ss", null).ToString();//DateTime.UtcNow.AddHours(-1).ToString();
+                string endTime = DateTime.ParseExact("16-06-21 17:00:00", "dd-MM-yy HH:mm:ss", null).ToString(); //DateTime.UtcNow.ToString();
                 List<RestorableSqlContainerGetResult> restorableContainerResult = (await cosmosDBManagementClient.RestorableSqlContainers.ListAsync(
                     location,
                     databaseAccount.InstanceId,
                     sqlDatabaseGetResults.Resource._rid,
                     startTime,
                     endTime)).ToList();
+
                 Assert.NotNull(restorableContainerResult);
-                Assert.Single(restorableContainerResult);
-
-                cosmosDBManagementClient.SqlResources.DeleteSqlContainer(resourceGroupName, databaseAccountName, databaseName3, containerName3);
-
-                endTime = DateTime.UtcNow.ToString();
-                restorableContainerResult = (await cosmosDBManagementClient.RestorableSqlContainers.ListAsync(
-                    location,
-                    databaseAccount.InstanceId,
-                    sqlDatabaseGetResults.Resource._rid,
-                    startTime,
-                    endTime)).ToList();
-                Assert.NotNull(restorableContainerResult);
-                Assert.Equal(2, restorableContainerResult.Count());
-
-                await cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
+                Assert.True(restorableContainerResult.Count() > 0);
             }
         }
 
