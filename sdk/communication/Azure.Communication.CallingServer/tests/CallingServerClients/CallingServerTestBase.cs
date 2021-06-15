@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer.Tests
             return new CallingServerClient(connectionString, callingServerClientOptions);
         }
 
-        internal CallingServerClient CreateMockCallingServerClient(MockResponse[] mockResponses)
+        internal CallingServerClient CreateMockCallingServerClient(params MockResponse[] mockResponses)
         {
             var callingServerClientOptions = new CallingServerClientOptions
             {
