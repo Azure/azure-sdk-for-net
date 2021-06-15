@@ -26,6 +26,13 @@ namespace Azure.Monitor.Query
         public bool IncludeStatistics { get; set; }
 
         /// <summary>
+        /// Gets or sets the value indicating whether to include query visualization as part of the response.
+        /// Visualization can be retrieved via the <see cref="LogsQueryResult.Visualization"/> property.
+        /// Defaults to <c>false</c>.
+        /// </summary>
+        public bool IncludeVisualization { get; set; }
+
+        /// <summary>
         /// Gets a list of additional workspaces names to include in the query.
         /// </summary>
         public IList<string> AdditionalWorkspaces { get; } = new ChangeTrackingList<string>();

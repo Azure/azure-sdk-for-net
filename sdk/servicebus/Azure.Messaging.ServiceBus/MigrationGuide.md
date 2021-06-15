@@ -103,7 +103,7 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 
 #### Administration client
 
-This replaces the `ManagementClient` from `Microsoft.Azure.ServiceBus`. For example usage please see the sample for [creating a subscription with a connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample07_CrudOperations.md).
+The `ServiceBusAdministrationClient` replaces the `ManagementClient` from `Microsoft.Azure.ServiceBus`. For example usage please see the sample for [CRUD operations using the `ServiceBusAdministrationClient`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample07_CrudOperations.md).
 
 
 Authenticate with Active Directory:

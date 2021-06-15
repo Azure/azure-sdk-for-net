@@ -53,6 +53,27 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        public void VerifyImdsRequestFailurePopulatesExceptionMessage()
+        {
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null } }))
+            {
+                var expectedMessage = "No MSI found for specified ClientId/ResourceId.";
+                var response = CreateErrorMockResponse(400, expectedMessage);
+                var mockTransport = new MockTransport(response);
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
+                var pipeline = CredentialPipeline.GetInstance(options);
+
+                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline, "mock-client-id") };
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(client));
+
+                var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                Assert.That(ex.Message, Does.Contain(expectedMessage));
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
         [TestCase(400)]
         [TestCase(502)]
         public void VerifyImdsRequestHandlesFailedRequestWithCredentialUnavailableExceptionMockAsync(int responseCode)
@@ -70,7 +91,7 @@ namespace Azure.Identity.Tests
 
                 var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-                Assert.That(ex.Message.Contains(ImdsManagedIdentitySource.IdentityUnavailableError));
+                Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.IdentityUnavailableError));
             }
         }
 
@@ -312,6 +333,13 @@ namespace Azure.Identity.Tests
         {
             var response = new MockResponse(responseCode);
             response.SetContent($"{{ \"access_token\": \"{token}\", \"expires_on\": \"3600\" }}");
+            return response;
+        }
+
+        private MockResponse CreateErrorMockResponse(int responseCode, string message)
+        {
+            var response = new MockResponse(responseCode);
+            response.SetContent($"{{\"StatusCode\":400,\"Message\":\"{message}\",\"CorrelationId\":\"f3c9aec0-7fa2-4184-ad0f-0c68ce5fc748\"}}");
             return response;
         }
     }

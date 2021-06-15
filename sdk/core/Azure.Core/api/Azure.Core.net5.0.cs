@@ -463,10 +463,12 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null) { throw null; }
         public string? Claims { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
+        public string? TenantId { get { throw null; } }
     }
 }
 namespace Azure.Core.Cryptography

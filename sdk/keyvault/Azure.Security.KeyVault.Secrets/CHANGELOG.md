@@ -1,7 +1,11 @@
 # Release History
 
-## 4.2.0-beta.6 (Unreleased)
+## 4.2.0 (2021-06-15)
 
+### Features Added
+
+- Changed default service version to "7.2".
+- Added `KeyVaultSecretIdentifier` to parse certificate URIs.
 
 ## 4.2.0-beta.5 (2021-05-11)
 
