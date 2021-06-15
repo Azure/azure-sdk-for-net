@@ -5,7 +5,6 @@ namespace Azure.Communication.CallingServer
         internal AddParticipantResult() { }
         public string ParticipantId { get { throw null; } }
     }
-
     public partial class AddParticipantResultEvent : Azure.Communication.CallingServer.CallingServerEventBase
     {
         public AddParticipantResultEvent() { }
