@@ -1,6 +1,7 @@
 # Release History
 
 ## 12.10.0-beta.1 (Unreleased)
+- Added support for service version 2020-10-02.
 - Added support for Immutable Storage with Versioning
     - Added BlobBaseClient.SetImmutibilityPolicy()
     - Added BlobBaseClient.DeleteImmutabilityPolicy()
