@@ -455,9 +455,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AzureBlobDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate) { }
+        public Azure.AI.MetricsAdvisor.Models.AzureBlobDataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
         public string BlobTemplate { get { throw null; } set { } }
         public string Container { get { throw null; } set { } }
         public void UpdateConnectionString(string connectionString) { }
+        public enum AuthenticationType
+        {
+            Basic = 0,
+            ManagedIdentity = 1,
+        }
     }
     public partial class AzureCosmosDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
@@ -470,17 +476,41 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AzureDataExplorerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataExplorerDataFeedSource(string connectionString, string query) { }
+        public Azure.AI.MetricsAdvisor.Models.AzureDataExplorerDataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
+        public string DatasourceCredentialId { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public void UpdateConnectionString(string connectionString) { }
+        public enum AuthenticationType
+        {
+            Basic = 0,
+            ManagedIdentity = 1,
+            ServicePrincipal = 2,
+            ServicePrincipalInKeyVault = 3,
+        }
     }
     public partial class AzureDataLakeStorageGen2DataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataLakeStorageGen2DataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate) { }
         public string AccountName { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.AzureDataLakeStorageGen2DataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
+        public string DatasourceCredentialId { get { throw null; } set { } }
         public string DirectoryTemplate { get { throw null; } set { } }
         public string FileSystemName { get { throw null; } set { } }
         public string FileTemplate { get { throw null; } set { } }
         public void UpdateAccountKey(string accountKey) { }
+        public enum AuthenticationType
+        {
+            Basic = 0,
+            SharedKey = 1,
+            ServicePrincipal = 2,
+            ServicePrincipalInKeyVault = 3,
+        }
+    }
+    public partial class AzureEventHubsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
+    {
+        public AzureEventHubsDataFeedSource(string connectionString, string consumerGroup) { }
+        public string ConsumerGroup { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class AzureTableDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
@@ -740,9 +770,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureDataExplorer { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureDataLakeStorageGen2 { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureEventHubs { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureLogAnalytics { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureTable { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType InfluxDb { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType LogAnalytics { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType MongoDb { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType MySql { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType PostgreSql { get { throw null; } }
@@ -919,6 +949,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static implicit operator Azure.AI.MetricsAdvisor.Models.IngestionStatusType (string value) { throw null; }
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.IngestionStatusType left, Azure.AI.MetricsAdvisor.Models.IngestionStatusType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class LogAnalyticsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
+    {
+        public LogAnalyticsDataFeedSource(string workspaceId, string query) { }
+        public LogAnalyticsDataFeedSource(string workspaceId, string query, string clientId, string clientSecret, string tenantId) { }
+        public string ClientId { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public string WorkspaceId { get { throw null; } set { } }
+        public void UpdateClientSecret(string clientSecret) { }
     }
     public partial class MetricAnomalyAlertConditions
     {
@@ -1183,8 +1223,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SqlServerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public SqlServerDataFeedSource(string connectionString, string query) { }
+        public Azure.AI.MetricsAdvisor.Models.SqlServerDataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
+        public string DatasourceCredentialId { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public void UpdateConnectionString(string connectionString) { }
+        public enum AuthenticationType
+        {
+            Basic = 0,
+            ManagedIdentity = 1,
+            SqlConnectionString = 2,
+            ServicePrincipal = 3,
+            ServicePrincipalInKeyVault = 4,
+        }
     }
     public partial class SuppressCondition
     {

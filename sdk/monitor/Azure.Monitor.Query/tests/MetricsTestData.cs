@@ -22,13 +22,13 @@ namespace Azure.Monitor.Query.Tests
         public string MetricNamespace { get; }
         public DateTimeOffset EndTime => StartTime.Add(Duration);
 
-        public MetricsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
+        public MetricsTestData(MonitorQueryClientTestEnvironment environment, DateTimeOffset dateTimeOffset)
         {
-            _testEnvironment = test.TestEnvironment;
+            _testEnvironment = environment;
 
-            var recordingUtcNow = test.Recording.UtcNow;
+            var recordingUtcNow = dateTimeOffset;
             // Snap to 15 minute intervals
-            StartTime = recordingUtcNow.AddTicks(- Duration.Ticks - recordingUtcNow.Ticks % Duration.Ticks);
+            StartTime = recordingUtcNow.AddTicks(- (Duration.Ticks + recordingUtcNow.Ticks % Duration.Ticks));
 
             MetricName = "CowsHappiness";
             MetricNamespace = "Cows";
@@ -44,17 +44,25 @@ namespace Azure.Monitor.Query.Tests
             _initialized = true;
             var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
+            await SendData();
+
             while (!await MetricsPropagated(metricClient))
             {
-                await SendData();
-
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
         }
 
         private async Task SendData()
         {
-            var senderClient = new MetricsSenderClient(_testEnvironment.Location, _testEnvironment.MetricsIngestionEndpoint, _testEnvironment.MetricsResource, _testEnvironment.Credential, new SenderClientOptions());
+            var senderClient = new MetricsSenderClient(
+                _testEnvironment.Location,
+                _testEnvironment.MetricsIngestionEndpoint,
+                _testEnvironment.MetricsResource,
+                _testEnvironment.Credential,
+                new SenderClientOptions()
+                {
+                    Diagnostics = { IsLoggingContentEnabled = true }
+                });
 
             var names = new[] {Name1, Name2};
 
