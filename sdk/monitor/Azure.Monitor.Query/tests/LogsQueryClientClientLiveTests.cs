@@ -573,49 +573,65 @@ namespace Azure.Monitor.Query.Tests
 
         [RecordedTest]
         [TestCaseSource(nameof(Queries))]
-        public async Task CanQueryWithFormattedQuery(FormattableString query)
+        public async Task CanQueryWithFormattedQuery(FormattableStringWrapper query)
         {
             var client = CreateClient();
 
-            var response = await client.QueryAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query), _logsTestData.DataTimeRange);
+            var response = await client.QueryAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);
             Assert.True(response.Value.Single());
         }
 
-        public static IEnumerable<FormattableString> Queries
+        public static IEnumerable<FormattableStringWrapper> Queries
         {
             get
             {
-                yield return $"print {true} == true";
-                yield return $"print {false} == false";
-                yield return $"print {(byte)1} == int(1)";
-                yield return $"print {(sbyte)2} == int(2)";
-                yield return $"print {(ushort)3} == int(3)";
-                yield return $"print {(short)4} == int(4)";
-                yield return $"print {(uint)5} == int(5)";
-                yield return $"print {(int)6} == int(6)";
+                yield return new($"print {true} == true");
+                yield return new($"print {false} == false");
+                yield return new($"print {(byte)1} == int(1)");
+                yield return new($"print {(sbyte)2} == int(2)");
+                yield return new($"print {(ushort)3} == int(3)");
+                yield return new($"print {(short)4} == int(4)");
+                yield return new($"print {(uint)5} == int(5)");
+                yield return new($"print {(int)6} == int(6)");
 
-                yield return $"print {1000000000} == int(1000000000)";
-                yield return $"print {1.1F} == real(1.1)";
-                yield return $"print {1.2D} == real(1.2)";
-                yield return $"print {1.3M} == decimal(1.3)";
-                yield return $"print {1000000000000000000L} == long(1000000000000000000)";
-                yield return $"print {1000000000000000001UL} == long(1000000000000000001)";
+                yield return new($"print {1000000000} == int(1000000000)");
+                yield return new($"print {1.1F} == real(1.1)");
+                yield return new($"print {1.2D} == real(1.2)");
+                yield return new($"print {1.3M} == decimal(1.3)");
+                yield return new($"print {1000000000000000000L} == long(1000000000000000000)");
+                yield return new($"print {1000000000000000001UL} == long(1000000000000000001)");
 
-                yield return $"print {Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")} == guid(74be27de-1e4e-49d9-b579-fe0b331d3642)";
+                yield return new($"print {Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")} == guid(74be27de-1e4e-49d9-b579-fe0b331d3642)");
 
-                yield return $"print {DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.AssumeUniversal)} == datetime(2015-12-31 23:59:59.9)";
-                yield return $"print {DateTime.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.AssumeUniversal)} == datetime(2015-12-31 23:59:59.9)";
+                yield return new($"print {DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.RoundtripKind)} == datetime(2015-12-31 23:59:59.9)");
+                yield return new($"print {DateTime.Parse("2015-12-31 23:59:59.9+00:00", null, DateTimeStyles.RoundtripKind)} == datetime(2015-12-31 23:59:59.9)");
 
-                yield return $"print {TimeSpan.FromSeconds(10)} == 10s";
+                yield return new($"print {TimeSpan.FromSeconds(10)} == 10s");
 
-                yield return $"print {"hello world"} == \"hello world\"";
-                yield return $"print {"hello \" world"} == \"hello \\\" world\"";
-                yield return $"print {"\\\""} == \"\\\\\\\"\"";
+                yield return new($"print {"hello world"} == \"hello world\"");
+                yield return new($"print {"hello \" world"} == \"hello \\\" world\"");
+                yield return new($"print {"\\\""} == \"\\\\\\\"\"");
 
-                yield return $"print {"\r\n\t"} == \"\\r\\n\\t\"";
+                yield return new($"print {"\r\n\t"} == \"\\r\\n\\t\"");
 
-                yield return $"print {'"'} == \"\\\"\"";
-                yield return $"print {'\''} == \"'\"";
+                yield return new($"print {'"'} == \"\\\"\"");
+                yield return new($"print {'\''} == \"'\"");
+            }
+        }
+
+        // To fix recording names
+        public readonly struct FormattableStringWrapper
+        {
+            public FormattableString Value { get; }
+
+            public FormattableStringWrapper(FormattableString value)
+            {
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+                return string.Format(Value.Format, Value.GetArguments().Select(a => a?.GetType().Name).ToArray());
             }
         }
 
