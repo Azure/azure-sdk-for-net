@@ -3294,7 +3294,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             PageBlobRequestConditions conditions,
             PageBlobRequestConditions sourceConditions,
-            AuthenticationHeaderValue sourceAuthentication,
+            HttpAuthorization sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {

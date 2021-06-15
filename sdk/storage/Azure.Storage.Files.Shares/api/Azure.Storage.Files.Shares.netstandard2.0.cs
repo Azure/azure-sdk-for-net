@@ -794,7 +794,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public ShareFileUploadRangeFromUriOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
-        public System.Net.Http.Headers.AuthenticationHeaderValue SourceAuthentication { get { throw null; } set { } }
+        public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
     }
     public partial class ShareInfo
     {
