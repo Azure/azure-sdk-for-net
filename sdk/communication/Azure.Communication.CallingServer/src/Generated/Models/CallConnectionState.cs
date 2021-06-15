@@ -22,40 +22,22 @@ namespace Azure.Communication.CallingServer
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UnknownValue = "unknown";
-        private const string IdleValue = "idle";
         private const string IncomingValue = "incoming";
-        private const string EstablishingValue = "establishing";
-        private const string EstablishedValue = "established";
-        private const string HoldValue = "hold";
-        private const string UnholdValue = "unhold";
-        private const string TransferringValue = "transferring";
-        private const string RedirectingValue = "redirecting";
-        private const string TerminatingValue = "terminating";
-        private const string TerminatedValue = "terminated";
+        private const string ConnectingValue = "connecting";
+        private const string ConnectedValue = "connected";
+        private const string DisconnectingValue = "disconnecting";
+        private const string DisconnectedValue = "disconnected";
 
-        /// <summary> unknown. </summary>
-        public static CallConnectionState Unknown { get; } = new CallConnectionState(UnknownValue);
-        /// <summary> idle. </summary>
-        public static CallConnectionState Idle { get; } = new CallConnectionState(IdleValue);
         /// <summary> incoming. </summary>
         public static CallConnectionState Incoming { get; } = new CallConnectionState(IncomingValue);
-        /// <summary> establishing. </summary>
-        public static CallConnectionState Establishing { get; } = new CallConnectionState(EstablishingValue);
-        /// <summary> established. </summary>
-        public static CallConnectionState Established { get; } = new CallConnectionState(EstablishedValue);
-        /// <summary> hold. </summary>
-        public static CallConnectionState Hold { get; } = new CallConnectionState(HoldValue);
-        /// <summary> unhold. </summary>
-        public static CallConnectionState Unhold { get; } = new CallConnectionState(UnholdValue);
-        /// <summary> transferring. </summary>
-        public static CallConnectionState Transferring { get; } = new CallConnectionState(TransferringValue);
-        /// <summary> redirecting. </summary>
-        public static CallConnectionState Redirecting { get; } = new CallConnectionState(RedirectingValue);
-        /// <summary> terminating. </summary>
-        public static CallConnectionState Terminating { get; } = new CallConnectionState(TerminatingValue);
-        /// <summary> terminated. </summary>
-        public static CallConnectionState Terminated { get; } = new CallConnectionState(TerminatedValue);
+        /// <summary> connecting. </summary>
+        public static CallConnectionState Connecting { get; } = new CallConnectionState(ConnectingValue);
+        /// <summary> connected. </summary>
+        public static CallConnectionState Connected { get; } = new CallConnectionState(ConnectedValue);
+        /// <summary> disconnecting. </summary>
+        public static CallConnectionState Disconnecting { get; } = new CallConnectionState(DisconnectingValue);
+        /// <summary> disconnected. </summary>
+        public static CallConnectionState Disconnected { get; } = new CallConnectionState(DisconnectedValue);
         /// <summary> Determines if two <see cref="CallConnectionState"/> values are the same. </summary>
         public static bool operator ==(CallConnectionState left, CallConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallConnectionState"/> values are not the same. </summary>

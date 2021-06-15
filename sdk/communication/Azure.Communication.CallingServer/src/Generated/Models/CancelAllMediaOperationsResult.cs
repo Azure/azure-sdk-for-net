@@ -16,25 +16,25 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
-        /// <param name="id"> Gets or sets the identifier. </param>
-        /// <param name="status"> Gets or sets the status of the operation. </param>
-        /// <param name="operationContext"> Gets or sets the operation context. </param>
-        /// <param name="resultInfo"> Gets or sets the result info. </param>
-        internal CancelAllMediaOperationsResult(string id, OperationStatus? status, string operationContext, ResultInfo resultInfo)
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultInfo"> The result info for the operation. </param>
+        internal CancelAllMediaOperationsResult(string operationId, OperationStatus? status, string operationContext, ResultInfo resultInfo)
         {
-            Id = id;
+            OperationId = operationId;
             Status = status;
             OperationContext = operationContext;
             ResultInfo = resultInfo;
         }
 
-        /// <summary> Gets or sets the identifier. </summary>
-        public string Id { get; }
-        /// <summary> Gets or sets the status of the operation. </summary>
+        /// <summary> The operation id. </summary>
+        public string OperationId { get; }
+        /// <summary> The status of the operation. </summary>
         public OperationStatus? Status { get; }
-        /// <summary> Gets or sets the operation context. </summary>
+        /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }
-        /// <summary> Gets or sets the result info. </summary>
+        /// <summary> The result info for the operation. </summary>
         public ResultInfo ResultInfo { get; }
     }
 }

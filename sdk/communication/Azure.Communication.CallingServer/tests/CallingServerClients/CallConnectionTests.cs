@@ -201,7 +201,7 @@ namespace Azure.Communication.CallingServer.Tests
 
         private void VerifyCancelAllMediaOperationsResult(CancelAllMediaOperationsResult result)
         {
-            Assert.AreEqual("dummyId", result.Id);
+            Assert.AreEqual("dummyId", result.OperationId);
             Assert.AreEqual(OperationStatus.Completed, result.Status);
             Assert.AreEqual("dummyOperationContext", result.OperationContext);
             Assert.AreEqual(200, result.ResultInfo.Code);
@@ -210,7 +210,7 @@ namespace Azure.Communication.CallingServer.Tests
 
         private void VerifyPlayAudioResult(PlayAudioResult result)
         {
-            Assert.AreEqual("dummyId", result.Id);
+            Assert.AreEqual("dummyId", result.OperationId);
             Assert.AreEqual(OperationStatus.Running, result.Status);
             Assert.AreEqual("dummyOperationContext", result.OperationContext);
             Assert.AreEqual(200, result.ResultInfo.Code);

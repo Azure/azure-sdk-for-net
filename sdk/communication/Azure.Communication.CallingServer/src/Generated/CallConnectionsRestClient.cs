@@ -18,20 +18,20 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CallConnectionRestClient
+    internal partial class CallConnectionsRestClient
     {
         private string endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of CallConnectionRestClient. </summary>
+        /// <summary> Initializes a new instance of CallConnectionsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-06-15-preview")
+        public CallConnectionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-06-15-preview")
         {
             if (endpoint == null)
             {
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId, string subject, IEnumerable<CallModality> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId, string subject, IEnumerable<MediaType> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -96,7 +96,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public async Task<Response<CreateCallResult>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<CallModality> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateCallResult>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -137,7 +137,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public Response<CreateCallResult> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<CallModality> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public Response<CreateCallResult> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -180,7 +180,6 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath("/:hangup", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -416,7 +415,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateInviteParticipantsRequest(string callConnectionId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId, string operationContext, string callbackUri)
+        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId, CommunicationIdentifierModel participant, string operationContext, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -428,11 +427,11 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath("/participants", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new InviteParticipantsRequestInternal(participants.ToList())
+            var model = new AddParticipantRequest()
             {
                 AlternateCallerId = alternateCallerId,
+                Participant = participant,
                 OperationContext = operationContext,
                 CallbackUri = callbackUri
             };
@@ -442,26 +441,22 @@ namespace Azure.Communication.CallingServer
             return message;
         }
 
-        /// <summary> Invite participants to the call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="participants"> The list of participants to be added to the call. </param>
         /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
+        /// <param name="participant"> The participant to be added to the call. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participants"/> is null. </exception>
-        public async Task<Response> InviteParticipantsAsync(string callConnectionId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public async Task<Response> AddParticipantAsync(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (participants == null)
-            {
-                throw new ArgumentNullException(nameof(participants));
-            }
 
-            using var message = CreateInviteParticipantsRequest(callConnectionId, participants, alternateCallerId, operationContext, callbackUri);
+            using var message = CreateAddParticipantRequest(callConnectionId, alternateCallerId, participant, operationContext, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -472,26 +467,22 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Invite participants to the call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="participants"> The list of participants to be added to the call. </param>
         /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
+        /// <param name="participant"> The participant to be added to the call. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participants"/> is null. </exception>
-        public Response InviteParticipants(string callConnectionId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public Response AddParticipant(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (participants == null)
-            {
-                throw new ArgumentNullException(nameof(participants));
-            }
 
-            using var message = CreateInviteParticipantsRequest(callConnectionId, participants, alternateCallerId, operationContext, callbackUri);
+            using var message = CreateAddParticipantRequest(callConnectionId, alternateCallerId, participant, operationContext, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -515,7 +506,6 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath(participantId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

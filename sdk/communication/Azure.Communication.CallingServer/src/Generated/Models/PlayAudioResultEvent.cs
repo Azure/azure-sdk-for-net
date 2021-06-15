@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of PlayAudioResultEvent. </summary>
         /// <param name="resultInfo"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
-        /// <param name="status"> Gets or sets the status of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
         internal PlayAudioResultEvent(ResultInfo resultInfo, string operationContext, OperationStatus? status)
         {
             ResultInfo = resultInfo;
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
         public ResultInfo ResultInfo { get; set; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Gets or sets the status of the operation. </summary>
+        /// <summary> The status of the operation. </summary>
         public OperationStatus? Status { get; set; }
     }
 }

@@ -9,20 +9,20 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The invited participants result event.
     /// </summary>
-    [CodeGenModel("InviteParticipantsResultEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
-    public partial class InviteParticipantsResultEvent : CallingServerEventBase
+    [CodeGenModel("AddParticipantResultEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
+    public partial class AddParticipantResultEvent : CallingServerEventBase
     {
         /// <summary>
-        /// Deserialize <see cref="InviteParticipantsResultEvent"/> event.
+        /// Deserialize <see cref="AddParticipantResultEvent"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="InviteParticipantsResultEvent"/> object.</returns>
-        public static InviteParticipantsResultEvent Deserialize(string content)
+        /// <returns>The new <see cref="AddParticipantResultEvent"/> object.</returns>
+        public static AddParticipantResultEvent Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeInviteParticipantsResultEvent(element);
+            return DeserializeAddParticipantResultEvent(element);
         }
     }
 }

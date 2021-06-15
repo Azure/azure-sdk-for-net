@@ -34,21 +34,6 @@ namespace Azure.Communication.CallingServer
             Details = new ChangeTrackingList<CommunicationError>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="target"> The error target. </param>
-        /// <param name="details"> Further details about specific errors that led to this error. </param>
-        /// <param name="innerError"> The inner error if any. </param>
-        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
-        {
-            Code = code;
-            Message = message;
-            Target = target;
-            Details = details;
-            InnerError = innerError;
-        }
-
         /// <summary> The error code. </summary>
         public string Code { get; }
         /// <summary> The error message. </summary>

@@ -19,14 +19,14 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes new instance of PlayAudioResult class. </summary>
-        /// <param name="id"> Gets or sets the identifier. </param>
-        /// <param name="status"> Gets or sets the status of the operation. </param>
-        /// <param name="operationContext"> Gets or sets the operation context. </param>
-        /// <param name="resultInfo"> Gets or sets the result info. </param>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultInfo"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.PlayAudioResult"/> instance for mocking. </returns>
-        public static PlayAudioResult PlayAudioResult(string id = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
+        public static PlayAudioResult PlayAudioResult(string operationId = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
         {
-            return new PlayAudioResult(id, status, operationContext, resultInfo);
+            return new PlayAudioResult(operationId, status, operationContext, resultInfo);
         }
 
         /// <summary> Initializes new instance of ResultInfo class. </summary>
@@ -52,14 +52,14 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes new instance of CancelAllMediaOperationsResult class. </summary>
-        /// <param name="id"> Gets or sets the identifier. </param>
-        /// <param name="status"> Gets or sets the status of the operation. </param>
-        /// <param name="operationContext"> Gets or sets the operation context. </param>
-        /// <param name="resultInfo"> Gets or sets the result info. </param>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultInfo"> The result info for the operation. </param>
         /// <returns> A new <see cref="CallingServer.CancelAllMediaOperationsResult"/> instance for mocking. </returns>
-        public static CancelAllMediaOperationsResult CancelAllMediaOperationsResult(string id = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
+        public static CancelAllMediaOperationsResult CancelAllMediaOperationsResult(string operationId = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
         {
-            return new CancelAllMediaOperationsResult(id, status, operationContext, resultInfo);
+            return new CancelAllMediaOperationsResult(operationId, status, operationContext, resultInfo);
         }
 
         /// <summary> Initializes new instance of StartCallRecordingResult class. </summary>
@@ -70,12 +70,12 @@ namespace Azure.Communication.CallingServer
             return new StartCallRecordingResult(recordingId);
         }
 
-        /// <summary> Initializes new instance of CallRecordingStateResult class. </summary>
-        /// <param name="recordingState"> The recording state of the recording. </param>
-        /// <returns> A new <see cref="CallingServer.CallRecordingStateResult"/> instance for mocking. </returns>
-        public static CallRecordingStateResult CallRecordingStateResult(CallRecordingState? recordingState = default)
+        /// <summary> Initializes new instance of CallRecordingProperties class. </summary>
+        /// <param name="recordingState"> The state of the recording. </param>
+        /// <returns> A new <see cref="CallingServer.CallRecordingProperties"/> instance for mocking. </returns>
+        public static CallRecordingProperties CallRecordingProperties(CallRecordingState? recordingState = default)
         {
-            return new CallRecordingStateResult(recordingState);
+            return new CallRecordingProperties(recordingState);
         }
 
         /// <summary> Initializes new instance of JoinCallResult class. </summary>
