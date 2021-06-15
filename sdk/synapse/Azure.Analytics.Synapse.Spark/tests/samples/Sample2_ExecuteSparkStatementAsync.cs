@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Spark;
-using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Identity;
 using NUnit.Framework;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Samples
 {
@@ -33,47 +34,54 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             #endregion
 
             #region Snippet:CreateSparkSessionAsync
-            SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
-            {
-                DriverMemory = "28g",
-                DriverCores = 4,
-                ExecutorMemory = "28g",
-                ExecutorCores = 4,
-                ExecutorCount = 2
-            };
+            RequestContent request = RequestContent.Create (new {
+                name = $"session-{Guid.NewGuid()}",
+                driverMemory = "28g",
+                driverCores = 4,
+                executorMemory = "28g",
+                executorCores = 4,
+                numExecutors = 2
+            });
 
             SparkSessionOperation createSessionOperation = await client.StartCreateSparkSessionAsync(request);
-            SparkSession sessionCreated = await createSessionOperation.WaitForCompletionAsync();
+            await createSessionOperation.WaitForCompletionAsync();
+            BinaryData jobCreated = createSessionOperation.Value;
+            var sessionId = JsonDocument.Parse(jobCreated.ToMemory()).RootElement.GetProperty("id").GetInt32();
+
             #endregion
 
             #region Snippet:GetSparkSessionAsync
-            SparkSession session = await client.GetSparkSessionAsync(sessionCreated.Id);
-            Debug.WriteLine($"Session is returned with name {session.Name} and state {session.State}");
+            Response session = await client.GetSparkSessionAsync(sessionId);
+            var sessionDoc = JsonDocument.Parse(session.Content.ToMemory());
+            Debug.WriteLine($"Session is returned with state {sessionDoc.RootElement.GetProperty("state").GetString()}");
             #endregion
 
             #region Snippet:CreateSparkStatementAsync
-            SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
-            {
-                Kind = SparkStatementLanguageType.Spark,
+            RequestContent sparkStatementRequest = RequestContent.Create (new {
+                Kind = "spark",
                 Code = @"print(""Hello world\n"")"
-            };
+            });
 
-            SparkStatementOperation createStatementOperation = await client.StartCreateSparkStatementAsync(sessionCreated.Id, sparkStatementRequest);
-            SparkStatement statementCreated = await createStatementOperation.WaitForCompletionAsync();
+            SparkStatementOperation createStatementOperation = await client.StartCreateSparkStatementAsync(sessionId, sparkStatementRequest);
+            await createStatementOperation.WaitForCompletionAsync();
+            BinaryData statementCreated = createStatementOperation.Value;
+            var statementId = JsonDocument.Parse(statementCreated.ToMemory()).RootElement.GetProperty("id").GetInt32();
+
             #endregion
 
             #region Snippet:GetSparkStatementAsync
-            SparkStatement statement = await client.GetSparkStatementAsync(sessionCreated.Id, statementCreated.Id);
-            Debug.WriteLine($"Statement is returned with id {statement.Id} and state {statement.State}");
+            Response statement = await client.GetSparkStatementAsync(sessionId, statementId);
+            var statementDoc = JsonDocument.Parse(session.Content.ToMemory());
+            Debug.WriteLine($"Statement is returned with id {statementDoc.RootElement.GetProperty("id").GetInt32()} and state {statementDoc.RootElement.GetProperty("state").GetString()}");
             #endregion
 
             #region Snippet:CancelSparkStatementAsync
-            SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
-            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Message}");
+            Response cancellationResult = client.CancelSparkStatement(sessionId, statementId);
+            Debug.WriteLine($"Statement is cancelled");
             #endregion
 
             #region Snippet:CancelSparkSessionAsync
-            Response operation = client.CancelSparkSession(sessionCreated.Id);
+            Response operation = client.CancelSparkSession(sessionId);
             #endregion
         }
     }

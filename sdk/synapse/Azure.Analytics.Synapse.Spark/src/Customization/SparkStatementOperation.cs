@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Spark
         protected SparkStatementOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => JsonDocument.Parse(_response.Content).RootElement.GetProperty(nameof(Id)).GetString();
+        public override string Id => JsonDocument.Parse(_response.Content).RootElement.GetProperty("id").GetInt32().ToString(CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Gets the <see cref="BinaryData"/>.
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <inheritdoc/>
         public override bool HasValue => !_responseHasError && HasCompleted;
 
-        private bool _responseHasError => StringComparer.OrdinalIgnoreCase.Equals ("error", JsonDocument.Parse(_response.Content).RootElement.GetProperty("State").GetString());
+        private bool _responseHasError => StringComparer.OrdinalIgnoreCase.Equals ("error", JsonDocument.Parse(_response.Content).RootElement.GetProperty("state").GetString());
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Spark
                         _response = _client.GetSparkStatement(_sessionId, id, new RequestOptions () { CancellationToken = cancellationToken });
                     }
                     var doc = JsonDocument.Parse(_response.Content);
-                    _completed = IsJobComplete(doc.RootElement.GetProperty("State").GetString());
+                    _completed = IsJobComplete(doc.RootElement.GetProperty("state").GetString());
                 }
                 catch (RequestFailedException e)
                 {
