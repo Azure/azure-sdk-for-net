@@ -43,8 +43,8 @@ public class ObservableEventDataBatch : IDisposable
     public long SizeInBytes => _batch.SizeInBytes;
     public long MaximumSizeInBytes => _batch.MaximumSizeInBytes;
 
-    // The constructor requires that sourceBatch is an empty batch so that it can track the events 
-    // that are being added. 
+    // The constructor requires that sourceBatch is an empty batch so that it can track the events
+    // that are being added.
     public ObservableEventDataBatch(EventDataBatch sourceBatch)
     {
         _batch = sourceBatch ?? throw new ArgumentNullException(nameof(sourceBatch));
@@ -72,8 +72,6 @@ public class ObservableEventDataBatch : IDisposable
     // implicitly converted to an EventDataBatch.
     public static implicit operator EventDataBatch(ObservableEventDataBatch observable) => observable._batch;
 }
-
-
 ```
 
 # Using the Observable Data Batch
@@ -85,8 +83,8 @@ An Event Hub client is safe to cache and use for the lifetime of the application
 #### Accessing the EventData Instances
 This snippet demonstrates how to add events to an observable data batch and how to access them.
 ```C# Snippet:Sample09_AccessingEventData
-var connectionString = "<<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>>";
-var eventHubName = "<<< NAME OF THE EVENT HUB >>>";
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -117,7 +115,6 @@ finally
 {
     await producer.CloseAsync();
 }
-
 ```
 
 #### Comparing Identity
@@ -126,6 +123,7 @@ This sample demonstrates how to add an `EventData` identification property that 
 ```C# Snippet:Sample09_CheckingBatch
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
