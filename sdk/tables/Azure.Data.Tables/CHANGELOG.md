@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Support for Azure Active Directory (AAD) authorization has been added to `TableServiceClient` and `TableClient`. This enables use of `TokenCredential` credentials. Note: Only Azure Storage API endpoints currently support AAD authorization.
+
 ### Breaking Changes
 
 ### Key Bugs Fixed
