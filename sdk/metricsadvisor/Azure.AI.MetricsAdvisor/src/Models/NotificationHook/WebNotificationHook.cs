@@ -18,8 +18,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="WebNotificationHook"/> class.
         /// </summary>
-        public WebNotificationHook()
+        /// <param name="name">The name of the hook.</param>
+        /// <param name="endpoint">The API address to be called when an alert is triggered.</param>
+        public WebNotificationHook(string name, Uri endpoint) : base(name)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            Endpoint = endpoint;
             HookType = HookType.Webhook;
             Headers = new ChangeTrackingDictionary<string, string>();
         }

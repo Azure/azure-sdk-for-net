@@ -17,7 +17,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailNotificationHook"/> class.
         /// </summary>
-        public EmailNotificationHook()
+        /// <param name="name">The name of the hook.</param>
+        public EmailNotificationHook(string name) : base(name)
         {
             HookType = HookType.Email;
             EmailsToAlert = new ChangeTrackingList<string>();
