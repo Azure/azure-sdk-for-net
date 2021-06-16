@@ -62,7 +62,7 @@
             "apiVersion": "[variables('authorizationApiVersion')]",
             "name": "[guid(concat('dataContributorRoleId', resourceGroup().id))]",
             "properties": {
-                "roleDefinitionId": "[variables('tableDataContributorRoleId')]",
+                "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
                 "principalId": "[parameters('testApplicationOid')]"
             }
         },
