@@ -2289,7 +2289,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Description = "This data feed was created to test the .NET client.",
                 AccessMode = DataFeedAccessMode.Public,
                 ActionLinkTemplate = "https://fakeurl.com/%metric/%datafeed",
-                MissingDataPointFillSettings = new() { FillType = DataFeedMissingDataPointFillType.CustomValue, CustomFillValue = 45.0 }
+                MissingDataPointFillSettings = new(DataFeedMissingDataPointFillType.CustomValue) { CustomFillValue = 45.0 }
             };
 
             dataFeed.AdministratorsEmails.Add("fake@admin.com");
@@ -2337,10 +2337,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             dataFeed.IngestionSettings.StopRetryAfter = TimeSpan.FromMinutes(20);
             dataFeed.IngestionSettings.DataSourceRequestConcurrency = 6;
 
-            dataFeed.MissingDataPointFillSettings = new()
-            {
-                FillType = DataFeedMissingDataPointFillType.NoFilling
-            };
+            dataFeed.MissingDataPointFillSettings = new(DataFeedMissingDataPointFillType.NoFilling);
         }
 
         private void ValidateDataFeedWithMinimumSetup(DataFeed dataFeed, string expectedName, string expectedDescription = "", string expectedId = null)

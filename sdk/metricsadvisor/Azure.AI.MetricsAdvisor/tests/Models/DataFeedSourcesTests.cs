@@ -61,7 +61,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             ""dataSourceType"": ""SqlServer"",
             ""dataSourceParameter"": {},
-            ""metrics"": []
+            ""metrics"": [],
+            ""fillMissingPointType"": ""NoFilling""
         }
         ";
 
