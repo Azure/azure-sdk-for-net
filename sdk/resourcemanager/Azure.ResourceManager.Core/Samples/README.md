@@ -11,5 +11,6 @@ description: Samples for the Azure.ResourceManager.Core client library
 
 # Azure.ResourceManager.Core Samples
 
-- [Creating a virtual network](CreatingAVirtualNetwork.md)
-- [Managing Resource Groups](ManagingResourceGroups.md)
+- [Getting a subscription](Sample1_HelloWorld.md)
+- [Managing Resource Groups](Sample2_ManagingResourceGroups.md)
+- [Creating a virtual network](Sample3_CreatingAVirtualNetwork.md)
