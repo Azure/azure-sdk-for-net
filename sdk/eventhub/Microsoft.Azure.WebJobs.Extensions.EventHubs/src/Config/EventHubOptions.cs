@@ -173,11 +173,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <summary>
-        /// Gets or sets a value indication whether a single-dispatch trigger bindings are enabled.
-        /// </summary>
-        internal bool IsSingleDispatchEnabled { get; set; }
-
-        /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
         /// </summary>
         internal string CheckpointContainer { get; set; } =  "azure-webjobs-eventhub";
