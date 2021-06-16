@@ -20,7 +20,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+    [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20501")]
     public class ImmutableStorageWithVersioningTests : BlobTestBase
     {
         public ImmutableStorageWithVersioningTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
