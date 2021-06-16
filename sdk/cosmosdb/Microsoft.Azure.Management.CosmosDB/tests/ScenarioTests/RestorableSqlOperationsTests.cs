@@ -5,7 +5,6 @@ using Microsoft.Azure.Management.CosmosDB;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -59,7 +58,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 Assert.Equal(2, restorableSqlContainers.Count());
 
-                string restoreTimestamp = DateTime.ParseExact("16-06-21 06:20:00", "dd-MM-yy HH:mm:ss", null).ToString(); // use - DateTime.UtcNow.AddMinutes(-1).ToString() when generating json file
+                string restoreTimestamp = "2021-06-16T06:30:00Z";// use - DateTime.UtcNow.AddMinutes(-1).ToString() when generating json file
                 List<DatabaseRestoreResource> restorableSqlResources =
                     (await cosmosDBManagementClient.RestorableSqlResources.ListAsync(location, restorableDatabaseAccount.Name, location, restoreTimestamp.ToString())).ToList();
 

@@ -47,7 +47,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 // Create client
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler);
                 DatabaseAccountGetResults databaseaccount = await RestorableMongoOperationsTests.CreateDatabaseAccountIfNotExists(cosmosDBManagementClient);
-                DateTime restoreTime = DateTime.ParseExact("15-06-21 23:30:00", "dd-MM-yy HH:mm:ss", null); // use - DateTime.UtcNow.AddMinutes(-1) when generating json file
+                string restoreTime = "2021-06-15T23:30:00Z"; // use - DateTime.UtcNow.AddMinutes(-1) when generating json file
                 await RestorableMongodbTestHelper(cosmosDBManagementClient, databaseaccount.InstanceId, restoreTime, resources);
             }
         }
@@ -81,7 +81,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler);
                 DatabaseAccountGetResults databaseaccount = await RestorableMongoOperationsTests.CreateDatabaseAccountIfNotExists(cosmosDBManagementClient);
 
-                DateTime restoreTime = DateTime.ParseExact("15-06-21 23:30:00", "dd-MM-yy HH:mm:ss", null); // use - DateTime.UtcNow.AddMinutes(-1) when generating json file
+                string restoreTime = "2021-06-15T23:30:00Z"; // use - DateTime.UtcNow.AddMinutes(-1) when generating json file
                 await RestorableMongodbTestHelper(cosmosDBManagementClient, databaseaccount.InstanceId, restoreTime, resources);
             }
         }
@@ -89,7 +89,7 @@ namespace CosmosDB.Tests.ScenarioTests
         private async Task RestorableMongodbTestHelper(
             CosmosDBManagementClient cosmosDBManagementClient,
             string sourceAccountInstanceId,
-            DateTime restoreTimestamp,
+            string restoreTimestamp,
             List<DatabaseRestoreResource> resources = null)
         {
             List<RestorableMongodbDatabaseGetResult> restorableMongodbDatabases =
@@ -109,7 +109,7 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(resource.CollectionNames.Count, restorableMongodbContainers.Count());
 
             List<DatabaseRestoreResource> restorableMongodbResources =
-                (await cosmosDBManagementClient.RestorableMongodbResources.ListAsync(location, sourceAccountInstanceId, location, restoreTimestamp.ToString())).ToList();
+                (await cosmosDBManagementClient.RestorableMongodbResources.ListAsync(location, sourceAccountInstanceId, location, restoreTimestamp)).ToList();
 
             ValidateDatabaseRestoreResource(resources, restorableMongodbResources);
         }

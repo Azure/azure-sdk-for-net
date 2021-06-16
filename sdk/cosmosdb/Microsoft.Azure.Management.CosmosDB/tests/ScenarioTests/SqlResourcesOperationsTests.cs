@@ -475,8 +475,8 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(sqlDatabaseGetResults);
                 Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
 
-                string startTime = DateTime.ParseExact("15-06-21 21:30:00", "dd-MM-yy HH:mm:ss", null).ToString();//DateTime.UtcNow.AddHours(-1).ToString();
-                string endTime = DateTime.ParseExact("16-06-21 17:00:00", "dd-MM-yy HH:mm:ss", null).ToString(); //DateTime.UtcNow.ToString();
+                string startTime = "2021-06-15T21:30:00Z"; //DateTime.UtcNow.AddHours(-1).ToString();
+                string endTime = "2021-06-16T17:30:00Z"; //DateTime.UtcNow.ToString();
                 List<RestorableSqlContainerGetResult> restorableContainerResult = (await cosmosDBManagementClient.RestorableSqlContainers.ListAsync(
                     location,
                     databaseAccount.InstanceId,

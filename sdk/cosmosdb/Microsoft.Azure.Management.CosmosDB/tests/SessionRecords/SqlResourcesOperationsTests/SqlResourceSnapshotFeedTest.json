@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "31e21db7-b83a-4f2b-b8dd-35b72bc436bf"
+          "9fddc645-bf93-4681-ad39-7f59ec0ec7ae"
         ],
         "Accept-Language": [
           "en-US"
@@ -39,19 +39,19 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "c8ad696a-d13c-4872-bb5a-55dbe4226d3e"
+          "c5c24839-5268-4f03-9816-28cb4cc15178"
         ],
         "x-ms-correlation-request-id": [
-          "c8ad696a-d13c-4872-bb5a-55dbe4226d3e"
+          "c5c24839-5268-4f03-9816-28cb4cc15178"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210616T173153Z:c8ad696a-d13c-4872-bb5a-55dbe4226d3e"
+          "WESTUS2:20210616T233629Z:c5c24839-5268-4f03-9816-28cb4cc15178"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 16 Jun 2021 17:31:52 GMT"
+          "Wed, 16 Jun 2021 23:36:29 GMT"
         ],
         "Content-Length": [
           "2116"
@@ -70,7 +70,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"resource\": {\r\n      \"id\": \"databaseName\"\r\n    },\r\n    \"options\": {}\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b918a399-bf7f-496b-9cbf-9f51f383cf72"
+          "e5c5f536-e4bb-4822-8aa8-ba0842bc61d5"
         ],
         "Accept-Language": [
           "en-US"
@@ -96,13 +96,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/resourceGroups/CosmosDBResourceGroup3668/providers/Microsoft.DocumentDB/databaseAccounts/cli127/sqlDatabases/databaseName/operationResults/5ca0fff5-9265-4f06-9bac-b32baf8896bb?api-version=2021-06-15"
+          "https://management.azure.com/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/resourceGroups/CosmosDBResourceGroup3668/providers/Microsoft.DocumentDB/databaseAccounts/cli127/sqlDatabases/databaseName/operationResults/8eecf8f9-ce60-4fb7-8b80-ea15d2cf96e8?api-version=2021-06-15"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/providers/Microsoft.DocumentDB/locations/eastus2/operationsStatus/5ca0fff5-9265-4f06-9bac-b32baf8896bb?api-version=2021-06-15"
+          "https://management.azure.com/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/providers/Microsoft.DocumentDB/locations/eastus2/operationsStatus/8eecf8f9-ce60-4fb7-8b80-ea15d2cf96e8?api-version=2021-06-15"
         ],
         "x-ms-request-id": [
-          "5ca0fff5-9265-4f06-9bac-b32baf8896bb"
+          "8eecf8f9-ce60-4fb7-8b80-ea15d2cf96e8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,16 +117,16 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "85b4b67e-a8cd-410e-9211-89dcebf0b80f"
+          "4bad71a0-c6c2-486b-8cd3-4c51f9b9c422"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210616T173155Z:85b4b67e-a8cd-410e-9211-89dcebf0b80f"
+          "WESTUS2:20210616T233631Z:4bad71a0-c6c2-486b-8cd3-4c51f9b9c422"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 16 Jun 2021 17:31:54 GMT"
+          "Wed, 16 Jun 2021 23:36:30 GMT"
         ],
         "Content-Length": [
           "21"
@@ -139,8 +139,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/providers/Microsoft.DocumentDB/locations/eastus2/operationsStatus/5ca0fff5-9265-4f06-9bac-b32baf8896bb?api-version=2021-06-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjU5ZmJiMjQtOWJjZC00Y2ZjLTg2NWMtZmMzM2IyMmZlMzhhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzLzVjYTBmZmY1LTkyNjUtNGYwNi05YmFjLWIzMmJhZjg4OTZiYj9hcGktdmVyc2lvbj0yMDIxLTA2LTE1",
+      "RequestUri": "/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/providers/Microsoft.DocumentDB/locations/eastus2/operationsStatus/8eecf8f9-ce60-4fb7-8b80-ea15d2cf96e8?api-version=2021-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjU5ZmJiMjQtOWJjZC00Y2ZjLTg2NWMtZmMzM2IyMmZlMzhhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzLzhlZWNmOGY5LWNlNjAtNGZiNy04YjgwLWVhMTVkMmNmOTZlOD9hcGktdmVyc2lvbj0yMDIxLTA2LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -171,19 +171,19 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "723d6a2a-d68e-4422-adcc-55883192f486"
+          "b8957b15-dbad-4ad9-9b22-1675774b7385"
         ],
         "x-ms-correlation-request-id": [
-          "723d6a2a-d68e-4422-adcc-55883192f486"
+          "b8957b15-dbad-4ad9-9b22-1675774b7385"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210616T173225Z:723d6a2a-d68e-4422-adcc-55883192f486"
+          "WESTUS2:20210616T233701Z:b8957b15-dbad-4ad9-9b22-1675774b7385"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 16 Jun 2021 17:32:25 GMT"
+          "Wed, 16 Jun 2021 23:37:00 GMT"
         ],
         "Content-Length": [
           "22"
@@ -228,19 +228,19 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "ad0732a6-cac1-4d46-a8ed-efd6c6f6501a"
+          "092db9e8-9dca-46ac-83bb-a9352dbd4932"
         ],
         "x-ms-correlation-request-id": [
-          "ad0732a6-cac1-4d46-a8ed-efd6c6f6501a"
+          "092db9e8-9dca-46ac-83bb-a9352dbd4932"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210616T173225Z:ad0732a6-cac1-4d46-a8ed-efd6c6f6501a"
+          "WESTUS2:20210616T233701Z:092db9e8-9dca-46ac-83bb-a9352dbd4932"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 16 Jun 2021 17:32:25 GMT"
+          "Wed, 16 Jun 2021 23:37:00 GMT"
         ],
         "Content-Length": [
           "458"
@@ -253,13 +253,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/providers/Microsoft.DocumentDB/locations/EAST%20US%202/restorableDatabaseAccounts/44229c8d-8a7e-4ef7-802c-5d09a93bd7c7/restorableSqlContainers?api-version=2021-06-15&restorableSqlDatabaseRid=t9o6AA%3D%3D&startTime=6%2F15%2F2021%209%3A30%3A00%20PM&endTime=6%2F16%2F2021%205%3A00%3A00%20PM",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjU5ZmJiMjQtOWJjZC00Y2ZjLTg2NWMtZmMzM2IyMmZlMzhhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvRUFTVCUyMFVTJTIwMi9yZXN0b3JhYmxlRGF0YWJhc2VBY2NvdW50cy80NDIyOWM4ZC04YTdlLTRlZjctODAyYy01ZDA5YTkzYmQ3YzcvcmVzdG9yYWJsZVNxbENvbnRhaW5lcnM/YXBpLXZlcnNpb249MjAyMS0wNi0xNSZyZXN0b3JhYmxlU3FsRGF0YWJhc2VSaWQ9dDlvNkFBJTNEJTNEJnN0YXJ0VGltZT02JTJGMTUlMkYyMDIxJTIwOSUzQTMwJTNBMDAlMjBQTSZlbmRUaW1lPTYlMkYxNiUyRjIwMjElMjA1JTNBMDAlM0EwMCUyMFBN",
+      "RequestUri": "/subscriptions/259fbb24-9bcd-4cfc-865c-fc33b22fe38a/providers/Microsoft.DocumentDB/locations/EAST%20US%202/restorableDatabaseAccounts/44229c8d-8a7e-4ef7-802c-5d09a93bd7c7/restorableSqlContainers?api-version=2021-06-15&restorableSqlDatabaseRid=t9o6AA%3D%3D&startTime=2021-06-15T21%3A30%3A00Z&endTime=2021-06-16T17%3A30%3A00Z",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjU5ZmJiMjQtOWJjZC00Y2ZjLTg2NWMtZmMzM2IyMmZlMzhhL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvRUFTVCUyMFVTJTIwMi9yZXN0b3JhYmxlRGF0YWJhc2VBY2NvdW50cy80NDIyOWM4ZC04YTdlLTRlZjctODAyYy01ZDA5YTkzYmQ3YzcvcmVzdG9yYWJsZVNxbENvbnRhaW5lcnM/YXBpLXZlcnNpb249MjAyMS0wNi0xNSZyZXN0b3JhYmxlU3FsRGF0YWJhc2VSaWQ9dDlvNkFBJTNEJTNEJnN0YXJ0VGltZT0yMDIxLTA2LTE1VDIxJTNBMzAlM0EwMFomZW5kVGltZT0yMDIxLTA2LTE2VDE3JTNBMzAlM0EwMFo=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "be070949-b9ac-42fb-a8bc-5bc6892b0381"
+          "3c5c188a-3e41-4fe4-8dc2-bde7e201b992"
         ],
         "Accept-Language": [
           "en-US"
@@ -291,19 +291,19 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "6b33de68-061a-4365-af1b-dfaae9c2a04e"
+          "c666615c-0db6-4fdc-97d2-0412f942af19"
         ],
         "x-ms-correlation-request-id": [
-          "6b33de68-061a-4365-af1b-dfaae9c2a04e"
+          "c666615c-0db6-4fdc-97d2-0412f942af19"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210616T173226Z:6b33de68-061a-4365-af1b-dfaae9c2a04e"
+          "WESTUS2:20210616T233702Z:c666615c-0db6-4fdc-97d2-0412f942af19"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 16 Jun 2021 17:32:26 GMT"
+          "Wed, 16 Jun 2021 23:37:01 GMT"
         ],
         "Content-Length": [
           "1571"
