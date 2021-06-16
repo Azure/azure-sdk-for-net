@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OperationsBase"/> class for mocking.
+        /// Initializes a new instance of the <see cref="OperationsBase"/> class.
         /// </summary>
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
