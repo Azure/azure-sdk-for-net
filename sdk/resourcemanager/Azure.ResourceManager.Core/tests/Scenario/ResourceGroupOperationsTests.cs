@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -76,6 +77,8 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
             Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(null));
         }
 
         [TestCase]
@@ -87,6 +90,12 @@ namespace Azure.ResourceManager.Core.Tests
             parameters.Resources.Add("*");
             var expOp = await rg.StartExportTemplateAsync(parameters);
             await expOp.WaitForCompletionAsync();
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var expOp = await rg.StartExportTemplateAsync(null);
+                _ = await expOp.WaitForCompletionAsync();
+            });
         }
 
         [TestCase]
@@ -104,6 +113,9 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.AddTagAsync(null, "value"));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
         }
 
         [TestCase]
@@ -123,6 +135,17 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                var addTagOp = await rg1.StartAddTagAsync(null, "value");
+                _ = await addTagOp.WaitForCompletionAsync();
+            });
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                var addTagOp = await rg1.StartAddTagAsync(" ", "value");
+                _ = await addTagOp.WaitForCompletionAsync();
+            });
         }
 
         [TestCase]
@@ -143,6 +166,8 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.SetTagsAsync(null));
         }
 
         [TestCase]
@@ -165,6 +190,12 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var setTagOp = await rg1.StartSetTagsAsync(null);
+                _ = await setTagOp.WaitForCompletionAsync();
+            });
         }
 
         [TestCase]
@@ -190,6 +221,9 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.RemoveTagAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.RemoveTagAsync(" "));
         }
 
         [TestCase]
@@ -218,6 +252,17 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                var removeTagOp = await rg1.StartRemoveTagAsync(null);
+                _ = await removeTagOp.WaitForCompletionAsync();
+            });
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                var removeTagOp = await rg1.StartRemoveTagAsync(" ");
+                _ = await removeTagOp.WaitForCompletionAsync();
+            });
         }
 
         [TestCase]
@@ -257,6 +302,8 @@ namespace Azure.ResourceManager.Core.Tests
             countRg2 = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(0, countRg1);
             Assert.AreEqual(1, countRg2);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.MoveResourcesAsync(null));
         }
 
         [TestCase]
@@ -286,6 +333,12 @@ namespace Azure.ResourceManager.Core.Tests
             countRg2 = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(0, countRg1);
             Assert.AreEqual(1, countRg2);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var moveOp = await rg1.StartMoveResourcesAsync(null);
+                _ = await moveOp.WaitForCompletionResponseAsync();
+            });
         }
 
         [TestCase]
@@ -302,6 +355,8 @@ namespace Azure.ResourceManager.Core.Tests
             Response response = await rg1.ValidateMoveResourcesAsync(moveInfo);
 
             Assert.AreEqual(204, response.Status);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.ValidateMoveResourcesAsync(null));
         }
 
         [TestCase]
@@ -322,6 +377,12 @@ namespace Azure.ResourceManager.Core.Tests
             Response response = await validateOp.WaitForCompletionResponseAsync();
 
             Assert.AreEqual(204, response.Status);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var moveOp = await rg1.StartValidateMoveResourcesAsync(null);
+                _ = await moveOp.WaitForCompletionResponseAsync();
+            });
         }
 
         [TestCase]
