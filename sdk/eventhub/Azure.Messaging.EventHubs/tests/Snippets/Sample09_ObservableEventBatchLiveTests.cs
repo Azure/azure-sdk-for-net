@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -154,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 {
                     var eventBody = new BinaryData($"Event #{ index }");
                     var eventData = new EventData(eventBody);
-                    eventData.Properties.Add("ApplicationID", index);
+                    eventData.Properties.Add("ApplicationId", index);
 
                     if (!newbatch.TryAdd(eventData))
                     {
@@ -163,11 +164,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 }
 
                 //check if event 1 is in the batch
-                var contains = false;
-                foreach (var singleEvent in newbatch.Events)
-                {
-                    contains = contains || (Int32.TryParse(singleEvent.Properties["ApplicationID"].ToString(), out Int32 id) && id == 1);
-                }
+                var contains = newbatch.Events.Any(eventData => int
+                .TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
             }
             finally
             {
@@ -200,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 {
                     var eventBody = new BinaryData($"Event #{ index }");
                     var eventData = new EventData(eventBody);
-                    eventData.Properties.Add("ApplicationID", index);
+                    eventData.Properties.Add("ApplicationId", index);
 
                     if (!newbatch.TryAdd(eventData))
                     {
@@ -208,11 +206,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     }
                 }
 
-                var contains = false;
-                foreach (var singleEvent in newbatch.Events)
-                {
-                      contains |= (int.TryParse(singleEvent.Properties["ApplicationId"].ToString(), out int id) && id == 1);
-                }
+                var contains = newbatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
+
                 Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
 
                 Assert.Greater(newbatch.Count, 0, "Events were not successfully added to the batch");

@@ -142,11 +142,8 @@ try
     }
 
     //check if event 1 is in the batch
-    var contains = false;
-    foreach (var singleEvent in newbatch.Events)
-    {
-        contains = contains || (Int32.TryParse(singleEvent.Properties["ApplicationID"].ToString(), out Int32 id) && id == 1);
-    }
+    var contains = newbatch.Events.Any(eventData => int
+    .TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
 }
 finally
 {
