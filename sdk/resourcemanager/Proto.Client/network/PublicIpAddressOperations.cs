@@ -14,7 +14,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be performed over a specific NetworkSecurityGroup.
     /// </summary>
-    public class PublicIpAddressOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, PublicIpAddress>, ITaggableResource<ResourceGroupResourceIdentifier, PublicIpAddress>, IDeletableResource
+    public class PublicIpAddressOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, PublicIpAddress>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicIpAddressOperations"/> class.

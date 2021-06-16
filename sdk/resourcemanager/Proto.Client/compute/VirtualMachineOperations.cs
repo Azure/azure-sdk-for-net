@@ -12,7 +12,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing the operations that can be performed over a specific VirtualMachine.
     /// </summary>
-    public class VirtualMachineOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualMachine>, ITaggableResource<ResourceGroupResourceIdentifier, VirtualMachine>, IDeletableResource
+    public class VirtualMachineOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualMachine>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineOperations"/> class.
