@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The invited participants result event.
+    /// The added participants result event.
     /// </summary>
     [CodeGenModel("AddParticipantResultEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
     public partial class AddParticipantResultEvent : CallingServerEventBase
