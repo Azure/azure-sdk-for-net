@@ -79,7 +79,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
         public TableClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, null, default, default, options)
         {
@@ -102,7 +102,8 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="credential"/> is null.</exception>
         public TableClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, null, default, credential, options)
         {
@@ -123,6 +124,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
+        /// <exception cref="ArgumentException"><paramref name="tableName"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, null)
@@ -143,6 +145,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentException"><paramref name="tableName"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, options)
@@ -164,6 +167,7 @@ namespace Azure.Data.Tables
         /// Configure Azure Storage connection strings</see>.
         /// </param>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="tableName"/> is null.</exception>
         public TableClient(string connectionString, string tableName)
             : this(connectionString, tableName, default)
         { }
@@ -185,9 +189,12 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentException"><paramref name="tableName"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="tableName"/> is null.</exception>
         public TableClient(string connectionString, string tableName, TableClientOptions options = null)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
             _accountName = connString._accountName;
@@ -225,7 +232,8 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'. or <paramref name="tableName"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="tableName"/>, <paramref name="endpoint"/>, or <paramref name="tokenCredential"/> is null.</exception>
         public TableClient(Uri endpoint, string tableName, TokenCredential tokenCredential, TableClientOptions options = default)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));

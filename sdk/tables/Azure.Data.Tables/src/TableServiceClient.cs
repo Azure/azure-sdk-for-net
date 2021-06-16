@@ -67,6 +67,8 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.
         /// See <see cref="GenerateSasUri(TableAccountSasPermissions,TableAccountSasResourceTypes,DateTimeOffset)"/> for creating a SAS token.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="credential"/> is null.</exception>
         public TableServiceClient(Uri endpoint, AzureSasCredential credential)
             : this(endpoint, credential, null)
         {
@@ -85,6 +87,7 @@ namespace Azure.Data.Tables
         /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
         /// Configure Azure Storage connection strings</see>.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
         public TableServiceClient(string connectionString)
             : this(connectionString, null)
         { }
@@ -100,6 +103,8 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> is null.</exception>
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, default, default, options)
         {
@@ -124,6 +129,8 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not start with 'https'.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> is null.</exception>
         public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, default, credential, options)
         {
@@ -143,6 +150,7 @@ namespace Azure.Data.Tables
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, null)
         {
@@ -161,6 +169,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
@@ -183,6 +192,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
         public TableServiceClient(string connectionString, TableClientOptions options = null)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
@@ -225,6 +235,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
         public TableServiceClient(Uri endpoint, TokenCredential tokenCredential, TableClientOptions options = default)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
