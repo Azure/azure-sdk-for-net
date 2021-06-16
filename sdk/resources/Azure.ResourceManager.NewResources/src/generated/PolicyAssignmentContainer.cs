@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NewResources
         /// <summary> Initializes a new instance of PolicyAssignmentContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="scope"> Typed scope Identifier for the container. </param>
-        internal PolicyAssignmentContainer(OperationsBase parent, ResourceIdentifier scope):base(parent)
+        internal PolicyAssignmentContainer(OperationsBase parent, ResourceIdentifier scope) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             // TODO: Validate scope
@@ -211,6 +211,140 @@ namespace Azure.ResourceManager.NewResources
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </summary>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<PolicyAssignment> List(string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<PolicyAssignment> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                scope.Start();
+                try
+                {
+                    Response<PolicyAssignmentListResult> response;
+                    var scopeParts = _scope.ToString().Split('/');
+
+                    if (_scope.GetType() == typeof(SubscriptionResourceIdentifier))
+                    {
+                        var s = _scope as SubscriptionResourceIdentifier;
+                        response = _restClient.List(s.SubscriptionId, filter, cancellationToken);
+                    }
+                    else if (_scope.GetType() == typeof(TenantResourceIdentifier) && _scope.ToString().StartsWith("/providers/Microsoft.Management/managementGroups/"))
+                    {
+                        response = _restClient.ListForManagementGroup(_scope.Name, filter, cancellationToken);
+                    }
+                    else if (_scope.GetType() == typeof(ResourceGroupResourceIdentifier) && scopeParts[scopeParts.Length - 2].Equals("resourceGroups"))
+                    {
+                        var s = _scope as ResourceGroupResourceIdentifier;
+                        response = _restClient.ListForResourceGroup(s.SubscriptionId, s.ResourceGroupName, filter, cancellationToken);
+                    }
+                    else
+                    {
+                        var s = _scope as ResourceGroupResourceIdentifier;
+                        var parts = s.ToString().Substring(s.ToString().IndexOf("providers/")).ToString().Split('/');
+                        var resourceProviderNamespace = parts[1];
+                        var resourceType = parts[parts.Length - 2];
+                        var startIndex = s.ToString().IndexOf($"providers/{resourceProviderNamespace}") + $"providers/{resourceProviderNamespace}/".Length;
+                        var endIndex = s.ToString().IndexOf($"/{resourceType}");
+                        var parentResourcePath = startIndex >= endIndex ? "" : s.ToString().Substring(startIndex, endIndex - startIndex);
+                        response = _restClient.ListForResource(s.SubscriptionId, s.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, s.Name, filter, cancellationToken);
+                    }
+
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<PolicyAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </summary>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<PolicyAssignment> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<PolicyAssignment>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                scope.Start();
+                try
+                {
+                    Response<PolicyAssignmentListResult> response;
+                    var scopeParts = _scope.ToString().Split('/');
+
+                    if (_scope.GetType() == typeof(SubscriptionResourceIdentifier))
+                    {
+                        var s = _scope as SubscriptionResourceIdentifier;
+                        response = await _restClient.ListAsync(s.SubscriptionId, filter, cancellationToken).ConfigureAwait(false);
+                    }
+                    else if (_scope.GetType() == typeof(TenantResourceIdentifier) && _scope.ToString().StartsWith("/providers/Microsoft.Management/managementGroups/"))
+                    {
+                        response = await _restClient.ListForManagementGroupAsync(_scope.Name, filter, cancellationToken).ConfigureAwait(false);
+                    }
+                    else if (_scope.GetType() == typeof(ResourceGroupResourceIdentifier) && scopeParts[scopeParts.Length - 2].Equals("resourceGroups"))
+                    {
+                        var s = _scope as ResourceGroupResourceIdentifier;
+                        response = await _restClient.ListForResourceGroupAsync(s.SubscriptionId, s.ResourceGroupName, filter, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        var s = _scope as ResourceGroupResourceIdentifier;
+                        var parts = s.ToString().Substring(s.ToString().IndexOf("providers/")).ToString().Split('/');
+                        var resourceProviderNamespace = parts[1];
+                        var resourceType = parts[parts.Length - 2];
+                        var startIndex = s.ToString().IndexOf($"providers/{resourceProviderNamespace}") + $"providers/{resourceProviderNamespace}/".Length;
+                        var endIndex = s.ToString().IndexOf($"/{resourceType}");
+                        var parentResourcePath = startIndex >= endIndex ? "" : s.ToString().Substring(startIndex, endIndex - startIndex);
+                        response = await _restClient.ListForResourceAsync(s.SubscriptionId, s.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, s.Name, filter, cancellationToken).ConfigureAwait(false);
+                    }
+
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<PolicyAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         // /// <summary> Filters the list of PolicyAssignment for this resource group represented as generic resources. </summary>
