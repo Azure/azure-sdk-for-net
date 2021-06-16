@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class ProviderContainerTests : ResourceManagerTestBase
+    public class ProviderOperationsTests : ResourceManagerTestBase
     {
-        public ProviderContainerTests(bool isAsync)
+        public ProviderOperationsTests(bool isAsync)
          : base(isAsync)//, RecordedTestMode.Record)
         {
         }

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Core
         {
         }
 
+        internal ProviderContainer(TenantOperations parent) : base(parent)
+        {
+        }
+
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 

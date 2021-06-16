@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Core
         }
 
         //TODO:
-        ///// <summary>
-        ///// Gets the provider container under this subscription.
-        ///// </summary>
-        ///// <returns> The provider container. </returns>
-        ////public ProviderContainer GetProviders()
-        ////{
-        ////    return new ProviderContainer(this);
-        ////}
+        /// <summary>
+        /// Gets the provider container under this subscription.
+        /// </summary>
+        /// <returns> The provider container. </returns>
+        public ProviderContainer GetProviders()
+        {
+            return new ProviderContainer(this);
+        }
     }
 }
