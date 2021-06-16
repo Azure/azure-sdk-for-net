@@ -31,14 +31,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public class ObservableEventDataBatch : IDisposable
         {
             // The set of events that have been accepted into the batch
-            private List<EventData> _events = new();
+            private List<EventData> _events = new List<EventData>();
 
             /// The EventDataBatch being observed
             private EventDataBatch _batch;
 
             // These events are the source of what is held in the batch.  Though
             // these instances are mutable, any changes made will NOT be reflected to
-            // those that had been accepted into the batch.
+            // those that had been accepted into the batch
             public IReadOnlyList<EventData> Events { get; }
 
             public int Count => _batch.Count;
@@ -46,13 +46,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             public long MaximumSizeInBytes => _batch.MaximumSizeInBytes;
 
             // The constructor requires that sourceBatch is an empty batch so that it can track the events
-            // that are being added.
+            // that are being added
             public ObservableEventDataBatch(EventDataBatch sourceBatch)
             {
                 _batch = sourceBatch ?? throw new ArgumentNullException(nameof(sourceBatch));
                 if (_batch.Count > 0)
                 {
-                    throw new ArgumentException("sourceBatch is not an empty EventBatch");
+                    throw new ArgumentException("The sourceBatch is not empty.", nameof(sourceBatch));
                 }
                 Events = _events.AsReadOnly();
             }
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             public void Dispose() => _batch.Dispose();
 
             // Performs the needed transation to allow an ObservableEventDataBatch to be
-            // implicitly converted to an EventDataBatch.
+            // implicitly converted to an EventDataBatch
             public static implicit operator EventDataBatch(ObservableEventDataBatch observable) => observable._batch;
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     }
                 }
 
-                //check if event 1 is in the batch
+                // Verify that the expected event is in the batch
                 var contains = newbatch.Events.Any(eventData => int
                 .TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
             }
@@ -176,51 +176,45 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
 #endregion
         }
+
         /// <summary>
         ///   Live test of the ObservableEventBatch Class. This checks that events are successfully being added
         ///   to both the internal and external batch.
         /// </summary>
         ///
         [Test]
-        public async Task ObservableEventBatch_LiveTest()
+        public async Task ObservableEventBatchIsPublishable()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+            await using var producer = new EventHubProducerClient(connectionString, eventHubName);
+            using var eventBatch = await producer.CreateBatchAsync();
+            var newbatch = new ObservableEventDataBatch(eventBatch);
 
-            try
+            for (var index = 0; index < 5; ++index)
             {
-                using var eventBatch = await producer.CreateBatchAsync();
-                ObservableEventDataBatch newbatch = new ObservableEventDataBatch(eventBatch);
+                var eventBody = new BinaryData($"Event #{ index }");
+                var eventData = new EventData(eventBody);
+                eventData.Properties.Add("ApplicationId", index);
 
-                for (var index = 0; index < 5; ++index)
+                if (!newbatch.TryAdd(eventData))
                 {
-                    var eventBody = new BinaryData($"Event #{ index }");
-                    var eventData = new EventData(eventBody);
-                    eventData.Properties.Add("ApplicationId", index);
-
-                    if (!newbatch.TryAdd(eventData))
-                    {
-                        throw new Exception($"The event at { index } could not be added.");
-                    }
+                    throw new Exception($"The event at { index } could not be added.");
                 }
-
-                var contains = newbatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
-
-                Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
-
-                Assert.Greater(newbatch.Count, 0, "Events were not successfully added to the batch");
-                Assert.AreEqual(newbatch.Count, newbatch.Events.Count, "The observable batch events are out of sync with the event batch data");
-
-                // check implicit casting by verifying batch can be sent using built in
-                // producer method
-                await producer.SendAsync(newbatch);
             }
-            finally
-            {
-                await producer.CloseAsync();
-            }
+
+            var contains = newbatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
+
+            Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
+
+            Assert.Greater(newbatch.Count, 0, "Events were not successfully added to the batch");
+            Assert.AreEqual(newbatch.Count, newbatch.Events.Count, "The observable batch events are out of sync with the event batch data");
+
+            // Check implicit casting by verifying batch can be sent using built in
+            // producer method
+            await producer.SendAsync(newbatch);
+            await producer.CloseAsync();
         }
     }
 }
