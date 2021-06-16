@@ -6777,6 +6777,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class SynapseSparkJobDefinitionActivity : Azure.Analytics.Synapse.Artifacts.Models.ExecutionActivity
     {
         public SynapseSparkJobDefinitionActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.SynapseSparkJobReference sparkJob) : base (default(string)) { }
+        public System.Collections.Generic.IList<object> Arguments { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.SynapseSparkJobReference SparkJob { get { throw null; } set { } }
     }
     public partial class SynapseSparkJobReference
