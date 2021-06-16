@@ -26,57 +26,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample09_ObservableEventBatchLiveTests
     {
-        #region Snippet:Sample09_ObservableEventBatch
-
-        public class ObservableEventDataBatch : IDisposable
-        {
-            // The set of events that have been accepted into the batch
-            private List<EventData> _events = new List<EventData>();
-
-            /// The EventDataBatch being observed
-            private EventDataBatch _batch;
-
-            // These events are the source of what is held in the batch.  Though
-            // these instances are mutable, any changes made will NOT be reflected to
-            // those that had been accepted into the batch
-            public IReadOnlyList<EventData> Events { get; }
-
-            public int Count => _batch.Count;
-            public long SizeInBytes => _batch.SizeInBytes;
-            public long MaximumSizeInBytes => _batch.MaximumSizeInBytes;
-
-            // The constructor requires that sourceBatch is an empty batch so that it can track the events
-            // that are being added
-            public ObservableEventDataBatch(EventDataBatch sourceBatch)
-            {
-                _batch = sourceBatch ?? throw new ArgumentNullException(nameof(sourceBatch));
-                if (_batch.Count > 0)
-                {
-                    throw new ArgumentException("The sourceBatch is not empty.", nameof(sourceBatch));
-                }
-                Events = _events.AsReadOnly();
-            }
-
-            public bool TryAdd(EventData eventData)
-            {
-                if (_batch.TryAdd(eventData))
-                {
-                    _events.Add(eventData);
-                    return true;
-                }
-
-                return false;
-            }
-
-            public void Dispose() => _batch.Dispose();
-
-            // Performs the needed transation to allow an ObservableEventDataBatch to be
-            // implicitly converted to an EventDataBatch
-            public static implicit operator EventDataBatch(ObservableEventDataBatch observable) => observable._batch;
-        }
-
-        #endregion
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -216,5 +165,56 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             await producer.SendAsync(newbatch);
             await producer.CloseAsync();
         }
+
+        #region Snippet:Sample09_ObservableEventBatch
+
+        public class ObservableEventDataBatch : IDisposable
+        {
+            // The set of events that have been accepted into the batch
+            private List<EventData> _events = new List<EventData>();
+
+            /// The EventDataBatch being observed
+            private EventDataBatch _batch;
+
+            // These events are the source of what is held in the batch.  Though
+            // these instances are mutable, any changes made will NOT be reflected to
+            // those that had been accepted into the batch
+            public IReadOnlyList<EventData> Events { get; }
+
+            public int Count => _batch.Count;
+            public long SizeInBytes => _batch.SizeInBytes;
+            public long MaximumSizeInBytes => _batch.MaximumSizeInBytes;
+
+            // The constructor requires that sourceBatch is an empty batch so that it can track the events
+            // that are being added
+            public ObservableEventDataBatch(EventDataBatch sourceBatch)
+            {
+                _batch = sourceBatch ?? throw new ArgumentNullException(nameof(sourceBatch));
+                if (_batch.Count > 0)
+                {
+                    throw new ArgumentException("The sourceBatch is not empty.", nameof(sourceBatch));
+                }
+                Events = _events.AsReadOnly();
+            }
+
+            public bool TryAdd(EventData eventData)
+            {
+                if (_batch.TryAdd(eventData))
+                {
+                    _events.Add(eventData);
+                    return true;
+                }
+
+                return false;
+            }
+
+            public void Dispose() => _batch.Dispose();
+
+            // Performs the needed transation to allow an ObservableEventDataBatch to be
+            // implicitly converted to an EventDataBatch
+            public static implicit operator EventDataBatch(ObservableEventDataBatch observable) => observable._batch;
+        }
+
+        #endregion
     }
 }
