@@ -9,7 +9,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be performed over a specific subnet.
     /// </summary>
-    public class SubnetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, Subnet>, IDeletableResource
+    public class SubnetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, Subnet>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubnetOperations"/> class.

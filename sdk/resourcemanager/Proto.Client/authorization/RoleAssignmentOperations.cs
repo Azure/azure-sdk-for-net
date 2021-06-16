@@ -13,7 +13,7 @@ namespace Proto.Authorization
     /// <summary>
     /// Operations over Role Assignments for Role-based access control to ARM resources
     /// </summary>
-    public class RoleAssignmentOperations : ExtensionResourceOperationsBase<RoleAssignment>, IDeletableResource
+    public class RoleAssignmentOperations : ExtensionResourceOperationsBase<RoleAssignment>
     {
         /// <summary>
         /// Gets the resource type for Role Assignments.

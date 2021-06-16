@@ -5,7 +5,6 @@ using Azure;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using System.Threading;
 using System.Threading.Tasks;
 
