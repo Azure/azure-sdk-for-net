@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-9f295737-02ab-c9da-dccc-e30888d49f31?restype=container",
@@ -20,7 +20,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Fri, 14 May 2021 17:16:09 GMT",
-        "ETag": "\u00220x8D916FBF79A103B\u0022",
+        "ETag": "\"0x8D916FBF79A103B\"",
         "Last-Modified": "Fri, 14 May 2021 17:16:09 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -53,7 +53,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Fri, 14 May 2021 17:16:09 GMT",
-        "ETag": "\u00220x8D916FBF7B23C21\u0022",
+        "ETag": "\"0x8D916FBF7B23C21\"",
         "Last-Modified": "Fri, 14 May 2021 17:16:09 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -91,7 +91,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Date": "Fri, 14 May 2021 17:16:09 GMT",
-        "ETag": "\u00220x8D916FBF7BDAC1F\u0022",
+        "ETag": "\"0x8D916FBF7BDAC1F\"",
         "Last-Modified": "Fri, 14 May 2021 17:16:09 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -107,7 +107,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanoauthstage.blob.core.windows.net/?restype=service\u0026comp=userdelegationkey",
+      "RequestUri": "https://seanoauthstage.blob.core.windows.net/?restype=service&comp=userdelegationkey",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -123,7 +123,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
       },
-      "RequestBody": "\uFEFF\u003CKeyInfo\u003E\u003CExpiry\u003E2021-05-14T18:16:10Z\u003C/Expiry\u003E\u003C/KeyInfo\u003E",
+      "RequestBody": "﻿<KeyInfo><Expiry>2021-05-14T18:16:10Z</Expiry></KeyInfo>",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
@@ -137,10 +137,10 @@
         "x-ms-request-id": "9467e894-c01e-0011-27e4-4877dc000000",
         "x-ms-version": "2020-10-02"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2021-05-14T17:16:09Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2021-05-14T18:16:10Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2020-10-02\u003C/SignedVersion\u003E\u003CValue\u003EDhJzS60rw3Qu0rgqKksE\u002BZ3aasndYkORFyYFk/rCs60=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-05-14T17:16:09Z</SignedStart><SignedExpiry>2021-05-14T18:16:10Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-10-02</SignedVersion><Value>DhJzS60rw3Qu0rgqKksE+Z3aasndYkORFyYFk/rCs60=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-9f295737-02ab-c9da-dccc-e30888d49f31/test-blob-4e954627-9738-f033-ad67-fe000749b8d4?versionid=2021-05-14T17%3A16%3A09.7891361Z\u0026skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-05-14T17%3A16%3A09Z\u0026ske=2021-05-14T18%3A16%3A10Z\u0026sks=b\u0026skv=2020-10-02\u0026sv=2020-10-02\u0026st=2021-05-14T16%3A16%3A10Z\u0026se=2021-05-14T18%3A16%3A10Z\u0026sr=b\u0026sp=racwdxltmei\u0026sig=Sanitized",
+      "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-9f295737-02ab-c9da-dccc-e30888d49f31/test-blob-4e954627-9738-f033-ad67-fe000749b8d4?versionid=2021-05-14T17%3A16%3A09.7891361Z&skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-05-14T17%3A16%3A09Z&ske=2021-05-14T18%3A16%3A10Z&sks=b&skv=2020-10-02&sv=2020-10-02&st=2021-05-14T16%3A16%3A10Z&se=2021-05-14T18%3A16%3A10Z&sr=b&sp=racwdxltmei&sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -190,7 +190,7 @@
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
         "Date": "Fri, 14 May 2021 17:16:10 GMT",
-        "ETag": "\u00220x8D916FBF7BDAC1F\u0022",
+        "ETag": "\"0x8D916FBF7BDAC1F\"",
         "Last-Modified": "Fri, 14 May 2021 17:16:09 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -248,6 +248,6 @@
   "Variables": {
     "DateTimeOffsetNow": "2021-05-14T12:16:10.3507487-05:00",
     "RandomSeed": "885818541",
-    "Storage_TestConfigOAuth": "OAuthTenant\nseanoauthstage\nU2FuaXRpemVk\nhttps://seanoauthstage.blob.core.windows.net\nhttps://seanoauthstage.file.core.windows.net\nhttps://seanoauthstage.queue.core.windows.net\nhttps://seanoauthstage.table.core.windows.net\n\n\n\n\nhttps://seanoauthstage-secondary.blob.core.windows.net\nhttps://seanoauthstage-secondary.file.core.windows.net\nhttps://seanoauthstage-secondary.queue.core.windows.net\nhttps://seanoauthstage-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seanoauthstage.blob.core.windows.net/;QueueEndpoint=https://seanoauthstage.queue.core.windows.net/;FileEndpoint=https://seanoauthstage.file.core.windows.net/;BlobSecondaryEndpoint=https://seanoauthstage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanoauthstage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanoauthstage-secondary.file.core.windows.net/;AccountName=seanoauthstage;AccountKey=Sanitized\n"
+    "Storage_TestConfigOAuth": "OAuthTenant\nseanoauthstage\nU2FuaXRpemVk\nhttps://seanoauthstage.blob.core.windows.net\nhttps://seanoauthstage.file.core.windows.net\nhttps://seanoauthstage.queue.core.windows.net\nhttps://seanoauthstage.table.core.windows.net\n\n\n\n\nhttps://seanoauthstage-secondary.blob.core.windows.net\nhttps://seanoauthstage-secondary.file.core.windows.net\nhttps://seanoauthstage-secondary.queue.core.windows.net\nhttps://seanoauthstage-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seanoauthstage.blob.core.windows.net/;QueueEndpoint=https://seanoauthstage.queue.core.windows.net/;FileEndpoint=https://seanoauthstage.file.core.windows.net/;BlobSecondaryEndpoint=https://seanoauthstage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanoauthstage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanoauthstage-secondary.file.core.windows.net/;AccountName=seanoauthstage;AccountKey=Sanitized\n\n\n"
   }
 }
