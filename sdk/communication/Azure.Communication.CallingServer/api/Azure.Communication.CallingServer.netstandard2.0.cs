@@ -102,9 +102,9 @@ namespace Azure.Communication.CallingServer
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CallingServerEventType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.CallingServerEventType AddParticipantResultEvent { get { throw null; } }
         public static Azure.Communication.CallingServer.CallingServerEventType CallConnectionStateChangedEvent { get { throw null; } }
         public static Azure.Communication.CallingServer.CallingServerEventType CallRecordingStateChangeEvent { get { throw null; } }
-        public static Azure.Communication.CallingServer.CallingServerEventType InviteParticipantsResultEvent { get { throw null; } }
         public static Azure.Communication.CallingServer.CallingServerEventType ParticipantsUpdatedEvent { get { throw null; } }
         public static Azure.Communication.CallingServer.CallingServerEventType PlayAudioResultEvent { get { throw null; } }
         public static Azure.Communication.CallingServer.CallingServerEventType ToneReceivedEvent { get { throw null; } }
