@@ -14,14 +14,14 @@ Install-Package Azure.ResourceManager.Core -Version 1.0.0-beta.1
 
 ### Prerequisites
 
-You will need the following values to authenticate to Azure
+You'll need the following values to authenticate to Azure:
 
 -   **Subscription ID**
 -   **Client ID**
 -   **Client Secret**
 -   **Tenant ID**
 
-The detailed instructions on how to get and set this values can be found in the [Prerequisites guide](docs/Prerequisites.md). 
+Detailed instructions on getting and setting these values is found in the [Prerequisites guide](docs/Prerequisites.md). 
 
 ### Authentication and Creating Resource Management Client
 
@@ -41,31 +41,27 @@ following:
 ```
 From this code snippet, we showed that in order to interact with Resources, we need to create the top-level client first **AzureResourceManagerClient**
 
-More information and different authentication approaches using Azure
-Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 ## Key concepts
 ### Understanding Azure Resource Hierarchy
 
-In order to reduce both the number of clients needed to perform common tasks and the amount of redundant parameters that each of those clients take, we have introduced an object hierarchy in the SDK that mimics the object hierarchy in Azure. Each resource client in the SDK has methods to access the resource clients of its children that is already scoped to the proper subscription and resource group.
+To reduce both the number of clients needed to perform common tasks and the amount of redundant parameters that each of those clients take, we have introduced an object hierarchy in the SDK that mimics the object hierarchy in Azure. Each resource client in the SDK has methods to access the resource clients of its children that is already scoped to the proper subscription and resource group.
 
-To accomplish this we are introducing 4 standard types for all resources in Azure.
+To accomplish this, we're introducing 4 standard types for all resources in Azure:
+
 #### **[Resource]Data**
-This represents the data that makes up a given resource.  Typically this is the response data from a service call such as GET and provides details about the underlying resource.
-Previously this was represented by a **Model** class.
+This represents the data that makes up a given resource. Typically, this is the response data from a service call such as GET and provides details about the underlying resource.
+Previously, this was represented by a **Model** class.
 
 #### **[Resource]Operations**
 
-This represents a service client that is scoped to a particular resource.
-You can directly execute all operations on that client without needing to pass in scope
-parameters such as subscription id or resource name.
+This represents a service client that's scoped to a particular resource. You can directly execute all operations on that client without needing to pass in scope parameters such as subscription ID or resource name.
 
 #### **[Resource]Container**
 
 This represents the operations you can perform on a collection of resources belonging to a specific parent resource.
-This mainly consists of List or Create operations.
-For most things the parent will be a **ResourceGroup**, however each parent / child relationship is represented this way.
-Such as a **Subnet** is a child of a **VirtualNetwork** or a **ResourceGroup** is a child of a **Subscription**.
+This mainly consists of List or Create operations. For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
 
 #### **[Resource]**
 
@@ -74,10 +70,10 @@ It also has access to all of the operations and like the **[Resource]Operations*
 to a specific resource in Azure.
 
 ### Migrating from current to preview versions
-There are core differences between the current and new preview SDK.
-The main ones are:
+There are core differences between the current and new preview SDK. The main ones are:
+
 - The introduction of Resource Operations.
-- An structured Resource Identifier.
+- A structured Resource Identifier.
 
 You can learn more about the main differences [in this document](docs\MigratingFromCurrentToPreview.md) and reading the examples below.
 

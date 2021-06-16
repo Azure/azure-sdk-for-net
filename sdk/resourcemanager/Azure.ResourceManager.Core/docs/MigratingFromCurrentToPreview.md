@@ -1,16 +1,9 @@
 # Differences between current and preview .NET Management SDK
 
 ## Structured Resource Identifier
-In the past the resource identifier returned by Azure often in a property called Id was returned as a string.
-This made it difficult for users to pull out specific pieces of the identifier since they needed
-to implement their own parsing logic.  Today instead you can implicitly cast the string into an object
-which will do the parsing for you.  There are 3 types of ResourceIdentifiers and they correspond
-to which level the resource lives at.  A resource that lives on a tenant will have a **TenantResourceIdentifier**.
-A resource that lives under a subscription will have a **SubscriptionResourceIdentifer**.  A resource that lives under
-a resource group will have a **ResourceGroupResourceIdentifier**.
+In the past, the resource identifier returned by Azure (often in a property named `Id`) was returned as a string. This made it difficult for users to retrieve specific pieces of the identifier, since they needed to implement their own parsing logic. Today, you can instead implicitly cast the string into an object, which will do the parsing for you. There are three types of ResourceIdentifiers, and they correspond to the level at which the resource lives. A resource that lives on a tenant will have a **TenantResourceIdentifier**. A resource that lives under a subscription will have a **SubscriptionResourceIdentifer**. A resource that lives under a resource group will have a **ResourceGroupResourceIdentifier**.
 
-You can usually tell by the id string itself which type it is, but if you are unsure you can always cast it onto a **ResourceIdentifier**
-and use the Try methods to retrieve the values.
+You can usually tell by the `id` string itself which type it is. If you're unsure, you can cast it onto a **ResourceIdentifier** and use the `Try` methods to retrieve the values.
 
 ### Casting to a specific type
 ```csharp
@@ -29,9 +22,9 @@ string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourc
 // Assume we don't know what type of resource id we have we can cast to the base type
 ResourceIdentifier id = resourceId;
 string property;
-if(id.TryGetSubscriptionId(out property))
+if (id.TryGetSubscriptionId(out property))
     Console.WriteLine($"Subscription: {property}");
-if(id.TryGetResourceGroupName(out property))
+if (id.TryGetResourceGroupName(out property))
     Console.WriteLine($"ResourceGroup: {property}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
@@ -85,9 +78,9 @@ This becomes more pronounced when dealing with list methods and performing opera
 ```csharp
     Subscription subscription = armClient.DefaultSubscription;
 
-    foreach(VirtualMachine virtualMachine in subscription.ListVirtualMachines())
+    foreach (VirtualMachine virtualMachine in subscription.ListVirtualMachines())
     {
-        // Because each object is already scoped I no longer need to pass in those variables
+        // Because each object is already scoped, I no longer need to pass in those variables.
         await virtualMachine.StartAddTag("tagKey", "tagValue").WaitForCompletionAsync();
     }
 ```
