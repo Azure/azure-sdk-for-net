@@ -13,9 +13,17 @@ namespace Azure.Communication.CallingServer.Tests
 {
     public class CallingServerLiveTestBase : RecordedTestBase<CallingServerTestEnvironment>
     {
-        protected const string RESOURCE_IDENTIFIER = "02665c56-277e-4c59-bab4-c475caa3ee80";
+        // Random Gen Guid
+        protected const string FROM_USER_IDENTIFIER = "e3560385-776f-41d1-bf04-07ef738f2f23";
 
-        protected const string GROUP_IDENTIFIER = "1400789f-e11b-4ceb-88cb-bc8df2a01568";
+        // Random Gen Guid
+        protected const string TO_USER_IDENTIFIER = "e3560385-776f-41d1-bf04-07ef738f2fc1";
+
+        // From ACS Resource "immutableResourceId".
+        protected const string RESOURCE_IDENTIFIER = "016a7064-0581-40b9-be73-6dde64d69d72";
+
+        // Random Gen Guid
+        protected const string GROUP_IDENTIFIER = "3500789f-e11b-4ceb-85cb-bc8df2a01768";
 
         protected string GetRandomUserId()
         {
@@ -25,6 +33,24 @@ namespace Azure.Communication.CallingServer.Tests
         protected string GetFixedUserId(string userGuid)
         {
             return "8:acs:" + RESOURCE_IDENTIFIER + "_" + userGuid;
+        }
+
+        protected string GetFromUserId()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                return GetRandomUserId();
+            }
+            return GetFixedUserId(FROM_USER_IDENTIFIER);
+        }
+
+        protected string GetToUserId()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                return GetRandomUserId();
+            }
+            return GetFixedUserId(TO_USER_IDENTIFIER);
         }
 
         protected string GetGroupId()
@@ -77,7 +103,9 @@ namespace Azure.Communication.CallingServer.Tests
             return InstrumentClient(callingServerClient);
         }
 
-        protected async Task<IEnumerable<CallConnection>> CreateGroupCallAsync(CallingServerClient callingServerClient, string groupId, string from, string to, string callBackUri)
+        #region Api operation functions
+        #region Snippet:Azure_Communication_ServerCalling_Tests_CreateGroupCallOperation
+        internal async Task<IEnumerable<CallConnection>> CreateGroupCallOperation(CallingServerClient callingServerClient, string groupId, string from, string to, string callBackUri)
         {
             CallConnection? fromCallConnection = null;
             CallConnection? toCallConnection = null;
@@ -128,15 +156,15 @@ namespace Azure.Communication.CallingServer.Tests
                 throw;
             }
         }
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_CreateGroupCallOperation
 
-        #region Support functions
         #region Snippet:Azure_Communication_ServerCalling_Tests_CreateCallConnectionOperation
         internal async Task<Response<CallConnection>> CreateCallConnectionOperation(CallingServerClient client)
         {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var source = await CreateUserAsync(communicationIdentityClient).ConfigureAwait(false);
 
-            var targets = new[] { new PhoneNumberIdentifier("+11111111111") };
+            var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
                    new[] { MediaType.Audio },
@@ -171,6 +199,20 @@ namespace Azure.Communication.CallingServer.Tests
 
             Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }
+
+        internal async Task PlayAudioOperation(ServerCall serverCall)
+        {
+            Console.WriteLine("Performing PlayAudio operation");
+
+            var response = await serverCall.PlayAudioAsync(
+                audioFileUri: new Uri(TestEnvironment.AudioFileUrl),
+                audioFileId: "ebb1d98d-fd86-4204-800c-f7bdfc2e515c",
+                callbackUri: new Uri(TestEnvironment.AppCallbackUrl),
+                operationContext: "de346f03-7f8d-41ab-a232-cc5e14990769"
+                ).ConfigureAwait(false);
+
+            Assert.AreEqual(response.Value.Status, OperationStatus.Running);
+        }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_HangupCallOperation
@@ -193,39 +235,84 @@ namespace Azure.Communication.CallingServer.Tests
 
             Assert.AreEqual(OperationStatus.Completed, response.Value.Status);
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantOperation
-        internal async Task AddParticipantOperation(CallConnection callConnection)
+        internal async Task CancelAllMediaOperationsOperation(IEnumerable<CallConnection> callConnections)
         {
             Console.WriteLine("Performing cancel media processing operation to stop playing audio");
 
-            string invitedUser = GetFixedUserId("e3560385-776f-41d1-bf04-07ef738f2fc1");
+            if (callConnections == null)
+            {
+                return;
+            }
+            foreach (CallConnection callConnection in callConnections)
+            {
+                if (callConnection != null)
+                {
+                    try
+                    {
+                        var response = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
+                        Assert.AreEqual(OperationStatus.Completed, response.Value.Status);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error hanging up: " + ex.Message);
+                    }
+                }
+            }
+        }
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
+
+        #region Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantOperation
+        internal async Task<string> AddParticipantOperation(CallConnection callConnection)
+        {
+            Console.WriteLine("Performing add participant operation to add a participant");
+
+            string invitedUser = GetFixedUserId("0000000a-b200-7a0d-570c-113a0d00288d");
 
             var response = await callConnection.AddParticipantAsync(new CommunicationUserIdentifier(invitedUser)).ConfigureAwait(false);
 
-            Assert.AreEqual(202, response.Status);
+            Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.ParticipantId));
+
+            return response.Value.ParticipantId;
+        }
+
+        internal async Task<string> AddParticipantOperation(ServerCall serverCall)
+        {
+            Console.WriteLine("Performing add participant operation to add a participant");
+
+            string invitedUser = GetFixedUserId("0000000a-b200-7a0d-570c-113a0d00288d");
+
+            var response = await serverCall.AddParticipantAsync(
+                new CommunicationUserIdentifier(invitedUser),
+                callbackUri: new Uri(TestEnvironment.AppCallbackUrl)
+                ).ConfigureAwait(false);
+
+            Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.ParticipantId));
+
+            return response.Value.ParticipantId;
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_RemoveParticipantOperation
-        internal async Task RemoveParticipantOperation(CallConnection callConnection)
+        internal async Task RemoveParticipantOperation(CallConnection callConnection, string participantId)
         {
-            Console.WriteLine("Performing cancel media processing operation to stop playing audio");
+            Console.WriteLine("Performing remove participant operation to remove a participant");
 
-            // Remove Participant
-            /**
-             * There is an update that we require to beable to get
-             * the participantId from the service when a user is
-             * added to a call. Until that is fixed this recorded
-             * valuse needs to be used.
-             */
-            var response = await callConnection.RemoveParticipantAsync("e3560385-776f-41d1-bf04-07ef738f2fc1").ConfigureAwait(false);
+            var response = await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false);
+
+            Assert.AreEqual(202, response.Status);
+        }
+
+        internal async Task RemoveParticipantOperation(ServerCall serverCall, string participantId)
+        {
+            Console.WriteLine("Performing remove participant operation to remove a participant");
+
+            var response = await serverCall.RemoveParticipantAsync(participantId).ConfigureAwait(false);
 
             Assert.AreEqual(202, response.Status);
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_RemoveParticipantOperation
-        #endregion
+        #endregion Api operation functions
 
         #region Support functions
         private CommunicationUserIdentifier CreateUser(CommunicationIdentityClient communicationIdentityClient)
@@ -239,6 +326,7 @@ namespace Azure.Communication.CallingServer.Tests
             // reserve for living test, expect adding more content in the future.
             return await communicationIdentityClient.CreateUserAsync();
         }
+
         protected async Task CleanUpConnectionsAsync(IEnumerable<CallConnection> connections)
         {
             if (connections == null)
@@ -261,7 +349,7 @@ namespace Azure.Communication.CallingServer.Tests
             }
         }
 
-        protected async Task SleepIfNotInPlaybackModeAsync()
+        protected async Task SleepIfNotInPlaybackModeAsync(int milliSeconds = 10000)
         {
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
                 await Task.Delay(10000);
@@ -272,6 +360,23 @@ namespace Azure.Communication.CallingServer.Tests
             if (Mode == RecordedTestMode.Playback)
                 return;
             Thread.Sleep(milliSeconds);
+        }
+
+        protected async Task ValidateCallRecordingStateAsync(ServerCall serverCall,
+            string recordingId,
+            CallRecordingState expectedCallRecordingState)
+        {
+            Assert.NotNull(serverCall);
+            Assert.NotNull(recordingId);
+
+            // There is a delay between the action and when the state is available.
+            // Waiting to make sure we get the updated state, when we are running
+            // against a live service.
+            SleepInTest(6000);
+
+            CallRecordingProperties callRecordingProperties = await serverCall.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
+            Assert.NotNull(callRecordingProperties);
+            Assert.AreEqual(callRecordingProperties.RecordingState, expectedCallRecordingState);
         }
 
         private CallingServerClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs()

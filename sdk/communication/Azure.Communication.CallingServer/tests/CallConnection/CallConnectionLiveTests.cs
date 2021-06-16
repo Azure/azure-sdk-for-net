@@ -76,7 +76,7 @@ namespace Azure.Communication.CallingServer.Tests
                 var participantId = await AddParticipantOperation(callConnection).ConfigureAwait(false);
 
                 // Remove Participant
-                await SleepIfNotInPlaybackModeAsync(15000).ConfigureAwait(false);
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await RemoveParticipantOperation(callConnection, participantId).ConfigureAwait(false);
 
                 // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
