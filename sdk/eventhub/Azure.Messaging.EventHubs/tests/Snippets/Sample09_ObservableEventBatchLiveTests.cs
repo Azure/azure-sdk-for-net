@@ -87,12 +87,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:Sample09_AccessingEventData
-
+            #if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            #else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+            #endif
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -124,7 +125,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 await producer.CloseAsync();
             }
 
-            #endregion
+#endregion
         }
 
         /// <summary>
@@ -138,11 +139,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:Sample09_CheckingBatch
 
+            #if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            #else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+            #endif
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -171,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 await producer.CloseAsync();
             }
-            #endregion
+#endregion
         }
         /// <summary>
         ///   Live test of the ObservableEventBatch Class. This checks that events are successfully being added
@@ -182,11 +185,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public async Task ObservableEventBatch_LiveTest()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try

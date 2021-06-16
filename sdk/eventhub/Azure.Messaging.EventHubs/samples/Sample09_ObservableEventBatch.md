@@ -81,7 +81,7 @@ An Event Hub client is safe to cache and use for the lifetime of the application
 #### Accessing the EventData Instances
 This snippet demonstrates how to add events to an observable data batch and how to access them.
 ```C# Snippet:Sample09_AccessingEventData
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 var producer = new EventHubProducerClient(connectionString, eventHubName);
@@ -119,7 +119,7 @@ finally
 
 This sample demonstrates how to add an `EventData` identification property that can be used to verify that a given event ID was added to the observable batch. 
 ```C# Snippet:Sample09_CheckingBatch
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 var producer = new EventHubProducerClient(connectionString, eventHubName);
@@ -133,7 +133,7 @@ try
     {
         var eventBody = new BinaryData($"Event #{ index }");
         var eventData = new EventData(eventBody);
-        eventData.Properties.Add("ApplicationID", index);
+        eventData.Properties.Add("ApplicationId", index);
 
         if (!newbatch.TryAdd(eventData))
         {
