@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.Core
 
         /// <summary>
         /// Gets the parent resource of this resource.
-        /// This hides the Parent from base class ContainerBase.
         /// </summary>
         protected new ResourceOperationsBase Parent { get {return base.Parent as ResourceOperationsBase;} }
 
