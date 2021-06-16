@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Threading.Tasks;
 
     /// <summary>
-    /// GlobalAdministratorOperations operations.
+    /// RoleAssignmentMetricsOperations operations.
     /// </summary>
-    public partial interface IGlobalAdministratorOperations
+    public partial interface IRoleAssignmentMetricsOperations
     {
         /// <summary>
-        /// Elevates access for a Global Administrator.
+        /// Get role assignment usage metrics for a subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -35,9 +35,12 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ElevateAccessWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RoleAssignmentMetricsResult>> GetMetricsForSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
