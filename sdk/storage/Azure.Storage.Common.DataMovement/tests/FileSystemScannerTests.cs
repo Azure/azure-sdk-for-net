@@ -50,17 +50,18 @@ namespace Azure.Storage.Tests
             AllowReadData(lockedChild, false, false);
             AllowReadData(lockedSubfolder, true, false);
 
-            FilesystemScanner scanner = new FilesystemScanner(folder);
+            FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(folder);
+            FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
 
             // Act
-            IEnumerable<string> result = scanner.Scan();
+            IEnumerable<string> result = scanner.Scan().ToList(); // Conversion to list is necessary because results from Scan() disappear once read
 
             // Assert
             Assert.Multiple(() =>
             {
-                CollectionAssert.Contains(result, openChild);
-                CollectionAssert.Contains(result, openSubchild);
-                CollectionAssert.Contains(result, lockedChild); // No permissions on file, but that should be dealt with by caller
+                CollectionAssert.Contains(result, openChild, "Missing entry for the readable child.");
+                CollectionAssert.Contains(result, openSubchild, "Missing entry for the readable subchild.");
+                CollectionAssert.Contains(result, lockedChild, "Missing entry for the unreadable child."); // No permissions on file, but that should be dealt with by caller
                 CollectionAssert.DoesNotContain(result, lockedSubchild); // No permissions to enumerate folder, children not returned
             });
 
@@ -80,14 +81,10 @@ namespace Azure.Storage.Tests
 
             AllowReadData(folder, true, false);
 
-            FilesystemScanner scanner = new FilesystemScanner(folder);
-
-            // Act
-            IEnumerable<string> result = scanner.Scan();
-
-            // Assert
+            // Act/Assert
             Assert.Throws<UnauthorizedAccessException>(() => {
-                result.GetEnumerator().MoveNext();
+                FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(folder);
+                FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
             });
 
             // Cleanup
@@ -102,13 +99,14 @@ namespace Azure.Storage.Tests
             // Arrange
             string file = CreateRandomFile(_temp);
 
-            FilesystemScanner scanner = new FilesystemScanner(file);
+            FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(file);
+            FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
 
             // Act
             IEnumerable<string> result = scanner.Scan();
 
             // Assert
-            CollectionAssert.IsNotEmpty(result);
+            CollectionAssert.Contains(result, file);
 
             // Cleanup
             File.Delete(file);
@@ -123,7 +121,8 @@ namespace Azure.Storage.Tests
             // Act/Assert
             Assert.IsFalse(File.Exists(file));
             Assert.Throws<FileNotFoundException>(() => {
-                FilesystemScanner scanner = new FilesystemScanner(file);
+                FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(file);
+                FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
             });
         }
 
@@ -146,11 +145,13 @@ namespace Azure.Storage.Tests
 
             string file = CreateRandomFile(_temp);
 
-            FilesystemScanner scanFolder = new FilesystemScanner(folder);
-            FilesystemScanner scanFile = new FilesystemScanner(file);
+            FileSystemScannerFactory folderFactory = new FileSystemScannerFactory(folder);
+            FileSystemScanner scanFolder = folderFactory.BuildFilesystemScanner();
+            FileSystemScannerFactory fileFactory = new FileSystemScannerFactory(file);
+            FileSystemScanner scanFile = fileFactory.BuildFilesystemScanner();
 
             // Act
-            IEnumerable<string> result = scanFolder.Scan().Concat(scanFile.Scan());
+            IEnumerable<string> result = scanFolder.Scan().Concat(scanFile.Scan()).ToList(); // Conversion to list is necessary because results from Scan() disappear once read
 
             // Assert
             Assert.Multiple(() =>
