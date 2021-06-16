@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(5));
+                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
 
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.

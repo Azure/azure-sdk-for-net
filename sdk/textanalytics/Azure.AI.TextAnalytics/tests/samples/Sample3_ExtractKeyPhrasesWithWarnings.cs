@@ -4,6 +4,8 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -23,8 +25,9 @@ namespace Azure.AI.TextAnalytics.Samples
 
             try
             {
-                Response<KeyPhraseCollection> response = client.ExtractKeyPhrases(document);
-                KeyPhraseCollection keyPhrases = response.Value;
+                Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(new List<string>() { document }, options: new TextAnalyticsRequestOptions() { ModelVersion = "2020-07-01" });
+                ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
+                KeyPhraseCollection keyPhrases = keyPhrasesInDocuments.FirstOrDefault().KeyPhrases;
 
                 if (keyPhrases.Warnings.Count > 0)
                 {

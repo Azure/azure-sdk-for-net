@@ -17,12 +17,13 @@ namespace Azure.Monitor.Query
     {
         /// <summary> Initializes new instance of LogsQueryResult class. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="Statistics"> Statistics represented in JSON format. </param>
+        /// <param name="Statistics"> Any object. </param>
+        /// <param name="Visualization"> Any object. </param>
         /// <returns> A new <see cref="Models.LogsQueryResult"/> instance for mocking. </returns>
-        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default)
+        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default, JsonElement Visualization = default)
         {
             tables ??= new List<LogsQueryResultTable>();
-            return new LogsQueryResult(tables, Statistics);
+            return new LogsQueryResult(tables, Statistics, Visualization);
         }
 
         /// <summary> Initializes new instance of LogsQueryResultTable class. </summary>

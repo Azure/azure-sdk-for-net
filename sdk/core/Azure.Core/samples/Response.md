@@ -127,6 +127,49 @@ await foreach (Page<SecretProperties> page in allSecretProperties.AsPages())
 }
 ```
 
+## Using System.Linq.Async with AsyncPageable
+
+The [`System.Linq.Async`](https://www.nuget.org/packages/System.Linq.Async) package provides a set of LINQ methods that operate on `IAsyncEnumerable<T>` type.
+Because `AsyncPageable<T>` implements `IAsyncEnumerable<T>` you can use `System.Linq.Async` to easily query and transform the data.
+
+### Convert to a `List<T>`
+
+`ToListAsync` can be used to convert an `AsyncPageable` to a `List<T>`.  This might make several service calls if the data isn't returned in a single page.
+
+```C# Snippet:SystemLinqAsyncToList
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+// ToListAsync would convert asynchronous enumerable into a List<T>
+List<SecretProperties> secretList = await allSecretProperties.ToListAsync();
+```
+
+### Take the first N elements
+
+`Take` can be used to get only the first `N` elements of the `AsyncPageable`.  Using `Take` will make the fewest service calls required to get `N` items.
+
+```C# Snippet:SystemLinqAsyncTake
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+// Take would request enough pages to get 30 items
+await foreach (var secretProperties in allSecretProperties.Take(30))
+{
+    Console.WriteLine(secretProperties.Name);
+}
+```
+
+### More methods
+
+`System.Linq.Async` provides other useful methods like `Select`, `Where`, `OrderBy`, `GroupBy`, etc. that provide functionality equivalent to their synchronous [`Enumerable` counterparts](https://docs.microsoft.com/dotnet/api/system.linq.enumerable).
+
+### Beware client-side evaluation
+
+`System.Linq.Async` LINQ operations are executed on the client so the following query would fetch all the items just to count them:
+
+```C# Snippet:SystemLinqAsyncCount
+// DANGER! DO NOT COPY: CountAsync as used here fetches all the secrets locally to count them.
+int expensiveSecretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
+```
+The same warning applies to operators like `Where`.  Always prefer server-side filtering, aggregation, or projections of data if available.
 ## Iterating over pageable
 
 `Pageable<T>` is a synchronous version of `AsyncPageable<T>`, it can be used with a normal `foreach` loop.

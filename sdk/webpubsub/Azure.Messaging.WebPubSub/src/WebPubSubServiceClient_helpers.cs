@@ -41,9 +41,10 @@ namespace Azure.Messaging.WebPubSub
             }
             if (roles != default && roles.Length > 0)
             {
-                var jsonArray = BinaryData.FromObjectAsJson(roles).ToString();
-                var role = new Claim("role", jsonArray);
-                claims.Add(role);
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim("role", role));
+                }
             }
 
             string endpoint = this.endpoint.AbsoluteUri;
@@ -56,7 +57,7 @@ namespace Azure.Messaging.WebPubSub
             string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expiresAfter);
 
             var clientEndpoint = new UriBuilder(endpoint);
-            clientEndpoint.Scheme = "wss";
+            clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";
             var uriString = $"{clientEndpoint}client/hubs/{hub}?access_token={token}";
 
             return new Uri(uriString);
