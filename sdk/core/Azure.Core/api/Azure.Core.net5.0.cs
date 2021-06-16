@@ -687,7 +687,7 @@ namespace Azure.Core.Pipeline
     }
     public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport
     {
-        public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
+        public static Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
