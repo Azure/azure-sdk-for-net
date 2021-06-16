@@ -9,27 +9,135 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
+using Newtonsoft.Json;
+using File = System.IO.File;
 
 namespace ConsoleTest
 {
-    public class StubContentFactory
-    {        
+    /// <summary>
+    /// A content factory class used to create ADU artifacts needed for the sample program.
+    /// </summary>
+    public class ContentFactory
+    {
+        private const string FileName = "setup.exe";
+
         private readonly string _storageConnectionString;
         private readonly string _blobContainer;
-        
-        public StubContentFactory(string storageConnectionString, string blobContainer)
+
+        /// <summary>
+        /// Initializes a new instance of the ContentFactory class.
+        /// </summary>
+        /// <param name="storageConnectionString">The Azure Storage account connection string.</param>
+        /// <param name="blobContainer">The Azure Blob container to use when uploading files.</param>
+        public ContentFactory(string storageConnectionString, string blobContainer)
         {
             _storageConnectionString = storageConnectionString;
             _blobContainer = blobContainer;
         }
 
-        public async Task<(string, string, string, string)> CreateImportUpdate(string manufacturer, string name, string version)
+        /// <summary>
+        /// Create import update.
+        /// </summary>
+        /// <param name="manufacturer">The provider.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>
+        /// An asynchronous result that yields the new import update.
+        /// </returns>
+        public async Task<object> CreateImportUpdate(string manufacturer, string name, string version)
         {
+            // Create actual update payload (fake "setup.exe")
+            string payloadLocalFile = CreateAduPayloadFile(FileName);
+            long payloadFileSize = GetFileSize(payloadLocalFile);
+            string payloadFileHash = GetFileHash(payloadLocalFile);
             // Upload the payload file to Azure Blob storage
-            string payloadUrl = await UploadFileAsync("sample_manifest.txt", "rL0zrlcS1Zkg4HgyZPqryY");
+            string payloadUrl = await UploadFileAsync(payloadLocalFile, GenerateStorageId(payloadFileHash));
+
+            // Create import manifest (describing the update and all it's payload files)
+            string importManifestFile = CreateImportManifestContent(
+                manufacturer,
+                name,
+                version,
+                FileName,
+                payloadFileSize,
+                payloadFileHash,
+                new Tuple<string, string>[] { new Tuple<string, string>(manufacturer.ToLowerInvariant(), name.ToLowerInvariant()) });
+            long importManifestFileSize = GetFileSize(importManifestFile);
+            string importManifestFileHash = GetFileHash(importManifestFile);
             // Upload the import manifest file to Azure Blob storage
-            string importManifestUrl = await UploadFileAsync("sample_content.txt", "NjOvp+rHaYTarfp+7h0h3Z");
-            return ("sample_manifest.txt", "rL0zrlcS1Zkg4HgyZPqryY", "sample_content.txt", "NjOvp+rHaYTarfp+7h0h3Z");
+            string importManifestUrl = await UploadFileAsync(importManifestFile, GenerateStorageId(importManifestFileHash));
+
+            // Create import update request body (containing Urls to import manifest and update payload files)
+            return CreateImportBody(importManifestUrl, importManifestFileSize, importManifestFileHash, payloadUrl);
+        }
+
+        private string CreateAduPayloadFile(string fileName)
+        {
+            var content = new
+            {
+                Scenario = "DeviceUpdateClientSample",
+                Timestamp = DateTime.UtcNow.ToString("O"),
+            };
+
+            string filePath = Path.GetTempFileName();
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(content, Formatting.Indented));
+
+            return filePath;
+        }
+
+        private string CreateImportManifestContent(string provider, string name, string version, string fileName, long fileSize, string fileHash, Tuple<string, string>[] compatibilityIds)
+        {
+            var aduContent = new
+            {
+                updateId = new {provider, name, version},
+                updateType = "microsoft/swupdate:1",
+                installedCriteria = "1.2.3.4",
+                compatibility = compatibilityIds.Select(c => new
+                {
+                    deviceManufacturer = c.Item1, 
+                    deviceModel = c.Item2
+                }).ToArray(),
+                createdDateTime = DateTime.UtcNow,
+                manifestVersion = new Version(2, 0),
+                files = new[]
+                {
+                    new
+                    {
+                        fileName= fileName, 
+                        sizeInBytes = fileSize, 
+                        hashes = new Dictionary<string, string>()
+                        {
+                            {"Sha256", fileHash}
+                        }
+                    }
+                }
+            };
+
+            string filePath = Path.GetTempFileName();
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(aduContent, Formatting.Indented));
+
+            return filePath;
+        }
+
+        private object CreateImportBody(string importManifestUrl, long importManifestFileSize, string importManifestFileHash, string payloadUrl)
+        {
+            return new
+            {
+                importManifest = new
+                {
+                    url = importManifestUrl, 
+                    sizeInBytes = importManifestFileSize, 
+                    hashes = new Dictionary<string, string>()
+                    {
+                        {"SHA256", importManifestFileHash}
+                    }
+                }, 
+                files = new[] {new
+                {
+                    filename = FileName, 
+                    url = payloadUrl
+                }}
+            };
         }
 
         private async Task<string> UploadFileAsync(string localFileToUpload, string storageId)
@@ -52,6 +160,27 @@ namespace ConsoleTest
             });
 
             return $"{cloudBlockBlob.Uri.ToString()}{token}";
+        }
+
+
+        private long GetFileSize(string filePath)
+        {
+            return new FileInfo(filePath).Length;
+        }
+
+        private string GetFileHash(string filePath)
+        {
+            SHA256 sha256 = SHA256.Create();
+            using (FileStream fileStream = File.OpenRead(filePath))
+            {
+                byte[] hash = sha256.ComputeHash(fileStream);
+                return Convert.ToBase64String(hash);
+            }
+        }
+
+        private string GenerateStorageId(string fileHash)
+        {
+            return fileHash.Substring(0, 22);
         }
     }
 }

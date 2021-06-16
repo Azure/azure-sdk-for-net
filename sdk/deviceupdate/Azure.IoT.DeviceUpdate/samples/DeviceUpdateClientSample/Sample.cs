@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -114,7 +115,8 @@ namespace ConsoleTest
             string deploymentId = await DeployUpdateStepAsync(provider, name, version, groupId);
 
             // Check device and wait until the new update is installed there
-            await CheckDeviceUpdateStepAsync(provider, name, version);
+            // temporary:
+            // await CheckDeviceUpdateStepAsync(provider, name, version);
 
             // Check that device group contains *NO* devices that can be updated with our new update
             await CheckGroupDevicesAreUpToDateStepAsync(groupId, provider, name, version, isCompliant: true);
@@ -134,35 +136,21 @@ namespace ConsoleTest
 
         private async Task<string> ImportUpdateStepAsync(string version)
         {
-            StubContentFactory contentFactory = new StubContentFactory(_connectionString, BlobContainer);
-            (string sample_manifest, string manifest_hash, string sample_content, string content_hash) = await contentFactory.CreateImportUpdate(SimulatorProvider, SimulatorModel, version);
+            ContentFactory contentFactory = new ContentFactory(_connectionString, BlobContainer);
+            var update = await contentFactory.CreateImportUpdate(SimulatorProvider, SimulatorModel, version);
 
             ConsoleEx.WriteLine(ConsoleColor.Yellow, "Importing update...");
-            var operationRequest = RequestContent.Create(new {
-                importManifest = new {
-                    url = "SOME_URL",
-                    sizeInBytes = "94",
-                    hashes = new Dictionary<string, string>{ 
-                        ["SHA256"] = content_hash
-                    }
-                },
-                files = new [] { new  {
-                    filenam = "setup.exe",
-                    url = "http://test.blob.core.windows.net/test/SOME_URL"
-                }}
-            });
-            Response operationIdResponse = await _updatesClient.ImportUpdateAsync(operationRequest);
-            var operationIdResponseContent = JsonDocument.Parse(operationIdResponse.Content.ToMemory());
-            string operationIdResponseValue = operationIdResponseContent.RootElement.GetString();
-            Console.WriteLine($"Import operation id: {operationIdResponseValue}");
+            Response operationResponse = await _updatesClient.ImportUpdateAsync(RequestContent.Create(update));
+            string operationId = GetJobIdFromLocationHeader(operationResponse);
+            Console.WriteLine($"Import operation id: {operationId}");
 
             Console.WriteLine("Waiting for import to finish...");
             Console.WriteLine("(this may take a minute or two)");
             bool repeat = true;
             while (repeat)
             {
-                Response operationResponse = await _updatesClient.GetOperationAsync(operationIdResponseValue);
-                var operationDoc = JsonDocument.Parse(operationIdResponse.Content.ToMemory());
+                operationResponse = await _updatesClient.GetOperationAsync(operationId);
+                var operationDoc = JsonDocument.Parse(operationResponse.Content.ToMemory());
                 switch (operationDoc.RootElement.GetProperty("status").GetString())
                 {
                     case "Succeeded":
@@ -170,16 +158,16 @@ namespace ConsoleTest
                         repeat = false;
                         break;
                     case "Failed":
-                        throw new ApplicationException("Import failed with error: \n" + JsonConvert.SerializeObject(operationDoc.RootElement.GetProperty("error"), Formatting.Indented));
+                        throw new ApplicationException("Import failed with error: \n" + JsonConvert.SerializeObject(operationDoc.RootElement.ToString(), Formatting.Indented));
                     default:
                         Console.Write(".");
-                        await Task.Delay(GetRetryAfterFromResponse(operationIdResponse));
+                        await Task.Delay(GetRetryAfterFromResponse(operationResponse));
                         break;
                 }
             }
 
             Console.WriteLine();
-            return JsonDocument.Parse(operationIdResponse.Content.ToMemory()).RootElement.GetProperty("value").GetString();
+            return JsonDocument.Parse(operationResponse.Content.ToMemory()).RootElement.GetProperty("operationId").ToString();
         }
 
         private async Task RetrieveUpdateStepAsync(string provider, string name, string version, bool notFoundExpected = false)
@@ -193,7 +181,7 @@ namespace ConsoleTest
                     throw new ApplicationException($"Service returned valid update even though NotFound response was expected");
                 }
                 var doc = JsonDocument.Parse(response.Content.ToMemory());
-                Console.WriteLine(JsonConvert.SerializeObject(doc.RootElement.GetProperty("Value").GetString(), Formatting.Indented));
+                Console.WriteLine(JsonConvert.SerializeObject(doc.ToObject(), Formatting.Indented));
             }
             catch (RequestFailedException e)
             {
@@ -351,7 +339,7 @@ namespace ConsoleTest
             Console.WriteLine("Checking the deployment status...");
             Response deploymentStatus = await _deploymentsClient.GetDeploymentStatusAsync(deploymentId);
             var deploymentStatusDoc = JsonDocument.Parse(deployment.Content.ToMemory());
-            Console.WriteLine($"  {deploymentStatusDoc.RootElement.GetProperty("deploymentState").GetString()}");
+            Console.WriteLine($"  {deploymentStatusDoc.RootElement.GetProperty("deploymentId").GetString()}");
 
             Console.WriteLine();
             return deploymentId;
@@ -389,18 +377,16 @@ namespace ConsoleTest
         private async Task DeleteUpdateStepAsync(string provider, string name, string version)
         {
             Console.WriteLine("Deleting the update...");
-            Response operationIdResponse = await _updatesClient.DeleteUpdateAsync(provider, name, version);
-            var operationIdResponseContent = JsonDocument.Parse(operationIdResponse.Content.ToMemory());
-            string operationIdResponseValue = operationIdResponseContent.RootElement.GetString();
-
-            Console.WriteLine($"Delete operation id: {operationIdResponseValue}");
+            Response operationResponse = await _updatesClient.DeleteUpdateAsync(provider, name, version);
+            string operationId = GetJobIdFromLocationHeader(operationResponse);
+            Console.WriteLine($"Delete operation id: {operationId}");
 
             Console.WriteLine("Waiting for delete to finish...");
             var repeat = true;
             while (repeat)
             {
-                Response operationResponse = await _updatesClient.GetOperationAsync(operationIdResponseValue);
-                var operationDoc = JsonDocument.Parse(operationIdResponse.Content.ToMemory());
+                operationResponse = await _updatesClient.GetOperationAsync(operationId);
+                var operationDoc = JsonDocument.Parse(operationResponse.Content.ToMemory());
                 switch (operationDoc.RootElement.GetProperty("status").GetString())
                 {
                     case "Succeeded":
@@ -408,10 +394,10 @@ namespace ConsoleTest
                         repeat = false;
                         break;
                     case "Failed":
-                        throw new ApplicationException("Delete failed with error: \n" + JsonConvert.SerializeObject(operationDoc.RootElement.GetProperty("error"), Formatting.Indented));
+                        throw new ApplicationException("Delete failed with error: \n" + JsonConvert.SerializeObject(operationDoc.RootElement.ToString(), Formatting.Indented));
                     default:
                         Console.Write(".");
-                        await Task.Delay(GetRetryAfterFromResponse(operationIdResponse));
+                        await Task.Delay(GetRetryAfterFromResponse(operationResponse));
                         break;
                 }
             }
@@ -444,6 +430,22 @@ namespace ConsoleTest
             {
                 return DefaultRetryAfterValue;
             }
+        }
+
+        private static string GetJobIdFromLocationHeader(Response response)
+        {
+            if (response.Headers.TryGetValue("Operation-Location", out string location))
+            {
+                string jobId = null;
+                if (location != null)
+                {
+                    jobId = location.Split("/").Last().Split("?")[0];
+                }
+
+                return jobId;
+            }
+
+            throw new NotSupportedException();
         }
     }
 }

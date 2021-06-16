@@ -18,7 +18,7 @@ namespace Azure.IoT.DeviceUpdate
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
-        private readonly string[] AuthorizationScopes = { "https://management.azure.com/.default" };
+        private readonly string[] AuthorizationScopes = { "6ee392c4-d339-4083-b04d-6b7947c6cf78/.default" };
         private readonly TokenCredential _tokenCredential;
         private string accountEndpoint;
         private string instanceId;
