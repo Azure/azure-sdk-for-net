@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
-        [CodeGenMember("AnomalyDetectionConfiugurationId")]
+        [CodeGenMember("AnomalyDetectionConfigurationId")]
         public string DetectionConfigurationId { get; }
 
         /// <summary>
