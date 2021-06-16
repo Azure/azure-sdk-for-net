@@ -87,13 +87,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:Sample09_AccessingEventData
-            #if SNIPPET
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            #else
+#else
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
-            #endif
+#endif
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -139,13 +139,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:Sample09_CheckingBatch
 
-            #if SNIPPET
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            #else
+#else
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
-            #endif
+#endif
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
