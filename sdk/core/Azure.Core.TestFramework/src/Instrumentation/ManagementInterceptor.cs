@@ -35,13 +35,28 @@ namespace Azure.Core.TestFramework
                     return;
 
                 var taskResultType = type.GetGenericArguments()[0];
-                if (taskResultType.Name.StartsWith("Response") || taskResultType.Name.StartsWith("ArmResponse"))
+                if (taskResultType.Name.StartsWith("Response"))
                 {
                     var taskResult = result.GetType().GetProperty("Result").GetValue(result);
                     var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
                     var genericValueTask = typeof(ValueTask<>).MakeGenericType(taskResultType);
                     var vtCtor = genericValueTask.GetConstructor(new Type[] { taskResultType });
                     invocation.ReturnValue = vtCtor.Invoke(new object[] { instrumentedResult });
+                }
+            }
+            else if (type.Name.StartsWith("Task"))
+            {
+                if ((bool)type.GetProperty("IsFaulted").GetValue(result))
+                    return;
+
+                var taskResultType = type.GetGenericArguments()[0];
+                if (taskResultType.Name.StartsWith("Response"))
+                {
+                    var taskResult = result.GetType().GetProperty("Result").GetValue(result);
+                    var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                    var method = typeof(Task).GetMethod("FromResult", BindingFlags.Public | BindingFlags.Static);
+                    var genericMethod = method.MakeGenericMethod(taskResultType);
+                    invocation.ReturnValue = genericMethod.Invoke(null, new object[] { instrumentedResult });;
                 }
             }
             else if (invocation.Method.Name.EndsWith("Value") && type.BaseType.Name.EndsWith("Operations"))
