@@ -45,14 +45,6 @@ namespace Azure.Communication.CallingServer
             : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
         { }
 
-        private CallingServerClient(string endpoint, TokenCredential tokenCredential, CallingServerClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
-        { }
-
-        private CallingServerClient(string endpoint, AzureKeyCredential keyCredential, CallingServerClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
-        { }
-
         private CallingServerClient(string endpoint, HttpPipeline httpPipeline, CallingServerClientOptions options)
         {
             _pipeline = httpPipeline;

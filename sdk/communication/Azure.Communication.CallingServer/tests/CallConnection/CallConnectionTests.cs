@@ -43,7 +43,6 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
 
             var response = await callConnection.HangupAsync().ConfigureAwait(false);
-
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
@@ -53,8 +52,27 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
 
             var response = callConnection.Hangup();
-
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public void HangupCallAsync_Failed(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.HangupAsync().ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public void HangupCall_Failed(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.Hangup());
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
@@ -63,7 +81,6 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(200, CancelAllMediaOperaionsResponsePayload, callConnectionId: callConnectionId);
 
             var result = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
-
             VerifyCancelAllMediaOperationsResult(result);
         }
 
@@ -73,8 +90,27 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(200, CancelAllMediaOperaionsResponsePayload, callConnectionId: callConnectionId);
 
             var result = callConnection.CancelAllMediaOperations();
-
             VerifyCancelAllMediaOperationsResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public void CancelAllMediaOperationsAsync_Failed(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CallConnectionId))]
+        public void CancelAllMediaOperations_Failed(string callConnectionId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.CancelAllMediaOperations());
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
@@ -83,7 +119,6 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
 
             var result = await callConnection.PlayAudioAsync(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext).ConfigureAwait(false);
-
             VerifyPlayAudioResult(result);
         }
 
@@ -93,8 +128,27 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, PlayAudioResponsePayload);
 
             var result = callConnection.PlayAudio(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
-
             VerifyPlayAudioResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_PlayAudio))]
+        public void PlayAudioAsync_Failed(Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.PlayAudioAsync(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_PlayAudio))]
+        public void PlayAudio_Failed(Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.PlayAudio(sampleAudioFileUri, false, sampleAudioFileId, sampleCallbackUri, sampleOperationContext));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_PlayAudio))]
@@ -112,7 +166,6 @@ namespace Azure.Communication.CallingServer.Tests
             };
 
             var result = await callConnection.PlayAudioAsync(playAudio).ConfigureAwait(false);
-
             VerifyPlayAudioResult(result);
         }
 
@@ -131,8 +184,45 @@ namespace Azure.Communication.CallingServer.Tests
             };
 
             var result = callConnection.PlayAudio(playAudio);
-
             VerifyPlayAudioResult(result);
+        }
+
+        [TestCaseSource(nameof(TestData_PlayAudio))]
+        public void PlayAudioAsyncOverload_Failed(Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            var playAudio = new PlayAudioOptions()
+            {
+                AudioFileUri = sampleAudioFileUri,
+                AudioFileId = sampleAudioFileId,
+                CallbackUri = sampleCallbackUri,
+                Loop = false,
+                OperationContext = sampleOperationContext
+            };
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.PlayAudioAsync(playAudio).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_PlayAudio))]
+        public void PlayAudioOverload_Failed(Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            var playAudio = new PlayAudioOptions()
+            {
+                AudioFileUri = sampleAudioFileUri,
+                AudioFileId = sampleAudioFileId,
+                CallbackUri = sampleCallbackUri,
+                Loop = false,
+                OperationContext = sampleOperationContext
+            };
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.PlayAudio(playAudio));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_AddParticipant))]
@@ -141,7 +231,6 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
             var response = await callConnection.AddParticipantAsync(participant, alternateCallerId, operationContext).ConfigureAwait(false);
-
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
         }
@@ -152,9 +241,28 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, AddParticipantResultPayload);
 
             var response = callConnection.AddParticipant(participant, alternateCallerId, operationContext);
-
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual("dummyparticipantid", response.Value.ParticipantId);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant))]
+        public void AddParticipantsAsync_Failed(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantAsync(participant, alternateCallerId, operationContext).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant))]
+        public void AddParticipants_Failed(CommunicationIdentifier participant, string alternateCallerId, string operationContext)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipant(participant, alternateCallerId, operationContext));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_ParticipantId))]
@@ -163,7 +271,6 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
 
             var response = await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false);
-
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
         }
 
@@ -173,8 +280,27 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
 
             var response = callConnection.RemoveParticipant(participantId);
-
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void RemoveParticipantsAsync_Failed(string callConnectionId, string participantId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantAsync(participantId).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_ParticipantId))]
+        public void RemoveParticipants_Failed(string callConnectionId, string participantId)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipant(participantId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
         }
 
         private void VerifyCancelAllMediaOperationsResult(CancelAllMediaOperationsResult result)
