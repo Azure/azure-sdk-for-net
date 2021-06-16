@@ -33,7 +33,6 @@ Define a strongly-typed entity class that extends from the `ITableEntity` interf
 
 ```C# Snippet:TablesSample2DefineStronglyTypedEntity
 // Define a strongly typed entity by extending the <see cref="ITableEntity"> class.
-
 public class OfficeSupplyEntity : ITableEntity
 {
     public string Product { get; set; }
@@ -50,7 +49,6 @@ Once defined, create an entity with the class.
 
 ```C# Snippet:TablesSample2CreateStronglyTypedEntity
 // Create an instance of the strongly-typed entity and set their properties.
-
 var strongEntity = new OfficeSupplyEntity
 {
     PartitionKey = partitionKey,
@@ -71,7 +69,6 @@ Properties accessed using the indexer `[]` will be typed as an `object`, but `Ta
 
 ```C# Snippet:TablesSample2CreateDictionaryEntity
 // Make a dictionary entity by defining a <see cref="TableEntity">.
-
 var entity = new TableEntity(partitionKey, rowKey)
 {
     { "Product", "Marker Set" },
@@ -88,7 +85,6 @@ To add the entity to the table, invoke `CreateEntity` and pass in the newly crea
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-
 tableClient.AddEntity(entity);
 ```
 
@@ -98,7 +94,6 @@ To delete an entity, invoke `DeleteEntity` and pass in its partition and row key
 
 ```C# Snippet:TablesSample2DeleteEntity
 // Delete the entity given the partition and row key.
-
 tableClient.DeleteEntity(partitionKey, rowKey);
 ```
 

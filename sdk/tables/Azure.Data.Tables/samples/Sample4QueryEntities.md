@@ -35,7 +35,6 @@ Here is a query returning a collection of dictionary `TableEntity` objects that 
 Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
 // Iterate the <see cref="Pageable"> to access all queried entities.
-
 foreach (TableEntity qEntity in queryResultsFilter)
 {
     Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
@@ -52,7 +51,6 @@ The `QueryFilter` class handles all the type escaping for you.
 // The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
 Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
 // Iterate the <see cref="Pageable"> to access all queried entities.
-
 foreach (TableEntity qEntity in queryResultsFilter)
 {
     Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");

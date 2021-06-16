@@ -51,7 +51,6 @@ namespace Azure.Data.Tables.Samples
             Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
             // Iterate the <see cref="Pageable"> to access all queried entities.
-
             foreach (TableEntity qEntity in queryResultsFilter)
             {
                 Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
@@ -68,7 +67,6 @@ namespace Azure.Data.Tables.Samples
             queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
 #endif
             // Iterate the <see cref="Pageable"> to access all queried entities.
-
             foreach (TableEntity qEntity in queryResultsFilter)
             {
                 Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");

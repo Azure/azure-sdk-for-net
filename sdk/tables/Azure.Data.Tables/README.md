@@ -147,7 +147,6 @@ To interact with table entities, we must first construct a `TableClient`.
 
 ```C# Snippet:TablesSample2CreateTableWithTableClient
 // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
-
 var tableClient = new TableClient(
     new Uri(storageUri),
     tableName,
@@ -163,7 +162,6 @@ Let's define a new `TableEntity` so that we can add it to the table.
 
 ```C# Snippet:TablesSample2CreateDictionaryEntity
 // Make a dictionary entity by defining a <see cref="TableEntity">.
-
 var entity = new TableEntity(partitionKey, rowKey)
 {
     { "Product", "Marker Set" },
@@ -178,7 +176,6 @@ Using the `TableClient` we can now add our new entity to the table.
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-
 tableClient.AddEntity(entity);
 ```
 
@@ -190,7 +187,6 @@ To inspect the set of existing table entities, we can query the table using an O
 Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
 // Iterate the <see cref="Pageable"> to access all queried entities.
-
 foreach (TableEntity qEntity in queryResultsFilter)
 {
     Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
@@ -212,7 +208,6 @@ If we no longer need our new table entity, it can be deleted.
 
 ```C# Snippet:TablesSample2DeleteEntity
 // Delete the entity given the partition and row key.
-
 tableClient.DeleteEntity(partitionKey, rowKey);
 ```
 
