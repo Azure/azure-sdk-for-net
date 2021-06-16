@@ -16,10 +16,11 @@ namespace Azure.ResourceManager.Core
         /// <param name="parent">The <see cref="ResourceGroupResourceIdentifier"/> of the parent of this child resource.</param>
         /// <param name="resourceGroupName">The name of the resourceGroup.</param>
         internal ResourceGroupResourceIdentifier(SubscriptionResourceIdentifier parent, string resourceGroupName)
-            : base(parent, ResourceIdentifier.ResourceGroupsKey, resourceGroupName)
+            : base(parent, ResourceIdentifier.ResourceGroupsType, resourceGroupName)
         {
             if (string.IsNullOrWhiteSpace(resourceGroupName))
                 throw new ArgumentOutOfRangeException(nameof(resourceGroupName), "Invalid resource group name.");
+            IsChild = true;
             ResourceGroupName = resourceGroupName;
         }
 
