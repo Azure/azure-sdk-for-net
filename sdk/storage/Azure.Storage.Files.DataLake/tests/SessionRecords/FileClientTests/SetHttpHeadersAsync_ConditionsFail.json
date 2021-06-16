@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-00c560ae-1617-1832-9e36-549bd5ebf754?restype=container",
@@ -19,7 +19,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:21 GMT",
-        "ETag": "\u00220x8D909005CBA4192\u0022",
+        "ETag": "\"0x8D909005CBA4192\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:20 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "a1c6ee19-3886-820a-3457-dc561138cfe1",
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:20 GMT",
-        "ETag": "\u00220x8D909005CE26DAE\u0022",
+        "ETag": "\"0x8D909005CE26DAE\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:21 GMT",
         "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "3e67611b-f1ee-f389-a00f-b8b9f8ddaefa",
@@ -87,9 +87,9 @@
         "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:b09e7186-001e-000c-54e9-3ae8ba000000\n",
-        "Time:2021-04-26T22:12:21.4319224Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-04-26T22:12:21.4319224Z</Message></Error>"
       ]
     },
     {
@@ -136,7 +136,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:21 GMT",
-        "ETag": "\u00220x8D909005D355429\u0022",
+        "ETag": "\"0x8D909005D355429\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:21 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "c4578893-c9da-7aa4-0e29-58ee6d82bc26",
@@ -163,7 +163,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:21 GMT",
-        "ETag": "\u00220x8D909005D442906\u0022",
+        "ETag": "\"0x8D909005D442906\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:21 GMT",
         "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "cfd0810e-9e3a-a6fc-fad0-17a2a47d2a03",
@@ -204,9 +204,9 @@
         "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:b09e71bf-001e-000c-05e9-3ae8ba000000\n",
-        "Time:2021-04-26T22:12:21.9773078Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-04-26T22:12:21.9773078Z</Message></Error>"
       ]
     },
     {
@@ -253,7 +253,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:22 GMT",
-        "ETag": "\u00220x8D909005D674298\u0022",
+        "ETag": "\"0x8D909005D674298\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:22 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "5a7fb382-a74a-ea34-5b51-1ca2679f9fcd",
@@ -280,7 +280,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:21 GMT",
-        "ETag": "\u00220x8D909005D775CFF\u0022",
+        "ETag": "\"0x8D909005D775CFF\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:22 GMT",
         "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "b92f6bf0-81fe-f8e2-f1a9-2713ca7258b6",
@@ -295,7 +295,7 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "If-Match": "\u0022garbage\u0022",
+        "If-Match": "\"garbage\"",
         "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-cache-control": "hshuqtelkiwrhwwebram",
         "x-ms-blob-content-disposition": "nqhmnaxwdmuqcdktriee",
@@ -321,9 +321,9 @@
         "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:b09e71cd-001e-000c-11e9-3ae8ba000000\n",
-        "Time:2021-04-26T22:12:22.3125433Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-04-26T22:12:22.3125433Z</Message></Error>"
       ]
     },
     {
@@ -370,7 +370,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:22 GMT",
-        "ETag": "\u00220x8D909005D9ADF08\u0022",
+        "ETag": "\"0x8D909005D9ADF08\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:22 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "ad909aeb-26b6-8e99-c700-b361739e4007",
@@ -397,7 +397,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:22 GMT",
-        "ETag": "\u00220x8D909005DA93323\u0022",
+        "ETag": "\"0x8D909005DA93323\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:22 GMT",
         "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "dafa9193-ec3b-01b1-6d28-ee01e72d9b18",
@@ -425,7 +425,7 @@
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
         "Date": "Mon, 26 Apr 2021 22:12:22 GMT",
-        "ETag": "\u00220x8D909005DA93323\u0022",
+        "ETag": "\"0x8D909005DA93323\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:22 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-access-tier": "Hot",
@@ -476,9 +476,9 @@
         "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:b09e71e2-001e-000c-23e9-3ae8ba000000\n",
-        "Time:2021-04-26T22:12:22.7548545Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-04-26T22:12:22.7548545Z</Message></Error>"
       ]
     },
     {
@@ -525,7 +525,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
-        "ETag": "\u00220x8D909005DEDF003\u0022",
+        "ETag": "\"0x8D909005DEDF003\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:23 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "5acc3831-710a-b161-2f98-e79b146270d8",
@@ -552,7 +552,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:12:22 GMT",
-        "ETag": "\u00220x8D909005DFEAC79\u0022",
+        "ETag": "\"0x8D909005DFEAC79\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:12:23 GMT",
         "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "62cd046d-2d1e-1ad1-d848-63b5f071d71b",
@@ -593,9 +593,9 @@
         "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithBlobOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the blob.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithBlobOperation</Code><Message>There is currently no lease on the blob.\n",
         "RequestId:b09e7200-001e-000c-3be9-3ae8ba000000\n",
-        "Time:2021-04-26T22:12:23.2021712Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-04-26T22:12:23.2021712Z</Message></Error>"
       ]
     },
     {
@@ -625,8 +625,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-26T15:12:20.2310273-07:00",
+    "DateTimeOffsetNow": "2021-04-26T17:12:20.2310273-05:00",
     "RandomSeed": "1960223532",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nkasobolhnscanada\nU2FuaXRpemVk\nhttp://kasobolhnscanada.blob.core.windows.net\nhttp://kasobolhnscanada.file.core.windows.net\nhttp://kasobolhnscanada.queue.core.windows.net\nhttp://kasobolhnscanada.table.core.windows.net\n\n\n\n\nhttp://kasobolhnscanada-secondary.blob.core.windows.net\nhttp://kasobolhnscanada-secondary.file.core.windows.net\nhttp://kasobolhnscanada-secondary.queue.core.windows.net\nhttp://kasobolhnscanada-secondary.table.core.windows.net\nc6b5fe1a-9b59-4975-92c4-d9f728c3c371\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://kasobolhnscanada.blob.core.windows.net/;QueueEndpoint=http://kasobolhnscanada.queue.core.windows.net/;FileEndpoint=http://kasobolhnscanada.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolhnscanada-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolhnscanada-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolhnscanada-secondary.file.core.windows.net/;AccountName=kasobolhnscanada;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nkasobolhnscanada\nU2FuaXRpemVk\nhttp://kasobolhnscanada.blob.core.windows.net\nhttp://kasobolhnscanada.file.core.windows.net\nhttp://kasobolhnscanada.queue.core.windows.net\nhttp://kasobolhnscanada.table.core.windows.net\n\n\n\n\nhttp://kasobolhnscanada-secondary.blob.core.windows.net\nhttp://kasobolhnscanada-secondary.file.core.windows.net\nhttp://kasobolhnscanada-secondary.queue.core.windows.net\nhttp://kasobolhnscanada-secondary.table.core.windows.net\nc6b5fe1a-9b59-4975-92c4-d9f728c3c371\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://kasobolhnscanada.blob.core.windows.net/;QueueEndpoint=http://kasobolhnscanada.queue.core.windows.net/;FileEndpoint=http://kasobolhnscanada.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolhnscanada-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolhnscanada-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolhnscanada-secondary.file.core.windows.net/;AccountName=kasobolhnscanada;AccountKey=Sanitized\n\n\n"
   }
 }

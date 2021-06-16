@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://qqsdktest01.blob.preprod.core.windows.net/test-filesystem-8172fd6c-8501-491a-0719-d2f13789858f?restype=container",
@@ -18,7 +18,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Thu, 25 Mar 2021 18:00:03 GMT",
-        "ETag": "\u00220x8D8EFB7D0FE2BFA\u0022",
+        "ETag": "\"0x8D8EFB7D0FE2BFA\"",
         "Last-Modified": "Thu, 25 Mar 2021 18:00:03 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
@@ -56,6 +56,6 @@
   ],
   "Variables": {
     "RandomSeed": "1310097133",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nqqsdktest01\nU2FuaXRpemVk\nhttps://qqsdktest01.blob.preprod.core.windows.net\nhttp://qqsdktest01.file.core.windows.net\nhttp://qqsdktest01.queue.core.windows.net\nhttp://qqsdktest01.table.core.windows.net\n\n\n\n\nhttp://qqsdktest01-secondary.blob.core.windows.net\nhttp://qqsdktest01-secondary.file.core.windows.net\nhttp://qqsdktest01-secondary.queue.core.windows.net\nhttp://qqsdktest01-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://qqsdktest01.blob.preprod.core.windows.net/;QueueEndpoint=http://qqsdktest01.queue.core.windows.net/;FileEndpoint=http://qqsdktest01.file.core.windows.net/;BlobSecondaryEndpoint=http://qqsdktest01-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://qqsdktest01-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://qqsdktest01-secondary.file.core.windows.net/;AccountName=qqsdktest01;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nqqsdktest01\nU2FuaXRpemVk\nhttps://qqsdktest01.blob.preprod.core.windows.net\nhttp://qqsdktest01.file.core.windows.net\nhttp://qqsdktest01.queue.core.windows.net\nhttp://qqsdktest01.table.core.windows.net\n\n\n\n\nhttp://qqsdktest01-secondary.blob.core.windows.net\nhttp://qqsdktest01-secondary.file.core.windows.net\nhttp://qqsdktest01-secondary.queue.core.windows.net\nhttp://qqsdktest01-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://qqsdktest01.blob.preprod.core.windows.net/;QueueEndpoint=http://qqsdktest01.queue.core.windows.net/;FileEndpoint=http://qqsdktest01.file.core.windows.net/;BlobSecondaryEndpoint=http://qqsdktest01-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://qqsdktest01-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://qqsdktest01-secondary.file.core.windows.net/;AccountName=qqsdktest01;AccountKey=Sanitized\n\n\n"
   }
 }
