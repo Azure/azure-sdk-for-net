@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
-using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -39,8 +38,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         /// <summary>
         /// Creates a datasource credential using the specified <see cref="MetricsAdvisorAdministrationClient"/>.
-        /// A <see cref="DatasourceCredential"/> instance is returned, from which the created credential can
-        /// be obtained. Upon disposal, the associated credential will be deleted.
+        /// A <see cref="DisposableDatasourceCredential"/> instance is returned, from which the created credential
+        /// can be obtained. Upon disposal, the created credential will be deleted.
         /// </summary>
         /// <param name="adminClient">The client to use for creating and for deleting the datasource credential.</param>
         /// <param name="credential">Specifies how the created <see cref="DatasourceCredential"/> should be configured.</param>
@@ -48,11 +47,31 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public static async Task<DisposableDatasourceCredential> CreateDatasourceCredentialAsync(MetricsAdvisorAdministrationClient adminClient, DatasourceCredential credential)
         {
             DatasourceCredential createdCredential = await adminClient.CreateDatasourceCredentialAsync(credential);
-
-            Assert.That(createdCredential, Is.Not.Null);
-            Assert.That(createdCredential.Id, Is.Not.Null.And.Not.Empty);
-
             return new DisposableDatasourceCredential(adminClient, createdCredential);
+        }
+
+        /// <summary>
+        /// Creates a datasource credential using the specified <see cref="MetricsAdvisorAdministrationClient"/>.
+        /// A <see cref="DisposableDatasourceCredential"/> instance is returned, from which the created credential can
+        /// be obtained. Except for the name, all of its required properties are initialized with mock values. Upon disposal,
+        /// the created credential will be deleted.
+        /// </summary>
+        /// <param name="adminClient">The client to use for creating and for deleting the datasource credential.</param>
+        /// <param name="name">The name of the datasource credential to be created.</param>
+        /// <param name="authenticationType">Specifies which type of <see cref="DatasourceCredential"/> should be created.</param>
+        /// <returns>A <see cref="DisposableDatasourceCredential"/> instance from which the created credential can be obtained.</returns>
+        public static async Task<DisposableDatasourceCredential> CreateDatasourceCredentialAsync(MetricsAdvisorAdministrationClient adminClient, string name, string authenticationType)
+        {
+            DatasourceCredential credential = authenticationType switch
+            {
+                "ServicePrincipal" => new ServicePrincipalDatasourceCredential(name, "mock", "mock", "mock"),
+                "ServicePrincipalInKeyVault" => new ServicePrincipalInKeyVaultDatasourceCredential(name, new Uri("https://mock.com/"), "mock", "mock", "mock", "mock", "mock"),
+                "SharedKey" => new DataLakeGen2SharedKeyDatasourceCredential(name, "mock"),
+                "SqlConnectionString" => new SqlConnectionStringDatasourceCredential(name, "mock"),
+                _ => throw new ArgumentOutOfRangeException($"Invalid datasource credential type: {authenticationType}")
+            };
+
+            return await CreateDatasourceCredentialAsync(adminClient, credential).ConfigureAwait(false);
         }
 
         /// <summary>

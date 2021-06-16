@@ -27,9 +27,10 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of LogsBatchQueryResultInternal. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="Statistics"> Statistics represented in JSON format. </param>
+        /// <param name="Statistics"> Any object. </param>
+        /// <param name="Visualization"> Any object. </param>
         /// <param name="error"> The code and message for an error. </param>
-        internal LogsBatchQueryResultInternal(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, ErrorInfo error) : base(tables, Statistics)
+        internal LogsBatchQueryResultInternal(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, JsonElement Visualization, ErrorInfo error) : base(tables, Statistics, Visualization)
         {
             Error = error;
         }

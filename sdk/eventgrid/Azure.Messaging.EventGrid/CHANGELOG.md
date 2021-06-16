@@ -1,24 +1,20 @@
 # Release History
 
+## 4.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
 ## 4.3.0 (2021-06-08)
 
 ### New Features
 * Added the following new system events:
-  - FarmBeatsApplicationDataChangedEventData
-  - FarmBeatsBoundaryChangedEventData
-  - FarmBeatsCropChangedEventData
-  - FarmBeatsCropVarietyChangedEventData
-  - FarmBeatsFarmChangedEventData
-  - FarmBeatsFarmerChangedEventData
-  - FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData 
-  - FarmBeatsFieldChangedEventData
-  - FarmBeatsHarvestDataChangedEventData
-  - FarmBeatsPlantingDataChangedEventData
-  - FarmBeatsSatelliteDataIngestionJobStatusChangedEventData
-  - FarmBeatsSeasonalFieldChangedEventData
-  - FarmBeatsSeasonChangedEventData
-  - FarmBeatsTillageDataChangedEventData
-  - FarmBeatsWeatherDataIngestionJobStatusChangedEventData
   - StorageBlobInventoryPolicyCompletedEventData
     
 * Updated existing system events:

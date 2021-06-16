@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
 
-            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new ExtractKeyPhrasesOptions() { ModelVersion = "2020-07-01" });
+            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new TextAnalyticsRequestOptions() { ModelVersion = "2020-07-01" });
             KeyPhraseCollection keyPhrases = keyPhrasesCollection.FirstOrDefault().KeyPhrases;
 
             ValidateInDocumenResult(keyPhrases, 1);
@@ -143,26 +143,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsTrue(options.IncludeStatistics);
             Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
-        }
-
-        [RecordedTest]
-        public async Task ExtractKeyPhrasesBatchConvenienceWithExtractKeyPhrasesOptionsStatisticsTest()
-        {
-            var options = new ExtractKeyPhrasesOptions { IncludeStatistics = true };
-            TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
-
-            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, "en", options);
-
-            ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
-
-            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]
@@ -192,26 +172,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsTrue(options.IncludeStatistics);
             Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
-        }
-
-        [RecordedTest]
-        public async Task ExtractKeyPhrasesBatchWithExtractKeyPhrasesOptionsSatisticsTest()
-        {
-            var options = new ExtractKeyPhrasesOptions { IncludeStatistics = true };
-            TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
-
-            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, options);
-
-            ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
-
-            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]
