@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-40f31cdb-ed06-35f1-624a-afeba3c7f8f3?restype=container",
@@ -19,7 +19,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Tue, 15 Jun 2021 17:44:55 GMT",
-        "ETag": "\u00220x8D9302549D69CB2\u0022",
+        "ETag": "\"0x8D9302549D69CB2\"",
         "Last-Modified": "Tue, 15 Jun 2021 17:44:56 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -50,12 +50,12 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
       },
-      "RequestBody": "vgeLCM0OxbI3Bu7BHsywh2lKdJTrlRwDe6oPHvKuHb1pKRZEuh1ce7I7pngvyaHVo9B12buqMijriIwi/qa/iekwV/W1a81L7vnhr\u002B6j1LIJOXshOUMCv/btWTGROXwMex2P/nGrIDcDKuvByIM6R7TaGMUrnlCmLZj\u002BxxKburR81TPRFNVAXRlEHg9XQPdzsxF9tiC34d3M6NDZrFgkaG82RPJPaDPembus5oBBTuygixMAHgOTxfRVBCsEZ7DAH7WfIfwEI0renh1lC/pdi5rkOCFEJEpso3/9\u002BWQH2jEK68bKoi3wm2fJIX/lLbn6\u002BHmQIC6Pe/trMn18Bynm18PrWx8zk\u002Blt8525ewLKh3XFAwHrdroDenDLXm\u002BvdJQ\u002B4kq7\u002BdGaxmSQIyyQ1f/5oaoItgMo\u002B2AJ6OGuaDV5vX8Ie5i3Do2kKzycWlONcqRw0bzFp76QFefqshHw614vF2WtiFpmQpIdZIvHi6ANe3U8PZZ4tBbBeGWxzFx8sz/dbUPt4OpKCo8qqEMyyYpH3TabtK3It2NO7A/0tXY1oLBL6R5cH5uK8TMGTgvTjq/bau4m4P\u002BRFbXgnvPbVVQZ9AeS599r6r6bEMJ6wWhXe15gGEuHD7\u002BxudRoe4Cnr5zf7VoEQKbPb38wis89F1NNiSOVej0JkeRH4S0LA2899GAmmtMOUju3kKjMV4Xvc6GAG/FdETRe1lt2vF54w2wP8pZuF3yAPjfo3eqUPTpeV22Mi\u002Bd94OIsx8R3mJXcP8w7vGTugFwlANy6dTRKypghF2Tx7DiFkhG0Qk\u002B3CKahDJ4dWIHWb9cQZosLw2ut4fwrVoAx6lKUtilSOj0Mbfg2GWmWLHIXSqeN4IWtec\u002BmBmFTjLElcCFLiaFXgzWZBPmT1KoCF7SKFAzZowrN5j1arDTcueFGEKhHSqPRwMZy9NyLGqQko\u002B\u002BtyXelS80WfqNk/NcBvEoYTMQBuswRuVNFZ64uQcyYNQhEL/BpocTbMcwAbMTvcDiRcs3gI\u002BkimxAkX\u002BQe5zzWzMbPvI1ar6r/JYgAEUyPVvZ2nc7\u002BtxIeIpPgREHgvUqPKaD9H7SqNsMi4f1gIorDlQntp0pu1xSzsJr5emtpHmg\u002BcOerkTZCy2YL3NUVvv8IHK838xX/IVGLSW4ZsLxXucOUIbKjGAPTq9zjYvs/nvKa8V67MStTP0\u002BVIEfHKBqpsyISgJxNZQSrZEc5G75WTKt8fr9em4eXQeJjDve7DILBOa/YLB1WTYxZEM3jGSOQP9ObS6lbSxeaej\u002B66lYM71fFeOIPfR\u002BOJjEzBIu6tCe/0s8jH8HYZe6XPrHdm2M1TSB1HqFBgcG0DSR4J0eM4MYY\u002BheH6M\u002BW7A==",
+      "RequestBody": "vgeLCM0OxbI3Bu7BHsywh2lKdJTrlRwDe6oPHvKuHb1pKRZEuh1ce7I7pngvyaHVo9B12buqMijriIwi/qa/iekwV/W1a81L7vnhr+6j1LIJOXshOUMCv/btWTGROXwMex2P/nGrIDcDKuvByIM6R7TaGMUrnlCmLZj+xxKburR81TPRFNVAXRlEHg9XQPdzsxF9tiC34d3M6NDZrFgkaG82RPJPaDPembus5oBBTuygixMAHgOTxfRVBCsEZ7DAH7WfIfwEI0renh1lC/pdi5rkOCFEJEpso3/9+WQH2jEK68bKoi3wm2fJIX/lLbn6+HmQIC6Pe/trMn18Bynm18PrWx8zk+lt8525ewLKh3XFAwHrdroDenDLXm+vdJQ+4kq7+dGaxmSQIyyQ1f/5oaoItgMo+2AJ6OGuaDV5vX8Ie5i3Do2kKzycWlONcqRw0bzFp76QFefqshHw614vF2WtiFpmQpIdZIvHi6ANe3U8PZZ4tBbBeGWxzFx8sz/dbUPt4OpKCo8qqEMyyYpH3TabtK3It2NO7A/0tXY1oLBL6R5cH5uK8TMGTgvTjq/bau4m4P+RFbXgnvPbVVQZ9AeS599r6r6bEMJ6wWhXe15gGEuHD7+xudRoe4Cnr5zf7VoEQKbPb38wis89F1NNiSOVej0JkeRH4S0LA2899GAmmtMOUju3kKjMV4Xvc6GAG/FdETRe1lt2vF54w2wP8pZuF3yAPjfo3eqUPTpeV22Mi+d94OIsx8R3mJXcP8w7vGTugFwlANy6dTRKypghF2Tx7DiFkhG0Qk+3CKahDJ4dWIHWb9cQZosLw2ut4fwrVoAx6lKUtilSOj0Mbfg2GWmWLHIXSqeN4IWtec+mBmFTjLElcCFLiaFXgzWZBPmT1KoCF7SKFAzZowrN5j1arDTcueFGEKhHSqPRwMZy9NyLGqQko++tyXelS80WfqNk/NcBvEoYTMQBuswRuVNFZ64uQcyYNQhEL/BpocTbMcwAbMTvcDiRcs3gI+kimxAkX+Qe5zzWzMbPvI1ar6r/JYgAEUyPVvZ2nc7+txIeIpPgREHgvUqPKaD9H7SqNsMi4f1gIorDlQntp0pu1xSzsJr5emtpHmg+cOerkTZCy2YL3NUVvv8IHK838xX/IVGLSW4ZsLxXucOUIbKjGAPTq9zjYvs/nvKa8V67MStTP0+VIEfHKBqpsyISgJxNZQSrZEc5G75WTKt8fr9em4eXQeJjDve7DILBOa/YLB1WTYxZEM3jGSOQP9ObS6lbSxeaej+66lYM71fFeOIPfR+OJjEzBIu6tCe/0s8jH8HYZe6XPrHdm2M1TSB1HqFBgcG0DSR4J0eM4MYY+heH6M+W7A==",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-MD5": "VvB2\u002B8QxNZg1DhAp6U\u002Bnxw==",
+        "Content-MD5": "VvB2+8QxNZg1DhAp6U+nxw==",
         "Date": "Tue, 15 Jun 2021 17:44:55 GMT",
-        "ETag": "\u00220x8D9302549E1D81B\u0022",
+        "ETag": "\"0x8D9302549E1D81B\"",
         "Last-Modified": "Tue, 15 Jun 2021 17:44:56 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -105,9 +105,9 @@
         "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ECannotVerifyCopySource\u003C/Code\u003E\u003CMessage\u003EAuthentication information is not given in the correct format. Check the value of Authorization header.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>Authentication information is not given in the correct format. Check the value of Authorization header.\n",
         "RequestId:4f575777-601e-0013-0a0e-624833000000\n",
-        "Time:2021-06-15T17:44:56.1849767Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-06-15T17:44:56.1849767Z</Message></Error>"
       ]
     },
     {
@@ -143,6 +143,6 @@
   ],
   "Variables": {
     "RandomSeed": "1519442769",
-    "Storage_TestConfigOAuth": "OAuthTenant\nseanoauthstage\nU2FuaXRpemVk\nhttps://seanoauthstage.blob.core.windows.net\nhttps://seanoauthstage.file.core.windows.net\nhttps://seanoauthstage.queue.core.windows.net\nhttps://seanoauthstage.table.core.windows.net\n\n\n\n\nhttps://seanoauthstage-secondary.blob.core.windows.net\nhttps://seanoauthstage-secondary.file.core.windows.net\nhttps://seanoauthstage-secondary.queue.core.windows.net\nhttps://seanoauthstage-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seanoauthstage.blob.core.windows.net/;QueueEndpoint=https://seanoauthstage.queue.core.windows.net/;FileEndpoint=https://seanoauthstage.file.core.windows.net/;BlobSecondaryEndpoint=https://seanoauthstage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanoauthstage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanoauthstage-secondary.file.core.windows.net/;AccountName=seanoauthstage;AccountKey=Sanitized\n"
+    "Storage_TestConfigOAuth": "OAuthTenant\nseanoauthstage\nU2FuaXRpemVk\nhttps://seanoauthstage.blob.core.windows.net\nhttps://seanoauthstage.file.core.windows.net\nhttps://seanoauthstage.queue.core.windows.net\nhttps://seanoauthstage.table.core.windows.net\n\n\n\n\nhttps://seanoauthstage-secondary.blob.core.windows.net\nhttps://seanoauthstage-secondary.file.core.windows.net\nhttps://seanoauthstage-secondary.queue.core.windows.net\nhttps://seanoauthstage-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seanoauthstage.blob.core.windows.net/;QueueEndpoint=https://seanoauthstage.queue.core.windows.net/;FileEndpoint=https://seanoauthstage.file.core.windows.net/;BlobSecondaryEndpoint=https://seanoauthstage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanoauthstage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanoauthstage-secondary.file.core.windows.net/;AccountName=seanoauthstage;AccountKey=Sanitized\n\n\n"
   }
 }
