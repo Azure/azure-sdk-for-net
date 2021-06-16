@@ -83,7 +83,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema(),
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow }
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
             };
 
             dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("metric"));
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema(),
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow }
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
             };
 
             await adminClient.UpdateDataFeedAsync(dataFeed);

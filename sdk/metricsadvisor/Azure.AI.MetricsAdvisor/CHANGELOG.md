@@ -2,6 +2,8 @@
 
 ## 1.0.0-beta.5 (Unreleased)
 
+### Breaking Changes
+- DataFeedIngestionSettings constructor now takes the required `ingestionStartTime` parameter. For this reason, `IngestionStartTime` is not nullable anymore.
 
 ## 1.0.0-beta.4 (2021-06-07)
 
