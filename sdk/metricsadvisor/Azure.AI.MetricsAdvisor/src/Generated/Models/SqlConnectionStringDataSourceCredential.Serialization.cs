@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class SqlConnectionStringDatasourceCredential : IUtf8JsonSerializable
+    public partial class SqlConnectionStringDataSourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static SqlConnectionStringDatasourceCredential DeserializeSqlConnectionStringDatasourceCredential(JsonElement element)
+        internal static SqlConnectionStringDataSourceCredential DeserializeSqlConnectionStringDataSourceCredential(JsonElement element)
         {
             AzureSQLConnectionStringParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
@@ -64,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new SqlConnectionStringDatasourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new SqlConnectionStringDataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

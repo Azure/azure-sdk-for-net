@@ -8,27 +8,27 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Authenticates to an Azure service via service principal. The client ID and the client secret used for datasource
+    /// Authenticates to an Azure service via service principal. The client ID and the client secret used for data source
     /// authentication must be stored as secrets in a Key Vault resource, so credentials to access this Key Vault instance
     /// must also be provided.
     /// </summary>
     [CodeGenModel("ServicePrincipalInKVCredential")]
-    [CodeGenSuppress(nameof(ServicePrincipalInKeyVaultDatasourceCredential), typeof(string), typeof(ServicePrincipalInKVParam))]
-    public partial class ServicePrincipalInKeyVaultDatasourceCredential
+    [CodeGenSuppress(nameof(ServicePrincipalInKeyVaultDataSourceCredential), typeof(string), typeof(ServicePrincipalInKVParam))]
+    public partial class ServicePrincipalInKeyVaultDataSourceCredential
     {
         private string _keyVaultClientSecret;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServicePrincipalInKeyVaultDatasourceCredential"/> class.
+        /// Initializes a new instance of the <see cref="ServicePrincipalInKeyVaultDataSourceCredential"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="ServicePrincipalInKeyVaultDatasourceCredential"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="ServicePrincipalInKeyVaultDataSourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="endpoint">The endpoint to connect to the Key Vault resource where the secrets are stored.</param>
         /// <param name="keyVaultClientId">The client ID to authenticate to the Key Vault resource.</param>
         /// <param name="keyVaultClientSecret">The client secret to authenticate to the Key Vault resource.</param>
         /// <param name="tenantId">The tenant ID of the service principals used for authentication.</param>
-        /// <param name="secretNameForClientId">The name of the Key Vault secret storing the client ID used for datasource authentication.</param>
-        /// <param name="secretNameForClientSecret">The name of the Key Vault secret storing the client secret used for datasource authentication.</param>
-        public ServicePrincipalInKeyVaultDatasourceCredential(string name, Uri endpoint, string keyVaultClientId, string keyVaultClientSecret, string tenantId, string secretNameForClientId, string secretNameForClientSecret)
+        /// <param name="secretNameForClientId">The name of the Key Vault secret storing the client ID used for data source authentication.</param>
+        /// <param name="secretNameForClientSecret">The name of the Key Vault secret storing the client secret used for data source authentication.</param>
+        public ServicePrincipalInKeyVaultDataSourceCredential(string name, Uri endpoint, string keyVaultClientId, string keyVaultClientSecret, string tenantId, string secretNameForClientId, string secretNameForClientSecret)
             : base(name)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             SecretNameForClientSecret = secretNameForClientSecret;
         }
 
-        internal ServicePrincipalInKeyVaultDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
+        internal ServicePrincipalInKeyVaultDataSourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
@@ -75,12 +75,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string TenantId { get; set; }
 
         /// <summary>
-        /// The name of the Key Vault secret storing the client ID used for datasource authentication.
+        /// The name of the Key Vault secret storing the client ID used for data source authentication.
         /// </summary>
         public string SecretNameForClientId { get; set; }
 
         /// <summary>
-        /// The name of the Key Vault secret storing the client secret used for datasource authentication.
+        /// The name of the Key Vault secret storing the client secret used for data source authentication.
         /// </summary>
         public string SecretNameForClientSecret { get; set; }
 

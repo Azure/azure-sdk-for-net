@@ -11,17 +11,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Authenticates to a Data Lake Storage Gen2 resource via shared key.
     /// </summary>
     [CodeGenModel("DataLakeGen2SharedKeyCredential")]
-    [CodeGenSuppress(nameof(DataLakeGen2SharedKeyDatasourceCredential), typeof(string), typeof(DataLakeGen2SharedKeyParam))]
-    public partial class DataLakeGen2SharedKeyDatasourceCredential
+    [CodeGenSuppress(nameof(DataLakeGen2SharedKeyDataSourceCredential), typeof(string), typeof(DataLakeGen2SharedKeyParam))]
+    public partial class DataLakeGen2SharedKeyDataSourceCredential
     {
         private string _accountKey;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeGen2SharedKeyDatasourceCredential"/> class.
+        /// Initializes a new instance of the <see cref="DataLakeGen2SharedKeyDataSourceCredential"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="DataLakeGen2SharedKeyDatasourceCredential"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="DataLakeGen2SharedKeyDataSourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="accountKey">The account key to be used for authentication.</param>
-        public DataLakeGen2SharedKeyDatasourceCredential(string name, string accountKey)
+        public DataLakeGen2SharedKeyDataSourceCredential(string name, string accountKey)
             : base(name)
         {
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccountKey = accountKey;
         }
 
-        internal DataLakeGen2SharedKeyDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
+        internal DataLakeGen2SharedKeyDataSourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;

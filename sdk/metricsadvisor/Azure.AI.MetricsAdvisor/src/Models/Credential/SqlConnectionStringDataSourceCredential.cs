@@ -11,17 +11,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Authenticates to an SQL server via connection string.
     /// </summary>
     [CodeGenModel("AzureSQLConnectionStringCredential")]
-    [CodeGenSuppress(nameof(SqlConnectionStringDatasourceCredential), typeof(string), typeof(AzureSQLConnectionStringParam))]
-    public partial class SqlConnectionStringDatasourceCredential
+    [CodeGenSuppress(nameof(SqlConnectionStringDataSourceCredential), typeof(string), typeof(AzureSQLConnectionStringParam))]
+    public partial class SqlConnectionStringDataSourceCredential
     {
         private string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlConnectionStringDatasourceCredential"/> class.
+        /// Initializes a new instance of the <see cref="SqlConnectionStringDataSourceCredential"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="SqlConnectionStringDatasourceCredential"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="SqlConnectionStringDataSourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="connectionString">The connection string to be used for authentication.</param>
-        public SqlConnectionStringDatasourceCredential(string name, string connectionString)
+        public SqlConnectionStringDataSourceCredential(string name, string connectionString)
             : base(name)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             ConnectionString = connectionString;
         }
 
-        internal SqlConnectionStringDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters)
+        internal SqlConnectionStringDataSourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;

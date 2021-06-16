@@ -263,15 +263,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     break;
                 case AzureDataExplorerDataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    detail.CredentialId = s.DatasourceCredentialId;
+                    detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageGen2DataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    detail.CredentialId = s.DatasourceCredentialId;
+                    detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    detail.CredentialId = s.DatasourceCredentialId;
+                    detail.CredentialId = s.DataSourceCredentialId;
                     break;
             }
         }
@@ -285,15 +285,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     break;
                 case AzureDataExplorerDataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    patch.CredentialId = s.DatasourceCredentialId;
+                    patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageGen2DataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    patch.CredentialId = s.DatasourceCredentialId;
+                    patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    patch.CredentialId = s.DatasourceCredentialId;
+                    patch.CredentialId = s.DataSourceCredentialId;
                     break;
             }
         }

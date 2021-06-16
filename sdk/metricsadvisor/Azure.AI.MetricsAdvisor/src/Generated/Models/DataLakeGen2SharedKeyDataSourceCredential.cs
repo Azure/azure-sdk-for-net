@@ -9,8 +9,8 @@ using System;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The ServicePrincipalCredential. </summary>
-    public partial class ServicePrincipalDatasourceCredential : DatasourceCredential
+    /// <summary> The DataLakeGen2SharedKeyCredential. </summary>
+    public partial class DataLakeGen2SharedKeyDataSourceCredential : DataSourceCredential
     {
     }
 }

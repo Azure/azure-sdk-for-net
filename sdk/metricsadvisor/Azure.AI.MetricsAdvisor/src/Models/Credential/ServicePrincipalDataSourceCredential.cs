@@ -11,19 +11,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Authenticates to an Azure service via service principal.
     /// </summary>
     [CodeGenModel("ServicePrincipalCredential")]
-    [CodeGenSuppress(nameof(ServicePrincipalDatasourceCredential), typeof(string), typeof(ServicePrincipalParam))]
-    public partial class ServicePrincipalDatasourceCredential
+    [CodeGenSuppress(nameof(ServicePrincipalDataSourceCredential), typeof(string), typeof(ServicePrincipalParam))]
+    public partial class ServicePrincipalDataSourceCredential
     {
         private string _clientSecret;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServicePrincipalDatasourceCredential"/> class.
+        /// Initializes a new instance of the <see cref="ServicePrincipalDataSourceCredential"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="ServicePrincipalDatasourceCredential"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="ServicePrincipalDataSourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="clientId">The client ID of the service principal used for authentication.</param>
         /// <param name="clientSecret">The client secret of the service principal used for authentication.</param>
         /// <param name="tenantId">The tenant ID of the service principal used for authentication.</param>
-        public ServicePrincipalDatasourceCredential(string name, string clientId, string clientSecret, string tenantId)
+        public ServicePrincipalDataSourceCredential(string name, string clientId, string clientSecret, string tenantId)
             : base(name)
         {
             Argument.AssertNotNullOrEmpty(clientId, nameof(clientId));
@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             TenantId = tenantId;
         }
 
-        internal ServicePrincipalDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
+        internal ServicePrincipalDataSourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
