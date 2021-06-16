@@ -2,7 +2,6 @@
 using Azure.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

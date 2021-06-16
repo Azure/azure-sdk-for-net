@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Core.Resources
+namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// A class representing a tag filter used in Azure API calls.
