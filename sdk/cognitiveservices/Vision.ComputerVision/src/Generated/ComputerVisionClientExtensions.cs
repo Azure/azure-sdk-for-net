@@ -771,12 +771,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// extraction. Accepted values are: "latest", "latest-preview", "2021-04-12".
             /// Defaults to "latest".
             /// </param>
+            /// <param name='readingOrder'>
+            /// Optional parameter to specify which reading order algorithm should be
+            /// applied when ordering the extract text elements. Can be either 'basic' or
+            /// 'natural'. Will default to 'basic' if not specified
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReadHeaders> ReadAsync(this IComputerVisionClient operations, string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReadHeaders> ReadAsync(this IComputerVisionClient operations, string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ReadWithHttpMessagesAsync(url, language, pages, modelVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReadWithHttpMessagesAsync(url, language, pages, modelVersion, readingOrder, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -836,12 +841,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// the pages you want to get OCR result. For a range of pages, use a hyphen.
             /// Separate each page or range with a comma.
             /// </param>
+            /// <param name='modelVersion'>
+            /// Optional parameter to specify the version of the OCR model used for text
+            /// extraction. Accepted values are: "latest", "latest-preview", "2021-04-12".
+            /// Defaults to "latest".
+            /// </param>
+            /// <param name='readingOrder'>
+            /// Optional parameter to specify which reading order algorithm should be
+            /// applied when ordering the extract text elements. Can be either 'basic' or
+            /// 'natural'. Will default to 'basic' if not specified
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReadInStreamHeaders> ReadInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), IList<string> pages = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReadInStreamHeaders> ReadInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ReadInStreamWithHttpMessagesAsync(image, language, pages, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReadInStreamWithHttpMessagesAsync(image, language, pages, modelVersion, readingOrder, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

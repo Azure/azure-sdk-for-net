@@ -723,13 +723,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// text extraction. Accepted values are: "latest", "latest-preview",
         /// "2021-04-12". Defaults to "latest".
         /// </param>
+        /// <param name='readingOrder'>
+        /// Optional parameter to specify which reading order algorithm should
+        /// be applied when ordering the extract text elements. Can be either
+        /// 'basic' or 'natural'. Will default to 'basic' if not specified
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This interface is used for getting OCR results of Read operation.
@@ -780,13 +785,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// number of the pages you want to get OCR result. For a range of
         /// pages, use a hyphen. Separate each page or range with a comma.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the OCR model used for
+        /// text extraction. Accepted values are: "latest", "latest-preview",
+        /// "2021-04-12". Defaults to "latest".
+        /// </param>
+        /// <param name='readingOrder'>
+        /// Optional parameter to specify which reading order algorithm should
+        /// be applied when ordering the extract text elements. Can be either
+        /// 'basic' or 'natural'. Will default to 'basic' if not specified
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
