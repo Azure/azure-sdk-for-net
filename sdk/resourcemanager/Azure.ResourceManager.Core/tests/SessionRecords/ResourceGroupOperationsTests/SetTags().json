@@ -16,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "450",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 23:33:37 GMT",
+        "Date": "Wed, 16 Jun 2021 00:15:38 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "64c55952-f4c8-466b-8bf5-fb88d2874a0c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11978",
-        "x-ms-request-id": "64c55952-f4c8-466b-8bf5-fb88d2874a0c",
-        "x-ms-routing-request-id": "WESTUS2:20210615T233337Z:64c55952-f4c8-466b-8bf5-fb88d2874a0c"
+        "x-ms-correlation-request-id": "694a3b71-6cc7-4f6a-a578-c67e91b304a1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "694a3b71-6cc7-4f6a-a578-c67e91b304a1",
+        "x-ms-routing-request-id": "WESTUS2:20210616T001539Z:694a3b71-6cc7-4f6a-a578-c67e91b304a1"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -53,7 +53,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "34",
         "Content-Type": "application/json",
-        "traceparent": "00-b4c5cfe8883c534fb5176b4268cb018e-032764fa2e8c7941-00",
+        "traceparent": "00-a1ef24c1267df14da6f10306d3272275-c8e4965452311048-00",
         "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "b2d52f2d95f5bed589c19fc232d5cdbd",
         "x-ms-return-client-request-id": "true"
@@ -67,15 +67,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "228",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 23:33:37 GMT",
+        "Date": "Wed, 16 Jun 2021 00:15:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f175ba59-fe3c-40c9-ac59-5bd016d95b73",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "f175ba59-fe3c-40c9-ac59-5bd016d95b73",
-        "x-ms-routing-request-id": "WESTUS2:20210615T233338Z:f175ba59-fe3c-40c9-ac59-5bd016d95b73"
+        "x-ms-correlation-request-id": "680dfe59-f57e-424d-8c0a-d85217d55a07",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "680dfe59-f57e-424d-8c0a-d85217d55a07",
+        "x-ms-routing-request-id": "WESTUS2:20210616T001540Z:680dfe59-f57e-424d-8c0a-d85217d55a07"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg3012",
@@ -110,15 +110,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 23:33:38 GMT",
+        "Date": "Wed, 16 Jun 2021 00:15:40 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "07d0f543-8c14-4483-af2f-716d0efee224",
-        "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "07d0f543-8c14-4483-af2f-716d0efee224",
-        "x-ms-routing-request-id": "WESTUS2:20210615T233339Z:07d0f543-8c14-4483-af2f-716d0efee224"
+        "x-ms-correlation-request-id": "cdec199b-6a41-478f-8711-918964c8ca77",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "cdec199b-6a41-478f-8711-918964c8ca77",
+        "x-ms-routing-request-id": "WESTUS2:20210616T001540Z:cdec199b-6a41-478f-8711-918964c8ca77"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg3012",

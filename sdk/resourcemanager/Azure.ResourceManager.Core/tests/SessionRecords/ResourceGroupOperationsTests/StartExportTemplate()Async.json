@@ -16,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "450",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 23:14:46 GMT",
+        "Date": "Wed, 16 Jun 2021 00:26:12 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3a6f8b28-0b3c-4b2b-aed1-985295eb021e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11932",
-        "x-ms-request-id": "3a6f8b28-0b3c-4b2b-aed1-985295eb021e",
-        "x-ms-routing-request-id": "WESTUS2:20210615T231446Z:3a6f8b28-0b3c-4b2b-aed1-985295eb021e"
+        "x-ms-correlation-request-id": "19f9694d-3ac6-4603-b9cc-b2705f10ba8b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "19f9694d-3ac6-4603-b9cc-b2705f10ba8b",
+        "x-ms-routing-request-id": "WESTUS2:20210616T002613Z:19f9694d-3ac6-4603-b9cc-b2705f10ba8b"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -53,7 +53,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "34",
         "Content-Type": "application/json",
-        "traceparent": "00-b7ba6afee21121439db08d7639958d2e-770dd3d275d39f4d-00",
+        "traceparent": "00-9293af15f4a40544bb005daf7001323a-7aa5904901508e44-00",
         "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "173239ec56adb4fe4f511ef05d6e531a",
         "x-ms-return-client-request-id": "true"
@@ -67,15 +67,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "228",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 23:14:47 GMT",
+        "Date": "Wed, 16 Jun 2021 00:26:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "441af64b-951b-43ec-a3ba-204a32da5a76",
-        "x-ms-ratelimit-remaining-subscription-writes": "1191",
-        "x-ms-request-id": "441af64b-951b-43ec-a3ba-204a32da5a76",
-        "x-ms-routing-request-id": "WESTUS2:20210615T231447Z:441af64b-951b-43ec-a3ba-204a32da5a76"
+        "x-ms-correlation-request-id": "4c3c0026-7e47-4d4c-a00c-9c4e41962b8e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "4c3c0026-7e47-4d4c-a00c-9c4e41962b8e",
+        "x-ms-routing-request-id": "WESTUS2:20210616T002614Z:4c3c0026-7e47-4d4c-a00c-9c4e41962b8e"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg7061",
@@ -110,15 +110,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "179",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 23:14:47 GMT",
+        "Date": "Wed, 16 Jun 2021 00:26:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0cc07c41-6f58-4b84-bf23-5d12dc54f601",
-        "x-ms-ratelimit-remaining-subscription-reads": "11931",
-        "x-ms-request-id": "0cc07c41-6f58-4b84-bf23-5d12dc54f601",
-        "x-ms-routing-request-id": "WESTUS2:20210615T231448Z:0cc07c41-6f58-4b84-bf23-5d12dc54f601"
+        "x-ms-correlation-request-id": "3ecc82d0-2f48-4f09-a58d-4bb3b98a1d07",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "3ecc82d0-2f48-4f09-a58d-4bb3b98a1d07",
+        "x-ms-routing-request-id": "WESTUS2:20210616T002615Z:3ecc82d0-2f48-4f09-a58d-4bb3b98a1d07"
       },
       "ResponseBody": {
         "template": {
