@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     public partial class DataSourceCredential : IUtf8JsonSerializable
     {
