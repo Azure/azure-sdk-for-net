@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://kasobolcanadacentral.file.core.windows.net/test-share-52a89552-9910-21b9-e846-7099b56644e7?restype=share",
@@ -18,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:29:58 GMT",
-        "ETag": "\u00220x8D90902D3088485\u0022",
+        "ETag": "\"0x8D90902D3088485\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:29:58 GMT",
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "4beff3c0-88a5-d2c7-36d0-a4ba0f6a50f0",
@@ -49,7 +49,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:29:58 GMT",
-        "ETag": "\u00220x8D90902D31670A0\u0022",
+        "ETag": "\"0x8D90902D31670A0\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:29:58 GMT",
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "c3e81d99-9e65-ab3e-fb34-89677ba146d8",
@@ -90,7 +90,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:29:58 GMT",
-        "ETag": "\u00220x8D90902D32455E1\u0022",
+        "ETag": "\"0x8D90902D32455E1\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:29:58 GMT",
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "7bfe9b48-6542-0b4a-a46e-40347db40b37",
@@ -120,7 +120,7 @@
         "x-ms-content-disposition": "kkgxouaxglvqiyyhrewx",
         "x-ms-content-encoding": "drjpcxktnreokrfdsgcy",
         "x-ms-content-language": "uhnttnnmbhytwfrrapuq",
-        "x-ms-content-md5": "dDO\u002BPkRjr/IRsJz96tborg==",
+        "x-ms-content-md5": "dDO+PkRjr/IRsJz96tborg==",
         "x-ms-content-type": "kfjnggfptvnlbxdudpvo",
         "x-ms-date": "Mon, 26 Apr 2021 22:29:58 GMT",
         "x-ms-file-attributes": "Preserve",
@@ -135,7 +135,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:29:58 GMT",
-        "ETag": "\u00220x8D90902D32FC9A5\u0022",
+        "ETag": "\"0x8D90902D32FC9A5\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:29:58 GMT",
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "04411d88-4dc5-7c68-e880-c9069695c826",
@@ -173,10 +173,10 @@
         "Content-Encoding": "drjpcxktnreokrfdsgcy",
         "Content-Language": "uhnttnnmbhytwfrrapuq",
         "Content-Length": "1048576",
-        "Content-MD5": "dDO\u002BPkRjr/IRsJz96tborg==",
+        "Content-MD5": "dDO+PkRjr/IRsJz96tborg==",
         "Content-Type": "kfjnggfptvnlbxdudpvo",
         "Date": "Mon, 26 Apr 2021 22:29:58 GMT",
-        "ETag": "\u00220x8D90902D32FC9A5\u0022",
+        "ETag": "\"0x8D90902D32FC9A5\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:29:58 GMT",
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "60ab9864-0773-1d71-7608-61940f5dc917",
@@ -224,8 +224,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-26T15:29:58.4358242-07:00",
+    "DateTimeOffsetNow": "2021-04-26T17:29:58.4358242-05:00",
     "RandomSeed": "278959317",
-    "Storage_TestConfigDefault": "ProductionTenant\nkasobolcanadacentral\nU2FuaXRpemVk\nhttp://kasobolcanadacentral.blob.core.windows.net\nhttp://kasobolcanadacentral.file.core.windows.net\nhttp://kasobolcanadacentral.queue.core.windows.net\nhttp://kasobolcanadacentral.table.core.windows.net\n\n\n\n\nhttp://kasobolcanadacentral-secondary.blob.core.windows.net\nhttp://kasobolcanadacentral-secondary.file.core.windows.net\nhttp://kasobolcanadacentral-secondary.queue.core.windows.net\nhttp://kasobolcanadacentral-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://kasobolcanadacentral.blob.core.windows.net/;QueueEndpoint=http://kasobolcanadacentral.queue.core.windows.net/;FileEndpoint=http://kasobolcanadacentral.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolcanadacentral-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolcanadacentral-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolcanadacentral-secondary.file.core.windows.net/;AccountName=kasobolcanadacentral;AccountKey=Kg==;\nencryptionScope"
+    "Storage_TestConfigDefault": "ProductionTenant\nkasobolcanadacentral\nU2FuaXRpemVk\nhttp://kasobolcanadacentral.blob.core.windows.net\nhttp://kasobolcanadacentral.file.core.windows.net\nhttp://kasobolcanadacentral.queue.core.windows.net\nhttp://kasobolcanadacentral.table.core.windows.net\n\n\n\n\nhttp://kasobolcanadacentral-secondary.blob.core.windows.net\nhttp://kasobolcanadacentral-secondary.file.core.windows.net\nhttp://kasobolcanadacentral-secondary.queue.core.windows.net\nhttp://kasobolcanadacentral-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://kasobolcanadacentral.blob.core.windows.net/;QueueEndpoint=http://kasobolcanadacentral.queue.core.windows.net/;FileEndpoint=http://kasobolcanadacentral.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolcanadacentral-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolcanadacentral-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolcanadacentral-secondary.file.core.windows.net/;AccountName=kasobolcanadacentral;AccountKey=Kg==;\nencryptionScope\n\n"
   }
 }
