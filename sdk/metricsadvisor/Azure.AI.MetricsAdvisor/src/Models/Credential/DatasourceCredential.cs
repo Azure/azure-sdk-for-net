@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.MetricsAdvisor.Administration;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Provides different ways of authenticating to a <see cref="DataFeedSource"/> for data ingestion when the
