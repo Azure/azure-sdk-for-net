@@ -211,7 +211,7 @@ foreach (var item in queryResults)
 ```
 
 Now in `Azure.Data.Tables`, we again query with a single line of code and return the results as a `Pagageable<T>`. You'll find the `Pageable` type used consistently throughout all the new Azure SDK clients where an operation returns a paged result.
-Another different you may notice with the new client is that rather than implementing a full IQueryable LINQ provider, we've only implemented support for a filter expression. This approach helps to prevent accidentally writing LINQ expressions that return every item from the table to run a filter on the result locally.
+Another difference you may notice with the new client is that rather than implementing a full IQueryable LINQ provider, we've only implemented support for a filter expression. This approach helps to prevent accidentally writing LINQ expressions that return every item from the table to run a filter on the result locally.
 
 ```C# Snippet:TablesMigrationQuery
 // Execute the query.
