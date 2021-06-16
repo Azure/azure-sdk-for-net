@@ -10,6 +10,9 @@
 - In `DataPointAnomaly`, renamed property `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`.
 - In `DataFeedMetric`, renamed constructor parameter `metricName` to `name` only.
 - In `DataFeedDimension`, renamed constructor parameter `dimensionName` to `name` only.
+- Moved `GetAlertConfigurationsOptions`, `GetDatasourceCredentialsOptions`, and `GetDetectionConfigurationsOptions` to the `Azure.AI.MetricsAdvisor.Administration` namespace.
+- Moved `DatasourceCredential`, `DataFeedSource`, `NotificationHook`, and all of their concrete child types to the `Azure.AI.MetricsAdvisor.Administration` namespace.
+- Moved `MetricFeedback` and all of its concrete child types to the `Azure.AI.MetricsAdvisor` namespace.
 
 ## 1.0.0-beta.4 (2021-06-07)
 

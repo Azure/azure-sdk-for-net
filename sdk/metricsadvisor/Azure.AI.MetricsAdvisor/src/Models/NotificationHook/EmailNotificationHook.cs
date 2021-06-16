@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// An email hook is the channel for anomaly alerts to be sent to email addresses specified in the Email to section.

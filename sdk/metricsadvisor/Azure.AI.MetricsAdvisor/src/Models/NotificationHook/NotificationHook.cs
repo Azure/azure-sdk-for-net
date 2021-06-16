@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.

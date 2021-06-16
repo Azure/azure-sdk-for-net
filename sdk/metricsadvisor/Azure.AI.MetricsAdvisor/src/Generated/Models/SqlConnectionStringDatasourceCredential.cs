@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary> The AzureSQLConnectionStringCredential. </summary>
     public partial class SqlConnectionStringDatasourceCredential : DatasourceCredential

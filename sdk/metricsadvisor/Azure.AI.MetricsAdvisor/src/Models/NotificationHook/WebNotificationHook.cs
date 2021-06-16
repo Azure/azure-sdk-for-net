@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// A web hook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided API when an alert is triggered.
