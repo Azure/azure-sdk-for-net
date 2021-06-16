@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
-            AnomalyDetectionConfigurationId = anomalyDetectionConfigurationId;
+            DetectionConfigurationId = anomalyDetectionConfigurationId;
             Timestamp = timestamp;
             CreatedTime = createdTime;
             ModifiedTime = modifiedTime;
@@ -48,7 +48,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
-        public string AnomalyDetectionConfigurationId { get; }
+        [CodeGenMember("AnomalyDetectionConfiugurationId")]
+        public string DetectionConfigurationId { get; }
 
         /// <summary>
         /// The unique identifier of the <see cref="DataFeedMetric"/> of the time series in which this

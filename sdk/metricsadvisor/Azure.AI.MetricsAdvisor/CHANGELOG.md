@@ -5,6 +5,7 @@
 ### Breaking Changes
 - `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
 - `DataFeedMissingDataPointFillSettings` constructor now takes the required `fillType` parameter. For this reason, the property `FillType` is not nullable anymore.
+- In `DataPointAnomaly`, renamed property `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`.
 - In `DataFeedMetric`, renamed constructor parameter `metricName` to `name` only.
 - In `DataFeedDimension`, renamed constructor parameter `dimensionName` to `name` only.
 
