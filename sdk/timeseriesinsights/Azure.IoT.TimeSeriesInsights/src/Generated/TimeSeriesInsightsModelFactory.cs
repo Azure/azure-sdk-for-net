@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="target"> Target of the particular error (for example, the name of the property in error). May be null. </param>
         /// <param name="innerError"> Contains more specific error that narrows down the cause. May be null. </param>
         /// <param name="details"> Contains additional error information. May be null. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesOperationError"/> instance for mocking. </returns>
         public static TimeSeriesOperationError TimeSeriesOperationError(string code = default, string message = default, string target = default, TimeSeriesOperationError innerError = default, IReadOnlyList<TimeSeriesOperationErrorDetails> details = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes new instance of TimeSeriesOperationErrorDetails class. </summary>
         /// <param name="code"> Language-independent, human-readable string that defines a service-specific error code. This code serves as a more specific indicator for the HTTP error code specified in the response. Can be used to programmatically handle specific error cases. </param>
         /// <param name="message"> Human-readable, language-independent representation of the error. It is intended as an aid to developers and is not suitable for exposure to end users. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesOperationErrorDetails"/> instance for mocking. </returns>
         public static TimeSeriesOperationErrorDetails TimeSeriesOperationErrorDetails(string code = default, string message = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
