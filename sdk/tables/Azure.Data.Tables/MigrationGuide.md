@@ -1,16 +1,27 @@
 # Migration guide from Microsoft.Azure.Cosmos.Table to Azure.Data.Tables
 
-This guide is intended to assist in the migration to the Azure.Data.Tables client package from the legacy Microsoft.Azure.CosmosDB.Table package focusing on side-by-side comparisons for similar operations between the to versions.
+This guide is intended to assist in the migration to the Azure.Data.Tables client package from the legacy Microsoft.Azure.CosmosDB.Table package focusing on
+side-by-side comparisons for similar operations between the to versions.
 
-Familiarity with the Microsoft.Azure.CosmosDB.Table package is assumed. If you are new to the Azure Tables client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/README.md) and table client [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples) rather than this guide.
+Familiarity with the Microsoft.Azure.CosmosDB.Table package is assumed. If you are new to the Azure Tables client library for .NET, please refer to the
+[README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/README.md) and
+[samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples) rather than this guide.
 
 ## Migration benefits
 
-A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
+A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and
+been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to
+understand the gaps that the .NET client libraries have.
 
-There were several areas of consistent feedback expressed across the Azure client library ecosystem. One of the most important is that the client libraries for different Azure services have not had a consistent approach to organization, naming, and API structure. Additionally, many developers have felt that the learning curve was difficult, and the APIs did not offer a good, approachable, and consistent onboarding story for those learning Azure or exploring a specific Azure service.
+There were several areas of consistent feedback expressed across the Azure client library ecosystem. One of the most important is that the client libraries for
+different Azure services have not had a consistent approach to organization, naming, and API structure. Additionally, many developers have felt that the learning
+curve was difficult, and the APIs did not offer a good, approachable, and consistent on-boarding story for those learning Azure or exploring a specific Azure service.
 
-To try and improve the development experience across Azure services, including Tables, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
+To try and improve the development experience across Azure services, including Tables, a set of uniform
+[design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent
+experience with established API patterns for all services. A set of
+[.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic
+feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
 
 The new Azure Tables library `Azure.Data.Tables` provides the ability to share in some of the cross-service improvements made to the Azure development experience.
 
@@ -18,15 +29,17 @@ The new Azure Tables library `Azure.Data.Tables` provides the ability to share i
 
 ### Package and namespaces
 
-Package names and the namespace root for the modern Azure client libraries for .NET have changed. Each will follow the pattern `Azure.[Area].[Services]` where the legacy clients followed the pattern `Microsoft.Azure.[Service]`. This provides a quick and accessible means to help understand, at a glance, whether you are using the modern or legacy clients.
+Package names and the namespace root for the modern Azure client libraries for .NET have changed. Each will follow the pattern `Azure.[Area].[Services]` where the
+legacy clients followed the pattern `Microsoft.Azure.[Service]`. This provides a quick and accessible means to help understand, at a glance, whether you are using
+the modern or legacy clients.
 
-In the case of Tables, the modern client library is named `Azure.Data.Tables` and was released beginning with version 12. The legacy client libraries have packages and namespaces that begin with `Microsoft.Azure.CosmosDB` or `Microsoft.Azure.Storage` and a version of 2.x.x or below and 9.x.x or below respectively.
-
-
+In the case of Tables, the modern client library is named `Azure.Data.Tables` and was released beginning with version 12. The legacy client libraries have packages
+and namespaces that begin with `Microsoft.Azure.CosmosDB` or `Microsoft.Azure.Storage` and a version of 2.x.x or below and 9.x.x or below respectively.
 
 ### Constructing the clients
 
-Previously in `Microsoft.Azure.Comsmos.Table`, you would create a `CloudStorageAccount` which can be used to get an instance of the `CloudTableClient` in order to perform service level operations.
+Previously in `Microsoft.Azure.Comsmos.Table`, you would create a `CloudStorageAccount` which can be used to get an instance of the `CloudTableClient` in order to
+perform service level operations.
 
 ```C#
 // Create the CloudStorageAccount using StorageCredentials.
@@ -50,7 +63,8 @@ var serviceClient = new TableServiceClient(
 
 ### Creating a table
 
-Previously in `Microsoft.Azure.Comsmos.Table`, we'd use a `CloudTable` instance to create a table, which is returned from the `CloudTableClient` method on `CloudTableClient`.
+Previously in `Microsoft.Azure.Comsmos.Table`, we'd use a `CloudTable` instance to create a table, which is returned from the `CloudTableClient` method on
+`CloudTableClient`.
 
 ```C#
 // Create a table client and create the table if it doesn't already exist.
@@ -59,7 +73,8 @@ CloudTable table = tableClient.GetTableReference(tableName);
 cloudTable.CreateIfNotExists()
 ```
 
-With `Azure.Data.Tables` we have access to all table level operations directly from the `TableServiceClient`. Because the table service client is not affinitzed to any one table, it is ideal for scenarios where you need to create, delete, or list more than one cloudTable.
+With `Azure.Data.Tables` we have access to all table level operations directly from the `TableServiceClient`. Because the table service client is not affinitzed to
+any one table, it is ideal for scenarios where you need to create, delete, or list more than one cloudTable.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
@@ -84,7 +99,7 @@ Let's define an office supply entity so that we can add it to the cloudTable. Fi
 Previously in `Microsoft.Azure.Comsmos.Table`, our entity will inherit from the `TableEntity` base class and look like this:
 
 ```c#
-public class OfficeSupplyOld : Microsoft.Azure.Cosmos.cloudTable.TableEntity
+public class OfficeSupplyOld : Microsoft.Azure.Cosmos.Table.TableEntity
 {
 	public string Product { get; set; }
 	public double Price { get; set; }
@@ -155,7 +170,8 @@ TableResult result = cloudTable.Execute(insertOrMergeOperation);
 OfficeSupplyOld insertedCustomer = result.Result as OfficeSupplyOld;
 ```
 
-Now in `Azure.Data.Tables`, using the `TableClient`, we can imply pass our entity to the Upsert method which will create or update the entity depending on whether or not it already exists.
+Now in `Azure.Data.Tables`, using the `TableClient`, we can simply pass our entity to the Upsert method which will create or update the entity depending on whether
+or not it already exists.
 
 ```C# Snippet:TablesMigrationUpsertEntity
 // Upsert the newly created entity.
@@ -210,8 +226,11 @@ foreach (var item in queryResults)
 }
 ```
 
-Now in `Azure.Data.Tables`, we again query with a single line of code and return the results as a `Pagageable<T>`. You'll find the `Pageable` type used consistently throughout all the new Azure SDK clients where an operation returns a paged result.
-Another difference you may notice with the new client is that rather than implementing a full IQueryable LINQ provider, we've only implemented support for a filter expression. This approach helps to prevent accidentally writing LINQ expressions that return every item from the table to run a filter on the result locally.
+Now in `Azure.Data.Tables`, we again query with a single line of code and return the results as a `Pagageable<T>`. You'll find the `Pageable` type used consistently
+throughout all the new Azure SDK clients where an operation returns a paged result.
+
+Another difference you may notice with the new client is that rather than implementing a full IQueryable LINQ provider, we've only implemented support for a filter
+expression. This approach helps to prevent accidentally writing LINQ expressions that return every item from the table to run a filter on the result locally.
 
 ```C# Snippet:TablesMigrationQuery
 // Execute the query.
@@ -242,8 +261,8 @@ tableClient.DeleteEntity(partitionKey, rowKey);
 
 ### Batch transactions
 
-Previously with `Microsoft.Azure.Cosmos.Table`, creating and executing a transactional batch operation involves creating a `TableBatchOperation` containing the `TableOperation`s to be executed.
-The result from `ExecuteBatch` is a `TableBatchResult` which is essentially a collection of `TableResult`s.
+Previously with `Microsoft.Azure.Cosmos.Table`, creating and executing a transactional batch operation involves creating a `TableBatchOperation` containing the
+`TableOperation`s to be executed. The result from `ExecuteBatch` is a `TableBatchResult` which is essentially a collection of `TableResult`s.
 
 ```c#
 // Create a TableBatchOperation and populate it with our TableOperations.
@@ -263,8 +282,10 @@ foreach (TableResult result in batchResult)
 }
 ```
 
-Now in `Azure.Data.Tables`, there is no longer a stand alone type to represent a transactional batch collection, rather you build an enumerable of `TableTransactionAction`s. Executing the transaction is accomplished by passing this collection to the `SubmitTransaction` method on the `TableClient`.
-The result from `SubmitTransaction` is the standard `Response<T>` returned by most service operations found in the new Azure SDK client libraries, with the `T` being an IReadonlyList<Response>`. This list of responses represent the response for each operation executed within the transaction.
+Now in `Azure.Data.Tables`, there is no longer a stand alone type to represent a transactional batch collection, rather you build an enumerable of
+`TableTransactionAction`s. Executing the transaction is accomplished by passing this collection to the `SubmitTransaction` method on the `TableClient`. The result
+from `SubmitTransaction` is the standard `Response<T>` returned by most service operations found in the new Azure SDK client libraries, with the `T` being an
+`IReadonlyList<Response>`. This list of responses represent the response for each operation executed within the transaction.
 
 ```C# Snippet:MigrationBatchAdd
 // Create a collection of TableTransactionActions and populate it with the actions for each entity.
