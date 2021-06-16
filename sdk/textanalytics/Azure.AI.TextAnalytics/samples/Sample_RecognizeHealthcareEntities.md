@@ -16,7 +16,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
 
-```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAnalyzeDocumentsAsync
+```C# Snippet:TextAnalyticsSampleHealthcareConvenienceAnalyzeDocumentsAsync
 // get input documents
 string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                     Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
@@ -56,7 +56,7 @@ Console.WriteLine($"Status       : {healthOperation.Status}");
 Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 ```
 To view the final results of the long-running operation:
-```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAsyncViewResults
+```C# Snippet:TextAnalyticsSampleHealthcareConvenienceAsyncViewResults
 // view operation results
 await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
 {
@@ -142,12 +142,12 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
 
 To see the full example source files, see:
 
-* [Synchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatch.cs)
-* [Asynchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchAsync.cs)
-* [Automatic Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchAsync_AutomaticPolling.cs)
-* [Manual Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatch_ManualPolling.cs)
-* [Automatic Polling AnalyzeHealthcareEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchConvenienceAsync_AutomaticPolling.cs)
-* [Manual Polling AnalyzeHealthcareEntities Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesBatchConvenience_ManualPolling.cs)
+* [Synchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities.cs)
+* [Asynchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync.cs)
+* [Automatic Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync_AutomaticPolling.cs)
+* [Manual Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_ManualPolling.cs)
+* [Automatic Polling AnalyzeHealthcareEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_AutomaticPolling.cs)
+* [Manual Polling AnalyzeHealthcareEntities Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenience_ManualPolling.cs)
 * [Synchronous AnalyzeHealthcareEntities Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_Cancellation.cs)
 * [Asynchronous AnalyzeHealthcareEntitiesAsync Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync_Cancellation.cs)
 

@@ -234,15 +234,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     })));
         }
 
-        [Test]
-        public void ThrowsIfBindingToASingleEvent()
-        {
-            Assert.Throws<NotSupportedException>(() =>
-                BuildHost<EventHubTestSingleDispatchJobWithConnection>(builder =>
-                    builder.ConfigureServices(services =>
-                        services.Configure<EventHubOptions>(options => options.IsSingleDispatchEnabled = false))));
-        }
-
         private static string GetServiceUri()
         {
             return "https://" + StorageTestEnvironment.Instance.StorageAccountName + ".blob." + StorageTestEnvironment.Instance.StorageEndpointSuffix;

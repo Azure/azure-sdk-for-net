@@ -11,7 +11,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be pefroemd over a specific <see cref="NetworkInterface"/>.
     /// </summary>
-    public class NetworkInterfaceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkInterface>, ITaggableResource<ResourceGroupResourceIdentifier,NetworkInterface>, IDeletableResource
+    public class NetworkInterfaceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkInterface>
     {
         internal NetworkInterfaceOperations(GenericResourceOperations genericOperations)
             : base(genericOperations, genericOperations.Id)

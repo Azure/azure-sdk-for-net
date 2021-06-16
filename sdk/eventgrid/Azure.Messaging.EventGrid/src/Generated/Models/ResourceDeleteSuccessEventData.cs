@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Text.Json;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteSuccess event. This is raised when a resource delete operation succeeds. </summary>
@@ -23,11 +25,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceUri"> The URI of the resource in the operation. </param>
         /// <param name="operationName"> The operation that was performed. </param>
         /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
+        /// <param name="authorizationJson"> The requested authorization for the operation. </param>
+        /// <param name="claimsJson"> The properties of the claims. </param>
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        internal ResourceDeleteSuccessEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, string authorization, string claims, string correlationId, string httpRequest)
+        /// <param name="httpRequestJson"> The details of the operation. </param>
+        internal ResourceDeleteSuccessEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
@@ -36,10 +38,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ResourceUri = resourceUri;
             OperationName = operationName;
             Status = status;
-            Authorization = authorization;
-            Claims = claims;
+            AuthorizationJson = authorizationJson;
+            ClaimsJson = claimsJson;
             CorrelationId = correlationId;
-            HttpRequest = httpRequest;
+            HttpRequestJson = httpRequestJson;
         }
 
         /// <summary> The tenant ID of the resource. </summary>
@@ -56,13 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string OperationName { get; }
         /// <summary> The status of the operation. </summary>
         public string Status { get; }
-        /// <summary> The requested authorization for the operation. </summary>
-        public string Authorization { get; }
-        /// <summary> The properties of the claims. </summary>
-        public string Claims { get; }
         /// <summary> An operation ID used for troubleshooting. </summary>
         public string CorrelationId { get; }
-        /// <summary> The details of the operation. </summary>
-        public string HttpRequest { get; }
     }
 }

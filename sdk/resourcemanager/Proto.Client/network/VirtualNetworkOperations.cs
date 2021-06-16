@@ -11,7 +11,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be performed over a specific virtual nerwork.
     /// </summary>
-    public class VirtualNetworkOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualNetwork>, ITaggableResource<ResourceGroupResourceIdentifier, VirtualNetwork>, IDeletableResource
+    public class VirtualNetworkOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualNetwork>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualNetworkOperations"/> class.

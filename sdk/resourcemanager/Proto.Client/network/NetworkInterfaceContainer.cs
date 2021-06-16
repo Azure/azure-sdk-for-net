@@ -3,7 +3,6 @@
 
 using Azure;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System;

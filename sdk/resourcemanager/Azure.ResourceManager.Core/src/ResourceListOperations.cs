@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading;
-using Azure.ResourceManager.Core.Resources;
 
 namespace Azure.ResourceManager.Core
 {
