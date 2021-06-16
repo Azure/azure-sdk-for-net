@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Authenticates to a Data Lake Storage Gen2 resource via shared key.
