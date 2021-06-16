@@ -18,7 +18,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public string Field { get; set; }
 
         /// <summary>
-        /// The value we're checking against a Field.
+        /// The value we're checking against a field.
         /// </summary>
         public string Value { get; set; }
 
@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="field"> The field being checked against a certain value. </param>
         /// <param name="comparisonOperator"> The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked. </param>
-        /// <param name="value"> The value being checked against a Field. </param>
+        /// <param name="value"> The value being checked against a field. </param>
         public ComparisonCondition(string field, QueryComparisonOperator comparisonOperator, string value)
         {
             Field = field;
@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public override string Stringify()
         {
-            return $"{Field} {QueryConstants.ComparisonOperators[Operator.ToString()]} {Value}";
+            return $"{Field} {QueryConstants.ComparisonOperators[Operator]} {Value}";
         }
 
         /// <summary>

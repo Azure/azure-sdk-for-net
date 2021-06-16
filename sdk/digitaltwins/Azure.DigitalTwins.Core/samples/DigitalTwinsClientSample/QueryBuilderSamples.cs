@@ -62,7 +62,7 @@ namespace Azure.DigitalTwins.Core.Samples
             AdtQueryBuilder query6 = new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .WhereComparison("Temperature", QueryComparisonOperator.LessThan, "6")
+                .Where("Temperature", QueryComparisonOperator.LessThan, "6")
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1', exact)

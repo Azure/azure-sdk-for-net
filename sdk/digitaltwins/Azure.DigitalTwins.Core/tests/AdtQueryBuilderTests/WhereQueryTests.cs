@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_Comparison()
         {
             var query = new WhereQuery(null);
-            query.WhereComparison("Temperature", QueryComparisonOperator.Equal, "5");
+            query.Where("Temperature", QueryComparisonOperator.Equal, "5");
             query.Stringify()
                 .ToUpper()
                 .Should()
@@ -25,7 +25,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_Contains()
         {
             var query = new WhereQuery(null);
-            query.WhereContains("Owner", QueryContainOperator.IN, new string[] { "John", "Sally", "Marshall" });
+            query.Where("Owner", QueryContainOperator.In, new string[] { "John", "Sally", "Marshall" });
             query.Stringify()
                 .ToUpper()
                 .Should()
@@ -36,7 +36,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_Override()
         {
             var query = new WhereQuery(null);
-            query.WhereOverride("Temperature = 5");
+            query.Where("Temperature = 5");
             query.Stringify()
                 .ToUpper()
                 .Should()
@@ -160,7 +160,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_MultipleQueryies()
         {
             var query = new WhereQuery(null);
-            query.WhereComparison("Temperature", QueryComparisonOperator.Equal, "50")
+            query.Where("Temperature", QueryComparisonOperator.Equal, "50")
                 .WhereIsDefined("Humidity");
             query.Stringify()
                 .ToUpper()

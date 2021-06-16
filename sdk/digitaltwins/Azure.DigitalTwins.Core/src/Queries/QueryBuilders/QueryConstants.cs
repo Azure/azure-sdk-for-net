@@ -33,14 +33,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public const string IsObject = "IS_OBJECT";
 
         // Maps comparison operators represented alphabetically to respective symbolic representations.
-        public static Dictionary<string, string> ComparisonOperators = new Dictionary<string, string>()
+        public static readonly Dictionary<QueryComparisonOperator, string> ComparisonOperators = new Dictionary<QueryComparisonOperator, string>()
         {
-            { QueryComparisonOperator.Equal.ToString(), "=" },
-            { QueryComparisonOperator.NotEqual.ToString(), "!=" },
-            { QueryComparisonOperator.GreaterThan.ToString(), ">" },
-            { QueryComparisonOperator.LessThan.ToString(), "<" },
-            { QueryComparisonOperator.GreaterOrEqual.ToString(), ">=" },
-            { QueryComparisonOperator.LessOrEqual.ToString(), "<=" }
+            { QueryComparisonOperator.Equal, "=" },
+            { QueryComparisonOperator.NotEqual, "!=" },
+            { QueryComparisonOperator.GreaterThan, ">" },
+            { QueryComparisonOperator.LessThan, "<" },
+            { QueryComparisonOperator.GreaterOrEqual, ">=" },
+            { QueryComparisonOperator.LessOrEqual, "<=" }
         };
     }
 }

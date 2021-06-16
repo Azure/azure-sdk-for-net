@@ -74,13 +74,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="literalQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectOverride(string literalQuery)
+        public FromQuery Select(string literalQuery)
         {
-            // TODO -- just use select?
-            // approach 1 - method overload
-            // approach 2 - seperate method
             _clause = new SelectClause(new string[] { literalQuery });
-
             return _upstreamFromQuery;
         }
 

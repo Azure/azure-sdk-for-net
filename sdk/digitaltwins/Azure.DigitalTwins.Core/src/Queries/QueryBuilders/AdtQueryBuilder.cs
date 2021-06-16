@@ -72,7 +72,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectOverride(string literalQuery)
         {
-            return _selectQuery.SelectOverride(literalQuery);
+            return _selectQuery.Select(literalQuery);
         }
 
         /// <summary>

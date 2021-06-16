@@ -20,7 +20,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// The argument for the SELECT clause (eg. *).
+        /// The argument for the SELECT clause (eg. SELECT Temperature, Humidity, Occupants FROM ...).
         /// </summary>
         public string[] ClauseArgs { get; private set; }
     }

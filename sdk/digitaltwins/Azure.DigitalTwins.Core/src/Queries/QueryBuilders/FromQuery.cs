@@ -40,7 +40,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> The name of the collection. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public WhereQuery FromOverride(string collection)
+        public WhereQuery From(string collection)
         {
             _clause = new FromClause(collection);
             return _upstreamWhereQuery;

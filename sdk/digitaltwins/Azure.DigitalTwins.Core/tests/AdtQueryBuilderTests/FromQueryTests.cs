@@ -36,7 +36,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void FromQuery_Override()
         {
             var query = new FromQuery(null, null);
-            query.FromOverride("DIGITALTWINS");
+            query.From("DIGITALTWINS");
             query.Stringify()
                 .ToUpper()
                 .Should()

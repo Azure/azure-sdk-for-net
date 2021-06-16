@@ -24,28 +24,28 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds a WHERE and the conditional arguments for a comparison to the query object. Used to compare ADT properties
+        /// Adds  the conditional arguments for a comparison to the query object. Used to compare ADT properties
         /// using the query language's comparison operators.
         /// </summary>
         /// <param name="field"> The field being checked against a certain value. </param>
         /// <param name="comparisonOperator"> The comparison operator being invoked. </param>
         /// <param name="value"> The value being checked against a Field. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereQuery WhereComparison(string field, QueryComparisonOperator comparisonOperator, string value)
+        public WhereQuery Where(string field, QueryComparisonOperator comparisonOperator, string value)
         {
             _clauses.Add(new WhereClause(new ComparisonCondition(field, comparisonOperator, value)));
             return this;
         }
 
         /// <summary>
-        /// Adds a WHERE and the conditional arugments for a contains conditional statement to the query object. Used to search
+        /// Adds the conditional arugments for a contains conditional statement to the query object. Used to search
         /// a field for a user specified property.
         /// </summary>
         /// <param name="value"> User specified property to look for. </param>
         /// <param name="containOperator"> ADT contains operator defined by the ADT query language. </param>
         /// <param name="searched"> Field of possible options to check for the 'value' parameter. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereQuery WhereContains(string value, QueryContainOperator containOperator, string[] searched)
+        public WhereQuery Where(string value, QueryContainOperator containOperator, string[] searched)
         {
             _clauses.Add(new WhereClause(new ContainsCondition(value, containOperator, searched)));
             return this;
@@ -56,7 +56,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="condition"> The verbatim condition (SQL-like syntax) in string format. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereQuery WhereOverride(string condition)
+        public WhereQuery Where(string condition)
         {
             _clauses.Add(new WhereClause(condition));
             return this;
