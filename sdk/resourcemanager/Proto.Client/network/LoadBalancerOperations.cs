@@ -10,7 +10,7 @@ namespace Proto.Network
     /// A class representing the operations that can be performed over a specific LoadBalancer.
     /// </summary>
     // TODO, ITaggable was not added.
-    public class LoadBalancerOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, LoadBalancer>, IDeletableResource
+    public class LoadBalancerOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, LoadBalancer>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LoadBalancerOperations"/> class.
