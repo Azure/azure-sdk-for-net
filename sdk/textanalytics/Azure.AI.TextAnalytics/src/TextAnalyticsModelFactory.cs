@@ -557,6 +557,32 @@ namespace Azure.AI.TextAnalytics
             return new RecognizeLinkedEntitiesResultCollection(list.ToList(), statistics, modelVersion);
         }
 
+        /// <summary> Initializes new instance of LinkedEntity structure. </summary>
+        /// <param name="name"> Entity Linking formal name. </param>
+        /// <param name="matches"> List of instances this entity appears in the text. </param>
+        /// <param name="language"> Language used in the data source. </param>
+        /// <param name="dataSourceEntityId"> Unique identifier of the recognized entity from the data source. </param>
+        /// <param name="url"> URL for the entity&apos;s page from the data source. </param>
+        /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
+        /// <param name="bingEntitySearchApiId"> Bing Entity Search API unique identifier of the recognized entity. </param>
+        /// <returns> A new <see cref="TextAnalytics.LinkedEntity"/> instance for mocking. </returns>
+        internal static LinkedEntity LinkedEntity(string name = default, IEnumerable<LinkedEntityMatch> matches = default, string language = default, string dataSourceEntityId = default, Uri url = default, string dataSource = default, string bingEntitySearchApiId = default)
+        {
+            matches ??= new List<LinkedEntityMatch>();
+            return new LinkedEntity(name, matches, language, dataSourceEntityId, url, dataSource, bingEntitySearchApiId);
+        }
+
+        /// <summary> Initializes new instance of LinkedEntityMatch structure. </summary>
+        /// <param name="confidenceScore"> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </param>
+        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="offset"> Start position for the entity match text. </param>
+        /// <param name="length"> Length for the entity match text. </param>
+        /// <returns> A new <see cref="TextAnalytics.LinkedEntityMatch"/> instance for mocking. </returns>
+        internal static LinkedEntityMatch LinkedEntityMatch(double confidenceScore = default, string text = default, int offset = default, int length = default)
+        {
+            return new LinkedEntityMatch(confidenceScore, text, offset, length);
+        }
+
         #endregion Linked Entities
 
         #region Action Result Models
