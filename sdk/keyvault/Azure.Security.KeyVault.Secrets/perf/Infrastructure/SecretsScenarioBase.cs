@@ -19,9 +19,8 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Infrastructure
             Client = new SecretClient(
                 PerfTestEnvironment.Instance.VaultUri,
                 PerfTestEnvironment.Instance.Credential,
-                new SecretClientOptions() {
-                    Transport = Transport
-                });
+                ConfigureClientOptions(new SecretClientOptions())
+                );
         }
 
         protected SecretClient Client { get; }

@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,32 +16,51 @@ namespace Azure.Test.Perf
 {
     public abstract class PerfTest<TOptions> : IPerfTest where TOptions : PerfOptions
     {
-        private readonly HttpClient _httpClient;
-        private readonly TestProxyTransport _transport;
+        private static readonly HttpClient _httpClient = new HttpClient();
+
+        private readonly HttpPipelineTransport _transport;
+        private readonly TestProxyPolicy _testProxyPolicy;
+
         private string _recordingId;
 
         protected TOptions Options { get; private set; }
-        protected HttpPipelineTransport Transport => _transport;
 
         public PerfTest(TOptions options)
         {
             Options = options;
 
+            _transport = (new PerfClientOptions()).Transport;
+
             if (Options.Insecure || Options.TestProxy != null)
             {
-                _httpClient = new HttpClient(new HttpClientHandler()
+                // Disable SSL validation
+                if (_transport is HttpClientTransport)
                 {
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-                });
-            }
-            else
-            {
-                _httpClient = new HttpClient();
+                    _transport = new HttpClientTransport(new HttpClient(new HttpClientHandler()
+                    {
+                        ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                    }));
+                }
+                else
+                {
+                    // Assume _transport is HttpWebRequestTransport (currently internal class)
+                    ServicePointManager.ServerCertificateValidationCallback = (message, cert, chain, errors) => true;
+                }
             }
 
-            var httpClientTransport = new HttpClientTransport(_httpClient);
+            _testProxyPolicy = new TestProxyPolicy(Options.TestProxy);
+        }
 
-            _transport = new TestProxyTransport(httpClientTransport, Options.TestProxy);
+        protected TClientOptions ConfigureClientOptions<TClientOptions>(TClientOptions clientOptions) where TClientOptions: ClientOptions
+        {
+            clientOptions.Transport = _transport;
+
+            // TestProxyPolicy should be per-retry to run as late as possible in the pipeline.  For example, some
+            // clients compute a request signature as a per-retry policy, and TestProxyPolicy should run after the
+            // signature is computed to avoid altering the signature.
+            clientOptions.AddPolicy(_testProxyPolicy, HttpPipelinePosition.PerRetry);
+
+            return clientOptions;
         }
 
         public virtual Task GlobalSetupAsync()
@@ -55,8 +77,8 @@ namespace Azure.Test.Perf
         {
             await StartRecording();
 
-            _transport.RecordingId = _recordingId;
-            _transport.Mode = "record";
+            _testProxyPolicy.RecordingId = _recordingId;
+            _testProxyPolicy.Mode = "record";
 
             // Record one call to Run()
             if (Options.Sync)
@@ -72,8 +94,8 @@ namespace Azure.Test.Perf
 
             await StartPlayback();
 
-            _transport.Mode = "playback";
-            _transport.RecordingId = _recordingId;
+            _testProxyPolicy.Mode = "playback";
+            _testProxyPolicy.RecordingId = _recordingId;
         }
 
         public abstract void Run(CancellationToken cancellationToken);
@@ -89,8 +111,8 @@ namespace Azure.Test.Perf
             await _httpClient.SendAsync(message);
 
             // Stop redirecting requests to test proxy
-            _transport.Mode = null;
-            _transport.RecordingId = null;
+            _testProxyPolicy.Mode = null;
+            _testProxyPolicy.RecordingId = null;
         }
 
         public virtual Task CleanupAsync()
@@ -161,5 +183,8 @@ namespace Azure.Test.Perf
             var response = await _httpClient.SendAsync(message);
             _recordingId = response.Headers.GetValues("x-recording-id").Single();
         }
+
+        // Dummy class used to fetch default HttpPipelineTransport
+        private class PerfClientOptions : ClientOptions { }
     }
 }
