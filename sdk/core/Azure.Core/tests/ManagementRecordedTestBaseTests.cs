@@ -116,7 +116,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResourceOperations rgOp = client.GetTestResourceOperations();
-            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetArmResponseExceptionAsync());
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetResponseExceptionAsync());
         }
 
         [Test]

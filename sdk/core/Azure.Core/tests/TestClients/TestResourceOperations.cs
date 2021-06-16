@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
@@ -50,14 +51,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmResponseTest<TestResource> GetArmResponse(CancellationToken cancellationToken = default)
+        public virtual Response<TestResource> GetResponse(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponse");
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetResponse");
             scope.Start();
 
             try
             {
-                return new ArmResponseTest<TestResource>(new TestResource());
+                return Response.FromValue(new TestResource(), new MockResponse(200));
             }
             catch (Exception e)
             {
@@ -66,14 +67,15 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmResponseTest<TestResource>> GetArmResponseAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<TestResource>> GetResponseAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponse");
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetResponse");
             scope.Start();
 
             try
             {
-                return Task.FromResult(new ArmResponseTest<TestResource>(new TestResource()));
+                await Task.Delay(1);
+                return Response.FromValue(new TestResource(), new MockResponse(200));
             }
             catch (Exception e)
             {
@@ -82,9 +84,9 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmResponseTest<TestResource> GetArmResponseException(CancellationToken cancellationToken = default)
+        public virtual Response<TestResource> GetResponseException(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponseException");
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetResponseException");
             scope.Start();
 
             try
@@ -98,9 +100,9 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmResponseTest<TestResource>> GetArmResponseExceptionAsync(CancellationToken cancellationToken = default)
+        public virtual Task<Response<TestResource>> GetResponseExceptionAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponseException");
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetResponseException");
             scope.Start();
 
             try
