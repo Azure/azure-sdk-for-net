@@ -165,6 +165,121 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
+        /// <summary> The operation to create or update a PolicyAssignment by ID. Please note some properties can be set only during creation. </summary>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
+        /// <param name="parameters"> Parameters for the policy assignment. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public Response<PolicyAssignment> CreateById(string policyAssignmentId, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.CreateById");
+            scope.Start();
+            try
+            {
+                if (policyAssignmentId == null)
+                {
+                    throw new ArgumentNullException(nameof(policyAssignmentId));
+                }
+                if (parameters == null)
+                {
+                    throw new ArgumentNullException(nameof(parameters));
+                }
+
+                return StartCreateById(policyAssignmentId, parameters, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to create or update a PolicyAssignment by ID. Please note some properties can be set only during creation. </summary>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
+        /// <param name="parameters"> Parameters for the policy assignment. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<Response<PolicyAssignment>> CreateByIdAsync(string policyAssignmentId, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.CreateById");
+            scope.Start();
+            try
+            {
+                if (policyAssignmentId == null)
+                {
+                    throw new ArgumentNullException(nameof(policyAssignmentId));
+                }
+                if (parameters == null)
+                {
+                    throw new ArgumentNullException(nameof(parameters));
+                }
+
+                var operation = await StartCreateByIdAsync(policyAssignmentId, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to create or update a PolicyAssignment by ID. Please note some properties can be set only during creation. </summary>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
+        /// <param name="parameters"> Parameters for the policy assignment. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public PolicyAssignmentsCreateByIdOperation StartCreateById(string policyAssignmentId, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.StartCreateById");
+            scope.Start();
+            try
+            {
+                if (policyAssignmentId == null)
+                {
+                    throw new ArgumentNullException(nameof(policyAssignmentId));
+                }
+                if (parameters == null)
+                {
+                    throw new ArgumentNullException(nameof(parameters));
+                }
+
+                var originalResponse = _restClient.CreateById(policyAssignmentId, parameters, cancellationToken: cancellationToken);
+                return new PolicyAssignmentsCreateByIdOperation(Parent, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to create or update a PolicyAssignment by ID. Please note some properties can be set only during creation. </summary>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
+        /// <param name="parameters"> Parameters for the policy assignment. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<PolicyAssignmentsCreateByIdOperation> StartCreateByIdAsync(string policyAssignmentId, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.StartCreateById");
+            scope.Start();
+            try
+            {
+                if (policyAssignmentId == null)
+                {
+                    throw new ArgumentNullException(nameof(policyAssignmentId));
+                }
+                if (parameters == null)
+                {
+                    throw new ArgumentNullException(nameof(parameters));
+                }
+
+                var originalResponse = await _restClient.CreateByIdAsync(policyAssignmentId, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return new PolicyAssignmentsCreateByIdOperation(Parent, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <inheritdoc />
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
@@ -204,6 +319,54 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var response = await _restClient.GetAsync(_scope, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc />
+        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public Response<PolicyAssignment> GetById(string policyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.GetById");
+            scope.Start();
+            try
+            {
+                if (policyAssignmentId == null)
+                {
+                    throw new ArgumentNullException(nameof(policyAssignmentId));
+                }
+
+                var response = _restClient.GetById(policyAssignmentId, cancellationToken: cancellationToken);
+                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation retrieves the policy assignment with the given ID. Policy assignment IDs have this format: &apos;{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}&apos;. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </summary>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<PolicyAssignment>> GetByIdAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentOperations.GetById");
+            scope.Start();
+            try
+            {
+                if (policyAssignmentId == null)
+                {
+                    throw new ArgumentNullException(nameof(policyAssignmentId));
+                }
+
+                var response = await _restClient.GetByIdAsync(policyAssignmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
