@@ -1,7 +1,7 @@
-{
+﻿{
   "Entries": [
     {
-      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service&comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -32,10 +32,10 @@
         "x-ms-request-id": "888eb7ad-f01a-000c-3002-20a144000000",
         "x-ms-version": "2020-10-02"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceProperties><HourMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></MinuteMetrics><Cors><CorsRule><AllowedMethods>DELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH</AllowedMethods><AllowedOrigins>*</AllowedOrigins><AllowedHeaders>*</AllowedHeaders><ExposedHeaders>*</ExposedHeaders><MaxAgeInSeconds>86400</MaxAgeInSeconds></CorsRule></Cors><ProtocolSettings><SMB><Multichannel><Enabled>false</Enabled></Multichannel></SMB></ProtocolSettings></StorageServiceProperties>"
     },
     {
-      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service&comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -52,7 +52,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
       },
-      "RequestBody": "\uFEFF\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E",
+      "RequestBody": "﻿<StorageServiceProperties><HourMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></MinuteMetrics><ProtocolSettings><SMB><Multichannel><Enabled>true</Enabled></Multichannel></SMB></ProtocolSettings><Cors><CorsRule><AllowedOrigins>*</AllowedOrigins><AllowedMethods>DELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH</AllowedMethods><AllowedHeaders>*</AllowedHeaders><ExposedHeaders>*</ExposedHeaders><MaxAgeInSeconds>86400</MaxAgeInSeconds></CorsRule></Cors></StorageServiceProperties>",
       "StatusCode": 202,
       "ResponseHeaders": {
         "Date": "Tue, 23 Mar 2021 16:34:09 GMT",
@@ -68,7 +68,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service&comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -99,10 +99,10 @@
         "x-ms-request-id": "888eb7b8-f01a-000c-3202-20a144000000",
         "x-ms-version": "2020-10-02"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003C/StorageServiceProperties\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><StorageServiceProperties><HourMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></MinuteMetrics><Cors><CorsRule><AllowedMethods>DELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH</AllowedMethods><AllowedOrigins>*</AllowedOrigins><AllowedHeaders>*</AllowedHeaders><ExposedHeaders>*</ExposedHeaders><MaxAgeInSeconds>86400</MaxAgeInSeconds></CorsRule></Cors><ProtocolSettings><SMB><Multichannel><Enabled>true</Enabled></Multichannel></SMB></ProtocolSettings></StorageServiceProperties>"
     },
     {
-      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "http://seancanarypremiumfile2.file.core.windows.net/?restype=service&comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -119,7 +119,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
       },
-      "RequestBody": "\uFEFF\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E",
+      "RequestBody": "﻿<StorageServiceProperties><HourMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></HourMetrics><MinuteMetrics><Version>1.0</Version><Enabled>false</Enabled><RetentionPolicy><Enabled>false</Enabled></RetentionPolicy></MinuteMetrics><ProtocolSettings><SMB><Multichannel><Enabled>false</Enabled></Multichannel></SMB></ProtocolSettings><Cors><CorsRule><AllowedOrigins>*</AllowedOrigins><AllowedMethods>DELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH</AllowedMethods><AllowedHeaders>*</AllowedHeaders><ExposedHeaders>*</ExposedHeaders><MaxAgeInSeconds>86400</MaxAgeInSeconds></CorsRule></Cors></StorageServiceProperties>",
       "StatusCode": 202,
       "ResponseHeaders": {
         "Date": "Tue, 23 Mar 2021 16:34:09 GMT",
@@ -137,6 +137,6 @@
   ],
   "Variables": {
     "RandomSeed": "1874837654",
-    "Storage_TestConfigPremiumFile": "PremiumFileTenant\nseancanarypremiumfile2\nU2FuaXRpemVk\nhttp://seancanarypremiumfile2.blob.core.windows.net\nhttp://seancanarypremiumfile2.file.core.windows.net\nhttp://seancanarypremiumfile2.queue.core.windows.net\nhttp://seancanarypremiumfile2.table.core.windows.net\n\n\n\n\nhttp://seancanarypremiumfile2-secondary.blob.core.windows.net\nhttp://seancanarypremiumfile2-secondary.file.core.windows.net\nhttp://seancanarypremiumfile2-secondary.queue.core.windows.net\nhttp://seancanarypremiumfile2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seancanarypremiumfile2.blob.core.windows.net/;QueueEndpoint=http://seancanarypremiumfile2.queue.core.windows.net/;FileEndpoint=http://seancanarypremiumfile2.file.core.windows.net/;BlobSecondaryEndpoint=http://seancanarypremiumfile2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seancanarypremiumfile2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seancanarypremiumfile2-secondary.file.core.windows.net/;AccountName=seancanarypremiumfile2;AccountKey=Sanitized\n"
+    "Storage_TestConfigPremiumFile": "PremiumFileTenant\nseancanarypremiumfile2\nU2FuaXRpemVk\nhttp://seancanarypremiumfile2.blob.core.windows.net\nhttp://seancanarypremiumfile2.file.core.windows.net\nhttp://seancanarypremiumfile2.queue.core.windows.net\nhttp://seancanarypremiumfile2.table.core.windows.net\n\n\n\n\nhttp://seancanarypremiumfile2-secondary.blob.core.windows.net\nhttp://seancanarypremiumfile2-secondary.file.core.windows.net\nhttp://seancanarypremiumfile2-secondary.queue.core.windows.net\nhttp://seancanarypremiumfile2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seancanarypremiumfile2.blob.core.windows.net/;QueueEndpoint=http://seancanarypremiumfile2.queue.core.windows.net/;FileEndpoint=http://seancanarypremiumfile2.file.core.windows.net/;BlobSecondaryEndpoint=http://seancanarypremiumfile2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seancanarypremiumfile2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seancanarypremiumfile2-secondary.file.core.windows.net/;AccountName=seancanarypremiumfile2;AccountKey=Sanitized\n\n\n"
   }
 }
