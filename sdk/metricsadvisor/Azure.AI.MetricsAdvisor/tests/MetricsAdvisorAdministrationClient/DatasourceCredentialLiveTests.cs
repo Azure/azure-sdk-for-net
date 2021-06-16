@@ -90,6 +90,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             DatasourceCredential updatedCredential = await adminClient.UpdateDatasourceCredentialAsync(credentialToUpdate);
 
+            Assert.That(updatedCredential.Id, Is.EqualTo(credentialToUpdate.Id));
             Assert.That(updatedCredential.Name, Is.EqualTo(expectedName));
             Assert.That(updatedCredential.Description, Is.EqualTo(expectedDescription));
         }

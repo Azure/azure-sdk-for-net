@@ -285,11 +285,11 @@ namespace Azure.AI.TextAnalytics.Tests
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
-            RecognizeEntitiesActionResult entitiesActionsResults = resultCollection.RecognizeEntitiesActionsResults.FirstOrDefault();
-            ExtractKeyPhrasesActionResult keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault();
-            RecognizePiiEntitiesActionResult piiActionsResults = resultCollection.RecognizePiiEntitiesActionsResults.FirstOrDefault();
-            RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesActionsResults.FirstOrDefault();
-            AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentActionsResults.FirstOrDefault();
+            RecognizeEntitiesActionResult entitiesActionsResults = resultCollection.RecognizeEntitiesResults.FirstOrDefault();
+            ExtractKeyPhrasesActionResult keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults.FirstOrDefault();
+            RecognizePiiEntitiesActionResult piiActionsResults = resultCollection.RecognizePiiEntitiesResults.FirstOrDefault();
+            RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
+            AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());

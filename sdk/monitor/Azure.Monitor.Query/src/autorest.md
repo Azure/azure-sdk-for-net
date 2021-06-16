@@ -37,7 +37,7 @@ directive:
     }
 ```
 
-### Add statistics
+### Add statistics and render
 
 ``` yaml
 directive:
@@ -45,6 +45,16 @@ directive:
   where: $.definitions.logQueryResult
   transform: >
     $.properties["statistics"] = { "type": "object" };
+    $.properties["render"] = { "type": "object" };
+```
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.queryResults
+  transform: >
+    $.properties["statistics"] = { "type": "object" };
+    $.properties["render"] = { "type": "object" };
 ```
 
 ### Make properties required

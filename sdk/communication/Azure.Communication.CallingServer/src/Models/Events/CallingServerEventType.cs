@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
         internal const string ToneReceivedEventValue = "Microsoft.Communication.DtmfReceived";
         internal const string PlayAudioResultEventValue = "Microsoft.Communication.PlayAudioResult";
         internal const string CallRecordingStateChangeEventValue = "Microsoft.Communication.CallRecordingStateChanged";
-        internal const string InviteParticipantsResultEventValue = "Microsoft.Communication.InviteParticipantResult";
+        internal const string AddParticipantResultEventValue = "Microsoft.Communication.AddParticipantResult";
         internal const string ParticipantsUpdatedEventValue = "Microsoft.Communication.ParticipantsUpdated";
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace Azure.Communication.CallingServer
         public static CallingServerEventType CallRecordingStateChangeEvent { get; } = new CallingServerEventType(CallRecordingStateChangeEventValue);
 
         /// <summary>
-        /// The invited participants result event type.
+        /// The add participant result event type.
         /// </summary>
-        public static CallingServerEventType InviteParticipantsResultEvent { get; } = new CallingServerEventType(InviteParticipantsResultEventValue);
+        public static CallingServerEventType AddParticipantResultEvent { get; } = new CallingServerEventType(AddParticipantResultEventValue);
 
         /// <summary>
         /// The call state change event type.

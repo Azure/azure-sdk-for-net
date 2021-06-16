@@ -1757,7 +1757,6 @@ namespace Azure.AI.TextAnalytics
         /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
