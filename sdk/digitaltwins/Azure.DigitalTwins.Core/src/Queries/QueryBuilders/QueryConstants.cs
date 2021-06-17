@@ -26,11 +26,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public const string StartsWith = "STARTSWITH";
         public const string EndsWith = "ENDSWITH";
         public const string IsOfModel = "IS_OF_MODEL";
-        public const string IsBool = "IS_BOOL";
-        public const string IsNumber = "IS_NUMBER";
-        public const string IsString = "IS_STRING";
-        public const string IsPrimative = "IS_PRIMATIVE";
-        public const string IsObject = "IS_OBJECT";
+
+        public static readonly Dictionary<AdtDataType, string> IsOfTypeConversions = new Dictionary<AdtDataType, string>()
+        {
+            { AdtDataType.AdtBool, "IS_BOOL" },
+            { AdtDataType.AdtNumber, "IS_NUMBER" },
+            { AdtDataType.AdtString, "IS_STRING" },
+            { AdtDataType.AdtPrimative, "IS_PRIMATIVE" },
+            { AdtDataType.AdtObject, "IS_OBJECT" }
+        };
 
         // Maps comparison operators represented alphabetically to respective symbolic representations.
         public static readonly Dictionary<QueryComparisonOperator, string> ComparisonOperators = new Dictionary<QueryComparisonOperator, string>()

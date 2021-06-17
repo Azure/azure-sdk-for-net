@@ -151,7 +151,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.Relationships)
-                .WhereIsBool("isOccupied")
+                .WhereIsOfType("isOccupied", AdtDataType.AdtBool)
                 .Build()
                 .Stringify()
                 .Should()

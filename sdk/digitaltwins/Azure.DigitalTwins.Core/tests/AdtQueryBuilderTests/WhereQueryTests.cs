@@ -107,50 +107,50 @@ namespace Azure.DigitalTwins.Core.Tests
         }
 
         [Test]
-        public void WhereQuery_IsBool()
+        public void WhereQuery_IsOfType_Bool()
         {
             var query = new WhereQuery(null);
-            query.WhereIsBool("HasTemperature");
+            query.WhereIsOfType("HasTemperature", AdtDataType.AdtBool);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_BOOL(HasTemperature)");
         }
 
         [Test]
-        public void WhereQuery_IsNumber()
+        public void WhereQuery_IsOfType_Number()
         {
             var query = new WhereQuery(null);
-            query.WhereIsNumber("Contains");
+            query.WhereIsOfType("Contains", AdtDataType.AdtNumber);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_NUMBER(Contains)");
         }
 
         [Test]
-        public void WhereQuery_IsString()
+        public void WhereQuery_IsOfType_String()
         {
             var query = new WhereQuery(null);
-            query.WhereIsString("Status");
+            query.WhereIsOfType("Status", AdtDataType.AdtString);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_STRING(Status)");
         }
 
         [Test]
-        public void WhereQuery_IsPrimative()
+        public void WhereQuery_IsOfType_Primative()
         {
             var query = new WhereQuery(null);
-            query.WhereIsPrimative("area");
+            query.WhereIsOfType("area", AdtDataType.AdtPrimative);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_PRIMATIVE(area)");
         }
 
         [Test]
-        public void WhereQuery_IsObject()
+        public void WhereQuery_IsOfType_Object()
         {
             var query = new WhereQuery(null);
-            query.WhereIsObject("MapObject");
+            query.WhereIsOfType("MapObject", AdtDataType.AdtObject);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_OBJECT(MapObject)");
