@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Core
         internal static ResourceType PreDefinedTagsType =>
             new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{TagsKey}");
 
-
         /// <summary>
         /// The root of the resource hierarchy
         /// </summary>
