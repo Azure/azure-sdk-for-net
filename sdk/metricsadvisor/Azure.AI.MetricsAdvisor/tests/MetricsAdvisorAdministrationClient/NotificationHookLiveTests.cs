@@ -27,9 +27,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate = new EmailNotificationHook()
+            var hookToCreate = new EmailNotificationHook(hookName)
             {
-                Name = hookName,
                 EmailsToAlert = { "fake1@email.com", "fake2@email.com" }
             };
 
@@ -60,9 +59,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var description = "This hook was created to test the .NET client.";
 
-            var hookToCreate = new EmailNotificationHook()
+            var hookToCreate = new EmailNotificationHook(hookName)
             {
-                Name = hookName,
                 EmailsToAlert = { "fake1@email.com", "fake2@email.com" },
                 Description = description,
                 ExternalLink = new Uri("http://fake.endpoint.com/")
@@ -95,7 +93,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new WebNotificationHook(hookName, new Uri("http://contoso.com/"));
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -134,10 +132,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 { "key2", "value2" }
             };
 
-            var hookToCreate = new WebNotificationHook()
+            var hookToCreate = new WebNotificationHook(hookName, endpoint)
             {
-                Name = hookName,
-                Endpoint = endpoint,
                 Description = description,
                 ExternalLink = new Uri("http://fake.endpoint.com/"),
                 // TODO: add CertificateKey validation (https://github.com/Azure/azure-sdk-for-net/issues/17485)
@@ -184,9 +180,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate = new EmailNotificationHook()
+            var hookToCreate = new EmailNotificationHook(hookName)
             {
-                Name = hookName,
                 EmailsToAlert = { "fake1@email.com", "fake2@email.com" }
             };
 
@@ -223,9 +218,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate = new EmailNotificationHook()
+            var hookToCreate = new EmailNotificationHook(hookName)
             {
-                Name = hookName,
                 EmailsToAlert = { "fake1@email.com", "fake2@email.com" }
             };
 
@@ -233,7 +227,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created hook.
 
-            var hookToUpdate = new EmailNotificationHook();
+            var hookToUpdate = new EmailNotificationHook(hookName);
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
@@ -260,9 +254,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var description = "This hook was created to test the .NET client.";
 
-            var hookToCreate = new EmailNotificationHook()
+            var hookToCreate = new EmailNotificationHook(hookName)
             {
-                Name = hookName,
                 EmailsToAlert = { "fake1@email.com", "fake2@email.com" }
             };
 
@@ -302,9 +295,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var description = "This hook was created to test the .NET client.";
 
-            var hookToCreate = new EmailNotificationHook()
+            var hookToCreate = new EmailNotificationHook(hookName)
             {
-                Name = hookName,
                 EmailsToAlert = { "fake1@email.com", "fake2@email.com" }
             };
 
@@ -312,7 +304,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Update the created hook.
 
-            var hookToUpdate = new EmailNotificationHook()
+            var hookToUpdate = new EmailNotificationHook(hookName)
             {
                 Description = description,
                 ExternalLink = new Uri("http://fake.endpoint.com/")
@@ -343,7 +335,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new WebNotificationHook(hookName, new Uri("http://contoso.com/"));
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -383,13 +375,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var endpoint = new Uri("http://contoso.com/");
 
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = endpoint };
+            var hookToCreate = new WebNotificationHook(hookName, endpoint);
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             // Update the created hook.
 
-            var hookToUpdate = new WebNotificationHook() { Endpoint = endpoint, Username = "fakeUsername" };
+            var hookToUpdate = new WebNotificationHook(hookName, endpoint) { Username = "fakeUsername" };
 
             var updatedWebHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as WebNotificationHook;
 
@@ -427,7 +419,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 { "key2", "value2" }
             };
 
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = endpoint };
+            var hookToCreate = new WebNotificationHook(hookName, endpoint);
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -483,15 +475,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 { "key2", "value2" }
             };
 
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = endpoint };
+            var hookToCreate = new WebNotificationHook(hookName, endpoint);
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             // Update the created hook.
 
-            var hookToUpdate = new WebNotificationHook()
+            var hookToUpdate = new WebNotificationHook(hookName, endpoint)
             {
-                Endpoint = endpoint,
                 Description = description,
                 ExternalLink = new Uri("http://fake.endpoint.com/"),
                 // TODO: add certificate key validation (https://github.com/Azure/azure-sdk-for-net/issues/17485)
@@ -533,7 +524,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new WebNotificationHook(hookName, new Uri("http://contoso.com/"));
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -582,7 +573,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             string hookNameFilter = hookName.Substring(1, hookName.Length - 3);
-            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
+            var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -638,7 +629,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
+            var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
 
             string hookId = null;
 
