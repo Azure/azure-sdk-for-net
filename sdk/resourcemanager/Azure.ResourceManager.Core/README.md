@@ -25,20 +25,20 @@ Detailed instructions on getting and setting these values is found in the [Prere
 
 ### Authentication and Creating Resource Management Client
 
-Once the environment is setup, all you need to do is to create an
-authenticated client. Our default option is to use
-**DefaultAzureCredential** and create an **AzureResourceManagerClient**.  Since all management APIs go through the same endpoint
-you no longer need to create a new client for every resource type like before.
+Once the environment is set up, create an authenticated client. Our default option is to use `DefaultAzureCredential` and create an `AzureResourceManagerClient`. Since all management APIs go through the same endpoint, you no longer need to create a new client for every resource type.
 
-To authenticate to Azure and create an ARM client, simply do the
-following:
+To authenticate to Azure and create an ARM client, do the following:
+
 ```csharp
     using Azure.Identity;
     using Azure.ResourceManager.Core;
     using System;
-    ...
+    
+    // code omitted for brevity
+    
     ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
+
 From this code snippet, we showed that in order to interact with Resources, we need to create the top-level client first **AzureResourceManagerClient**
 
 More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
