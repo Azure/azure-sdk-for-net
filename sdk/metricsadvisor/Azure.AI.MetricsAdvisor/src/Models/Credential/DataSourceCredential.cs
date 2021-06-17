@@ -11,19 +11,19 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// Provides different ways of authenticating to a <see cref="DataFeedSource"/> for data ingestion when the
     /// default authentication method does not suffice. The supported credentials are:
     /// <list type="bullet">
-    ///   <item><see cref="DataLakeGen2SharedKeyDatasourceCredential"/></item>
-    ///   <item><see cref="ServicePrincipalDatasourceCredential"/></item>
-    ///   <item><see cref="ServicePrincipalInKeyVaultDatasourceCredential"/></item>
-    ///   <item><see cref="SqlConnectionStringDatasourceCredential"/></item>
+    ///   <item><see cref="DataLakeGen2SharedKeyDataSourceCredential"/></item>
+    ///   <item><see cref="ServicePrincipalDataSourceCredential"/></item>
+    ///   <item><see cref="ServicePrincipalInKeyVaultDataSourceCredential"/></item>
+    ///   <item><see cref="SqlConnectionStringDataSourceCredential"/></item>
     /// </list>
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
-    public partial class DatasourceCredential
+    public partial class DataSourceCredential
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DatasourceCredential"/> class.
+        /// Initializes a new instance of the <see cref="DataSourceCredential"/> class.
         /// </summary>
-        internal DatasourceCredential(string name)
+        internal DataSourceCredential(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -31,19 +31,19 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="DatasourceCredential"/>. Set by the service.
+        /// The unique identifier of this <see cref="DataSourceCredential"/>. Set by the service.
         /// </summary>
         [CodeGenMember("DataSourceCredentialId")]
         public string Id { get; }
 
         /// <summary>
-        /// A custom unique name for this <see cref="DatasourceCredential"/> to be displayed on the web portal.
+        /// A custom unique name for this <see cref="DataSourceCredential"/> to be displayed on the web portal.
         /// </summary>
         [CodeGenMember("DataSourceCredentialName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// A description of this <see cref="DatasourceCredential"/>.
+        /// A description of this <see cref="DataSourceCredential"/>.
         /// </summary>
         [CodeGenMember("DataSourceCredentialDescription")]
         public string Description { get; set; }
@@ -52,15 +52,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             DataSourceCredentialPatch patch = this switch
             {
-                DataLakeGen2SharedKeyDatasourceCredential c => new DataLakeGen2SharedKeyCredentialPatch()
+                DataLakeGen2SharedKeyDataSourceCredential c => new DataLakeGen2SharedKeyCredentialPatch()
                 {
                     Parameters = new() { AccountKey = c.AccountKey }
                 },
-                ServicePrincipalDatasourceCredential c => new ServicePrincipalCredentialPatch()
+                ServicePrincipalDataSourceCredential c => new ServicePrincipalCredentialPatch()
                 {
                     Parameters = new() { ClientId = c.ClientId, ClientSecret = c.ClientSecret, TenantId = c.TenantId }
                 },
-                ServicePrincipalInKeyVaultDatasourceCredential c => new ServicePrincipalInKVCredentialPatch()
+                ServicePrincipalInKeyVaultDataSourceCredential c => new ServicePrincipalInKVCredentialPatch()
                 {
                     Parameters = new()
                     {
@@ -72,11 +72,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
                         ServicePrincipalSecretNameInKV = c.SecretNameForClientSecret
                     }
                 },
-                SqlConnectionStringDatasourceCredential c => new AzureSQLConnectionStringCredentialPatch()
+                SqlConnectionStringDataSourceCredential c => new AzureSQLConnectionStringCredentialPatch()
                 {
                     Parameters = new() { ConnectionString = c.ConnectionString }
                 },
-                _ => throw new InvalidOperationException("Invalid datasource credential type")
+                _ => throw new InvalidOperationException("Invalid data source credential type")
             };
 
             patch.DataSourceCredentialName = Name;

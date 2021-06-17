@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class SqlConnectionStringDatasourceCredential : IUtf8JsonSerializable
+    public partial class ServicePrincipalDataSourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static SqlConnectionStringDatasourceCredential DeserializeSqlConnectionStringDatasourceCredential(JsonElement element)
+        internal static ServicePrincipalDataSourceCredential DeserializeServicePrincipalDataSourceCredential(JsonElement element)
         {
-            AzureSQLConnectionStringParam parameters = default;
+            ServicePrincipalParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = AzureSQLConnectionStringParam.DeserializeAzureSQLConnectionStringParam(property.Value);
+                    parameters = ServicePrincipalParam.DeserializeServicePrincipalParam(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new SqlConnectionStringDatasourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new ServicePrincipalDataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

@@ -618,14 +618,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
-            await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialName, authentication.ToString());
+            await using var disposableCredential = await DisposableDataSourceCredential.CreateDataSourceCredentialAsync(adminClient, credentialName, authentication.ToString());
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock")
             {
                 Authentication = authentication,
-                DatasourceCredentialId = credentialId
+                DataSourceCredentialId = credentialId
             };
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
@@ -635,7 +635,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AzureDataExplorerDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataExplorerDataFeedSource;
 
             Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(createdDataSource.DatasourceCredentialId, Is.EqualTo(credentialId));
+            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
         }
 
         [RecordedTest]
@@ -667,14 +667,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
-            await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialName, authentication.ToString());
+            await using var disposableCredential = await DisposableDataSourceCredential.CreateDataSourceCredentialAsync(adminClient, credentialName, authentication.ToString());
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock")
             {
                 Authentication = authentication,
-                DatasourceCredentialId = credentialId
+                DataSourceCredentialId = credentialId
             };
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
@@ -684,7 +684,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AzureDataLakeStorageGen2DataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
 
             Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(createdDataSource.DatasourceCredentialId, Is.EqualTo(credentialId));
+            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
         }
 
         [RecordedTest]
@@ -718,14 +718,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
-            await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialName, authentication.ToString());
+            await using var disposableCredential = await DisposableDataSourceCredential.CreateDataSourceCredentialAsync(adminClient, credentialName, authentication.ToString());
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource("mock", "mock")
             {
                 Authentication = authentication,
-                DatasourceCredentialId = credentialId
+                DataSourceCredentialId = credentialId
             };
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
@@ -735,7 +735,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             SqlServerDataFeedSource createdDataSource = createdDataFeed.DataSource as SqlServerDataFeedSource;
 
             Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(createdDataSource.DatasourceCredentialId, Is.EqualTo(credentialId));
+            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
         }
 
         [RecordedTest]
@@ -1998,7 +1998,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
-            await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialName, authentication.ToString());
+            await using var disposableCredential = await DisposableDataSourceCredential.CreateDataSourceCredentialAsync(adminClient, credentialName, authentication.ToString());
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
@@ -2011,13 +2011,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AzureDataExplorerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataExplorerDataFeedSource;
 
             dataSourceToUpdate.Authentication = authentication;
-            dataSourceToUpdate.DatasourceCredentialId = credentialId;
+            dataSourceToUpdate.DataSourceCredentialId = credentialId;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             AzureDataExplorerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
 
             Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(updatedDataSource.DatasourceCredentialId, Is.EqualTo(credentialId));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
         }
 
         [RecordedTest]
@@ -2051,7 +2051,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
-            await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialName, authentication.ToString());
+            await using var disposableCredential = await DisposableDataSourceCredential.CreateDataSourceCredentialAsync(adminClient, credentialName, authentication.ToString());
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
@@ -2064,13 +2064,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AzureDataLakeStorageGen2DataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageGen2DataFeedSource;
 
             dataSourceToUpdate.Authentication = authentication;
-            dataSourceToUpdate.DatasourceCredentialId = credentialId;
+            dataSourceToUpdate.DataSourceCredentialId = credentialId;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             AzureDataLakeStorageGen2DataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
 
             Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(updatedDataSource.DatasourceCredentialId, Is.EqualTo(credentialId));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
         }
 
         [RecordedTest]
@@ -2106,7 +2106,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
-            await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialName, authentication.ToString());
+            await using var disposableCredential = await DisposableDataSourceCredential.CreateDataSourceCredentialAsync(adminClient, credentialName, authentication.ToString());
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
@@ -2119,13 +2119,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             SqlServerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as SqlServerDataFeedSource;
 
             dataSourceToUpdate.Authentication = authentication;
-            dataSourceToUpdate.DatasourceCredentialId = credentialId;
+            dataSourceToUpdate.DataSourceCredentialId = credentialId;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
             SqlServerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
 
             Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
-            Assert.That(updatedDataSource.DatasourceCredentialId, Is.EqualTo(credentialId));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
         }
 
         [RecordedTest]

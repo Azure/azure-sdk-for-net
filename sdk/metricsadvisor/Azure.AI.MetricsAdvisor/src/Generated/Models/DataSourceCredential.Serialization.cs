@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class DatasourceCredential : IUtf8JsonSerializable
+    public partial class DataSourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,16 +28,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static DatasourceCredential DeserializeDatasourceCredential(JsonElement element)
+        internal static DataSourceCredential DeserializeDataSourceCredential(JsonElement element)
         {
             if (element.TryGetProperty("dataSourceCredentialType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureSQLConnectionString": return SqlConnectionStringDatasourceCredential.DeserializeSqlConnectionStringDatasourceCredential(element);
-                    case "DataLakeGen2SharedKey": return DataLakeGen2SharedKeyDatasourceCredential.DeserializeDataLakeGen2SharedKeyDatasourceCredential(element);
-                    case "ServicePrincipal": return ServicePrincipalDatasourceCredential.DeserializeServicePrincipalDatasourceCredential(element);
-                    case "ServicePrincipalInKV": return ServicePrincipalInKeyVaultDatasourceCredential.DeserializeServicePrincipalInKeyVaultDatasourceCredential(element);
+                    case "AzureSQLConnectionString": return SqlConnectionStringDataSourceCredential.DeserializeSqlConnectionStringDataSourceCredential(element);
+                    case "DataLakeGen2SharedKey": return DataLakeGen2SharedKeyDataSourceCredential.DeserializeDataLakeGen2SharedKeyDataSourceCredential(element);
+                    case "ServicePrincipal": return ServicePrincipalDataSourceCredential.DeserializeServicePrincipalDataSourceCredential(element);
+                    case "ServicePrincipalInKV": return ServicePrincipalInKeyVaultDataSourceCredential.DeserializeServicePrincipalInKeyVaultDataSourceCredential(element);
                 }
             }
             DataSourceCredentialType dataSourceCredentialType = default;
@@ -67,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new DatasourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
+            return new DataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
         }
     }
 }
