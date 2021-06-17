@@ -8,8 +8,6 @@ namespace Azure.Communication.CallingServer.Tests
 {
     public class CallingServerTestBase
     {
-        protected const string dummyAccessKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ+SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV+adQssw5c=";
-
         protected const string connectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
 
         protected const string CreateOrJoinCallPayload = "{" +
