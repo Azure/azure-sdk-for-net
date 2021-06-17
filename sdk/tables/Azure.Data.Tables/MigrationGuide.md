@@ -1,9 +1,9 @@
 # Migration guide from Microsoft.Azure.Cosmos.Table to Azure.Data.Tables
 
-This guide is intended to assist in the migration to the Azure.Data.Tables client package from the legacy Microsoft.Azure.CosmosDB.Table package focusing on
+This guide is intended to assist in the migration to the `Azure.Data.Tables` package from the legacy `Microsoft.Azure.CosmosDB.Table` package focusing on
 side-by-side comparisons for similar operations between the to versions.
 
-Familiarity with the Microsoft.Azure.CosmosDB.Table package is assumed. If you are new to the Azure Tables client library for .NET, please refer to the
+Familiarity with the `Microsoft.Azure.CosmosDB.Table` package is assumed. If you are new to the Azure Tables client library for .NET, please refer to the
 [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/README.md) and
 [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples) rather than this guide.
 
@@ -96,7 +96,7 @@ tableClient.CreateIfNotExists();
 
 Let's define an office supply entity so that we can add it to the cloudTable. First we need to define our custom entity types.
 
-Previously in `Microsoft.Azure.Comsmos.Table`, our entity will inherit from the `TableEntity` base class and look like this:
+Previously in `Microsoft.Azure.Comsmos.Table`, our entity would inherit from the `TableEntity` base class and look like this:
 
 ```c#
 public class OfficeSupplyOld : Microsoft.Azure.Cosmos.Table.TableEntity
@@ -107,7 +107,7 @@ public class OfficeSupplyOld : Microsoft.Azure.Cosmos.Table.TableEntity
 }
 ```
 
-Now in `Azure.Data.Tables`,we will implement the `ITableEntity` interface to define our entity
+Now in `Azure.Data.Tables`, we will implement the `ITableEntity` interface to define our entity.
 
 ```C# Snippet:TablesSample2DefineStronglyTypedEntity
 // Define a strongly typed entity by extending the <see cref="ITableEntity"> class.
@@ -156,7 +156,7 @@ var entity = new OfficeSupplyEntity
 };
 ```
 
-Previously in `Microsoft.Azure.Comsmos.Table`, we'll create a `TableOperation` and execute it with the table client.
+Previously in `Microsoft.Azure.Comsmos.Table`, we would create a `TableOperation` and execute it with the table client.
 The result of the operation must be casted back to the entity type.
 
 ```c#
@@ -170,7 +170,7 @@ TableResult result = cloudTable.Execute(insertOrMergeOperation);
 OfficeSupplyOld insertedCustomer = result.Result as OfficeSupplyOld;
 ```
 
-Now in `Azure.Data.Tables`, using the `TableClient`, we can simply pass our entity to the Upsert method which will create or update the entity depending on whether
+Now in `Azure.Data.Tables`, using the `TableClient`, we can simply pass our entity to the `UpsertEntity` method which will create or update the entity depending on whether
 or not it already exists.
 
 ```C# Snippet:TablesMigrationUpsertEntity
@@ -180,9 +180,9 @@ tableClient.UpsertEntity(entity);
 
 ### Fetching a single entity from the table
 
-Both clients allow for fetching a single entity from the table if the PartitionKey and RowKey is known.
+Both clients allow for fetching a single entity from the table if the `PartitionKey` and `RowKey` are known.
 
-Previously in `Microsoft.Azure.Comsmos.Table`, we create an operation and execute it, similar to when we added the item to the cloudTable.
+Previously in `Microsoft.Azure.Comsmos.Table`, we created an operation and then executed it, similar to when we added the item to the cloudTable.
 
 ```c#
 // Create the operation.
@@ -199,7 +199,7 @@ Console.WriteLine($"{marker.PartitionKey}, {marker.RowKey}, {marker.Product}, {m
 }
 ```
 
-Now in `Azure.Data.Tables`, the generic GetEntity method is a one liner.
+Now in `Azure.Data.Tables`, the generic GetEntity method is a one-liner.
 ```C# Snippet:MigrationGetEntity
 // Get the entity.
 OfficeSupplyEntity marker = tableClient.GetEntity<OfficeSupplyEntity>(partitionKey, rowKey);
@@ -210,7 +210,7 @@ Console.WriteLine($"{marker.PartitionKey}, {marker.RowKey}, {marker.Product}, {m
 
 ### Querying data from the table
 
-Previously in `Microsoft.Azure.Comsmos.Table`, creating an executing a query looks as follows.
+Previously in `Microsoft.Azure.Comsmos.Table`, creating an executing a query looked as follows.
 
 ```c#
 // Create the query.
@@ -226,10 +226,10 @@ foreach (var item in queryResults)
 }
 ```
 
-Now in `Azure.Data.Tables`, we again query with a single line of code and return the results as a `Pagageable<T>`. You'll find the `Pageable` type used consistently
-throughout all the new Azure SDK clients where an operation returns a paged result.
+Now in `Azure.Data.Tables`, we query with a single line of code and return the results as a `Pagageable<T>`. You'll find the `Pageable` type used consistently
+throughout all the new Azure SDK clients when an operation returns a paged result.
 
-Another difference you may notice with the new client is that rather than implementing a full IQueryable LINQ provider, we've only implemented support for a filter
+Another difference you may notice with the new client is that rather than implementing a full `IQueryable` LINQ provider, we've only implemented support for a filter
 expression. This approach helps to prevent accidentally writing LINQ expressions that return every item from the table to run a filter on the result locally.
 
 ```C# Snippet:TablesMigrationQuery
@@ -245,14 +245,14 @@ foreach (var item in queryResults.ToList())
 
 ### Delete table entities
 
-Previously with `Microsoft.Azure.Cosmos.Table`, deleting a table entity is accomplished with the follwowing code.
+Previously with `Microsoft.Azure.Cosmos.Table`, deleting a table entity was accomplished with the following code.
 
 ```c#
 TableOperation deleteOperation = TableOperation.Delete(deleteEntity);
 TableResult result = cloudTable.Execute(deleteOperation);
 ```
 
-Now in `Azure.Data.Tables`, deleting an entity requires just the ParitionKey and RowKey values.
+Now in `Azure.Data.Tables`, deleting an entity requires just the `ParitionKey` and `RowKey` values.
 
 ```C# Snippet:TablesSample2DeleteEntity
 // Delete the entity given the partition and row key.
@@ -261,8 +261,8 @@ tableClient.DeleteEntity(partitionKey, rowKey);
 
 ### Batch transactions
 
-Previously with `Microsoft.Azure.Cosmos.Table`, creating and executing a transactional batch operation involves creating a `TableBatchOperation` containing the
-`TableOperation`s to be executed. The result from `ExecuteBatch` is a `TableBatchResult` which is essentially a collection of `TableResult`s.
+Previously with `Microsoft.Azure.Cosmos.Table`, creating and executing a transactional batch operation involved creating a `TableBatchOperation` which contained the
+`TableOperation`(s) to be executed. The result from `ExecuteBatch` was a `TableBatchResult` which is essentially a collection of `TableResult`s.
 
 ```c#
 // Create a TableBatchOperation and populate it with our TableOperations.
