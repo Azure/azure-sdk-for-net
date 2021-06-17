@@ -71,68 +71,6 @@ namespace Azure.DigitalTwins.Core.Samples
                 .From(AdtCollection.DigitalTwins)
                 .WhereIsOfModel("dtmi:example:room;1", true)
                 .Build();
-
-            AdtQueryBuilder experimentWithIntermediateWhere = new AdtQueryBuilder()
-                .Select("*")
-                .From(AdtCollection.DigitalTwins, "hi")
-                .Where()
-                .IsTrue(q => q
-                    .IsOfType("Humidity", AdtDataType.AdtNumber)
-                    .Or()
-                    .IsOfType("Humidity", AdtDataType.AdtPrimative))
-                .Or()
-                .IsTrue(q => q
-                    .IsOfType("Temperature", AdtDataType.AdtNumber)
-                    .Or()
-                    .IsOfType("Temperature", AdtDataType.AdtPrimative))
-
-                .Build();
-
-            AdtQueryBuilder experimentWithIntermediateWhere2 = new AdtQueryBuilder()
-            .Select("*")
-                .From(AdtCollection.DigitalTwins, "hi")
-                .Where()
-                .Where("1") //isTrue
-                .Or()
-                .Where("2")
-                .Or()
-                .Where("3")
-                .Or()
-                    .Where("4")
-                    .Where("5")
-                .Build();
-
-            //            SELECT * FROM DIGITALTWINS WHERE 1 OR 2 OR 3 OR 4 AND 5
-            //            SELECT * FROM DIGITALTWINS WHERE 1 OR (2 OR (3 OR (4 AND 5)))
-
-            AdtQueryBuilder experimentWithIntermediateWhere3 = new AdtQueryBuilder()
-            .Select("*")
-                .From(AdtCollection.DigitalTwins, "hi")
-                .Where()
-                .Where("1")
-                .Or()
-                .Where("2")
-                .And()
-                .Where("3")
-                .Or()
-                .Where("4")
-                .Build();
-
-            // WHERE 1 OR (2 AND 3) OR (4))
-            // WHERE (1 OR 2) AND (3 OR 4)
-
-            // SELECT * FROM DigitalTwins WHERE
-            //  (
-            //      1
-            //      OR
-            //      2
-            //  )
-            //  AND
-            //  (
-            //      3
-            //      OR
-            //      4
-            //  )
         }
     }
 }
