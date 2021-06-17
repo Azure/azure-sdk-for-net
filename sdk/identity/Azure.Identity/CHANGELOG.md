@@ -2,6 +2,8 @@
 
 ## 1.5.0-beta.2 (Unreleased)
 
+### New Features
+- Added support to `ManagedIdentityCredential` for Bridge to Kubernetes local development authentication.
 
 ## 1.5.0-beta.1 (2021-06-08)
 

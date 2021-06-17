@@ -99,6 +99,41 @@ namespace Azure.Identity.Tests
         [Test]
         [TestCase(null)]
         [TestCase("mock-client-id")]
+        public async Task VerifyIMDSRequestWithPodIdentityEnvVarMockAsync(string clientId)
+        {
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "AZURE_POD_IDENTITY_TOKEN_URL", "https://mock.podid.endpoint/oauth2/token" } }))
+            {
+                var response = CreateMockResponse(200, ExpectedToken);
+                var mockTransport = new MockTransport(response);
+                var options = new TokenCredentialOptions() { Transport = mockTransport };
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(clientId, options));
+
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+                Assert.AreEqual(ExpectedToken, actualToken.Token);
+
+                MockRequest request = mockTransport.SingleRequest;
+
+                Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint/oauth2/token"));
+
+                string query = request.Uri.Query;
+
+                Assert.IsTrue(query.Contains("api-version=2018-02-01"));
+                Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                if (clientId != null)
+                {
+                    Assert.IsTrue(query.Contains($"client_id=mock-client-id"));
+                }
+                Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadataValue));
+                Assert.AreEqual("true", actMetadataValue);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        [TestCase(null)]
+        [TestCase("mock-client-id")]
         public async Task VerifyAppService2017RequestWithClientIdMockAsync(string clientId)
         {
             using (new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
