@@ -180,10 +180,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(metricId, options))
             {
-                Console.WriteLine($"Time series metric ID: {seriesData.Definition.MetricId}");
+                Console.WriteLine($"Time series metric ID: {seriesData.MetricId}");
                 Console.WriteLine("Time series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in seriesData.Definition.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in seriesData.SeriesKey.AsDictionary())
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
