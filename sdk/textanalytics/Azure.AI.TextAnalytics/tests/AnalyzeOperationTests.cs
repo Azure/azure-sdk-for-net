@@ -217,6 +217,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(entitiesActionsResults);
             Assert.IsNotNull(piiActionsResults);
             Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
             Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
 
             // Keyphrases
@@ -575,6 +576,74 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, analyzeSentimentDocumentsResults.Count);
 
             Assert.AreEqual(TextSentiment.Mixed, analyzeSentimentDocumentsResults[0].DocumentSentiment.Sentiment);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21798")]
+        public async Task AnalyzeOperationWithActionName(bool useActionName)
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions;
+
+            if (useActionName)
+            {
+                batchActions = new TextAnalyticsActions()
+                {
+                    ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() { ActionName = "MyExtractKPAction"} },
+                    RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { ActionName = "MyRecognizeEntitiesAction" } },
+                    RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { ActionName = "MyRecognizePiiEntitiesAction" } },
+                    RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() { ActionName = "MyRecognizeLinkedEntitiesAction" } },
+                    AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() { ActionName = "MyAnalyzeSentimentAction" } },
+                    DisplayName = "AnalyzeOperationWithMultipleTasks"
+                };
+            }
+            else
+            {
+                batchActions = new TextAnalyticsActions()
+                {
+                    ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+                    RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+                    RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
+                    RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
+                    AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
+                    DisplayName = "AnalyzeOperationWithMultipleTasks"
+                };
+            }
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesResults;
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+
+            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.IsNotNull(entitiesActionsResults);
+            Assert.IsNotNull(piiActionsResults);
+            Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
+
+            if (useActionName)
+            {
+                Assert.AreEqual("MyExtractKPAction", keyPhrasesActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyRecognizeEntitiesAction", entitiesActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyRecognizePiiEntitiesAction", piiActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyRecognizeLinkedEntitiesAction", entityLinkingActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyAnalyzeSentimentAction", analyzeSentimentActionsResults.FirstOrDefault().ActionName);
+            }
+            else
+            {
+                Assert.IsNotEmpty(keyPhrasesActionsResults.FirstOrDefault().ActionName);
+            }
         }
     }
 }
