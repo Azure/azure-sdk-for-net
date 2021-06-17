@@ -13,10 +13,23 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly RecognizePiiEntitiesResultCollection _documentsResults;
 
-        internal RecognizePiiEntitiesActionResult(RecognizePiiEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
-            : base(completedOn, error)
+        /// <summary>
+        /// Successful action.
+        /// </summary>
+        internal RecognizePiiEntitiesActionResult(RecognizePiiEntitiesResultCollection result, string actionName, DateTimeOffset completedOn)
+            : base(completedOn)
         {
             _documentsResults = result;
+            ActionName = actionName;
+        }
+
+        /// <summary>
+        /// Action with an error.
+        /// </summary>
+        internal RecognizePiiEntitiesActionResult(string actionName, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+            : base(completedOn, error)
+        {
+            ActionName = actionName;
         }
 
         /// <summary>
@@ -35,5 +48,10 @@ namespace Azure.AI.TextAnalytics
                 return _documentsResults;
             }
         }
+
+        /// <summary>
+        /// Gets the name for this action.
+        /// </summary>
+        public string ActionName { get; }
     }
 }
