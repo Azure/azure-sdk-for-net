@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class TranslationStatusResult
+    public partial class TranslationStatus
     {
-        internal static TranslationStatusResult DeserializeTranslationStatusResult(JsonElement element)
+        internal static TranslationStatus DeserializeTranslationStatus(JsonElement element)
         {
             string id = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
-            TranslationStatus status = default;
+            DocumentTranslationStatus status = default;
             Optional<DocumentTranslationError> error = default;
             StatusSummary summary = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TranslationStatus(property.Value.GetString());
+                    status = new DocumentTranslationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"))
@@ -60,7 +60,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new TranslationStatusResult(id, createdDateTimeUtc, lastActionDateTimeUtc, status, error.Value, summary);
+            return new TranslationStatus(id, createdDateTimeUtc, lastActionDateTimeUtc, status, error.Value, summary);
         }
     }
 }

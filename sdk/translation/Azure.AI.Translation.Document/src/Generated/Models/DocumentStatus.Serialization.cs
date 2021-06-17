@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentStatusResult
+    public partial class DocumentStatus
     {
-        internal static DocumentStatusResult DeserializeDocumentStatusResult(JsonElement element)
+        internal static DocumentStatus DeserializeDocumentStatus(JsonElement element)
         {
             Optional<Uri> path = default;
             Uri sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
-            TranslationStatus status = default;
+            DocumentTranslationStatus status = default;
             string to = default;
             Optional<DocumentTranslationError> error = default;
             float progress = default;
@@ -54,7 +54,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new TranslationStatus(property.Value.GetString());
+                    status = new DocumentTranslationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("to"))
@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentStatusResult(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error.Value, progress, id, characterCharged);
+            return new DocumentStatus(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error.Value, progress, id, characterCharged);
         }
     }
 }
