@@ -9,12 +9,12 @@ namespace Azure.Monitor.Query
 {
     internal class RowBinder: TypeBinder<LogsQueryResultRow>
     {
-        internal IReadOnlyList<T> BindResults<T>(LogsQueryResult response)
+        internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsQueryResultTable> tables)
         {
             List<T> results = new List<T>();
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
             {
-                foreach (var table in response.Tables)
+                foreach (var table in tables)
                 {
                     foreach (var row in table.Rows)
                     {
@@ -32,7 +32,7 @@ namespace Azure.Monitor.Query
             }
             else
             {
-                foreach (var table in response.Tables)
+                foreach (var table in tables)
                 {
                     foreach (var row in table.Rows)
                     {
@@ -83,6 +83,7 @@ namespace Azure.Monitor.Query
             else if (typeof(T) == typeof(Guid)) value = (T)(object)source.GetGuid(column);
             else if (typeof(T) == typeof(DateTimeOffset)) value = (T)(object)source.GetDateTimeOffset(column);
             else if (typeof(T) == typeof(TimeSpan)) value = (T)(object)source.GetTimeSpan(column);
+            else if (typeof(T) == typeof(BinaryData)) value = (T)(object)source.GetDynamic(column);
 
             else if (typeof(T) == typeof(int?)) value = (T)(object)(int?)source.GetInt32(column);
             else if (typeof(T) == typeof(bool?)) value = (T)(object)(bool?)source.GetBoolean(column);

@@ -18,9 +18,15 @@
   - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
 - Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
 - Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
+- Renamed type `Results` to `DocumentsResults` in `AnalyzeSentimentActionResult`, `ExtractKeyPhrasesActionResult`, `RecognizeEntitiesActionResult`, `RecognizeLinkedEntitiesActionResult`, and `RecognizePiiEntitiesActionResult`.
+- Renamed all types under `AnalyzeActionsResult` from `xxActionsResults` to ``xxResults`.
 - Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
 - Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
 - Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
+- Removed property `StringIndexType` from `TextAnalyticsRequestOptions`. This SDK will keep using `UTF-16` code unit as the default encoding.
+- Removed type `ExtractKeyPhrasesOptions` and respective exposure.
+- Removed type `RecognizeEntitiesOptions` and respective exposure.
+- Removed type `RecognizeLinkedEntitiesOptions` and respective exposure.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features

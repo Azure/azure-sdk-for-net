@@ -553,11 +553,6 @@ namespace Microsoft.Azure.Management.Sql
         IServerOperations ServerOperations { get; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
-
-        /// <summary>
         /// Gets the IServerSecurityAlertPoliciesOperations.
         /// </summary>
         IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
@@ -661,6 +656,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRestorableDroppedManagedDatabasesOperations.
         /// </summary>
         IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
 
         /// <summary>
         /// Gets the IUsagesOperations.

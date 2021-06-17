@@ -17,13 +17,12 @@ namespace Azure.Core.Tests
         [ForwardsClientCalls]
         public virtual Pageable<TestResource> List(int pages = 1, CancellationToken cancellation = default)
         {
-            FuncPageable<object> results = GetSyncResults(pages);
-            return new PhWrappingPageable<object, TestResource>(results, o => new TestResource());
+            return GetSyncResults(pages);
         }
 
-        private FuncPageable<object> GetSyncResults(int pages)
+        private FuncPageable<TestResource> GetSyncResults(int pages)
         {
-            Page<object> pageFunc(int? pageSizeHint)
+            Page<TestResource> pageFunc(int? pageSizeHint)
             {
                 //simulates forwarding with todays wrapper.  This should go away after codegen is finished
                 using var scope = _diagnostic.CreateScope("TestResourceContainer.GetSyncResults");
@@ -31,7 +30,7 @@ namespace Azure.Core.Tests
 
                 try
                 {
-                    return Page<object>.FromValues(new object[] { new object(), new object() }, null, null);
+                    return Page<TestResource>.FromValues(new TestResource[] { new TestResource(), new TestResource() }, null, null);
                 }
                 catch (Exception e)
                 {
@@ -39,19 +38,18 @@ namespace Azure.Core.Tests
                     throw;
                 }
             }
-            return new FuncPageable<object>((cToken, pageSize) => pageFunc(pageSize));
+            return new FuncPageable<TestResource>((cToken, pageSize) => pageFunc(pageSize));
         }
 
         [ForwardsClientCalls]
         public virtual AsyncPageable<TestResource> ListAsync(int pages = 1, CancellationToken cancellation = default)
         {
-            FuncAsyncPageable<object> results = GetAsyncResults(pages);
-            return new PhWrappingAsyncPageable<object, TestResource>(results, o => new TestResource());
+            return GetAsyncResults(pages);
         }
 
-        private FuncAsyncPageable<object> GetAsyncResults(int pages)
+        private FuncAsyncPageable<TestResource> GetAsyncResults(int pages)
         {
-            async Task<Page<object>> pageFunc(int? pageSizeHint)
+            async Task<Page<TestResource>> pageFunc(int? pageSizeHint)
             {
                 using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAsyncResults");
                 scope.Start();
@@ -59,7 +57,7 @@ namespace Azure.Core.Tests
                 try
                 {
                     await Task.Delay(10);
-                    return Page<object>.FromValues(new object[] { new object(), new object() }, null, null);
+                    return Page<TestResource>.FromValues(new TestResource[] { new TestResource(), new TestResource() }, null, null);
                 }
                 catch (Exception e)
                 {
@@ -67,7 +65,7 @@ namespace Azure.Core.Tests
                     throw;
                 }
             }
-            return new FuncAsyncPageable<object>((cToken, pageSize) => pageFunc(pageSize));
+            return new FuncAsyncPageable<TestResource>((cToken, pageSize) => pageFunc(pageSize));
         }
 
         public virtual string Method()

@@ -59,10 +59,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 _options.Hub = _nameResolver.Resolve(Constants.HubNameStringName);
             }
 
+            Exception webhookException = null;
+            try
+            {
 #pragma warning disable CS0618 // Type or member is obsolete
-            var url = context.GetWebhookHandler();
+                var url = context.GetWebhookHandler();
 #pragma warning restore CS0618 // Type or member is obsolete
-            _logger.LogInformation($"Registered Web PubSub negotiate Endpoint = {url?.GetLeftPart(UriPartial.Path)}");
+                _logger.LogInformation($"Registered Web PubSub negotiate Endpoint = {url?.GetLeftPart(UriPartial.Path)}");
+            }
+            catch (Exception ex)
+            {
+                // disable trigger.
+                webhookException = ex;
+            }
 
             // register JsonConverters
             RegisterJsonConverter();
@@ -75,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
-                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _options));
+                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _options, webhookException));
 
             var webpubsubConnectionAttributeRule = context.AddBindingRule<WebPubSubConnectionAttribute>();
             webpubsubConnectionAttributeRule.AddValidator(ValidateWebPubSubConnectionAttributeBinding);

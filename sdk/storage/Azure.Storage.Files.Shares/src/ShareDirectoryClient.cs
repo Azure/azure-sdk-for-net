@@ -325,16 +325,10 @@ namespace Azure.Storage.Files.Shares
 
         private DirectoryRestClient BuildDirectoryRestClient(Uri uri)
         {
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
-            {
-                ShareName = null,
-                DirectoryOrFilePath = null
-            };
             return new DirectoryRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: $"{ShareName}/{Path.EscapePath()}",
+                uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

@@ -32,7 +32,7 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="VirtualNetwork" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetwork> ListVnets(this SubscriptionOperations subscription)
         {
-            return subscription.ListResources(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -52,7 +52,7 @@ namespace Proto.Network
         /// <returns> An async collection of <see cref="VirtualNetwork" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetwork> ListVnetsAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResourcesAsync(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -76,7 +76,7 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="PublicIpAddress" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublicIpAddress> ListPublicIps(this SubscriptionOperations subscription)
         {
-            return subscription.ListResources(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -96,7 +96,7 @@ namespace Proto.Network
         /// <returns> An async collection of <see cref="PublicIpAddress" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublicIpAddress> ListPublicIpsAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResourcesAsync(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -120,7 +120,7 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="NetworkInterface"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkInterface> ListNics(this SubscriptionOperations subscription)
         {
-            return subscription.ListResources(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -140,7 +140,7 @@ namespace Proto.Network
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkInterface> ListNicsAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResourcesAsync(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -164,7 +164,7 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="NetworkSecurityGroup" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkSecurityGroup> ListNsgs(this SubscriptionOperations subscription)
         {
-            return subscription.ListResources(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -184,7 +184,7 @@ namespace Proto.Network
         /// <returns> An async collection of <see cref="NetworkSecurityGroup" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkSecurityGroup> ListNsgsAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResourcesAsync(
+            return subscription.UseClientContext(
                (baseUri, credential, options, pipeline) =>
                {
                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);

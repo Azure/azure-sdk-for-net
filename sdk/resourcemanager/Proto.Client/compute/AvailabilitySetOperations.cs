@@ -12,7 +12,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing the operations that can be performed over a specific availability set.
     /// </summary>
-    public class AvailabilitySetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, AvailabilitySet>, ITaggableResource<ResourceGroupResourceIdentifier, AvailabilitySet>, IDeletableResource
+    public class AvailabilitySetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, AvailabilitySet>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.

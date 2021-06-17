@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="durationInMs"> The duration of a pipeline run. </param>
         /// <param name="status"> The status of a pipeline run. </param>
         /// <param name="message"> The message from a pipeline run. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.PipelineRun"/> instance for mocking. </returns>
         public static PipelineRun PipelineRun(string runId = default, string runGroupId = default, bool? isLatest = default, string pipelineName = default, IReadOnlyDictionary<string, string> parameters = default, PipelineRunInvokedBy invokedBy = default, DateTimeOffset? lastUpdated = default, DateTimeOffset? runStart = default, DateTimeOffset? runEnd = default, int? durationInMs = default, string status = default, string message = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="input"> The input for the activity. </param>
         /// <param name="output"> The output for the activity. </param>
         /// <param name="error"> The error if any from the activity run. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.ActivityRun"/> instance for mocking. </returns>
         public static ActivityRun ActivityRun(string pipelineName = default, string pipelineRunId = default, string activityName = default, string activityType = default, string activityRunId = default, string linkedServiceName = default, string status = default, DateTimeOffset? activityRunStart = default, DateTimeOffset? activityRunEnd = default, int? durationInMs = default, object input = default, object output = default, object error = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
@@ -134,7 +134,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.Trigger"/> instance for mocking. </returns>
         public static Trigger Trigger(string type = default, string description = default, TriggerRuntimeState? runtimeState = default, IList<object> annotations = default, IDictionary<string, object> additionalProperties = default)
         {
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="message"> Trigger error message. </param>
         /// <param name="properties"> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </param>
         /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.TriggerRun"/> instance for mocking. </returns>
         public static TriggerRun TriggerRun(string triggerRunId = default, string triggerName = default, string triggerType = default, DateTimeOffset? triggerRunTimestamp = default, TriggerRunStatus? status = default, string message = default, IReadOnlyDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> triggeredPipelines = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="startTime"> Start time of data flow debug session. </param>
         /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
         /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
         public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = default, string computeType = default, int? coreCount = default, int? nodeCount = default, string integrationRuntimeName = default, string sessionId = default, string startTime = default, int? timeToLiveInMinutes = default, string lastActivityTime = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
@@ -616,7 +616,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Initializes new instance of ManagedIntegrationRuntime class. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>

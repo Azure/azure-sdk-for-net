@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
@@ -21,12 +22,15 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="roles"></param>
+        /// <param name="expiresAfter">Defaults to one hour, if not specified.</param>
         /// <returns></returns>
-        public virtual Uri GetClientAccessUri(string userId = default, string[] roles = default, TimeSpan expireAfter = default)
+        public virtual Uri GenerateClientAccessUri(string userId = default, string[] roles = default, TimeSpan expiresAfter = default)
         {
-            if (expireAfter == default)
+            if (expiresAfter == default)
             {
-                expireAfter = TimeSpan.FromHours(1);
+                expiresAfter = TimeSpan.FromHours(1);
             }
 
             List<Claim> claims = new List<Claim>();
@@ -37,23 +41,24 @@ namespace Azure.Messaging.WebPubSub
             }
             if (roles != default && roles.Length > 0)
             {
-                var jsonArray = BinaryData.FromObjectAsJson(roles).ToString();
-                var role = new Claim("role", jsonArray);
-                claims.Add(role);
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim("role", role));
+                }
             }
 
-            string endpoint = _endpoint.AbsoluteUri;
+            string endpoint = this.endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
             {
                 endpoint += "/";
             }
-            var audience = $"{endpoint}client/hubs/{_hub}";
+            var audience = $"{endpoint}client/hubs/{hub}";
 
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expireAfter);
+            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expiresAfter);
 
             var clientEndpoint = new UriBuilder(endpoint);
-            clientEndpoint.Scheme = "wss";
-            var uriString = $"{clientEndpoint}client/hubs/{_hub}?access_token={token}";
+            clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";
+            var uriString = $"{clientEndpoint}client/hubs/{hub}?access_token={token}";
 
             return new Uri(uriString);
         }

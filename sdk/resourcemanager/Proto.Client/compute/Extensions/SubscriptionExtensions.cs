@@ -2,7 +2,6 @@
 using Azure.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +30,7 @@ namespace Proto.Compute
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachine> ListVirtualMachines(this SubscriptionOperations subscription)
         {
-            return subscription.ListResources(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -51,7 +50,7 @@ namespace Proto.Compute
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachine> ListVirtualMachinesAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResourcesAsync(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -103,7 +102,7 @@ namespace Proto.Compute
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailabilitySet> ListAvailabilitySets(this SubscriptionOperations subscription)
         {
-            return subscription.ListResources(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
@@ -123,7 +122,7 @@ namespace Proto.Compute
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailabilitySet> ListAvailabilitySetsAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResourcesAsync(
+            return subscription.UseClientContext(
                 (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);

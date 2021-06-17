@@ -144,7 +144,7 @@ var documents = new List<TextDocumentInput>
     new TextDocumentInput("4", string.Empty)
 };
 
-var options = new ExtractKeyPhrasesOptions { IncludeStatistics = true };
+var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
 Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(documents, options);
 ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 

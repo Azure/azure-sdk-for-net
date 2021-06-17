@@ -39,13 +39,13 @@ namespace Azure.AI.FormRecognizer.Models
             Name = name;
             LabelData = null;
 
-            // Bounding box, page and text are not returned by the service in two scenarios:
+            // Bounding box and page are not returned by the service in two scenarios:
             //   - When this field is global and not associated with a specific page (e.g. ReceiptType).
             //   - When this field is a collection, such as a list or dictionary.
             //
             // In these scenarios we do not set a ValueData.
 
-            if (fieldValue.BoundingBox.Count == 0 && fieldValue.Page == null && fieldValue.Text == null)
+            if (fieldValue.BoundingBox.Count == 0 && fieldValue.Page == null)
             {
                 ValueData = null;
             }

@@ -15,6 +15,17 @@ namespace Azure.Monitor.Query
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QueryModelFactory
     {
+        /// <summary> Initializes new instance of LogsQueryResult class. </summary>
+        /// <param name="tables"> The list of tables, columns and rows. </param>
+        /// <param name="Statistics"> Any object. </param>
+        /// <param name="Visualization"> Any object. </param>
+        /// <returns> A new <see cref="Models.LogsQueryResult"/> instance for mocking. </returns>
+        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default, JsonElement Visualization = default)
+        {
+            tables ??= new List<LogsQueryResultTable>();
+            return new LogsQueryResult(tables, Statistics, Visualization);
+        }
+
         /// <summary> Initializes new instance of LogsQueryResultTable class. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
@@ -30,7 +41,7 @@ namespace Azure.Monitor.Query
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <returns> A new <see cref="Models.LogsQueryResultColumn"/> instance for mocking. </returns>
-        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, string type = default)
+        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogColumnTypes type = default)
         {
             return new LogsQueryResultColumn(name, type);
         }

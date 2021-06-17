@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ContainerBase"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        protected ContainerBase(ResourceOperationsBase parent)
+        protected ContainerBase(OperationsBase parent)
             : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), parent.Id)
         {
             Parent = parent;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
-        protected ResourceOperationsBase Parent { get; }
+        protected OperationsBase Parent { get; }
     }
 }

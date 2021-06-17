@@ -12,6 +12,7 @@ namespace Azure.Monitor.Query.Tests
     public class MetricsClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
     {
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]
         public async Task QueryMetrics()
         {
             #region Snippet:QueryMetrics
@@ -25,7 +26,7 @@ namespace Azure.Monitor.Query.Tests
             string resourceId = TestEnvironment.MetricsResource;
 #endif
 
-            var metricsClient = new MetricsClient(endpoint, new DefaultAzureCredential());
+            var metricsClient = new MetricsQueryClient(endpoint, new DefaultAzureCredential());
 
             Response<MetricQueryResult> results = await metricsClient.QueryAsync(
                 resourceId,

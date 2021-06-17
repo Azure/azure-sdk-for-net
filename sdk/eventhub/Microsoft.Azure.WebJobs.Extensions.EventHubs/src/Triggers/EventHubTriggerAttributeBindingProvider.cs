@@ -55,11 +55,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
              (factoryContext, singleDispatch) =>
              {
                  var options = _options.Value;
-                 if (singleDispatch && !options.IsSingleDispatchEnabled)
-                 {
-                     throw new NotSupportedException("Binding to individual events is not supported. Please use batch processing by binding to an array instead.");
-                 }
-
                  var checkpointStore = new BlobsCheckpointStore(
                      _clientFactory.GetCheckpointStoreClient(),
                      options.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
