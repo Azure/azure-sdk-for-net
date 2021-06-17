@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        public async Task<Response<TagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public async Task<Response<PreDefinedTagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Core
                 case 200:
                 case 201:
                     {
-                        TagValue value = default;
+                        PreDefinedTagValue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagValue.DeserializeTagValue(document.RootElement);
+                        value = PreDefinedTagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        public Response<TagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public Response<PreDefinedTagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Core
                 case 200:
                 case 201:
                     {
-                        TagValue value = default;
+                        PreDefinedTagValue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagValue.DeserializeTagValue(document.RootElement);
+                        value = PreDefinedTagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public async Task<Response<TagData>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response<PreDefinedTagData>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.Core
                 case 200:
                 case 201:
                     {
-                        TagData value = default;
+                        PreDefinedTagData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagData.DeserializeTagDetails(document.RootElement);
+                        value = PreDefinedTagData.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public Response<TagData> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
+        public Response<PreDefinedTagData> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.Core
                 case 200:
                 case 201:
                     {
-                        TagData value = default;
+                        PreDefinedTagData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagData.DeserializeTagDetails(document.RootElement);
+                        value = PreDefinedTagData.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TagsListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PreDefinedTagsListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -359,9 +359,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsListResult value = default;
+                        PreDefinedTagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<TagsListResult> List(CancellationToken cancellationToken = default)
+        public Response<PreDefinedTagsListResult> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -379,9 +379,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsListResult value = default;
+                        PreDefinedTagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<TagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<PreDefinedTagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -419,9 +419,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsListResult value = default;
+                        PreDefinedTagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<TagsListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<PreDefinedTagsListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -446,11 +446,309 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsListResult value = default;
+                        PreDefinedTagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagsResource parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", "2019-10-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="parameters"> The TagsResource to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<TagsResource>> CreateOrUpdateAtScopeAsync(string scope, TagsResource parameters, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateCreateOrUpdateAtScopeRequest(scope, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagsResource value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="parameters"> The TagsResource to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
+        public Response<TagsResource> CreateOrUpdateAtScope(string scope, TagsResource parameters, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateCreateOrUpdateAtScopeRequest(scope, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagsResource value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal Azure.Core.HttpMessage CreateUpdateAtScopeRequest(string scope, TagsPatchResource parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", "2019-10-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="parameters"> The TagsPatchResource to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<TagsResource>> UpdateAtScopeAsync(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateAtScopeRequest(scope, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagsResource value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="parameters"> The TagsPatchResource to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
+        public Response<TagsResource> UpdateAtScope(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateAtScopeRequest(scope, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagsResource value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal Azure.Core.HttpMessage CreateGetAtScopeRequest(string scope)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", "2019-10-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the entire set of tags on a resource or subscription. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public async Task<Response<TagsResource>> GetAtScopeAsync(string scope, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateGetAtScopeRequest(scope);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagsResource value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets the entire set of tags on a resource or subscription. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public Response<TagsResource> GetAtScope(string scope, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateGetAtScopeRequest(scope);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TagsResource value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal Azure.Core.HttpMessage CreateDeleteAtScopeRequest(string scope)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", "2019-10-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public async Task<Response> DeleteAtScopeAsync(string scope, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateDeleteAtScopeRequest(scope);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
+        /// <param name="scope"> The resource scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public Response DeleteAtScope(string scope, CancellationToken cancellationToken = default)
+        {
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            using var message = CreateDeleteAtScopeRequest(scope);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Core
         /// Gets the tags container under this subscription.
         /// </summary>
         /// <returns> The tags container. </returns>
-        public virtual TagsContainer GetTags()
+        public virtual PreDefinedTagsContainer GetPredefinedTags()
         {
-            return new TagsContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id.SubscriptionId);
+            return new PreDefinedTagsContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id, new PreDefinedTagData());
         }
 
         /// <inheritdoc/>

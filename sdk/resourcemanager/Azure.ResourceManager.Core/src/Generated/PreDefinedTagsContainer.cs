@@ -12,30 +12,31 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of Tags and their operations.
     /// </summary>
-    public class TagsContainer : ContainerBase
+    public class PreDefinedTagsContainer : ContainerBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TagsContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="PreDefinedTagsContainer"/> class for mocking.
         /// </summary>
-        protected TagsContainer()
+        protected PreDefinedTagsContainer()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TagsContainer"/> class.
+        /// Initializes a new instance of the <see cref="PreDefinedTagsContainer"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
-        /// <param name="subscriptionId"></param>
-        internal TagsContainer(ClientContext clientContext, string subscriptionId)
-            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionId))
+        /// <param name="subscription"></param>
+        /// <param name="tag"></param>
+        internal PreDefinedTagsContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription, PreDefinedTagData tag)
+            : base(clientContext, new PreDefinedTagsResourceIdentifier(subscription, tag))
         {
-            RestClient = new TagsRestOperations(Diagnostics, Pipeline, subscriptionId, BaseUri);
+            RestClient = new TagsRestOperations(Diagnostics, Pipeline, subscription.SubscriptionId, BaseUri);
         }
 
         /// <summary>
         /// Gets the valid resource type associated with the container.
         /// </summary>
-        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
+        protected override ResourceType ValidResourceType => PreDefinedTagsOperations.ResourceType;
 
         /// <summary>
         /// Gets the operations that can be performed on the container.
@@ -45,14 +46,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Tag>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreDefinedTags>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response =  await RestClient.CreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Tag(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PreDefinedTags(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Tag> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
+        public virtual Response<PreDefinedTags> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = RestClient.CreateOrUpdate(tagName, cancellationToken);
-                return Response.FromValue(new Tag(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PreDefinedTags(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -82,16 +83,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Tag> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PreDefinedTags> ListAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Tag>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PreDefinedTags>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new PreDefinedTags(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -99,14 +100,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            async Task<Page<Tag>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PreDefinedTags>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new PreDefinedTags(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Tag> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<PreDefinedTags> List(CancellationToken cancellationToken = default)
         {
-            Page<Tag> FirstPageFunc(int? pageSizeHint)
+            Page<PreDefinedTags> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = RestClient.List(cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new PreDefinedTags(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -136,14 +137,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            Page<Tag> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PreDefinedTags> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = RestClient.ListNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new PreDefinedTags(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

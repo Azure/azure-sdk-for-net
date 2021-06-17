@@ -6,23 +6,23 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a Tags along with the instance operations that can be performed on it.
     /// </summary>
-    public class Tag : TagsOperations
+    public class PreDefinedTags : PreDefinedTagsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Tag"/> class for mocking.
+        /// Initializes a new instance of the <see cref="PreDefinedTags"/> class for mocking.
         /// </summary>
-        protected Tag()
+        protected PreDefinedTags()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Tag"/> class.
+        /// Initializes a new instance of the <see cref="PreDefinedTags"/> class.
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="tagDetails
         /// "> The data model representing the generic azure resource. </param>
-        internal Tag(OperationsBase operations, TagData tagDetails)
-            : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), ((SubscriptionResourceIdentifier)((TagsContainer)operations).Id).SubscriptionId)
+        internal PreDefinedTags(OperationsBase operations, PreDefinedTagData tagDetails)
+            : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), operations.Id.Parent, tagDetails)
         {
             Details = tagDetails;
         }
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Tags data model.
         /// </summary>
-        public virtual TagData Details { get; }
+        public virtual PreDefinedTagData Details { get; }
     }
 }

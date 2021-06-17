@@ -7,11 +7,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    internal partial class TagsListResult
+    internal partial class PreDefinedTagsListResult
     {
-        internal static TagsListResult DeserializeTagsListResult(JsonElement element)
+        internal static PreDefinedTagsListResult DeserializeTagsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TagData>> value = default;
+            Optional<IReadOnlyList<PreDefinedTagData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagData> array = new List<TagData>();
+                    List<PreDefinedTagData> array = new List<PreDefinedTagData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagData.DeserializeTagDetails(item));
+                        array.Add(PreDefinedTagData.DeserializeTagDetails(item));
                     }
                     value = array;
                     continue;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new TagsListResult(Optional.ToList(value), nextLink.Value);
+            return new PreDefinedTagsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

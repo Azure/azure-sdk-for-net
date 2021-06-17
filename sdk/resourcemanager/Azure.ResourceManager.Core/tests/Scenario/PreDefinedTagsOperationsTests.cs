@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class TagsOperationsTests : ResourceManagerTestBase
+    public class PreDefinedTagsOperationsTests : ResourceManagerTestBase
     {
-        public TagsOperationsTests(bool isAsync)
+        public PreDefinedTagsOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core.Tests
         [OneTimeTearDown]
         protected void GlobalTagCleanup()
         {
-            var container = Client.DefaultSubscription.GetTags();
+            var container = Client.DefaultSubscription.GetPredefinedTags();
             var operation = Client.GetTagOperations();
             var listResult = container.List().Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var operation = Client.GetTagOperations();
-            var container = Client.DefaultSubscription.GetTags();
+            var container = Client.DefaultSubscription.GetPredefinedTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             // Assert create tag value
             var createValue = await operation.CreateOrUpdateValueAsync(tagName, "testValue").ConfigureAwait(false);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var operation = Client.GetTagOperations();
-            var container = Client.DefaultSubscription.GetTags();
+            var container = Client.DefaultSubscription.GetPredefinedTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.DeleteAsync(tagName).ConfigureAwait(false);
             var listResult = await container.ListAsync().ToEnumerableAsync();

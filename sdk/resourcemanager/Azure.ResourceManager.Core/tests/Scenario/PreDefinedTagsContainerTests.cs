@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class TagsContainerTests : ResourceManagerTestBase
+    public class PreDefinedTagsContainerTests : ResourceManagerTestBase
     {
-        public TagsContainerTests(bool isAsync)
+        public PreDefinedTagsContainerTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core.Tests
         [OneTimeTearDown]
         protected void GlobalTagCleanup()
         {
-            var container = Client.DefaultSubscription.GetTags();
+            var container = Client.DefaultSubscription.GetPredefinedTags();
             var operation = Client.GetTagOperations();
             var listResult = container.List().Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task Create()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetTags();
+            var container = Client.DefaultSubscription.GetPredefinedTags();
             var result = await container.CreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Details.TagName.Equals(tagName));
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task List()
         {
-            var container = Client.DefaultSubscription.GetTags();
+            var container = Client.DefaultSubscription.GetPredefinedTags();
             var result = await container.ListAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(result.Count, 1, "List result less than 1");
             var expectTag = result.Where(x => x.Details.TagName.StartsWith("tagName")).FirstOrDefault();

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core
     public abstract class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
         internal const string ProvidersKey = "providers", SubscriptionsKey = "subscriptions",
-            ResourceGroupsKey = "resourceGroups", LocationsKey = "locations";
+            ResourceGroupsKey = "resourceGroups", LocationsKey = "locations", TagsKey= "tagNames";
 
         internal const string ResourceGroupsLowerKey = "resourcegroups"; 
 
@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Core
             new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{LocationsKey}");
         internal static ResourceType ResourceGroupsType =>
             new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{ResourceGroupsKey}");
+        internal static ResourceType PreDefinedTagsType =>
+            new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{TagsKey}");
 
         /// <summary>
         /// The root of the resource hierarchy

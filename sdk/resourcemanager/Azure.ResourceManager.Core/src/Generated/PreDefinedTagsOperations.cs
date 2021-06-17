@@ -9,27 +9,28 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The Tags service client. </summary>
-    public class TagsOperations : OperationsBase
+    public class PreDefinedTagsOperations : OperationsBase
     {
         /// <summary>
         /// The resource type for Tags.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions/tagNames";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TagsOperations"/> class for mocking.
+        /// Initializes a new instance of the <see cref="PreDefinedTagsOperations"/> class for mocking.
         /// </summary>
-        protected TagsOperations()
+        protected PreDefinedTagsOperations()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TagsOperations"/> class.
+        /// Initializes a new instance of the <see cref="PreDefinedTagsOperations"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
-        internal TagsOperations(ClientContext clientContext, string subscriptionGuid)
-            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
+        /// <param name="tagData"> The Guid of the subscription. </param>
+        internal PreDefinedTagsOperations(ClientContext clientContext, string subscriptionGuid, PreDefinedTagData tagData)
+            : base(clientContext, new PreDefinedTagsResourceIdentifier(subscriptionGuid, tagData))
         {
         }
 
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.DeleteValue");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.DeleteValue");
             scope.Start();
             try
             {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.DeleteValue");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.DeleteValue");
             scope.Start();
             try
             {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreDefinedTagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdateValue");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.CreateOrUpdateValue");
             scope.Start();
             try
             {
@@ -101,9 +102,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public virtual Response<PreDefinedTagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdateValue");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.CreateOrUpdateValue");
             scope.Start();
             try
             {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.Delete");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.Delete");
             scope.Start();
             try
             {
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.Delete");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.Delete");
             scope.Start();
             try
             {

@@ -4,17 +4,17 @@
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Tag count. </summary>
-    public partial class TagCount
+    public partial class PreDefinedTagCount
     {
         /// <summary> Initializes a new instance of TagCount. </summary>
-        internal TagCount()
+        internal PreDefinedTagCount()
         {
         }
 
         /// <summary> Initializes a new instance of TagCount. </summary>
         /// <param name="type"> Type of count. </param>
         /// <param name="value"> Value of count. </param>
-        internal TagCount(string type, int? value)
+        internal PreDefinedTagCount(string type, int? value)
         {
             Type = type;
             Value = value;

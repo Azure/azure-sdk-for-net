@@ -7,14 +7,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class TagData
+    public partial class PreDefinedTagData
     {
-        internal static TagData DeserializeTagDetails(JsonElement element)
+        internal static PreDefinedTagData DeserializeTagDetails(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> tagName = default;
-            Optional<TagCount> count = default;
-            Optional<IReadOnlyList<TagValue>> values = default;
+            Optional<PreDefinedTagCount> count = default;
+            Optional<IReadOnlyList<PreDefinedTagValue>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    count = TagCount.DeserializeTagCount(property.Value);
+                    count = PreDefinedTagCount.DeserializeTagCount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("values"))
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagValue> array = new List<TagValue>();
+                    List<PreDefinedTagValue> array = new List<PreDefinedTagValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagValue.DeserializeTagValue(item));
+                        array.Add(PreDefinedTagValue.DeserializeTagValue(item));
                     }
                     values = array;
                     continue;
                 }
             }
-            return new TagData(id.Value, tagName.Value, count.Value, Optional.ToList(values));
+            return new PreDefinedTagData(id.Value, tagName.Value, count.Value, Optional.ToList(values));
         }
     }
 }

@@ -6,9 +6,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class TagCount
+    public partial class PreDefinedTagCount
     {
-        internal static TagCount DeserializeTagCount(JsonElement element)
+        internal static PreDefinedTagCount DeserializeTagCount(JsonElement element)
         {
             Optional<string> type = default;
             Optional<int> value = default;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new TagCount(type.Value, Optional.ToNullable(value));
+            return new PreDefinedTagCount(type.Value, Optional.ToNullable(value));
         }
     }
 }
