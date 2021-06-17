@@ -96,7 +96,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 First, we need to construct a `TableServiceClient`.
 
 ```C# Snippet:TablesSample1CreateClient
-// Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+// Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
 var serviceClient = new TableServiceClient(
     new Uri(storageUri),

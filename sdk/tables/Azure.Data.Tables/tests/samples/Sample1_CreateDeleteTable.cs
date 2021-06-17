@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Samples
             string tableName = "OfficeSupplies1p1";
 
             #region Snippet:TablesSample1CreateClient
-            // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+            // Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),

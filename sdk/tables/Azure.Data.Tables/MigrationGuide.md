@@ -23,7 +23,7 @@ experience with established API patterns for all services. A set of
 [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic
 feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
 
-The new Azure Tables library `Azure.Data.Tables` provides the ability to share in some of the cross-service improvements made to the Azure development experience.
+The new Azure Tables library, `Azure.Data.Tables`, provides the ability to share in some of the cross-service improvements made to the Azure development experience.
 
 ## General changes
 
@@ -54,7 +54,7 @@ CloudStorageAccount storageAccount = new CloudStorageAccount(
 Now, in `Azure.Data.Tables`, we only need a `TableServiceClient` for service level operations.
 
 ```C# Snippet:TablesSample1CreateClient
-// Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+// Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
 var serviceClient = new TableServiceClient(
     new Uri(storageUri),
@@ -69,7 +69,7 @@ Previously in `Microsoft.Azure.Comsmos.Table`, we'd use a `CloudTable` instance 
 ```C#
 // Create a table client and create the table if it doesn't already exist.
 string tableName = "OfficeSupplies1p1";
-CloudTable table = tableClient.GetTableReference(tableName);
+CloudTable cloudTable = tableClient.GetTableReference(tableName);
 cloudTable.CreateIfNotExists()
 ```
 
@@ -94,7 +94,7 @@ tableClient.CreateIfNotExists();
 
 ### Adding data to the table
 
-Let's define an office supply entity so that we can add it to the cloudTable. First we need to define our custom entity types.
+Let's define an office supply entity so that we can add it to the table. To do so, we'll first need to define our custom entity types.
 
 Previously in `Microsoft.Azure.Comsmos.Table`, our entity would inherit from the `TableEntity` base class and look like this:
 
@@ -110,7 +110,7 @@ public class OfficeSupplyOld : Microsoft.Azure.Cosmos.Table.TableEntity
 Now in `Azure.Data.Tables`, we will implement the `ITableEntity` interface to define our entity.
 
 ```C# Snippet:TablesSample2DefineStronglyTypedEntity
-// Define a strongly typed entity by extending the <see cref="ITableEntity"> class.
+// Define a strongly typed entity by implementing the ITableEntity interface.
 public class OfficeSupplyEntity : ITableEntity
 {
     public string Product { get; set; }
@@ -125,7 +125,7 @@ public class OfficeSupplyEntity : ITableEntity
 
 Now let's populate an entity to add to the table for each version of the client.
 
-For `Microsoft.Azure.Cosmos.cloudTable.TableEntity`:
+For `Microsoft.Azure.Cosmos.Table.TableEntity`:
 
 ```c#
 string partitionKey = "Stationery";

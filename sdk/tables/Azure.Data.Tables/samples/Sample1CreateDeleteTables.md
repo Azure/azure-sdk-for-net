@@ -9,7 +9,7 @@ A `TableServiceClient` performs account-level operations like creating and delet
 In the sample below, we will use a Storage account and authenticate with an endpoint and `TableSharedKeyCredential`, which requires an account name and an account key. You can set `accountName` and `storageAccountKey` with an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:TablesSample1CreateClient
-// Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+// Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
 var serviceClient = new TableServiceClient(
     new Uri(storageUri),

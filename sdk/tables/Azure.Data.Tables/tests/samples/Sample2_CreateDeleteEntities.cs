@@ -107,7 +107,7 @@ namespace Azure.Data.Tables.Samples
         }
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity
-        // Define a strongly typed entity by extending the <see cref="ITableEntity"> class.
+        // Define a strongly typed entity by implementing the ITableEntity interface.
         public class OfficeSupplyEntity : ITableEntity
         {
             public string Product { get; set; }
