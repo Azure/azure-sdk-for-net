@@ -96,117 +96,117 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToAllAsync(string message, ContentType contentType = default)
+        public virtual async Task<Response> SendToAllAsync(string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return await SendToAllAsync(contentType.ToString(), RequestContent.Create(message), default, requestOptions: default).ConfigureAwait(false);
+            return await SendToAllAsync(contentType.ToString(), RequestContent.Create(content), default, requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToAll(string message, ContentType contentType = default)
+        public virtual Response SendToAll(string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return SendToAll(contentType.ToString(), RequestContent.Create(message), excluded: default, requestOptions: default);
+            return SendToAll(contentType.ToString(), RequestContent.Create(content), excluded: default, requestOptions: default);
         }
 
         /// <summary>
         /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToUserAsync(string userId, string message, ContentType contentType = default)
+        public virtual async Task<Response> SendToUserAsync(string userId, string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(message), requestOptions: default).ConfigureAwait(false);
+            return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToUser(string userId, string message, ContentType contentType = default)
+        public virtual Response SendToUser(string userId, string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return SendToUser(userId, contentType.ToString(), RequestContent.Create(message), requestOptions: default);
+            return SendToUser(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
         }
 
         /// <summary>
         /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToConnectionAsync(string connectionId, string message, ContentType contentType = default)
+        public virtual async Task<Response> SendToConnectionAsync(string connectionId, string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(message), requestOptions: default).ConfigureAwait(false);
+            return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToConnection(string connectionId, string message, ContentType contentType = default)
+        public virtual Response SendToConnection(string connectionId, string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(message), requestOptions: default);
+            return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
         }
 
         /// <summary>
         /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToGroupAsync(string group, string message, ContentType contentType = default)
+        public virtual async Task<Response> SendToGroupAsync(string group, string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(message), excluded : default, requestOptions: default).ConfigureAwait(false);
+            return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
-        /// <param name="message"></param>
+        /// <param name="content"></param>
         /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToGroup(string group, string message, ContentType contentType = default)
+        public virtual Response SendToGroup(string group, string content, ContentType contentType = default)
         {
             if (contentType == default)
                 contentType = ContentType.TextPlain;
 
-            return SendToGroup(group, contentType.ToString(), RequestContent.Create(message), excluded : default, requestOptions: default);
+            return SendToGroup(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
