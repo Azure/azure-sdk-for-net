@@ -229,7 +229,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
 
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, detectionConfigurationId, startTime, endTime))
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(detectionConfigurationId, seriesKeys, startTime, endTime))
             {
                 Console.WriteLine("Time series key:");
 
