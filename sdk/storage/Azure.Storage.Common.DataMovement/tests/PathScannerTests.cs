@@ -19,12 +19,12 @@ using Mono.Unix.Native;
 
 namespace Azure.Storage.Tests
 {
-    public class FilesystemScannerTests
+    public class PathScannerTests
     {
         private readonly string _temp = Path.GetTempPath();
         private readonly FileSystemAccessRule _winAcl;
 
-        public FilesystemScannerTests()
+        public PathScannerTests()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -50,8 +50,8 @@ namespace Azure.Storage.Tests
             AllowReadData(lockedChild, false, false);
             AllowReadData(lockedSubfolder, true, false);
 
-            FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(folder);
-            FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
+            PathScannerFactory scannerFactory = new PathScannerFactory(folder);
+            PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
             IEnumerable<string> result = scanner.Scan().ToList(); // Conversion to list is necessary because results from Scan() disappear once read
@@ -83,8 +83,9 @@ namespace Azure.Storage.Tests
 
             // Act/Assert
             Assert.Throws<UnauthorizedAccessException>(() => {
-                FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(folder);
-                FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
+                PathScannerFactory scannerFactory = new PathScannerFactory(folder);
+                PathScanner scanner = scannerFactory.BuildPathScanner();
+                scanner.Scan().GetEnumerator().MoveNext(); // Force getting first element to get resulting error
             });
 
             // Cleanup
@@ -99,8 +100,8 @@ namespace Azure.Storage.Tests
             // Arrange
             string file = CreateRandomFile(_temp);
 
-            FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(file);
-            FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
+            PathScannerFactory scannerFactory = new PathScannerFactory(file);
+            PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
             IEnumerable<string> result = scanner.Scan();
@@ -121,8 +122,8 @@ namespace Azure.Storage.Tests
             // Act/Assert
             Assert.IsFalse(File.Exists(file));
             Assert.Throws<FileNotFoundException>(() => {
-                FileSystemScannerFactory fsFactory = new FileSystemScannerFactory(file);
-                FileSystemScanner scanner = fsFactory.BuildFilesystemScanner();
+                PathScannerFactory scannerFactory = new PathScannerFactory(file);
+                PathScanner scanner = scannerFactory.BuildPathScanner();
             });
         }
 
@@ -145,10 +146,10 @@ namespace Azure.Storage.Tests
 
             string file = CreateRandomFile(_temp);
 
-            FileSystemScannerFactory folderFactory = new FileSystemScannerFactory(folder);
-            FileSystemScanner scanFolder = folderFactory.BuildFilesystemScanner();
-            FileSystemScannerFactory fileFactory = new FileSystemScannerFactory(file);
-            FileSystemScanner scanFile = fileFactory.BuildFilesystemScanner();
+            PathScannerFactory folderFactory = new PathScannerFactory(folder);
+            PathScanner scanFolder = folderFactory.BuildPathScanner();
+            PathScannerFactory fileFactory = new PathScannerFactory(file);
+            PathScanner scanFile = fileFactory.BuildPathScanner();
 
             // Act
             IEnumerable<string> result = scanFolder.Scan().Concat(scanFile.Scan()).ToList(); // Conversion to list is necessary because results from Scan() disappear once read

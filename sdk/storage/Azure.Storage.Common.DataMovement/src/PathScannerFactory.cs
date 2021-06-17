@@ -9,24 +9,16 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Common.DataMovement
 {
-    internal class FileSystemScannerFactory
+    internal class PathScannerFactory
     {
         private string _path;
-        private DirectoryScannerFactory _dirFactory;
 
-        public FileSystemScannerFactory(string path)
+        public PathScannerFactory(string path)
         {
             _path = path;
-            _dirFactory = new DirectoryScannerFactory();
         }
 
-        public FileSystemScannerFactory(string path, DirectoryScannerFactory dirFactory)
-        {
-            _path = path;
-            _dirFactory = dirFactory;
-        }
-
-        public FileSystemScanner BuildFilesystemScanner()
+        public PathScanner BuildPathScanner()
         {
             try
             {
@@ -34,12 +26,9 @@ namespace Azure.Storage.Common.DataMovement
                 string fullPath = Path.GetFullPath(_path);
 
                 // Check if path exists and whether it points to a directory
-                if ((File.GetAttributes(fullPath) & FileAttributes.Directory) == FileAttributes.Directory)
-                {
-                    return new FileSystemScanner(fullPath, true, _dirFactory);
-                }
+                bool isDir = (File.GetAttributes(fullPath) & FileAttributes.Directory) == FileAttributes.Directory;
 
-                return new FileSystemScanner(fullPath, false);
+                return new PathScanner(fullPath, isDir);
             }
             catch
             {
