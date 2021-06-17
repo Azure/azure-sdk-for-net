@@ -184,7 +184,7 @@ namespace Monitor.Tests.BasicTests
 
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedResult, insightsClient.SerializationSettings);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(new DataCollectionRuleResource { Tags = expectedResult }, insightsClient.SerializationSettings);
 
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -193,12 +193,6 @@ namespace Monitor.Tests.BasicTests
 
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
-
-            ActionGroupPatchBody bodyParameter = new ActionGroupPatchBody
-            {
-                Enabled = true,
-                Tags = null
-            };
 
             var result = insightsClient.DataCollectionRules.Update("rg-amcs-test", "dcrUpdateDataCollectionRuleTest", expectedResult);
             Utilities.AreEqual(expectedResult, result.Tags);
