@@ -15,7 +15,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new SelectQuery(null, null);
             query.Select("*");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("SELECT *");
         }
@@ -25,7 +25,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new SelectQuery(null, null);
             query.SelectCount();
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("SELECT COUNT()");
         }
@@ -35,7 +35,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new SelectQuery(null, null);
             query.SelectTop(5);
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("SELECT TOP(5)");
         }
@@ -44,8 +44,8 @@ namespace Azure.DigitalTwins.Core.Tests
         public void SelectQuery_Override()
         {
             var query = new SelectQuery(null, null);
-            query.SelectOverride("Room, Temperature");
-            query.Stringify()
+            query.Select("Room, Temperature");
+            query.GetQueryText()
                 .Should()
                 .Be("SELECT Room, Temperature");
         }

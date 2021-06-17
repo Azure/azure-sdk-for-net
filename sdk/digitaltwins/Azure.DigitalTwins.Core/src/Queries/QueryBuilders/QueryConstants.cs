@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
+namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
     /// Keywords for building queries.
@@ -19,6 +19,39 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         public const string Top = "TOP";
         public const string Count = "COUNT";
 
-        // other query keywords added in this same fashion as they are implemented
+        public const string And = "AND";
+
+        public const string IsDefined = "IS_DEFINED";
+        public const string IsNull = "IS_NULL";
+        public const string StartsWith = "STARTSWITH";
+        public const string EndsWith = "ENDSWITH";
+        public const string IsOfModel = "IS_OF_MODEL";
+
+        public static readonly IReadOnlyDictionary<AdtDataType, string> IsOfTypeConversions = new Dictionary<AdtDataType, string>()
+        {
+            { AdtDataType.AdtBool, "IS_BOOL" },
+            { AdtDataType.AdtNumber, "IS_NUMBER" },
+            { AdtDataType.AdtString, "IS_STRING" },
+            { AdtDataType.AdtPrimative, "IS_PRIMATIVE" },
+            { AdtDataType.AdtObject, "IS_OBJECT" }
+        };
+
+        // Maps comparison operators represented alphabetically to respective symbolic representations.
+        public static readonly IReadOnlyDictionary<QueryComparisonOperator, string> ComparisonOperators = new Dictionary<QueryComparisonOperator, string>()
+        {
+            { QueryComparisonOperator.Equal, "=" },
+            { QueryComparisonOperator.NotEqual, "!=" },
+            { QueryComparisonOperator.GreaterThan, ">" },
+            { QueryComparisonOperator.LessThan, "<" },
+            { QueryComparisonOperator.GreaterOrEqual, ">=" },
+            { QueryComparisonOperator.LessOrEqual, "<=" }
+        };
+
+        // Maps contains operators
+        public static readonly IReadOnlyDictionary<QueryContainsOperator, string> ContainOperators = new Dictionary<QueryContainsOperator, string>()
+        {
+            { QueryContainsOperator.In, "IN" },
+            { QueryContainsOperator.NotIn, "NIN" }
+        };
     }
 }

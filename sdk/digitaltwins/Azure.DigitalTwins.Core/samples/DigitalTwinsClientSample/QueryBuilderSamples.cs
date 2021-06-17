@@ -57,6 +57,20 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Select("Room", "Temperature")
                 .From(AdtCollection.DigitalTwins)
                 .Build();
+
+            // SELECT * FROM DIGITALTWINS WHERE TEMPERATURE < 5
+            var queryWithComparisonWhereClause = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where("Temperature", QueryComparisonOperator.LessThan, "6")
+                .Build();
+
+            // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1', exact)
+            AdtQueryBuilder query7 = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsOfModel("dtmi:example:room;1", true)
+                .Build();
         }
     }
 }

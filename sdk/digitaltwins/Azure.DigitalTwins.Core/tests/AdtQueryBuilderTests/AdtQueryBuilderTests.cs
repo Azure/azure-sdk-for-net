@@ -92,5 +92,84 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Should()
                 .Be("SELECT TOP(3) Room, Temperature FROM DigitalTwins");
         }
+
+        [Test]
+        public void AdtQueryBuilder_Where_Comparison()
+        {
+            new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where("Temperature", QueryComparisonOperator.GreaterOrEqual, "50")
+                .Build()
+                .Stringify()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE Temperature >= 50");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Where_Contains()
+        {
+            new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where("Location", QueryContainsOperator.NotIn, new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
+                .Build()
+                .Stringify()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE Location NIN ['Paris', 'Tokyo', 'Madrid', 'Prague']");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Where_Override()
+        {
+            new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where("IS_OF_MODEL('dtmi:example:room;1', exact)")
+                .Build()
+                .Stringify()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1', exact)");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Where_IsOfModel()
+        {
+            new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsOfModel("dtmi:example:room;1", true)
+                .Build()
+                .Stringify()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1', exact)");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Where_IsBool()
+        {
+            new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.Relationships)
+                .WhereIsOfType("isOccupied", AdtDataType.AdtBool)
+                .Build()
+                .Stringify()
+                .Should()
+                .Be("SELECT * FROM Relationships WHERE IS_BOOL(isOccupied)");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Where_MultipleWhere()
+        {
+            new AdtQueryBuilder()
+                .Select("Temperature")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsDefined("Humidity")
+                .Where("Occupants < 10")
+                .Build()
+                .Stringify()
+                .Should()
+                .Be("SELECT Temperature FROM DigitalTwins WHERE IS_DEFINED(Humidity) AND Occupants < 10");
+        }
     }
 }

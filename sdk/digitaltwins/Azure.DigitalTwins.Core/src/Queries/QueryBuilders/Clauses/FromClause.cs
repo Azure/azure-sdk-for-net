@@ -6,9 +6,9 @@ using System.Text;
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// Custom object for a FROM clause. Only meant to be used when adding FROM to a query. Hidden from user.
+    /// Custom object for a FROM clause. Only meant to be used when adding FROM to a query.
     /// </summary>
-    internal class FromClause : ClauseBase
+    internal class FromClause
     {
         /// <summary>
         /// Constructor for a FROM clause.
@@ -16,13 +16,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="collection"> Enum Collection that can be either a ADT instance or a relationship. </param>
         internal FromClause(AdtCollection collection)
         {
-            Type = ClauseType.FROM;
             Collection = collection.ToString();
         }
 
         internal FromClause(string literalCollection)
         {
-            Type = ClauseType.FROM;
             Collection = literalCollection;
         }
 

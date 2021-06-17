@@ -6,14 +6,14 @@ using System.Text;
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// Custom object for a WHERE clause. Only meant to be used when adding WHERE to a query. Hidden from user.
+    /// Custom object for a WHERE clause. Only meant to be used when adding WHERE to a query.
     /// </summary>
-    internal class WhereClause : ClauseBase
+    internal class WhereClause
     {
         /// <summary>
-        /// Condition object that encodes the logical condition behind the WHERE clause.
+        /// Condition object represented in string format that encodes the logical condition behind the WHERE clause.
         /// </summary>
-        internal ConditionBase Condition { get; set; }
+        internal string Condition { get; set; }
 
         /// <summary>
         /// Constructor for a WHERE clause.
@@ -21,7 +21,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="condition"> Condition argument for the WHERE clause. </param>
         internal WhereClause(ConditionBase condition)
         {
-            Type = ClauseType.WHERE;
+            Condition = condition.Stringify();
+        }
+
+        /// <summary>
+        /// Constructor for a WHERE clause that allows for overridden conditional statements.
+        /// </summary>
+        /// <param name="condition"> Condition argument for the WHERE clause. </param>
+        internal WhereClause(string condition)
+        {
             Condition = condition;
         }
     }
