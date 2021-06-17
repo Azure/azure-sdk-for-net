@@ -21,14 +21,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal const string ObjValue = ".obj";
         internal const string PlyValue = ".ply";
 
-        internal static readonly string[] validAssetFileTypeValues = new string[] {
-            FbxValue,
-            GlbValue,
-            GltfValue,
-            ObjValue,
-            PlyValue
-        };
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetFileType"/> struct.
         /// </summary>
@@ -47,11 +39,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             return new AssetFileType(Path.GetExtension(assetFilePath));
         }
-
-        /// <summary>
-        /// A List of supported asset file types
-        /// </summary>
-        public static IEnumerable<AssetFileType> SupportedAssetFileTypes => validAssetFileTypeValues.Select(f => new AssetFileType(f)).AsEnumerable();
 
         /// <summary>
         /// Fbx
@@ -119,14 +106,5 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
         /// <inheritdoc/>
         public override string ToString() => _value;
-
-        /// <summary>
-        /// Returns true if the values of the object contain valid data.
-        /// </summary>
-        /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        internal bool IsValid()
-        {
-            return validAssetFileTypeValues.Contains(_value, StringComparer.OrdinalIgnoreCase);
-        }
     }
 }

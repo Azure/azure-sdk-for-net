@@ -40,13 +40,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
                 new object[] { new Vector3(1, 0, 0), default(Uri), false }
             };
 
-        public static IEnumerable<object[]> UnsupportedAssetFileTypesFailTestData =>
-            new List<object[]>
-            {
-                new object[] { new AssetFileType(".obj"), true },
-                new object[] { new AssetFileType(".exe"), false },
-            };
-
         [Test]
         [TestCaseSource(nameof(IsNormalizedTestData))]
         public void NormalizedVectorRequired(Vector3 v, bool expectedSuccess)
@@ -75,27 +68,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             }
             catch (ArgumentException)
             {
-                caught = true;
-            }
-
-            Assert.AreNotEqual(caught, expectedSuccess);
-        }
-
-        [Test]
-        [TestCaseSource(nameof(UnsupportedAssetFileTypesFailTestData))]
-        public void UnsupportedAssetFileTypesFail(AssetFileType assetFileType, bool expectedSuccess)
-        {
-            Vector3 validAssetGravity = new Vector3(1, 0, 0);
-            AssetLengthUnit assetLengthUnit = AssetLengthUnit.Meters;
-            bool caught = false;
-
-            try
-            {
-                new AssetConversionOptions(new Uri(anyWorkingUriString), assetFileType, validAssetGravity, assetLengthUnit);
-            }
-            catch (UnsupportedAssetFileTypeException ex)
-            {
-                Console.WriteLine(ex);
                 caught = true;
             }
 
