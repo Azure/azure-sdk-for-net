@@ -167,17 +167,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 var whereComponents = new StringBuilder();
                 whereComponents.Append($"{QueryConstants.Where} ");
 
-                // Parse each Where conditional statement
-                for (int i = 0; i < _clauses.Count - 1; i++)
+                List<string> conditions = new List<string>();
+                foreach (WhereClause _clause in _clauses)
                 {
-                    whereComponents.Append(_clauses[i].Condition);
-
-                    // Add AND logical operator by default for multiple WHERE coditions
-                    whereComponents.Append($" {QueryConstants.And} ");
+                    conditions.Add(_clause.Condition);
                 }
 
-                // Attach final argument (outside of loop to avoid an extra And operator
-                whereComponents.Append(_clauses[_clauses.Count - 1].Condition);
+                whereComponents.Append(string.Join($" {QueryConstants.And} ", conditions).Trim());
                 return whereComponents.ToString().Trim();
             }
 

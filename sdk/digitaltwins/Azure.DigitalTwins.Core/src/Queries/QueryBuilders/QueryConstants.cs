@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public const string EndsWith = "ENDSWITH";
         public const string IsOfModel = "IS_OF_MODEL";
 
-        public static readonly Dictionary<AdtDataType, string> IsOfTypeConversions = new Dictionary<AdtDataType, string>()
+        public static readonly IReadOnlyDictionary<AdtDataType, string> IsOfTypeConversions = new Dictionary<AdtDataType, string>()
         {
             { AdtDataType.AdtBool, "IS_BOOL" },
             { AdtDataType.AdtNumber, "IS_NUMBER" },
@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         };
 
         // Maps comparison operators represented alphabetically to respective symbolic representations.
-        public static readonly Dictionary<QueryComparisonOperator, string> ComparisonOperators = new Dictionary<QueryComparisonOperator, string>()
+        public static readonly IReadOnlyDictionary<QueryComparisonOperator, string> ComparisonOperators = new Dictionary<QueryComparisonOperator, string>()
         {
             { QueryComparisonOperator.Equal, "=" },
             { QueryComparisonOperator.NotEqual, "!=" },
@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         };
 
         // Maps contains operators
-        public static readonly Dictionary<QueryContainsOperator, string> ContainOperators = new Dictionary<QueryContainsOperator, string>()
+        public static readonly IReadOnlyDictionary<QueryContainsOperator, string> ContainOperators = new Dictionary<QueryContainsOperator, string>()
         {
             { QueryContainsOperator.In, "IN" },
             { QueryContainsOperator.NotIn, "NIN" }
