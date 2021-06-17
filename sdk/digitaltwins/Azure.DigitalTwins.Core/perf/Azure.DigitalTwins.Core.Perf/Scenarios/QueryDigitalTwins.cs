@@ -26,7 +26,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
             await base.SetupAsync();
 
             _digitalTwinsClient = new DigitalTwinsClient(
-                new Uri(PerfTestEnvironment.Instance.ClientId),
+                new Uri(PerfTestEnvironment.Instance.DigitalTwinsUrl),
                 new ClientSecretCredential(
                     PerfTestEnvironment.Instance.DigitalTwinsTenantId,
                     PerfTestEnvironment.Instance.DigitalTwinsClientId,
