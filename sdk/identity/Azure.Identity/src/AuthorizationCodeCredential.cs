@@ -93,7 +93,7 @@ namespace Azure.Identity
                 _ => null
             };
 
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions, null);
         }
 
         /// <summary>
