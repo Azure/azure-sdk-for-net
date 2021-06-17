@@ -44,7 +44,7 @@ namespace Azure.Core.TestFramework
                     invocation.ReturnValue = vtCtor.Invoke(new object[] { instrumentedResult });
                 }
             }
-            else if (type.Name.StartsWith("Task"))
+            else if (type.Name.StartsWith("Task") || type.Name.StartsWith("AsyncStateMachineBox")) //in .net 5 the type is not task here
             {
                 if ((bool)type.GetProperty("IsFaulted").GetValue(result))
                     return;
