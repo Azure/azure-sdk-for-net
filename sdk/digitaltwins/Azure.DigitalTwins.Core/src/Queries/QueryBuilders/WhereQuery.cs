@@ -63,6 +63,29 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
+        /// An alternative way to add a WHERE clause to the query by directly providing a string that contains the condition.
+        /// </summary>
+        /// <param name="condition"> The verbatim condition (SQL-like syntax) in string format. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereQuery IsTrue(string condition)
+        {
+            _clauses.Add(new WhereClause(condition));
+            return this;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public WhereQuery IsTrue(Func<WhereQuery, WhereQuery> predicate)
+        {
+            WhereQuery innerWhere = predicate.Invoke(this);
+            _clauses.Add(new WhereClause(innerWhere.GetQueryText()));
+            return this;
+        }
+
+        /// <summary>
         /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_defined">IS_DEFINED</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="property"> The property that the query is looking for as defined. </param>
@@ -136,7 +159,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="expression"> The expression that the query is looking for as a specified type. </param>
         /// <param name="type"> The type in the ADT query language being checked for. </param>
         /// <returns></returns>
-        public WhereQuery WhereIsOfType(string expression, AdtDataType type)
+        public WhereQuery IsOfType(string expression, AdtDataType type)
         {
             string functionName = QueryConstants.IsOfTypeConversions[type];
             _clauses.Add(new WhereClause($"{functionName}({expression})"));
@@ -144,9 +167,18 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the logical operator AND to the query.
+        /// TODO.
         /// </summary>
-        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        /// <returns></returns>
+        public WhereQuery Or()
+        {
+            return this;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
         public WhereQuery And()
         {
             return this;
@@ -167,7 +199,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 var whereComponents = new StringBuilder();
                 whereComponents.Append($"{QueryConstants.Where} ");
 
-                List<string> conditions = new List<string>();
+                var conditions = new List<string>();
                 foreach (WhereClause _clause in _clauses)
                 {
                     conditions.Add(_clause.Condition);

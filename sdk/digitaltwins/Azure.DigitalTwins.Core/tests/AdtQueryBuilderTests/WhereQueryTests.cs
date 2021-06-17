@@ -110,7 +110,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_IsOfType_Bool()
         {
             var query = new WhereQuery(null);
-            query.WhereIsOfType("HasTemperature", AdtDataType.AdtBool);
+            query.IsOfType("HasTemperature", AdtDataType.AdtBool);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_BOOL(HasTemperature)");
@@ -120,7 +120,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_IsOfType_Number()
         {
             var query = new WhereQuery(null);
-            query.WhereIsOfType("Contains", AdtDataType.AdtNumber);
+            query.IsOfType("Contains", AdtDataType.AdtNumber);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_NUMBER(Contains)");
@@ -130,7 +130,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_IsOfType_String()
         {
             var query = new WhereQuery(null);
-            query.WhereIsOfType("Status", AdtDataType.AdtString);
+            query.IsOfType("Status", AdtDataType.AdtString);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_STRING(Status)");
@@ -140,7 +140,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_IsOfType_Primative()
         {
             var query = new WhereQuery(null);
-            query.WhereIsOfType("area", AdtDataType.AdtPrimative);
+            query.IsOfType("area", AdtDataType.AdtPrimative);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_PRIMATIVE(area)");
@@ -150,7 +150,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_IsOfType_Object()
         {
             var query = new WhereQuery(null);
-            query.WhereIsOfType("MapObject", AdtDataType.AdtObject);
+            query.IsOfType("MapObject", AdtDataType.AdtObject);
             query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_OBJECT(MapObject)");

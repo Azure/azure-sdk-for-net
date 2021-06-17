@@ -3,9 +3,8 @@
 
 using System;
 using System.Text;
-using Azure.DigitalTwins.Core.QueryBuilder;
 
-namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
+namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
     /// Azure DigitalTwins Query builder that facilitates writing queries against ADT instances.
@@ -14,6 +13,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
     {
         private readonly SelectQuery _selectQuery;
         private readonly FromQuery _fromQuery;
+        private readonly IntermediateWhere _intermediateWhere;
         private readonly WhereQuery _whereQuery;
 
         /// <summary>
@@ -22,7 +22,8 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         public AdtQueryBuilder()
         {
             _whereQuery = new WhereQuery(this);
-            _fromQuery = new FromQuery(this, _whereQuery);
+            _intermediateWhere = new IntermediateWhere(this, _whereQuery);
+            _fromQuery = new FromQuery(this, _intermediateWhere, "");
             _selectQuery = new SelectQuery(this, _fromQuery);
         }
 

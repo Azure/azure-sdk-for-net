@@ -15,12 +15,33 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     {
         private readonly WhereQuery _upstreamWhereQuery;
         private readonly AdtQueryBuilder _parent;
+        private IntermediateWhere _upsteamIntermediateWhereQuery;
         private FromClause _clause;
 
         internal FromQuery(AdtQueryBuilder parent, WhereQuery upstreamWhereQuery)
         {
             _parent = parent;
             _upstreamWhereQuery = upstreamWhereQuery;
+        }
+
+        internal FromQuery(AdtQueryBuilder parent, IntermediateWhere upstreamIntermediateWhere, string fixme)
+        {
+            Console.WriteLine(fixme);
+            _parent = parent;
+            _upsteamIntermediateWhereQuery = upstreamIntermediateWhere;
+        }
+
+        /// <summary>
+        /// Adds the FROM clause and its argument to the query via the Clauses component.
+        /// </summary>
+        /// <param name="collection"> An enum different collections that users can query from. </param>
+        /// <param name="fix"></param>
+        /// <returns> ADT query with select and from clause. </returns>
+        public IntermediateWhere From(AdtCollection collection, string fix)
+        {
+            Console.WriteLine(fix);
+            _clause = new FromClause(collection);
+            return _upsteamIntermediateWhereQuery;
         }
 
         /// <summary>
