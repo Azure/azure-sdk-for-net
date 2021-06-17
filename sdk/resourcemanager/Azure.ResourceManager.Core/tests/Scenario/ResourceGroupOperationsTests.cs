@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Core.Tests
             var deleteOp = await rg.StartDeleteAsync();
             var response = deleteOp.GetRawResponse();
             Assert.AreEqual(202, response.Status);
-            Assert.AreEqual("Accepted", response.ReasonPhrase);
             await deleteOp.UpdateStatusAsync();
             await deleteOp.WaitForCompletionResponseAsync();
             await deleteOp.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2));
