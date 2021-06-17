@@ -21,7 +21,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
-        private readonly TokenCredentialOptions _options;
+        private readonly bool _allowMultiTenantAuthentication;
         private readonly MsalConfidentialClient _client;
         private readonly string _redirectUri;
         private readonly string _tenantId;
@@ -85,8 +85,8 @@ namespace Azure.Identity
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
             _authCode = authorizationCode ;
-            _options = options ??= new TokenCredentialOptions();
-            _pipeline = CredentialPipeline.GetInstance(options);
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
                 AuthorizationCodeCredentialOptions o => o.RedirectUri?.ToString(),
@@ -127,7 +127,7 @@ namespace Azure.Identity
             try
             {
                 AccessToken token;
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
 
                 if (_record is null)
                 {

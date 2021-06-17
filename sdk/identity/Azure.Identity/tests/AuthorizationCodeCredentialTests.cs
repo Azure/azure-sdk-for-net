@@ -95,7 +95,7 @@ namespace Azure.Identity.Tests
         {
             options = new TokenCredentialOptions { AllowMultiTenantAuthentication = preferHint };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options) ;
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
 
             AuthorizationCodeCredential cred = InstrumentClient(new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockMsalClient));
 

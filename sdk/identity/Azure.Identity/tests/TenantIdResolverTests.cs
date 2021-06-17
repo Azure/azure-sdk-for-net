@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests
         [TestCaseSource(nameof(ResolveInputs))]
         public void Resolve(string tenantId, TokenRequestContext context, TokenCredentialOptions options, string expectedTenantId)
         {
-            var result = TenantIdResolver.Resolve(tenantId, context, options);
+            var result = TenantIdResolver.Resolve(tenantId, context, options.AllowMultiTenantAuthentication);
 
             Assert.AreEqual(expectedTenantId, result);
         }

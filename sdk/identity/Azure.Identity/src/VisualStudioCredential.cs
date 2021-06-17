@@ -29,8 +29,8 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
-        private readonly TokenCredentialOptions _options;
-        private bool tenantIdOptionProvided;
+        private readonly bool _allowMultiTenantAuthentication;
+        private readonly bool _tenantIdOptionProvided;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -43,13 +43,13 @@ namespace Azure.Identity
         /// <param name="options">Options for configuring the credential.</param>
         public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
         {
-            _options = options;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
         }
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
-            _options = options;
-            tenantIdOptionProvided = tenantId != null;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _tenantIdOptionProvided = tenantId != null;
             _tenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
@@ -166,7 +166,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);

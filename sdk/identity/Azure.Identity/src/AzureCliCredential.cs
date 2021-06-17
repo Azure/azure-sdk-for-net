@@ -20,7 +20,7 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredential : TokenCredential
     {
-        private readonly AzureCliCredentialOptions _options;
+        private readonly bool _allowMultiTenantAuthentication;
         internal const string AzureCLINotInstalled = "Azure CLI not installed";
         internal const string AzNotLogIn = "Please run 'az login' to set up account";
         private const string WinAzureCLIError = "'az' is not recognized";
@@ -44,6 +44,7 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
+        private readonly string _tenantId;
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -65,7 +66,8 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            _options = options ?? new AzureCliCredentialOptions();
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _tenantId = options?.TenantId;
         }
 
         /// <summary>
@@ -108,7 +110,7 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
-            string tenantId = TenantIdResolver.Resolve(_options.TenantId, context, _options);
+            string tenantId = TenantIdResolver.Resolve(_tenantId, context, _allowMultiTenantAuthentication);
 
             ScopeUtilities.ValidateScope(resource);
 

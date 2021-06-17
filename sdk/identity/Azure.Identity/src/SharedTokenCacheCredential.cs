@@ -30,7 +30,7 @@ namespace Azure.Identity
         private readonly bool _skipTenantValidation;
         private readonly AuthenticationRecord _record;
         private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
-        private readonly TokenCredentialOptions _options;
+        private readonly bool _allowMultiTenantAuthentication;
 
         internal MsalPublicClient Client { get; }
 
@@ -74,7 +74,7 @@ namespace Azure.Identity
             _skipTenantValidation = (options as SharedTokenCacheCredentialOptions)?.EnableGuestTenantAuthentication ?? false;
             _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _options = options;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
@@ -107,7 +107,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
                 IAccount account = await GetAccountAsync(tenantId, async, cancellationToken).ConfigureAwait(false);
                 AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

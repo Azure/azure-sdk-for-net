@@ -580,7 +580,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             var options = new SharedTokenCacheCredentialOptions { AllowMultiTenantAuthentication = preferHint };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
             mockMsal.Accounts = new List<IAccount>
             {
                 new MockAccount(expectedUsername, expectedTenantId)

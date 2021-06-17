@@ -18,7 +18,7 @@ namespace Azure.Identity
     public class DeviceCodeCredential : TokenCredential
     {
         private readonly string _tenantId;
-        private readonly TokenCredentialOptions _options;
+        private readonly bool _allowMultiTenantAuthentication;
         internal MsalPublicClient Client { get; set; }
         internal string ClientId { get; }
         internal bool DisableAutomaticAuthentication { get; }
@@ -86,7 +86,7 @@ namespace Azure.Identity
             DeviceCodeCallback = deviceCodeCallback;
             DisableAutomaticAuthentication = (options as DeviceCodeCredentialOptions)?.DisableAutomaticAuthentication ?? false;
             Record = (options as DeviceCodeCredentialOptions)?.AuthenticationRecord;
-            _options = options;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, ClientId, AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).ToString(), options as ITokenCacheOptions);
         }
@@ -198,7 +198,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);

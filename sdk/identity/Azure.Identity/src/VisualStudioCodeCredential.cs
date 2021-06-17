@@ -27,7 +27,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly MsalPublicClient _client;
         private const string _commonTenant = "common";
-        private readonly TokenCredentialOptions _options;
+        private readonly bool _allowMultiTenantAuthentication;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
@@ -48,7 +48,7 @@ namespace Azure.Identity
             _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
-            _options = options;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
         }
 
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
-                var tenantId = TenantIdResolver.Resolve(tenant, requestContext, _options);
+                var tenantId = TenantIdResolver.Resolve(tenant, requestContext, _allowMultiTenantAuthentication);
 
                 if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {

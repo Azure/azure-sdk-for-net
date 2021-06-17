@@ -27,7 +27,7 @@ namespace Azure.Identity
         private readonly SecureString _password;
         private AuthenticationRecord _record;
         private readonly string _tenantId;
-        private readonly TokenCredentialOptions _options;
+        private readonly bool _allowMultiTenantAuthentication;
 
         /// <summary>
         /// Protected constructor for mocking
@@ -83,7 +83,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(clientId, nameof(clientId));
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-            _options = options;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
 
             _username = username;
             _password = password.ToSecureString();
@@ -188,7 +188,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
 
                 AuthenticationResult result = await _client
                     .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
