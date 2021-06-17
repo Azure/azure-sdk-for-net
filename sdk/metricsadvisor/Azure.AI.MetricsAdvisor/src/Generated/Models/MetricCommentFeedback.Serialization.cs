@@ -7,9 +7,10 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     public partial class MetricCommentFeedback : IUtf8JsonSerializable
     {

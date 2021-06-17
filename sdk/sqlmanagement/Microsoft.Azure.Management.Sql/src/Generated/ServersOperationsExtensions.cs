@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
-            public static IPage<Server> ListByResourceGroup(this IServersOperations operations, string resourceGroupName)
+            /// <param name='expand'>
+            /// The child resources to include in the response.
+            /// </param>
+            public static IPage<Server> ListByResourceGroup(this IServersOperations operations, string resourceGroupName, string expand = default(string))
             {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,12 +49,15 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
+            /// <param name='expand'>
+            /// The child resources to include in the response.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Server>> ListByResourceGroupAsync(this IServersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Server>> ListByResourceGroupAsync(this IServersOperations operations, string resourceGroupName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -70,9 +76,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static Server Get(this IServersOperations operations, string resourceGroupName, string serverName)
+            /// <param name='expand'>
+            /// The child resources to include in the response.
+            /// </param>
+            public static Server Get(this IServersOperations operations, string resourceGroupName, string serverName, string expand = default(string))
             {
-                return operations.GetAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serverName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -88,12 +97,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='expand'>
+            /// The child resources to include in the response.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Server> GetAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Server> GetAsync(this IServersOperations operations, string resourceGroupName, string serverName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -240,9 +252,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Server> List(this IServersOperations operations)
+            /// <param name='expand'>
+            /// The child resources to include in the response.
+            /// </param>
+            public static IPage<Server> List(this IServersOperations operations, string expand = default(string))
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -251,46 +266,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Server>> ListAsync(this IServersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Determines whether a resource can be created with the specified name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The name availability request parameters.
-            /// </param>
-            public static CheckNameAvailabilityResponse CheckNameAvailability(this IServersOperations operations, CheckNameAvailabilityRequest parameters)
-            {
-                return operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Determines whether a resource can be created with the specified name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The name availability request parameters.
+            /// <param name='expand'>
+            /// The child resources to include in the response.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IServersOperations operations, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Server>> ListAsync(this IServersOperations operations, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -339,6 +323,40 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<ImportExportOperationResult> ImportDatabaseAsync(this IServersOperations operations, string resourceGroupName, string serverName, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ImportDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Determines whether a resource can be created with the specified name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The name availability request parameters.
+            /// </param>
+            public static CheckNameAvailabilityResponse CheckNameAvailability(this IServersOperations operations, CheckNameAvailabilityRequest parameters)
+            {
+                return operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Determines whether a resource can be created with the specified name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The name availability request parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IServersOperations operations, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -15,32 +15,41 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AzureCloud != null)
+            if (Optional.IsDefined(AzureCloud))
             {
-                writer.WritePropertyName("azureCloud");
-                writer.WriteStringValue(AzureCloud);
+                if (AzureCloud != null)
+                {
+                    writer.WritePropertyName("azureCloud");
+                    writer.WriteStringValue(AzureCloud);
+                }
+                else
+                {
+                    writer.WriteNull("azureCloud");
+                }
             }
-            else
+            if (Optional.IsDefined(ApplicationId))
             {
-                writer.WriteNull("azureCloud");
+                if (ApplicationId != null)
+                {
+                    writer.WritePropertyName("applicationId");
+                    writer.WriteStringValue(ApplicationId);
+                }
+                else
+                {
+                    writer.WriteNull("applicationId");
+                }
             }
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApiKey))
             {
-                writer.WritePropertyName("applicationId");
-                writer.WriteStringValue(ApplicationId);
-            }
-            else
-            {
-                writer.WriteNull("applicationId");
-            }
-            if (ApiKey != null)
-            {
-                writer.WritePropertyName("apiKey");
-                writer.WriteStringValue(ApiKey);
-            }
-            else
-            {
-                writer.WriteNull("apiKey");
+                if (ApiKey != null)
+                {
+                    writer.WritePropertyName("apiKey");
+                    writer.WriteStringValue(ApiKey);
+                }
+                else
+                {
+                    writer.WriteNull("apiKey");
+                }
             }
             if (Query != null)
             {
@@ -56,9 +65,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureApplicationInsightsParameter DeserializeAzureApplicationInsightsParameter(JsonElement element)
         {
-            string azureCloud = default;
-            string applicationId = default;
-            string apiKey = default;
+            Optional<string> azureCloud = default;
+            Optional<string> applicationId = default;
+            Optional<string> apiKey = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -103,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
+            return new AzureApplicationInsightsParameter(azureCloud.Value, applicationId.Value, apiKey.Value, query);
         }
     }
 }

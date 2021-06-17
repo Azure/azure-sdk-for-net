@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c63e8bf71612274595731d85fc25358e-8fff93bb68ceeb44-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-c747e58a32751e449a171caf5b1cd7c2-984c6f2e4b26ba42-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210604.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "66be6f27b4d3929056ed029f912d45e9",
         "x-ms-return-client-request-id": "true"
@@ -15,18 +15,19 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "45ad6973-2455-4d9b-92f8-97516338b389",
-        "Content-Length": "31448",
+        "apim-request-id": "85a7a726-d01c-4ba0-a549-e6fc19c9fa19",
+        "Content-Length": "40270",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 17:42:26 GMT",
+        "Date": "Fri, 04 Jun 2021 12:23:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "425",
-        "x-request-id": "45ad6973-2455-4d9b-92f8-97516338b389"
+        "x-envoy-upstream-service-time": "494",
+        "x-request-id": "85a7a726-d01c-4ba0-a549-e6fc19c9fa19"
       },
       "ResponseBody": {
         "value": [
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -38,10 +39,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 157077.59999999998,
+              "expectedValue": 181218.56936944055
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -53,10 +57,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 163790.59999999998,
+              "expectedValue": 192484.41588363584
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -68,10 +75,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1.0,
+              "expectedValue": 0.16030692603870361
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -83,10 +93,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 48517.200000000004,
+              "expectedValue": 82380.6273376673
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -98,10 +111,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 384774.8,
+              "expectedValue": 425739.701011788
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -113,10 +129,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 3.4,
+              "expectedValue": 1.8564662412054167
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -128,10 +147,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.2,
+              "expectedValue": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -143,10 +165,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 51520.2,
+              "expectedValue": 59465.511859350692
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -158,10 +183,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 90392.0,
+              "expectedValue": 114054.43781517429
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -173,10 +201,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 263007.4,
+              "expectedValue": 299469.32547888882
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -188,10 +219,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 3583808.9999999995,
+              "expectedValue": 4286919.7293367144
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -203,10 +237,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 343973.6,
+              "expectedValue": 377594.368992992
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -218,10 +255,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.0,
+              "expectedValue": 3.5724144512849647
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -233,10 +273,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.4,
+              "expectedValue": 0.23381129349099047
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -248,10 +291,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 7921032.1999999993,
+              "expectedValue": 8322959.9117520843
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -263,10 +309,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 129240.2,
+              "expectedValue": 177259.05288228157
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -278,10 +327,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.6,
+              "expectedValue": 0.13304319424495817
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -293,10 +345,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 3964.0,
+              "expectedValue": 7052.2207915934969
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -308,10 +363,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.2,
+              "expectedValue": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -323,10 +381,13 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 66519260.000000022,
+              "expectedValue": 70651365.375282586
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -338,10 +399,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 573090.6,
+              "expectedValue": 700579.75023709389
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -353,10 +417,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 105163.2,
+              "expectedValue": 137926.87013517786
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -368,10 +435,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.6,
+              "expectedValue": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -383,10 +453,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 21153.0,
+              "expectedValue": 23721.703402082909
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -398,10 +471,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 128287.2,
+              "expectedValue": 148298.48106495664
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -413,10 +489,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 3051.8,
+              "expectedValue": 3878.3156446487719
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -428,10 +507,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 513455.6,
+              "expectedValue": 596967.90257180436
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -443,10 +525,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 13668.2,
+              "expectedValue": 15589.618659407335
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -458,10 +543,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 3276301.8000000003,
+              "expectedValue": 3648290.7632062924
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -473,10 +561,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 13951.0,
+              "expectedValue": 17052.084936012034
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -488,10 +579,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 4645918.2,
+              "expectedValue": 4953441.3993763272
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -503,10 +597,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.6,
+              "expectedValue": 0.29684555611205976
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -518,10 +615,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.0,
+              "expectedValue": 5.89638307091832
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -533,10 +633,13 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 79092033.4,
+              "expectedValue": 83904129.166464686
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -548,10 +651,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 143210.8,
+              "expectedValue": 164852.16590807075
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -563,10 +669,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1985.6,
+              "expectedValue": 2320.148701215885
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -578,10 +687,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 4226.8,
+              "expectedValue": 5780.4800802272312
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -593,10 +705,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 23648.2,
+              "expectedValue": 30878.275591296202
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -608,10 +723,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.2,
+              "expectedValue": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -623,10 +741,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1220639.8,
+              "expectedValue": 1353817.4313189974
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -638,10 +759,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 22195.4,
+              "expectedValue": 26079.684957036981
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -653,10 +777,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 181043.40000000002,
+              "expectedValue": 195305.11084885083
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -668,10 +795,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 29401.6,
+              "expectedValue": 36480.752283402035
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -683,10 +813,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.2,
+              "expectedValue": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -698,10 +831,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 33.4,
+              "expectedValue": 77.265790755136535
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -713,10 +849,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 92548.8,
+              "expectedValue": 110946.63393768857
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -728,10 +867,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1395682.2,
+              "expectedValue": 1549008.7202043266
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -743,10 +885,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 8564.6,
+              "expectedValue": 9208.6736377689886
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -758,10 +903,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 321202.8,
+              "expectedValue": 386597.96822187968
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -773,10 +921,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1196469.4000000001,
+              "expectedValue": 1414458.8326065671
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -788,10 +939,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 111116.4,
+              "expectedValue": 128938.696433415
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -803,10 +957,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 136278.6,
+              "expectedValue": 145516.42724883126
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -818,10 +975,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 202219.2,
+              "expectedValue": 239402.56062742215
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -833,10 +993,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1364655.2000000007,
+              "expectedValue": 1496098.3298686668
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -848,10 +1011,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 5464832.3999999994,
+              "expectedValue": 5962432.2200998
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -863,10 +1029,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 725175.60000000009,
+              "expectedValue": 882195.56464993954
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -878,10 +1047,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 151385.2,
+              "expectedValue": 212998.07999491875
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -893,10 +1065,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1033392.8,
+              "expectedValue": 1211625.401471812
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -908,10 +1083,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.0,
+              "expectedValue": 0.21970638531468334
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -923,10 +1101,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 248900.4,
+              "expectedValue": 298351.02589707694
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -938,10 +1119,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 43094.8,
+              "expectedValue": 75662.4929814965
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -953,10 +1137,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 3.0,
+              "expectedValue": 1.4729684801491421
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -968,10 +1155,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1.0,
+              "expectedValue": 0.042535363885149849
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -983,10 +1173,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 3080496.6,
+              "expectedValue": 3689096.1750460584
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -998,10 +1191,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 15247.8,
+              "expectedValue": 17194.227575452729
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1013,10 +1209,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1075849.5999999999,
+              "expectedValue": 1238994.8288891343
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1028,10 +1227,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1.0,
+              "expectedValue": 0.012328166585182702
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1043,10 +1245,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 15463.6,
+              "expectedValue": 18114.404832860055
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1058,10 +1263,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.6,
+              "expectedValue": 0.26713244989257545
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1073,10 +1281,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.2,
+              "expectedValue": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1088,10 +1299,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 2.8,
+              "expectedValue": 0.32331066012917681
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1103,10 +1317,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 2819.0,
+              "expectedValue": 3696.5958879526511
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1118,10 +1335,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 5891.0,
+              "expectedValue": 6338.257404824094
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1133,10 +1353,13 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 32332227.000000004,
+              "expectedValue": 34235014.937926367
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1148,10 +1371,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 234996.2,
+              "expectedValue": 279630.25558062526
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1163,10 +1389,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.0,
+              "expectedValue": 1.7619857385604643
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1178,10 +1407,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 2844091.6,
+              "expectedValue": 3170442.4297326757
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1193,10 +1425,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 123889.8,
+              "expectedValue": 150442.908313583
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1208,10 +1443,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.2,
+              "expectedValue": 4.4979893663574879
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1223,10 +1461,13 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 26463631.2,
+              "expectedValue": 28204439.128056582
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1238,10 +1479,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 161420.4,
+              "expectedValue": 174051.17889907371
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1253,10 +1497,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 284787.2,
+              "expectedValue": 340843.21337300004
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1268,10 +1515,13 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 1.4,
+              "expectedValue": 0.00082077254676293527
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1283,10 +1533,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 792048.8,
+              "expectedValue": 861444.99715175061
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1298,10 +1551,13 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 867955.8,
+              "expectedValue": 955002.49523577024
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "timestamp": "2020-10-29T00:00:00Z",
@@ -1313,11 +1569,12 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active"
+              "anomalyStatus": "Active",
+              "value": 0.2,
+              "expectedValue": 0.0
             }
           }
-        ],
-        "@nextLink": null
+        ]
       }
     }
   ],

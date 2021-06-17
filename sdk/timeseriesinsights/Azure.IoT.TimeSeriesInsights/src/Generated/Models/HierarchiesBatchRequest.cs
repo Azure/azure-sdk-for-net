@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to perform a single operation on a batch of hierarchies. Exactly one of &quot;get&quot;, &quot;put&quot; or &quot;delete&quot; must be set. </summary>
-    public partial class HierarchiesBatchRequest
+    internal partial class HierarchiesBatchRequest
     {
         /// <summary> Initializes a new instance of HierarchiesBatchRequest. </summary>
         public HierarchiesBatchRequest()

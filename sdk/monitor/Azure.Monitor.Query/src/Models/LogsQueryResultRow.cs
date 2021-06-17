@@ -14,11 +14,13 @@ namespace Azure.Monitor.Query.Models
     /// </summary>
     public class LogsQueryResultRow
     {
-        private readonly Dictionary<string, int> _columns;
+        private readonly Dictionary<string, int> _columnMap;
+        private readonly IReadOnlyList<LogsQueryResultColumn> _columns;
         private readonly JsonElement _row;
 
-        internal LogsQueryResultRow(Dictionary<string, int> columns, JsonElement row)
+        internal LogsQueryResultRow(Dictionary<string, int> columnMap, IReadOnlyList<LogsQueryResultColumn> columns, JsonElement row)
         {
+            _columnMap = columnMap;
             _columns = columns;
             _row = row;
         }
@@ -92,6 +94,13 @@ namespace Azure.Monitor.Query.Models
         public Guid GetGuid(int index) => _row[index].GetGuid();
 
         /// <summary>
+        /// Gets the value of the column at the specified index as <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="index">The column index.</param>
+        /// <returns>The <see cref="BinaryData"/> value of the column.</returns>
+        public BinaryData GetDynamic(int index) => new BinaryData(_row[index].GetString());
+
+        /// <summary>
         /// Returns true if the value of the column at the specified index is null, otherwise false.
         /// </summary>
         /// <param name="index">The column index.</param>
@@ -103,70 +112,77 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="int"/> value of the column.</returns>
-        public int GetInt32(string name) => GetInt32(_columns[name]);
+        public int GetInt32(string name) => GetInt32(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="long"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="long"/> value of the column.</returns>
-        public long GetInt64(string name) => GetInt64(_columns[name]);
+        public long GetInt64(string name) => GetInt64(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="bool"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="bool"/> value of the column.</returns>
-        public bool GetBoolean(string name) => GetBoolean(_columns[name]);
+        public bool GetBoolean(string name) => GetBoolean(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="decimal"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="decimal"/> value of the column.</returns>
-        public decimal GetDecimal(string name) => GetDecimal(_columns[name]);
+        public decimal GetDecimal(string name) => GetDecimal(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="double"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="double"/> value of the column.</returns>
-        public double GetDouble(string name) => GetDouble(_columns[name]);
+        public double GetDouble(string name) => GetDouble(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="string"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="string"/> value of the column.</returns>
-        public string GetString(string name) => GetString(_columns[name]);
+        public string GetString(string name) => GetString(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="DateTimeOffset"/> value of the column.</returns>
-        public DateTimeOffset GetDateTimeOffset(string name) => GetDateTimeOffset(_columns[name]);
+        public DateTimeOffset GetDateTimeOffset(string name) => GetDateTimeOffset(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="TimeSpan"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="TimeSpan"/> value of the column.</returns>
-        public TimeSpan GetTimeSpan(string name) => GetTimeSpan(_columns[name]);
+        public TimeSpan GetTimeSpan(string name) => GetTimeSpan(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column with the specified name as <see cref="Guid"/>.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="Guid"/> value of the column.</returns>
-        public Guid GetGuid(string name) => GetGuid(_columns[name]);
+        public Guid GetGuid(string name) => GetGuid(_columnMap[name]);
+
+        /// <summary>
+        /// Gets the value of the column with the specified name as <see cref="Guid"/>.
+        /// </summary>
+        /// <param name="name">The column name.</param>
+        /// <returns>The <see cref="BinaryData"/> value of the column.</returns>
+        public BinaryData GetDynamic(string name) => GetDynamic(_columnMap[name]);
 
         /// <summary>
         /// Returns true if the value of the column with the specified name is null, otherwise false.
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>True if the value is null, otherwise false.</returns>
-        public bool IsNull(string name) => IsNull(_columns[name]);
+        public bool IsNull(string name) => IsNull(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="object"/>.
@@ -175,7 +191,36 @@ namespace Azure.Monitor.Query.Models
         /// <returns>The <see cref="object"/> value of the column.</returns>
         public object GetObject(int index)
         {
+            if (IsNull(index))
+            {
+                return null;
+            }
+
             var element = _row[index];
+            switch (_columns[index].Type.ToString())
+            {
+                case LogColumnTypes.DatetimeTypeValue:
+                    return GetDateTimeOffset(index);
+                case LogColumnTypes.BoolTypeValue:
+                    return GetBoolean(index);
+                case LogColumnTypes.GuidTypeValue:
+                    return GetGuid(index);
+                case LogColumnTypes.IntTypeValue:
+                    return GetInt32(index);
+                case LogColumnTypes.LongTypeValue:
+                    return GetInt64(index);
+                case LogColumnTypes.RealTypeValue:
+                    return GetDouble(index);
+                case LogColumnTypes.StringTypeValue:
+                    return GetString(index);
+                case LogColumnTypes.TimespanTypeValue:
+                    return GetTimeSpan(index);
+                case LogColumnTypes.DecimalTypeValue:
+                    return GetDecimal(index);
+                case LogColumnTypes.DynamicValueTypeValue:
+                    return GetDynamic(index);
+            }
+
             switch (element.ValueKind)
             {
                 case JsonValueKind.String:
@@ -209,7 +254,7 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="name">The column name.</param>
         /// <returns>The <see cref="object"/> value of the column.</returns>
-        public object GetObject(string name) => GetObject(_columns[name]);
+        public object GetObject(string name) => GetObject(_columnMap[name]);
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="object"/>.
@@ -225,6 +270,6 @@ namespace Azure.Monitor.Query.Models
         /// <returns>The <see cref="object"/> value of the column.</returns>
         public object this[string name] => GetObject(name);
 
-        internal bool TryGetColumn(string name, out int column) => _columns.TryGetValue(name, out column);
+        internal bool TryGetColumn(string name, out int column) => _columnMap.TryGetValue(name, out column);
     }
 }

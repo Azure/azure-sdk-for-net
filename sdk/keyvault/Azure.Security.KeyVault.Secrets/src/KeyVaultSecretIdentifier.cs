@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Secrets
@@ -56,6 +57,7 @@ namespace Azure.Security.KeyVault.Secrets
         public string Version { get; }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
             obj is KeyVaultSecretIdentifier other && Equals(other);
 
@@ -64,7 +66,13 @@ namespace Azure.Security.KeyVault.Secrets
             SourceId.Equals(other.SourceId);
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             SourceId.GetHashCode();
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() =>
+            base.ToString();
     }
 }

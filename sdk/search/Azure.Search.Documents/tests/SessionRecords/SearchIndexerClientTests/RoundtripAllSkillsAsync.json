@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "3714",
+        "Content-Length": "3715",
         "Content-Type": "application/json",
-        "traceparent": "00-f4fbbca4489f9b4bbbda8edead8edeb4-524766a842aec640-00",
+        "traceparent": "00-91853703a12a56419478cf6db53c0b50-600fb9ff31f16742-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
-          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "8e39ba448961d14a4b538fa82f0f897a",
         "x-ms-return-client-request-id": "true"
@@ -43,7 +43,7 @@
             ]
           },
           {
-            "entitiesDefinitionUri": "https://microsoft.com",
+            "entitiesDefinitionUri": "https://microsoft.com/",
             "@odata.type": "#Microsoft.Skills.Text.CustomEntityLookupSkill",
             "inputs": [
               {
@@ -314,11 +314,11 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "8e39ba44-8961-d14a-4b53-8fa82f0f897a",
-        "Content-Length": "6254",
+        "Content-Length": "6255",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 28 Apr 2021 22:48:33 GMT",
-        "elapsed-time": "94",
-        "ETag": "W/\u00220x8D90A97C0727081\u0022",
+        "Date": "Thu, 10 Jun 2021 21:23:34 GMT",
+        "elapsed-time": "72",
+        "ETag": "W/\u00220x8D92C56012836BC\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027lefvvewn\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
@@ -330,7 +330,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D90A97C0727081\u0022",
+        "@odata.etag": "\u00220x8D92C56012836BC\u0022",
         "name": "lefvvewn",
         "description": null,
         "skills": [
@@ -372,7 +372,7 @@
             "description": null,
             "context": null,
             "defaultLanguageCode": null,
-            "entitiesDefinitionUri": "https://microsoft.com",
+            "entitiesDefinitionUri": "https://microsoft.com/",
             "globalDefaultCaseSensitive": null,
             "globalDefaultAccentSensitive": null,
             "globalDefaultFuzzyEditDistance": null,

@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2020_06_30_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents.Tests
         {
             // Make sure we're not repeating Header/Query names already defined
             // in the base ClientOptions
-            SearchClientOptions options = new SearchClientOptions();
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion);
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
 
@@ -66,7 +67,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
 
-            SearchIndexerClient serviceClient = resources.GetIndexerClient();
+            SearchIndexerClient serviceClient = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
 
             // Create the Azure Blob data source and indexer.
             SearchIndexerDataSourceConnection dataSource = new SearchIndexerDataSourceConnection(
@@ -381,9 +382,19 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions());
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
             string skillsetName = Recording.Random.GetName();
 
+            SearchIndexerSkillset skillset = CreateSkillsetModel(skillsetName, resources);
+
+            // Create the skillset.
+            SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(skillset);
+
+            await TestSkillsetAsync(client, skillset, createdSkillset, skillsetName);
+        }
+
+        private SearchIndexerSkillset CreateSkillsetModel(string skillsetName, SearchResources resources)
+        {
             // Skills based on https://github.com/Azure-Samples/azure-search-sample-data/blob/master/hotelreviews/HotelReviews_skillset.json.
             SearchIndexerSkill skill1 = new SplitSkill(
                 new[]
@@ -481,33 +492,31 @@ namespace Azure.Search.Documents.Tests
                 Context = "/document",
             };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table1 = new("hotelReviewsDocument")
+            KnowledgeStoreTableProjectionSelector table1 = new("hotelReviewsDocument")
             {
                 GeneratedKeyName = "Documentid",
                 Source = "/document/tableprojection",
                 SourceContext = null,
             };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table2 = new("hotelReviewsPages")
+            KnowledgeStoreTableProjectionSelector table2 = new("hotelReviewsPages")
             {
                 GeneratedKeyName = "Pagesid",
                 Source = "/document/tableprojection/pages/*",
                 SourceContext = null,
             };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table3 = new("hotelReviewsKeyPhrases")
+            KnowledgeStoreTableProjectionSelector table3 = new("hotelReviewsKeyPhrases")
             {
                 GeneratedKeyName = "KeyPhrasesid",
                 Source = "/document/tableprojection/pages/*/keyphrase/*",
                 SourceContext = null,
             };
 
-            SearchIndexerKnowledgeStoreProjection projection1 = new();
-            projection1.Tables.Add(table1);
-            projection1.Tables.Add(table2);
-            projection1.Tables.Add(table3);
+            KnowledgeStoreProjection projection1 = new()
+            { Tables = { table1, table2, table3 } };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table4 = new("hotelReviewsInlineDocument")
+            KnowledgeStoreTableProjectionSelector table4 = new("hotelReviewsInlineDocument")
             {
                 GeneratedKeyName = "Documentid",
                 Source = null,
@@ -520,7 +529,7 @@ namespace Azure.Search.Documents.Tests
             table4.Inputs.Add(new("reviews_title") { Source = "/document/reviews_title", SourceContext = null });
             table4.Inputs.Add(new("AzureSearch_DocumentKey") { Source = "/document/AzureSearch_DocumentKey", SourceContext = null });
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table5 = new("hotelReviewsInlinePages")
+            KnowledgeStoreTableProjectionSelector table5 = new("hotelReviewsInlinePages")
             {
                 GeneratedKeyName = "Pagesid",
                 Source = null,
@@ -530,7 +539,7 @@ namespace Azure.Search.Documents.Tests
             table5.Inputs.Add(new("LanguageCode") { Source = "/document/Language", SourceContext = null });
             table5.Inputs.Add(new("Page") { Source = "/document/reviews_text/pages/*", SourceContext = null });
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table6 = new("hotelReviewsInlineKeyPhrases")
+            KnowledgeStoreTableProjectionSelector table6 = new("hotelReviewsInlineKeyPhrases")
             {
                 GeneratedKeyName = "kpidv2",
                 Source = null,
@@ -538,22 +547,22 @@ namespace Azure.Search.Documents.Tests
             };
             table6.Inputs.Add(new("Keyphrases") { Source = "/document/reviews_text/pages/*/Keyphrases/*", SourceContext = null });
 
-            SearchIndexerKnowledgeStoreProjection projection2 = new();
-            projection2.Tables.Add(table4);
-            projection2.Tables.Add(table5);
-            projection2.Tables.Add(table6);
+            KnowledgeStoreProjection projection2 = new()
+            { Tables = { table4, table5, table6 } };
 
-            List<SearchIndexerKnowledgeStoreProjection> projections = new() { projection1, projection2 };
+            List<KnowledgeStoreProjection> projections = new() { projection1, projection2 };
 
             SearchIndexerSkillset skillset = new SearchIndexerSkillset(skillsetName, new[] { skill1, skill2, skill3, skill4, skill5 })
             {
                 CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
-                KnowledgeStore = new SearchIndexerKnowledgeStore(resources.StorageAccountConnectionString, projections),
+                KnowledgeStore = new KnowledgeStore(resources.StorageAccountConnectionString, projections),
             };
 
-            // Create the skillset.
-            SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(skillset);
+            return skillset;
+        }
 
+        private async Task TestSkillsetAsync(SearchIndexerClient client, SearchIndexerSkillset skillset, SearchIndexerSkillset createdSkillset, string skillsetName)
+        {
             try
             {
                 Assert.That(createdSkillset, Is.EqualTo(skillset).Using(SearchIndexerSkillsetComparer.Shared));
@@ -574,7 +583,7 @@ namespace Azure.Search.Documents.Tests
                 // Check the projections in the knowledge store of the skillset.
                 Assert.AreEqual(2, skillset.KnowledgeStore.Projections.Count);
 
-                SearchIndexerKnowledgeStoreProjection p1 = skillset.KnowledgeStore.Projections[0];
+                KnowledgeStoreProjection p1 = skillset.KnowledgeStore.Projections[0];
                 Assert.AreEqual(3, p1.Tables.Count);
                 Assert.AreEqual("hotelReviewsDocument", p1.Tables[0].TableName);
                 Assert.AreEqual(0, p1.Tables[0].Inputs.Count);
@@ -585,7 +594,7 @@ namespace Azure.Search.Documents.Tests
                 Assert.AreEqual(0, p1.Objects.Count);
                 Assert.AreEqual(0, p1.Files.Count);
 
-                SearchIndexerKnowledgeStoreProjection p2 = skillset.KnowledgeStore.Projections[1];
+                KnowledgeStoreProjection p2 = skillset.KnowledgeStore.Projections[1];
                 Assert.AreEqual(3, p2.Tables.Count);
                 Assert.AreEqual("hotelReviewsInlineDocument", p2.Tables[0].TableName);
                 Assert.AreEqual(6, p2.Tables[0].Inputs.Count);
@@ -620,18 +629,18 @@ namespace Azure.Search.Documents.Tests
 
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions());
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
             string skillsetName = Recording.Random.GetName();
 
             // Enumerate all skills and create them with consistently fake input to test for nullability during deserialization.
             SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
             {
-                var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" } ).ToList();
+                var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
                 var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
 
                 return t switch
                 {
-                    Type _ when t == typeof(CustomEntityLookupSkill) => new CustomEntityLookupSkill(inputs, outputs) { EntitiesDefinitionUri = "https://microsoft.com" },
+                    Type _ when t == typeof(CustomEntityLookupSkill) => new CustomEntityLookupSkill(inputs, outputs) { EntitiesDefinitionUri = new Uri("https://microsoft.com") },
 
                     // TODO: Should TextSplitMode be added to constructor (required input)?
                     Type _ when t == typeof(SplitSkill) => new SplitSkill(inputs, outputs) { TextSplitMode = TextSplitMode.Pages },
@@ -667,7 +676,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexerSkillset specifiedSkillset = new SearchIndexerSkillset(skillsetName, skills)
             {
                 CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
-                KnowledgeStore = new SearchIndexerKnowledgeStore(resources.StorageAccountConnectionString, new List<SearchIndexerKnowledgeStoreProjection>()),
+                KnowledgeStore = new KnowledgeStore(resources.StorageAccountConnectionString, new List<KnowledgeStoreProjection>()),
             };
 
             try

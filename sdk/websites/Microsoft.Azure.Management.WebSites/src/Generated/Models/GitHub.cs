@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the GitHub provider.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class GitHub : ProxyOnlyResource
     {
@@ -33,6 +36,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the GitHub
+        /// provider should not be enabled despite the set registration;
+        /// otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
+        /// <param name="registration">The configuration settings of the app
+        /// registration for the GitHub provider.</param>
+        /// <param name="login">The configuration settings of the login
+        /// flow.</param>
         public GitHub(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), ClientRegistration registration = default(ClientRegistration), LoginScopes login = default(LoginScopes))
             : base(id, name, kind, type)
         {
@@ -48,16 +58,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; if the
+        /// GitHub provider should not be enabled despite the set registration;
+        /// otherwise, &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the app registration for
+        /// the GitHub provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.registration")]
         public ClientRegistration Registration { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the login flow.
         /// </summary>
         [JsonProperty(PropertyName = "properties.login")]
         public LoginScopes Login { get; set; }

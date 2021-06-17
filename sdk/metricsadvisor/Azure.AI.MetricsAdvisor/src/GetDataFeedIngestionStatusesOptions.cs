@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.MetricsAdvisor.Administration;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetDataFeedIngestionStatuses"/> or
@@ -34,13 +33,13 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the count of items to be skipped.
         /// </summary>
-        public int? SkipCount { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
         /// unless the number of pages enumerated from the service is limited, the service will
         /// return an unlimited number of total items.
         /// </summary>
-        public int? TopCount { get; set; }
+        public int? MaxPageSize { get; set; }
     }
 }

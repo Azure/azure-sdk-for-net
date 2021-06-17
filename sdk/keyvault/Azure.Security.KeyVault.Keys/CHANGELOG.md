@@ -1,7 +1,44 @@
 # Release History
 
-## 4.2.0-beta.6 (Unreleased)
+## 4.3.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 4.2.0 (2021-06-15)
+
+### Features Added
+
+- Changed default service version to "7.2".
+- Added `KeyVaultKeyIdentifier` to parse certificate URIs.
+- Added local-only support for `CryptographyClient` using only a `JsonWebKey` using `LocalCryptographyClientOptions`.
+- Added `CreateEcKeyOptions` class and associated `KeyClient.CreateEcKey` and `CreateEcKeyAsync` methods.
+- Added `KeyType.OctHsm` to support "oct-HSM" key operations to support Managed HSM.
+- Added AES-GCM and AES-CBC support for encrypting and decrypting, including new `Encrypt` and `Decrypt` overloads.
+
+### Breaking Changes since 4.2.0-beta.6
+
+- Renamed `additionalAuthenticationData` factory method parameters to `additionalAuthenticatedData` to match properties and constructor parameters.
+- Renamed `parameters` parameter to `decryptParameters` for `CryptographyClient.Decrypt` and `DecryptAsync`.
+- Renamed `parameters` parameter to `encryptParameters` for `CryptographyClient.Encrypt` and `EncryptAsync`.
+
+## 4.2.0-beta.6 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.1.1 (2021-05-04)
+
+### Changed
+
+- Updated dependency versions
 
 ## 4.2.0-beta.5 (2021-03-09)
 

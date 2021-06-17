@@ -231,7 +231,7 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration);
 
-            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_uri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
         }
@@ -399,7 +399,7 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration);
 
-            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(fileSystemUri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
         }
@@ -430,29 +430,23 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration);
 
-            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(fileSystemUri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
         }
 
-        private (FileSystemRestClient DfsFileSystemRestClient, FileSystemRestClient BlobFileSystemRestClient) BuildFileSystemRestClients(Uri uri)
+        private (FileSystemRestClient DfsFileSystemRestClient, FileSystemRestClient BlobFileSystemRestClient) BuildFileSystemRestClients(Uri dfsUri, Uri blobUri)
         {
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
-            string fileSystemName = uriBuilder.FileSystemName;
-            uriBuilder.FileSystemName = null;
-
             FileSystemRestClient dfsFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToDfsUri().ToString(),
-                fileSystem: fileSystemName,
+                url: dfsUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToBlobUri().ToString(),
-                fileSystem: fileSystemName,
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             return (dfsFileSystemRestClient, blobFileSystemRestClient);

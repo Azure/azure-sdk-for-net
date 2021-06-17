@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
 
@@ -19,11 +17,16 @@ namespace Azure.Monitor.Query.Tests
         public async Task QueryLogsAsTable()
         {
             #region Snippet:QueryLogsAsTable
+#if SNIPPET
+            Uri endpoint = new Uri("https://api.loganalytics.io");
+            string workspaceId = "<workspace_id>";
+#else
+            Uri endpoint = TestEnvironment.LogsEndpoint;
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
-            /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
-            //@@string workspaceId = "<workspace_id>";
-            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -40,13 +43,16 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsPrintTable
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
 #if SNIPPET
+            Uri endpoint = new Uri("https://api.loganalytics.io");
             string workspaceId = "<workspace_id>";
 #else
+            Uri endpoint = TestEnvironment.LogsEndpoint;
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
-            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -76,16 +82,20 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsAsPrimitive
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
 #if SNIPPET
+            Uri endpoint = new Uri("https://api.loganalytics.io");
             string workspaceId = "<workspace_id>";
 #else
+            Uri endpoint = TestEnvironment.LogsEndpoint;
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
-                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup");
+                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
+                TimeSpan.FromDays(1));
 
             foreach (var resourceGroup in response.Value)
             {
@@ -100,7 +110,7 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsAsModels
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
             string workspaceId = "<workspace_id>";
 #else
@@ -109,7 +119,8 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(workspaceId,
-                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count");
+                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
+                TimeSpan.FromDays(1));
 
             foreach (var logEntryModel in response.Value)
             {
@@ -124,20 +135,23 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:BatchQuery
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
 #if SNIPPET
+            Uri endpoint = new Uri("https://api.loganalytics.io");
             string workspaceId = "<workspace_id>";
 #else
+            Uri endpoint = TestEnvironment.LogsEndpoint;
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+
             // Query TOP 10 resource groups by event count
             // And total event count
-            LogsBatchQuery batch = client.CreateBatchQuery();
-            string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count");
-            string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count");
+            LogsBatchQuery batch = new LogsBatchQuery();
+            string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
+            string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 
-            Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
 
             var count = response.Value.GetResult<int>(countQueryId).Single();
             var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
@@ -155,20 +169,23 @@ namespace Azure.Monitor.Query.Tests
         public async Task QueryLogsWithTimeout()
         {
             #region Snippet:QueryLogsWithTimeout
-
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
 #if SNIPPET
+            Uri endpoint = new Uri("https://api.loganalytics.io");
             string workspaceId = "<workspace_id>";
 #else
+            Uri endpoint = TestEnvironment.LogsEndpoint;
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
+
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(workspaceId,
                 "AzureActivity | summarize count()",
+                TimeSpan.FromDays(1),
                 options: new LogsQueryOptions()
                 {
-                    Timeout = TimeSpan.FromMinutes(10)
+                    ServerTimeout = TimeSpan.FromMinutes(10)
                 });
 
             foreach (var resourceGroup in response.Value)
@@ -184,19 +201,22 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:BadRequest
 #if SNIPPET
+            Uri endpoint = new Uri("https://api.loganalytics.io");
             string workspaceId = "<workspace_id>";
 #else
+            Uri endpoint = TestEnvironment.LogsEndpoint;
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+
             try
             {
-                await client.QueryAsync(workspaceId, "My Not So Valid Query");
+                await client.QueryAsync(workspaceId, "My Not So Valid Query", TimeSpan.FromDays(1));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
             }
             #endregion
         }

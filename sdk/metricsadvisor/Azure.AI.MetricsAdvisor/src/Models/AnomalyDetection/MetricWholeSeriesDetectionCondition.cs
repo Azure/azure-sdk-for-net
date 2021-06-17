@@ -41,5 +41,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// which data points are expected to be.
         /// </summary>
         public ChangeThresholdCondition ChangeThresholdCondition { get; set; }
+
+        internal WholeMetricConfigurationPatch GetPatchModel() => new WholeMetricConfigurationPatch()
+        {
+            ConditionOperator = CrossConditionsOperator,
+            SmartDetectionCondition = SmartDetectionCondition?.GetPatchModel(),
+            HardThresholdCondition = HardThresholdCondition?.GetPatchModel(),
+            ChangeThresholdCondition = ChangeThresholdCondition?.GetPatchModel()
+        };
     }
 }

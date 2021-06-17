@@ -11,7 +11,7 @@ The Azure Key Vault secrets client library allows you to securely store and cont
 Install the Azure Key Vault secrets client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Security.KeyVault.Secrets --version 4.2.0-beta.4
+dotnet add package Azure.Security.KeyVault.Secrets
 ```
 
 ### Prerequisites
@@ -65,6 +65,8 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     ```
     > --secret-permissions:
     > Accepted values: backup, delete, get, list, purge, recover, restore, set
+
+    If you have enabled role-based access control (RBAC) for Key Vault instead, you can find roles like "Key Vault Secrets Officer" in our [RBAC guide][rbac_guide].
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
     ```PowerShell
@@ -351,5 +353,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/MigrationGuide.md
+[rbac_guide]: https://docs.microsoft.com/azure/key-vault/general/rbac-guide
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Secrets%2FREADME.png)

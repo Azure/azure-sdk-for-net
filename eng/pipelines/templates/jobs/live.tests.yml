@@ -26,6 +26,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: Project
+  type: string
+  default: '**'
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -112,8 +115,10 @@ jobs:
           --logger:"console;verbosity=normal"
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:Project=${{ parameters.Project }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
+          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
           $(AdditionalTestArguments)
 
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
@@ -132,8 +137,25 @@ jobs:
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/*.trx"
-          testRunTitle: "$(TestTargetFramework)"
+          testRunTitle: "${{ parameters.ServiceDirectory }} ${{ parameters.CloudConfig.Cloud }} $(Agent.JobName)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Generate Code Coverage Reports
+        inputs:
+          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          targetdir: $(Build.ArtifactStagingDirectory)\coverage
+          reporttypes: Cobertura
+          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          verbosity: Verbose
+
+      - task: PublishCodeCoverageResults@1
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Publish Code Coverage Reports
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
 
       - ${{ parameters.PostSteps }}

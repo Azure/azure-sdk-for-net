@@ -1280,6 +1280,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     CancellationToken.None))
                 .Returns(mockTransportReceiver.Object);
 

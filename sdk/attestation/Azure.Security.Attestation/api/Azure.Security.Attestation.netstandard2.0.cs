@@ -29,8 +29,8 @@ namespace Azure.Security.Attestation
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestOpenEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestSgxEnclave(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSgxEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.BinaryData> AttestTpm(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> AttestTpmAsync(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.Attestation.TpmAttestationResponse> AttestTpm(Azure.Security.Attestation.TpmAttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.Attestation.TpmAttestationResponse>> AttestTpmAsync(Azure.Security.Attestation.TpmAttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>> GetSigningCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>>> GetSigningCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -51,10 +51,10 @@ namespace Azure.Security.Attestation
     }
     public static partial class AttestationModelFactory
     {
-        public static Azure.Security.Attestation.AttestationResponse<T> CreateAttestationResponse<T>(Azure.Response response, Azure.Security.Attestation.AttestationToken token, T body = null) where T : class { throw null; }
-        public static Azure.Security.Attestation.AttestationResult CreateAttestationResult(string jti = null, string issuer = null, System.DateTimeOffset issuedAt = default(System.DateTimeOffset), System.DateTimeOffset expiration = default(System.DateTimeOffset), System.DateTimeOffset notBefore = default(System.DateTimeOffset), object cnf = null, string nonce = null, string version = null, object runtimeClaims = null, object inittimeClaims = null, object policyClaims = null, string verifierType = null, Azure.Security.Attestation.AttestationSigner policySigner = null, System.BinaryData policyHash = null, bool? isDebuggable = default(bool?), float? productId = default(float?), string mrEnclave = null, string mrSigner = null, float? svn = default(float?), System.BinaryData enclaveHeldData = null, object sgxCollateral = null, string deprecatedVersion = null, bool? deprecatedIsDebuggable = default(bool?), object deprecatedSgxCollateral = null, System.BinaryData deprecatedEnclaveHeldData = null, System.BinaryData deprecatedEnclaveHeldData2 = null, float? deprecatedProductId = default(float?), string deprecatedMrEnclave = null, string deprecatedMrSigner = null, float? deprecatedSvn = default(float?), string deprecatedTee = null, Azure.Security.Attestation.AttestationSigner deprecatedPolicySigner = null, System.BinaryData deprecatedPolicyHash = null, string deprecatedRpData = null) { throw null; }
-        public static Azure.Security.Attestation.PolicyCertificatesModificationResult CreatePolicyCertificatesModificationResult(Azure.Security.Attestation.PolicyCertificateResolution certificateResolution, string certificateThumbprint) { throw null; }
-        public static Azure.Security.Attestation.PolicyModificationResult CreatePolicyModificationResult(Azure.Security.Attestation.PolicyModification policyModification, string policyHash, Azure.Security.Attestation.AttestationSigner signer) { throw null; }
+        public static Azure.Security.Attestation.AttestationResponse<T> AttestationResponse<T>(Azure.Response response, Azure.Security.Attestation.AttestationToken token, T body = null) where T : class { throw null; }
+        public static Azure.Security.Attestation.AttestationResult AttestationResult(string jti = null, string issuer = null, System.DateTimeOffset issuedAt = default(System.DateTimeOffset), System.DateTimeOffset expiration = default(System.DateTimeOffset), System.DateTimeOffset notBefore = default(System.DateTimeOffset), object cnf = null, string nonce = null, string version = null, object runtimeClaims = null, object inittimeClaims = null, object policyClaims = null, string verifierType = null, Azure.Security.Attestation.AttestationSigner policySigner = null, System.BinaryData policyHash = null, bool? isDebuggable = default(bool?), float? productId = default(float?), string mrEnclave = null, string mrSigner = null, float? svn = default(float?), System.BinaryData enclaveHeldData = null, object sgxCollateral = null, string deprecatedVersion = null, bool? deprecatedIsDebuggable = default(bool?), object deprecatedSgxCollateral = null, System.BinaryData deprecatedEnclaveHeldData = null, System.BinaryData deprecatedEnclaveHeldData2 = null, float? deprecatedProductId = default(float?), string deprecatedMrEnclave = null, string deprecatedMrSigner = null, float? deprecatedSvn = default(float?), string deprecatedTee = null, Azure.Security.Attestation.AttestationSigner deprecatedPolicySigner = null, System.BinaryData deprecatedPolicyHash = null, string deprecatedRpData = null) { throw null; }
+        public static Azure.Security.Attestation.PolicyCertificatesModificationResult PolicyCertificatesModificationResult(Azure.Security.Attestation.PolicyCertificateResolution certificateResolution, string certificateThumbprint) { throw null; }
+        public static Azure.Security.Attestation.PolicyModificationResult PolicyModificationResult(Azure.Security.Attestation.PolicyModification policyModification, string policyHash, Azure.Security.Attestation.AttestationSigner signer) { throw null; }
     }
     public partial class AttestationRequest
     {
@@ -223,6 +223,10 @@ namespace Azure.Security.Attestation
         public static bool operator !=(Azure.Security.Attestation.AttestationType left, Azure.Security.Attestation.AttestationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class AzureSecurityAttestationModelFactory
+    {
+        public static Azure.Security.Attestation.TpmAttestationResponse TpmAttestationResponse(string internalData = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyCertificateResolution : System.IEquatable<Azure.Security.Attestation.PolicyCertificateResolution>
     {
@@ -276,5 +280,15 @@ namespace Azure.Security.Attestation
     {
         public StoredAttestationPolicy() { }
         public string AttestationPolicy { get { throw null; } set { } }
+    }
+    public partial class TpmAttestationRequest
+    {
+        public TpmAttestationRequest() { }
+        public System.BinaryData Data { get { throw null; } set { } }
+    }
+    public partial class TpmAttestationResponse
+    {
+        internal TpmAttestationResponse() { }
+        public System.BinaryData Data { get { throw null; } }
     }
 }

@@ -1,6 +1,25 @@
 # Release History
 
-## 12.7.0-beta.4 (Unreleased)
+## 12.8.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 12.7.0 (2021-06-08)
+- Includes all features from 12.7.0-beta.4.
+- Fixed bug where specifying conditions in ShareFileClient.OpenRead could override allowModifications flag in ShareFileOpenReadOptions leading to inconsistent read.
+- Fixed bug where retry during streaming of ShareFileClient.Download result could lead to inconsistent read.
+
+## 12.6.2 (2021-05-20)
+- This release contains bug fixes to improve quality.
+
+## 12.7.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
 - Added support for Share and Share Snapshot Lease.
 - DataLakeLeaseClient now remembers the Lease ID after a lease change.
