@@ -88,7 +88,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <inheritdoc/>
-        public override string Stringify()
+        public override string GetQueryText()
         {
             var selectComponents = new StringBuilder();
             selectComponents.Append(QueryConstants.Select).Append(' ');

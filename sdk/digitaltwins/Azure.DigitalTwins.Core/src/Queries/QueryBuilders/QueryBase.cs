@@ -21,6 +21,6 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// Represents a query clause in string format.
         /// </summary>
         /// <returns> Query in string format. </returns>
-        public abstract string Stringify();
+        public abstract string GetQueryText();
     }
 }

@@ -44,10 +44,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         };
 
         // Maps contains operators
-        public static readonly Dictionary<QueryContainOperator, string> ContainOperators = new Dictionary<QueryContainOperator, string>()
+        public static readonly Dictionary<QueryContainsOperator, string> ContainOperators = new Dictionary<QueryContainsOperator, string>()
         {
-            { QueryContainOperator.In, "IN" },
-            { QueryContainOperator.NotIn, "NIN" }
+            { QueryContainsOperator.In, "IN" },
+            { QueryContainsOperator.NotIn, "NIN" }
         };
     }
 }

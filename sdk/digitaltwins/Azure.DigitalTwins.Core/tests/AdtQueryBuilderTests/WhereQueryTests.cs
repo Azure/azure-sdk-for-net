@@ -15,7 +15,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.Where("Temperature", QueryComparisonOperator.Equal, "5");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE Temperature = 5");
         }
@@ -25,7 +25,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.Where("RoomType", QueryComparisonOperator.Equal, "Hospital");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE RoomType = 'Hospital'");
         }
@@ -34,8 +34,8 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereQuery_Contains()
         {
             var query = new WhereQuery(null);
-            query.Where("Owner", QueryContainOperator.In, new string[] { "John", "Sally", "Marshall" });
-            query.Stringify()
+            query.Where("Owner", QueryContainsOperator.In, new string[] { "John", "Sally", "Marshall" });
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE Owner IN ['John', 'Sally', 'Marshall']");
         }
@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.Where("Temperature = 5");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE Temperature = 5");
         }
@@ -55,7 +55,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereIsDefined("Temperature");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_DEFINED(Temperature)");
         }
@@ -65,7 +65,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereIsNull("Humidity");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_NULL(Humidity)");
         }
@@ -75,7 +75,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereStartsWith("$dtId", "area1-");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE STARTSWITH($dtId, 'area1-')");
         }
@@ -85,7 +85,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereEndsWith("$dtId", "-small");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE ENDSWITH($dtId, '-small')");
         }
@@ -95,13 +95,13 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query1 = new WhereQuery(null);
             query1.WhereIsOfModel("dtmi:example:room;1", true);
-            query1.Stringify()
+            query1.GetQueryText()
                 .Should()
                 .Be("WHERE IS_OF_MODEL('dtmi:example:room;1', exact)");
 
             var query2 = new WhereQuery(null);
             query2.WhereIsOfModel("dtmi:example:room;1");
-            query2.Stringify()
+            query2.GetQueryText()
                 .Should()
                 .Be("WHERE IS_OF_MODEL('dtmi:example:room;1')");
         }
@@ -111,7 +111,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereIsBool("HasTemperature");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_BOOL(HasTemperature)");
         }
@@ -121,7 +121,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereIsNumber("Contains");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_NUMBER(Contains)");
         }
@@ -131,7 +131,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereIsString("Status");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_STRING(Status)");
         }
@@ -141,7 +141,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereIsPrimative("area");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_PRIMATIVE(area)");
         }
@@ -151,7 +151,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereQuery(null);
             query.WhereIsObject("MapObject");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE IS_OBJECT(MapObject)");
         }
@@ -162,7 +162,7 @@ namespace Azure.DigitalTwins.Core.Tests
             var query = new WhereQuery(null);
             query.Where("Temperature", QueryComparisonOperator.Equal, "50")
                 .WhereIsDefined("Humidity");
-            query.Stringify()
+            query.GetQueryText()
                 .Should()
                 .Be("WHERE Temperature = 50 AND IS_DEFINED(Humidity)");
         }

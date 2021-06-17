@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="containOperator"> ADT contains operator defined by the ADT query language. </param>
         /// <param name="searched"> Field of possible options to check for the 'value' parameter. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereQuery Where(string value, QueryContainOperator containOperator, string[] searched)
+        public WhereQuery Where(string value, QueryContainsOperator containOperator, string[] searched)
         {
             _clauses.Add(new WhereClause(new ContainsCondition(value, containOperator, searched)));
             return this;
@@ -201,7 +201,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <inheritdoc/>
-        public override string Stringify()
+        public override string GetQueryText()
         {
             if (_clauses.Any())
             {

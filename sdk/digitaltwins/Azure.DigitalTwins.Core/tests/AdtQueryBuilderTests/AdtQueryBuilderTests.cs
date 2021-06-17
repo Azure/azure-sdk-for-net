@@ -112,7 +112,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Where("Location", QueryContainOperator.NotIn, new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
+                .Where("Location", QueryContainsOperator.NotIn, new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
                 .Build()
                 .Stringify()
                 .Should()

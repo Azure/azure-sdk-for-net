@@ -25,7 +25,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Constructor for a WHERE clause that allows for overridden conditional statements in string format.
+        /// Constructor for a WHERE clause that allows for overridden conditional statements.
         /// </summary>
         /// <param name="condition"> Condition argument for the WHERE clause. </param>
         internal WhereClause(string condition)

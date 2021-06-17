@@ -84,13 +84,13 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
             StringBuilder finalQuery = new StringBuilder();
 
             // build the select string
-            finalQuery.Append(_selectQuery.Stringify());
+            finalQuery.Append(_selectQuery.GetQueryText());
 
             // build the from string
-            finalQuery.Append(' ').Append(_fromQuery.Stringify());
+            finalQuery.Append(' ').Append(_fromQuery.GetQueryText());
 
             // build the where string
-            finalQuery.Append(' ').Append(_whereQuery.Stringify());
+            finalQuery.Append(' ').Append(_whereQuery.GetQueryText());
 
             return finalQuery.ToString().Trim();
         }
