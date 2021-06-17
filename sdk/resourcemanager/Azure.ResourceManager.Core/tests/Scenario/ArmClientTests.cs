@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Scenario
+namespace Azure.ResourceManager.Core.Tests
 {
     class ArmClientTests : ResourceManagerTestBase
     {
@@ -23,6 +23,22 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
             var subscription = await GlobalClient.GetSubscriptions().TryGetAsync(SessionEnvironment.SubscriptionId);
             _ = subscription.GetResourceGroups().Construct(_location).StartCreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
             StopSessionRecording();
+        }
+
+        [TestCase]
+        [Ignore("4622 needs complete with a Mocked example to fill in this test")]
+        public void CreateResourceFromId()
+        {
+            //TODO: 4622 needs complete with a Mocked example to fill in this test
+            //public ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string subscription, string resourceGroup, string name, TResource model, azure_proto_core.Location location = default)
+        }
+
+        [TestCase]
+        public void TestArmClientParamCheck()
+        {
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(baseUri: null, null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(defaultSubscriptionId: null, null, null); });
         }
 
         [TestCase]
