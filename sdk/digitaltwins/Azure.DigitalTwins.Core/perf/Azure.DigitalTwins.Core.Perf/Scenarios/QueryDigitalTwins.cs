@@ -16,21 +16,29 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
     public sealed class QueryDigitalTwins : PerfTest<SizeOptions>
     {
         private DigitalTwinsClient _digitalTwinsClient;
+        private long _size;
 
         public QueryDigitalTwins(SizeOptions options) : base(options)
         {
-        }
-
-        public override async Task SetupAsync()
-        {
-            await base.SetupAsync();
-
             _digitalTwinsClient = new DigitalTwinsClient(
                 new Uri(PerfTestEnvironment.Instance.DigitalTwinsUrl),
                 new ClientSecretCredential(
                     PerfTestEnvironment.Instance.DigitalTwinsTenantId,
                     PerfTestEnvironment.Instance.DigitalTwinsClientId,
                     PerfTestEnvironment.Instance.DigitalTwinsClientSecret));
+
+            _size = options.Size;
+        }
+
+        public override async Task SetupAsync()
+        {
+            await base.SetupAsync();
+        }
+
+        public override async Task GlobalSetupAsync()
+        {
+            await base.GlobalSetupAsync();
+            // Global setup code that runs once at the beginning of test execution.
         }
 
         /// <summary>
