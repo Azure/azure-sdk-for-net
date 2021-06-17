@@ -16,14 +16,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedDimension"/> class.
         /// </summary>
-        /// <param name="dimensionName">The name of the data source's column to be used as a dimension. Values of this dimension will be read only from the specified column.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="dimensionName"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dimensionName"/> is empty.</exception>
-        public DataFeedDimension(string dimensionName)
+        /// <param name="name">The name of the data source's column to be used as a dimension. Values of this dimension will be read only from the specified column.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        public DataFeedDimension(string name)
         {
-            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Name = dimensionName;
+            Name = name;
         }
 
         /// <summary>

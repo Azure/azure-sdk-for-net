@@ -184,8 +184,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName0 = Recording.GenerateAlphaNumericId("hook");
             string hookName1 = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate0 = new EmailNotificationHook() { Name = hookName0 };
-            var hookToCreate1 = new EmailNotificationHook() { Name = hookName1 };
+            var hookToCreate0 = new EmailNotificationHook(hookName0);
+            var hookToCreate1 = new EmailNotificationHook(hookName1);
 
             hookToCreate0.EmailsToAlert.Add("fake@email.com");
             hookToCreate1.EmailsToAlert.Add("fake@email.com");
@@ -376,7 +376,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
+            var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -494,7 +494,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new WebNotificationHook(hookName, new Uri("http://contoso.com/"));
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
@@ -610,7 +610,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
+            var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -755,7 +755,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new WebNotificationHook(hookName, new Uri("http://contoso.com/"));
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
