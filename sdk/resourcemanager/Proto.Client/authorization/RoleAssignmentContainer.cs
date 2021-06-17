@@ -13,13 +13,13 @@ namespace Proto.Authorization
     /// <summary>
     /// Container for role assignments - note that in this case, the container is either a TrackedResource or a resource Id
     /// </summary>
-    public class RoleAssignmentContainer : ExtensionResourceContainer<RoleAssignment, RoleAssignmentCreateParameters>
+    public class RoleAssignmentContainer : ResourceContainerBase<SubscriptionResourceIdentifier, RoleAssignment, RoleAssignmentCreateParameters>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RoleAssignmentContainer"/> class.
         /// </summary>
         /// <param name="operations"> A generic operations class representing the parent of the role Assignment. </param>
-        internal RoleAssignmentContainer(OperationsBase operations)
+        internal RoleAssignmentContainer(ResourceOperationsBase operations)
             : base(operations)
         {
             // TODO: Remove this once we nio longer need to create management clients
@@ -37,8 +37,8 @@ namespace Proto.Authorization
         /// </summary>
         /// <param name="operations"> The client options with http client details for these operations. </param>
         /// <param name="scope"> The resource id of the target resource, resource group, or subscription for this role assignment. </param>
-        internal RoleAssignmentContainer(OperationsBase operations, ResourceIdentifier scope)
-            : base(operations, scope)
+        internal RoleAssignmentContainer(ResourceOperationsBase operations, ResourceIdentifier scope)
+            : base(operations)
         {
             // TODO: Remove this once we nio longer need to create management clients
             string subscriptionId;
@@ -59,13 +59,37 @@ namespace Proto.Authorization
         private RoleAssignmentsOperations Operations { get; }
 
         /// <summary>
+        /// Gets a RoleAssignment
+        /// </summary>
+        /// <param name="resourceName"> The role assignment name. </param>
+        /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
+        /// <returns> The role assignment. </returns>
+        public override Response<RoleAssignment> Get(string resourceName, CancellationToken cancellationToken = default)
+        {
+            var response = Operations.Get(Id, resourceName, cancellationToken);
+            return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a RoleAssignment
+        /// </summary>
+        /// <param name="resourceName"> The role assignment name. </param>
+        /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
+        /// <returns> The role assignment. </returns>
+        public async override Task<Response<RoleAssignment>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            var response = await Operations.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
+        }
+
+        /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment is created on the service.
         /// </summary>
         /// <param name="name"> The name of the role assignment. </param>
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
         /// <returns> The created role assignment. </returns>
-        public override Response<RoleAssignment> Create(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public Response<RoleAssignment> Create(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.Create(Id, name, resourceDetails.ToModel(), cancellationToken);
             return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
@@ -79,7 +103,7 @@ namespace Proto.Authorization
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
         /// <returns> A Task that yields the created role assignment when complete. </returns>
-        public async override Task<Response<RoleAssignment>> CreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignment>> CreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = await Operations.CreateAsync(Id, name, resourceDetails.ToModel(), cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
@@ -93,7 +117,7 @@ namespace Proto.Authorization
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blocking API calls made during this method. </param>
         /// <returns> An ArmOperation that yields the created role assignment and gives the user control over polling. </returns>
-        public override Operation<RoleAssignment> StartCreate(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public Operation<RoleAssignment> StartCreate(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 Operations.Create(Id, name, resourceDetails.ToModel(), cancellationToken),
@@ -108,7 +132,7 @@ namespace Proto.Authorization
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blocking API calls made during this method. </param>
         /// <returns> A <see cref="Task{ArmOperation}"/> that yields the created role assignment and gives the user control over polling. </returns>
-        public async override Task<Operation<RoleAssignment>> StartCreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Operation<RoleAssignment>> StartCreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 await Operations.CreateAsync(Id, name, resourceDetails.ToModel(), cancellationToken).ConfigureAwait(false),
@@ -120,7 +144,7 @@ namespace Proto.Authorization
         /// </summary>
         /// <param name="cancellationToken"> A token that allows cancellation of any blocking API calls made during this method. </param>
         /// <returns> A <see cref="Azure.Pageable{RoleAssignemnt}"/> that allows paged enumeration of the role assignments at this scope. </returns>
-        public override Azure.Pageable<RoleAssignment> ListAtScope(CancellationToken cancellationToken = default)
+        public Azure.Pageable<RoleAssignment> ListAtScope(CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }
@@ -130,7 +154,7 @@ namespace Proto.Authorization
         /// </summary>
         /// <param name="cancellationToken"> A token that allows cancellation of any blocking API calls made during this method. </param>
         /// <returns> A <see cref="Azure.AsyncPageable{RoleAssignemnt}"/> that allows asynchronous paged enumeration of the role assignments at this scope. </returns>
-        public override Azure.AsyncPageable<RoleAssignment> ListAtScopeAsync(CancellationToken cancellationToken = default)
+        public Azure.AsyncPageable<RoleAssignment> ListAtScopeAsync(CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }
