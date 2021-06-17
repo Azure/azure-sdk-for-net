@@ -13,28 +13,23 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly RecognizeEntitiesResultCollection _documentsResults;
 
-        internal RecognizeEntitiesActionResult(RecognizeEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        /// <summary>
+        /// Successful action.
+        /// </summary>
+        internal RecognizeEntitiesActionResult(RecognizeEntitiesResultCollection result, string actionName, DateTimeOffset completedOn)
+            : base(completedOn)
+        {
+            _documentsResults = result;
+            ActionName = actionName;
+        }
+
+        /// <summary>
+        /// Action with an error.
+        /// </summary>
+        internal RecognizeEntitiesActionResult(string actionName, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
             : base(completedOn, error)
         {
-            _documentsResults = result;
-        }
-
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
-        internal RecognizeEntitiesActionResult(
-            RecognizeEntitiesResultCollection result,
-            DateTimeOffset completedOn) : base(completedOn)
-        {
-            _documentsResults = result;
-        }
-
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
-        internal RecognizeEntitiesActionResult(
-            TextAnalyticsErrorInternal error) : base(error)
-        {
+            ActionName = actionName;
         }
 
         /// <summary>
@@ -53,5 +48,10 @@ namespace Azure.AI.TextAnalytics
                 return _documentsResults;
             }
         }
+
+        /// <summary>
+        /// Gets the name for this action.
+        /// </summary>
+        public string ActionName { get; }
     }
 }
