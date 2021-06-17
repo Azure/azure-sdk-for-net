@@ -4,7 +4,7 @@ This sample demonstrates how to write an `ObservableEventDataBatch` class that w
 
 ## Considerations
 
-While the `ObservableDataBatch` may seem desirable, there are several nuances that should be considered before using it in your application.   In order to make sure that once an event is successfully added to the batch it will be sent, the `EventDataBatch` creates a hidden copy of the events which it uses to publish to the Event Hub. Without this, the application could make changes to them, and potentially invalidate the batch size calculations,  making it too large to publish.   If `EventDataBatch` held onto the original event after copying and made them accessible, applications altering the events would not be altering the event that was published, and the events that it sees as belonging to the batch would no longer match the actual batch content that will be published. 
+While the `ObservableDataBatch` may seem desirable, there are several nuances that should be considered before using it in your application. In order to make sure that once an event is successfully added to the batch it will be sent, the `EventDataBatch` creates a hidden copy of the events which it uses to publish to the Event Hub. Without this, the application could make changes to them, and potentially invalidate the batch size calculations,  making it too large to publish. If `EventDataBatch` held onto the original event after copying and made them accessible, applications altering the events would not be altering the event that was published, and the events that it sees as belonging to the batch would no longer match the actual batch content that will be published. 
 
 Another issue is with equality. `EventData` objects do not have a strong and deterministic way to define equality, since the meaning of two events being equal can be different depending on the application. This creates confusion and can cause unnecessary issues in some applications.
 
@@ -63,13 +63,13 @@ public class ObservableEventDataBatch : IDisposable
 }
 ```
 
-#### Benefits
+### Benefits
 
 The benefit of this approach is that it utilizes all of the existing methods for managing and publishing events. It takes advantage of the implicit operator functionality in order to return the internal `EventDataBatch` variable, `_batch`, when these methods are called. It also is a straightforward implementation that achieves the goal of allowing events to be seen by the application.
 
-#### Trade-offs
+### Trade-offs
 
-The trade-off of this approach is that as mentioned above it does not prevent issues where the two distinct set of events (the actual `EventBatch` events and the visible list of events) go out of sync. There are two ways that this could happen, the first is if the events returned by `ObservableDataBatch.Events` are mutated by the application. The second way this could happen is if `TryAdd` is called on the reference to the `EventDataBatch` after it has been casted from an `ObservableEventDataBatch`, this would call `EventDataBatch.TryAdd()` rather than `ObservableEventDataBatch.TryAdd()` leading to added events being in the actual batch to send that are not reflected in the visible `ObservableDataBatch.Events` variable.
+The trade-off of this approach is that as mentioned above it does not prevent issues where the two distinct set of events (the actual events contained in the `EventDataBatch` and the visible list of events) go out of sync. There are two ways that this could happen, the first is if the events returned by `ObservableDataBatch.Events` are mutated by the application. The second way this could happen is if `TryAdd` is called on the reference to the `EventDataBatch` after it has been casted from an `ObservableEventDataBatch`, this would call `EventDataBatch.TryAdd()` rather than `ObservableEventDataBatch.TryAdd()` leading to added events being in the actual batch to send that are not reflected in the visible `ObservableDataBatch.Events` variable.
 
 ### Using the Observable Data Batch
 
