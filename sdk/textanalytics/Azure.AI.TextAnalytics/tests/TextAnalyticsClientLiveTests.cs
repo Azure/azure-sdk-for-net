@@ -80,7 +80,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21795")]
         public async Task RotateApiKey()
         {
             // Instantiate a client that will be used to call the service.
