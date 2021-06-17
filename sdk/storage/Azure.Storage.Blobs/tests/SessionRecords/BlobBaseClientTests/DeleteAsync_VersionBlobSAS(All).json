@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-448cb6a1-80fb-9fed-0e4c-641d6abc8027?restype=container",
@@ -22,7 +22,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 14 May 2021 16:55:07 GMT",
-        "ETag": "\u00220x8D916F90797E498\u0022",
+        "ETag": "\"0x8D916F90797E498\"",
         "Last-Modified": "Fri, 14 May 2021 16:55:07 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -56,7 +56,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 14 May 2021 16:55:07 GMT",
-        "ETag": "\u00220x8D916F907A239B4\u0022",
+        "ETag": "\"0x8D916F907A239B4\"",
         "Last-Modified": "Fri, 14 May 2021 16:55:08 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -95,7 +95,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 14 May 2021 16:55:07 GMT",
-        "ETag": "\u00220x8D916F907AC9BD3\u0022",
+        "ETag": "\"0x8D916F907AC9BD3\"",
         "Last-Modified": "Fri, 14 May 2021 16:55:08 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -110,7 +110,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-448cb6a1-80fb-9fed-0e4c-641d6abc8027/test-blob-ae295bea-f5ff-0ddf-875c-0d9195eedcd4?versionid=2021-05-14T16%3A55%3A08.0375732Z\u0026sv=2020-10-02\u0026st=2021-05-14T15%3A55%3A08Z\u0026se=2021-05-14T17%3A55%3A08Z\u0026sr=b\u0026sp=racwdxltmei\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-448cb6a1-80fb-9fed-0e4c-641d6abc8027/test-blob-ae295bea-f5ff-0ddf-875c-0d9195eedcd4?versionid=2021-05-14T16%3A55%3A08.0375732Z&sv=2020-10-02&st=2021-05-14T15%3A55%3A08Z&se=2021-05-14T17%3A55%3A08Z&sr=b&sp=racwdxltmei&sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -161,7 +161,7 @@
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
         "Date": "Fri, 14 May 2021 16:55:08 GMT",
-        "ETag": "\u00220x8D916F907AC9BD3\u0022",
+        "ETag": "\"0x8D916F907AC9BD3\"",
         "Last-Modified": "Fri, 14 May 2021 16:55:08 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -220,6 +220,6 @@
   "Variables": {
     "DateTimeOffsetNow": "2021-05-14T11:55:08.5902754-05:00",
     "RandomSeed": "249371453",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

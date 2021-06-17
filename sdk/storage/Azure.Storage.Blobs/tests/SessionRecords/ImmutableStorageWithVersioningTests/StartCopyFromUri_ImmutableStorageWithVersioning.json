@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-29d427af-8b41-13f8-487b-2d3fe9903352/test-blob-77620397-ac40-8741-db9a-6ca999eab53d",
@@ -19,12 +19,12 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
       },
-      "RequestBody": "wUa24Hmy843Ar5HPbyTJHuB3WcfBBA4C5k1Oph5OeV3G8H6i2VLZ5RDVtpAbchi20U7JIZHue703tPkrZExucjUzCH\u002BmJ0WOnXS27E1\u002B53Q1l9XQhVjM13TAaiVZrYDEZ0Ra52mYEKkJO4MdN45vucyF9s12nezdZzAK5bwgNPDz8YUJIwALnIYrx0rUr5/lUbFY1LazTslXfX84jivt6QaTKkYJZZbMeVpGStaiCbiRJJMLx2A5P6O8sqaA0g1bPt5EQIVZ3OsajFpcbQPytHPHp2qX4iGlWeqjTbPwS6dN6gz4XskzN0io8DoG3dKfyf0yuSujxFu8nuaato43KkGzD4L3\u002Blaqk28i7/Hmn3wYA4S2vZF7qSawO8DimIG5cMb5U85PqM6nhyW7gdRq1f9qgrIKgWyvN2VbRr6WyPvuaH8r7UyuyFu1DzVsvyhSRmXAdxbOru5ZShto82EQEb8qzRhVPuizvLlWVXI2Qnc9CQBZ1VDkH7mQ0qMwRdX6pf12QvIP/Qd9Dbtdd1l8IgekK\u002BlgtztvRa1fxGxFgnbkXLB0wACFLQz428eUh6hgFK\u002BbjBnrmu7CB/1FsDibOIpEeBupB2IHH/7dZ9t02r0F/6\u002B8qfZd\u002BMLCsrgDP33TXaI8Tw6Ntg1MlG0bDTISTiw/P7GI3o\u002BU539Y51WpBN\u002BBCQo4N4queEiicBSJQeuPr2SMw//LS34TqGiONM\u002B3opCNmgQn2RaikMdo5W56CqWUyTfwHUDftb6MJI8iIEN5682E\u002B6fmZ9VN6TM4Y2UPmZ3D\u002BWuXxoVPruVFm7WHgHCD7/qh9Q79rmFiozMMp1FZfIvxXybY4iRHNE3CoMwgxmnDtHRqbqOOxUsJNCNRQgeT7B8pliFJqwzWWcDBOw2VQd3KSfPd7w3nYpnaz60A9vFFL7Ss9jBIeQlnkxXjzYk\u002BdPJGhvkUtfwSQjOHbtxe1WLOewxY6EqtgtDpdlv4BJUPnFq6um/4MXm3mrT8wAotCL2yFFF95YunmQQoKj\u002BgGT6dd9KBpBvz1kqToE6WsMHGvG2eRe9EkrbOEiFr0Ac5F4B2X0k4q2Sivz4H6kU9EelCYm3RAtROWeQbspH6hwZCWYnOIFF4jREJ/IaxPKhxkQE4KG2ZZxSsJwVkHPjTqDc3xJC7bvGXytRcyAZOnBw8qSGPwV\u002BYqPF0IvhLFHEYNVNOeXgXtiIQoF2YPZ8OXovoJ3PXQ\u002BbXnxufRkz4TLZjQ5Ky/yKkJfP\u002BfiEBAGtSZsRtY\u002Bz\u002BQfJtdtpcd2/VGFSnNfoMW15oRAGA2MXE1p6wTeCIi\u002BnJZQGgRIhIR66DKWbNWspxRQplBR7rfmksqKA7rCqPTI1r3c/4axbVIA==",
+      "RequestBody": "wUa24Hmy843Ar5HPbyTJHuB3WcfBBA4C5k1Oph5OeV3G8H6i2VLZ5RDVtpAbchi20U7JIZHue703tPkrZExucjUzCH+mJ0WOnXS27E1+53Q1l9XQhVjM13TAaiVZrYDEZ0Ra52mYEKkJO4MdN45vucyF9s12nezdZzAK5bwgNPDz8YUJIwALnIYrx0rUr5/lUbFY1LazTslXfX84jivt6QaTKkYJZZbMeVpGStaiCbiRJJMLx2A5P6O8sqaA0g1bPt5EQIVZ3OsajFpcbQPytHPHp2qX4iGlWeqjTbPwS6dN6gz4XskzN0io8DoG3dKfyf0yuSujxFu8nuaato43KkGzD4L3+laqk28i7/Hmn3wYA4S2vZF7qSawO8DimIG5cMb5U85PqM6nhyW7gdRq1f9qgrIKgWyvN2VbRr6WyPvuaH8r7UyuyFu1DzVsvyhSRmXAdxbOru5ZShto82EQEb8qzRhVPuizvLlWVXI2Qnc9CQBZ1VDkH7mQ0qMwRdX6pf12QvIP/Qd9Dbtdd1l8IgekK+lgtztvRa1fxGxFgnbkXLB0wACFLQz428eUh6hgFK+bjBnrmu7CB/1FsDibOIpEeBupB2IHH/7dZ9t02r0F/6+8qfZd+MLCsrgDP33TXaI8Tw6Ntg1MlG0bDTISTiw/P7GI3o+U539Y51WpBN+BCQo4N4queEiicBSJQeuPr2SMw//LS34TqGiONM+3opCNmgQn2RaikMdo5W56CqWUyTfwHUDftb6MJI8iIEN5682E+6fmZ9VN6TM4Y2UPmZ3D+WuXxoVPruVFm7WHgHCD7/qh9Q79rmFiozMMp1FZfIvxXybY4iRHNE3CoMwgxmnDtHRqbqOOxUsJNCNRQgeT7B8pliFJqwzWWcDBOw2VQd3KSfPd7w3nYpnaz60A9vFFL7Ss9jBIeQlnkxXjzYk+dPJGhvkUtfwSQjOHbtxe1WLOewxY6EqtgtDpdlv4BJUPnFq6um/4MXm3mrT8wAotCL2yFFF95YunmQQoKj+gGT6dd9KBpBvz1kqToE6WsMHGvG2eRe9EkrbOEiFr0Ac5F4B2X0k4q2Sivz4H6kU9EelCYm3RAtROWeQbspH6hwZCWYnOIFF4jREJ/IaxPKhxkQE4KG2ZZxSsJwVkHPjTqDc3xJC7bvGXytRcyAZOnBw8qSGPwV+YqPF0IvhLFHEYNVNOeXgXtiIQoF2YPZ8OXovoJ3PXQ+bXnxufRkz4TLZjQ5Ky/yKkJfP+fiEBAGtSZsRtY+z+QfJtdtpcd2/VGFSnNfoMW15oRAGA2MXE1p6wTeCIi+nJZQGgRIhIR66DKWbNWspxRQplBR7rfmksqKA7rCqPTI1r3c/4axbVIA==",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-MD5": "wOkocbnI4QUQlRIqQssAtg==",
         "Date": "Fri, 04 Jun 2021 18:41:36 GMT",
-        "ETag": "\u00220x8D927886254853A\u0022",
+        "ETag": "\"0x8D927886254853A\"",
         "Last-Modified": "Fri, 04 Jun 2021 18:41:36 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -64,7 +64,7 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Date": "Fri, 04 Jun 2021 18:41:36 GMT",
-        "ETag": "\u00220x8D9278862601C42\u0022",
+        "ETag": "\"0x8D9278862601C42\"",
         "Last-Modified": "Fri, 04 Jun 2021 18:41:36 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -103,7 +103,7 @@
         "Content-MD5": "wOkocbnI4QUQlRIqQssAtg==",
         "Content-Type": "application/octet-stream",
         "Date": "Fri, 04 Jun 2021 18:41:36 GMT",
-        "ETag": "\u00220x8D9278862601C42\u0022",
+        "ETag": "\"0x8D9278862601C42\"",
         "Last-Modified": "Fri, 04 Jun 2021 18:41:36 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -156,7 +156,7 @@
         "Content-MD5": "wOkocbnI4QUQlRIqQssAtg==",
         "Content-Type": "application/octet-stream",
         "Date": "Fri, 04 Jun 2021 18:41:36 GMT",
-        "ETag": "\u00220x8D9278862601C42\u0022",
+        "ETag": "\"0x8D9278862601C42\"",
         "Last-Modified": "Fri, 04 Jun 2021 18:41:36 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -186,7 +186,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-29d427af-8b41-13f8-487b-2d3fe9903352?restype=container\u0026comp=list\u0026include=Immutabilitypolicy%2CLegalhold",
+      "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-29d427af-8b41-13f8-487b-2d3fe9903352?restype=container&comp=list&include=Immutabilitypolicy%2CLegalhold",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -215,7 +215,7 @@
         "x-ms-request-id": "16dfee37-301e-0008-2471-5976b8000000",
         "x-ms-version": "2020-10-02"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanoauthstage.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-29d427af-8b41-13f8-487b-2d3fe9903352\u0022\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-77620397-ac40-8741-db9a-6ca999eab53d\u003C/Name\u003E\u003CVersionId\u003E2021-06-04T18:41:36.8377658Z\u003C/VersionId\u003E\u003CIsCurrentVersion\u003Etrue\u003C/IsCurrentVersion\u003E\u003CProperties\u003E\u003CCreation-Time\u003EFri, 04 Jun 2021 18:41:36 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EFri, 04 Jun 2021 18:41:36 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D927886254853A\u003C/Etag\u003E\u003CContent-Length\u003E1024\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/octet-stream\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EwOkocbnI4QUQlRIqQssAtg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Etrue\u003C/ServerEncrypted\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-9722e48f-ba81-b1ce-2467-6c23ba2907a0\u003C/Name\u003E\u003CVersionId\u003E2021-06-04T18:41:36.9137218Z\u003C/VersionId\u003E\u003CIsCurrentVersion\u003Etrue\u003C/IsCurrentVersion\u003E\u003CProperties\u003E\u003CCreation-Time\u003EFri, 04 Jun 2021 18:41:36 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EFri, 04 Jun 2021 18:41:36 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E0x8D9278862601C42\u003C/Etag\u003E\u003CContent-Length\u003E1024\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/octet-stream\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64 /\u003E\u003CContent-MD5\u003EwOkocbnI4QUQlRIqQssAtg==\u003C/Content-MD5\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003EHot\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CServerEncrypted\u003Etrue\u003C/ServerEncrypted\u003E\u003CImmutabilityPolicyUntilDate\u003EFri, 04 Jun 2021 18:46:37 GMT\u003C/ImmutabilityPolicyUntilDate\u003E\u003CImmutabilityPolicyMode\u003Eunlocked\u003C/ImmutabilityPolicyMode\u003E\u003CLegalHold\u003Etrue\u003C/LegalHold\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seanoauthstage.blob.core.windows.net/\" ContainerName=\"test-container-29d427af-8b41-13f8-487b-2d3fe9903352\"><Blobs><Blob><Name>test-blob-77620397-ac40-8741-db9a-6ca999eab53d</Name><VersionId>2021-06-04T18:41:36.8377658Z</VersionId><IsCurrentVersion>true</IsCurrentVersion><Properties><Creation-Time>Fri, 04 Jun 2021 18:41:36 GMT</Creation-Time><Last-Modified>Fri, 04 Jun 2021 18:41:36 GMT</Last-Modified><Etag>0x8D927886254853A</Etag><Content-Length>1024</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding /><Content-Language /><Content-CRC64 /><Content-MD5>wOkocbnI4QUQlRIqQssAtg==</Content-MD5><Cache-Control /><Content-Disposition /><BlobType>BlockBlob</BlobType><AccessTier>Hot</AccessTier><AccessTierInferred>true</AccessTierInferred><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>true</ServerEncrypted></Properties><OrMetadata /></Blob><Blob><Name>test-blob-9722e48f-ba81-b1ce-2467-6c23ba2907a0</Name><VersionId>2021-06-04T18:41:36.9137218Z</VersionId><IsCurrentVersion>true</IsCurrentVersion><Properties><Creation-Time>Fri, 04 Jun 2021 18:41:36 GMT</Creation-Time><Last-Modified>Fri, 04 Jun 2021 18:41:36 GMT</Last-Modified><Etag>0x8D9278862601C42</Etag><Content-Length>1024</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding /><Content-Language /><Content-CRC64 /><Content-MD5>wOkocbnI4QUQlRIqQssAtg==</Content-MD5><Cache-Control /><Content-Disposition /><BlobType>BlockBlob</BlobType><AccessTier>Hot</AccessTier><AccessTierInferred>true</AccessTierInferred><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState><ServerEncrypted>true</ServerEncrypted><ImmutabilityPolicyUntilDate>Fri, 04 Jun 2021 18:46:37 GMT</ImmutabilityPolicyUntilDate><ImmutabilityPolicyMode>unlocked</ImmutabilityPolicyMode><LegalHold>true</LegalHold></Properties><OrMetadata /></Blob></Blobs><NextMarker /></EnumerationResults>"
     },
     {
       "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-29d427af-8b41-13f8-487b-2d3fe9903352/test-blob-77620397-ac40-8741-db9a-6ca999eab53d",
@@ -349,6 +349,6 @@
   "Variables": {
     "DateTimeOffsetNow": "2021-06-04T13:41:37.5795409-05:00",
     "RandomSeed": "588385037",
-    "Storage_TestConfigOAuth": "OAuthTenant\nseanoauthstage\nU2FuaXRpemVk\nhttps://seanoauthstage.blob.core.windows.net\nhttps://seanoauthstage.file.core.windows.net\nhttps://seanoauthstage.queue.core.windows.net\nhttps://seanoauthstage.table.core.windows.net\n\n\n\n\nhttps://seanoauthstage-secondary.blob.core.windows.net\nhttps://seanoauthstage-secondary.file.core.windows.net\nhttps://seanoauthstage-secondary.queue.core.windows.net\nhttps://seanoauthstage-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seanoauthstage.blob.core.windows.net/;QueueEndpoint=https://seanoauthstage.queue.core.windows.net/;FileEndpoint=https://seanoauthstage.file.core.windows.net/;BlobSecondaryEndpoint=https://seanoauthstage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanoauthstage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanoauthstage-secondary.file.core.windows.net/;AccountName=seanoauthstage;AccountKey=Sanitized\n"
+    "Storage_TestConfigOAuth": "OAuthTenant\nseanoauthstage\nU2FuaXRpemVk\nhttps://seanoauthstage.blob.core.windows.net\nhttps://seanoauthstage.file.core.windows.net\nhttps://seanoauthstage.queue.core.windows.net\nhttps://seanoauthstage.table.core.windows.net\n\n\n\n\nhttps://seanoauthstage-secondary.blob.core.windows.net\nhttps://seanoauthstage-secondary.file.core.windows.net\nhttps://seanoauthstage-secondary.queue.core.windows.net\nhttps://seanoauthstage-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seanoauthstage.blob.core.windows.net/;QueueEndpoint=https://seanoauthstage.queue.core.windows.net/;FileEndpoint=https://seanoauthstage.file.core.windows.net/;BlobSecondaryEndpoint=https://seanoauthstage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanoauthstage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanoauthstage-secondary.file.core.windows.net/;AccountName=seanoauthstage;AccountKey=Sanitized\n\n\n"
   }
 }

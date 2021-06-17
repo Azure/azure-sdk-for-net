@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://kasoboltest.blob.core.windows.net/test-container-6c7f8a28-4fca-f93e-fe37-b9b412343e58?restype=container",
@@ -19,7 +19,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 05 Mar 2021 07:19:25 GMT",
-        "ETag": "\u00220x8D8DFA7019C6EDA\u0022",
+        "ETag": "\"0x8D8DFA7019C6EDA\"",
         "Last-Modified": "Fri, 05 Mar 2021 07:19:25 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "4edd8d22-1a14-d051-3de5-014bb85181db",
@@ -45,13 +45,13 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
       },
-      "RequestBody": "8TKRhFbvRC4yFOWtnWuY9I\u002BjVVZScMg9TFR75vKXAGPnNlqGv/yFHmCyoqsAlOtnlTMrLISneIBpVDgCdF48mxSBxWcREjSSHjb2n84dPLhoE1C\u002BbNPfP73ZHGvEgqoBdgeWfg==",
+      "RequestBody": "8TKRhFbvRC4yFOWtnWuY9I+jVVZScMg9TFR75vKXAGPnNlqGv/yFHmCyoqsAlOtnlTMrLISneIBpVDgCdF48mxSBxWcREjSSHjb2n84dPLhoE1C+bNPfP73ZHGvEgqoBdgeWfg==",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "/HuWoL9i5MNrPfoZ2ciBwg==",
         "Date": "Fri, 05 Mar 2021 07:19:25 GMT",
-        "ETag": "\u00220x8D8DFA701AB502D\u0022",
+        "ETag": "\"0x8D8DFA701AB502D\"",
         "Last-Modified": "Fri, 05 Mar 2021 07:19:25 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "402f7d0d-85a2-37a9-f5c8-ce9b8cf428c6",
@@ -83,7 +83,7 @@
         "Content-MD5": "/HuWoL9i5MNrPfoZ2ciBwg==",
         "Content-Type": "application/octet-stream",
         "Date": "Fri, 05 Mar 2021 07:19:25 GMT",
-        "ETag": "\u00220x8D8DFA701AB502D\u0022",
+        "ETag": "\"0x8D8DFA701AB502D\"",
         "Last-Modified": "Fri, 05 Mar 2021 07:19:25 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
@@ -128,6 +128,6 @@
   ],
   "Variables": {
     "RandomSeed": "1699280231",
-    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttps://kasoboltest.blob.core.windows.net\nhttps://kasoboltest.file.core.windows.net\nhttps://kasoboltest.queue.core.windows.net\nhttps://kasoboltest.table.core.windows.net\n\n\n\n\nhttps://kasoboltest-secondary.blob.core.windows.net\nhttps://kasoboltest-secondary.file.core.windows.net\nhttps://kasoboltest-secondary.queue.core.windows.net\nhttps://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://kasoboltest.blob.core.windows.net/;QueueEndpoint=https://kasoboltest.queue.core.windows.net/;FileEndpoint=https://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=https://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Kg==;\nencryptionScope"
+    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttps://kasoboltest.blob.core.windows.net\nhttps://kasoboltest.file.core.windows.net\nhttps://kasoboltest.queue.core.windows.net\nhttps://kasoboltest.table.core.windows.net\n\n\n\n\nhttps://kasoboltest-secondary.blob.core.windows.net\nhttps://kasoboltest-secondary.file.core.windows.net\nhttps://kasoboltest-secondary.queue.core.windows.net\nhttps://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://kasoboltest.blob.core.windows.net/;QueueEndpoint=https://kasoboltest.queue.core.windows.net/;FileEndpoint=https://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=https://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Kg==;\nencryptionScope\n\n"
   }
 }

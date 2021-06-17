@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-97bbd331-7d08-6946-6910-7aa9fc03eaf6?restype=container",
@@ -19,7 +19,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:42:45 GMT",
-        "ETag": "\u00220x8D909049CC3B455\u0022",
+        "ETag": "\"0x8D909049CC3B455\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:42:46 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "575294f1-0eed-1316-1aad-4b07a03d74c6",
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:42:45 GMT",
-        "ETag": "\u00220x8D909049CEA13E8\u0022",
+        "ETag": "\"0x8D909049CEA13E8\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:42:46 GMT",
         "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "1b256a47-52b1-c6a2-aa07-08c548cac66f",
@@ -78,7 +78,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 22:42:46 GMT",
-        "ETag": "\u00220x8D909049D013289\u0022",
+        "ETag": "\"0x8D909049D013289\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:42:46 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "e2043334-8e85-dfb1-d0f1-bda88a4426f8",
@@ -111,7 +111,7 @@
         "Content-MD5": "OehrRoN8ev0WH85sZKKlZA==",
         "Content-Type": "ndmtefrewcmooeorukgl",
         "Date": "Mon, 26 Apr 2021 22:42:46 GMT",
-        "ETag": "\u00220x8D909049D013289\u0022",
+        "ETag": "\"0x8D909049D013289\"",
         "Last-Modified": "Mon, 26 Apr 2021 22:42:46 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-access-tier": "Hot",
@@ -157,8 +157,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-26T15:42:45.6801302-07:00",
+    "DateTimeOffsetNow": "2021-04-26T17:42:45.6801302-05:00",
     "RandomSeed": "636680523",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nkasobolhnscanada\nU2FuaXRpemVk\nhttp://kasobolhnscanada.blob.core.windows.net\nhttp://kasobolhnscanada.file.core.windows.net\nhttp://kasobolhnscanada.queue.core.windows.net\nhttp://kasobolhnscanada.table.core.windows.net\n\n\n\n\nhttp://kasobolhnscanada-secondary.blob.core.windows.net\nhttp://kasobolhnscanada-secondary.file.core.windows.net\nhttp://kasobolhnscanada-secondary.queue.core.windows.net\nhttp://kasobolhnscanada-secondary.table.core.windows.net\nc6b5fe1a-9b59-4975-92c4-d9f728c3c371\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://kasobolhnscanada.blob.core.windows.net/;QueueEndpoint=http://kasobolhnscanada.queue.core.windows.net/;FileEndpoint=http://kasobolhnscanada.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolhnscanada-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolhnscanada-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolhnscanada-secondary.file.core.windows.net/;AccountName=kasobolhnscanada;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nkasobolhnscanada\nU2FuaXRpemVk\nhttp://kasobolhnscanada.blob.core.windows.net\nhttp://kasobolhnscanada.file.core.windows.net\nhttp://kasobolhnscanada.queue.core.windows.net\nhttp://kasobolhnscanada.table.core.windows.net\n\n\n\n\nhttp://kasobolhnscanada-secondary.blob.core.windows.net\nhttp://kasobolhnscanada-secondary.file.core.windows.net\nhttp://kasobolhnscanada-secondary.queue.core.windows.net\nhttp://kasobolhnscanada-secondary.table.core.windows.net\nc6b5fe1a-9b59-4975-92c4-d9f728c3c371\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://kasobolhnscanada.blob.core.windows.net/;QueueEndpoint=http://kasobolhnscanada.queue.core.windows.net/;FileEndpoint=http://kasobolhnscanada.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolhnscanada-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolhnscanada-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolhnscanada-secondary.file.core.windows.net/;AccountName=kasobolhnscanada;AccountKey=Sanitized\n\n\n"
   }
 }

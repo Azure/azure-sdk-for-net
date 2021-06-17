@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://amandadev3.blob.core.windows.net/test-container-a0cd24c1-9110-ab02-3f4e-bcbc172eb6b4?restype=container",
@@ -22,7 +22,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 03 Jun 2021 16:17:56 GMT",
-        "ETag": "\u00220x8D926AB26178D7F\u0022",
+        "ETag": "\"0x8D926AB26178D7F\"",
         "Last-Modified": "Thu, 03 Jun 2021 16:17:56 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -56,7 +56,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 03 Jun 2021 16:17:57 GMT",
-        "ETag": "\u00220x8D926AB26384AC9\u0022",
+        "ETag": "\"0x8D926AB26384AC9\"",
         "Last-Modified": "Thu, 03 Jun 2021 16:17:57 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -95,7 +95,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 03 Jun 2021 16:17:57 GMT",
-        "ETag": "\u00220x8D926AB264826FA\u0022",
+        "ETag": "\"0x8D926AB264826FA\"",
         "Last-Modified": "Thu, 03 Jun 2021 16:17:57 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -131,7 +131,7 @@
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
         "Date": "Thu, 03 Jun 2021 16:17:57 GMT",
-        "ETag": "\u00220x8D926AB26384AC9\u0022",
+        "ETag": "\"0x8D926AB26384AC9\"",
         "Last-Modified": "Thu, 03 Jun 2021 16:17:57 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -171,7 +171,7 @@
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
         "Date": "Thu, 03 Jun 2021 16:17:57 GMT",
-        "ETag": "\u00220x8D926AB264826FA\u0022",
+        "ETag": "\"0x8D926AB264826FA\"",
         "Last-Modified": "Thu, 03 Jun 2021 16:17:57 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -229,6 +229,6 @@
   ],
   "Variables": {
     "RandomSeed": "197232030",
-    "Storage_TestConfigDefault": "ProductionTenant\namandadev3\nU2FuaXRpemVk\nhttps://amandadev3.blob.core.windows.net\nhttps://amandadev3.file.core.windows.net\nhttps://amandadev3.queue.core.windows.net\nhttps://amandadev3.table.core.windows.net\n\n\n\n\nhttps://amandadev3-secondary.blob.core.windows.net\nhttps://amandadev3-secondary.file.core.windows.net\nhttps://amandadev3-secondary.queue.core.windows.net\nhttps://amandadev3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://amandadev3.blob.core.windows.net/;QueueEndpoint=https://amandadev3.queue.core.windows.net/;FileEndpoint=https://amandadev3.file.core.windows.net/;BlobSecondaryEndpoint=https://amandadev3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://amandadev3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://amandadev3-secondary.file.core.windows.net/;AccountName=amandadev3;AccountKey=Kg==;\ntestscope2"
+    "Storage_TestConfigDefault": "ProductionTenant\namandadev3\nU2FuaXRpemVk\nhttps://amandadev3.blob.core.windows.net\nhttps://amandadev3.file.core.windows.net\nhttps://amandadev3.queue.core.windows.net\nhttps://amandadev3.table.core.windows.net\n\n\n\n\nhttps://amandadev3-secondary.blob.core.windows.net\nhttps://amandadev3-secondary.file.core.windows.net\nhttps://amandadev3-secondary.queue.core.windows.net\nhttps://amandadev3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://amandadev3.blob.core.windows.net/;QueueEndpoint=https://amandadev3.queue.core.windows.net/;FileEndpoint=https://amandadev3.file.core.windows.net/;BlobSecondaryEndpoint=https://amandadev3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://amandadev3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://amandadev3-secondary.file.core.windows.net/;AccountName=amandadev3;AccountKey=Kg==;\ntestscope2\n\n"
   }
 }

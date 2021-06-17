@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-95bacbdb-89b8-ff1f-6237-3b1491d42a0a?restype=container",
@@ -22,7 +22,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 14 May 2021 16:55:26 GMT",
-        "ETag": "\u00220x8D916F912FCB0B3\u0022",
+        "ETag": "\"0x8D916F912FCB0B3\"",
         "Last-Modified": "Fri, 14 May 2021 16:55:27 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -57,7 +57,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 14 May 2021 16:55:26 GMT",
-        "ETag": "\u00220x8D916F913084104\u0022",
+        "ETag": "\"0x8D916F913084104\"",
         "Last-Modified": "Fri, 14 May 2021 16:55:27 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -72,7 +72,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/?sv=2020-10-02\u0026ss=b\u0026srt=sco\u0026st=2021-05-14T15%3A55%3A29Z\u0026se=2021-05-14T17%3A55%3A29Z\u0026sp=rwdxlacuptfi\u0026sig=Sanitized\u0026comp=blobs\u0026where=\u0022myTagKey\u0022%3D%27myTagValue%27",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/?sv=2020-10-02&ss=b&srt=sco&st=2021-05-14T15%3A55%3A29Z&se=2021-05-14T17%3A55%3A29Z&sp=rwdxlacuptfi&sig=Sanitized&comp=blobs&where=\"myTagKey\"%3D%27myTagValue%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -99,8 +99,8 @@
         "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
-        "\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary3.blob.core.windows.net/\u0022\u003E\u003CWhere\u003E\u0026quot;myTagKey\u0026quot;=\u0026apos;myTagValue\u0026apos;\u003C/Where\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-fbacb2ad-17c4-dcb4-60ff-48cfc3d356be\u003C/Name\u003E\u003CContainerName\u003Etest-container-95bacbdb-89b8-ff1f-6237-3b1491d42a0a\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker/\u003E\u003C/EnumerationResults\u003E"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
+        "<EnumerationResults ServiceEndpoint=\"https://seanmcccanary3.blob.core.windows.net/\"><Where>&quot;myTagKey&quot;=&apos;myTagValue&apos;</Where><Blobs><Blob><Name>test-blob-fbacb2ad-17c4-dcb4-60ff-48cfc3d356be</Name><ContainerName>test-container-95bacbdb-89b8-ff1f-6237-3b1491d42a0a</ContainerName><Tags><TagSet><Tag><Key>myTagKey</Key><Value>myTagValue</Value></Tag></TagSet></Tags></Blob></Blobs><NextMarker/></EnumerationResults>"
       ]
     },
     {
@@ -138,6 +138,6 @@
   "Variables": {
     "DateTimeOffsetNow": "2021-05-14T11:55:29.6627388-05:00",
     "RandomSeed": "971499564",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }
