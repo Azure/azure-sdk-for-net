@@ -102,9 +102,8 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Where("Temperature", QueryComparisonOperator.GreaterOrEqual, "50")
                 .Build()
                 .Stringify()
-                .ToUpper()
                 .Should()
-                .Be("SELECT * FROM DIGITALTWINS WHERE TEMPERATURE >= 50");
+                .Be("SELECT * FROM DigitalTwins WHERE Temperature >= 50");
         }
 
         [Test]
@@ -116,9 +115,8 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Where("Location", QueryContainOperator.NotIn, new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
                 .Build()
                 .Stringify()
-                .ToUpper()
                 .Should()
-                .Be("SELECT * FROM DIGITALTWINS WHERE LOCATION NIN ['PARIS', 'TOKYO', 'MADRID', 'PRAGUE']");
+                .Be("SELECT * FROM DigitalTwins WHERE Location NIN ['Paris', 'Tokyo', 'Madrid', 'Prague']");
         }
 
         [Test]

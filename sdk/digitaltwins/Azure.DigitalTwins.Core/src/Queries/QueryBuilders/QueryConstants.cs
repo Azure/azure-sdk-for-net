@@ -42,5 +42,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             { QueryComparisonOperator.GreaterOrEqual, ">=" },
             { QueryComparisonOperator.LessOrEqual, "<=" }
         };
+
+        // Maps contains operators
+        public static readonly Dictionary<QueryContainOperator, string> ContainOperators = new Dictionary<QueryContainOperator, string>()
+        {
+            { QueryContainOperator.In, "IN" },
+            { QueryContainOperator.NotIn, "NIN" }
+        };
     }
 }

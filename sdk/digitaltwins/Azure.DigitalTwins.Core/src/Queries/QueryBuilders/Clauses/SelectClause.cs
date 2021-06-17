@@ -6,7 +6,7 @@ using System.Text;
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// Custom object for a SELECT clause. Only meant to be used when adding SELECT to a query. Hidden from user.
+    /// Custom object for a SELECT clause. Only meant to be used when adding SELECT to a query.
     /// </summary>
     internal class SelectClause
     {

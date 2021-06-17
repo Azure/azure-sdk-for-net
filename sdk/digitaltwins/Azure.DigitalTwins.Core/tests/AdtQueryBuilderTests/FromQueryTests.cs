@@ -16,9 +16,8 @@ namespace Azure.DigitalTwins.Core.Tests
             var query = new FromQuery(null, null);
             query.From(AdtCollection.DigitalTwins);
             query.Stringify()
-                .ToUpper()
                 .Should()
-                .Be("FROM DIGITALTWINS");
+                .Be("FROM DigitalTwins");
         }
 
         [Test]
@@ -27,9 +26,8 @@ namespace Azure.DigitalTwins.Core.Tests
             var query = new FromQuery(null, null);
             query.From(AdtCollection.Relationships);
             query.Stringify()
-                .ToUpper()
                 .Should()
-                .Be("FROM RELATIONSHIPS");
+                .Be("FROM Relationships");
         }
 
         [Test]
@@ -38,7 +36,6 @@ namespace Azure.DigitalTwins.Core.Tests
             var query = new FromQuery(null, null);
             query.From("DIGITALTWINS");
             query.Stringify()
-                .ToUpper()
                 .Should()
                 .Be("FROM DIGITALTWINS");
         }

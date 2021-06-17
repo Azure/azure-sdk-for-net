@@ -37,7 +37,21 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public override string Stringify()
         {
-            return $"{Field} {QueryConstants.ComparisonOperators[Operator]} {Value}";
+            var conditionString = new StringBuilder();
+            conditionString.Append($"{Field} {QueryConstants.ComparisonOperators[Operator]} ");
+
+            // check to see if the input is numeric value -- if not, we need single quotes around Value
+            bool isNumeric = int.TryParse(Value, out int numericValue);
+
+            if (!isNumeric)
+            {
+                // surround with single quotes
+                Value = "'" + Value + "'";
+            }
+
+            conditionString.Append(Value);
+
+            return conditionString.ToString();
         }
 
         /// <summary>

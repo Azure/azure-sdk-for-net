@@ -42,7 +42,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             string searchedFormatted = $"['{string.Join("', '", Searched)}']";
 
             // form entire conditional string
-            return $"{Value} {Operator} {searchedFormatted}";
+            return $"{Value} {QueryConstants.ContainOperators[Operator]} {searchedFormatted}";
         }
     }
 }

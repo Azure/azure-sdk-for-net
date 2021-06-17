@@ -116,14 +116,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereQuery WhereIsOfModel(string model, bool exact = false)
         {
+            var whereClauseArg = new StringBuilder();
+            whereClauseArg.Append($"{QueryConstants.IsOfModel}('{model}'");
+
             if (exact)
             {
-                _clauses.Add(new WhereClause($"{QueryConstants.IsOfModel}('{model}', exact)"));
+                whereClauseArg.Append(", exact");
             }
-            else
-            {
-                _clauses.Add(new WhereClause($"{QueryConstants.IsOfModel}('{model}')"));
-            }
+
+            whereClauseArg.Append(')');
+            _clauses.Add(new WhereClause(whereClauseArg.ToString()));
 
             return this;
         }
@@ -204,7 +206,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             if (_clauses.Any())
             {
                 // Where keyword only needs to be appened one time, happends outside of loop
-                StringBuilder whereComponents = new StringBuilder();
+                var whereComponents = new StringBuilder();
                 whereComponents.Append($"{QueryConstants.Where} ");
 
                 // Parse each Where conditional statement
