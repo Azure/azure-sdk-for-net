@@ -43,37 +43,37 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
-
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-                ObservableEventDataBatch newbatch = new ObservableEventDataBatch(eventBatch);
+                var newBatch = new ObservableEventDataBatch(eventBatch);
 
+                // Adding events to the batch
                 for (var index = 0; index < 5; ++index)
                 {
                     var eventBody = new BinaryData($"Event #{ index }");
                     var eventData = new EventData(eventBody);
 
-                    if (!newbatch.TryAdd(eventData))
+                    if (!newBatch.TryAdd(eventData))
                     {
                         throw new Exception($"The event at { index } could not be added.");
                     }
                 }
 
-                foreach (var singleEvent in newbatch.Events)
+                // Looping through the events to demonstrate how to access them
+                foreach (var singleEvent in newBatch.Events)
                 {
                     Debug.WriteLine($"Added event { singleEvent.EventBody } at time { singleEvent.EnqueuedTime }");
                 }
 
-                await producer.SendAsync(newbatch);
+                await producer.SendAsync(newBatch);
             }
             finally
             {
                 await producer.CloseAsync();
             }
-
 #endregion
         }
 
@@ -95,29 +95,28 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
-
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-                ObservableEventDataBatch newbatch = new ObservableEventDataBatch(eventBatch);
+                var newBatch = new ObservableEventDataBatch(eventBatch);
 
+                // Adding events to the batch
                 for (var index = 0; index < 5; ++index)
                 {
                     var eventBody = new BinaryData($"Event #{ index }");
                     var eventData = new EventData(eventBody);
                     eventData.Properties.Add("ApplicationId", index);
 
-                    if (!newbatch.TryAdd(eventData))
+                    if (!newBatch.TryAdd(eventData))
                     {
                         throw new Exception($"The event at { index } could not be added.");
                     }
                 }
 
                 // Verify that the expected event is in the batch
-                var contains = newbatch.Events.Any(eventData => int
-                .TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
+                var contains = newBatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
             }
             finally
             {
@@ -127,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         }
 
         /// <summary>
-        ///   Live test of the ObservableEventBatch Class. This checks that events are successfully being added
+        ///   Live test of the ObservableEventBatch class. This checks that events are successfully being added
         ///   to both the internal and external batch.
         /// </summary>
         ///
@@ -139,30 +138,30 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = scope.EventHubName;
             await using var producer = new EventHubProducerClient(connectionString, eventHubName);
             using var eventBatch = await producer.CreateBatchAsync();
-            var newbatch = new ObservableEventDataBatch(eventBatch);
+            var newBatch = new ObservableEventDataBatch(eventBatch);
 
+            // Adding events to the batch
             for (var index = 0; index < 5; ++index)
             {
                 var eventBody = new BinaryData($"Event #{ index }");
                 var eventData = new EventData(eventBody);
                 eventData.Properties.Add("ApplicationId", index);
 
-                if (!newbatch.TryAdd(eventData))
+                if (!newBatch.TryAdd(eventData))
                 {
                     throw new Exception($"The event at { index } could not be added.");
                 }
             }
 
-            var contains = newbatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
-
+            var contains = newBatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
             Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
 
-            Assert.Greater(newbatch.Count, 0, "Events were not successfully added to the batch");
-            Assert.AreEqual(newbatch.Count, newbatch.Events.Count, "The observable batch events are out of sync with the event batch data");
+            Assert.Greater(newBatch.Count, 0, "Events were not successfully added to the batch");
+            Assert.AreEqual(newBatch.Count, newBatch.Events.Count, "The observable batch events are out of sync with the event batch data");
 
             // Check implicit casting by verifying batch can be sent using built in
             // producer method
-            await producer.SendAsync(newbatch);
+            await producer.SendAsync(newBatch);
             await producer.CloseAsync();
         }
 
