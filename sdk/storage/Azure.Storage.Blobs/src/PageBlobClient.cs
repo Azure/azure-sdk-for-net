@@ -1945,6 +1945,11 @@ namespace Azure.Storage.Blobs.Specialized
                 operationName ??= $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}";
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                    | BlobRequestConditionProperty.IfSequenceNumberLessThan
+                    | BlobRequestConditionProperty.IfSequenceNumberEqual);
+
                 try
                 {
                     scope.Start();
