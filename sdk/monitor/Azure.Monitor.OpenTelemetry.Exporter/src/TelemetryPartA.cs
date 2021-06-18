@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static TelemetryItem GetTelemetryItem(Activity activity, Resource resource, string instrumentationKey)
         {
-            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatTimestamp(activity.StartTimeUtc))
+            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
             {
                 InstrumentationKey = instrumentationKey
             };
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)
         {
             var name = PartA_Name_Mapping[TelemetryType.Message];
-            var time = FormatTimestamp(logRecord.Timestamp);
+            var time = FormatUtcTimestamp(logRecord.Timestamp);
 
             TelemetryItem telemetryItem = new TelemetryItem(name, time)
             {
@@ -124,9 +124,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        internal static string FormatUtcTimestamp(System.DateTime utcTimeStamp)
+        internal static string FormatUtcTimestamp(System.DateTime utcTimestamp)
         {
-            return timeStamp.ToString(DateTimeFormat, CultureInfo.InvariantCulture);
+            return utcTimestamp.ToString(DateTimeFormat, CultureInfo.InvariantCulture);
         }
     }
 }
