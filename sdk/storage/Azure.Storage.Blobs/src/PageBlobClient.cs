@@ -2280,6 +2280,11 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(Resize)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                    | BlobRequestConditionProperty.IfSequenceNumberLessThan
+                    | BlobRequestConditionProperty.IfSequenceNumberEqual);
+
                 try
                 {
                     scope.Start();
