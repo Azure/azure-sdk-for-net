@@ -1256,6 +1256,9 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPages)}");
 
+                // All PageBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(BlobRequestConditionProperty.None);
+
                 try
                 {
                     scope.Start();
@@ -3341,6 +3344,16 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sourceUri)}: {sourceUri}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPagesFromUri)}");
+
+                // All destination PageBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(BlobRequestConditionProperty.None);
+
+                sourceConditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.LeaseId
+                    | BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                    | BlobRequestConditionProperty.IfSequenceNumberLessThan
+                    | BlobRequestConditionProperty.IfSequenceNumberEqual
+                    | BlobRequestConditionProperty.TagConditions);
 
                 try
                 {

@@ -2696,6 +2696,51 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(PageBlobRequestConditions.LeaseId))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
+        [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberEqual))]
+        [TestCase(nameof(PageBlobRequestConditions.TagConditions))]
+        public async Task UploadPagesFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            PageBlobClient pageBlobClient = new PageBlobClient(uri, GetOptions());
+
+            PageBlobRequestConditions sourceConditions = new PageBlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(PageBlobRequestConditions.LeaseId):
+                    sourceConditions.LeaseId = "LeaseId";
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual):
+                    sourceConditions.IfSequenceNumberLessThanOrEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberLessThan):
+                    sourceConditions.IfSequenceNumberLessThan = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.IfSequenceNumberEqual):
+                    sourceConditions.IfSequenceNumberEqual = 0;
+                    break;
+                case nameof(PageBlobRequestConditions.TagConditions):
+                    sourceConditions.TagConditions = "TagConditions";
+                    break;
+            }
+
+            HttpRange httpRange = new HttpRange(0, 1);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                pageBlobClient.UploadPagesFromUriAsync(
+                    uri,
+                    httpRange,
+                    httpRange,
+                    sourceConditions: sourceConditions),
+                e => Assert.AreEqual($"{invalidSourceCondition} is not applicable to this API.", e.Message));
+        }
+
+        [RecordedTest]
         public async Task UploadPagesFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
