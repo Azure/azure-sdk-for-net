@@ -134,7 +134,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (predicate())
                 {
-                    TestContext.WriteLine($"Condition evaluated to true in {waitPeriod.TotalSeconds} seconds.");
+                    TestContext.WriteLine($"{nameof(ConditionalDelayAsync)}: Condition evaluated to true in {waitPeriod.TotalSeconds} seconds.");
                     return;
                 }
 
@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 
-            TestContext.WriteLine($"Condition did not evaluate to true in {waitPeriod.TotalSeconds} seconds.");
+            TestContext.WriteLine($"{nameof(ConditionalDelayAsync)}: Condition did not evaluate to true in {waitPeriod.TotalSeconds} seconds.");
         }
 
         /// <summary>
