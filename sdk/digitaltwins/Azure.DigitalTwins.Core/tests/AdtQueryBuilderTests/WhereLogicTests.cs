@@ -33,7 +33,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereLogic_Contains()
         {
             var query = new WhereLogic(null);
-            query.Contains("Owner", QueryContainsOperator.In, new string[] { "John", "Sally", "Marshall" });
+            query.Contains("Owner", new string[] { "John", "Sally", "Marshall" });
             query.GetQueryText()
                 .Should()
                 .Be("Owner IN ['John', 'Sally', 'Marshall']");
@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereLogic_Override()
         {
             var query = new WhereLogic(null);
-            query.Override("Temperature = 5");
+            query.CustomClause("Temperature = 5");
             query.GetQueryText()
                 .Should()
                 .Be("Temperature = 5");

@@ -40,12 +40,24 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// a field for a user specified property.
         /// </summary>
         /// <param name="value"> User specified property to look for. </param>
-        /// <param name="containOperator"> ADT contains operator defined by the ADT query language. </param>
         /// <param name="searched"> Field of possible options to check for the 'value' parameter. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic Contains(string value, QueryContainsOperator containOperator, string[] searched)
+        public WhereLogic Contains(string value, string[] searched)
         {
-            _clauses.Add(new WhereClause(new ContainsCondition(value, containOperator, searched)));
+            _clauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.In, searched)));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the conditional arugments for a contains conditional statement to the query object. Used to search
+        /// a field for a user specified property.
+        /// </summary>
+        /// <param name="value"> User specified property to look for. </param>
+        /// <param name="searched"> Field of possible options to check for the 'value' parameter. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
+        public WhereLogic NotContains(string value, string[] searched)
+        {
+            _clauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.NotIn, searched)));
             return this;
         }
 
@@ -54,7 +66,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="condition"> The verbatim condition (SQL-like syntax) in string format. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic Override(string condition)
+        public WhereLogic CustomClause(string condition)
         {
             _clauses.Add(new WhereClause(condition));
             return this;
