@@ -392,17 +392,12 @@ namespace Azure.Search.Documents.Tests
             await indexer.MergeDocumentsAsync(new[] { new SimpleDocument { Id = "Fake" } });
             await indexer.UploadDocumentsAsync(data.Skip(500));
 
-            await DelayAsync(TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(250));
+            int expectedPendingQueueSize = 1001 - BatchSize;
+
+            await ConditionalDelayAsync(TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(250), 5, ()=>(pending.Count == expectedPendingQueueSize));
 
             Assert.AreEqual(0, removeFailedCount);
-            if ((pending.Count == 1001) && (Mode != RecordedTestMode.Playback))
-            {
-                Assert.Inconclusive("Publishing has not started.");
-            }
-            else
-            {
-                Assert.AreEqual(1001 - BatchSize, pending.Count);
-            }
+            Assert.AreEqual(expectedPendingQueueSize, pending.Count);
 
             await indexer.FlushAsync();
             Assert.AreEqual(0, pending.Count);

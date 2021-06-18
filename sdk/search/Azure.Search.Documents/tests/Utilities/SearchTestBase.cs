@@ -108,6 +108,54 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// <para>This method allows us to return early if the <paramref name="predicate"/> condition evaluates to true.
+        /// It evaluates the predicate after every <paramref name="delayPerIteration"/> or <paramref name="playbackDelayPerIteration"/> time span.
+        /// It returns when the condition evaluates to <c>true</c>, or if the condition stays false after <paramref name="iterationCount"/> checks.</para>
+        /// </summary>
+        /// <param name="delayPerIteration">The time to wait per iteration.  Defaults to 1s.</param>
+        /// <param name="playbackDelayPerIteration">
+        /// An optional time wait if we're playing back a recorded test.  This
+        /// is useful for allowing client side events to get processed.
+        /// </param>
+        /// <param name="iterationCount">Number of iterations of the wait-and-check cycle.</param>
+        /// <param name="predicate">Condition that will result in early end of delay when it evaluates to <c>true</c>.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to check.</param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was signaled.</exception>
+        public async Task ConditionalDelayAsync(TimeSpan? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint iterationCount = 1, Func<bool> predicate = null, CancellationToken cancellationToken = default)
+        {
+            TimeSpan waitPeriod = TimeSpan.Zero;
+
+            for (int i = 0; i < iterationCount; i++)
+            {
+                if (predicate())
+                {
+                    TestContext.WriteLine($"Condition evaluated to true in {waitPeriod.TotalSeconds} seconds.");
+                    return;
+                }
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    waitPeriod += delayPerIteration ?? TimeSpan.FromSeconds(1);
+                    await Task.Delay(delayPerIteration ?? TimeSpan.FromSeconds(1));
+                }
+                else if (playbackDelayPerIteration != null)
+                {
+                    waitPeriod += playbackDelayPerIteration.Value;
+                    await Task.Delay(playbackDelayPerIteration.Value);
+                }
+            }
+
+            TestContext.WriteLine($"Condition did not evaluate to true in {waitPeriod.TotalSeconds} seconds.");
+        }
+
+        /// <summary>
         /// Assert that we can catch the desired exception.  NUnit's default
         /// forces everything to be sync.
         /// </summary>
