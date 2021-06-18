@@ -963,6 +963,48 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(AppendBlobRequestConditions.LeaseId))]
+        [TestCase(nameof(AppendBlobRequestConditions.TagConditions))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        public async Task AppendBlockFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions sourceConditions = new AppendBlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(AppendBlobRequestConditions.LeaseId):
+                    sourceConditions.LeaseId = "LeaseId";
+                    break;
+                case nameof(AppendBlobRequestConditions.TagConditions):
+                    sourceConditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(AppendBlobRequestConditions.IfAppendPositionEqual):
+                    sourceConditions.IfAppendPositionEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    sourceConditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+            }
+
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.AppendBlockFromUriAsync(
+                    uri,
+                    options),
+                e => Assert.AreEqual($"{invalidSourceCondition} is not applicable to this API.", e.Message));
+        }
+
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

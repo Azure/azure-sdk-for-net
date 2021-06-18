@@ -1127,6 +1127,9 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
 
+                // All AppendBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(BlobRequestConditionProperty.None);
+
                 try
                 {
                     scope.Start();
@@ -1521,6 +1524,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
+
+                // All destination AppendBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(BlobRequestConditionProperty.None);
+
+                sourceConditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.LeaseId
+                    | BlobRequestConditionProperty.TagConditions
+                    | BlobRequestConditionProperty.IfAppendPositionEqual
+                    | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual);
 
                 try
                 {
