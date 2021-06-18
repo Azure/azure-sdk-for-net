@@ -78,6 +78,37 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(result.Value.Data.Tags, tags);
         }
 
+        [RecordedTest]
+        public async Task TestCreateOrUpdateAllTags()
+        {
+            var result = await _rg.CreateOrUpdateAllTagsAsync(UpdateTags);
+            Assert.IsFalse(result.Value.Properties.TagsValue.ContainsKey("key1"));
+            Assert.IsTrue(result.Value.Properties.TagsValue.ContainsKey("UpdateKey1"));
+        }
+
+        [RecordedTest]
+        public async Task TestUpdateAllTags()
+        {
+            var result = await _rg.UpdateAllTagsAsync(UpdateTags);
+            Assert.IsTrue(result.Value.Properties.TagsValue.ContainsKey("key1"));
+            Assert.IsTrue(result.Value.Properties.TagsValue.ContainsKey("UpdateKey1"));
+        }
+
+        [RecordedTest]
+        public async Task TestGetAllTags()
+        {
+            var result = await _rg.GetAllTagsAsync();
+            Assert.IsTrue(result.Value.Properties.TagsValue.Count == 2);
+        }
+
+        [RecordedTest]
+        public async Task TestDeleteAllTags()
+        {
+            await _rg.DeleteAllTagsAsync();
+            var result = await _rg.GetAllTagsAsync();
+            Assert.IsTrue(result.Value.Properties.TagsValue.Count == 0);
+        }
+
         static IEnumerable<object[]> TagSource()
         {
             IDictionary<string, string> OriKey1 = new Dictionary<string, string> { { "key1", "value1" } };

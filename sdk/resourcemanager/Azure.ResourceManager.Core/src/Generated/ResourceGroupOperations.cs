@@ -75,6 +75,12 @@ namespace Azure.ResourceManager.Core
             Id.SubscriptionId,
             BaseUri);
 
+        private TagsRestOperations TagsRestClient => new TagsRestOperations(
+            Diagnostics,
+            Pipeline,
+            Id.SubscriptionId,
+            BaseUri);
+
         private ResourcesRestOperations GenericRestClient => new ResourcesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
         /// <summary>
@@ -962,6 +968,195 @@ namespace Azure.ResourceManager.Core
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
+        }
+
+        /// <summary>
+        /// Creates or updates the entire set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="tags"> The set of tags. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Tags from the specified object. </returns>
+        public virtual Response<TagsResource> CreateOrUpdateAllTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags is null)
+                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CreateOrUpdateAllTags");
+            scope.Start();
+
+            try
+            {
+                return TagsRestClient.CreateOrUpdateAtScope(Id, new TagsResource(new Tags(tags)), cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the entire set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="tags"> The set of tags. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Tags from the specified object. </returns>
+        public virtual async Task<Response<TagsResource>> CreateOrUpdateAllTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags is null)
+                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CreateOrUpdateAllTags");
+            scope.Start();
+
+            try
+            {
+                return await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, new TagsResource(new Tags(tags)), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Selectively updates the set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="tags"> The set of tags. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Tags from the specified object. </returns>
+        public virtual Response<TagsResource> UpdateAllTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags is null)
+                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.UpdateAllTags");
+            scope.Start();
+
+            try
+            {
+                return TagsRestClient.UpdateAtScope(Id, new TagsPatchResource() 
+                { 
+                    Operation = TagsPatchResourceOperation.Delete, Properties = new Tags(tags) 
+                }, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Selectively updates the set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="tags"> The set of tags. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Tags from the specified object. </returns>
+        public virtual async Task<Response<TagsResource>> UpdateAllTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags is null)
+                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.UpdateAllTags");
+            scope.Start();
+
+            try
+            {
+                return await TagsRestClient.UpdateAtScopeAsync(Id, new TagsPatchResource()
+                {
+                    Operation = TagsPatchResourceOperation.Merge,
+                    Properties = new Tags(tags)
+                }, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entire set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Tags from the specified object. </returns>
+        public virtual Response<TagsResource> GetAllTags(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.GetAllTags");
+            scope.Start();
+
+            try
+            {
+                return TagsRestClient.GetAtScope(Id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entire set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Tags from the specified object. </returns>
+        public virtual async Task<Response<TagsResource>> GetAllTagsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.GetAllTags");
+            scope.Start();
+
+            try
+            {
+                return await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the entire set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual Response DeleteAllTags(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.DeleteAllTags");
+            scope.Start();
+
+            try
+            {
+                return TagsRestClient.DeleteAtScope(Id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the entire set of tags on a resource or subscription.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual async Task<Response> DeleteAllTagsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.DeleteAllTags");
+            scope.Start();
+
+            try
+            {
+                return await TagsRestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
