@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Compares the API version value in ApiVersionsBase object and the one in object.
         /// </summary>
-        /// <param name="obj"> The object to compare. </param>
+        /// <param name="other"> The object to compare. </param>
         /// <returns> Comparison result in boolean. Equal returns true otherwise returns false. </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object other)
         {
-            if (obj is ApiVersionsBase)
-                return Equals(obj as ApiVersionsBase);
-            if (obj is string)
-                return Equals(obj as string);
+            if (other is ApiVersionsBase)
+                return Equals(other as ApiVersionsBase);
+            if (other is string)
+                return Equals(other as string);
 
             return false;
         }

@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> SQL API query. Type: string (or Expression with resultType string). </param>
         /// <param name="pageSize"> Page size of the result. Type: integer (or Expression with resultType integer). </param>
         /// <param name="preferredRegions"> Preferred regions. Type: array of strings (or Expression with resultType array of strings). </param>

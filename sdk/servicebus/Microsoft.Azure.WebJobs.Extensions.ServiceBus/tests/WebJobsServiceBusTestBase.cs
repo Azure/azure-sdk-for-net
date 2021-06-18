@@ -181,7 +181,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await using ServiceBusClient client = new ServiceBusClient(connectionString ?? ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
             var sender = client.CreateSender(queueName ?? _firstQueueScope.QueueName);
-            ServiceBusMessage messageObj = new ServiceBusMessage(message);
+            ServiceBusMessage messageObj = new ServiceBusMessage(message)
+            {
+                ContentType = "application/json",
+                CorrelationId = "correlationId",
+                Subject = "subject",
+                To = "to",
+                ReplyTo = "replyTo",
+                ApplicationProperties = {{ "key", "value"}}
+            };
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;

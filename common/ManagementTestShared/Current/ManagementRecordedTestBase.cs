@@ -27,14 +27,7 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return operation.WaitForCompletionAsync(ZeroPollingInterval, default);
-            }
-            else
-            {
-                return operation.WaitForCompletionAsync();
-            }
+            return operation.WaitForCompletionAsync();
         }
 
         protected ResourcesManagementClient GetResourceManagementClient()

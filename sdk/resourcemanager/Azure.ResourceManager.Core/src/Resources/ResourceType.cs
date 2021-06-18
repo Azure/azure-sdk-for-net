@@ -117,29 +117,29 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Compares two <see cref="ResourceType"/> objects.
         /// </summary>
-        /// <param name="source"> First <see cref="ResourceType"/> object. </param>
-        /// <param name="target"> Second <see cref="ResourceType"/> object. </param>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
         /// <returns> True if they are equal, otherwise False. </returns>
-        public static bool operator ==(ResourceType source, ResourceType target)
+        public static bool operator ==(ResourceType left, ResourceType right)
         {
-            if (source is null)
-                return target is null;
+            if (left is null)
+                return right is null;
 
-            return source.Equals(target);
+            return left.Equals(right);
         }
 
         /// <summary>
         /// Compares two <see cref="ResourceType"/> objects.
         /// </summary>
-        /// <param name="source"> First <see cref="ResourceType"/> object. </param>
-        /// <param name="target"> Second <see cref="ResourceType"/> object. </param>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
         /// <returns> False if they are equal, otherwise True. </returns>
-        public static bool operator !=(ResourceType source, ResourceType target)
+        public static bool operator !=(ResourceType left, ResourceType right)
         {
-            if (source is null)
-                return !(target is null);
+            if (left is null)
+                return !(right is null);
 
-            return !source.Equals(target);
+            return !left.Equals(right);
         }
 
         /// <summary>
@@ -184,22 +184,22 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object other)
         {
-            if (obj is null)
+            if (other is null)
                 return false;
 
-            var resourceObj = obj as ResourceType;
+            var resourceObj = other as ResourceType;
 
             if (!(resourceObj is null))
                 return Equals(resourceObj);
 
-            var stringObj = obj as string;
+            var stringObj = other as string;
 
             if (stringObj != null)
                 return Equals(stringObj);
 
-            return base.Equals(obj);
+            return base.Equals(other);
         }
 
         /// <inheritdoc/>
