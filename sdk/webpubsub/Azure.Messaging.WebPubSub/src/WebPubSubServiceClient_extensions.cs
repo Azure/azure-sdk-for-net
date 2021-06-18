@@ -101,8 +101,9 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToAllAsync(string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return await SendToAllAsync(contentType.ToString(), RequestContent.Create(content), default, requestOptions: default).ConfigureAwait(false);
         }
@@ -113,8 +114,9 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToAll(string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return SendToAll(contentType.ToString(), RequestContent.Create(content), excluded: default, requestOptions: default);
         }
@@ -128,8 +130,10 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToUserAsync(string userId, string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
         }
@@ -143,8 +147,10 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToUser(string userId, string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return SendToUser(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
         }
@@ -158,8 +164,10 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
         }
@@ -173,8 +181,10 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToConnection(string connectionId, string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
         }
@@ -188,8 +198,10 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToGroupAsync(string group, string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default).ConfigureAwait(false);
         }
@@ -203,8 +215,10 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToGroup(string group, string content, ContentType contentType = default)
         {
-            if (contentType == default)
-                contentType = ContentType.TextPlain;
+            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNull(content, nameof(content));
+
+            if (contentType == default) contentType = ContentType.TextPlain;
 
             return SendToGroup(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default);
         }
@@ -270,7 +284,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
         public virtual async Task<Response> GrantPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var response = await GrantPermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await GrantPermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
             return response;
         }
 
@@ -281,7 +295,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
         public virtual Response GrantPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var response = GrantPermission(permission.ToString(), connectionId, targetName, options);
+            var response = GrantPermission(PermissionToString(permission), connectionId, targetName, options);
             return response;
         }
 
@@ -292,7 +306,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
         public virtual async Task<Response> RevokePermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var response = await RevokePermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await RevokePermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
             return response;
         }
 
@@ -303,7 +317,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
         public virtual Response RevokePermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var response = RevokePermission(permission.ToString(), connectionId, targetName, options);
+            var response = RevokePermission(PermissionToString(permission), connectionId, targetName, options);
             return response;
         }
 
@@ -314,7 +328,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
         public virtual async Task<Response<bool>> CheckPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var response = await CheckPermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await CheckPermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
             return Response.FromValue((response.Status == 200), response);
         }
 
@@ -325,7 +339,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
         public virtual Response<bool> CheckPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var response = CheckPermission(permission.ToString(), connectionId, targetName, options);
+            var response = CheckPermission(PermissionToString(permission), connectionId, targetName, options);
             return Response.FromValue((response.Status == 200), response);
         }
     }

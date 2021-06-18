@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
@@ -88,6 +89,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
         internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
         {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
             var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
 
             var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -137,6 +140,19 @@ namespace Azure.Messaging.WebPubSub
             }
 
             return (uriBuilder.Uri, new AzureKeyCredential(accessKey));
+        }
+
+        internal static string PermissionToString(WebPubSubPermission permission)
+        {
+            switch (permission)
+            {
+                case WebPubSubPermission.SendToGroup:
+                    return "sendToGroup";
+                case WebPubSubPermission.JoinLeaveGroup:
+                    return "joinLeaveGroup";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(permission));
+            }
         }
     }
 }
