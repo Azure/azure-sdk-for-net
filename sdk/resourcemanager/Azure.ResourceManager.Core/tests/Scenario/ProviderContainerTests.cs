@@ -13,14 +13,38 @@ namespace Azure.ResourceManager.Core.Tests
         {
         }
 
-        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
-        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
+        [TestCase("microsoft.insights")]
         [RecordedTest]
-        public async Task Get(string resourceId)
+        public async Task GetFromSubscription(string resourceId)
         {
             var providerContainer = Client.DefaultSubscription.GetProviders();
             var result = await providerContainer.GetAsync(resourceId);
             Assert.IsNotNull(result);
+        }
+
+        [TestCase("/providers/microsoft.insights")]
+        [RecordedTest]
+        public async Task GetFromTenant(string resourceId)
+        {
+            var providerContainer = Client.Tenant.GetProviders();
+            var result = await providerContainer.GetAsync(resourceId);
+            Assert.IsNotNull(result);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void GetNullException()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Assert.Throws<ArgumentNullException>(() => { providerContainer.Get(null); });
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void GetEmptyException()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Assert.Throws<ArgumentException>(() => { providerContainer.Get(""); });
         }
 
         [TestCase]

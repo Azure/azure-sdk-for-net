@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        private ArmClient(
+        internal ArmClient(
             string defaultSubscriptionId,
             Uri baseUri,
             TokenCredential credential,

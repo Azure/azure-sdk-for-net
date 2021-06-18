@@ -25,12 +25,8 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ProviderContainer"/> class.
         /// </summary>
         /// <param name="parent"> The client context to use. </param>
-        internal ProviderContainer(SubscriptionOperations parent)
+        internal ProviderContainer(OperationsBase parent)
             : base(parent)
-        {
-        }
-
-        internal ProviderContainer(TenantOperations parent) : base(parent)
         {
         }
 
@@ -78,7 +74,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc />
-        public override async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default) // base does not have string expand 2nd parameter
+        public override async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
             scope.Start();

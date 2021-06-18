@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TData}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        protected ResourceContainerBase(ResourceOperationsBase parent)
+        protected ResourceContainerBase(OperationsBase parent)
             : base(parent)
         {
         }

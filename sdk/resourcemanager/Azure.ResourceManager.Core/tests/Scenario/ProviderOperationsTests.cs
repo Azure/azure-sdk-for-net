@@ -13,27 +13,72 @@ namespace Azure.ResourceManager.Core.Tests
         {
         }
 
-        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
-        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
+        [TestCase]
         [RecordedTest]
-        public async Task Get(string resourceId)
+        public async Task Get()
         {
-            var providerContainer = Client.DefaultSubscription.GetProviders();
-            var result = await providerContainer.GetAsync(resourceId);
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Response<Provider> response = await providerContainer.GetAsync("microsoft.insights");
+            Provider result = response.Value;
             Assert.IsNotNull(result);
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task Register()
         {
-            var providerContainer = Client.DefaultSubscription.GetProviders();
-            var x = providerContainer.ListAsync();
-            Assert.IsNotNull(x);
-            await foreach (var p in x)
-            {
-                Assert.IsNotNull(p.Data.Id);
-            }
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Response<Provider> response = await providerContainer.GetAsync("microsoft.insights");
+            var result = response.Value;
+            var register = await result.RegisterAsync("testerNamespace");
+            Assert.IsNotNull(register);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void RegisterNullException()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Response<Provider> response = providerContainer.Get("microsoft.insights");
+            Assert.Throws<ArgumentNullException>(() => {response.Value.Register(null); });
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void RegisterEmptyException()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Response<Provider> response = providerContainer.Get("microsoft.insights");
+            Assert.Throws<ArgumentException>(() => { response.Value.Register(""); });
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Unegister()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Response<Provider> response = await providerContainer.GetAsync("microsoft.insights");
+            var result = response.Value;
+            var unregister = await result.UnregisterAsync("testerNamespace");
+            Assert.IsNotNull(unregister);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void UnregisterNullException()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Response<Provider> response = providerContainer.Get("microsoft.insights");
+            Assert.Throws<ArgumentNullException>(() => { response.Value.Unregister(null); });
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void UnregisterEmptyException()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Response<Provider> response = providerContainer.Get("microsoft.insights");
+            Assert.Throws<ArgumentException>(() => { response.Value.Unregister(""); });
         }
     }
 }
