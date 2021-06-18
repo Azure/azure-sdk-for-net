@@ -20,6 +20,26 @@ namespace Azure.DigitalTwins.Core.Tests
         }
 
         [Test]
+        public void WhereLogic_NumberWithStringComparison()
+        {
+            var query = new WhereLogic(null);
+            query.Compare("Temperature", QueryComparisonOperator.Equal, "'5'");
+            query.GetQueryText()
+                .Should()
+                .Be("Temperature = 5");
+        }
+
+        [Test]
+        public void WhereLogic_StringPropertyWithStringComparison()
+        {
+            var query = new WhereLogic(null);
+            query.Compare("RoomType", QueryComparisonOperator.Equal, "'Hospital'");
+            query.GetQueryText()
+                .Should()
+                .Be("RoomType = 'Hospital'");
+        }
+
+        [Test]
         public void WhereLogic_StringPropertyComparison()
         {
             var query = new WhereLogic(null);

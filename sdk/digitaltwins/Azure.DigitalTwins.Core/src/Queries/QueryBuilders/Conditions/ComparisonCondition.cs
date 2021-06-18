@@ -35,22 +35,44 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public override string Stringify()
         {
+            // TODO -- generic type on this class to handle different inputs
             var conditionString = new StringBuilder();
             conditionString.Append($"{Field} {QueryConstants.ComparisonOperators[Operator]} ");
 
             // check to see if the input is numeric value -- if not, we need single quotes around Value
-            bool isNumeric = int.TryParse(Value, out _);
+            bool isNumeric;
+            bool quoteSurrounded = (Value[0] == '\'' && Value[Value.Length - 1] == '\'');
 
-            // TODO -- test case for existing single quotes
-            // TODO -- generic type on this class to handle different inputs
+            // check to see if the user has entered single quotes around the Value
+            if (quoteSurrounded)
+            {
+                isNumeric = int.TryParse(Value.Substring(1, Value.Length - 2), out _);
+            }
+            else
+            {
+                isNumeric = int.TryParse(Value, out _);
+            }
 
             if (!isNumeric)
             {
-                // surround with single quotes
-                Value = "'" + Value + "'";
-            }
+                if (!quoteSurrounded)
+                {
+                    // surround with single quotes
+                    Value = "'" + Value + "'";
+                }
 
-            conditionString.Append(Value);
+                conditionString.Append(Value);
+            }
+            // if not numeric but surrounded by quotes, it must be a number surrounded by quotes (which must be removed)
+            else if (quoteSurrounded)
+            {
+                conditionString.Append(Value.Substring(1, Value.Length - 2));
+            }
+            // if numeric and not surround by quotes, we can add as is
+            else
+            {
+                conditionString.Append(Value);
+            }
 
             return conditionString.ToString();
         }
