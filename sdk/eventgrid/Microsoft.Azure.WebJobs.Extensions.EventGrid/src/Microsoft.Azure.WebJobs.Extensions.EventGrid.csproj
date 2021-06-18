@@ -9,7 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-    <PackageReference Include="Azure.Messaging.EventGrid" />
+    <!-- Add back after next Event Grid GA -->
+    <!-- <PackageReference Include="Azure.Messaging.EventGrid" /> -->
   </ItemGroup>
 
   <ItemGroup>
