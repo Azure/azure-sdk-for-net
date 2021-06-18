@@ -6,6 +6,7 @@
 - Added value `None` to enum `PiiEntityDomainType` to allow user to specify no domain.
 - Added property `ActionName` to all `xxActions` input types so user can specify a name per action. If not provided, service will generate a name.
 - Added property `ActionName` to all `xxActionResult` output types that displays the name of each action. 
+- The parameter `CategoriesFilter` in `RecognizePiiEntitiesActions` has been enabled for `StartAnalyzeActions` methods.
 
 ### Breaking changes
 - Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.
