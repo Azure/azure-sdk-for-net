@@ -10,13 +10,13 @@ namespace Azure.AI.Translation.Document
     /// Status information about a particular document within a translation operation.
     /// </summary>
     [CodeGenModel("DocumentStatus")]
-    public partial class DocumentStatusResult
+    public partial class DocumentStatus
     {
         /// <summary>
         /// Document Id.
         /// </summary>
         [CodeGenMember("Id")]
-        public string DocumentId { get; }
+        public string Id { get; }
 
         /// <summary>
         /// Location of the translated document in the target container.
@@ -63,7 +63,7 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Status of the document.
         /// </summary>
-        public TranslationStatus Status { get; }
+        public DocumentTranslationStatus Status { get; }
 
         /// <summary>
         /// Gets the error explaining why the translation operation failed on this
@@ -71,14 +71,6 @@ namespace Azure.AI.Translation.Document
         /// cannot be processed.
         /// </summary>
         public DocumentTranslationError Error { get; }
-
-        /// <summary>
-        /// Returns true if the translation on the document is completed, independent if it succeeded or failed.
-        /// </summary>
-        public bool HasCompleted => Status == TranslationStatus.Succeeded
-                                    || Status == TranslationStatus.Failed
-                                    || Status == TranslationStatus.Cancelled
-                                    || Status == TranslationStatus.ValidationFailed;
 
         [CodeGenMember("Progress")]
         internal float Progress { get; }
