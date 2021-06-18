@@ -39,7 +39,7 @@ namespace Azure.Communication.CallingServer
             /// The Beta of the CallingServer service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2021_06_15_Preview = 0
+            V2021_06_15_Preview = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

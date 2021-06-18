@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Communication;
+using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -96,7 +97,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public async Task<Response<CreateCallResult>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateCallResultInternal>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -117,9 +118,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 201:
                     {
-                        CreateCallResult value = default;
+                        CreateCallResultInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateCallResult.DeserializeCreateCallResult(document.RootElement);
+                        value = CreateCallResultInternal.DeserializeCreateCallResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -137,7 +138,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public Response<CreateCallResult> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public Response<CreateCallResultInternal> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -158,9 +159,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 201:
                     {
-                        CreateCallResult value = default;
+                        CreateCallResultInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateCallResult.DeserializeCreateCallResult(document.RootElement);
+                        value = CreateCallResultInternal.DeserializeCreateCallResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
