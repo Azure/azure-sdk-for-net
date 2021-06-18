@@ -31,7 +31,7 @@ namespace Azure.AI.Translation.Document.Samples
             await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
             {
                 if (translationStatus.Status != DocumentTranslationStatus.Failed &&
-                      translationStatus.Status == DocumentTranslationStatus.Succeeded)
+                      translationStatus.Status != DocumentTranslationStatus.Succeeded)
                 {
                     DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
                     await operation.WaitForCompletionAsync();

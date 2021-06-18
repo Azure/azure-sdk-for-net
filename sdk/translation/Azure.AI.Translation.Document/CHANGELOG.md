@@ -7,7 +7,7 @@
 - Renamed property `TranslationId` to `Id`in `TranslationStatusResult`
 - Renamed type `TranslationStatusResult` to `TranslationStatus`.
 - Renamed type `DocumentStatusResult` to `DocumentStatus`.
-- Renamed type `TranslationStatus` to `DocumentTranslationStatus`.
+- Renamed enum `TranslationStatus` to `DocumentTranslationStatus`.
 - Renamed method `GetDocumentFormats` to `GetSupportedDocumentFormats`.
 - Renamed method `GetGlossaryFormats` to `GetSupportedGlossaryFormats`.
 - Removed property `HasCompleted` from types `DocumentStatusResult` and `TranslationStatusResult`.
