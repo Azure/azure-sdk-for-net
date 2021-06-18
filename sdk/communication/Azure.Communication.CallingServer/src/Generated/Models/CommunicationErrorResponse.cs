@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The Communication Services error. </summary>
-    public partial class CallingServerErrorResponse
+    internal partial class CommunicationErrorResponse
     {
-        /// <summary> Initializes a new instance of CallingServerErrorResponse. </summary>
+        /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal CallingServerErrorResponse(CallingServerError error)
+        internal CommunicationErrorResponse(CommunicationError error)
         {
             if (error == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The Communication Services error. </summary>
-        public CallingServerError Error { get; }
+        public CommunicationError Error { get; }
     }
 }

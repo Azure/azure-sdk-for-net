@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallingServerError
+    internal partial class CommunicationError
     {
-        internal static CallingServerError DeserializeCallingServerError(JsonElement element)
+        internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {
             string code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<CallingServerError>> details = default;
-            Optional<CallingServerError> innererror = default;
+            Optional<IReadOnlyList<CommunicationError>> details = default;
+            Optional<CommunicationError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -44,10 +44,10 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CallingServerError> array = new List<CallingServerError>();
+                    List<CommunicationError> array = new List<CommunicationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCallingServerError(item));
+                        array.Add(DeserializeCommunicationError(item));
                     }
                     details = array;
                     continue;
@@ -59,11 +59,11 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DeserializeCallingServerError(property.Value);
+                    innererror = DeserializeCommunicationError(property.Value);
                     continue;
                 }
             }
-            return new CallingServerError(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

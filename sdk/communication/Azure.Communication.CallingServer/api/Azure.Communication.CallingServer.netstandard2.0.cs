@@ -7,10 +7,10 @@ namespace Azure.Communication.CallingServer
     }
     public partial class AddParticipantResultEvent : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        public AddParticipantResultEvent() { }
-        public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.ResultInfo ResultInfo { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.OperationStatus? Status { get { throw null; } set { } }
+        internal AddParticipantResultEvent() { }
+        public string OperationContext { get { throw null; } }
+        public Azure.Communication.CallingServer.ResultInfo ResultInfo { get { throw null; } }
+        public Azure.Communication.CallingServer.OperationStatus Status { get { throw null; } }
         public static Azure.Communication.CallingServer.AddParticipantResultEvent Deserialize(string content) { throw null; }
     }
     public partial class CallConnection
@@ -53,10 +53,10 @@ namespace Azure.Communication.CallingServer
     }
     public partial class CallConnectionStateChangedEvent : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        public CallConnectionStateChangedEvent() { }
-        public string CallConnectionId { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.CallConnectionState? CallConnectionState { get { throw null; } set { } }
-        public string ServerCallId { get { throw null; } set { } }
+        internal CallConnectionStateChangedEvent() { }
+        public string CallConnectionId { get { throw null; } }
+        public Azure.Communication.CallingServer.CallConnectionState CallConnectionState { get { throw null; } }
+        public string ServerCallId { get { throw null; } }
         public static Azure.Communication.CallingServer.CallConnectionStateChangedEvent Deserialize(string content) { throw null; }
     }
     public partial class CallingServerClient
@@ -64,6 +64,7 @@ namespace Azure.Communication.CallingServer
         protected CallingServerClient() { }
         public CallingServerClient(string connectionString) { }
         public CallingServerClient(string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options) { }
+        public CallingServerClient(System.Uri endpoint, string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options = null) { }
         public virtual Azure.Response<Azure.Communication.CallingServer.CallConnection> CreateCallConnection(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.CallConnection>> CreateCallConnectionAsync(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> DownloadStreaming(System.Uri sourceEndpoint, Azure.HttpRange range = default(Azure.HttpRange), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -84,20 +85,6 @@ namespace Azure.Communication.CallingServer
         {
             V2021_06_15_Preview = 1,
         }
-    }
-    public partial class CallingServerError
-    {
-        internal CallingServerError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallingServer.CallingServerError> Details { get { throw null; } }
-        public Azure.Communication.CallingServer.CallingServerError InnerError { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
-    public partial class CallingServerErrorResponse
-    {
-        internal CallingServerErrorResponse() { }
-        public Azure.Communication.CallingServer.CallingServerError Error { get { throw null; } }
     }
     public abstract partial class CallingServerEventBase
     {
@@ -135,7 +122,7 @@ namespace Azure.Communication.CallingServer
     public partial class CallRecordingProperties
     {
         internal CallRecordingProperties() { }
-        public Azure.Communication.CallingServer.CallRecordingState? RecordingState { get { throw null; } }
+        public Azure.Communication.CallingServer.CallRecordingState RecordingState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CallRecordingState : System.IEquatable<Azure.Communication.CallingServer.CallRecordingState>
@@ -157,11 +144,11 @@ namespace Azure.Communication.CallingServer
     }
     public partial class CallRecordingStateChangeEvent : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        public CallRecordingStateChangeEvent() { }
-        public string RecordingId { get { throw null; } set { } }
-        public string ServerCallId { get { throw null; } set { } }
-        public System.DateTimeOffset? StartDateTime { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.CallRecordingState? State { get { throw null; } set { } }
+        internal CallRecordingStateChangeEvent() { }
+        public string RecordingId { get { throw null; } }
+        public string ServerCallId { get { throw null; } }
+        public System.DateTimeOffset StartDateTime { get { throw null; } }
+        public Azure.Communication.CallingServer.CallRecordingState State { get { throw null; } }
         public static Azure.Communication.CallingServer.CallRecordingStateChangeEvent Deserialize(string content) { throw null; }
     }
     public partial class CancelAllMediaOperationsResult
@@ -170,15 +157,7 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get { throw null; } }
         public string OperationId { get { throw null; } }
         public Azure.Communication.CallingServer.ResultInfo ResultInfo { get { throw null; } }
-        public Azure.Communication.CallingServer.OperationStatus? Status { get { throw null; } }
-    }
-    public partial class CommunicationParticipant
-    {
-        public CommunicationParticipant() { }
-        public CommunicationParticipant(Azure.Communication.CommunicationIdentifier identifier, string participantId, bool? isMuted) { }
-        public Azure.Communication.CommunicationIdentifier Identifier { get { throw null; } set { } }
-        public bool? IsMuted { get { throw null; } set { } }
-        public string ParticipantId { get { throw null; } set { } }
+        public Azure.Communication.CallingServer.OperationStatus Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallingServer.ContentTransferOptions>
@@ -272,9 +251,9 @@ namespace Azure.Communication.CallingServer
     }
     public partial class ParticipantsUpdatedEvent : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        public ParticipantsUpdatedEvent() { }
-        public string CallConnectionId { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.Communication.CallingServer.CommunicationParticipant> Participants { get { throw null; } set { } }
+        internal ParticipantsUpdatedEvent() { }
+        public string CallConnectionId { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Communication.CallingServer.CallParticipant> Participants { get { throw null; } }
         public static Azure.Communication.CallingServer.ParticipantsUpdatedEvent Deserialize(string content) { throw null; }
     }
     public partial class PlayAudioOptions
@@ -292,22 +271,22 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get { throw null; } }
         public string OperationId { get { throw null; } }
         public Azure.Communication.CallingServer.ResultInfo ResultInfo { get { throw null; } }
-        public Azure.Communication.CallingServer.OperationStatus? Status { get { throw null; } }
+        public Azure.Communication.CallingServer.OperationStatus Status { get { throw null; } }
     }
     public partial class PlayAudioResultEvent : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        public PlayAudioResultEvent() { }
-        public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.ResultInfo ResultInfo { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.OperationStatus? Status { get { throw null; } set { } }
+        internal PlayAudioResultEvent() { }
+        public string OperationContext { get { throw null; } }
+        public Azure.Communication.CallingServer.ResultInfo ResultInfo { get { throw null; } }
+        public Azure.Communication.CallingServer.OperationStatus Status { get { throw null; } }
         public static Azure.Communication.CallingServer.PlayAudioResultEvent Deserialize(string content) { throw null; }
     }
     public partial class ResultInfo
     {
         internal ResultInfo() { }
-        public int? Code { get { throw null; } }
+        public int Code { get { throw null; } }
         public string Message { get { throw null; } }
-        public int? Subcode { get { throw null; } }
+        public int Subcode { get { throw null; } }
     }
     public partial class ServerCall
     {
@@ -336,15 +315,15 @@ namespace Azure.Communication.CallingServer
     }
     public partial class ToneInfo
     {
-        public ToneInfo() { }
-        public int? SequenceId { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.ToneValue? Tone { get { throw null; } set { } }
+        internal ToneInfo() { }
+        public int SequenceId { get { throw null; } }
+        public Azure.Communication.CallingServer.ToneValue Tone { get { throw null; } }
     }
     public partial class ToneReceivedEvent : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        public ToneReceivedEvent() { }
-        public string CallConnectionId { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.ToneInfo ToneInfo { get { throw null; } set { } }
+        internal ToneReceivedEvent() { }
+        public string CallConnectionId { get { throw null; } }
+        public Azure.Communication.CallingServer.ToneInfo ToneInfo { get { throw null; } }
         public static Azure.Communication.CallingServer.ToneReceivedEvent Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The Communication Services error. </summary>
-    public partial class CallingServerError
+    internal partial class CommunicationError
     {
-        /// <summary> Initializes a new instance of CallingServerError. </summary>
+        /// <summary> Initializes a new instance of CommunicationError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal CallingServerError(string code, string message)
+        internal CommunicationError(string code, string message)
         {
             if (code == null)
             {
@@ -31,16 +31,16 @@ namespace Azure.Communication.CallingServer
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<CallingServerError>();
+            Details = new ChangeTrackingList<CommunicationError>();
         }
 
-        /// <summary> Initializes a new instance of CallingServerError. </summary>
+        /// <summary> Initializes a new instance of CommunicationError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
         /// <param name="innerError"> The inner error if any. </param>
-        internal CallingServerError(string code, string message, string target, IReadOnlyList<CallingServerError> details, CallingServerError innerError)
+        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
         {
             Code = code;
             Message = message;
@@ -56,8 +56,8 @@ namespace Azure.Communication.CallingServer
         /// <summary> The error target. </summary>
         public string Target { get; }
         /// <summary> Further details about specific errors that led to this error. </summary>
-        public IReadOnlyList<CallingServerError> Details { get; }
+        public IReadOnlyList<CommunicationError> Details { get; }
         /// <summary> The inner error if any. </summary>
-        public CallingServerError InnerError { get; }
+        public CommunicationError InnerError { get; }
     }
 }

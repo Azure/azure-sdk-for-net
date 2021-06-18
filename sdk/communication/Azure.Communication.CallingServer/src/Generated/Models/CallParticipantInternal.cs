@@ -13,15 +13,17 @@ namespace Azure.Communication.CallingServer
     internal partial class CallParticipantInternal
     {
         /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
-        internal CallParticipantInternal()
+        /// <param name="isMuted"> Is participant muted. </param>
+        internal CallParticipantInternal(bool isMuted)
         {
+            IsMuted = isMuted;
         }
 
         /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="participantId"> Participant id. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal CallParticipantInternal(CommunicationIdentifierModel identifier, string participantId, bool? isMuted)
+        internal CallParticipantInternal(CommunicationIdentifierModel identifier, string participantId, bool isMuted)
         {
             Identifier = identifier;
             ParticipantId = participantId;
@@ -33,6 +35,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Participant id. </summary>
         public string ParticipantId { get; }
         /// <summary> Is participant muted. </summary>
-        public bool? IsMuted { get; }
+        public bool IsMuted { get; }
     }
 }

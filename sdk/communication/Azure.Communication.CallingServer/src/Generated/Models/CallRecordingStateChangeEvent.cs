@@ -13,8 +13,12 @@ namespace Azure.Communication.CallingServer
     public partial class CallRecordingStateChangeEvent
     {
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
-        public CallRecordingStateChangeEvent()
+        /// <param name="state"> The state of the recording. </param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
+        internal CallRecordingStateChangeEvent(CallRecordingState state, DateTimeOffset startDateTime)
         {
+            State = state;
+            StartDateTime = startDateTime;
         }
 
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
@@ -22,7 +26,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="state"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
         /// <param name="serverCallId"> The server call.id. </param>
-        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState? state, DateTimeOffset? startDateTime, string serverCallId)
+        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState state, DateTimeOffset startDateTime, string serverCallId)
         {
             RecordingId = recordingId;
             State = state;
@@ -31,12 +35,12 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The call recording id. </summary>
-        public string RecordingId { get; set; }
+        public string RecordingId { get; }
         /// <summary> The state of the recording. </summary>
-        public CallRecordingState? State { get; set; }
+        public CallRecordingState State { get; }
         /// <summary> The time of the recording started. </summary>
-        public DateTimeOffset? StartDateTime { get; set; }
+        public DateTimeOffset StartDateTime { get; }
         /// <summary> The server call.id. </summary>
-        public string ServerCallId { get; set; }
+        public string ServerCallId { get; }
     }
 }

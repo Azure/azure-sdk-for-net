@@ -14,21 +14,16 @@ namespace Azure.Communication.CallingServer
     {
         internal static CallRecordingProperties DeserializeCallRecordingProperties(JsonElement element)
         {
-            Optional<CallRecordingState> recordingState = default;
+            CallRecordingState recordingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     recordingState = new CallRecordingState(property.Value.GetString());
                     continue;
                 }
             }
-            return new CallRecordingProperties(Optional.ToNullable(recordingState));
+            return new CallRecordingProperties(recordingState);
         }
     }
 }

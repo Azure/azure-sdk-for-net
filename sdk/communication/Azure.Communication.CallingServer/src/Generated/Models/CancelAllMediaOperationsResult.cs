@@ -11,8 +11,10 @@ namespace Azure.Communication.CallingServer
     public partial class CancelAllMediaOperationsResult
     {
         /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
-        internal CancelAllMediaOperationsResult()
+        /// <param name="status"> The status of the operation. </param>
+        internal CancelAllMediaOperationsResult(OperationStatus status)
         {
+            Status = status;
         }
 
         /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
@@ -20,7 +22,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="resultInfo"> The result info for the operation. </param>
-        internal CancelAllMediaOperationsResult(string operationId, OperationStatus? status, string operationContext, ResultInfo resultInfo)
+        internal CancelAllMediaOperationsResult(string operationId, OperationStatus status, string operationContext, ResultInfo resultInfo)
         {
             OperationId = operationId;
             Status = status;
@@ -31,7 +33,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> The operation id. </summary>
         public string OperationId { get; }
         /// <summary> The status of the operation. </summary>
-        public OperationStatus? Status { get; }
+        public OperationStatus Status { get; }
         /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }
         /// <summary> The result info for the operation. </summary>

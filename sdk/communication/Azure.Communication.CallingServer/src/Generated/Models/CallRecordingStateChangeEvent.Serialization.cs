@@ -11,39 +11,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallRecordingStateChangeEvent : IUtf8JsonSerializable
+    public partial class CallRecordingStateChangeEvent
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RecordingId))
-            {
-                writer.WritePropertyName("recordingId");
-                writer.WriteStringValue(RecordingId);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state");
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(StartDateTime))
-            {
-                writer.WritePropertyName("startDateTime");
-                writer.WriteStringValue(StartDateTime.Value, "O");
-            }
-            if (Optional.IsDefined(ServerCallId))
-            {
-                writer.WritePropertyName("serverCallId");
-                writer.WriteStringValue(ServerCallId);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static CallRecordingStateChangeEvent DeserializeCallRecordingStateChangeEvent(JsonElement element)
         {
             Optional<string> recordingId = default;
-            Optional<CallRecordingState> state = default;
-            Optional<DateTimeOffset> startDateTime = default;
+            CallRecordingState state = default;
+            DateTimeOffset startDateTime = default;
             Optional<string> serverCallId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,21 +28,11 @@ namespace Azure.Communication.CallingServer
                 }
                 if (property.NameEquals("state"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     state = new CallRecordingState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startDateTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -78,7 +42,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallRecordingStateChangeEvent(recordingId.Value, Optional.ToNullable(state), Optional.ToNullable(startDateTime), serverCallId.Value);
+            return new CallRecordingStateChangeEvent(recordingId.Value, state, startDateTime, serverCallId.Value);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The added participants result event.
     /// </summary>
-    [CodeGenModel("AddParticipantResultEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("AddParticipantResultEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class AddParticipantResultEvent : CallingServerEventBase
     {
         /// <summary>
