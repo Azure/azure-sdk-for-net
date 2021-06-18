@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// </summary>
     internal class TelemetryPartA
     {
-        private const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss.ffffZ";
+        private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
         private static readonly IReadOnlyDictionary<TelemetryType, string> PartA_Name_Mapping = new Dictionary<TelemetryType, string>
         {
             [TelemetryType.Request] = "Request",
