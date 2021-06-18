@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
-    public partial class CreateCallResult
+    internal partial class CreateCallResultInternal
     {
-        internal static CreateCallResult DeserializeCreateCallResult(JsonElement element)
+        internal static CreateCallResultInternal DeserializeCreateCallResultInternal(JsonElement element)
         {
             Optional<string> callConnectionId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CreateCallResult(callConnectionId.Value);
+            return new CreateCallResultInternal(callConnectionId.Value);
         }
     }
 }

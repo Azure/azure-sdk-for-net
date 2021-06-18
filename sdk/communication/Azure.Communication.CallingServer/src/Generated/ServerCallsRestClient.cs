@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Communication;
+using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -631,7 +632,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public async Task<Response<JoinCallResult>> JoinCallAsync(string serverCallId, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JoinCallResultInternal>> JoinCallAsync(string serverCallId, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
@@ -652,9 +653,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        JoinCallResult value = default;
+                        JoinCallResultInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JoinCallResult.DeserializeJoinCallResult(document.RootElement);
+                        value = JoinCallResultInternal.DeserializeJoinCallResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -671,7 +672,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public Response<JoinCallResult> JoinCall(string serverCallId, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public Response<JoinCallResultInternal> JoinCall(string serverCallId, CommunicationIdentifierModel source, string callbackUri, string subject = null, IEnumerable<MediaType> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
@@ -692,9 +693,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     {
-                        JoinCallResult value = default;
+                        JoinCallResultInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JoinCallResult.DeserializeJoinCallResult(document.RootElement);
+                        value = JoinCallResultInternal.DeserializeJoinCallResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

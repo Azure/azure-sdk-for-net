@@ -27,14 +27,21 @@ namespace Azure.Communication.CallingServer
         internal ServerCallsRestClient ServerCallRestClient { get; }
 
         #region public constructors
+        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        public CallingServerClient(string connectionString)
+            : this(
+                  ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                  new CallingServerClientOptions())
+        { }
 
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallingServerClient(string connectionString, CallingServerClientOptions options = default)
+        public CallingServerClient(string connectionString, CallingServerClientOptions options)
             : this(
                   ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                  options ?? new CallingServerClientOptions())
+                  Argument.CheckNotNull(options, nameof(options)))
         { }
 
         #endregion

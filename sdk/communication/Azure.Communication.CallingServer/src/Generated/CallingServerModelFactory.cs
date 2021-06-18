@@ -12,14 +12,6 @@ namespace Azure.Communication.CallingServer
     /// <summary> Model factory for read-only models. </summary>
     internal static partial class CallingServerModelFactory
     {
-        /// <summary> Initializes new instance of CreateCallResult class. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <returns> A new <see cref="CallingServer.CreateCallResult"/> instance for mocking. </returns>
-        public static CreateCallResult CreateCallResult(string callConnectionId = default)
-        {
-            return new CreateCallResult(callConnectionId);
-        }
-
         /// <summary> Initializes new instance of CallingServerErrorResponse class. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <returns> A new <see cref="CallingServer.CallingServerErrorResponse"/> instance for mocking. </returns>
@@ -107,14 +99,6 @@ namespace Azure.Communication.CallingServer
         public static CallRecordingProperties CallRecordingProperties(CallRecordingState? recordingState = default)
         {
             return new CallRecordingProperties(recordingState);
-        }
-
-        /// <summary> Initializes new instance of JoinCallResult class. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <returns> A new <see cref="CallingServer.JoinCallResult"/> instance for mocking. </returns>
-        public static JoinCallResult JoinCallResult(string callConnectionId = default)
-        {
-            return new JoinCallResult(callConnectionId);
         }
     }
 }

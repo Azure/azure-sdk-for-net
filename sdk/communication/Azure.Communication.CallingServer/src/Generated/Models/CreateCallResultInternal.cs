@@ -5,19 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The response payload of the create call operation. </summary>
-    public partial class CreateCallResult
+    internal partial class CreateCallResultInternal
     {
-        /// <summary> Initializes a new instance of CreateCallResult. </summary>
-        internal CreateCallResult()
+        /// <summary> Initializes a new instance of CreateCallResultInternal. </summary>
+        internal CreateCallResultInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateCallResult. </summary>
+        /// <summary> Initializes a new instance of CreateCallResultInternal. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        internal CreateCallResult(string callConnectionId)
+        internal CreateCallResultInternal(string callConnectionId)
         {
             CallConnectionId = callConnectionId;
         }

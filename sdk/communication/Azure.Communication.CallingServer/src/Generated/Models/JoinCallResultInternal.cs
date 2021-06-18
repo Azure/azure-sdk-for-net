@@ -5,19 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models
 {
     /// <summary> The response payload of the join call operation. </summary>
-    public partial class JoinCallResult
+    internal partial class JoinCallResultInternal
     {
-        /// <summary> Initializes a new instance of JoinCallResult. </summary>
-        internal JoinCallResult()
+        /// <summary> Initializes a new instance of JoinCallResultInternal. </summary>
+        internal JoinCallResultInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of JoinCallResult. </summary>
+        /// <summary> Initializes a new instance of JoinCallResultInternal. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        internal JoinCallResult(string callConnectionId)
+        internal JoinCallResultInternal(string callConnectionId)
         {
             CallConnectionId = callConnectionId;
         }
