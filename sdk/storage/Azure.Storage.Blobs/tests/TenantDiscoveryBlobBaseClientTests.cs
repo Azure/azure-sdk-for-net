@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Tests
     public class TenantDiscoveryBlobBaseClientTests : BlobTestBase
     {
         public TenantDiscoveryBlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion)
+            : base(async, serviceVersion, RecordedTestMode.Record)
         { }
 
         [RecordedTest]
