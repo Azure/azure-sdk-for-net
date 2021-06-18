@@ -62,7 +62,8 @@ namespace Azure.Communication.CallingServer
     public partial class CallingServerClient
     {
         protected CallingServerClient() { }
-        public CallingServerClient(string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options = null) { }
+        public CallingServerClient(string connectionString) { }
+        public CallingServerClient(string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options) { }
         public virtual Azure.Response<Azure.Communication.CallingServer.CallConnection> CreateCallConnection(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.CallConnection>> CreateCallConnectionAsync(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> DownloadStreaming(System.Uri sourceEndpoint, Azure.HttpRange range = default(Azure.HttpRange), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -81,7 +82,7 @@ namespace Azure.Communication.CallingServer
         public CallingServerClientOptions(Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion version = Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion.V2021_06_15_Preview) { }
         public enum ServiceVersion
         {
-            V2021_06_15_Preview = 0,
+            V2021_06_15_Preview = 1,
         }
     }
     public partial class CallingServerError
@@ -205,11 +206,6 @@ namespace Azure.Communication.CallingServer
         public System.Collections.Generic.IList<Azure.Communication.CallingServer.MediaType> RequestedMediaTypes { get { throw null; } }
         public string Subject { get { throw null; } set { } }
     }
-    public partial class CreateCallResult
-    {
-        internal CreateCallResult() { }
-        public string CallConnectionId { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventSubscriptionType : System.IEquatable<Azure.Communication.CallingServer.EventSubscriptionType>
     {
@@ -235,11 +231,6 @@ namespace Azure.Communication.CallingServer
         public System.Collections.Generic.IList<Azure.Communication.CallingServer.EventSubscriptionType> RequestedCallEvents { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.CallingServer.MediaType> RequestedMediaTypes { get { throw null; } }
         public string Subject { get { throw null; } set { } }
-    }
-    public partial class JoinCallResult
-    {
-        internal JoinCallResult() { }
-        public string CallConnectionId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaType : System.IEquatable<Azure.Communication.CallingServer.MediaType>
