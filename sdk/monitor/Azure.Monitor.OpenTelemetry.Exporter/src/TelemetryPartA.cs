@@ -124,7 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        internal static string FormatTimestamp(System.DateTime timeStamp)
+        internal static string FormatUtcTimestamp(System.DateTime utcTimeStamp)
         {
             return timeStamp.ToString(DateTimeFormat, CultureInfo.InvariantCulture);
         }
