@@ -148,7 +148,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public System.Uri MixedRealityAuthenticationEndpoint { get { throw null; } set { } }
         public Azure.MixedReality.Authentication.MixedRealityStsClientOptions MixedRealityAuthenticationOptions { get { throw null; } set { } }
         public System.Uri ServiceEndpoint { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
         public enum ServiceVersion
         {
             V0_2_preview_0 = 1,
@@ -174,9 +173,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
-    public partial class UnsupportedAssetFileTypeException : System.Exception
+    public partial class UnsupportedAssetFileTypeException : System.Exception, System.Runtime.Serialization.ISerializable
     {
-        internal UnsupportedAssetFileTypeException() { }
+        public UnsupportedAssetFileTypeException() { }
+        protected UnsupportedAssetFileTypeException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public UnsupportedAssetFileTypeException(string message) { }
+        public UnsupportedAssetFileTypeException(string message, System.Exception inner) { }
         public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType AttemptedFileType { get { throw null; } }
         public System.Collections.Generic.IEnumerable<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
     }
