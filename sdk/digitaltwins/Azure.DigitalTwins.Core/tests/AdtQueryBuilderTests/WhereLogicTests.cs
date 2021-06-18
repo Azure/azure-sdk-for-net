@@ -20,6 +20,16 @@ namespace Azure.DigitalTwins.Core.Tests
         }
 
         [Test]
+        public void WhereLogic_Comparison_Float()
+        {
+            var query = new WhereLogic(null);
+            query.Compare("Temperature", QueryComparisonOperator.Equal, 5.5);
+            query.GetQueryText()
+                .Should()
+                .Be("Temperature = 5.5");
+        }
+
+        [Test]
         public void WhereLogic_NumberWithStringComparison()
         {
             var query = new WhereLogic(null);

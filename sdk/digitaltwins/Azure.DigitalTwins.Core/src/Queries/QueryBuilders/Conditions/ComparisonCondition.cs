@@ -26,7 +26,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="field"> The field being checked against a certain value. </param>
         /// <param name="comparisonOperator"> The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked. </param>
-        /// <param name="value"> The value being checked against a field. </param>
+        /// <param name="value"> The value being checked against a field. Valid types are string, int, long, float or double.</param>
         public ComparisonCondition(string field, QueryComparisonOperator comparisonOperator, T value)
         {
             Field = field;
@@ -45,14 +45,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 // if string, surround value with single quotes to denote string type in SQL
                 conditionString.Append($"'{Value}'");
             }
-            else if (typeof(T) == typeof(int))
+            else if (typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(float) || typeof(T) == typeof(double))
             {
-                // if integer, insert raw value into query string (nothing needs to be done)
+                // if int, long, float, our double, insert raw value into query string (nothing needs to be done)
                 conditionString.Append(Value);
             }
             else
             {
-                throw new InvalidOperationException("Invalid condition: use a string or an integer.");
+                throw new InvalidOperationException("Invalid condition: use a string, integer, long, float, or double.");
             }
 
             return conditionString.ToString();
