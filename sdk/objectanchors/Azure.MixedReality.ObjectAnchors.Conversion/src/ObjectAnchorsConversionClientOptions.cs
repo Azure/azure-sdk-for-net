@@ -21,7 +21,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Gets the list of supported asset file types
         /// </summary>
-        public IEnumerable<AssetFileType> SupportedAssetFileTypes { get; }
+        internal IEnumerable<AssetFileType> SupportedAssetFileTypes { get; }
 
         /// <summary>
         /// Gets the authentication endpoint.
