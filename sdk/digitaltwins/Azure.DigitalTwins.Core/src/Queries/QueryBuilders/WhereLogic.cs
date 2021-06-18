@@ -29,9 +29,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="comparisonOperator"> The comparison operator being invoked. </param>
         /// <param name="value"> The value being checked against a Field. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic Compare(string field, QueryComparisonOperator comparisonOperator, string value)
+        public WhereLogic Compare<T>(string field, QueryComparisonOperator comparisonOperator, T value)
         {
-            _clauses.Add(new WhereClause(new ComparisonCondition(field, comparisonOperator, value)));
+            _clauses.Add(new WhereClause(new ComparisonCondition<T>(field, comparisonOperator, value)));
             return this;
         }
 
