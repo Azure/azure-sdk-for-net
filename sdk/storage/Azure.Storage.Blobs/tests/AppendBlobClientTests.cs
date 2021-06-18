@@ -231,6 +231,39 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        public async Task CreateAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(AppendBlobRequestConditions.IfAppendPositionEqual):
+                    conditions.IfAppendPositionEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    conditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+            }
+
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Conditions = conditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.CreateAsync(
+                    options),
+                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CreateAsync_Tags()
         {
@@ -1908,8 +1941,8 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { Match = ReceivedETag },
                 new AccessConditionParameters { NoneMatch = GarbageETag },
                 new AccessConditionParameters { LeaseId = ReceivedLeaseId },
-                new AccessConditionParameters { AppendPosE = 0 },
-                new AccessConditionParameters { MaxSizeLTE = 100 }
+                new AccessConditionParameters { AppendPosE = overwrite ? null : 0 },
+                new AccessConditionParameters { MaxSizeLTE = overwrite ? null : 100 }
             };
             foreach (AccessConditionParameters parameters in testCases)
             {

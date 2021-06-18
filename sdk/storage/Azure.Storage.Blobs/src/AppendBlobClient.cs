@@ -866,6 +866,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Create)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.IfAppendPositionEqual
+                    | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual);
+
                 try
                 {
                     scope.Start();
