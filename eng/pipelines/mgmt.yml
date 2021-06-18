@@ -3,6 +3,7 @@ pr:
   branches:
     include:
     - master
+    - main
     - '*-preview'
     - 'feature/cplat*'
   paths:
