@@ -1549,6 +1549,35 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.TagConditions))]
+        public async Task SealAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    conditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.SealAsync(
+                    conditions),
+                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SealAsync_Error()
         {
             // Arrange
