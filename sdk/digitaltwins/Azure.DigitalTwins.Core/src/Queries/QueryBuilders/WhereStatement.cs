@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string GetQueryText()
         {
-            return $"{QueryConstants.Where}";
+            return QueryConstants.Where;
         }
     }
 }
