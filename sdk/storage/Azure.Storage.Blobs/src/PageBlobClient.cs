@@ -2911,6 +2911,12 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(StartCopyIncremental)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.LeaseId
+                    | BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                    | BlobRequestConditionProperty.IfSequenceNumberLessThan
+                    | BlobRequestConditionProperty.IfSequenceNumberEqual);
+
                 try
                 {
                     scope.Start();
