@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
-                Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
+                Assert.That(anomaly.DetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.CreatedTime, Is.Null);
                 Assert.That(anomaly.ModifiedTime, Is.Null);
                 Assert.That(anomaly.Status, Is.Null);
@@ -79,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
-                Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
+                Assert.That(anomaly.DetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.CreatedTime, Is.Null);
                 Assert.That(anomaly.ModifiedTime, Is.Null);
                 Assert.That(anomaly.Status, Is.Null);

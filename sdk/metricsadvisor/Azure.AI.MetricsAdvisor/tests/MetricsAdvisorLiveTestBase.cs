@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     MetricColumns = { new DataFeedMetric(TempDataFeedMetricName) },
                     DimensionColumns = { new DataFeedDimension(TempDataFeedDimensionNameA), new DataFeedDimension(TempDataFeedDimensionNameB) }
                 },
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = SamplingStartTime }
+                IngestionSettings = new DataFeedIngestionSettings(SamplingStartTime)
             };
 
             return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);

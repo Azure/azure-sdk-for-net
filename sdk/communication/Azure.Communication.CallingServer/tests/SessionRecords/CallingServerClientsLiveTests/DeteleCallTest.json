@@ -13,6 +13,7 @@
         "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "eb10f939a722c217265156b97f4f4a3d",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 07 Jun 2021 18:12:58 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -49,6 +50,7 @@
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "99022c0ac00c2306a97122eafe5dddac",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 07 Jun 2021 18:12:59 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -101,6 +103,7 @@
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "6acefc89900c627797d9352dd49b0f60",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 07 Jun 2021 18:13:00 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
