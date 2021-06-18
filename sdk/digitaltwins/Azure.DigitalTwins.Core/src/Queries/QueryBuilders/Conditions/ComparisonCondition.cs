@@ -39,7 +39,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             conditionString.Append($"{Field} {QueryConstants.ComparisonOperators[Operator]} ");
 
             // check to see if the input is numeric value -- if not, we need single quotes around Value
-            bool isNumeric = int.TryParse(Value, out int numericValue);
+            bool isNumeric = int.TryParse(Value, out _);
+
+            // TODO -- test case for existing single quotes
+            // TODO -- generic type on this class to handle different inputs
 
             if (!isNumeric)
             {

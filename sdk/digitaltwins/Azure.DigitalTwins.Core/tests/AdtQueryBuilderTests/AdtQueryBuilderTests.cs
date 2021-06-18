@@ -99,7 +99,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Where()
-                .Comparison("Temperature", QueryComparisonOperator.GreaterOrEqual, "50")
+                .Compare("Temperature", QueryComparisonOperator.GreaterOrEqual, "50")
                 .Build()
                 .Stringify()
                 .Should()

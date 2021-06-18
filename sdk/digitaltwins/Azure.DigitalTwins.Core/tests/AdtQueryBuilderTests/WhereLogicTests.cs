@@ -13,7 +13,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereLogic_Comparison()
         {
             var query = new WhereLogic(null);
-            query.Comparison("Temperature", QueryComparisonOperator.Equal, "5");
+            query.Compare("Temperature", QueryComparisonOperator.Equal, "5");
             query.GetQueryText()
                 .Should()
                 .Be("Temperature = 5");
@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereLogic_StringPropertyComparison()
         {
             var query = new WhereLogic(null);
-            query.Comparison("RoomType", QueryComparisonOperator.Equal, "Hospital");
+            query.Compare("RoomType", QueryComparisonOperator.Equal, "Hospital");
             query.GetQueryText()
                 .Should()
                 .Be("RoomType = 'Hospital'");
@@ -159,7 +159,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereLogic_MultipleQueryies()
         {
             var query = new WhereLogic(null);
-            query.Comparison("Temperature", QueryComparisonOperator.Equal, "50")
+            query.Compare("Temperature", QueryComparisonOperator.Equal, "50")
                 .IsDefined("Humidity");
             query.GetQueryText()
                 .Should()

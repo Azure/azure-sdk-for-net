@@ -10,13 +10,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public class WhereStatement : QueryBase
     {
-        private readonly WhereLogic _upsteamWhereLogic;
+        private readonly WhereLogic _upstreamWhereLogic;
         private readonly AdtQueryBuilder _parent;
 
-        internal WhereStatement(AdtQueryBuilder parent, WhereLogic upsteamWhere)
+        internal WhereStatement(AdtQueryBuilder parent, WhereLogic upstreamWhere)
         {
             _parent = parent;
-            _upsteamWhereLogic = upsteamWhere;
+            _upstreamWhereLogic = upstreamWhere;
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public WhereLogic Where()
         {
-            return _upsteamWhereLogic;
+            return _upstreamWhereLogic;
         }
 
         /// <inheritdoc/>
