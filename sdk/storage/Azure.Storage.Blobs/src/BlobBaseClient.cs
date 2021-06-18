@@ -426,6 +426,20 @@ namespace Azure.Storage.Blobs.Specialized
                 url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
+
+        /// <summary>
+        /// Intended for DataLake to create a backing blob client.
+        ///
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <returns>
+        /// New instanc of the <see cref="BlobServiceClient"/> class.
+        /// </returns>
+        public BlobBaseClient CloneClient()
+        {
+            return new BlobBaseClient(Uri, ClientConfiguration, ClientSideEncryption);
+        }
         #endregion ctors
 
         /// <summary>

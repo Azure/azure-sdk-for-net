@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Azure.Storage.Common.DataMovement
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// FilesystemScanner class.

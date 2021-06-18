@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Common.DataMovement
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// StorageTransferResults.
