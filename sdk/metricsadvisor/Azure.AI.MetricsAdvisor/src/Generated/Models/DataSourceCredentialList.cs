@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -16,19 +17,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>
         internal DataSourceCredentialList()
         {
-            Value = new ChangeTrackingList<DatasourceCredential>();
+            Value = new ChangeTrackingList<DataSourceCredential>();
         }
 
         /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>
         /// <param name="nextLink"> . </param>
         /// <param name="value"> . </param>
-        internal DataSourceCredentialList(string nextLink, IReadOnlyList<DatasourceCredential> value)
+        internal DataSourceCredentialList(string nextLink, IReadOnlyList<DataSourceCredential> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
         public string NextLink { get; }
-        public IReadOnlyList<DatasourceCredential> Value { get; }
+        public IReadOnlyList<DataSourceCredential> Value { get; }
     }
 }

@@ -54,6 +54,8 @@
       <TenantType>Cloud</TenantType>
       <AccountName>[OAUTH-ACCOUNT]</AccountName>
       <AccountKey>[OAUTH-ACCOUNT-KEY]</AccountKey>
+      <ResourceGroupName>[OAUTH-RESOURCE-GROUP-NAME]</ResourceGroupName>
+      <SubscriptionId>[OAUTH-SUBSCRIPTION-ID]</SubscriptionId>
 
       <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>

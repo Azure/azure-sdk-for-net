@@ -46,6 +46,8 @@ $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
 $PremiumFileAccountEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
 $StorageTenantId = $DeploymentOutputs['STORAGE_TENANT_ID']
+$ResourceGroupName = $DeploymentOutputs['RESOURCE_GROUP_NAME']
+$SubscriptionId = $DeploymentOutputs['SUBSCRIPTION_ID']
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -107,6 +109,8 @@ $content =
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
+      <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
+      <SubscriptionId>$SubscriptionId</SubscriptionId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
@@ -174,13 +178,13 @@ $content =
 $storageTestConfigurationTemplateName = 'TestConfigurationsTemplate.xml'
 $storageTestConfigurationName = 'TestConfigurations.xml'
 
-if(-not (Test-Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ErrorAction Ignore) ) { 
+if(-not (Test-Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ErrorAction Ignore) ) {
   Write-Verbose "Checking for '$storageTestConfigurationTemplateName' files under '$PSScriptRoot'"
 
-  $foundFile = Get-ChildItem -Path $PSScriptRoot -Filter $storageTestConfigurationTemplateName -Recurse | Select-Object -First 1 
+  $foundFile = Get-ChildItem -Path $PSScriptRoot -Filter $storageTestConfigurationTemplateName -Recurse | Select-Object -First 1
   $storageTemplateDirName = $foundFile.Directory.FullName
   Write-Verbose "Found template dir '$storageTemplateDirName'"
-    
+
 } else {
   $storageTemplateDirName = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
   Write-Verbose "Found environment variable BUILD_ARTIFACTSTAGINGDIRECTORY '$storageTemplateDirName'"

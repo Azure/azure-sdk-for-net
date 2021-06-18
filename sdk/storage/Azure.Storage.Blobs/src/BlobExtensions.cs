@@ -723,6 +723,10 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+
             return new BlobProperties(
                 lastModified: response.Headers.LastModified.GetValueOrDefault(),
                 createdOn: response.Headers.CreationTime.GetValueOrDefault(),
@@ -768,7 +772,9 @@ namespace Azure.Storage.Blobs
                 expiresOn: response.Headers.ExpiresOn.GetValueOrDefault(),
                 isSealed: response.Headers.IsSealed.GetValueOrDefault(),
                 rehydratePriority: response.Headers.RehydratePriority,
-                lastAccessed: response.Headers.LastAccessed.GetValueOrDefault());
+                lastAccessed: response.Headers.LastAccessed.GetValueOrDefault(),
+                immutabilityPolicy: immutabilityPolicy,
+                hasLegalHold: response.Headers.LegalHold.GetValueOrDefault());
         }
         #endregion
 
@@ -834,6 +840,11 @@ namespace Azure.Storage.Blobs
             }
 
             response.GetRawResponse().Headers.ExtractMultiHeaderDownloadProperties(out var metadata, out var objectReplicationRules);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+
             return new BlobDownloadStreamingResult
             {
                 Content = response.Value,
@@ -874,7 +885,9 @@ namespace Azure.Storage.Blobs
                         ? ParseObjectReplicationIds(objectReplicationRules)
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
-                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
+                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
+                    ImmutabilityPolicy = immutabilityPolicy,
+                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
                 }
             };
         }
@@ -1151,7 +1164,8 @@ namespace Azure.Storage.Blobs
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
                 ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
                     ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
-                    : null
+                    : null,
+                HasVersionsOnly = blobItemInternal.HasVersionsOnly
             };
         }
 
@@ -1161,6 +1175,10 @@ namespace Azure.Storage.Blobs
             {
                 return null;
             }
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = blobPropertiesInternal.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = blobPropertiesInternal.ImmutabilityPolicyMode;
 
             return new BlobItemProperties
             {
@@ -1199,7 +1217,9 @@ namespace Azure.Storage.Blobs
                 CreatedOn = blobPropertiesInternal.CreationTime,
                 CopyCompletedOn = blobPropertiesInternal.CopyCompletionTime,
                 DeletedOn = blobPropertiesInternal.DeletedTime,
-                AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime
+                AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime,
+                ImmutabilityPolicy = immutabilityPolicy,
+                HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault()
             };
         }
 
@@ -1258,6 +1278,7 @@ namespace Azure.Storage.Blobs
                 RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
                 ETag = new ETag(containerPropertiesInternal.Etag),
                 Metadata = metadata.ToMetadata(),
+                HasImmutableStorageWithVersioning = containerPropertiesInternal.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault(),
             };
         }
 
@@ -1282,7 +1303,8 @@ namespace Azure.Storage.Blobs
                 // Container Get Properties does not return DeletedOn.
                 // Container Get Properties does not return RemainingRetentionDays.
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                Metadata = response.Headers.Metadata.ToMetadata()
+                Metadata = response.Headers.Metadata.ToMetadata(),
+                HasImmutableStorageWithVersioning = response.Headers.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault()
             };
         }
 
@@ -1321,5 +1343,81 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
+        #region ToBlobImmutabilityPolicy
+        internal static BlobImmutabilityPolicy ToBlobImmutabilityPolicy(this ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobImmutabilityPolicy
+            {
+                ExpiresOn = response.Headers.ImmutabilityPolicyExpiry,
+                PolicyMode = response.Headers.ImmutabilityPolicyMode
+            };
+        }
+        #endregion
+
+        #region ToBlobLegalHoldInfo
+        internal static BlobLegalHoldResult ToBlobLegalHoldInfo(this ResponseWithHeaders<BlobSetLegalHoldHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLegalHoldResult
+            {
+                HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
+            };
+        }
+        #endregion
+
+        #region ValidateConditionsNotPresent
+        internal static void ValidateConditionsNotPresent(this BlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.LeaseId) == BlobRequestConditionProperty.LeaseId
+                && requestConditions.LeaseId != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.LeaseId)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.TagConditions) == BlobRequestConditionProperty.TagConditions
+                && requestConditions.TagConditions != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.TagConditions)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfModifiedSince) == BlobRequestConditionProperty.IfModifiedSince
+                && requestConditions.IfModifiedSince != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfModifiedSince)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfUnmodifiedSince) == BlobRequestConditionProperty.IfUnmodifiedSince
+                && requestConditions.IfUnmodifiedSince != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfUnmodifiedSince)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfMatch) == BlobRequestConditionProperty.IfMatch
+                && requestConditions.IfMatch != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfMatch)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfNoneMatch) == BlobRequestConditionProperty.IfNoneMatch
+                && requestConditions.IfNoneMatch != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.IfNoneMatch)} is not applicable to this API.");
+            }
+        }
+        #endregion
     }
 }
