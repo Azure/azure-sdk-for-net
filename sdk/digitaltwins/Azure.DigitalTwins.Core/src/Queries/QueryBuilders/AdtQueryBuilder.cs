@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -13,17 +12,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     {
         private readonly SelectQuery _selectQuery;
         private readonly FromQuery _fromQuery;
-        private readonly IntermediateWhere _intermediateWhere;
-        private readonly WhereQuery _whereQuery;
+        private readonly WhereStatement _whereStatement;
+        private readonly WhereLogic _whereLogic;
 
         /// <summary>
         /// Initializes an instance of an AdtQueryBuilder object.
         /// </summary>
         public AdtQueryBuilder()
         {
-            _whereQuery = new WhereQuery(this);
-            _intermediateWhere = new IntermediateWhere(this, _whereQuery);
-            _fromQuery = new FromQuery(this, _intermediateWhere, "");
+            _whereLogic = new WhereLogic(this);
+            _whereStatement = new WhereStatement(this, _whereLogic);
+            _fromQuery = new FromQuery(this, _whereStatement);
             _selectQuery = new SelectQuery(this, _fromQuery);
         }
 
@@ -90,8 +89,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             // build the from string
             finalQuery.Append(' ').Append(_fromQuery.GetQueryText());
 
-            // build the where string
-            finalQuery.Append(' ').Append(_whereQuery.GetQueryText());
+            // build the where statement string
+            finalQuery.Append(' ').Append(_whereStatement.GetQueryText());
+
+            // build the where logic string
+            finalQuery.Append(' ').Append(_whereLogic.GetQueryText());
 
             return finalQuery.ToString().Trim();
         }

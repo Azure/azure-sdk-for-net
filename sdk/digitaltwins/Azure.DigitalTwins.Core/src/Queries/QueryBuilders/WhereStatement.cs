@@ -10,9 +10,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// TODO.
     /// </summary>
-    public class IntermediateWhere
+    public class WhereStatement : QueryBase
     {
-        private readonly WhereQuery _upstreamWhereQuery;
+        private readonly WhereLogic _upsteamWhereLogic;
         private readonly AdtQueryBuilder _parent;
 
         /// <summary>
@@ -20,19 +20,31 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="upsteamWhere"></param>
-        internal IntermediateWhere(AdtQueryBuilder parent, WhereQuery upsteamWhere)
+        internal WhereStatement(AdtQueryBuilder parent, WhereLogic upsteamWhere)
         {
             _parent = parent;
-            _upstreamWhereQuery = upsteamWhere;
+            _upsteamWhereLogic = upsteamWhere;
         }
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <returns></returns>
-        public WhereQuery Where()
+        public WhereLogic Where()
         {
-            return _upstreamWhereQuery;
+            return _upsteamWhereLogic;
+        }
+
+        /// <inheritdoc/>
+        public override AdtQueryBuilder Build()
+        {
+            throw new InvalidOperationException("Invalid query: Missing WHERE logic.");
+        }
+
+        /// <inheritdoc/>
+        public override string GetQueryText()
+        {
+            return $"{QueryConstants.Where}";
         }
     }
 }

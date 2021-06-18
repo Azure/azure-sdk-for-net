@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 using Azure.DigitalTwins.Core.QueryBuilder;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -37,7 +36,8 @@ namespace Azure.DigitalTwins.Core.Samples
             AdtQueryBuilder sample4 = new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel("dtmi:example:room;1")
+                .Where()
+                .IsOfModel("dtmi:example:room;1")
                 .Build();
 
             #endregion Snippet:DigitalTwinsQueryBuilder
@@ -59,17 +59,19 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE TEMPERATURE < 5
-            var queryWithComparisonWhereClause = new AdtQueryBuilder()
+            AdtQueryBuilder queryWithComparisonWhereClause = new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Where("Temperature", QueryComparisonOperator.LessThan, "6")
+                .Where()
+                .Comparison("Temperature", QueryComparisonOperator.LessThan, "6")
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1', exact)
-            AdtQueryBuilder query7 = new AdtQueryBuilder()
+            AdtQueryBuilder queryWithIsOfModel = new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel("dtmi:example:room;1", true)
+                .Where()
+                .IsOfModel("dtmi:example:room;1", true)
                 .Build();
         }
     }

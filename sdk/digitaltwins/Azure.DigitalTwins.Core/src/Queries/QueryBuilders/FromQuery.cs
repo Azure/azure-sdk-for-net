@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Text;
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -13,35 +10,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class FromQuery : QueryBase
     {
-        private readonly WhereQuery _upstreamWhereQuery;
+        private WhereStatement _upsteamWhereStatement;
         private readonly AdtQueryBuilder _parent;
-        private IntermediateWhere _upsteamIntermediateWhereQuery;
         private FromClause _clause;
 
-        internal FromQuery(AdtQueryBuilder parent, WhereQuery upstreamWhereQuery)
+        internal FromQuery(AdtQueryBuilder parent, WhereStatement upstreamIntermediateWhere)
         {
             _parent = parent;
-            _upstreamWhereQuery = upstreamWhereQuery;
-        }
-
-        internal FromQuery(AdtQueryBuilder parent, IntermediateWhere upstreamIntermediateWhere, string fixme)
-        {
-            Console.WriteLine(fixme);
-            _parent = parent;
-            _upsteamIntermediateWhereQuery = upstreamIntermediateWhere;
-        }
-
-        /// <summary>
-        /// Adds the FROM clause and its argument to the query via the Clauses component.
-        /// </summary>
-        /// <param name="collection"> An enum different collections that users can query from. </param>
-        /// <param name="fix"></param>
-        /// <returns> ADT query with select and from clause. </returns>
-        public IntermediateWhere From(AdtCollection collection, string fix)
-        {
-            Console.WriteLine(fix);
-            _clause = new FromClause(collection);
-            return _upsteamIntermediateWhereQuery;
+            _upsteamWhereStatement = upstreamIntermediateWhere;
         }
 
         /// <summary>
@@ -49,10 +25,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> An enum different collections that users can query from. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public WhereQuery From(AdtCollection collection)
+        public WhereStatement From(AdtCollection collection)
         {
             _clause = new FromClause(collection);
-            return _upstreamWhereQuery;
+            return _upsteamWhereStatement;
         }
 
         /// <summary>
@@ -61,10 +37,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> The name of the collection. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public WhereQuery From(string collection)
+        public WhereStatement From(string collection)
         {
             _clause = new FromClause(collection);
-            return _upstreamWhereQuery;
+            return _upsteamWhereStatement;
         }
 
         /// <inheritdoc/>

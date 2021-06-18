@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
