@@ -1377,6 +1377,13 @@ namespace Azure.Storage.Blobs
         #region ValidateConditionsNotPresent
         internal static void ValidateConditionsNotPresent(this BlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
         {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
             if (requestConditions == null)
             {
                 return;
