@@ -115,18 +115,18 @@ namespace EventGrid.Tests.ScenarioTests
                     {
                         EndpointUrl = AzureFunctionEndpointUrl,
                         DeliveryAttributeMappings = new List<DeliveryAttributeMapping> 
-                        { 
+                        {
                             new StaticDeliveryAttributeMapping()
                             {
                                 Name = "StaticDeliveryAttribute1",
                                 IsSecret = false,
                                 Value = "someValue"
                             },
-                            //////new DynamicDeliveryAttributeMapping()
-                            //////{
-                            //////    Name = "DynamicDeliveryAttribute1",
-                            //////    SourceField = "SomeField"
-                            //////}
+                            new DynamicDeliveryAttributeMapping()
+                            {
+                                Name = "DynamicDeliveryAttribute1",
+                                SourceField = "data.field1"
+                            }
                         }
                     },
                     Filter = new EventSubscriptionFilter()
@@ -150,10 +150,10 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal(".jpg", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
                 Assert.NotNull(((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings);
-                // Assert.Equal(2, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
-                Assert.Equal(1, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
+                Assert.Equal(2, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
+                // Assert.Equal(1, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
                 Assert.Equal("StaticDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[0].Name);
-                // Assert.Equal("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
+                Assert.Equal("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
                 // List event subscriptions
                 var eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;
@@ -426,7 +426,7 @@ namespace EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Stop this test until ARM manifest deployment in all regions to tesh this global resource.")]
+        [Fact(Skip = "Stop this test until ARM manifest deployment in all regions to test this global resource.")]
         public void EventSubscriptionToResourceGroupCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -965,7 +965,7 @@ namespace EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Skip temporarily.")]
+        [Fact]
         public void DisableLocalAuthCRUDOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

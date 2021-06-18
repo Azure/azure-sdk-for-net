@@ -17,7 +17,7 @@ namespace EventGrid.Tests.ScenarioTests
         const string StorageTopicType = "Microsoft.Storage.StorageAccounts";
         const string EventHubsTopicType = "Microsoft.EventHub.Namespaces";
 
-        [Fact(Skip = "Stop this test until ARM manifest deployment in all regions to tesh this global resource.")]
+        [Fact(Skip = "Stop this test until ARM manifest deployment in all regions to test this global resource.")]
         public async Task TopicTypeTestsAsync()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
