@@ -604,7 +604,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        public IEnumerable<AccessConditionParameters> UploadClearAsync_AccessConditions_Data
+        public IEnumerable<AccessConditionParameters> UploadClearAsync_AccessConditions_Data(bool noSequenceNumberConditions)
             => new[]
             {
                 new AccessConditionParameters(),
@@ -613,16 +613,16 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { Match = ReceivedETag },
                 new AccessConditionParameters { NoneMatch = GarbageETag },
                 new AccessConditionParameters { LeaseId = ReceivedLeaseId },
-                new AccessConditionParameters { SequenceNumberLT = 5 },
-                new AccessConditionParameters { SequenceNumberLTE = 3 },
-                new AccessConditionParameters { SequenceNumberEqual = 0 }
+                new AccessConditionParameters { SequenceNumberLT = noSequenceNumberConditions ? null : 5 },
+                new AccessConditionParameters { SequenceNumberLTE = noSequenceNumberConditions? null : 3 },
+                new AccessConditionParameters { SequenceNumberEqual = noSequenceNumberConditions ? null : 0 }
            };
 
         [RecordedTest]
         public async Task UploadAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data(noSequenceNumberConditions: false))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1035,7 +1035,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ClearPagesAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data(noSequenceNumberConditions: false))
             {
                 await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -3690,7 +3690,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_AccessConditions(bool overwrite)
         {
             var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data)
+            foreach (AccessConditionParameters parameters in UploadClearAsync_AccessConditions_Data(overwrite))
             {
                 // Arrange
                 await using DisposingContainer test = await GetTestContainerAsync();
