@@ -27,6 +27,8 @@ namespace Azure.Identity
         private const int MsalLogErrorEvent = 10;
         private const int InteractiveAuthenticationThreadPoolExecutionEvent = 11;
         private const int InteractiveAuthenticationInlineExecutionEvent = 12;
+        private const int ProcessRunnerErrorEvent = 13;
+        private const int ProcessRunnerInfoEvent = 14;
 
         private AzureIdentityEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
@@ -142,18 +144,19 @@ namespace Azure.Identity
                 {
                     // Format how Exception.ToString() would.
                     sb.AppendLine()
-                      .Append(" ---> ");
+                        .Append(" ---> ");
                 }
+
                 // Do not include StackTrace, but do include HResult (often useful for CryptographicExceptions or IOExceptions).
                 sb.Append(ex.GetType().FullName)
-                  .Append(" (0x")
-                  .Append(ex.HResult.ToString("x", CultureInfo.InvariantCulture))
-                  .Append("): ")
-                  .Append(ex.Message);
+                    .Append(" (0x")
+                    .Append(ex.HResult.ToString("x", CultureInfo.InvariantCulture))
+                    .Append("): ")
+                    .Append(ex.Message);
                 ex = ex.InnerException;
                 nest = true;
-            }
-            while (ex != null);
+            } while (ex != null);
+
             return sb.ToString();
         }
 
@@ -222,6 +225,36 @@ namespace Azure.Identity
         public void InteractiveAuthenticationExecutingInline()
         {
             WriteEvent(InteractiveAuthenticationInlineExecutionEvent);
+        }
+
+        [NonEvent]
+        public void ProcessRunnerError(string message)
+        {
+            if (IsEnabled(EventLevel.Error, EventKeywords.All))
+            {
+                LogProcessRunnerError(message);
+            }
+        }
+
+        [Event(ProcessRunnerErrorEvent, Level = EventLevel.Error, Message = "{0}")]
+        public void LogProcessRunnerError(string message)
+        {
+            WriteEvent(ProcessRunnerErrorEvent, message);
+        }
+
+        [NonEvent]
+        public void ProcessRunnerInformational(string message)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                LogProcessRunnerInformational(message);
+            }
+        }
+
+        [Event(ProcessRunnerInfoEvent, Level = EventLevel.Informational, Message = "{0}")]
+        public void LogProcessRunnerInformational(string message)
+        {
+            WriteEvent(ProcessRunnerInfoEvent, message);
         }
     }
 }
