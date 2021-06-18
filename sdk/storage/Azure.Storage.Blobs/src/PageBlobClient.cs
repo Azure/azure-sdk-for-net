@@ -969,6 +969,11 @@ namespace Azure.Storage.Blobs.Specialized
                 operationName ??= $"{nameof(PageBlobClient)}.{nameof(Create)}";
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                    | BlobRequestConditionProperty.IfSequenceNumberLessThan
+                    | BlobRequestConditionProperty.IfSequenceNumberEqual);
+
                 try
                 {
                     scope.Start();
@@ -1465,6 +1470,9 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(ClearPages)}");
+
+                // All PageBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(BlobRequestConditionProperty.None);
 
                 try
                 {

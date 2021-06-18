@@ -1475,6 +1475,43 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentException($"{nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual)} is not applicable to this API.");
             }
         }
+
+        internal static void ValidateConditionsNotPresent(this PageBlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            // Validate BlobRequestConditions
+            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(invalidConditions);
+
+            // Validate PageBlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThan) == BlobRequestConditionProperty.IfSequenceNumberLessThan
+                && requestConditions.IfSequenceNumberLessThan != null)
+            {
+                throw new ArgumentException($"{nameof(PageBlobRequestConditions.IfSequenceNumberLessThan)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual) == BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                && requestConditions.IfSequenceNumberLessThanOrEqual != null)
+            {
+                throw new ArgumentException($"{nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberEqual) == BlobRequestConditionProperty.IfSequenceNumberEqual
+                && requestConditions.IfSequenceNumberEqual != null)
+            {
+                throw new ArgumentException($"{nameof(PageBlobRequestConditions.IfSequenceNumberEqual)} is not applicable to this API.");
+            }
+        }
         #endregion
     }
 }
