@@ -289,40 +289,41 @@ Build an ADT query using an `AdtQueryBuilder`:
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
-AdtQueryBuilder sample1 = new AdtQueryBuilder()
+AdtQueryBuilder selectAll = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
     .Build();
 
 // SELECT TOP(3) FROM DIGITALTWINS
-AdtQueryBuilder sample2 = new AdtQueryBuilder()
+AdtQueryBuilder selectTop = new AdtQueryBuilder()
     .SelectTop(3)
     .From(AdtCollection.DigitalTwins)
     .Build();
 
 // SELECT COUNT() FROM RELATIONSHIPS
-AdtQueryBuilder sample3 = new AdtQueryBuilder()
+AdtQueryBuilder selectRelationships = new AdtQueryBuilder()
     .SelectCount()
     .From(AdtCollection.Relationships)
     .Build();
 
 // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1')
-AdtQueryBuilder query2 = new AdtQueryBuilder()
+AdtQueryBuilder whereIsOfModel = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
-    .WhereIsOfModel("dtmi:example:room;1")
+    .Where()
+    .IsOfModel("dtmi:example:room;1")
     .Build();
 ```
 
-Turn an `AdtQueryBuilder` to a string by calling `ToString()` after `Build()`:
+Turn an `AdtQueryBuilder` to a string by calling `GetQueryText()` after `Build()`:
 
 ```C# Snippet:DigitalTwinsQueryBuilderToString
 // SELECT * FROM DIGITALTWINS
-string string1 = new AdtQueryBuilder()
+string selectAllToString = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
     .Build()
-    .Stringify();
+    .GetQueryText();
 ```
 
 ### Delete digital twins

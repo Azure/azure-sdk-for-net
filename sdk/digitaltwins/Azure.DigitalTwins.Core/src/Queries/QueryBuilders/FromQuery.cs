@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Text;
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -13,14 +10,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class FromQuery : QueryBase
     {
-        private readonly WhereQuery _upstreamWhereQuery;
+        private readonly WhereStatement _upsteamWhereStatement;
         private readonly AdtQueryBuilder _parent;
         private FromClause _clause;
 
-        internal FromQuery(AdtQueryBuilder parent, WhereQuery upstreamWhereQuery)
+        internal FromQuery(AdtQueryBuilder parent, WhereStatement upsteamWhereStatement)
         {
             _parent = parent;
-            _upstreamWhereQuery = upstreamWhereQuery;
+            _upsteamWhereStatement = upsteamWhereStatement;
         }
 
         /// <summary>
@@ -28,10 +25,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> An enum different collections that users can query from. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public WhereQuery From(AdtCollection collection)
+        public WhereStatement From(AdtCollection collection)
         {
             _clause = new FromClause(collection);
-            return _upstreamWhereQuery;
+            return _upsteamWhereStatement;
         }
 
         /// <summary>
@@ -40,10 +37,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> The name of the collection. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public WhereQuery From(string collection)
+        public WhereStatement From(string collection)
         {
             _clause = new FromClause(collection);
-            return _upstreamWhereQuery;
+            return _upsteamWhereStatement;
         }
 
         /// <inheritdoc/>

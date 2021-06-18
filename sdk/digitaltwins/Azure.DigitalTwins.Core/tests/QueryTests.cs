@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 using Azure.DigitalTwins.Core.QueryBuilder;
 
 namespace Azure.DigitalTwins.Core.Tests

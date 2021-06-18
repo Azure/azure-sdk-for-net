@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
+using Azure.DigitalTwins.Core.QueryBuilder;
 using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core

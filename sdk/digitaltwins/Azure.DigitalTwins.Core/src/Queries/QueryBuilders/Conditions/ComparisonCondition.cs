@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -10,7 +9,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Condition specifically for comparisons using the SQL-like comparison operators.
     /// </summary>
-    internal class ComparisonCondition : ConditionBase
+    internal class ComparisonCondition<T> : ConditionBase
     {
         /// <summary>
         /// The field that we're checking against a certain value.
@@ -20,15 +19,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// The value we're checking against a field.
         /// </summary>
-        public string Value { get; set; }
+        public T Value { get; set; }
 
         /// <summary>
         /// Constructor for a comparison condition.
         /// </summary>
         /// <param name="field"> The field being checked against a certain value. </param>
         /// <param name="comparisonOperator"> The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked. </param>
-        /// <param name="value"> The value being checked against a field. </param>
-        public ComparisonCondition(string field, QueryComparisonOperator comparisonOperator, string value)
+        /// <param name="value"> The value being checked against a field. Valid types are string, int, long, float or double.</param>
+        public ComparisonCondition(string field, QueryComparisonOperator comparisonOperator, T value)
         {
             Field = field;
             Operator = comparisonOperator;
@@ -41,15 +40,20 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             conditionString.Append($"{Field} {QueryConstants.ComparisonOperators[Operator]} ");
 
             // check to see if the input is numeric value -- if not, we need single quotes around Value
-            bool isNumeric = int.TryParse(Value, out int numericValue);
-
-            if (!isNumeric)
+            if (typeof(T) == typeof(string))
             {
-                // surround with single quotes
-                Value = "'" + Value + "'";
+                // if string, surround value with single quotes to denote string type in SQL
+                conditionString.Append($"'{Value}'");
             }
-
-            conditionString.Append(Value);
+            else if (typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(float) || typeof(T) == typeof(double))
+            {
+                // if int, long, float, our double, insert raw value into query string (nothing needs to be done)
+                conditionString.Append(Value);
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid condition: use a string, integer, long, float, or double.");
+            }
 
             return conditionString.ToString();
         }

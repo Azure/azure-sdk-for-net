@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.DigitalTwins.Core.QueryBuilder;
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -99,7 +98,8 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Where("Temperature", QueryComparisonOperator.GreaterOrEqual, "50")
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.GreaterOrEqual, 50)
                 .Build()
                 .Stringify()
                 .Should()
@@ -112,7 +112,8 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Where("Location", QueryContainsOperator.NotIn, new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
+                .Where()
+                .NotContains("Location", new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
                 .Build()
                 .Stringify()
                 .Should()
@@ -125,7 +126,8 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Where("IS_OF_MODEL('dtmi:example:room;1', exact)")
+                .Where()
+                .CustomClause("IS_OF_MODEL('dtmi:example:room;1', exact)")
                 .Build()
                 .Stringify()
                 .Should()
@@ -138,7 +140,8 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel("dtmi:example:room;1", true)
+                .Where()
+                .IsOfModel("dtmi:example:room;1", true)
                 .Build()
                 .Stringify()
                 .Should()
@@ -151,7 +154,8 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.Relationships)
-                .WhereIsOfType("isOccupied", AdtDataType.AdtBool)
+                .Where()
+                .IsOfType("isOccupied", AdtDataType.AdtBool)
                 .Build()
                 .Stringify()
                 .Should()
@@ -164,8 +168,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("Temperature")
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Humidity")
-                .Where("Occupants < 10")
+                .Where()
+                .IsDefined("Humidity")
+                .CustomClause("Occupants < 10")
                 .Build()
                 .Stringify()
                 .Should()

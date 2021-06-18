@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using Azure.DigitalTwins.Core.QueryBuilder;
-
-namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
+namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
     /// Parent class for all query clauses.

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.DigitalTwins.Core.QueryBuilder;
-using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 using FluentAssertions;
 using NUnit.Framework;
 
