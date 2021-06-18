@@ -101,7 +101,7 @@ namespace Azure.Communication.CallingServer.Tests
                     new CommunicationIdentifier[]
                     {
                         new CommunicationUserIdentifier("8:acs:resource_target"),
-                        new PhoneNumberIdentifier("+1425XXXXXXX")
+                        new PhoneNumberIdentifier("+14255550123")
                     },
                     new CreateCallOptions(
                         new Uri("https://bot.contoso.com/callback"),
@@ -115,7 +115,7 @@ namespace Azure.Communication.CallingServer.Tests
                         }
                     )
                     {
-                        AlternateCallerId = new PhoneNumberIdentifier("+1425XXXXXXX"),
+                        AlternateCallerId = new PhoneNumberIdentifier("+14255550123"),
                         Subject = "testsubject"
                     }
                 },

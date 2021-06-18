@@ -12,8 +12,10 @@ namespace Azure.Communication.CallingServer.Tests
     /// </summary>
     public class CallingServerTestEnvironment : CommunicationTestEnvironment
     {
+        public const string AlternateCallerId = "ALTERNATE_CALLERID";
+
         /// <summary>
-        /// The phone number associated with the source.
+        /// The phone number required to make a pstn call.
         /// </summary>
         public string SourcePhoneNumber => GetRecordedVariable(AlternateCallerId, options => options.IsSecret());
 
@@ -21,11 +23,6 @@ namespace Azure.Communication.CallingServer.Tests
         /// The phone number associated with the source.
         /// </summary>
         public string TargetPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
-
-        /// <summary>
-        /// The audio file name of the play prompt.
-        /// </summary>
-        public string AlternateCallerId => "ALTERNATE_CALLERID";
 
         /// <summary>
         /// The audio file name of the play prompt.
