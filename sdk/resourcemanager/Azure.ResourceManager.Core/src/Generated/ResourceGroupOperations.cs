@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.Core
             {
                 return TagsRestClient.UpdateAtScope(Id, new TagsPatchResource() 
                 { 
-                    Operation = TagsPatchResourceOperation.Delete, Properties = new Tags(tags) 
+                    Operation = TagsPatchResourceOperation.Merge, Properties = new Tags(tags) 
                 }, cancellationToken);
             }
             catch (Exception e)
