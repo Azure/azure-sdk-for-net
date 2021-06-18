@@ -10,14 +10,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class FromQuery : QueryBase
     {
-        private WhereStatement _upsteamWhereStatement;
+        private readonly WhereStatement _upsteamWhereStatement;
         private readonly AdtQueryBuilder _parent;
         private FromClause _clause;
 
-        internal FromQuery(AdtQueryBuilder parent, WhereStatement upstreamIntermediateWhere)
+        internal FromQuery(AdtQueryBuilder parent, WhereStatement upsteamWhereStatement)
         {
             _parent = parent;
-            _upsteamWhereStatement = upstreamIntermediateWhere;
+            _upsteamWhereStatement = upsteamWhereStatement;
         }
 
         /// <summary>

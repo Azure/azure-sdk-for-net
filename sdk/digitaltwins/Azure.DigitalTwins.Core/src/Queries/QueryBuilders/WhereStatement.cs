@@ -2,24 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// TODO.
+    /// Query that already contains a SELECT and FROM clause.
     /// </summary>
     public class WhereStatement : QueryBase
     {
         private readonly WhereLogic _upsteamWhereLogic;
         private readonly AdtQueryBuilder _parent;
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <param name="upsteamWhere"></param>
         internal WhereStatement(AdtQueryBuilder parent, WhereLogic upsteamWhere)
         {
             _parent = parent;
@@ -27,7 +20,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO.
+        /// Adds a WHERE statement to a query.
         /// </summary>
         /// <returns></returns>
         public WhereLogic Where()

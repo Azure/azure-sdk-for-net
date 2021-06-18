@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +8,7 @@ using System.Text;
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// Query that already contains a SELECT and FROM clause.
+    /// Query that already contains a SELECT, FROM and a WHERE statement.
     /// </summary>
     public sealed class WhereLogic : QueryBase
     {
@@ -139,24 +138,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             string functionName = QueryConstants.IsOfTypeConversions[type];
             _clauses.Add(new WhereClause($"{functionName}({expression})"));
-            return this;
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <returns></returns>
-        public WhereLogic Or()
-        {
-            return this;
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <returns></returns>
-        public WhereLogic And()
-        {
             return this;
         }
 
