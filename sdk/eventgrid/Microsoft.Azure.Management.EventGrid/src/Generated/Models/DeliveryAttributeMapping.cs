@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     /// <summary>
     /// Delivery attribute mapping details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DeliveryAttributeMapping")]
     public partial class DeliveryAttributeMapping
     {
         /// <summary>
