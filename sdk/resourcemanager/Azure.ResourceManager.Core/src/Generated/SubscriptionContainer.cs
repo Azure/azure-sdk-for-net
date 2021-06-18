@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         internal SubscriptionContainer(ClientContext clientContext)
-            : base(clientContext, null) //TODO: Id gets set as null here
+            : base(clientContext, null)
         {
             RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline);
         }

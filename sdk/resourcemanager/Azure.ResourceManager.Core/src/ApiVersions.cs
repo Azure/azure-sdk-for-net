@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Core
         {
             _armClient = new ArmClient(subscription, baseUri, credential, _clientOptions);
         }
-       
+
         private ConcurrentDictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>();
         private ConcurrentDictionary<string, string> _nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>();
 
