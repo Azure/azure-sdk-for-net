@@ -4,9 +4,9 @@ This sample demonstrates how to make a call to a recipient phone number.
 
 To get started you'll need a Communication Service Resource.  See [README][README] for prerequisites and instructions.
 
-## Creating a `ServerCallingClient`
+## Creating a `CallingServerClient`
 
-Server Calling clients can be authenticated using the connection string acquired from an Azure Communication Resource in the Azure Portal.
+CallingServer client can be authenticated using the connection string acquired from an Azure Communication Resource in the Azure Portal.
 
 ```C# Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
