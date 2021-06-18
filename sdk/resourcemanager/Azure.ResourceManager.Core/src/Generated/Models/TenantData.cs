@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Tenant Id information. </summary>
-    public partial class TenantIdDescription
+    public partial class TenantData
     {
         /// <summary> Initializes a new instance of TenantIdDescription. </summary>
-        internal TenantIdDescription()
+        internal TenantData()
         {
             Domains = new ChangeTrackingList<string>();
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
         /// <param name="displayName"> The display name of the tenant. </param>
         /// <param name="domains"> The list of domains for the tenant. </param>
-        internal TenantIdDescription(string id, string tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains)
+        internal TenantData(string id, string tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains)
         {
             Id = id;
             TenantId = tenantId;

@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.Core
     public class TenantOperations : OperationsBase
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TenantOperations"/> class for mocking.
+        /// </summary>
+        protected TenantOperations()
+        {
+        }
+
+        /// <summary>
         /// The resource type for subscription
         /// </summary>
         public static readonly ResourceType ResourceType = ResourceType.RootResourceType;

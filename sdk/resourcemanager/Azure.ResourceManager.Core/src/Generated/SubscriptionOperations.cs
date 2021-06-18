@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Core
         /// Gets a container representing all resources as generic objects in the current tenant.
         /// </summary>
         /// <returns> GenericResource container. </returns>
-        public GenericResourceContainer GetGenericResources()
+        public virtual GenericResourceContainer GetGenericResources()
         {
             return new GenericResourceContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
