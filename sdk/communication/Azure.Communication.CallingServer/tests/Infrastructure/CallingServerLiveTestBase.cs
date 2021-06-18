@@ -83,7 +83,7 @@ namespace Azure.Communication.CallingServer.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.LiveTestDynamicConnectionString,
+                    TestEnvironment.LiveTestStaticConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
