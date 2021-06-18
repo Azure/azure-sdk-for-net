@@ -33,6 +33,9 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task RunCreatePlayCancelHangupScenarioTests()
         {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
             CallingServerClient client = CreateInstrumentedCallingServerClient();
             try
             {
@@ -65,6 +68,9 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task RunCreateAddRemoveHangupScenarioTests()
         {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
             CallingServerClient client = CreateInstrumentedCallingServerClient();
             try
             {

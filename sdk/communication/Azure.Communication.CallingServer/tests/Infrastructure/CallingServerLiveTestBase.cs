@@ -25,14 +25,23 @@ namespace Azure.Communication.CallingServer.Tests
         // Random Gen Guid
         protected const string GROUP_IDENTIFIER = "3500789f-e11b-4ceb-85cb-bc8df2a01768";
 
+        protected string GetResourceId()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                return TestEnvironment.ResourceIdentifier;
+            }
+            return RESOURCE_IDENTIFIER;
+        }
+
         protected string GetRandomUserId()
         {
-            return "8:acs:" + RESOURCE_IDENTIFIER + "_" + Guid.NewGuid().ToString();
+            return "8:acs:" + GetResourceId() + "_" + Guid.NewGuid().ToString();
         }
 
         protected string GetFixedUserId(string userGuid)
         {
-            return "8:acs:" + RESOURCE_IDENTIFIER + "_" + userGuid;
+            return "8:acs:" + GetResourceId() + "_" + userGuid;
         }
 
         protected string GetFromUserId()
@@ -74,6 +83,9 @@ namespace Azure.Communication.CallingServer.Tests
 
         public CallingServerLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CallingServerRecordedTestSanitizer();
+
+        public bool SkipCallingServerInteractionLiveTests
+            => TestEnvironment.Mode == RecordedTestMode.Live && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
