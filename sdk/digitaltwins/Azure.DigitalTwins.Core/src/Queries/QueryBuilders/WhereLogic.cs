@@ -155,7 +155,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 // Where keyword only needs to be appened one time, happends outside of loop
                 var whereLogicComponents = new StringBuilder();
 
-                var conditions = new List<string>(_clauses.Length);
+                var conditions = new List<string>(_clauses.Count);
                 foreach (WhereClause _clause in _clauses)
                 {
                     conditions.Add(_clause.Condition);
