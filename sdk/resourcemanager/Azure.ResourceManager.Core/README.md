@@ -1,12 +1,12 @@
 # Azure ResourceManager Core client library for .NET
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+This package follows the [new Azure SDK guidelines]<---(https://azure.github.io/azure-sdk/general_introduction.html)--> which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
 ## Getting started 
 
 ### Install the package
 
-Install the Azure Resources management core library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Resources management core library for .NET with [NuGet]<---(https://www.nuget.org/)-->:
 
 ```PowerShell
 Install-Package Azure.ResourceManager.Core -Version 1.0.0-beta.1
@@ -21,7 +21,7 @@ You'll need the following values to authenticate to Azure:
 -   **Client Secret**
 -   **Tenant ID**
 
-Detailed instructions on getting and setting these values is found in the [Prerequisites guide](docs/Prerequisites.md). 
+Detailed instructions on getting and setting these values is found in the [Prerequisites guide]<---(docs/Prerequisites.md)-->. 
 
 ### Authentication and Creating Resource Management Client
 
@@ -41,7 +41,7 @@ To authenticate to Azure and create an ARM client, do the following:
 
 From this code snippet, we showed that in order to interact with Resources, we need to create the top-level client first **AzureResourceManagerClient**
 
-More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+More information and different authentication approaches using Azure Identity can be found in [this document]<---(https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)-->.
 
 ## Key concepts
 ### Understanding Azure Resource Hierarchy
@@ -75,7 +75,7 @@ There are core differences between the current and new preview SDK. The main one
 - The introduction of Resource Operations.
 - A structured Resource Identifier.
 
-You can learn more about the main differences [in this document](docs\MigratingFromCurrentToPreview.md) and reading the examples below.
+You can learn more about the main differences [in this document]<---(docs\MigratingFromCurrentToPreview.md)--> and reading the examples below.
 
 
 ## Examples
@@ -138,31 +138,31 @@ await foreach (ResourceGroup rg in response)
 }
 ```
 
-For more detailed examples, take a look at [samples](samples/) we have available.
+For more detailed examples, take a look at [samples]<---(samples/)--> we have available.
 
 ## Troubleshooting
 
 -   If you find a bug or have a suggestion, file an issue via [Github
-    Issues](https://github.com/Azure/azure-sdk-for-net/issues) and
+    Issues]<---(https://github.com/Azure/azure-sdk-for-net/issues)--> and
     make sure you add the "Preview" label to the issue.
 -   If you need help, check [previous
-    questions](https://stackoverflow.com/questions/tagged/azure+.net)
+    questions]<---(https://stackoverflow.com/questions/tagged/azure+.net)-->
     or ask new ones on StackOverflow using azure and .NET tags.
--   If having trouble with authenthication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
+-   If having trouble with authenthication, go to [DefaultAzureCredential documentation]<---(https://docs.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet)-->.
 ## Next Steps
 ### More sample code
 
-- [Managing Resource Groups](samples/ManagingResourceGroups.md)
-- [Creating a Virtual Network](samples/CreatingAVirtualNetwork.md)
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [Managing Resource Groups]<---(samples/ManagingResourceGroups.md)-->
+- [Creating a Virtual Network]<---(samples/CreatingAVirtualNetwork.md)-->
+- [.NET Management Library Code Samples]<---(https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)-->
 
 ### Additional Documentation
-For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
+For more information on Azure SDK, please refer to [this website]<---(https://azure.github.io/azure-sdk/)-->.
 
 ## Contributing
 
 For details on contributing to this repository, see the [contributing
-guide](docs/CONTRIBUTING.md).
+guide]<---(docs/CONTRIBUTING.md)-->.
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
