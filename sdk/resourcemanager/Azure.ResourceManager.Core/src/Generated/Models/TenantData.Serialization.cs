@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class TenantIdDescription
+    public partial class TenantData
     {
-        internal static TenantIdDescription DeserializeTenantIdDescription(JsonElement element)
+        internal static TenantData DeserializeTenantIdDescription(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> tenantId = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new TenantIdDescription(id.Value, tenantId.Value, Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains));
+            return new TenantData(id.Value, tenantId.Value, Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains));
         }
     }
 }

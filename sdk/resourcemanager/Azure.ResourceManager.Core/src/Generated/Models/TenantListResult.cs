@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            Value = new ChangeTrackingList<TenantIdDescription>();
+            Value = new ChangeTrackingList<TenantData>();
             NextLink = nextLink;
         }
 
         /// <summary> Initializes a new instance of TenantListResult. </summary>
         /// <param name="value"> An array of tenants. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal TenantListResult(IReadOnlyList<TenantIdDescription> value, string nextLink)
+        internal TenantListResult(IReadOnlyList<TenantData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of tenants. </summary>
-        public IReadOnlyList<TenantIdDescription> Value { get; }
+        public IReadOnlyList<TenantData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

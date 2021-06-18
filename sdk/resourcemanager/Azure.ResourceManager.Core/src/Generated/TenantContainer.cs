@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -36,16 +37,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<TenantIdDescription> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Tenant> ListAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TenantIdDescription>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Tenant>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("TenantContainer.List");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -53,14 +54,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            async Task<Page<TenantIdDescription>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Tenant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("TenantContainer.List");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -73,16 +74,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<TenantIdDescription> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Tenant> List(CancellationToken cancellationToken = default)
         {
-            Page<TenantIdDescription> FirstPageFunc(int? pageSizeHint)
+            Page<Tenant> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("TenantContainer.List");
                 scope.Start();
                 try
                 {
                     var response = RestClient.List(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -90,14 +91,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            Page<TenantIdDescription> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Tenant> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("TenantContainer.List");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tenant(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

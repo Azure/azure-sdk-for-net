@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void GetGenericResourcesOperationsTests()
         {
             string id = $"/providers/Microsoft.Compute/virtualMachines/myVm";
-            Assert.AreEqual(id, Client.GetGenericResourcesOperations(new TenantResourceIdentifier(id)).Id.StringValue);
+            Assert.AreEqual(id, Client.GetGenericResourceOperations(new TenantResourceIdentifier(id)).Id.StringValue);
         }
 
         [TestCase]
