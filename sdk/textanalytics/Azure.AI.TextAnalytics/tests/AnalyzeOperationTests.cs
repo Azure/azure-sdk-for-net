@@ -447,6 +447,42 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        public async Task AnalyzeOperationWithPiiCategories()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            var documents = new List<string>
+            {
+                "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft.",
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber } } },
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
+
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+
+            Assert.IsNotNull(piiActionsResults);
+
+            RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, piiDocumentsResults.Count);
+
+            Assert.IsNotEmpty(piiDocumentsResults[0].Entities.RedactedText);
+
+            Assert.IsFalse(piiDocumentsResults[0].HasError);
+            Assert.AreEqual(1, piiDocumentsResults[0].Entities.Count);
+            Assert.AreEqual(PiiEntityCategory.USSocialSecurityNumber, piiDocumentsResults[0].Entities.FirstOrDefault().Category);
+        }
+
+        [RecordedTest]
         public async Task AnalyzeOperationWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();

@@ -329,8 +329,8 @@ namespace Azure.AI.TextAnalytics
                     Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
                     ModelVersion = action.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
-                    LoggingOptOut = action.DisableServiceLogs
-                    // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
+                    LoggingOptOut = action.DisableServiceLogs,
+                    PiiCategories = action.CategoriesFilter
                 },
                 TaskName = action.ActionName
             };
