@@ -32,7 +32,7 @@ namespace Azure.Communication.CallingServer
             JsonElement element = document.RootElement;
 
             var participantsUpdatedEventInternal = ParticipantsUpdatedEventInternal.DeserializeParticipantsUpdatedEventInternal(element);
-            var callParticipants = participantsUpdatedEventInternal.Participants?.Select(x => new CallParticipant { Identifier = CommunicationIdentifierSerializer.Deserialize(x.Identifier), IsMuted = x.IsMuted, ParticipantId = x.ParticipantId });
+            var callParticipants = participantsUpdatedEventInternal.Participants?.Select(x => new CallParticipant(identifier: CommunicationIdentifierSerializer.Deserialize(x.Identifier), isMuted: x.IsMuted, participantId: x.ParticipantId));
 
             return new ParticipantsUpdatedEvent(participantsUpdatedEventInternal.CallConnectionId, callParticipants);
         }
