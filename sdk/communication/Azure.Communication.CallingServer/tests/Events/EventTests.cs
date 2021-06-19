@@ -1,13 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests.Events
@@ -15,166 +9,103 @@ namespace Azure.Communication.CallingServer.Tests.Events
     public class EventTests : CallingServerTestBase
     {
         [Test]
-        public async Task CallRecordingStateChangeEventTest()
+        public void CallRecordingStateChangeEventTest()
         {
-            CallRecordingStateChangeEvent e = new CallRecordingStateChangeEvent("id", CallRecordingState.Active, new DateTimeOffset(DateTime.Now), "callServerId");
-            var c = CallRecordingStateChangeEvent.Deserialize(await Serialize(e));
+            var json = "{\"recordingId\":\"id\",\"state\":\"active\",\"startDateTime\":\"2021-06-18T18:59:23.5718812-07:00\",\"serverCallId\":\"callServerId\"}";
 
-            Assert.IsTrue(this.DeepCompare(e, c));
+            var c = CallRecordingStateChangeEvent.Deserialize(json);
 
-            e.RecordingId = "id2";
-            var d = CallRecordingStateChangeEvent.Deserialize(await Serialize(e));
-
-            Assert.IsFalse(this.DeepCompare(c, d));
+            Assert.AreEqual("id", c.RecordingId);
+            Assert.AreEqual(CallRecordingState.Active, c.State);
+            Assert.AreEqual("callServerId", c.ServerCallId);
+            Assert.AreEqual("2021-06-18", c.StartDateTime.ToString("yyyy-MM-dd"));
         }
 
         [Test]
-        public async Task CallConnectionStateChangedEventTest()
+        public void CallConnectionStateChangedEventTest()
         {
-            CallConnectionStateChangedEvent e = new CallConnectionStateChangedEvent("serverCallId", "callConnectionId", CallConnectionState.Disconnected);
-            var c = CallConnectionStateChangedEvent.Deserialize(await Serialize(e));
+            var json = "{\"serverCallId\":\"serverCallId\",\"callConnectionId\":\"callConnectionId\",\"callConnectionState\":\"connected\"}";
 
-            Assert.IsTrue(this.DeepCompare(e, c));
+            var c = CallConnectionStateChangedEvent.Deserialize(json);
 
-            e.CallConnectionState = CallConnectionState.Connected;
-            var d = CallConnectionStateChangedEvent.Deserialize(await Serialize(e));
-
-            Assert.IsFalse(this.DeepCompare(c, d));
+            Assert.AreEqual("serverCallId", c.ServerCallId);
+            Assert.AreEqual("callConnectionId", c.CallConnectionId);
+            Assert.AreEqual(CallConnectionState.Connected, c.CallConnectionState);
         }
 
         [Test]
-        public async Task AddParticipantResultEventTest()
+        public void AddParticipantResultEventTest()
         {
-            AddParticipantResultEvent e = new AddParticipantResultEvent(null, "operatingContext", OperationStatus.Failed);
-            var c = AddParticipantResultEvent.Deserialize(await Serialize(e));
+            var json = "{\"resultInfo\":{\"code\":400,\"subcode\":415,\"message\":\"failure message\"},\"operationContext\":\"operatingContext\",\"status\":\"failed\"}";
 
-            Assert.IsTrue(this.DeepCompare(e, c));
+            var c = AddParticipantResultEvent.Deserialize(json);
 
-            e.OperationContext = "context";
-            var d = AddParticipantResultEvent.Deserialize(await Serialize(e));
+            Assert.AreEqual("operatingContext", c.OperationContext);
+            Assert.AreEqual(OperationStatus.Failed, c.Status);
+            Assert.IsNotNull(c.ResultInfo);
+            Assert.AreEqual(400, c.ResultInfo.Code);
+            Assert.AreEqual(415, c.ResultInfo.Subcode);
+            Assert.AreEqual("failure message", c.ResultInfo.Message);
 
-            Assert.IsFalse(this.DeepCompare(c, d));
+            json = "{\"operationContext\":\"operatingContext\",\"status\":\"running\"}";
+            c = AddParticipantResultEvent.Deserialize(json);
+
+            Assert.AreEqual("operatingContext", c.OperationContext);
+            Assert.AreEqual(OperationStatus.Running, c.Status);
+            Assert.IsNull(c.ResultInfo);
         }
 
         [Test]
-        public async Task PlayAudioResultEventTest()
+        public void PlayAudioResultEventTest()
         {
-            PlayAudioResultEvent e = new PlayAudioResultEvent(null, "operatingContext", OperationStatus.Failed);
-            var c = PlayAudioResultEvent.Deserialize(await Serialize(e));
+            var json = "{\"resultInfo\":{\"code\":500,\"subcode\":505,\"message\":\"failure message\"},\"operationContext\":\"operatingContext\",\"status\":\"failed\"}";
 
-            Assert.IsTrue(this.DeepCompare(e, c));
+            var c = PlayAudioResultEvent.Deserialize(json);
 
-            e.OperationContext = "context";
-            var d = PlayAudioResultEvent.Deserialize(await Serialize(e));
+            Assert.AreEqual("operatingContext", c.OperationContext);
+            Assert.AreEqual(OperationStatus.Failed, c.Status);
+            Assert.IsNotNull(c.ResultInfo);
+            Assert.AreEqual(500, c.ResultInfo.Code);
+            Assert.AreEqual(505, c.ResultInfo.Subcode);
+            Assert.AreEqual("failure message", c.ResultInfo.Message);
 
-            Assert.IsFalse(this.DeepCompare(c, d));
+            json = "{\"operationContext\":\"operatingContext\",\"status\":\"completed\"}";
+            c = PlayAudioResultEvent.Deserialize(json);
+
+            Assert.AreEqual("operatingContext", c.OperationContext);
+            Assert.AreEqual(OperationStatus.Completed, c.Status);
+            Assert.IsNull(c.ResultInfo);
         }
 
         [Test]
-        public async Task ToneReceivedEventTest()
+        public void ToneReceivedEventTest()
         {
-            ToneInfo r = new ToneInfo(1, ToneValue.A);
-            ToneReceivedEvent e = new ToneReceivedEvent();
-            var c = ToneReceivedEvent.Deserialize(await Serialize(e));
+            var json = "{\"toneInfo\":{\"sequenceId\":1,\"tone\":\"A\"},\"callConnectionId\": \"8e6ff9fd-dd81-47f9-963a-1989bb95779c\"}";
 
-            Assert.IsTrue(this.DeepCompare(e, c));
+            var c = ToneReceivedEvent.Deserialize(json);
 
-            e.ToneInfo = new ToneInfo(1, ToneValue.A);
-            var d = ToneReceivedEvent.Deserialize(await Serialize(e));
-
-            Assert.IsFalse(this.DeepCompare(c, d));
+            Assert.AreEqual("8e6ff9fd-dd81-47f9-963a-1989bb95779c", c.CallConnectionId);
+            Assert.IsNotNull(c.ToneInfo);
+            Assert.AreEqual(1, c.ToneInfo.SequenceId);
+            Assert.AreEqual(ToneValue.A, c.ToneInfo.Tone);
         }
 
-        private bool DeepCompare(object a, object b)
+        [Test]
+        public void ParticipantUpdatedEventTest()
         {
-            _ = a ?? throw new ArgumentNullException(nameof(a));
-            _ = b ?? throw new ArgumentNullException(nameof(b));
+            var json = "{\"callConnectionId\":\"c0623fc9-f723-44e1-b18e-ec2da390fba0\",\"participants\":[{\"identifier\":{\"rawId\":\"8:acs:resource_guid1\",\"communicationUser\":{\"id\":\"8:acs:resource_guid1\"},\"phoneNumber\":null,\"microsoftTeamsUser\":null},\"participantId\":\"participant1\",\"isMuted\":false},{\"identifier\":{\"rawId\":\"8:acs:resource_guid2\",\"communicationUser\":null,\"phoneNumber\":{\"value\":\"\\u002B14250000000\"},\"microsoftTeamsUser\":null},\"participantId\":\"participant2\",\"isMuted\":true}]}";
 
-            if (a.GetType() != b.GetType())
-            {
-                return false;
-            }
+            var c = ParticipantsUpdatedEvent.Deserialize(json);
 
-            var aType = a.GetType();
-            var aProperties = aType.GetProperties().ToList();
-
-            var bType = b.GetType();
-            var bProperties = bType.GetProperties().ToList();
-
-            foreach (var aProperty in aProperties)
-            {
-                var bProperty = bProperties.FirstOrDefault(p => p.Name == aProperty.Name);
-
-                var result = CompareProperty(
-                    aProperty,
-                    bProperty ?? throw new NullReferenceException($"Missing Property: {aProperty.Name}"));
-
-                if (!result)
-                {
-                    return false;
-                }
-
-                bProperties.Remove(bProperty);
-            }
-
-            foreach (var bProperty in bProperties)
-            {
-                var aProperty = bProperties.FirstOrDefault(p => p.Name == bProperty.Name);
-                var result = CompareProperty(
-                    aProperty ?? throw new NullReferenceException($"Missing Property: {bProperty.Name}"),
-                    bProperty);
-
-                if (!result)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-
-            bool CompareProperty(PropertyInfo aPropertyInfo, PropertyInfo bPropertyInfo)
-            {
-                if (aPropertyInfo is null || bPropertyInfo is null)
-                {
-                    return false;
-                }
-
-                if (aPropertyInfo.GetType().IsByRef != bPropertyInfo.GetType().IsByRef)
-                {
-                    return false;
-                }
-
-                var aValue = aPropertyInfo.GetValue(a);
-                var bValue = bPropertyInfo.GetValue(b);
-
-                if (aValue is null && bValue is null)
-                {
-                    return true;
-                }
-                else if (aValue is null || bValue is null)
-                {
-                    return false;
-                }
-
-                if (aPropertyInfo.GetType().IsByRef)
-                {
-                    return DeepCompare(aValue, bValue);
-                }
-                else
-                {
-                    return aValue.Equals(bValue);
-                }
-            }
-        }
-
-        private async Task<string> Serialize<T>(T e) where T : IUtf8JsonSerializable
-        {
-            var m = new MemoryStream();
-            var w = new Utf8JsonWriter(m);
-            e.Write(w);
-            await w.FlushAsync();
-            m.Position = 0;
-            return await new StreamReader(m).ReadToEndAsync();
+            Assert.AreEqual("c0623fc9-f723-44e1-b18e-ec2da390fba0", c.CallConnectionId);
+            Assert.IsNotNull(c.Participants);
+            Assert.AreEqual(2, c.Participants.Count());
+            Assert.AreEqual("participant1", c.Participants.ElementAt(0).ParticipantId);
+            Assert.AreEqual(false, c.Participants.ElementAt(0).IsMuted);
+            Assert.AreEqual(new CommunicationUserIdentifier("8:acs:resource_guid1"), c.Participants.ElementAt(0).Identifier);
+            Assert.AreEqual("participant2", c.Participants.ElementAt(1).ParticipantId);
+            Assert.AreEqual(true, c.Participants.ElementAt(1).IsMuted);
+            Assert.AreEqual(new PhoneNumberIdentifier("+14250000000"), c.Participants.ElementAt(1).Identifier);
         }
     }
 }
