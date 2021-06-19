@@ -146,16 +146,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> ConnectionExistsAsync(string connectionId, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsRequest(connectionId, requestOptions);
+            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
@@ -187,16 +187,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response ConnectionExists(string connectionId, RequestOptions requestOptions = null)
+        internal virtual Response ConnectionExistsImpl(string connectionId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsRequest(connectionId, requestOptions);
+            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
@@ -224,10 +224,10 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Create Request for <see cref="ConnectionExists"/> and <see cref="ConnectionExistsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="ConnectionExistsImpl"/> and <see cref="ConnectionExistsImplAsync"/> operations. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateConnectionExistsRequest(string connectionId, RequestOptions requestOptions = null)
+        private HttpMessage CreateConnectionExistsImplRequest(string connectionId, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -470,16 +470,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> GroupExistsAsync(string group, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsRequest(group, requestOptions);
+            HttpMessage message = CreateGroupExistsImplRequest(group, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
@@ -511,16 +511,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response GroupExists(string group, RequestOptions requestOptions = null)
+        internal virtual Response GroupExistsImpl(string group, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsRequest(group, requestOptions);
+            HttpMessage message = CreateGroupExistsImplRequest(group, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
@@ -548,10 +548,10 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Create Request for <see cref="GroupExists"/> and <see cref="GroupExistsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GroupExistsImpl"/> and <see cref="GroupExistsImplAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGroupExistsRequest(string group, RequestOptions requestOptions = null)
+        private HttpMessage CreateGroupExistsImplRequest(string group, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -908,16 +908,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> UserExistsAsync(string userId, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsRequest(userId, requestOptions);
+            HttpMessage message = CreateUserExistsImplRequest(userId, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
@@ -949,16 +949,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response UserExists(string userId, RequestOptions requestOptions = null)
+        internal virtual Response UserExistsImpl(string userId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsRequest(userId, requestOptions);
+            HttpMessage message = CreateUserExistsImplRequest(userId, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExists");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
@@ -986,10 +986,10 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Create Request for <see cref="UserExists"/> and <see cref="UserExistsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="UserExistsImpl"/> and <see cref="UserExistsImplAsync"/> operations. </summary>
         /// <param name="userId"> Target user Id. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUserExistsRequest(string userId, RequestOptions requestOptions = null)
+        private HttpMessage CreateUserExistsImplRequest(string userId, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

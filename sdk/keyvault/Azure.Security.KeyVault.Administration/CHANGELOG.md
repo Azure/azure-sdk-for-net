@@ -1,5 +1,16 @@
 # Release History
 
+## 4.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
 ## 4.0.0 (2021-06-15)
 
 - Initial release of `KeyVaultAccessControlClient` to managed role assignments and definitions for Managed HSM.

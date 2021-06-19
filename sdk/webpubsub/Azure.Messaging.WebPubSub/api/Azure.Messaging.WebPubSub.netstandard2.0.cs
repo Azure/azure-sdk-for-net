@@ -19,43 +19,44 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionToGroupAsync(string group, string connectionId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response AddUserToGroup(string group, string userId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddUserToGroupAsync(string group, string userId, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response CheckPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CheckPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> CheckPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response CloseClientConnection(string connectionId, string reason = null, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CloseClientConnectionAsync(string connectionId, string reason = null, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response<bool> ConnectionExists(string connectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Uri GenerateClientAccessUri(string userId = null, string[] roles = null, System.TimeSpan expiresAfter = default(System.TimeSpan)) { throw null; }
-        public virtual Azure.Response GrantPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> GroupExists(string group, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GroupExistsAsync(string group, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> ConnectionExists(string connectionId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Uri GenerateClientAccessUri(System.DateTime expiresAtUtc, string userId = null, params string[] roles) { throw null; }
+        public virtual System.Uri GenerateClientAccessUri(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, params string[] roles) { throw null; }
+        public virtual Azure.Response GrantPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response<bool> GroupExists(string group, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GroupExistsAsync(string group, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromGroup(string group, string connectionId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromGroupAsync(string group, string connectionId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response RemoveUserFromAllGroups(string userId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveUserFromAllGroupsAsync(string userId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response RemoveUserFromGroup(string group, string userId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveUserFromGroupAsync(string group, string userId, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response RevokePermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RevokePermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RevokePermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RevokePermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response SendToAll(string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual Azure.Response SendToAll(string contentType, Azure.Core.RequestContent requestBody, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response SendToAll(string message, System.Collections.Generic.IEnumerable<string> excluded = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(string contentType, Azure.Core.RequestContent requestBody, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(string message, System.Collections.Generic.IEnumerable<string> excluded = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendToConnection(string connectionId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual Azure.Response SendToConnection(string connectionId, string contentType, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response SendToConnection(string connectionId, string message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, string contentType, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, string message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendToGroup(string group, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual Azure.Response SendToGroup(string group, string contentType, Azure.Core.RequestContent requestBody, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response SendToGroup(string group, string message, System.Collections.Generic.IEnumerable<string> excluded = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, string contentType, Azure.Core.RequestContent requestBody, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, string message, System.Collections.Generic.IEnumerable<string> excluded = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendToUser(string userId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual Azure.Response SendToUser(string userId, string contentType, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response SendToUser(string userId, string message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, string contentType, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, string message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> UserExists(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> UserExistsAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> UserExists(string userId, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> UserExistsAsync(string userId, Azure.RequestOptions options = null) { throw null; }
     }
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {

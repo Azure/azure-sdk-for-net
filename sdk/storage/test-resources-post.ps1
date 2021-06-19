@@ -45,6 +45,8 @@ $PremiumFileAccountName = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_NAME'
 $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
 $PremiumFileAccountEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
+$ResourceGroupName = $DeploymentOutputs['RESOURCE_GROUP_NAME']
+$SubscriptionId = $DeploymentOutputs['SUBSCRIPTION_ID']
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -106,6 +108,8 @@ $content =
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
+      <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
+      <SubscriptionId>$SubscriptionId</SubscriptionId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
