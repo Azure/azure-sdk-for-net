@@ -107,6 +107,9 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task RunCreateAddRemoveHangupScenarioTests()
         {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
             CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
             var groupId = GetGroupId();
             try
