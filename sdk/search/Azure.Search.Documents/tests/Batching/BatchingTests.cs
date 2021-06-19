@@ -394,10 +394,9 @@ namespace Azure.Search.Documents.Tests
 
             int expectedPendingQueueSize = 1001 - BatchSize;
 
-            await ConditionalDelayAsync(TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(250), 5, ()=>(pending.Count == expectedPendingQueueSize));
-
-            Assert.AreEqual(0, removeFailedCount);
+            await ConditionallyDelayAsync(() => (pending.Count == expectedPendingQueueSize), TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(250), 5);
             Assert.AreEqual(expectedPendingQueueSize, pending.Count);
+            Assert.AreEqual(0, removeFailedCount);
 
             await indexer.FlushAsync();
             Assert.AreEqual(0, pending.Count);

@@ -114,27 +114,27 @@ namespace Azure.Search.Documents.Tests
         /// complete immediately).
         /// <para>This method allows us to return early if the <paramref name="predicate"/> condition evaluates to true.
         /// It evaluates the predicate after every <paramref name="delayPerIteration"/> or <paramref name="playbackDelayPerIteration"/> time span.
-        /// It returns when the condition evaluates to <c>true</c>, or if the condition stays false after <paramref name="iterationCount"/> checks.</para>
+        /// It returns when the condition evaluates to <c>true</c>, or if the condition stays false after <paramref name="maxIterations"/> checks.</para>
         /// </summary>
+        /// <param name="predicate">Condition that will result in early end of delay when it evaluates to <c>true</c>.</param>
         /// <param name="delayPerIteration">The time to wait per iteration.  Defaults to 1s.</param>
         /// <param name="playbackDelayPerIteration">
         /// An optional time wait if we're playing back a recorded test.  This
         /// is useful for allowing client side events to get processed.
         /// </param>
-        /// <param name="iterationCount">Number of iterations of the wait-and-check cycle.</param>
-        /// <param name="predicate">Condition that will result in early end of delay when it evaluates to <c>true</c>.</param>
+        /// <param name="maxIterations">Maximum number of iterations of the wait-and-check cycle.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to check.</param>
         /// <returns>A task that will (optionally) delay.</returns>
         /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was signaled.</exception>
-        public async Task ConditionalDelayAsync(TimeSpan? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint iterationCount = 1, Func<bool> predicate = null, CancellationToken cancellationToken = default)
+        public async Task ConditionallyDelayAsync(Func<bool> predicate, TimeSpan ? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint maxIterations = 1, CancellationToken cancellationToken = default)
         {
             TimeSpan waitPeriod = TimeSpan.Zero;
 
-            for (int i = 0; i < iterationCount; i++)
+            for (int i = 0; i < maxIterations; i++)
             {
                 if (predicate())
                 {
-                    TestContext.WriteLine($"{nameof(ConditionalDelayAsync)}: Condition evaluated to true in {waitPeriod.TotalSeconds} seconds.");
+                    TestContext.WriteLine($"{nameof(ConditionallyDelayAsync)}: Condition evaluated to true in {waitPeriod.TotalSeconds} seconds.");
                     return;
                 }
 
@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 
-            TestContext.WriteLine($"{nameof(ConditionalDelayAsync)}: Condition did not evaluate to true in {waitPeriod.TotalSeconds} seconds.");
+            TestContext.WriteLine($"{nameof(ConditionallyDelayAsync)}: Condition did not evaluate to true in {waitPeriod.TotalSeconds} seconds.");
         }
 
         /// <summary>
