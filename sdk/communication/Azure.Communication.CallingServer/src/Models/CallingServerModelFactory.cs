@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer
     /// Calling server model factory
     /// </summary>
     [CodeGenModel("AzureCommunicationServicesModelFactory")]
-    internal partial class CallingServerModelFactory
+    public partial class CallingServerModelFactory
     {
     }
 }

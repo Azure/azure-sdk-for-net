@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
         {
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<string> participantId = default;
-            Optional<bool> isMuted = default;
+            bool isMuted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"))
@@ -37,16 +37,11 @@ namespace Azure.Communication.CallingServer
                 }
                 if (property.NameEquals("isMuted"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     isMuted = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new CallParticipantInternal(identifier.Value, participantId.Value, Optional.ToNullable(isMuted));
+            return new CallParticipantInternal(identifier.Value, participantId.Value, isMuted);
         }
     }
 }

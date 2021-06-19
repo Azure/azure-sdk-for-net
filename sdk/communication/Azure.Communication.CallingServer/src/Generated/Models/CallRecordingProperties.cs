@@ -11,18 +11,13 @@ namespace Azure.Communication.CallingServer
     public partial class CallRecordingProperties
     {
         /// <summary> Initializes a new instance of CallRecordingProperties. </summary>
-        internal CallRecordingProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of CallRecordingProperties. </summary>
         /// <param name="recordingState"> The state of the recording. </param>
-        internal CallRecordingProperties(CallRecordingState? recordingState)
+        internal CallRecordingProperties(CallRecordingState recordingState)
         {
             RecordingState = recordingState;
         }
 
         /// <summary> The state of the recording. </summary>
-        public CallRecordingState? RecordingState { get; }
+        public CallRecordingState RecordingState { get; }
     }
 }

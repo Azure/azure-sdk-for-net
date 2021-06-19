@@ -7,15 +7,10 @@ namespace Azure.Communication.CallingServer
     public class CallParticipant
     {
         /// <summary> Initializes a new instance of CallParticipant. </summary>
-        public CallParticipant()
-        {
-        }
-
-        /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="participantId"> Participant Id. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        public CallParticipant(CommunicationIdentifier identifier, string participantId, bool? isMuted)
+        internal CallParticipant(CommunicationIdentifier identifier, string participantId, bool isMuted)
         {
             Identifier = identifier;
             ParticipantId = participantId;
@@ -23,12 +18,12 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The communication identifier. </summary>
-        public CommunicationIdentifier Identifier { get; set; }
+        public CommunicationIdentifier Identifier { get; }
 
         /// <summary> Participant Id. </summary>
-        public string ParticipantId { get; set; }
+        public string ParticipantId { get; }
 
         /// <summary> Is participant muted. </summary>
-        public bool? IsMuted { get; set; }
+        public bool IsMuted { get; }
     }
 }
