@@ -17,30 +17,24 @@ namespace Azure.Communication.CallingServer.Tests
     /// </remarks>
     public class ServerCallLiveTests : CallingServerLiveTestBase
     {
-        protected string GroupId;
-        protected string FromUser;
-        protected string ToUser;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CallingServerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public ServerCallLiveTests(bool isAsync) : base(isAsync)
         {
-            GroupId = GetGroupId();
-            FromUser = GetFromUserId();
-            ToUser = GetToUserId();
         }
 
         [Test]
         public async Task RunAllRecordingFunctionsScenarioTests()
         {
             CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            var groupId = GetGroupId();
             try
             {
                 // Establish a Call
-                var callConnections = await CreateGroupCallOperation(callingServerClient, GroupId, FromUser, ToUser, TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-                var serverCall = callingServerClient.InitializeServerCall(GroupId);
+                var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
+                var serverCall = callingServerClient.InitializeServerCall(groupId);
 
                 // Start Recording
                 StartCallRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
@@ -80,11 +74,12 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task RunCreatePlayCancelHangupScenarioTests()
         {
             CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            var groupId = GetGroupId();
             try
             {
                 // Establish a Call
-                var callConnections = await CreateGroupCallOperation(callingServerClient, GroupId, FromUser, ToUser, TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-                var serverCall = callingServerClient.InitializeServerCall(GroupId);
+                var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
+                var serverCall = callingServerClient.InitializeServerCall(groupId);
 
                 // Play Prompt Audio
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
@@ -113,11 +108,12 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task RunCreateAddRemoveHangupScenarioTests()
         {
             CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            var groupId = GetGroupId();
             try
             {
                 // Establish a Call
-                var callConnections = await CreateGroupCallOperation(callingServerClient, GroupId, FromUser, ToUser, TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-                var serverCall = callingServerClient.InitializeServerCall(GroupId);
+                var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
+                var serverCall = callingServerClient.InitializeServerCall(groupId);
 
                 // Add Participant
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
