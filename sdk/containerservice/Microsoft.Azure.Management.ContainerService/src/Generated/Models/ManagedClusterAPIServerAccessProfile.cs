@@ -37,10 +37,16 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// API server.</param>
         /// <param name="enablePrivateCluster">Whether to create the cluster as
         /// a private cluster or not.</param>
-        public ManagedClusterAPIServerAccessProfile(IList<string> authorizedIPRanges = default(IList<string>), bool? enablePrivateCluster = default(bool?))
+        /// <param name="privateDNSZone">Private dns zone mode for private
+        /// cluster. </param>
+        /// <param name="enablePrivateClusterPublicFQDN">Whether to create
+        /// additional public FQDN for private cluster or not.</param>
+        public ManagedClusterAPIServerAccessProfile(IList<string> authorizedIPRanges = default(IList<string>), bool? enablePrivateCluster = default(bool?), string privateDNSZone = default(string), bool? enablePrivateClusterPublicFQDN = default(bool?))
         {
             AuthorizedIPRanges = authorizedIPRanges;
             EnablePrivateCluster = enablePrivateCluster;
+            PrivateDNSZone = privateDNSZone;
+            EnablePrivateClusterPublicFQDN = enablePrivateClusterPublicFQDN;
             CustomInit();
         }
 
@@ -61,6 +67,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "enablePrivateCluster")]
         public bool? EnablePrivateCluster { get; set; }
+
+        /// <summary>
+        /// Gets or sets private dns zone mode for private cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateDNSZone")]
+        public string PrivateDNSZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to create additional public FQDN for private
+        /// cluster or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "enablePrivateClusterPublicFQDN")]
+        public bool? EnablePrivateClusterPublicFQDN { get; set; }
 
     }
 }

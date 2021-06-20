@@ -40,75 +40,38 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// resource.</param>
         /// <param name="type">Resource type</param>
         /// <param name="count">Number of agents (VMs) to host docker
-        /// containers. Allowed values must be in the range of 0 to 100
-        /// (inclusive) for user pools and in the range of 1 to 100 (inclusive)
-        /// for system pools. The default value is 1.</param>
-        /// <param name="vmSize">Size of agent VMs. Possible values include:
-        /// 'Standard_A1', 'Standard_A10', 'Standard_A11', 'Standard_A1_v2',
-        /// 'Standard_A2', 'Standard_A2_v2', 'Standard_A2m_v2', 'Standard_A3',
-        /// 'Standard_A4', 'Standard_A4_v2', 'Standard_A4m_v2', 'Standard_A5',
-        /// 'Standard_A6', 'Standard_A7', 'Standard_A8', 'Standard_A8_v2',
-        /// 'Standard_A8m_v2', 'Standard_A9', 'Standard_B2ms', 'Standard_B2s',
-        /// 'Standard_B4ms', 'Standard_B8ms', 'Standard_D1', 'Standard_D11',
-        /// 'Standard_D11_v2', 'Standard_D11_v2_Promo', 'Standard_D12',
-        /// 'Standard_D12_v2', 'Standard_D12_v2_Promo', 'Standard_D13',
-        /// 'Standard_D13_v2', 'Standard_D13_v2_Promo', 'Standard_D14',
-        /// 'Standard_D14_v2', 'Standard_D14_v2_Promo', 'Standard_D15_v2',
-        /// 'Standard_D16_v3', 'Standard_D16s_v3', 'Standard_D1_v2',
-        /// 'Standard_D2', 'Standard_D2_v2', 'Standard_D2_v2_Promo',
-        /// 'Standard_D2_v3', 'Standard_D2s_v3', 'Standard_D3',
-        /// 'Standard_D32_v3', 'Standard_D32s_v3', 'Standard_D3_v2',
-        /// 'Standard_D3_v2_Promo', 'Standard_D4', 'Standard_D4_v2',
-        /// 'Standard_D4_v2_Promo', 'Standard_D4_v3', 'Standard_D4s_v3',
-        /// 'Standard_D5_v2', 'Standard_D5_v2_Promo', 'Standard_D64_v3',
-        /// 'Standard_D64s_v3', 'Standard_D8_v3', 'Standard_D8s_v3',
-        /// 'Standard_DS1', 'Standard_DS11', 'Standard_DS11_v2',
-        /// 'Standard_DS11_v2_Promo', 'Standard_DS12', 'Standard_DS12_v2',
-        /// 'Standard_DS12_v2_Promo', 'Standard_DS13', 'Standard_DS13-2_v2',
-        /// 'Standard_DS13-4_v2', 'Standard_DS13_v2', 'Standard_DS13_v2_Promo',
-        /// 'Standard_DS14', 'Standard_DS14-4_v2', 'Standard_DS14-8_v2',
-        /// 'Standard_DS14_v2', 'Standard_DS14_v2_Promo', 'Standard_DS15_v2',
-        /// 'Standard_DS1_v2', 'Standard_DS2', 'Standard_DS2_v2',
-        /// 'Standard_DS2_v2_Promo', 'Standard_DS3', 'Standard_DS3_v2',
-        /// 'Standard_DS3_v2_Promo', 'Standard_DS4', 'Standard_DS4_v2',
-        /// 'Standard_DS4_v2_Promo', 'Standard_DS5_v2',
-        /// 'Standard_DS5_v2_Promo', 'Standard_E16_v3', 'Standard_E16s_v3',
-        /// 'Standard_E2_v3', 'Standard_E2s_v3', 'Standard_E32-16s_v3',
-        /// 'Standard_E32-8s_v3', 'Standard_E32_v3', 'Standard_E32s_v3',
-        /// 'Standard_E4_v3', 'Standard_E4s_v3', 'Standard_E64-16s_v3',
-        /// 'Standard_E64-32s_v3', 'Standard_E64_v3', 'Standard_E64s_v3',
-        /// 'Standard_E8_v3', 'Standard_E8s_v3', 'Standard_F1', 'Standard_F16',
-        /// 'Standard_F16s', 'Standard_F16s_v2', 'Standard_F1s', 'Standard_F2',
-        /// 'Standard_F2s', 'Standard_F2s_v2', 'Standard_F32s_v2',
-        /// 'Standard_F4', 'Standard_F4s', 'Standard_F4s_v2',
-        /// 'Standard_F64s_v2', 'Standard_F72s_v2', 'Standard_F8',
-        /// 'Standard_F8s', 'Standard_F8s_v2', 'Standard_G1', 'Standard_G2',
-        /// 'Standard_G3', 'Standard_G4', 'Standard_G5', 'Standard_GS1',
-        /// 'Standard_GS2', 'Standard_GS3', 'Standard_GS4', 'Standard_GS4-4',
-        /// 'Standard_GS4-8', 'Standard_GS5', 'Standard_GS5-16',
-        /// 'Standard_GS5-8', 'Standard_H16', 'Standard_H16m',
-        /// 'Standard_H16mr', 'Standard_H16r', 'Standard_H8', 'Standard_H8m',
-        /// 'Standard_L16s', 'Standard_L32s', 'Standard_L4s', 'Standard_L8s',
-        /// 'Standard_M128-32ms', 'Standard_M128-64ms', 'Standard_M128ms',
-        /// 'Standard_M128s', 'Standard_M64-16ms', 'Standard_M64-32ms',
-        /// 'Standard_M64ms', 'Standard_M64s', 'Standard_NC12',
-        /// 'Standard_NC12s_v2', 'Standard_NC12s_v3', 'Standard_NC24',
-        /// 'Standard_NC24r', 'Standard_NC24rs_v2', 'Standard_NC24rs_v3',
-        /// 'Standard_NC24s_v2', 'Standard_NC24s_v3', 'Standard_NC6',
-        /// 'Standard_NC6s_v2', 'Standard_NC6s_v3', 'Standard_ND12s',
-        /// 'Standard_ND24rs', 'Standard_ND24s', 'Standard_ND6s',
-        /// 'Standard_NV12', 'Standard_NV24', 'Standard_NV6'</param>
+        /// containers. Allowed values must be in the range of 0 to 1000
+        /// (inclusive) for user pools and in the range of 1 to 1000
+        /// (inclusive) for system pools. The default value is 1.</param>
+        /// <param name="vmSize">Size of agent VMs.</param>
         /// <param name="osDiskSizeGB">OS Disk Size in GB to be used to specify
         /// the disk size for every machine in this master/agent pool. If you
         /// specify 0, it will apply the default osDisk size according to the
         /// vmSize specified.</param>
+        /// <param name="osDiskType">OS disk type to be used for machines in a
+        /// given agent pool. Allowed values are 'Ephemeral' and 'Managed'. If
+        /// unspecified, defaults to 'Ephemeral' when the VM supports ephemeral
+        /// OS and has a cache disk larger than the requested OSDiskSizeGB.
+        /// Otherwise, defaults to 'Managed'. May not be changed after
+        /// creation. Possible values include: 'Managed', 'Ephemeral'</param>
+        /// <param name="kubeletDiskType">KubeletDiskType determines the
+        /// placement of emptyDir volumes, container runtime data root, and
+        /// Kubelet ephemeral storage. Currently allows one value, OS,
+        /// resulting in Kubelet using the OS disk for data. Possible values
+        /// include: 'OS', 'Temporary'</param>
         /// <param name="vnetSubnetID">VNet SubnetID specifies the VNet's
-        /// subnet identifier.</param>
+        /// subnet identifier for nodes and maybe pods</param>
+        /// <param name="podSubnetID">Pod SubnetID specifies the VNet's subnet
+        /// identifier for pods.</param>
         /// <param name="maxPods">Maximum number of pods that can run on a
         /// node.</param>
         /// <param name="osType">OsType to be used to specify os type. Choose
         /// from Linux and Windows. Default to Linux. Possible values include:
         /// 'Linux', 'Windows'</param>
+        /// <param name="osSKU">OsSKU to be used to specify os sku. Choose from
+        /// Ubuntu(default) and CBLMariner for Linux OSType. Not applicable to
+        /// Windows OSType. Possible values include: 'Ubuntu',
+        /// 'CBLMariner'</param>
         /// <param name="maxCount">Maximum number of nodes for
         /// auto-scaling</param>
         /// <param name="minCount">Minimum number of nodes for
@@ -127,9 +90,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// agentpool</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
+        /// <param name="powerState">Describes whether the Agent Pool is
+        /// Running or Stopped</param>
         /// <param name="availabilityZones">Availability zones for nodes. Must
         /// use VirtualMachineScaleSets AgentPoolType.</param>
         /// <param name="enableNodePublicIP">Enable public IP for nodes</param>
+        /// <param name="nodePublicIPPrefixID">Public IP Prefix ID. VM nodes
+        /// use IPs assigned from this Public IP Prefix.</param>
         /// <param name="scaleSetPriority">ScaleSetPriority to be used to
         /// specify virtual machine scale set priority. Default to regular.
         /// Possible values include: 'Spot', 'Regular'</param>
@@ -149,15 +116,31 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// create and scale. For example, key=value:NoSchedule.</param>
         /// <param name="proximityPlacementGroupID">The ID for Proximity
         /// Placement Group.</param>
-        public AgentPool(string id = default(string), string name = default(string), string type = default(string), int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string agentPoolType = default(string), string mode = default(string), string orchestratorVersion = default(string), string nodeImageVersion = default(string), AgentPoolUpgradeSettings upgradeSettings = default(AgentPoolUpgradeSettings), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>), string proximityPlacementGroupID = default(string))
+        /// <param name="kubeletConfig">KubeletConfig specifies the
+        /// configuration of kubelet on agent nodes.</param>
+        /// <param name="linuxOSConfig">LinuxOSConfig specifies the OS
+        /// configuration of linux agent nodes.</param>
+        /// <param name="enableEncryptionAtHost">Whether to enable
+        /// EncryptionAtHost</param>
+        /// <param name="enableUltraSSD">Whether to enable UltraSSD</param>
+        /// <param name="enableFIPS">Whether to use FIPS enabled OS</param>
+        /// <param name="gpuInstanceProfile">GPUInstanceProfile to be used to
+        /// specify GPU MIG instance profile for supported GPU VM SKU.
+        /// Supported values are MIG1g, MIG2g, MIG3g, MIG4g and MIG7g. Possible
+        /// values include: 'MIG1g', 'MIG2g', 'MIG3g', 'MIG4g', 'MIG7g'</param>
+        public AgentPool(string id = default(string), string name = default(string), string type = default(string), int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string osDiskType = default(string), string kubeletDiskType = default(string), string vnetSubnetID = default(string), string podSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), string osSKU = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string agentPoolType = default(string), string mode = default(string), string orchestratorVersion = default(string), string nodeImageVersion = default(string), AgentPoolUpgradeSettings upgradeSettings = default(AgentPoolUpgradeSettings), string provisioningState = default(string), PowerState powerState = default(PowerState), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string nodePublicIPPrefixID = default(string), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>), string proximityPlacementGroupID = default(string), KubeletConfig kubeletConfig = default(KubeletConfig), LinuxOSConfig linuxOSConfig = default(LinuxOSConfig), bool? enableEncryptionAtHost = default(bool?), bool? enableUltraSSD = default(bool?), bool? enableFIPS = default(bool?), string gpuInstanceProfile = default(string))
             : base(id, name, type)
         {
             Count = count;
             VmSize = vmSize;
             OsDiskSizeGB = osDiskSizeGB;
+            OsDiskType = osDiskType;
+            KubeletDiskType = kubeletDiskType;
             VnetSubnetID = vnetSubnetID;
+            PodSubnetID = podSubnetID;
             MaxPods = maxPods;
             OsType = osType;
+            OsSKU = osSKU;
             MaxCount = maxCount;
             MinCount = minCount;
             EnableAutoScaling = enableAutoScaling;
@@ -167,8 +150,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             NodeImageVersion = nodeImageVersion;
             UpgradeSettings = upgradeSettings;
             ProvisioningState = provisioningState;
+            PowerState = powerState;
             AvailabilityZones = availabilityZones;
             EnableNodePublicIP = enableNodePublicIP;
+            NodePublicIPPrefixID = nodePublicIPPrefixID;
             ScaleSetPriority = scaleSetPriority;
             ScaleSetEvictionPolicy = scaleSetEvictionPolicy;
             SpotMaxPrice = spotMaxPrice;
@@ -176,6 +161,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             NodeLabels = nodeLabels;
             NodeTaints = nodeTaints;
             ProximityPlacementGroupID = proximityPlacementGroupID;
+            KubeletConfig = kubeletConfig;
+            LinuxOSConfig = linuxOSConfig;
+            EnableEncryptionAtHost = enableEncryptionAtHost;
+            EnableUltraSSD = enableUltraSSD;
+            EnableFIPS = enableFIPS;
+            GpuInstanceProfile = gpuInstanceProfile;
             CustomInit();
         }
 
@@ -186,69 +177,15 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// Gets or sets number of agents (VMs) to host docker containers.
-        /// Allowed values must be in the range of 0 to 100 (inclusive) for
-        /// user pools and in the range of 1 to 100 (inclusive) for system
+        /// Allowed values must be in the range of 0 to 1000 (inclusive) for
+        /// user pools and in the range of 1 to 1000 (inclusive) for system
         /// pools. The default value is 1.
         /// </summary>
         [JsonProperty(PropertyName = "properties.count")]
         public int? Count { get; set; }
 
         /// <summary>
-        /// Gets or sets size of agent VMs. Possible values include:
-        /// 'Standard_A1', 'Standard_A10', 'Standard_A11', 'Standard_A1_v2',
-        /// 'Standard_A2', 'Standard_A2_v2', 'Standard_A2m_v2', 'Standard_A3',
-        /// 'Standard_A4', 'Standard_A4_v2', 'Standard_A4m_v2', 'Standard_A5',
-        /// 'Standard_A6', 'Standard_A7', 'Standard_A8', 'Standard_A8_v2',
-        /// 'Standard_A8m_v2', 'Standard_A9', 'Standard_B2ms', 'Standard_B2s',
-        /// 'Standard_B4ms', 'Standard_B8ms', 'Standard_D1', 'Standard_D11',
-        /// 'Standard_D11_v2', 'Standard_D11_v2_Promo', 'Standard_D12',
-        /// 'Standard_D12_v2', 'Standard_D12_v2_Promo', 'Standard_D13',
-        /// 'Standard_D13_v2', 'Standard_D13_v2_Promo', 'Standard_D14',
-        /// 'Standard_D14_v2', 'Standard_D14_v2_Promo', 'Standard_D15_v2',
-        /// 'Standard_D16_v3', 'Standard_D16s_v3', 'Standard_D1_v2',
-        /// 'Standard_D2', 'Standard_D2_v2', 'Standard_D2_v2_Promo',
-        /// 'Standard_D2_v3', 'Standard_D2s_v3', 'Standard_D3',
-        /// 'Standard_D32_v3', 'Standard_D32s_v3', 'Standard_D3_v2',
-        /// 'Standard_D3_v2_Promo', 'Standard_D4', 'Standard_D4_v2',
-        /// 'Standard_D4_v2_Promo', 'Standard_D4_v3', 'Standard_D4s_v3',
-        /// 'Standard_D5_v2', 'Standard_D5_v2_Promo', 'Standard_D64_v3',
-        /// 'Standard_D64s_v3', 'Standard_D8_v3', 'Standard_D8s_v3',
-        /// 'Standard_DS1', 'Standard_DS11', 'Standard_DS11_v2',
-        /// 'Standard_DS11_v2_Promo', 'Standard_DS12', 'Standard_DS12_v2',
-        /// 'Standard_DS12_v2_Promo', 'Standard_DS13', 'Standard_DS13-2_v2',
-        /// 'Standard_DS13-4_v2', 'Standard_DS13_v2', 'Standard_DS13_v2_Promo',
-        /// 'Standard_DS14', 'Standard_DS14-4_v2', 'Standard_DS14-8_v2',
-        /// 'Standard_DS14_v2', 'Standard_DS14_v2_Promo', 'Standard_DS15_v2',
-        /// 'Standard_DS1_v2', 'Standard_DS2', 'Standard_DS2_v2',
-        /// 'Standard_DS2_v2_Promo', 'Standard_DS3', 'Standard_DS3_v2',
-        /// 'Standard_DS3_v2_Promo', 'Standard_DS4', 'Standard_DS4_v2',
-        /// 'Standard_DS4_v2_Promo', 'Standard_DS5_v2',
-        /// 'Standard_DS5_v2_Promo', 'Standard_E16_v3', 'Standard_E16s_v3',
-        /// 'Standard_E2_v3', 'Standard_E2s_v3', 'Standard_E32-16s_v3',
-        /// 'Standard_E32-8s_v3', 'Standard_E32_v3', 'Standard_E32s_v3',
-        /// 'Standard_E4_v3', 'Standard_E4s_v3', 'Standard_E64-16s_v3',
-        /// 'Standard_E64-32s_v3', 'Standard_E64_v3', 'Standard_E64s_v3',
-        /// 'Standard_E8_v3', 'Standard_E8s_v3', 'Standard_F1', 'Standard_F16',
-        /// 'Standard_F16s', 'Standard_F16s_v2', 'Standard_F1s', 'Standard_F2',
-        /// 'Standard_F2s', 'Standard_F2s_v2', 'Standard_F32s_v2',
-        /// 'Standard_F4', 'Standard_F4s', 'Standard_F4s_v2',
-        /// 'Standard_F64s_v2', 'Standard_F72s_v2', 'Standard_F8',
-        /// 'Standard_F8s', 'Standard_F8s_v2', 'Standard_G1', 'Standard_G2',
-        /// 'Standard_G3', 'Standard_G4', 'Standard_G5', 'Standard_GS1',
-        /// 'Standard_GS2', 'Standard_GS3', 'Standard_GS4', 'Standard_GS4-4',
-        /// 'Standard_GS4-8', 'Standard_GS5', 'Standard_GS5-16',
-        /// 'Standard_GS5-8', 'Standard_H16', 'Standard_H16m',
-        /// 'Standard_H16mr', 'Standard_H16r', 'Standard_H8', 'Standard_H8m',
-        /// 'Standard_L16s', 'Standard_L32s', 'Standard_L4s', 'Standard_L8s',
-        /// 'Standard_M128-32ms', 'Standard_M128-64ms', 'Standard_M128ms',
-        /// 'Standard_M128s', 'Standard_M64-16ms', 'Standard_M64-32ms',
-        /// 'Standard_M64ms', 'Standard_M64s', 'Standard_NC12',
-        /// 'Standard_NC12s_v2', 'Standard_NC12s_v3', 'Standard_NC24',
-        /// 'Standard_NC24r', 'Standard_NC24rs_v2', 'Standard_NC24rs_v3',
-        /// 'Standard_NC24s_v2', 'Standard_NC24s_v3', 'Standard_NC6',
-        /// 'Standard_NC6s_v2', 'Standard_NC6s_v3', 'Standard_ND12s',
-        /// 'Standard_ND24rs', 'Standard_ND24s', 'Standard_ND6s',
-        /// 'Standard_NV12', 'Standard_NV24', 'Standard_NV6'
+        /// Gets or sets size of agent VMs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmSize")]
         public string VmSize { get; set; }
@@ -263,10 +200,38 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public int? OsDiskSizeGB { get; set; }
 
         /// <summary>
-        /// Gets or sets vNet SubnetID specifies the VNet's subnet identifier.
+        /// Gets or sets OS disk type to be used for machines in a given agent
+        /// pool. Allowed values are 'Ephemeral' and 'Managed'. If unspecified,
+        /// defaults to 'Ephemeral' when the VM supports ephemeral OS and has a
+        /// cache disk larger than the requested OSDiskSizeGB. Otherwise,
+        /// defaults to 'Managed'. May not be changed after creation. Possible
+        /// values include: 'Managed', 'Ephemeral'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.osDiskType")]
+        public string OsDiskType { get; set; }
+
+        /// <summary>
+        /// Gets or sets kubeletDiskType determines the placement of emptyDir
+        /// volumes, container runtime data root, and Kubelet ephemeral
+        /// storage. Currently allows one value, OS, resulting in Kubelet using
+        /// the OS disk for data. Possible values include: 'OS', 'Temporary'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kubeletDiskType")]
+        public string KubeletDiskType { get; set; }
+
+        /// <summary>
+        /// Gets or sets vNet SubnetID specifies the VNet's subnet identifier
+        /// for nodes and maybe pods
         /// </summary>
         [JsonProperty(PropertyName = "properties.vnetSubnetID")]
         public string VnetSubnetID { get; set; }
+
+        /// <summary>
+        /// Gets or sets pod SubnetID specifies the VNet's subnet identifier
+        /// for pods.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.podSubnetID")]
+        public string PodSubnetID { get; set; }
 
         /// <summary>
         /// Gets or sets maximum number of pods that can run on a node.
@@ -281,6 +246,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.osType")]
         public string OsType { get; set; }
+
+        /// <summary>
+        /// Gets or sets osSKU to be used to specify os sku. Choose from
+        /// Ubuntu(default) and CBLMariner for Linux OSType. Not applicable to
+        /// Windows OSType. Possible values include: 'Ubuntu', 'CBLMariner'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.osSKU")]
+        public string OsSKU { get; set; }
 
         /// <summary>
         /// Gets or sets maximum number of nodes for auto-scaling
@@ -342,6 +315,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets describes whether the Agent Pool is Running or Stopped
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.powerState")]
+        public PowerState PowerState { get; private set; }
+
+        /// <summary>
         /// Gets or sets availability zones for nodes. Must use
         /// VirtualMachineScaleSets AgentPoolType.
         /// </summary>
@@ -353,6 +332,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableNodePublicIP")]
         public bool? EnableNodePublicIP { get; set; }
+
+        /// <summary>
+        /// Gets or sets public IP Prefix ID. VM nodes use IPs assigned from
+        /// this Public IP Prefix.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nodePublicIPPrefixID")]
+        public string NodePublicIPPrefixID { get; set; }
 
         /// <summary>
         /// Gets or sets scaleSetPriority to be used to specify virtual machine
@@ -406,5 +392,59 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         [JsonProperty(PropertyName = "properties.proximityPlacementGroupID")]
         public string ProximityPlacementGroupID { get; set; }
 
+        /// <summary>
+        /// Gets or sets kubeletConfig specifies the configuration of kubelet
+        /// on agent nodes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kubeletConfig")]
+        public KubeletConfig KubeletConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets linuxOSConfig specifies the OS configuration of linux
+        /// agent nodes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.linuxOSConfig")]
+        public LinuxOSConfig LinuxOSConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to enable EncryptionAtHost
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableEncryptionAtHost")]
+        public bool? EnableEncryptionAtHost { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to enable UltraSSD
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableUltraSSD")]
+        public bool? EnableUltraSSD { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to use FIPS enabled OS
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableFIPS")]
+        public bool? EnableFIPS { get; set; }
+
+        /// <summary>
+        /// Gets or sets gPUInstanceProfile to be used to specify GPU MIG
+        /// instance profile for supported GPU VM SKU. Supported values are
+        /// MIG1g, MIG2g, MIG3g, MIG4g and MIG7g. Possible values include:
+        /// 'MIG1g', 'MIG2g', 'MIG3g', 'MIG4g', 'MIG7g'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gpuInstanceProfile")]
+        public string GpuInstanceProfile { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KubeletConfig != null)
+            {
+                KubeletConfig.Validate();
+            }
+        }
     }
 }

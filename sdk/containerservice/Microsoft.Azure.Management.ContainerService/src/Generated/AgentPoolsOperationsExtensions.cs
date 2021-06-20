@@ -329,6 +329,58 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            public static AgentPool UpgradeNodeImageVersion(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
+            {
+                return operations.UpgradeNodeImageVersionAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPool> UpgradeNodeImageVersionAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpgradeNodeImageVersionWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates an agent pool.
             /// </summary>
             /// <remarks>
@@ -433,6 +485,58 @@ namespace Microsoft.Azure.Management.ContainerService
             public static async Task BeginDeleteAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            public static AgentPool BeginUpgradeNodeImageVersion(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
+            {
+                return operations.BeginUpgradeNodeImageVersionAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPool> BeginUpgradeNodeImageVersionAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpgradeNodeImageVersionWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
