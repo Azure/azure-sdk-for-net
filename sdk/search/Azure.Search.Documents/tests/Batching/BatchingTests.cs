@@ -18,6 +18,8 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    // Avoid running these tests in parallel with anything else that's sharing the event source
+    [NonParallelizable]
     public class BatchingTests : SearchTestBase
     {
         private TestEventListener _listener;
