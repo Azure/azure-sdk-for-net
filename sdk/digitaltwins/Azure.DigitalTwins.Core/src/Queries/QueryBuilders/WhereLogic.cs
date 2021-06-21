@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -178,6 +179,26 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public WhereLogic IsTrue(string condition)
+        {
+            Console.WriteLine(condition);
+            return this;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
+        public WhereLogic Or()
+        {
+            return this;
         }
 
         /*

@@ -73,6 +73,18 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Where()
                 .IsOfModel("dtmi:example:room;1", true)
                 .Build();
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            AdtQueryBuilder logicalOpsOption1 = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .Or()
+                .IsOfModel("dtmi:example:room;1", true)
+                .Build();
         }
     }
 }
