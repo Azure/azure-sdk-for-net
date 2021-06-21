@@ -61,5 +61,37 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(10, options.MaxDequeueCount);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.VisibilityTimeout);
         }
+
+        [Test]
+        public void ConfigureOptions_SetsPollingIntervalToTwoSecondsInDevelopment()
+        {
+            var values = new Dictionary<string, string>
+            {
+            };
+
+            QueuesOptions options = TestHelpers.GetConfiguredOptions<QueuesOptions>(b =>
+            {
+                b.AddAzureStorageQueues();
+            }, values, env: "Development");
+
+            Assert.AreEqual(TimeSpan.FromSeconds(2), options.MaxPollingInterval);
+        }
+
+        [Test]
+        public void ConfigureOptions_HonorsExplicitlySetPollingIntervalInDevelopment()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:Queues";
+            var values = new Dictionary<string, string>
+            {
+                { $"{extensionPath}:MaxPollingInterval", "00:00:42" },
+            };
+
+            QueuesOptions options = TestHelpers.GetConfiguredOptions<QueuesOptions>(b =>
+            {
+                b.AddAzureStorageQueues();
+            }, values, env: "Development");
+
+            Assert.AreEqual(TimeSpan.FromSeconds(42), options.MaxPollingInterval);
+        }
     }
 }

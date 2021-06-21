@@ -99,7 +99,7 @@
                     "webpubsub"
                 ],
                 "summary": "Check if the connection with the given connectionId exists.",
-                "operationId": "WebPubSubService_ConnectionExists",
+                "operationId": "WebPubSubService_ConnectionExistsImpl",
                 "x-accessibility": "internal",
                 "parameters": [
                     {
@@ -254,7 +254,7 @@
                     "webpubsub"
                 ],
                 "summary": "Check if there are any client connections inside the given group",
-                "operationId": "WebPubSubService_GroupExists",
+                "operationId": "WebPubSubService_GroupExistsImpl",
                 "x-accessibility": "internal",
                 "parameters": [
                     {
@@ -480,7 +480,7 @@
                     "webpubsub"
                 ],
                 "summary": "Check if there are any client connections connected for the given user.",
-                "operationId": "WebPubSubService_UserExists",
+                "operationId": "WebPubSubService_UserExistsImpl",
                 "x-accessibility": "internal",
                 "parameters": [
                     {
