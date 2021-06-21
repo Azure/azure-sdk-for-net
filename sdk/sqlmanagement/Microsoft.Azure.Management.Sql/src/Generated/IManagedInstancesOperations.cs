@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<TopQueries>>> ListByManagedInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), string interval = default(string), string aggregationFunction = default(string), string observationMetric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TopQueries>>> ListByManagedInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?), AggregationFunctionType? aggregationFunction = default(AggregationFunctionType?), MetricType? observationMetric = default(MetricType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Failovers a managed instance.
         /// </summary>
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> FailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string replicaType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> FailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a managed instance.
         /// </summary>
@@ -407,7 +407,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginFailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string replicaType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginFailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of all managed instances in an instance pool.
         /// </summary>

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="tenantId">Tenant ID of the administrator.</param>
         /// <param name="azureADOnlyAuthentication">Azure Active Directory only
         /// Authentication enabled.</param>
-        public ServerExternalAdministrator(string administratorType = default(string), string principalType = default(string), string login = default(string), System.Guid? sid = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), bool? azureADOnlyAuthentication = default(bool?))
+        public ServerExternalAdministrator(AdministratorType? administratorType = default(AdministratorType?), PrincipalType? principalType = default(PrincipalType?), string login = default(string), System.Guid? sid = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), bool? azureADOnlyAuthentication = default(bool?))
         {
             AdministratorType = administratorType;
             PrincipalType = principalType;
@@ -63,14 +63,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'ActiveDirectory'
         /// </summary>
         [JsonProperty(PropertyName = "administratorType")]
-        public string AdministratorType { get; set; }
+        public AdministratorType? AdministratorType { get; set; }
 
         /// <summary>
         /// Gets or sets principal Type of the sever administrator. Possible
         /// values include: 'User', 'Group', 'Application'
         /// </summary>
         [JsonProperty(PropertyName = "principalType")]
-        public string PrincipalType { get; set; }
+        public PrincipalType? PrincipalType { get; set; }
 
         /// <summary>
         /// Gets or sets login name of the server administrator.

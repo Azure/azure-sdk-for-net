@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SecondaryType.
     /// </summary>
-    public static class SecondaryType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SecondaryTypeConverter))]
+    public struct SecondaryType : System.IEquatable<SecondaryType>
     {
-        public const string Geo = "Geo";
-        public const string Named = "Named";
+        private SecondaryType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SecondaryType Geo = "Geo";
+
+        public static readonly SecondaryType Named = "Named";
+
+
+        /// <summary>
+        /// Underlying value of enum SecondaryType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SecondaryType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SecondaryType
+        /// </summary>
+        public bool Equals(SecondaryType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SecondaryType
+        /// </summary>
+        public static implicit operator SecondaryType(string value)
+        {
+            return new SecondaryType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SecondaryType to string
+        /// </summary>
+        public static implicit operator string(SecondaryType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SecondaryType
+        /// </summary>
+        public static bool operator == (SecondaryType e1, SecondaryType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SecondaryType
+        /// </summary>
+        public static bool operator != (SecondaryType e1, SecondaryType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SecondaryType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SecondaryType && Equals((SecondaryType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SecondaryType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

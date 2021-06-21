@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The time step to be used to summarize the metric values. Possible values
             /// include: 'PT1H', 'P1D'
             /// </param>
-            public static IPage<QueryStatistics> ListByQuery(this IManagedDatabaseQueriesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), string interval = default(string))
+            public static IPage<QueryStatistics> ListByQuery(this IManagedDatabaseQueriesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?))
             {
                 return operations.ListByQueryAsync(resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval).GetAwaiter().GetResult();
             }
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<QueryStatistics>> ListByQueryAsync(this IManagedDatabaseQueriesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), string interval = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<QueryStatistics>> ListByQueryAsync(this IManagedDatabaseQueriesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByQueryWithHttpMessagesAsync(resourceGroupName, managedInstanceName, databaseName, queryId, startTime, endTime, interval, null, cancellationToken).ConfigureAwait(false))
                 {

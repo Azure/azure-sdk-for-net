@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Encrypting', 'Decrypting'</param>
         /// <param name="percentComplete">The percent complete of the
         /// transparent data encryption scan for a database.</param>
-        public TransparentDataEncryptionActivity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string status = default(string), double? percentComplete = default(double?))
+        public TransparentDataEncryptionActivity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), TransparentDataEncryptionActivityStatus? status = default(TransparentDataEncryptionActivityStatus?), double? percentComplete = default(double?))
             : base(id, name, type)
         {
             Location = location;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Encrypting', 'Decrypting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
+        public TransparentDataEncryptionActivityStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets the percent complete of the transparent data encryption scan

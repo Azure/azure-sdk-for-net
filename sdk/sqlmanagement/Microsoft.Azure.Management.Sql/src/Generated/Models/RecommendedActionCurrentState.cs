@@ -10,25 +10,122 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for RecommendedActionCurrentState.
     /// </summary>
-    public static class RecommendedActionCurrentState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(RecommendedActionCurrentStateConverter))]
+    public struct RecommendedActionCurrentState : System.IEquatable<RecommendedActionCurrentState>
     {
-        public const string Active = "Active";
-        public const string Pending = "Pending";
-        public const string Executing = "Executing";
-        public const string Verifying = "Verifying";
-        public const string PendingRevert = "PendingRevert";
-        public const string RevertCancelled = "RevertCancelled";
-        public const string Reverting = "Reverting";
-        public const string Reverted = "Reverted";
-        public const string Ignored = "Ignored";
-        public const string Expired = "Expired";
-        public const string Monitoring = "Monitoring";
-        public const string Resolved = "Resolved";
-        public const string Success = "Success";
-        public const string Error = "Error";
+        private RecommendedActionCurrentState(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly RecommendedActionCurrentState Active = "Active";
+
+        public static readonly RecommendedActionCurrentState Pending = "Pending";
+
+        public static readonly RecommendedActionCurrentState Executing = "Executing";
+
+        public static readonly RecommendedActionCurrentState Verifying = "Verifying";
+
+        public static readonly RecommendedActionCurrentState PendingRevert = "PendingRevert";
+
+        public static readonly RecommendedActionCurrentState RevertCancelled = "RevertCancelled";
+
+        public static readonly RecommendedActionCurrentState Reverting = "Reverting";
+
+        public static readonly RecommendedActionCurrentState Reverted = "Reverted";
+
+        public static readonly RecommendedActionCurrentState Ignored = "Ignored";
+
+        public static readonly RecommendedActionCurrentState Expired = "Expired";
+
+        public static readonly RecommendedActionCurrentState Monitoring = "Monitoring";
+
+        public static readonly RecommendedActionCurrentState Resolved = "Resolved";
+
+        public static readonly RecommendedActionCurrentState Success = "Success";
+
+        public static readonly RecommendedActionCurrentState Error = "Error";
+
+
+        /// <summary>
+        /// Underlying value of enum RecommendedActionCurrentState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for RecommendedActionCurrentState
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type RecommendedActionCurrentState
+        /// </summary>
+        public bool Equals(RecommendedActionCurrentState e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// RecommendedActionCurrentState
+        /// </summary>
+        public static implicit operator RecommendedActionCurrentState(string value)
+        {
+            return new RecommendedActionCurrentState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert RecommendedActionCurrentState to
+        /// string
+        /// </summary>
+        public static implicit operator string(RecommendedActionCurrentState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum RecommendedActionCurrentState
+        /// </summary>
+        public static bool operator == (RecommendedActionCurrentState e1, RecommendedActionCurrentState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum RecommendedActionCurrentState
+        /// </summary>
+        public static bool operator != (RecommendedActionCurrentState e1, RecommendedActionCurrentState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for RecommendedActionCurrentState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is RecommendedActionCurrentState && Equals((RecommendedActionCurrentState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode RecommendedActionCurrentState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

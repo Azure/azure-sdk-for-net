@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="creationDate">The key creation date.</param>
         /// <param name="autoRotationEnabled">Key auto rotation opt-in flag.
         /// Either true or false.</param>
-        public ManagedInstanceKey(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string uri = default(string), string thumbprint = default(string), System.DateTime? creationDate = default(System.DateTime?), bool? autoRotationEnabled = default(bool?))
+        public ManagedInstanceKey(ServerKeyType serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string uri = default(string), string thumbprint = default(string), System.DateTime? creationDate = default(System.DateTime?), bool? autoRotationEnabled = default(bool?))
             : base(id, name, type)
         {
             Kind = kind;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'ServiceManaged', 'AzureKeyVault'
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverKeyType")]
-        public string ServerKeyType { get; set; }
+        public ServerKeyType ServerKeyType { get; set; }
 
         /// <summary>
         /// Gets or sets the URI of the key. If the ServerKeyType is
@@ -110,10 +110,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ServerKeyType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServerKeyType");
-            }
         }
     }
 }

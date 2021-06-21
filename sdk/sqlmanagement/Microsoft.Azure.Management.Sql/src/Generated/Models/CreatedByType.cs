@@ -10,15 +10,100 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for CreatedByType.
     /// </summary>
-    public static class CreatedByType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(CreatedByTypeConverter))]
+    public struct CreatedByType : System.IEquatable<CreatedByType>
     {
-        public const string User = "User";
-        public const string Application = "Application";
-        public const string ManagedIdentity = "ManagedIdentity";
-        public const string Key = "Key";
+        private CreatedByType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly CreatedByType User = "User";
+
+        public static readonly CreatedByType Application = "Application";
+
+        public static readonly CreatedByType ManagedIdentity = "ManagedIdentity";
+
+        public static readonly CreatedByType Key = "Key";
+
+
+        /// <summary>
+        /// Underlying value of enum CreatedByType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for CreatedByType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type CreatedByType
+        /// </summary>
+        public bool Equals(CreatedByType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to CreatedByType
+        /// </summary>
+        public static implicit operator CreatedByType(string value)
+        {
+            return new CreatedByType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert CreatedByType to string
+        /// </summary>
+        public static implicit operator string(CreatedByType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum CreatedByType
+        /// </summary>
+        public static bool operator == (CreatedByType e1, CreatedByType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum CreatedByType
+        /// </summary>
+        public static bool operator != (CreatedByType e1, CreatedByType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for CreatedByType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is CreatedByType && Equals((CreatedByType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode CreatedByType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

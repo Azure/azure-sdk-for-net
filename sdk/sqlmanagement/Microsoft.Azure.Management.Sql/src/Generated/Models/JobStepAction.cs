@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'TSql'</param>
         /// <param name="source">The source of the action to execute. Possible
         /// values include: 'Inline'</param>
-        public JobStepAction(string value, string type = default(string), string source = default(string))
+        public JobStepAction(string value, JobStepActionType? type = default(JobStepActionType?), JobStepActionSource? source = default(JobStepActionSource?))
         {
             Type = type;
             Source = source;
@@ -54,14 +54,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'TSql'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public JobStepActionType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the source of the action to execute. Possible values
         /// include: 'Inline'
         /// </summary>
         [JsonProperty(PropertyName = "source")]
-        public string Source { get; set; }
+        public JobStepActionSource? Source { get; set; }
 
         /// <summary>
         /// Gets or sets the action value, for example the text of the T-SQL

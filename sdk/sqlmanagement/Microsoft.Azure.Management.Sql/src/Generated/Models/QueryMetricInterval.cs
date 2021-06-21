@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// interval.</param>
         /// <param name="metrics">List of metric objects for this
         /// interval</param>
-        public QueryMetricInterval(string intervalStartTime = default(string), string intervalType = default(string), long? executionCount = default(long?), IList<QueryMetricProperties> metrics = default(IList<QueryMetricProperties>))
+        public QueryMetricInterval(string intervalStartTime = default(string), QueryTimeGrainType? intervalType = default(QueryTimeGrainType?), long? executionCount = default(long?), IList<QueryMetricProperties> metrics = default(IList<QueryMetricProperties>))
         {
             IntervalStartTime = intervalStartTime;
             IntervalType = intervalType;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets interval type (length). Possible values include: 'PT1H', 'P1D'
         /// </summary>
         [JsonProperty(PropertyName = "intervalType")]
-        public string IntervalType { get; private set; }
+        public QueryTimeGrainType? IntervalType { get; private set; }
 
         /// <summary>
         /// Gets execution count of a query in this interval.

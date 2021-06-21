@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ServerNetworkAccessFlag.
     /// </summary>
-    public static class ServerNetworkAccessFlag
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ServerNetworkAccessFlagConverter))]
+    public struct ServerNetworkAccessFlag : System.IEquatable<ServerNetworkAccessFlag>
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        private ServerNetworkAccessFlag(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ServerNetworkAccessFlag Enabled = "Enabled";
+
+        public static readonly ServerNetworkAccessFlag Disabled = "Disabled";
+
+
+        /// <summary>
+        /// Underlying value of enum ServerNetworkAccessFlag
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ServerNetworkAccessFlag
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ServerNetworkAccessFlag
+        /// </summary>
+        public bool Equals(ServerNetworkAccessFlag e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ServerNetworkAccessFlag
+        /// </summary>
+        public static implicit operator ServerNetworkAccessFlag(string value)
+        {
+            return new ServerNetworkAccessFlag(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ServerNetworkAccessFlag to string
+        /// </summary>
+        public static implicit operator string(ServerNetworkAccessFlag e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ServerNetworkAccessFlag
+        /// </summary>
+        public static bool operator == (ServerNetworkAccessFlag e1, ServerNetworkAccessFlag e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ServerNetworkAccessFlag
+        /// </summary>
+        public static bool operator != (ServerNetworkAccessFlag e1, ServerNetworkAccessFlag e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ServerNetworkAccessFlag
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ServerNetworkAccessFlag && Equals((ServerNetworkAccessFlag)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ServerNetworkAccessFlag
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

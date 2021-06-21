@@ -10,14 +10,100 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for TargetBackupStorageRedundancy.
     /// </summary>
-    public static class TargetBackupStorageRedundancy
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(TargetBackupStorageRedundancyConverter))]
+    public struct TargetBackupStorageRedundancy : System.IEquatable<TargetBackupStorageRedundancy>
     {
-        public const string Geo = "Geo";
-        public const string Local = "Local";
-        public const string Zone = "Zone";
+        private TargetBackupStorageRedundancy(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly TargetBackupStorageRedundancy Geo = "Geo";
+
+        public static readonly TargetBackupStorageRedundancy Local = "Local";
+
+        public static readonly TargetBackupStorageRedundancy Zone = "Zone";
+
+
+        /// <summary>
+        /// Underlying value of enum TargetBackupStorageRedundancy
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for TargetBackupStorageRedundancy
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type TargetBackupStorageRedundancy
+        /// </summary>
+        public bool Equals(TargetBackupStorageRedundancy e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// TargetBackupStorageRedundancy
+        /// </summary>
+        public static implicit operator TargetBackupStorageRedundancy(string value)
+        {
+            return new TargetBackupStorageRedundancy(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert TargetBackupStorageRedundancy to
+        /// string
+        /// </summary>
+        public static implicit operator string(TargetBackupStorageRedundancy e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum TargetBackupStorageRedundancy
+        /// </summary>
+        public static bool operator == (TargetBackupStorageRedundancy e1, TargetBackupStorageRedundancy e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum TargetBackupStorageRedundancy
+        /// </summary>
+        public static bool operator != (TargetBackupStorageRedundancy e1, TargetBackupStorageRedundancy e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for TargetBackupStorageRedundancy
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is TargetBackupStorageRedundancy && Equals((TargetBackupStorageRedundancy)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode TargetBackupStorageRedundancy
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

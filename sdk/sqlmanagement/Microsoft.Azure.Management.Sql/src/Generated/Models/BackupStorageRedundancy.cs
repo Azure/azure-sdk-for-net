@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for BackupStorageRedundancy.
     /// </summary>
-    public static class BackupStorageRedundancy
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(BackupStorageRedundancyConverter))]
+    public struct BackupStorageRedundancy : System.IEquatable<BackupStorageRedundancy>
     {
-        public const string Geo = "Geo";
-        public const string Local = "Local";
-        public const string Zone = "Zone";
+        private BackupStorageRedundancy(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly BackupStorageRedundancy Geo = "Geo";
+
+        public static readonly BackupStorageRedundancy Local = "Local";
+
+        public static readonly BackupStorageRedundancy Zone = "Zone";
+
+
+        /// <summary>
+        /// Underlying value of enum BackupStorageRedundancy
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for BackupStorageRedundancy
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type BackupStorageRedundancy
+        /// </summary>
+        public bool Equals(BackupStorageRedundancy e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to BackupStorageRedundancy
+        /// </summary>
+        public static implicit operator BackupStorageRedundancy(string value)
+        {
+            return new BackupStorageRedundancy(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert BackupStorageRedundancy to string
+        /// </summary>
+        public static implicit operator string(BackupStorageRedundancy e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum BackupStorageRedundancy
+        /// </summary>
+        public static bool operator == (BackupStorageRedundancy e1, BackupStorageRedundancy e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum BackupStorageRedundancy
+        /// </summary>
+        public static bool operator != (BackupStorageRedundancy e1, BackupStorageRedundancy e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for BackupStorageRedundancy
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is BackupStorageRedundancy && Equals((BackupStorageRedundancy)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode BackupStorageRedundancy
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

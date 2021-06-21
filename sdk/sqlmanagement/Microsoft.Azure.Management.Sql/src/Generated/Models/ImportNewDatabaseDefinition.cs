@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="authenticationType">Authentication type.</param>
         /// <param name="networkIsolation">Optional resource information to
         /// enable network isolation for request.</param>
-        public ImportNewDatabaseDefinition(string storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword, string databaseName = default(string), string edition = default(string), string serviceObjectiveName = default(string), string maxSizeBytes = default(string), string authenticationType = default(string), NetworkIsolationSettings networkIsolation = default(NetworkIsolationSettings))
+        public ImportNewDatabaseDefinition(StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword, string databaseName = default(string), string edition = default(string), string serviceObjectiveName = default(string), string maxSizeBytes = default(string), string authenticationType = default(string), NetworkIsolationSettings networkIsolation = default(NetworkIsolationSettings))
         {
             DatabaseName = databaseName;
             Edition = edition;
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SharedAccessKey', 'StorageAccessKey'
         /// </summary>
         [JsonProperty(PropertyName = "storageKeyType")]
-        public string StorageKeyType { get; set; }
+        public StorageKeyType StorageKeyType { get; set; }
 
         /// <summary>
         /// Gets or sets storage key.
@@ -146,10 +146,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (StorageKeyType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageKeyType");
-            }
             if (StorageKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageKey");

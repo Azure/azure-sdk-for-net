@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for QueryTimeGrainType.
     /// </summary>
-    public static class QueryTimeGrainType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(QueryTimeGrainTypeConverter))]
+    public struct QueryTimeGrainType : System.IEquatable<QueryTimeGrainType>
     {
-        public const string PT1H = "PT1H";
-        public const string P1D = "P1D";
+        private QueryTimeGrainType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly QueryTimeGrainType PT1H = "PT1H";
+
+        public static readonly QueryTimeGrainType P1D = "P1D";
+
+
+        /// <summary>
+        /// Underlying value of enum QueryTimeGrainType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for QueryTimeGrainType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type QueryTimeGrainType
+        /// </summary>
+        public bool Equals(QueryTimeGrainType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to QueryTimeGrainType
+        /// </summary>
+        public static implicit operator QueryTimeGrainType(string value)
+        {
+            return new QueryTimeGrainType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert QueryTimeGrainType to string
+        /// </summary>
+        public static implicit operator string(QueryTimeGrainType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum QueryTimeGrainType
+        /// </summary>
+        public static bool operator == (QueryTimeGrainType e1, QueryTimeGrainType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum QueryTimeGrainType
+        /// </summary>
+        public static bool operator != (QueryTimeGrainType e1, QueryTimeGrainType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for QueryTimeGrainType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is QueryTimeGrainType && Equals((QueryTimeGrainType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode QueryTimeGrainType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

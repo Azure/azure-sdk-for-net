@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit = default(double?), string unit = default(string), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit = default(double?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Limit = limit;
             Unit = unit;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'DTU', 'VCores'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public string Unit { get; private set; }
+        public PerformanceLevelUnit? Unit { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:

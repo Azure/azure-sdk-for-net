@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="requestedBackupStorageRedundancy">The storage
         /// redundancy type of the backup. Possible values include: 'Geo',
         /// 'Local', 'Zone'</param>
-        public LongTermRetentionBackup(string id = default(string), string name = default(string), string type = default(string), string serverName = default(string), System.DateTime? serverCreateTime = default(System.DateTime?), string databaseName = default(string), System.DateTime? databaseDeletionTime = default(System.DateTime?), System.DateTime? backupTime = default(System.DateTime?), System.DateTime? backupExpirationTime = default(System.DateTime?), string backupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string))
+        public LongTermRetentionBackup(string id = default(string), string name = default(string), string type = default(string), string serverName = default(string), System.DateTime? serverCreateTime = default(System.DateTime?), string databaseName = default(string), System.DateTime? databaseDeletionTime = default(System.DateTime?), System.DateTime? backupTime = default(System.DateTime?), System.DateTime? backupExpirationTime = default(System.DateTime?), BackupStorageRedundancy? backupStorageRedundancy = default(BackupStorageRedundancy?), BackupStorageRedundancy? requestedBackupStorageRedundancy = default(BackupStorageRedundancy?))
             : base(id, name, type)
         {
             ServerName = serverName;
@@ -112,14 +112,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupStorageRedundancy")]
-        public string BackupStorageRedundancy { get; private set; }
+        public BackupStorageRedundancy? BackupStorageRedundancy { get; private set; }
 
         /// <summary>
         /// Gets or sets the storage redundancy type of the backup. Possible
         /// values include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedBackupStorageRedundancy")]
-        public string RequestedBackupStorageRedundancy { get; set; }
+        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
 
     }
 }

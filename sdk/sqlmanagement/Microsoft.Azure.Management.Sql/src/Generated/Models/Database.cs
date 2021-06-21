@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database has been created.</param>
         /// <param name="isInfraEncryptionEnabled">Infra encryption is enabled
         /// for this database.</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?))
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), CreateMode? createMode = default(CreateMode?), string collation = default(string), long? maxSizeBytes = default(long?), SampleName? sampleName = default(SampleName?), string elasticPoolId = default(string), string sourceDatabaseId = default(string), DatabaseStatus? status = default(DatabaseStatus?), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), CatalogCollationType? catalogCollation = default(CatalogCollationType?), bool? zoneRedundant = default(bool?), DatabaseLicenseType? licenseType = default(DatabaseLicenseType?), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), DatabaseReadScale? readScale = default(DatabaseReadScale?), int? highAvailabilityReplicaCount = default(int?), SecondaryType? secondaryType = default(SecondaryType?), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), CurrentBackupStorageRedundancy? currentBackupStorageRedundancy = default(CurrentBackupStorageRedundancy?), RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy = default(RequestedBackupStorageRedundancy?), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'OnlineSecondary'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
-        public string CreateMode { get; set; }
+        public CreateMode? CreateMode { get; set; }
 
         /// <summary>
         /// Gets or sets the collation of the database.
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'WideWorldImportersStd', 'WideWorldImportersFull'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sampleName")]
-        public string SampleName { get; set; }
+        public SampleName? SampleName { get; set; }
 
         /// <summary>
         /// Gets or sets the resource identifier of the elastic pool containing
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'OnlineChangingDwPerformanceTiers', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
+        public DatabaseStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets the ID of the database.
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'DATABASE_DEFAULT', 'SQL_Latin1_General_CP1_CI_AS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.catalogCollation")]
-        public string CatalogCollation { get; set; }
+        public CatalogCollationType? CatalogCollation { get; set; }
 
         /// <summary>
         /// Gets or sets whether or not this database is zone redundant, which
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'LicenseIncluded', 'BasePrice'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
-        public string LicenseType { get; set; }
+        public DatabaseLicenseType? LicenseType { get; set; }
 
         /// <summary>
         /// Gets the max log size for this database.
@@ -497,7 +497,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the same region. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.readScale")]
-        public string ReadScale { get; set; }
+        public DatabaseReadScale? ReadScale { get; set; }
 
         /// <summary>
         /// Gets or sets the number of secondary replicas associated with the
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Geo', 'Named'
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryType")]
-        public string SecondaryType { get; set; }
+        public SecondaryType? SecondaryType { get; set; }
 
         /// <summary>
         /// Gets the name and tier of the SKU.
@@ -532,14 +532,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// database. Possible values include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.currentBackupStorageRedundancy")]
-        public string CurrentBackupStorageRedundancy { get; private set; }
+        public CurrentBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; private set; }
 
         /// <summary>
         /// Gets or sets the storage account type to be used to store backups
         /// for this database. Possible values include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedBackupStorageRedundancy")]
-        public string RequestedBackupStorageRedundancy { get; set; }
+        public RequestedBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
 
         /// <summary>
         /// Gets or sets minimal capacity that database will always have

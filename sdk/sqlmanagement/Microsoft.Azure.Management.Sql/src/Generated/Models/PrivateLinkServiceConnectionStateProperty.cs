@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// description.</param>
         /// <param name="actionsRequired">The actions required for private link
         /// service connection. Possible values include: 'None'</param>
-        public PrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired = default(string))
+        public PrivateLinkServiceConnectionStateProperty(PrivateLinkServiceConnectionStateStatus status, string description, PrivateLinkServiceConnectionStateActionsRequire? actionsRequired = default(PrivateLinkServiceConnectionStateActionsRequire?))
         {
             Status = status;
             Description = description;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'Approved', 'Pending', 'Rejected', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public PrivateLinkServiceConnectionStateStatus Status { get; set; }
 
         /// <summary>
         /// Gets or sets the private link service connection description.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'None'
         /// </summary>
         [JsonProperty(PropertyName = "actionsRequired")]
-        public string ActionsRequired { get; private set; }
+        public PrivateLinkServiceConnectionStateActionsRequire? ActionsRequired { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -77,10 +77,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Status == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Status");
-            }
             if (Description == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Description");

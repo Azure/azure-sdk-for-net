@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="backupStorageRedundancy">The storage redundancy type
         /// of the backup. Possible values include: 'Geo', 'Local',
         /// 'Zone'</param>
-        public ManagedInstanceLongTermRetentionBackup(string id = default(string), string name = default(string), string type = default(string), string managedInstanceName = default(string), System.DateTime? managedInstanceCreateTime = default(System.DateTime?), string databaseName = default(string), System.DateTime? databaseDeletionTime = default(System.DateTime?), System.DateTime? backupTime = default(System.DateTime?), System.DateTime? backupExpirationTime = default(System.DateTime?), string backupStorageRedundancy = default(string))
+        public ManagedInstanceLongTermRetentionBackup(string id = default(string), string name = default(string), string type = default(string), string managedInstanceName = default(string), System.DateTime? managedInstanceCreateTime = default(System.DateTime?), string databaseName = default(string), System.DateTime? databaseDeletionTime = default(System.DateTime?), System.DateTime? backupTime = default(System.DateTime?), System.DateTime? backupExpirationTime = default(System.DateTime?), BackupStorageRedundancy? backupStorageRedundancy = default(BackupStorageRedundancy?))
             : base(id, name, type)
         {
             ManagedInstanceName = managedInstanceName;
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupStorageRedundancy")]
-        public string BackupStorageRedundancy { get; private set; }
+        public BackupStorageRedundancy? BackupStorageRedundancy { get; private set; }
 
     }
 }

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="targetBackupStorageRedundancy">The storage redundancy
         /// type of the copied backup. Possible values include: 'Geo', 'Local',
         /// 'Zone'</param>
-        public CopyLongTermRetentionBackupParameters(string targetSubscriptionId = default(string), string targetResourceGroup = default(string), string targetServerResourceId = default(string), string targetServerFullyQualifiedDomainName = default(string), string targetDatabaseName = default(string), string targetBackupStorageRedundancy = default(string))
+        public CopyLongTermRetentionBackupParameters(string targetSubscriptionId = default(string), string targetResourceGroup = default(string), string targetServerResourceId = default(string), string targetServerFullyQualifiedDomainName = default(string), string targetDatabaseName = default(string), TargetBackupStorageRedundancy? targetBackupStorageRedundancy = default(TargetBackupStorageRedundancy?))
         {
             TargetSubscriptionId = targetSubscriptionId;
             TargetResourceGroup = targetResourceGroup;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetBackupStorageRedundancy")]
-        public string TargetBackupStorageRedundancy { get; set; }
+        public TargetBackupStorageRedundancy? TargetBackupStorageRedundancy { get; set; }
 
     }
 }

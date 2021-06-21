@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// a memory optimized table.</param>
         /// <param name="isComputed">Whether or not the column is
         /// computed.</param>
-        public DatabaseColumn(string id = default(string), string name = default(string), string type = default(string), string columnType = default(string), string temporalType = default(string), bool? memoryOptimized = default(bool?), bool? isComputed = default(bool?))
+        public DatabaseColumn(string id = default(string), string name = default(string), string type = default(string), ColumnDataType? columnType = default(ColumnDataType?), TableTemporalType? temporalType = default(TableTemporalType?), bool? memoryOptimized = default(bool?), bool? isComputed = default(bool?))
             : base(id, name, type)
         {
             ColumnType = columnType;
@@ -75,14 +75,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'timestamp', 'nvarchar', 'nchar', 'xml', 'sysname'
         /// </summary>
         [JsonProperty(PropertyName = "properties.columnType")]
-        public string ColumnType { get; set; }
+        public ColumnDataType? ColumnType { get; set; }
 
         /// <summary>
         /// Gets or sets the table temporal type. Possible values include:
         /// 'NonTemporalTable', 'HistoryTable', 'SystemVersionedTemporalTable'
         /// </summary>
         [JsonProperty(PropertyName = "properties.temporalType")]
-        public string TemporalType { get; set; }
+        public TableTemporalType? TemporalType { get; set; }
 
         /// <summary>
         /// Gets or sets whether or not the column belongs to a memory

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// format).</param>
         /// <param name="queries">List of top resource consuming queries with
         /// appropriate metric data</param>
-        public TopQueries(int? numberOfQueries = default(int?), string aggregationFunction = default(string), string observationMetric = default(string), string intervalType = default(string), string startTime = default(string), string endTime = default(string), IList<QueryStatisticsProperties> queries = default(IList<QueryStatisticsProperties>))
+        public TopQueries(int? numberOfQueries = default(int?), string aggregationFunction = default(string), string observationMetric = default(string), QueryTimeGrainType? intervalType = default(QueryTimeGrainType?), string startTime = default(string), string endTime = default(string), IList<QueryStatisticsProperties> queries = default(IList<QueryStatisticsProperties>))
         {
             NumberOfQueries = numberOfQueries;
             AggregationFunction = aggregationFunction;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets interval type (length). Possible values include: 'PT1H', 'P1D'
         /// </summary>
         [JsonProperty(PropertyName = "intervalType")]
-        public string IntervalType { get; private set; }
+        public QueryTimeGrainType? IntervalType { get; private set; }
 
         /// <summary>
         /// Gets the start time for the metric (ISO-8601 format).

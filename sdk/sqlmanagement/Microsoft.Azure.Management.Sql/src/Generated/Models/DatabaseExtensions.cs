@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public DatabaseExtensions(string storageKeyType, string storageKey, string storageUri, string id = default(string), string name = default(string), string type = default(string))
+        public DatabaseExtensions(StorageKeyType storageKeyType, string storageKey, string storageUri, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             StorageKeyType = storageKeyType;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SharedAccessKey', 'StorageAccessKey'
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageKeyType")]
-        public string StorageKeyType { get; set; }
+        public StorageKeyType StorageKeyType { get; set; }
 
         /// <summary>
         /// Gets or sets storage key.
@@ -93,10 +93,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (StorageKeyType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageKeyType");
-            }
             if (StorageKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageKey");

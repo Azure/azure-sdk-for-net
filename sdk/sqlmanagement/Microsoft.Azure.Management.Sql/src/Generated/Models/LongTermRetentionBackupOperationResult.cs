@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Zone'</param>
         /// <param name="status">Operation status</param>
         /// <param name="message">Progress message</param>
-        public LongTermRetentionBackupOperationResult(string id = default(string), string name = default(string), string type = default(string), System.Guid? requestId = default(System.Guid?), string operationType = default(string), string fromBackupResourceId = default(string), string toBackupResourceId = default(string), string targetBackupStorageRedundancy = default(string), string status = default(string), string message = default(string))
+        public LongTermRetentionBackupOperationResult(string id = default(string), string name = default(string), string type = default(string), System.Guid? requestId = default(System.Guid?), string operationType = default(string), string fromBackupResourceId = default(string), string toBackupResourceId = default(string), BackupStorageRedundancy? targetBackupStorageRedundancy = default(BackupStorageRedundancy?), string status = default(string), string message = default(string))
             : base(id, name, type)
         {
             RequestId = requestId;
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetBackupStorageRedundancy")]
-        public string TargetBackupStorageRedundancy { get; private set; }
+        public BackupStorageRedundancy? TargetBackupStorageRedundancy { get; private set; }
 
         /// <summary>
         /// Gets operation status

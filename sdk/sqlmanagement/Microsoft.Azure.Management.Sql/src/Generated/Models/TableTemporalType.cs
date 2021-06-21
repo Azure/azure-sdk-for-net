@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for TableTemporalType.
     /// </summary>
-    public static class TableTemporalType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(TableTemporalTypeConverter))]
+    public struct TableTemporalType : System.IEquatable<TableTemporalType>
     {
-        public const string NonTemporalTable = "NonTemporalTable";
-        public const string HistoryTable = "HistoryTable";
-        public const string SystemVersionedTemporalTable = "SystemVersionedTemporalTable";
+        private TableTemporalType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly TableTemporalType NonTemporalTable = "NonTemporalTable";
+
+        public static readonly TableTemporalType HistoryTable = "HistoryTable";
+
+        public static readonly TableTemporalType SystemVersionedTemporalTable = "SystemVersionedTemporalTable";
+
+
+        /// <summary>
+        /// Underlying value of enum TableTemporalType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for TableTemporalType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type TableTemporalType
+        /// </summary>
+        public bool Equals(TableTemporalType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to TableTemporalType
+        /// </summary>
+        public static implicit operator TableTemporalType(string value)
+        {
+            return new TableTemporalType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert TableTemporalType to string
+        /// </summary>
+        public static implicit operator string(TableTemporalType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum TableTemporalType
+        /// </summary>
+        public static bool operator == (TableTemporalType e1, TableTemporalType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum TableTemporalType
+        /// </summary>
+        public static bool operator != (TableTemporalType e1, TableTemporalType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for TableTemporalType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is TableTemporalType && Equals((TableTemporalType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode TableTemporalType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

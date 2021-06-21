@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<QueryStatistics>>> ListByQueryWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), string interval = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<QueryStatistics>>> ListByQueryWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get query execution statistics by query id.
         /// </summary>
