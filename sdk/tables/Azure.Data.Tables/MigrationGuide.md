@@ -73,8 +73,8 @@ CloudTable cloudTable = tableClient.GetTableReference(tableName);
 cloudTable.CreateIfNotExists()
 ```
 
-With `Azure.Data.Tables` we have access to all table level operations directly from the `TableServiceClient`. Because the table service client is not affinitzed to
-any one table, it is ideal for scenarios where you need to create, delete, or list more than one cloudTable.
+With `Azure.Data.Tables` we have access to all table level operations directly from the `TableServiceClient`. Because the table service client is not affinitized to
+any one table, it is ideal for scenarios where you need to create, delete, or list more than one table.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
