@@ -21,7 +21,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Gets the list of supported asset file types
         /// </summary>
-        internal IEnumerable<AssetFileType> SupportedAssetFileTypes { get; }
+        internal HashSet<AssetFileType> SupportedAssetFileTypes { get; }
 
         /// <summary>
         /// Gets the authentication endpoint.
@@ -52,7 +52,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
             SupportedAssetFileTypes = version switch
             {
-                ServiceVersion.V0_2_preview_0 => new AssetFileType[]
+                ServiceVersion.V0_2_preview_0 => new HashSet<AssetFileType>
                 {
                     AssetFileType.Fbx,
                     AssetFileType.Glb,

@@ -25,7 +25,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// The list of supported asset file types
         /// </summary>
-        public IEnumerable<AssetFileType> SupportedAssetFileTypes { get; }
+        public IReadOnlyList<AssetFileType> SupportedAssetFileTypes { get { return SupportedAssetFileTypesSet.ToList(); } }
+
+        internal HashSet<AssetFileType> SupportedAssetFileTypesSet { get; }
 
         /// <summary>
         /// The Account Domain to be used by the Client
@@ -88,7 +90,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);
 
             AccountId = accountId;
-            SupportedAssetFileTypes = options.SupportedAssetFileTypes;
+            SupportedAssetFileTypesSet = options.SupportedAssetFileTypes;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
             _getBlobUploadEndpointRestClient = new BlobUploadEndpointRestClient(_clientDiagnostics, _pipeline, serviceEndpoint, options.Version);
