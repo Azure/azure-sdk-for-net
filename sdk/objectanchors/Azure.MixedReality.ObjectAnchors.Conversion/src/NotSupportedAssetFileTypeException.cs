@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary>
-    /// An Exception thrown durin an attempt to provide an unsupported asset file type in an asset conversion operation
+    /// An Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation
     /// </summary>
     public class NotSupportedAssetFileTypeException : Exception, ISerializable
     {
@@ -30,7 +30,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// An Exception thrown durin an attempt to provide an unsupported asset file type in an asset conversion operation
+        /// An Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation
         /// </summary>
         /// <param name="message">The message corresponding to the exception</param>
         /// <param name="inner">The inner exception</param>
