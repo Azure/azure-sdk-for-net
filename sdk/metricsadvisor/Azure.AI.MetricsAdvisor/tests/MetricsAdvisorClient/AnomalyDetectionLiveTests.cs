@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAnomaliesWithMinimumSetup(bool useTokenCredential)
+        public async Task GetAnomaliesForDetectionConfigurationWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAnomaliesWithOptionalFilter()
+        public async Task GetAnomaliesForDetectionConfigurationWithOptionalFilter()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -108,7 +108,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetIncidentsWithMinimumSetup(bool useTokenCredential)
+        public async Task GetIncidentsForDetectionConfigurationWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -141,7 +141,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetIncidentsWithOptionalDimensionFilter()
+        public async Task GetIncidentsForDetectionConfigurationWithOptionalDimensionFilter()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 

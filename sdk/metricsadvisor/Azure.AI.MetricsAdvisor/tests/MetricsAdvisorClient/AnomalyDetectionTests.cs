@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private string FakeGuid => "00000000-0000-0000-0000-000000000000";
 
         [Test]
-        public void GetAnomaliesValidatesArguments()
+        public void GetAnomaliesForDetectionConfigurationValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetAnomaliesRespectsTheCancellationToken()
+        public void GetAnomaliesForDetectionConfigurationRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetIncidentsValidatesArguments()
+        public void GetIncidentsForDetectionConfigurationValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -72,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetIncidentsRespectsTheCancellationToken()
+        public void GetIncidentsForDetectionConfigurationRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 

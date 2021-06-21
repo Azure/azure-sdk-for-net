@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public async Task GetAnomaliesSetsValue()
+        public async Task GetAnomaliesForAlertSetsValue()
         {
             double originalValue = 3.14;
 
@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public async Task GetAnomaliesSetsNullExpectedValue()
+        public async Task GetAnomaliesForAlertSetsNullExpectedValue()
         {
             using Stream responseBody = CreateAnomalyJsonStream(expectedValue: null);
             MockResponse mockResponse = new MockResponse(200) { ContentStream = responseBody };
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public async Task GetAnomaliesSetsExpectedValue()
+        public async Task GetAnomaliesForAlertSetsExpectedValue()
         {
             double originalExpectedValue = 1.62;
 
@@ -62,7 +62,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public async Task GetIncidentsSetsValueOfRootNode()
+        public async Task GetIncidentsForAlertSetsValueOfRootNode()
         {
             double originalValue = 3.14;
 
@@ -78,7 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public async Task GetIncidentsSetsNullExpectedValueOfRootNode()
+        public async Task GetIncidentsForAlertSetsNullExpectedValueOfRootNode()
         {
             using Stream responseBody = CreateIncidentJsonStream(expectedValueOfRootNode: null);
             MockResponse mockResponse = new MockResponse(200) { ContentStream = responseBody };
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public async Task GetIncidentsSetsExpectedValueOfRootNode()
+        public async Task GetIncidentsForAlertSetsExpectedValueOfRootNode()
         {
             double originalValue = 1.62;
 

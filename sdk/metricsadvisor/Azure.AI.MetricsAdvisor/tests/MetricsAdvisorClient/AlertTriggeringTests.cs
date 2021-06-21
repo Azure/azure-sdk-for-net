@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetAnomaliesValidatesArguments()
+        public void GetAnomaliesForAlertValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -72,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetAnomaliesRespectsTheCancellationToken()
+        public void GetAnomaliesForAlertRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -87,7 +87,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetIncidentsValidatesArguments()
+        public void GetIncidentsForAlertValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -105,7 +105,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetIncidentsRespectsTheCancellationToken()
+        public void GetIncidentsForAlertRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
