@@ -24,6 +24,7 @@
         7. Update the description for the PatchSettings property with information about the VMSS Flex feature.
       ]]>
     </PackageReleaseNotes>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

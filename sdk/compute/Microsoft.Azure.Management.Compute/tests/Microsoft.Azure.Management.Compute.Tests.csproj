@@ -4,7 +4,8 @@
     <PackageId>Compute.Tests</PackageId>
     <Description>Compute.Tests Class Library</Description>
     <AssemblyName>Compute.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Platforms>AnyCPU;x64</Platforms>    
   </PropertyGroup>
   <PropertyGroup>
     <ExcludeFromBuild>false</ExcludeFromBuild>

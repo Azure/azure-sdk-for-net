@@ -259,6 +259,28 @@ namespace Compute.Tests
         }
 
         [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_UsingCapacityReservationGroup")]
+        public void TestVMScaleSetScenarioOperations_UsingCapacityReservationGroup()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, associateWithCapacityReservationGroup: true,
+                        vmSize: VirtualMachineSizeTypes.StandardDS1V2, faultDomainCount: 1, capacity: 1, shouldOverProvision: false,
+                        validateVmssVMInstanceView: true, validateListSku: false, deleteAsPartOfTest: false);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
         public void TestVMScaleSetScenarioOperations_ScheduledEvents()
         {
@@ -494,7 +516,8 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
-            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true)
+            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true,
+            bool associateWithCapacityReservationGroup = false)
         {
             EnsureClientsInitialized(context);
 
@@ -536,6 +559,16 @@ namespace Compute.Tests
                     dedicatedHostReferenceId = Helpers.GetDedicatedHostRef(m_subId, rgName, dedicatedHostGroupName, dedicatedHostName);
                 }
 
+                string capacityReservationGroupName = null, capacityReservationGroupReferenceId = null, capacityReservationName = null;
+                if (associateWithCapacityReservationGroup)
+                {
+                    capacityReservationGroupName = ComputeManagementTestUtilities.GenerateName("crgtest");
+                    capacityReservationName = ComputeManagementTestUtilities.GenerateName("crtest");
+                    CreateCapacityReservationGroup(rgName, capacityReservationGroupName);
+                    CreateCapacityReservation(rgName, capacityReservationGroupName, capacityReservationName, VirtualMachineSizeTypes.StandardDS1V2, reservedCount: 1);
+                    capacityReservationGroupReferenceId = Helpers.GetCapacityReservationGroupRef(m_subId, rgName, capacityReservationGroupName);
+                }
+
                 VirtualMachineScaleSet getResponse = CreateVMScaleSet_NoAsyncTracking(
                     rgName,
                     vmssName,
@@ -563,7 +596,8 @@ namespace Compute.Tests
                     capacity: capacity,
                     dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                     dedicatedHostGroupName: dedicatedHostGroupName,
-                    dedicatedHostName: dedicatedHostName);
+                    dedicatedHostName: dedicatedHostName,
+                    capacityReservationGroupReferenceId: capacityReservationGroupReferenceId);
 
                 if (diskEncryptionSetId != null)
                 {
@@ -575,6 +609,25 @@ namespace Compute.Tests
                     Assert.True(getResponse.VirtualMachineProfile.StorageProfile.DataDisks[0].ManagedDisk.DiskEncryptionSet != null, ".DataDisks.ManagedDisk.DiskEncryptionSet is null");
                     Assert.True(string.Equals(diskEncryptionSetId, getResponse.VirtualMachineProfile.StorageProfile.DataDisks[0].ManagedDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
                         "DataDisks.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
+                }
+
+                if (!string.IsNullOrEmpty(capacityReservationGroupReferenceId))
+                {
+                    Assert.True(getResponse.VirtualMachineProfile.CapacityReservation.CapacityReservationGroup != null, "CapacityReservation.CapacityReservationGroup is null");
+                    Assert.True(string.Equals(capacityReservationGroupReferenceId, getResponse.VirtualMachineProfile.CapacityReservation.CapacityReservationGroup.Id, StringComparison.OrdinalIgnoreCase),
+                        "CapacityReservation.CapacityReservationGroup.Id is not matching with expected CapacityReservationGroup resource");
+
+                    CapacityReservation capacityReservation =
+                         m_CrpClient.CapacityReservations.Get(rgName, capacityReservationGroupName, capacityReservationName, CapacityReservationInstanceViewTypes.InstanceView);
+
+                    string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMScaleSet.Name, "0");
+
+                    Assert.True(capacityReservation.VirtualMachinesAssociated.Any(), "capacityReservation.VirtualMachinesAssociated is not empty");
+                    Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.VirtualMachinesAssociated.First().Id), "capacityReservation.VirtualMachinesAssociated are not matching");
+
+                    Assert.True(capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.Any(), "InstanceView.UtilizationInfo.VirtualMachinesAllocated is not empty");
+                    Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.First().Id),
+                        "InstanceView.UtilizationInfo.VirtualMachinesAllocated are not matching");
                 }
 
                 if (encryptionAtHostEnabled != null)
