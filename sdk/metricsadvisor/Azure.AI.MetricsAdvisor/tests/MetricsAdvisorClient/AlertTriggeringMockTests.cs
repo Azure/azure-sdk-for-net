@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = CreateInstrumentedClient(mockResponse);
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(FakeGuid, "alertId"))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(FakeGuid, "alertId"))
             {
                 Assert.That(anomaly.Value, Is.EqualTo(originalValue));
             }
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = CreateInstrumentedClient(mockResponse);
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(FakeGuid, "alertId"))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(FakeGuid, "alertId"))
             {
                 Assert.That(anomaly.ExpectedValue, Is.Null);
             }
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = CreateInstrumentedClient(mockResponse);
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(FakeGuid, "alertId"))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(FakeGuid, "alertId"))
             {
                 Assert.That(anomaly.ExpectedValue, Is.EqualTo(originalExpectedValue));
             }
@@ -71,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = CreateInstrumentedClient(mockResponse);
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(FakeGuid, "alertId"))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForAlertAsync(FakeGuid, "alertId"))
             {
                 Assert.That(incident.ValueOfRootNode, Is.EqualTo(originalValue));
             }
@@ -85,7 +85,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = CreateInstrumentedClient(mockResponse);
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(FakeGuid, "alertId"))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForAlertAsync(FakeGuid, "alertId"))
             {
                 Assert.That(incident.ExpectedValueOfRootNode, Is.Null);
             }
@@ -101,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = CreateInstrumentedClient(mockResponse);
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(FakeGuid, "alertId"))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForAlertAsync(FakeGuid, "alertId"))
             {
                 Assert.That(incident.ExpectedValueOfRootNode, Is.EqualTo(originalValue));
             }
