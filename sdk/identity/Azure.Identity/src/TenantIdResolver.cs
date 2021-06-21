@@ -19,7 +19,7 @@ namespace Azure.Identity
         {
             return allowMultiTenantAuthentication switch
             {
-                false when context.TenantId != null && explicitTenantId != context.TenantId => throw new AuthenticationFailedException(tenantIdMismatch),
+                false when context.TenantId != null && explicitTenantId != context.TenantId && !IdentityCompatSwitches.AllowMultiTenantAuth => throw new AuthenticationFailedException(tenantIdMismatch),
                 false => explicitTenantId ?? context.TenantId,
                 _ => context.TenantId ?? explicitTenantId
             };

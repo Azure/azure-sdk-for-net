@@ -78,7 +78,7 @@ namespace Azure.Identity
 
             ClientId = clientId;
             _tenantId = tenantId;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;

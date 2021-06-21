@@ -86,7 +86,7 @@ namespace Azure.Identity
             DeviceCodeCallback = deviceCodeCallback;
             DisableAutomaticAuthentication = (options as DeviceCodeCredentialOptions)?.DisableAutomaticAuthentication ?? false;
             Record = (options as DeviceCodeCredentialOptions)?.AuthenticationRecord;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, ClientId, AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).ToString(), options as ITokenCacheOptions);
         }

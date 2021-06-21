@@ -83,7 +83,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(clientId, nameof(clientId));
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
 
             _username = username;
             _password = password.ToSecureString();

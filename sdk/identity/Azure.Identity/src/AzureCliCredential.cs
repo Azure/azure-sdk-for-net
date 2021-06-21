@@ -66,7 +66,7 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _tenantId = options?.TenantId;
         }
 

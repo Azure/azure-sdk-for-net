@@ -85,7 +85,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
             _authCode = authorizationCode ;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? true;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {

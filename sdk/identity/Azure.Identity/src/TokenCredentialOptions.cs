@@ -24,8 +24,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// If <c>true</c>, the tenant Id provided by a service authorization challenge will be used over the tenantId configured via the credential options.
-        /// Defaults to <c>true</c>.
+        /// Defaults to <c>false</c>.
         /// </summary>
-        public bool AllowMultiTenantAuthentication { get; set; } = true;
+        public bool AllowMultiTenantAuthentication { get; set; }
     }
 }

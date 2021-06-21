@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -42,6 +45,43 @@ namespace Azure.Identity.Tests
             finally
             {
                 Assert.AreEqual(expectedresult, result);
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void DoesNotThrowWhenAllowMultiTenantAuthConfigOrEnvIsTrue(
+            [Values(true, false, null)] bool? switchEnabled,
+            [Values(true, false, null)] bool? envVarEnabled)
+        {
+            TestAppContextSwitch ctx = null;
+            TestEnvVar env = null;
+            try
+            {
+                if (switchEnabled != null)
+                {
+                    ctx = new TestAppContextSwitch(IdentityCompatSwitches.AllowMultiTenantAuthSwitchName, switchEnabled.Value.ToString());
+                }
+                if (envVarEnabled != null)
+                {
+                    env = new TestEnvVar(IdentityCompatSwitches.AllowMultiTenantAuthExecutionEnvVar, envVarEnabled.Value.ToString());
+                }
+
+                if (IdentityCompatSwitches.AllowMultiTenantAuth)
+                {
+                    var result = TenantIdResolver.Resolve(TenantId, Context_Hint, false);
+                    Assert.AreEqual(TenantId, result);
+                }
+                else
+                {
+                    var ex = Assert.Throws<AuthenticationFailedException>(() => TenantIdResolver.Resolve(TenantId, Context_Hint, false));
+                    Assert.AreEqual(TenantIdResolver.tenantIdMismatch, ex.Message);
+                }
+            }
+            finally
+            {
+                ctx?.Dispose();
+                env?.Dispose();
             }
         }
     }
