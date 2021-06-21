@@ -24,8 +24,6 @@
   </ItemGroup>
  
   <ItemGroup>
-    <!--Switch to package reference once next version is released-->
-    <ProjectReference Include="..\..\..\eventgrid\Azure.Messaging.EventGrid\src\Azure.Messaging.EventGrid.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
   </ItemGroup>
