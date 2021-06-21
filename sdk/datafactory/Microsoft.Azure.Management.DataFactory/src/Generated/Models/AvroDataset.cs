@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        /// <param name="avroCompressionCodec">Possible values include: 'none',
-        /// 'deflate', 'snappy', 'xz', 'bzip2'</param>
-        public AvroDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), string avroCompressionCodec = default(string), int? avroCompressionLevel = default(int?))
+        /// <param name="avroCompressionCodec">The data avroCompressionCodec.
+        /// Type: string (or Expression with resultType string).</param>
+        public AvroDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object avroCompressionCodec = default(object), int? avroCompressionLevel = default(int?))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             Location = location;
@@ -75,11 +75,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public DatasetLocation Location { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'none', 'deflate', 'snappy',
-        /// 'xz', 'bzip2'
+        /// Gets or sets the data avroCompressionCodec. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.avroCompressionCodec")]
-        public string AvroCompressionCodec { get; set; }
+        public object AvroCompressionCodec { get; set; }
 
         /// <summary>
         /// </summary>
