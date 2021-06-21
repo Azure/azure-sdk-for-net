@@ -16,6 +16,7 @@
         ],
         "x-ms-client-request-id": "b51d23785451a8bc64d4a74bb6ede6a5",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Fri, 28 May 2021 18:52:04 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {

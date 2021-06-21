@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> Model factory for read-only models. </summary>
     public static partial class BatchDocumentTranslationModelFactory
     {
-        /// <summary> Initializes new instance of DocumentStatusResult class. </summary>
+        /// <summary> Initializes new instance of DocumentStatus class. </summary>
         /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
@@ -22,12 +22,12 @@ namespace Azure.AI.Translation.Document
         /// <param name="translatedTo"> To language. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
-        /// <param name="documentId"> Document Id. </param>
+        /// <param name="id"> Document Id. </param>
         /// <param name="charactersCharged"> Character charged by the API. </param>
-        /// <returns> A new <see cref="Document.DocumentStatusResult"/> instance for mocking. </returns>
-        public static DocumentStatusResult DocumentStatusResult(Uri translatedDocumentUri = default, Uri sourceDocumentUri = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, TranslationStatus status = default, string translatedTo = default, DocumentTranslationError error = default, float progress = default, string documentId = default, long charactersCharged = default)
+        /// <returns> A new <see cref="Document.DocumentStatus"/> instance for mocking. </returns>
+        public static DocumentStatus DocumentStatus(Uri translatedDocumentUri = default, Uri sourceDocumentUri = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, DocumentTranslationStatus status = default, string translatedTo = default, DocumentTranslationError error = default, float progress = default, string id = default, long charactersCharged = default)
         {
-            return new DocumentStatusResult(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo, error, progress, documentId, charactersCharged);
+            return new DocumentStatus(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo, error, progress, id, charactersCharged);
         }
 
         /// <summary> Initializes new instance of FileFormat class. </summary>
