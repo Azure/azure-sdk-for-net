@@ -127,6 +127,15 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static bool operator !=(Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode left, Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class NotSupportedAssetFileTypeException : System.Exception, System.Runtime.Serialization.ISerializable
+    {
+        public NotSupportedAssetFileTypeException() { }
+        protected NotSupportedAssetFileTypeException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public NotSupportedAssetFileTypeException(string message) { }
+        public NotSupportedAssetFileTypeException(string message, System.Exception inner) { }
+        public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType AttemptedFileType { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
+    }
     public partial class ObjectAnchorsConversionClient
     {
         protected ObjectAnchorsConversionClient() { }
@@ -172,14 +181,5 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-    }
-    public partial class UnsupportedAssetFileTypeException : System.Exception, System.Runtime.Serialization.ISerializable
-    {
-        public UnsupportedAssetFileTypeException() { }
-        protected UnsupportedAssetFileTypeException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public UnsupportedAssetFileTypeException(string message) { }
-        public UnsupportedAssetFileTypeException(string message, System.Exception inner) { }
-        public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType AttemptedFileType { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
     }
 }

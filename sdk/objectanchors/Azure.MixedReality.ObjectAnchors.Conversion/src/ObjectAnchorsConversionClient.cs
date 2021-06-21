@@ -119,7 +119,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 if (!SupportedAssetFileTypes.Contains(options.InputAssetFileType))
                 {
-                    throw new UnsupportedAssetFileTypeException(options.InputAssetFileType, SupportedAssetFileTypes);
+                    throw new NotSupportedAssetFileTypeException(options.InputAssetFileType, SupportedAssetFileTypes);
                 }
 
                 AssetConversionProperties properties = new AssetConversionProperties
@@ -153,7 +153,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 if (!SupportedAssetFileTypes.Contains(options.InputAssetFileType))
                 {
-                    throw new UnsupportedAssetFileTypeException(options.InputAssetFileType, SupportedAssetFileTypes);
+                    throw new NotSupportedAssetFileTypeException(options.InputAssetFileType, SupportedAssetFileTypes);
                 }
 
                 AssetConversionProperties properties = new AssetConversionProperties
