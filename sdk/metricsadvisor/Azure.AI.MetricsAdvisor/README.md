@@ -397,7 +397,7 @@ var options = new GetAnomaliesForAlertOptions() { MaxPageSize = 3 };
 
 int anomalyCount = 0;
 
-await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
+await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(alertConfigurationId, alertId, options))
 {
     Console.WriteLine($"Anomaly detection configuration ID: {anomaly.DetectionConfigurationId}");
     Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");
