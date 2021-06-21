@@ -224,6 +224,11 @@ namespace DataFactory.Tests.ScenarioTests
                     integrationRuntimeName);
                 managedStatus = status.Properties as ManagedIntegrationRuntimeStatus;
                 Assert.Equal(IntegrationRuntimeState.Stopped, managedStatus.State);
+
+                await client.IntegrationRuntimes.OutboundNetworkDependenciesEndpointsAsync(
+                    this.ResourceGroupName,
+                    this.DataFactoryName,
+                    integrationRuntimeName);
             };
 
             Func<DataFactoryManagementClient, Task> finallyAction = async (client) =>
