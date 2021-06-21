@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.MarketplaceOrdering
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("MarketplaceOrdering", "MarketplaceAgreements", "2015-06-01"),
-                new Tuple<string, string, string>("MarketplaceOrdering", "Operations", "2015-06-01"),
+                new Tuple<string, string, string>("MarketplaceOrdering", "MarketplaceAgreements", "2021-01-01"),
+                new Tuple<string, string, string>("MarketplaceOrdering", "Operations", "2021-01-01"),
               }.AsEnumerable();
           }
       }
