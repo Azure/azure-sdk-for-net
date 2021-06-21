@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 
 namespace Azure.ResourceManager.NewResources
 {
@@ -57,15 +56,16 @@ namespace Azure.ResourceManager.NewResources
 
         /// <summary> Lists the PolicyAssignment for this Azure.ResourceManager.Core.ResourceGroupOperations. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static Pageable<PolicyAssignment> ListPolicyAssignment(this ResourceGroupOperations resourceGroup, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyAssignment> ListPolicyAssignment(this ResourceGroupOperations resourceGroup, string filter = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                var result = ListForResourceGroup(clientDiagnostics, restOperations, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName);
+                var result = ListForResourceGroup(clientDiagnostics, restOperations, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, filter: filter, cancellationToken: cancellationToken);
                 return new PhWrappingPageable<PolicyAssignmentData, PolicyAssignment>(
                 result,
                 s => new PolicyAssignment(resourceGroup, s));
@@ -117,6 +117,25 @@ namespace Azure.ResourceManager.NewResources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// <summary> Lists the PolicyAssignment for this Azure.ResourceManager.Core.ResourceGroupOperations. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
+        public static AsyncPageable<PolicyAssignment> ListPolicyAssignmentAsync(this ResourceGroupOperations resourceGroup, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                var result = ListForResourceGroupAsync(clientDiagnostics, restOperations, resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, filter: filter, cancellationToken: cancellationToken);
+                return new PhWrappingAsyncPageable<PolicyAssignmentData, PolicyAssignment>(
+                result,
+                s => new PolicyAssignment(resourceGroup, s));
+            }
+            );
+        }
+
         /// <summary> This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="restOperations"> Resource client operations. </param>
@@ -153,7 +172,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListNextPageAsync(nextLink, filter: filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
