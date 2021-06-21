@@ -23,13 +23,13 @@ namespace Microsoft.Azure.Management.Authorization
     public static partial class RoleAssignmentsOperationsExtensions
     {
             /// <summary>
-            /// Gets role assignments for a resource.
+            /// List role assignments for a resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
@@ -46,19 +46,22 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForResource(this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static IPage<RoleAssignment> ListForResource(this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string))
             {
-                return operations.ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets role assignments for a resource.
+            /// List role assignments for a resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
@@ -75,59 +78,68 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForResourceAsync(this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListForResourceAsync(this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets role assignments for a resource group.
+            /// List role assignments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForResourceGroup(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static IPage<RoleAssignment> ListForResourceGroup(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string))
             {
-                return operations.ListForResourceGroupAsync(resourceGroupName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListForResourceGroupAsync(resourceGroupName, odataQuery, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets role assignments for a resource group.
+            /// List role assignments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForResourceGroupAsync(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListForResourceGroupAsync(this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a role assignment.
+            /// Delete a role assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -138,13 +150,16 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleAssignmentName'>
             /// The name of the role assignment to delete.
             /// </param>
-            public static RoleAssignment Delete(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName)
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static RoleAssignment Delete(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, string tenantId = default(string))
             {
-                return operations.DeleteAsync(scope, roleAssignmentName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(scope, roleAssignmentName, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a role assignment.
+            /// Delete a role assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -155,19 +170,22 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleAssignmentName'>
             /// The name of the role assignment to delete.
             /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> DeleteAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RoleAssignment> DeleteAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, roleAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, roleAssignmentName, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates a role assignment.
+            /// Create a role assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -193,7 +211,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Creates a role assignment.
+            /// Create a role assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,9 +254,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleAssignmentName'>
             /// The name of the role assignment to get.
             /// </param>
-            public static RoleAssignment Get(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName)
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static RoleAssignment Get(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, string tenantId = default(string))
             {
-                return operations.GetAsync(scope, roleAssignmentName).GetAwaiter().GetResult();
+                return operations.GetAsync(scope, roleAssignmentName, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -253,19 +274,22 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleAssignmentName'>
             /// The name of the role assignment to get.
             /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> GetAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RoleAssignment> GetAsync(this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, roleAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, roleAssignmentName, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a role assignment.
+            /// Delete a role assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -273,26 +297,32 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleId'>
             /// The ID of the role assignment to delete.
             /// </param>
-            public static RoleAssignment DeleteById(this IRoleAssignmentsOperations operations, string roleId)
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static RoleAssignment DeleteById(this IRoleAssignmentsOperations operations, string roleId, string tenantId = default(string))
             {
-                return operations.DeleteByIdAsync(roleId).GetAwaiter().GetResult();
+                return operations.DeleteByIdAsync(roleId, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a role assignment.
+            /// Delete a role assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='roleId'>
             /// The ID of the role assignment to delete.
+            /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> DeleteByIdAsync(this IRoleAssignmentsOperations operations, string roleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RoleAssignment> DeleteByIdAsync(this IRoleAssignmentsOperations operations, string roleId, string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteByIdWithHttpMessagesAsync(roleId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteByIdWithHttpMessagesAsync(roleId, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -347,9 +377,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleId'>
             /// The ID of the role assignment to get.
             /// </param>
-            public static RoleAssignment GetById(this IRoleAssignmentsOperations operations, string roleId)
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static RoleAssignment GetById(this IRoleAssignmentsOperations operations, string roleId, string tenantId = default(string))
             {
-                return operations.GetByIdAsync(roleId).GetAwaiter().GetResult();
+                return operations.GetByIdAsync(roleId, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -361,12 +394,15 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='roleId'>
             /// The ID of the role assignment to get.
             /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> GetByIdAsync(this IRoleAssignmentsOperations operations, string roleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RoleAssignment> GetByIdAsync(this IRoleAssignmentsOperations operations, string roleId, string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleId, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -381,9 +417,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleAssignment> List(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static IPage<RoleAssignment> List(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string))
             {
-                return operations.ListAsync(odataQuery).GetAwaiter().GetResult();
+                return operations.ListAsync(odataQuery, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -395,12 +434,15 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListAsync(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListAsync(this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -418,9 +460,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleAssignment> ListForScope(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>))
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
+            public static IPage<RoleAssignment> ListForScope(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string))
             {
-                return operations.ListForScopeAsync(scope, odataQuery).GetAwaiter().GetResult();
+                return operations.ListForScopeAsync(scope, odataQuery, tenantId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -435,19 +480,22 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='tenantId'>
+            /// Tenant ID for cross-tenant request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForScopeAsync(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListForScopeAsync(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, tenantId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets role assignments for a resource.
+            /// List role assignments for a resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -461,7 +509,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Gets role assignments for a resource.
+            /// List role assignments for a resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -481,7 +529,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Gets role assignments for a resource group.
+            /// List role assignments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -495,7 +543,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Gets role assignments for a resource group.
+            /// List role assignments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

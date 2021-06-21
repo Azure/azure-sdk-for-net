@@ -14,29 +14,27 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using System.Linq;
 
     /// <summary>
-    /// Role Definitions filter
+    /// The resource management error additional info.
     /// </summary>
-    public partial class RoleDefinitionFilter
+    public partial class ErrorAdditionalInfo
     {
         /// <summary>
-        /// Initializes a new instance of the RoleDefinitionFilter class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        public RoleDefinitionFilter()
+        public ErrorAdditionalInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RoleDefinitionFilter class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        /// <param name="roleName">Returns role definition with the specific
-        /// name.</param>
-        /// <param name="type">Returns role definition with the specific
-        /// type.</param>
-        public RoleDefinitionFilter(string roleName = default(string), string type = default(string))
+        /// <param name="type">The additional info type.</param>
+        /// <param name="info">The additional info.</param>
+        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
         {
-            RoleName = roleName;
             Type = type;
+            Info = info;
             CustomInit();
         }
 
@@ -46,16 +44,16 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets returns role definition with the specific name.
-        /// </summary>
-        [JsonProperty(PropertyName = "roleName")]
-        public string RoleName { get; set; }
-
-        /// <summary>
-        /// Gets or sets returns role definition with the specific type.
+        /// Gets the additional info type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "info")]
+        public object Info { get; private set; }
 
     }
 }

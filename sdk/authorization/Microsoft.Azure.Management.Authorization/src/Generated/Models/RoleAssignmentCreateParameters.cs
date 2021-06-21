@@ -47,10 +47,15 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <param name="canDelegate">The delegation flag used for creating a
         /// role assignment</param>
         /// <param name="description">Description of role assignment</param>
-        /// <param name="condition">The conditions on the role
-        /// assignment</param>
-        /// <param name="conditionVersion">Version of the condition</param>
-        public RoleAssignmentCreateParameters(string roleDefinitionId, string principalId, string principalType = default(string), bool? canDelegate = default(bool?), string description = default(string), string condition = default(string), string conditionVersion = default(string))
+        /// <param name="condition">The conditions on the role assignment. This
+        /// limits the resources it can be assigned to. e.g.:
+        /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
+        /// StringEqualsIgnoreCase 'foo_storage_container'</param>
+        /// <param name="conditionVersion">Version of the condition. Currently
+        /// accepted value is '2.0'</param>
+        /// <param name="delegatedManagedIdentityResourceId">Id of the
+        /// delegated managed identity resource</param>
+        public RoleAssignmentCreateParameters(string roleDefinitionId, string principalId, string principalType = default(string), bool? canDelegate = default(bool?), string description = default(string), string condition = default(string), string conditionVersion = default(string), string delegatedManagedIdentityResourceId = default(string))
         {
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
@@ -59,6 +64,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
             Description = description;
             Condition = condition;
             ConditionVersion = conditionVersion;
+            DelegatedManagedIdentityResourceId = delegatedManagedIdentityResourceId;
             CustomInit();
         }
 
@@ -104,16 +110,26 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the conditions on the role assignment
+        /// Gets or sets the conditions on the role assignment. This limits the
+        /// resources it can be assigned to. e.g.:
+        /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
+        /// StringEqualsIgnoreCase 'foo_storage_container'
         /// </summary>
         [JsonProperty(PropertyName = "properties.condition")]
         public string Condition { get; set; }
 
         /// <summary>
-        /// Gets or sets version of the condition
+        /// Gets or sets version of the condition. Currently accepted value is
+        /// '2.0'
         /// </summary>
         [JsonProperty(PropertyName = "properties.conditionVersion")]
         public string ConditionVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets id of the delegated managed identity resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.delegatedManagedIdentityResourceId")]
+        public string DelegatedManagedIdentityResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.
