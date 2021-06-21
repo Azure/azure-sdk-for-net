@@ -100,6 +100,6 @@ catch (RequestFailedException e)
 
 ---
 To see the full example source files, see:
-- [Synchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTable.cs)
-- [Asynchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableAsync.cs)
-- [CreateDeleteTableErrors](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableErrors.cs)
+- [Synchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTable.cs)
+- [Asynchronous CreateDeleteTable](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableAsync.cs)
+- [CreateDeleteTableErrors](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample1_CreateDeleteTableErrors.cs)

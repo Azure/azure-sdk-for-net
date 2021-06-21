@@ -1,4 +1,4 @@
-﻿# Microsoft.Azure.Management.Automanage release notes
+# Microsoft.Azure.Management.Automanage release notes
 
 ## Changes in 0.1.0-preview
 ### Features

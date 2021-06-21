@@ -37,5 +37,5 @@ foreach (TableItem table in queryTableResults)
 
 ---
 To see the full example source files, see:
-- [Synchronous Query Tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample3_QueryTables.cs)
-- [Asynchronous Query Tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample3_QueryTablesAsync.cs)
+- [Synchronous Query Tables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample3_QueryTables.cs)
+- [Asynchronous Query Tables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample3_QueryTablesAsync.cs)

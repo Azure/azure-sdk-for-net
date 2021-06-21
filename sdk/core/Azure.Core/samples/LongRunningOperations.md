@@ -43,7 +43,7 @@ Console.WriteLine(operation.HasValue);
 
 A Pageable Operation is use when the service call returns multiple values in pages after the Long Running Operation completes. The results can be access with the `GetValues()`, `GetValuesAsync()` methods which return `Pageable<T>/AsyncPageable<T>` respectively.
 
-To access the result you can iterate over the `Pageable<T>/AsyncPageable<T>`. For more information see [Consuming Service Methods Returning Pageable/AsyncPageable](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core#consuming-service-methods-returning-asyncpageablet).
+To access the result you can iterate over the `Pageable<T>/AsyncPageable<T>`. For more information see [Consuming Service Methods Returning Pageable/AsyncPageable](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core#consuming-service-methods-returning-asyncpageablet).
 
 ### Using `GetValuesAsync()`
 The `GetValuesAsync` method will contain the `AsyncPageable<T>` results.

@@ -1,6 +1,6 @@
 # Query Entities
 
-This sample demonstrates how to query a table for entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
+This sample demonstrates how to query a table for entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`
 
@@ -21,7 +21,7 @@ var tableClient = new TableClient(
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
-If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
+If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
 
 ## Query entities with `filter`
 
@@ -63,7 +63,7 @@ Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 
 Here is a query returning a collection of the strongly-typed `OfficeSupplyEntity` objects that cost at least $6.00.
 
-To define the strongly-typed class, refer to the sample on [creating classes](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample2CreateDeleteEntities.md).
+To define the strongly-typed class, refer to the sample on [creating classes](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample2CreateDeleteEntities.md).
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
 double priceCutOff = 6.00;
@@ -101,5 +101,5 @@ foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
 
 ---
 To see the full example source files, see:
-- [Synchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntities.cs)
-- [Asynchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntitiesAsync.cs)
+- [Synchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntities.cs)
+- [Asynchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntitiesAsync.cs)
