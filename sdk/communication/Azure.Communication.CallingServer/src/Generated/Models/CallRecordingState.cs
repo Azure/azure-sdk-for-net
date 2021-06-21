@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The recording state of the recording. </summary>
+    /// <summary> The state of the recording. </summary>
     public readonly partial struct CallRecordingState : IEquatable<CallRecordingState>
     {
         private readonly string _value;
