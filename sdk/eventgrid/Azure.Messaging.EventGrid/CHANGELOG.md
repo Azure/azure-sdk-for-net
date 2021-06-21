@@ -1,6 +1,6 @@
 # Release History
 
-## 4.4.0-beta.1 (2021-06-21)
+## 4.4.0 (2021-06-21)
 
 ### Features Added
 - Added public constructor and settable property for `SubscriptionValidationResponse`.
