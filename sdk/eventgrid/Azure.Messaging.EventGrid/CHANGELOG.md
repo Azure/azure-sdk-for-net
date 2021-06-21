@@ -5,6 +5,9 @@
 ### Features Added
 - Added public constructor and settable property for `SubscriptionValidationResponse`.
 
+### Key Bugs Fixed
+- Fix issue where ARM system event data could not be deserialized into their strongly typed models.
+
 ## 4.3.0 (2021-06-08)
 
 ### New Features
