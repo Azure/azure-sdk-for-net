@@ -866,6 +866,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Create)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.IfAppendPositionEqual
+                    | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual);
+
                 try
                 {
                     scope.Start();
@@ -1126,6 +1130,9 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
+
+                // All AppendBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(BlobRequestConditionProperty.None);
 
                 try
                 {
@@ -1522,6 +1529,15 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
 
+                // All destination AppendBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(BlobRequestConditionProperty.None);
+
+                sourceConditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.LeaseId
+                    | BlobRequestConditionProperty.TagConditions
+                    | BlobRequestConditionProperty.IfAppendPositionEqual
+                    | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual);
+
                 try
                 {
                     scope.Start();
@@ -1690,6 +1706,10 @@ namespace Azure.Storage.Blobs.Specialized
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Seal)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
+                    | BlobRequestConditionProperty.TagConditions);
 
                 try
                 {

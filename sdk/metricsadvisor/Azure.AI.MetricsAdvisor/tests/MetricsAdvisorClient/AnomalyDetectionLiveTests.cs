@@ -365,7 +365,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
             var returnedKeys = new List<DimensionKey>();
 
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, DetectionConfigurationId, SamplingStartTime, SamplingEndTime))
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(DetectionConfigurationId, seriesKeys, SamplingStartTime, SamplingEndTime))
             {
                 Assert.That(seriesData, Is.Not.Null);
                 Assert.That(seriesData.SeriesKey, Is.Not.Null);

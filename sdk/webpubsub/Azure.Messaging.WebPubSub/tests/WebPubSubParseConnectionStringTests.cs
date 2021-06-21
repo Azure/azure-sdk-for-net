@@ -36,7 +36,7 @@ namespace Azure.Messaging.WebPubSub.Tests
         public void TestGenerateUriContainsExpectedPayloads(string userId, string[] roles)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
-            var uri = serviceClient.GenerateClientAccessUri(userId, roles, TimeSpan.FromMinutes(5));
+            var uri = serviceClient.GenerateClientAccessUri(TimeSpan.FromMinutes(5), userId, roles);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
             Assert.NotNull(token);
             var jwt = JwtTokenHandler.ReadJwtToken(token);

@@ -200,17 +200,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var emptyList = new List<DimensionKey>();
             var seriesKeys = new List<DimensionKey>() { new DimensionKey() };
 
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(null, FakeGuid, default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(emptyList, FakeGuid, default, default), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(seriesKeys, null, default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(seriesKeys, "", default, default), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(seriesKeys, "configId", default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(FakeGuid, null, default, default), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(FakeGuid, emptyList, default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(null, seriesKeys, default, default), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync("", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync("configId", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
-            Assert.That(() => client.GetMetricEnrichedSeriesData(null, FakeGuid, default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesData(emptyList, FakeGuid, default, default), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesData(seriesKeys, null, default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesData(seriesKeys, "", default, default), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesData(seriesKeys, "configId", default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetMetricEnrichedSeriesData(FakeGuid, null, default, default), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesData(FakeGuid, emptyList, default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesData(null, seriesKeys, default, default), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesData("", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricEnrichedSeriesData("configId", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
         }
 
         [Test]
@@ -224,10 +224,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<MetricEnrichedSeriesData> asyncEnumerator = client.GetMetricEnrichedSeriesDataAsync(seriesKeys, FakeGuid, default, default, cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<MetricEnrichedSeriesData> asyncEnumerator = client.GetMetricEnrichedSeriesDataAsync(FakeGuid, seriesKeys, default, default, cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<MetricEnrichedSeriesData> enumerator = client.GetMetricEnrichedSeriesData(seriesKeys, FakeGuid, default, default, cancellationSource.Token).GetEnumerator();
+            IEnumerator<MetricEnrichedSeriesData> enumerator = client.GetMetricEnrichedSeriesData(FakeGuid, seriesKeys, default, default, cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 

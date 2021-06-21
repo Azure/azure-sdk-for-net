@@ -1375,17 +1375,18 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ValidateConditionsNotPresent
-        internal static void ValidateConditionsNotPresent(this BlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
+        internal static void ValidateConditionsNotPresent(this BlobLeaseRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
         {
-            if (requestConditions == null)
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
             {
                 return;
             }
 
-            if ((invalidConditions & BlobRequestConditionProperty.LeaseId) == BlobRequestConditionProperty.LeaseId
-                && requestConditions.LeaseId != null)
+            if (requestConditions == null)
             {
-                throw new ArgumentException($"{nameof(BlobRequestConditions.LeaseId)} is not applicable to this API.");
+                return;
             }
 
             if ((invalidConditions & BlobRequestConditionProperty.TagConditions) == BlobRequestConditionProperty.TagConditions
@@ -1416,6 +1417,62 @@ namespace Azure.Storage.Blobs
                 && requestConditions.IfNoneMatch != null)
             {
                 throw new ArgumentException($"{nameof(BlobRequestConditions.IfNoneMatch)} is not applicable to this API.");
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(this BlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            // Validate BlobLeaseRequestConditions conditions.
+            ((BlobLeaseRequestConditions)requestConditions).ValidateConditionsNotPresent(invalidConditions);
+
+            // Validate BlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.LeaseId) == BlobRequestConditionProperty.LeaseId
+                && requestConditions.LeaseId != null)
+            {
+                throw new ArgumentException($"{nameof(BlobRequestConditions.LeaseId)} is not applicable to this API.");
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(this AppendBlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            // Validate BlobRequestConditions
+            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(invalidConditions);
+
+            // Validate AppendBlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.IfAppendPositionEqual) == BlobRequestConditionProperty.IfAppendPositionEqual
+                && requestConditions.IfAppendPositionEqual != null)
+            {
+                throw new ArgumentException($"{nameof(AppendBlobRequestConditions.IfAppendPositionEqual)} is not applicable to this API.");
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual) == BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
+                && requestConditions.IfMaxSizeLessThanOrEqual != null)
+            {
+                throw new ArgumentException($"{nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual)} is not applicable to this API.");
             }
         }
         #endregion

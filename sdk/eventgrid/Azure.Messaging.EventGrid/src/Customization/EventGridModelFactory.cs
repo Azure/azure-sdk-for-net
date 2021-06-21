@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -179,6 +180,15 @@ namespace Azure.Messaging.EventGrid
         public static ResourceActionCancelEventData ResourceActionCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
         {
             return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement);
+        }
+
+        /// <summary> Initializes new instance of SubscriptionValidationResponse class. </summary>
+        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
+        /// <returns> A new <see cref="SystemEvents.SubscriptionValidationResponse"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
+        {
+            return new(validationResponse);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
