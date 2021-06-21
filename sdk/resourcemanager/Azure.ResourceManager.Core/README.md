@@ -148,7 +148,7 @@ For more detailed examples, take a look at [samples]<---(samples/)--> we have av
 -   If you need help, check [previous
     questions]<---(https://stackoverflow.com/questions/tagged/azure+.net)-->
     or ask new ones on StackOverflow using azure and .NET tags.
--   If having trouble with authenthication, go to [DefaultAzureCredential documentation]<---(https://docs.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet)-->.
+-   If having trouble with authenthication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
 ## Next Steps
 ### More sample code
 
