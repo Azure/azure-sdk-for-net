@@ -42,13 +42,15 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// both.</param>
         /// <param name="clusterResourceId">Dedicated LA cluster resourceId
         /// that is linked to the workspaces.</param>
-        public WorkspaceFeatures(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), bool? enableDataExport = default(bool?), bool? immediatePurgeDataOn30Days = default(bool?), bool? enableLogAccessUsingOnlyResourcePermissions = default(bool?), string clusterResourceId = default(string))
+        /// <param name="disableLocalAuth">Disable Non-AAD based Auth.</param>
+        public WorkspaceFeatures(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), bool? enableDataExport = default(bool?), bool? immediatePurgeDataOn30Days = default(bool?), bool? enableLogAccessUsingOnlyResourcePermissions = default(bool?), string clusterResourceId = default(string), bool? disableLocalAuth = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             EnableDataExport = enableDataExport;
             ImmediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
             EnableLogAccessUsingOnlyResourcePermissions = enableLogAccessUsingOnlyResourcePermissions;
             ClusterResourceId = clusterResourceId;
+            DisableLocalAuth = disableLocalAuth;
             CustomInit();
         }
 
@@ -90,6 +92,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "clusterResourceId")]
         public string ClusterResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets disable Non-AAD based Auth.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
 
     }
 }
