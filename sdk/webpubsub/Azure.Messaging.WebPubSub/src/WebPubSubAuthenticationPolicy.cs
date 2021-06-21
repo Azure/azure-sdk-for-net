@@ -26,7 +26,9 @@ namespace Azure.Messaging.WebPubSub
         public override void OnSendingRequest(HttpMessage message)
         {
             string audience = message.Request.Uri.ToUri().AbsoluteUri;
-            string accessToken = JwtUtils.GenerateJwtBearer(audience, claims: null, expiresAfter: TimeSpan.FromMinutes(10), _credential);
+            var expiresAt = DateTime.UtcNow + TimeSpan.FromMinutes(10);
+
+            string accessToken = JwtUtils.GenerateJwtBearer(audience, claims: null, expiresAt, _credential);
 
             var header = new AuthenticationHeaderValue("Bearer", accessToken);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, header.ToString());
