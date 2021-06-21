@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var dataSource = new AzureTableDataFeedSource("connectionString", "table", "query");
             var granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
             var schema = new DataFeedSchema() { MetricColumns = { new("metricName") } };
-            var ingestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow };
+            var ingestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow);
 
             var dataFeed = new DataFeed()
             {
@@ -68,10 +68,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             dataFeed.IngestionSettings = null;
             Assert.That(() => adminClient.CreateDataFeedAsync(dataFeed), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateDataFeed(dataFeed), Throws.InstanceOf<ArgumentNullException>());
-
-            dataFeed.IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = null };
-            Assert.That(() => adminClient.CreateDataFeedAsync(dataFeed), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.CreateDataFeed(dataFeed), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -85,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = new AzureTableDataFeedSource("connectionString", "table", "query"),
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema() { MetricColumns = { new("metricName") } },
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow }
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
             };
 
             using var cancellationSource = new CancellationTokenSource();

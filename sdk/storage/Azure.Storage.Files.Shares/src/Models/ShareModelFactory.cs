@@ -226,7 +226,7 @@ namespace Azure.Storage.Files.Shares.Models
             string parentId = default,
             DateTimeOffset? openedOn = default,
             DateTimeOffset? lastReconnectedOn = default)
-            =>  new ShareFileHandle(
+            => new ShareFileHandle(
                 handleId,
                 path,
                 fileId,
@@ -371,5 +371,24 @@ namespace Azure.Storage.Files.Shares.Models
                 LastModified = lastModified,
             };
         }
+
+        /// <summary>
+        /// Creates a new ShareFileItemProperties instance for mocking.
+        /// </summary>
+
+        public static ShareFileItemProperties ShareFileItemProperties(
+            DateTimeOffset? createdOn = default,
+            DateTimeOffset? lastAccessedOn = default,
+            DateTimeOffset? lastWrittenOn = default,
+            DateTimeOffset? changedOn = default,
+            DateTimeOffset? lastModified = default,
+            ETag? etag = default)
+            => new ShareFileItemProperties(
+                createdOn: createdOn,
+                lastAccessedOn: lastAccessedOn,
+                lastWrittenOn: lastWrittenOn,
+                changedOn: changedOn,
+                lastModified: lastModified,
+                eTag: etag);
     }
 }
