@@ -103,7 +103,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.MetricId, Is.Not.Null.And.Not.Empty);
-                Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Not.Null.And.Not.Empty);
+                Assert.That(anomaly.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.Timestamp, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(anomaly.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(anomaly.ModifiedTime, Is.Not.EqualTo(default(DateTimeOffset)));

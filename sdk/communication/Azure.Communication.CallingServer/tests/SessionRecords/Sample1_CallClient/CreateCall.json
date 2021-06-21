@@ -12,6 +12,7 @@
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210602.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f7c8910f9c6fa503ddd8b7582e6d4d17",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 02 Jun 2021 21:28:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {

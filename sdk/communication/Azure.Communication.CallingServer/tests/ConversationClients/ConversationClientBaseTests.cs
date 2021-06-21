@@ -40,5 +40,20 @@ namespace Azure.Communication.CallingServer.Tests.ConversationClients
             var convClient = new ConversationClient(uri, communicationTokenCredential, callClientOptions);
             return convClient;
         }
+
+        public ConversationClient CreateMockConversationClient(MockResponse[] mockResponses)
+        {
+            var uri = new Uri("https://acs.dummyresource.com");
+            var communicationTokenCredential =
+                new AzureKeyCredential(dummyAccessKey);
+
+            var callClientOptions = new CallClientOptions
+            {
+                Transport = new MockTransport(mockResponses)
+            };
+
+            var convClient = new ConversationClient(uri, communicationTokenCredential, callClientOptions);
+            return convClient;
+        }
     }
 }

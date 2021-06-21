@@ -51,7 +51,7 @@ az cosmosdb table create --name MyTableName --resource-group MyResourceGroup --a
 
 ### Authenticate the Client
 
-Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample0Auth.md)
+Learn more about options for authentication _(including Connection Strings, Shared Key, Shared Key Signatures, and TokenCredentials)_ [in our samples.](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample0Auth.md)
 
 ## Key concepts
 

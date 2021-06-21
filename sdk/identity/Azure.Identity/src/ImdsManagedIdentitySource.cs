@@ -111,6 +111,11 @@ namespace Azure.Identity
                     .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null, async)
                     .ConfigureAwait(false);
 
+                var errorContentMessage = await GetMessageFromResponse(response, async, cancellationToken).ConfigureAwait(false);
+                if (errorContentMessage != null)
+                {
+                    message = message + Environment.NewLine + errorContentMessage;
+                }
                 Interlocked.CompareExchange(ref _identityUnavailableErrorMessage, message, null);
                 throw new CredentialUnavailableException(message);
             }

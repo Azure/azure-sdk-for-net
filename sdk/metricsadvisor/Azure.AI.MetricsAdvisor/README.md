@@ -211,10 +211,7 @@ dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
 dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
 dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
 
-dataFeed.IngestionSettings = new DataFeedIngestionSettings()
-{
-    IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
-};
+dataFeed.IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.Parse("2020-01-01T00:00:00Z"));
 
 Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
@@ -319,10 +316,7 @@ Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and t
 ```C# Snippet:CreateHookAsync
 string hookName = "<hookName>";
 
-var emailHook = new EmailNotificationHook()
-{
-    Name = hookName
-};
+var emailHook = new EmailNotificationHook(hookName);
 
 emailHook.EmailsToAlert.Add("email1@sample.com");
 emailHook.EmailsToAlert.Add("email2@sample.com");
@@ -405,7 +399,7 @@ int anomalyCount = 0;
 
 await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
 {
-    Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
+    Console.WriteLine($"Anomaly detection configuration ID: {anomaly.DetectionConfigurationId}");
     Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");
     Console.WriteLine($"Metric ID: {anomaly.MetricId}");
     Console.WriteLine($"Anomaly value: {anomaly.Value}");
