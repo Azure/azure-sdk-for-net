@@ -7,6 +7,7 @@ namespace Azure.Identity
 {
     internal static class TenantIdResolver
     {
+        internal const string tenantIdMismatch = "The TenantId received from a challenge did not match the configured TenantId and AllowMultiTenantAuthentication is false.";
         /// <summary>
         /// Resolves the tenantId based on the supplied configuration values.
         /// </summary>
@@ -18,6 +19,7 @@ namespace Azure.Identity
         {
             return allowMultiTenantAuthentication switch
             {
+                false when context.TenantId != null && explicitTenantId != context.TenantId => throw new AuthenticationFailedException(tenantIdMismatch),
                 false => explicitTenantId ?? context.TenantId,
                 _ => context.TenantId ?? explicitTenantId
             };

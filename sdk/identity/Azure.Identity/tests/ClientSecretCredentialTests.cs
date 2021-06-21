@@ -46,10 +46,10 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint(
             [Values(true, false)] bool usePemFile,
             [Values(null, TenantIdHint)] string tenantId,
-            [Values(true, false)] bool preferHint)
+            [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            options.AllowMultiTenantAuthentication = preferHint;
+            options.AllowMultiTenantAuthentication = allowMultiTenantAuthentication;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
             ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockMsalClient));

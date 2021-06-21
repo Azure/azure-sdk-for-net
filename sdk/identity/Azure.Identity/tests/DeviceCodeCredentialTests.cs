@@ -104,9 +104,9 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
+        public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
-            options = new TokenCredentialOptions { AllowMultiTenantAuthentication = preferHint };
+            options = new TokenCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication) ;
             var cred = InstrumentClient(

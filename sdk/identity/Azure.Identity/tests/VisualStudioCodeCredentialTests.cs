@@ -60,11 +60,11 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task AuthenticateWithVsCodeCredential([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
+        public async Task AuthenticateWithVsCodeCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             using var env = new TestEnvVar(new Dictionary<string, string> {{"TENANT_ID", TenantId}});
             var environment = new IdentityTestEnvironment();
-            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport(), AllowMultiTenantAuthentication = preferHint };
+            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport(), AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(environment.TenantId, context, options.AllowMultiTenantAuthentication);
 

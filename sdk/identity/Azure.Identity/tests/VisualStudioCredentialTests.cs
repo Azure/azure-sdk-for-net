@@ -23,7 +23,7 @@ namespace Azure.Identity.Tests
         public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
+        public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool preferHint)
         {
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();

@@ -30,11 +30,11 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential(
             [Values(null, TenantIdHint)] string tenantId,
-            [Values(true, false)] bool preferHint,
+            [Values(true)] bool allowMultiTenantAuthentication,
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = preferHint};
+            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
             string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 

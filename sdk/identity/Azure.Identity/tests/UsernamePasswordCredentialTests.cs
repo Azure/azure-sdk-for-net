@@ -53,10 +53,10 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
+        public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new UsernamePasswordCredentialOptions { AllowMultiTenantAuthentication = preferHint };
+            var options = new UsernamePasswordCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
 

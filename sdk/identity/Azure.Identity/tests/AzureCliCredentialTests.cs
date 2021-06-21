@@ -23,11 +23,11 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithCliCredential(
             [Values(null, TenantIdHint)] string tenantId,
-            [Values(true, false)] bool preferHint,
+            [Values(true)] bool allowMultiTenantAuthentication,
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = preferHint};
+            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
             string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 

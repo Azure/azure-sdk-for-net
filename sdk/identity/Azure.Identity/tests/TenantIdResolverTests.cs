@@ -11,30 +11,38 @@ namespace Azure.Identity.Tests
     public class TenantIdResolverTests
     {
         private const string TenantId = "clientTenant";
-        private static TokenRequestContext Context_Hint = new(Array.Empty<string>(), tenantId: "hint" );
+        private static TokenRequestContext Context_Hint = new(Array.Empty<string>(), tenantId: "hint");
         private static TokenRequestContext Context_NoHint = new(Array.Empty<string>());
-        private static TokenCredentialOptions Options_True = new() { AllowMultiTenantAuthentication = true };
-        private static TokenCredentialOptions Options_False = new() { AllowMultiTenantAuthentication = false };
 
         public static IEnumerable<object[]> ResolveInputs()
         {
-            yield return new object[] { TenantId, Context_Hint, Options_True, Context_Hint.TenantId };
-            yield return new object[] { TenantId, Context_NoHint, Options_True, TenantId };
-            yield return new object[] { TenantId, Context_Hint, Options_False, TenantId };
-            yield return new object[] { TenantId, Context_NoHint, Options_False, TenantId };
-            yield return new object[] { null, Context_Hint, Options_True, Context_Hint.TenantId };
-            yield return new object[] { null, Context_NoHint, Options_True, null };
-            yield return new object[] { null, Context_Hint, Options_False, Context_Hint.TenantId };
-            yield return new object[] { null, Context_NoHint, Options_False, null };
+            yield return new object[] { TenantId, Context_Hint, true, Context_Hint.TenantId };
+            yield return new object[] { TenantId, Context_NoHint, true, TenantId };
+            yield return new object[] { TenantId, Context_Hint, false, TenantIdResolver.tenantIdMismatch };
+            yield return new object[] { TenantId, Context_NoHint, false, TenantId };
+            yield return new object[] { null, Context_Hint, true, Context_Hint.TenantId };
+            yield return new object[] { null, Context_NoHint, true, null };
+            yield return new object[] { null, Context_Hint, false, TenantIdResolver.tenantIdMismatch };
+            yield return new object[] { null, Context_NoHint, false, null };
         }
 
         [Test]
         [TestCaseSource(nameof(ResolveInputs))]
-        public void Resolve(string tenantId, TokenRequestContext context, TokenCredentialOptions options, string expectedTenantId)
+        public void Resolve(string tenantId, TokenRequestContext context, bool allowMultiTenantAuth, string expectedresult)
         {
-            var result = TenantIdResolver.Resolve(tenantId, context, options.AllowMultiTenantAuthentication);
-
-            Assert.AreEqual(expectedTenantId, result);
+            object result = null;
+            try
+            {
+                result = TenantIdResolver.Resolve(tenantId, context, allowMultiTenantAuth);
+            }
+            catch (AuthenticationFailedException ex)
+            {
+                result = ex.Message;
+            }
+            finally
+            {
+                Assert.AreEqual(expectedresult, result);
+            }
         }
     }
 }
