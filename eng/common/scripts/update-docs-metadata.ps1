@@ -24,7 +24,7 @@ param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-$releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)master"
+$releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)main"
 
 function GetMetaData {
   if (Test-Path Variable:MetadataUri) {

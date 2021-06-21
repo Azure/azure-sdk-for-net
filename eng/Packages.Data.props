@@ -45,6 +45,7 @@
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
+    <PackageReference Update="System.Text.Encodings.Web" Version="4.5.1" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
 
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
@@ -79,7 +80,7 @@
     <PackageReference Update="Azure.Core.Amqp" Version="1.1.0-beta.1" Condition="'$(HasReleaseVersion)' == 'false'"/>
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.13" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.4.1" />
-    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.2.0" />
+    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.3.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.2.0-beta.3" Condition="'$(HasReleaseVersion)' == 'false'"/>
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0-beta.1" />
     <PackageReference Update="Azure.Identity" Version="1.4.0" />
@@ -105,7 +106,8 @@
     These are dependencies for Track 2 integration packages
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
-    <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0-beta.1" />
+    <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
+    <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.27" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.19" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
@@ -115,8 +117,7 @@
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.0-beta.2" Condition="'$(HasReleaseVersion)' == 'false'" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -130,7 +131,7 @@
     All should have PrivateAssets="All" set so they don't become pacakge dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210604.3" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210615.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210322.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -217,6 +218,7 @@
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
+    <PackageReference Update="System.Linq.Async" Version="5.0.0" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />

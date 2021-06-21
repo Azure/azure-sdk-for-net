@@ -19,8 +19,6 @@ namespace Azure.Messaging.WebPubSub
     {
         private AzureKeyCredential _credential;
 
-        private const string JsonContent = "application/json";
-
         /// <summary>
         /// The hub.
         /// </summary>
@@ -98,188 +96,184 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
-        /// <param name="message"></param>
-        /// <param name="excluded">Excluded connection Ids.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToAllAsync(string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendToAllAsync(string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await SendToAllAsync(JsonContent, RequestContent.Create((object)message), excluded, options).ConfigureAwait(false);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return await SendToAllAsync(contentType.ToString(), RequestContent.Create(content), default, requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
-        /// <param name="message"></param>
-        /// <param name="excluded">Excluded connection Ids.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToAll(string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public virtual Response SendToAll(string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(content, nameof(content));
 
-            return SendToAll(JsonContent, RequestContent.Create((object)message), excluded, options);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return SendToAll(contentType.ToString(), RequestContent.Create(content), excluded: default, requestOptions: default);
         }
 
         /// <summary>
         /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToUserAsync(string userId, string message, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendToUserAsync(string userId, string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await SendToUserAsync(userId, JsonContent, RequestContent.Create((object)message), options).ConfigureAwait(false);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToUser(string userId, string message, CancellationToken cancellationToken = default)
+        public virtual Response SendToUser(string userId, string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return SendToUser(userId, JsonContent, RequestContent.Create((object)message), options);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return SendToUser(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
         }
 
         /// <summary>
         /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToConnectionAsync(string connectionId, string message, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendToConnectionAsync(string connectionId, string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await SendToConnectionAsync(connectionId, JsonContent, RequestContent.Create((object)message), options).ConfigureAwait(false);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToConnection(string connectionId, string message, CancellationToken cancellationToken = default)
+        public virtual Response SendToConnection(string connectionId, string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return SendToConnection(connectionId, JsonContent, RequestContent.Create((object)message), options);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
         }
 
         /// <summary>
         /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
-        /// <param name="message"></param>
-        /// <param name="excluded">Excluded connection Ids</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual async Task<Response> SendToGroupAsync(string group, string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendToGroupAsync(string group, string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await SendToGroupAsync(group, JsonContent, RequestContent.Create((object)message), excluded, options).ConfigureAwait(false);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
-        /// <param name="message"></param>
-        /// <param name="excluded">Excluded connection Ids</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="content"></param>
+        /// <param name="contentType">Defaults to ContentType.PlainText.</param>
         /// <returns>A <see cref="Response"/> if successful.</returns>
-        public virtual Response SendToGroup(string group, string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public virtual Response SendToGroup(string group, string content, ContentType contentType = default)
         {
-            RequestOptions options = default;
-            if (cancellationToken != default)
-                options = new RequestOptions() { CancellationToken = cancellationToken };
+            Argument.AssertNotNull(group, nameof(group));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return SendToGroup(group, JsonContent, RequestContent.Create((object)message), excluded, options);
+            if (contentType == default) contentType = ContentType.TextPlain;
+
+            return SendToGroup(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GroupExistsAsync(string group, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> GroupExistsAsync(string group, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = await GroupExistsAsync(group, options).ConfigureAwait(false);
+            var response = await GroupExistsImplAsync(group, options).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GroupExists(string group, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> GroupExists(string group, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = GroupExists(group, options);
+            var response = GroupExistsImpl(group, options);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> UserExistsAsync(string userId, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> UserExistsAsync(string userId, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = await UserExistsAsync(userId, options).ConfigureAwait(false);
+            var response = await UserExistsImplAsync(userId, options).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> UserExists(string userId, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> UserExists(string userId, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = UserExists(userId, options);
+            var response = UserExistsImpl(userId, options);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ConnectionExistsAsync(string connectionId, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> ConnectionExistsAsync(string connectionId, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = await ConnectionExistsAsync(connectionId, options).ConfigureAwait(false);
+            var response = await ConnectionExistsImplAsync(connectionId, options).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
         }
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> ConnectionExists(string connectionId, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> ConnectionExists(string connectionId, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = ConnectionExists(connectionId, options);
+            var response = ConnectionExistsImpl(connectionId, options);
             return Response.FromValue(response.Status == 200, response);
         }
 
@@ -287,11 +281,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GrantPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response> GrantPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = await GrantPermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await GrantPermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
             return response;
         }
 
@@ -299,11 +292,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GrantPermission(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response GrantPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = GrantPermission(permission.ToString(), connectionId, targetName, options);
+            var response = GrantPermission(PermissionToString(permission), connectionId, targetName, options);
             return response;
         }
 
@@ -311,11 +303,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RevokePermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response> RevokePermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = await RevokePermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            var response = await RevokePermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
             return response;
         }
 
@@ -323,11 +314,10 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RevokePermission(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response RevokePermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = RevokePermission(permission.ToString(), connectionId, targetName, options);
+            var response = RevokePermission(PermissionToString(permission), connectionId, targetName, options);
             return response;
         }
 
@@ -335,24 +325,22 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual async Task<Response<bool>> CheckPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = await CheckPermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
-            return response;
+            var response = await CheckPermissionAsync(PermissionToString(permission), connectionId, targetName, options).ConfigureAwait(false);
+            return Response.FromValue((response.Status == 200), response);
         }
 
         /// <summary> Check if a connection has permission to the specified action. </summary>
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckPermission(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        /// <param name="options">Options specifying the cancellation token, controlling error reporting, etc.</param>
+        public virtual Response<bool> CheckPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestOptions options = default)
         {
-            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-            var response = CheckPermission(permission.ToString(), connectionId, targetName, options);
-            return response;
+            var response = CheckPermission(PermissionToString(permission), connectionId, targetName, options);
+            return Response.FromValue((response.Status == 200), response);
         }
     }
 }

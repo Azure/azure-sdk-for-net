@@ -17,14 +17,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedMetric"/> class.
         /// </summary>
-        /// <param name="metricName">The name of the data source's column with numeric values to be used as a metric. Values of this metric will be read only from the specified column.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="metricName"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metricName"/> is empty.</exception>
-        public DataFeedMetric(string metricName)
+        /// <param name="name">The name of the data source's column with numeric values to be used as a metric. Values of this metric will be read only from the specified column.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        public DataFeedMetric(string name)
         {
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Name = metricName;
+            Name = name;
         }
 
         /// <summary>

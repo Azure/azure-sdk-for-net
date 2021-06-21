@@ -266,8 +266,12 @@ namespace Azure.Security.KeyVault.Keys
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Keys.KeyVaultKeyIdentifier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
     }
     public partial class RecoverDeletedKeyOperation : Azure.Operation<Azure.Security.KeyVault.Keys.KeyVaultKey>
     {

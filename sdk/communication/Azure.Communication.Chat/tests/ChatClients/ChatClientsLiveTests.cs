@@ -189,7 +189,9 @@ namespace Azure.Communication.Chat.Tests
             ChatMessage participantRemovedMessage2 = await chatThreadClient.GetMessageAsync(participantRemovedMessage.Id);
 
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
-            await chatThreadClient.SendTypingNotificationAsync();
+
+            TypingNotificationOptions typingNotificationOptions = new() { SenderDisplayName = "sender diplay name" };
+            Response typingNotificationWithOptionsResponse = await chatThreadClient.SendTypingNotificationAsync(typingNotificationOptions);
 
             AsyncPageable<ChatThreadItem> threads = chatClient.GetChatThreadsAsync();
             var threadsCount = threads.ToEnumerableAsync().Result.Count;
@@ -248,6 +250,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
             Assert.AreEqual((int)HttpStatusCode.Created, addChatParticipantResult.Status);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationWithOptionsResponse.Status);
         }
 
         [Test]

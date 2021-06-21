@@ -13,40 +13,5 @@ namespace Azure.Monitor.Query.Models
 {
     internal partial class LogsBatchQueryResultInternal
     {
-        internal static LogsBatchQueryResultInternal DeserializeLogsBatchQueryResultInternal(JsonElement element)
-        {
-            Optional<ErrorInfo> error = default;
-            IReadOnlyList<LogsQueryResultTable> tables = default;
-            Optional<JsonElement> statistics = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("error"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    error = ErrorInfo.DeserializeErrorInfo(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("tables"))
-                {
-                    List<LogsQueryResultTable> array = new List<LogsQueryResultTable>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LogsQueryResultTable.DeserializeLogsQueryResultTable(item));
-                    }
-                    tables = array;
-                    continue;
-                }
-                if (property.NameEquals("statistics"))
-                {
-                    statistics = property.Value.Clone();
-                    continue;
-                }
-            }
-            return new LogsBatchQueryResultInternal(tables, statistics, error.Value);
-        }
     }
 }

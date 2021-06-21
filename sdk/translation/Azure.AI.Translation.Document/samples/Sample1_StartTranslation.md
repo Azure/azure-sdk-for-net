@@ -43,11 +43,11 @@ Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
 Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 
-await foreach (DocumentStatusResult document in operation.Value)
+await foreach (DocumentStatus document in operation.Value)
 {
-    Console.WriteLine($"Document with Id: {document.DocumentId}");
+    Console.WriteLine($"Document with Id: {document.Id}");
     Console.WriteLine($"  Status:{document.Status}");
-    if (document.Status == TranslationStatus.Succeeded)
+    if (document.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");

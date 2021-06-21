@@ -53,7 +53,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
         /// <param name="blobTags"> Blob tags. </param>
         /// <param name="objectReplicationMetadata"> Dictionary of &lt;string&gt;. </param>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, IReadOnlyDictionary<string, string> objectReplicationMetadata)
+        /// <param name="hasVersionsOnly"> . </param>
+        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, IReadOnlyDictionary<string, string> objectReplicationMetadata, bool? hasVersionsOnly)
         {
             Name = name;
             Deleted = deleted;
@@ -64,6 +65,7 @@ namespace Azure.Storage.Blobs.Models
             Metadata = metadata;
             BlobTags = blobTags;
             ObjectReplicationMetadata = objectReplicationMetadata;
+            HasVersionsOnly = hasVersionsOnly;
         }
 
         public string Name { get; }
@@ -79,5 +81,6 @@ namespace Azure.Storage.Blobs.Models
         public BlobTags BlobTags { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> ObjectReplicationMetadata { get; }
+        public bool? HasVersionsOnly { get; }
     }
 }
