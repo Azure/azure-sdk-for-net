@@ -89,6 +89,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public AssetFileTypeNotSupportedException(string message, System.Exception inner) { }
         public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType AttemptedFileType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public enum AssetLengthUnit
     {

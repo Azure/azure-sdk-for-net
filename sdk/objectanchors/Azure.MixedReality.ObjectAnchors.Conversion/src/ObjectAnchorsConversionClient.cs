@@ -17,6 +17,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// </summary>
     public class ObjectAnchorsConversionClient
     {
+        private HashSet<AssetFileType> _supportedAssetFileTypesSet;
         /// <summary>
         /// The Account ID to be used by the Client
         /// </summary>
@@ -25,9 +26,20 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// The list of supported asset file types
         /// </summary>
-        public IReadOnlyList<AssetFileType> SupportedAssetFileTypes { get { return SupportedAssetFileTypesSet.ToList(); } }
+        public IReadOnlyList<AssetFileType> SupportedAssetFileTypes { get; private set; }
 
-        internal HashSet<AssetFileType> SupportedAssetFileTypesSet { get; }
+        internal HashSet<AssetFileType> SupportedAssetFileTypesSet
+        {
+            get
+            {
+                return _supportedAssetFileTypesSet;
+            }
+            set
+            {
+                _supportedAssetFileTypesSet = value;
+                SupportedAssetFileTypes = value.ToList();
+            }
+        }
 
         /// <summary>
         /// The Account Domain to be used by the Client
