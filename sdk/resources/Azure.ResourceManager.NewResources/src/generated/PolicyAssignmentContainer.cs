@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -409,37 +410,57 @@ namespace Azure.ResourceManager.NewResources
             }
             Page<PolicyAssignment> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.List");
                 scope.Start();
                 try
                 {
                     Response<PolicyAssignmentListResult> response;
-                    var scopeParts = policyAssignmentScope.ToString().Split('/');
 
-                    if (policyAssignmentScope.GetType() == typeof(SubscriptionResourceIdentifier))
+                    if (policyAssignmentScope.GetType() == typeof(TenantResourceIdentifier))
+                    {
+                        if (policyAssignmentScope.ResourceType.Equals("Microsoft.Management/managementGroups"))
+                        {
+                            response = _restClient.ListForManagementGroup(policyAssignmentScope.Name, filter, cancellationToken);
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Invalid scope: {policyAssignmentScope}.", nameof(policyAssignmentScope));
+                        }
+                    }
+                    else if (policyAssignmentScope.GetType() == typeof(SubscriptionResourceIdentifier))
                     {
                         var s = policyAssignmentScope as SubscriptionResourceIdentifier;
                         response = _restClient.List(s.SubscriptionId, filter, cancellationToken);
                     }
-                    else if (policyAssignmentScope.GetType() == typeof(TenantResourceIdentifier) && policyAssignmentScope.ToString().StartsWith("/providers/Microsoft.Management/managementGroups/"))
+                    else if (policyAssignmentScope.GetType() == typeof(ResourceGroupResourceIdentifier))
                     {
-                        response = _restClient.ListForManagementGroup(policyAssignmentScope.Name, filter, cancellationToken);
-                    }
-                    else if (policyAssignmentScope.GetType() == typeof(ResourceGroupResourceIdentifier) && scopeParts[scopeParts.Length - 2].Equals("resourceGroups"))
-                    {
-                        var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
-                        response = _restClient.ListForResourceGroup(s.SubscriptionId, s.ResourceGroupName, filter, cancellationToken);
+                        if (policyAssignmentScope.ResourceType.Equals("Microsoft.Resources/resourceGroups"))
+                        {
+                            var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
+                            response = _restClient.ListForResourceGroup(s.SubscriptionId, s.ResourceGroupName, filter, cancellationToken);
+                        }
+                        else
+                        {
+                            var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
+                            var resourceProviderNamespace = s.ResourceType.Namespace;
+                            var resourceType = s.ResourceType.Types[s.ResourceType.Types.Count - 1];
+                            var resourceName = s.Name;
+                            var parent = s.Parent;
+
+                            var parentParts = new List<string>();
+                            while (!parent.ResourceType.Type.Equals("resourceGroups"))
+                            {
+                                parentParts.Insert(0, $"{parent.ResourceType.Types[parent.ResourceType.Types.Count - 1]}/{parent.Name}");
+                                parent = parent.Parent;
+                            }
+                            var parentResourcePath = parentParts.Count > 0 ? string.Join("/", parentParts) : "";
+                            response = _restClient.ListForResource(s.SubscriptionId, s.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, cancellationToken);
+                        }
+
                     }
                     else
                     {
-                        var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
-                        var parts = s.ToString().Substring(s.ToString().IndexOf("providers/")).ToString().Split('/');
-                        var resourceProviderNamespace = parts[1];
-                        var resourceType = parts[parts.Length - 2];
-                        var startIndex = s.ToString().IndexOf($"providers/{resourceProviderNamespace}") + $"providers/{resourceProviderNamespace}/".Length;
-                        var endIndex = s.ToString().IndexOf($"/{resourceType}");
-                        var parentResourcePath = startIndex >= endIndex ? "" : s.ToString().Substring(startIndex, endIndex - startIndex);
-                        response = _restClient.ListForResource(s.SubscriptionId, s.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, s.Name, filter, cancellationToken);
+                        throw new ArgumentException($"Invalid scope: {policyAssignmentScope}.", nameof(policyAssignmentScope));
                     }
 
                     return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
@@ -452,7 +473,7 @@ namespace Azure.ResourceManager.NewResources
             }
             Page<PolicyAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.List");
                 scope.Start();
                 try
                 {
@@ -477,7 +498,7 @@ namespace Azure.ResourceManager.NewResources
         {
             async Task<Page<PolicyAssignment>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.List");
                 scope.Start();
                 try
                 {
@@ -520,7 +541,7 @@ namespace Azure.ResourceManager.NewResources
             }
             async Task<Page<PolicyAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.List");
                 scope.Start();
                 try
                 {
