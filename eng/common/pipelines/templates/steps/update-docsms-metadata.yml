@@ -47,8 +47,6 @@ steps:
 # exist, create it
 - ${{ if eq(parameters.DailyDocsBuild, 'true') }}:
   - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
-    parameters:
-      DailyBranchVariableName: TargetBranchName
 
   - pwsh: |
       $ErrorActionPreference = "Continue"
@@ -74,22 +72,16 @@ steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     parameters:
       WorkingDirectory: $(DocRepoLocation)
-
-  - pwsh: |
-      Write-Host "##vso[task.setvariable variable=TargetBranchName;]$(DefaultBranch)"
-    displayName: Set $(TargetBranchName) as $(DefaultBranch)
+      DefaultBranchVariableName: TargetBranchName
 
 - pwsh: |
     $artifactInfoJson = '${{ convertToJson(parameters.Artifacts) }}'.Trim('"')
     $artifactInfo = ConvertFrom-Json $artifactInfoJson
-    foreach($package in $artifactInfo) {
-      Write-Host "Updating docs for $($package.Name)"
-      ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
-        -PackageInfoJsonLocation $package.PackageInfoPath `
-        -DocRepoLocation "$(DocRepoLocation)" `
-        -Language '${{parameters.Language}}' `
-        -RepoId '${{ parameters.RepoId }}'
-    }
+    ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
+      -PackageInfoJsonLocations $artifactInfo `
+      -DocRepoLocation "$(DocRepoLocation)" `
+      -Language '${{parameters.Language}}' `
+      -RepoId '${{ parameters.RepoId }}'
   displayName: Apply Documentation Updates
 
 - template: /eng/common/pipelines/templates/steps/git-push-changes.yml

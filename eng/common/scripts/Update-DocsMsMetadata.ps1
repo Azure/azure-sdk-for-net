@@ -13,9 +13,10 @@ and other information needed to release reference docs:
   repository. This enables the Docs CI build to onboard packages which have not
   shipped and for which there are no entries in the metadata CSV files.
 
-.PARAMETER PackageInfoJsonLocation
-Location of the artifact information .json file. This is usually stored in build
-artifacts under packages/PackageInfo/<package-name>.json.
+.PARAMETER PackageInfoJsonLocations
+List of locations of the artifact information .json file. This is usually stored
+in build artifacts under packages/PackageInfo/<package-name>.json. Can also be
+a single item.
 
 .PARAMETER DocRepoLocation 
 Location of the root of the docs.microsoft.com reference doc location. Further
@@ -31,7 +32,7 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 
 param(
   [Parameter(Mandatory = $true)]
-  [string]$PackageInfoJsonLocation,
+  [array]$PackageInfoJsonLocations,
   
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation, 
@@ -86,55 +87,62 @@ ms.service: $service
   return "$header`n$ReadmeContent"
 }
 
-$packageInfoJson = Get-Content $PackageInfoJsonLocation -Raw
-$packageInfo = ConvertFrom-Json $packageInfoJson
+function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) { 
+  $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
+  $packageInfo = ConvertFrom-Json $packageInfoJson
 
-$originalVersion = $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
-if ($packageInfo.DevVersion) {
-  # If the package is of a dev version there may be language-specific needs to 
-  # specify the appropriate version. For example, in the case of JS, the dev 
-  # version is always 'dev' when interacting with NPM.
-  $packageInfo = &$GetDocsMsLanguageSpecificPackageInfo $packageInfo
+  $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
+  if ($packageInfo.DevVersion) {
+    # If the package is of a dev version there may be language-specific needs to 
+    # specify the appropriate version. For example, in the case of JS, the dev 
+    # version is always 'dev' when interacting with NPM.
+    $packageInfo = &$GetDocsMsLanguageSpecificPackageInfo $packageInfo
+  }
+
+  $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name })
+  if ($packageMetadataArray.Count -eq 0) { 
+    LogError "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV"
+  } elseif ($packageMetadataArray.Count -gt 1) { 
+    LogWarning "Multiple metadata entries for $($packageInfo.Name) in metadata CSV. Using first entry."
+  }
+  $packageMetadata = $packageMetadataArray[0]
+
+  $readmeContent = Get-Content $packageInfo.ReadMePath -Raw
+  $outputReadmeContent = "" 
+  if ($readmeContent) { 
+    $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
+  }
+
+  $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
+  $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
+
+  $readMePath = $docsMsMetadata.LatestReadMeLocation
+  if ($originalVersion.IsPrerelease) { 
+    $readMePath = $docsMsMetadata.PreviewReadMeLocation
+  }
+
+  $suffix = $docsMsMetadata.Suffix
+  $readMeName = "$($docsMsMetadata.DocsMsReadMeName.ToLower())-readme${suffix}.md"
+
+  $readmeLocation = Join-Path $DocRepoLocation $readMePath $readMeName
+
+  Set-Content -Path $readmeLocation -Value $outputReadmeContent
+
+  # Copy package info file to the docs repo
+  $metadataMoniker = 'latest'
+  if ($originalVersion.IsPrerelease) {
+    $metadataMoniker = 'preview'
+  }
+  $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
+  $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
+  $packageInfoJson = ConvertTo-Json $packageInfo
+  New-Item -ItemType Directory -Path $packageInfoLocation -Force
+  Set-Content `
+    -Path $packageInfoLocation/$packageMetadataName `
+    -Value $packageInfoJson
 }
 
-$packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name })
-if ($packageMetadataArray.Count -eq 0) { 
-  LogError "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV"
-} elseif ($packageMetadataArray.Count -gt 1) { 
-  LogWarning "Multiple metadata entries for $($packageInfo.Name) in metadata CSV. Using first entry."
+foreach ($packageInfo in $PackageInfoJsonLocations) {
+  Write-Host "Updating metadata for package: $packageInfo"
+  UpdateDocsMsMetadataForPackage $packageInfo
 }
-$packageMetadata = $packageMetadataArray[0]
-
-$readmeContent = Get-Content $packageInfo.ReadMePath -Raw
-$outputReadmeContent = "" 
-if ($readmeContent) { 
-  $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
-}
-
-$docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
-$version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
-
-$readMePath = $docsMsMetadata.LatestReadMeLocation
-if ($originalVersion.IsPrerelease) { 
-  $readMePath = $docsMsMetadata.PreviewReadMeLocation
-}
-
-$suffix = $docsMsMetadata.Suffix
-$readMeName = "$($docsMsMetadata.DocsMsReadMeName.ToLower())-readme${suffix}.md"
-
-$readmeLocation = Join-Path $DocRepoLocation $readMePath $readMeName
-
-Set-Content -Path $readmeLocation -Value $outputReadmeContent
-
-# Copy package info file to the docs repo
-$metadataMoniker = 'latest'
-if ($originalVersion.IsPrerelease) {
-  $metadataMoniker = 'preview'
-}
-$packageMetadataName = Split-Path $PackageInfoJsonLocation -Leaf
-$packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
-$packageInfoJson = ConvertTo-Json $packageInfo
-New-Item -ItemType Directory -Path $packageInfoLocation -Force
-Set-Content `
-  -Path $packageInfoLocation/$packageMetadataName `
-  -Value $packageInfoJson
