@@ -97,12 +97,10 @@ namespace Sql.Tests
                 var replicationLink = sqlClient.ReplicationLinks.Get(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
 
                 // Verify that the second database has a replicationLink to the first, with the first being the primary and the second being the secondary
-                string primaryRole = "Primary";
-                string secondaryRole = "Secondary";
                 Assert.True(replicationLink.PartnerServer == v12Server.Name);
                 Assert.True(replicationLink.PartnerDatabase == databaseName);
-                Assert.True(replicationLink.PartnerRole == primaryRole);
-                Assert.True(replicationLink.Role == secondaryRole);
+                Assert.True(replicationLink.PartnerRole == ReplicationRole.Primary);
+                Assert.True(replicationLink.Role == ReplicationRole.Secondary);
 
                 // Failover Replication Link
                 sqlClient.ReplicationLinks.Failover(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
@@ -111,8 +109,8 @@ namespace Sql.Tests
                 replicationLink = sqlClient.ReplicationLinks.Get(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
 
                 // Verify that Primary and Secondary have switched
-                Assert.True(replicationLink.PartnerRole == secondaryRole);
-                Assert.True(replicationLink.Role == primaryRole);
+                Assert.True(replicationLink.PartnerRole == ReplicationRole.Secondary);
+                Assert.True(replicationLink.Role == ReplicationRole.Primary);
             }
         }
     }
