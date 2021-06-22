@@ -134,7 +134,7 @@ When running in production, it's preferable to use [environment variables](https
 ```
 SEARCH__CREDENTIAL__KEY="..."
 ```
-Or use other secure ways of storing secrets like [Azure Key Vault](https://docs.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?view=aspnetcore-5.0).
+Or use other secure ways of storing secrets like [Azure Key Vault](https://docs.microsoft.com/aspnet/core/security/key-vault-configuration?view=aspnetcore-5.0).
 
 For more details about Dependency Injection in ASP.NET Core apps, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
