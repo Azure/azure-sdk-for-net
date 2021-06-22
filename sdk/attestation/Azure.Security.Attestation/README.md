@@ -212,10 +212,10 @@ var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, 
 
 Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
 
-There are two properties provided in the [PolicyResult][attestation_policy_result] that can be used to verify that the service received the policy document:
+There are two properties provided in the [PolicyModificationResult][attestation_policy_modification_result] that can be used to verify that the service received the policy document:
 
-* [`PolicySigner`][attestation_policy_result_signer] - if the `SetPolicy` call included a signing certificate, this will be the certificate provided at the time of the `SetPolicy` call. If no policy signer was set, this will be null.
-* [`PolicyTokenHash`][attestation_policy_result_token_hash] - this is the hash of the [JSON Web Token][json_web_token] sent to the service.
+* [`PolicySigner`][attestation_policy_modification_result_signer] - if the `SetPolicy` call included a signing certificate, this will be the certificate provided at the time of the `SetPolicy` call. If no policy signer was set, this will be null.
+* [`PolicyTokenHash`][attestation_policy_modification_result_token_hash] - this is the hash of the [JSON Web Token][json_web_token] sent to the service.
 
 To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
 
@@ -342,9 +342,9 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [attestation_response]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1
 [attestation_response_token]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.token
 [attestation_response_value]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.value
-[attestation_policy_result]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult
-[attestation_policy_result_signer]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policysigner
-[attestation_policy_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policytokenhash
+[attestation_policy_modification_result]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policymodificationresult
+[attestation_policy_modification_result_signer]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policymodificationresult.policysigner
+[attestation_policy_modification_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policymodificationresult.policytokenhash
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
