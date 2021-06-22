@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// The resource type for Tags.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tagNames";
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreDefinedTagsOperations"/> class for mocking.
@@ -28,9 +28,8 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
-        /// <param name="tagData"> The Guid of the subscription. </param>
-        internal PreDefinedTagsOperations(ClientContext clientContext, string subscriptionGuid, PreDefinedTagData tagData)
-            : base(clientContext, new PreDefinedTagsResourceIdentifier(subscriptionGuid, tagData))
+        internal PreDefinedTagsOperations(ClientContext clientContext, string subscriptionGuid)
+            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
         {
         }
 
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Core
         /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartDeleteAsync(string tagName, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> StartDeleteAsync(string tagName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.StartDelete");
             scope.Start();
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Core
         /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartDelete(string tagName, CancellationToken cancellationToken = default)
+        public virtual Operation StartDelete(string tagName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.StartDelete");
             scope.Start();

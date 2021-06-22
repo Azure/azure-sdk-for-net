@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
             var operation = Client.GetPreDefinedTagsOperations();
-            var listResult = container.List().Where(x => x.Details.TagName.StartsWith("tagName"));
+            var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
                 await item.DeleteAsync(item.Details.TagName).ConfigureAwait(false);
@@ -37,6 +37,16 @@ namespace Azure.ResourceManager.Core.Tests
             var tagName = Recording.GenerateAssetName("tagName");
             var container = Client.DefaultSubscription.GetPredefinedTags();
             var result = await container.CreateOrUpdateAsync(tagName);
+            Assert.IsTrue(result.Value.Details.TagName.Equals(tagName));
+        }
+
+        [Test, Order(1)]
+        [RecordedTest]
+        public async Task StartCreate()
+        {
+            var tagName = Recording.GenerateAssetName("tagName");
+            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var result = await container.StartCreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Details.TagName.Equals(tagName));
         }
 

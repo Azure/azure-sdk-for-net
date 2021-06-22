@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagDetails
         /// "> The data model representing the generic azure resource. </param>
         internal PreDefinedTag(OperationsBase operations, PreDefinedTagData tagDetails)
-            : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), operations.Id.Parent, tagDetails)
+            : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), operations.Id)
         {
             Details = tagDetails;
         }

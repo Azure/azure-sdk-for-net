@@ -13,20 +13,21 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
-    /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
+    /// <summary> The operation type for the delete API. </summary>
     public partial class PreDefinedTagDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourceGroupsDeleteOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of PreDefinedTagDeleteOperation for mocking. </summary>
         protected PreDefinedTagDeleteOperation()
         {
         }
 
         internal PreDefinedTagDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PreDefinedTagDeleteOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

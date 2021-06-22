@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [OneTimeTearDown]
-        protected void GlobalTagCleanup()
+        protected async Task GlobalTagCleanupAsync()
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
             var operation = Client.GetPreDefinedTagsOperations();
-            var listResult = container.List().Where(x => x.Details.TagName.StartsWith("tagName"));
+            var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
-                operation.Delete(item.Details.TagName);
+                await item.DeleteAsync(item.Details.TagName).ConfigureAwait(false);
             };
         }
 
@@ -66,6 +66,20 @@ namespace Azure.ResourceManager.Core.Tests
             var container = Client.DefaultSubscription.GetPredefinedTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.DeleteAsync(tagName).ConfigureAwait(false);
+            var listResult = await container.ListAsync().ToEnumerableAsync();
+            var expectTag = listResult.Where(x => x.Details.TagName.Equals(tagName)).FirstOrDefault();
+            Assert.IsNull(expectTag);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartDelete()
+        {
+            var tagName = Recording.GenerateAssetName("tagName");
+            var operation = Client.GetPreDefinedTagsOperations();
+            var container = Client.DefaultSubscription.GetPredefinedTags();
+            await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
+            await operation.StartDeleteAsync(tagName).ConfigureAwait(false);
             var listResult = await container.ListAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.Details.TagName.Equals(tagName)).FirstOrDefault();
             Assert.IsNull(expectTag);

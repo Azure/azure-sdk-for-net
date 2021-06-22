@@ -676,11 +676,7 @@ namespace Azure.ResourceManager.Core
             {
                 var originalTags = TagsRestClient.GetAtScope(Id, cancellationToken).Value;
                 originalTags.Properties.TagsValue.Remove(key);
-                TagsRestClient.UpdateAtScope(Id, new TagsPatchResource() 
-                { 
-                    Operation = TagsPatchResourceOperation.Delete, 
-                    Properties = originalTags.Properties 
-                } , cancellationToken);
+                TagsRestClient.CreateOrUpdateAtScope(Id, originalTags, cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -712,11 +708,7 @@ namespace Azure.ResourceManager.Core
             {
                 var originalTags = await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Properties.TagsValue.Remove(key);
-                await TagsRestClient.UpdateAtScopeAsync(Id, new TagsPatchResource()
-                {
-                    Operation = TagsPatchResourceOperation.Delete,
-                    Properties = originalTags.Value.Properties
-                }, cancellationToken).ConfigureAwait(false);
+                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, originalTags, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }

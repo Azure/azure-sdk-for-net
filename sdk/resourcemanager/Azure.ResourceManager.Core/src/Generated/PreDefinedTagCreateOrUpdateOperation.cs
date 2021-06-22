@@ -13,25 +13,32 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
-    /// <summary> The operation type for the delete API. </summary>
-    public partial class PreDefinedTagCreateOrUpdateOperation : Operation
+    /// <summary> The operation type for the create or update API. </summary>
+    public partial class PreDefinedTagCreateOrUpdateOperation : Operation<PreDefinedTag>
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationOrResponseInternals<PreDefinedTag> _operation;
 
-        /// <summary> Initializes a new instance of ResourceGroupsDeleteOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of PreDefinedTagCreateOrUpdateOperation for mocking. </summary>
         protected PreDefinedTagCreateOrUpdateOperation()
         {
         }
 
-        internal PreDefinedTagCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PreDefinedTagCreateOrUpdateOperation(OperationsBase parentOperation, Response<PreDefinedTagData> response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PreDefinedTagCreateOrUpdateOperation");
+            _operation = new OperationOrResponseInternals<PreDefinedTag>(Response.FromValue(new PreDefinedTag(parentOperation, response.Value), response.GetRawResponse()));
         }
+
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+        public override string Id => "";
+
+        /// <inheritdoc />
+        public override PreDefinedTag Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
+
+        /// <inheritdoc />
+        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.GetRawResponse();
@@ -43,9 +50,9 @@ namespace Azure.ResourceManager.Core
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
+        public override ValueTask<Response<PreDefinedTag>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PreDefinedTag>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

@@ -26,9 +26,8 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="subscription"></param>
-        /// <param name="tag"></param>
-        internal PreDefinedTagsContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription, PreDefinedTagData tag)
-            : base(clientContext, new PreDefinedTagsResourceIdentifier(subscription, tag))
+        internal PreDefinedTagsContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription)
+            : base(clientContext, new SubscriptionResourceIdentifier(subscription))
         {
             RestClient = new TagsRestOperations(Diagnostics, Pipeline, subscription.SubscriptionId, BaseUri);
         }
@@ -52,8 +51,8 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var response =  await RestClient.CreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PreDefinedTag(this, response.Value), response.GetRawResponse());
+                var response =  await StartCreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -71,8 +70,8 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var response = RestClient.CreateOrUpdate(tagName, cancellationToken);
-                return Response.FromValue(new PreDefinedTag(this, response.Value), response.GetRawResponse());
+                var response = StartCreateOrUpdate(tagName, cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = RestClient.CreateOrUpdate(tagName, cancellationToken);
-                return new PreDefinedTagCreateOrUpdateOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                return new PreDefinedTagCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = await RestClient.CreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
-                return new PreDefinedTagCreateOrUpdateOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                return new PreDefinedTagCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
