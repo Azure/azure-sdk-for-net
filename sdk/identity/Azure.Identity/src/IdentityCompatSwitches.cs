@@ -7,7 +7,7 @@ namespace Azure.Identity
 {
     internal class IdentityCompatSwitches
     {
-        internal const string AllowMultiTenantAuthExecutionEnvVar = "AZURE_IDENTITY_ALLOWMULTITENANTAUTH";
+        internal const string AllowMultiTenantAuthExecutionEnvVar = "AZURE_IDENTITY_ALLOW_MULTITENANT_AUTH";
         internal const string AllowMultiTenantAuthSwitchName = "Azure.Identity.AllowMultiTenantAuth";
         internal const string DisableInteractiveThreadpoolExecutionSwitchName = "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution";
         internal const string DisableInteractiveThreadpoolExecutionEnvVar = "AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION";
