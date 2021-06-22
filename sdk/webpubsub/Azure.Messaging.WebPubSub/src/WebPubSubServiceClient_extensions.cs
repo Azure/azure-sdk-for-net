@@ -105,7 +105,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToAllAsync(contentType.ToString(), RequestContent.Create(content), default, requestOptions: default).ConfigureAwait(false);
+            return await SendToAllAsync(contentType.ToString(), RequestContent.Create(content), default, options: default).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -118,7 +118,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToAll(contentType.ToString(), RequestContent.Create(content), excluded: default, requestOptions: default);
+            return SendToAll(contentType.ToString(), RequestContent.Create(content), excluded: default, options: default);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
+            return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(content), options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToUser(userId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
+            return SendToUser(userId, contentType.ToString(), RequestContent.Create(content), options: default);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default).ConfigureAwait(false);
+            return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(content), options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(content), requestOptions: default);
+            return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(content), options: default);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default).ConfigureAwait(false);
+            return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(content), excluded : default, options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToGroup(group, contentType.ToString(), RequestContent.Create(content), excluded : default, requestOptions: default);
+            return SendToGroup(group, contentType.ToString(), RequestContent.Create(content), excluded : default, options: default);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
