@@ -428,7 +428,8 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Intended for DataLake to create a backing blob client.
+        /// Intended to create a backing blob client for data movement.
+        /// Looking to remove this if it's unnecessary to do this.
         ///
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
         /// class.

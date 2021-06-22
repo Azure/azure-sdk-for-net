@@ -31,5 +31,10 @@ namespace Azure.Storage
         /// Number of files that were skipped.
         /// </summary>
         public long skippedTransfer { get; internal set; }
+
+        /// <summary>
+        /// Number of bytes transferred
+        /// </summary>
+        public long bytesTransferred { get; internal set; }
     }
 }

@@ -320,6 +320,21 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion
 
+        /// <summary>
+        /// Intended to create a backing blob client for data movement.
+        /// Looking to remove this if it's unnecessary to do this.
+        ///
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <returns>
+        /// New instanc of the <see cref="BlobServiceClient"/> class.
+        /// </returns>
+        public BlobDirectoryClient CloneClient()
+        {
+            return new BlobDirectoryClient(Uri, ClientConfiguration, ClientSideEncryption);
+        }
+
         #region Upload
         /// <summary>
         /// The <see cref="Upload(string, BlobUploadDirectoryOptions, CancellationToken)"/>

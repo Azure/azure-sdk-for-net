@@ -24,8 +24,6 @@ namespace Azure.Storage.DataMovement
         // To hold the jobs that have finished scanning and ready to run; This will help with grabbing required
         // authentication from the original job and for updating the jobs for progress tracking
         private IList<StorageTransferJob> _jobsInProgress;
-        // The files that have resulted from a scan and waiting to be performed on (upload/download/copy)
-        private AsyncQueue<StorageTransferItem> _transferQueue;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
         private string _progressLogDirectoryPath;
@@ -37,98 +35,66 @@ namespace Azure.Storage.DataMovement
         {
             _toScanQueue = new AsyncQueue<StorageTransferJob>();
             _jobsInProgress = new List<StorageTransferJob>();
-            _transferQueue = new AsyncQueue<StorageTransferItem>();
             _progressLogDirectoryPath = progressLogDirectoryPath;
         }
 
         /// <summary>
         /// Add upload job to perform.
         /// </summary>
-        public Task<StorageTransferResults> ScheduleUploadJob(
-            Stream stream,
+        public static Task<StorageTransferResults> ScheduleUploadJobAsync(
+            string sourceLocalPath,
             BlobBaseClient destinationClient,
-            BlobUploadOptions options = default,
+            StorageTransferOptions transferOptions = default,
+            BlobUploadOptions uploadOptions = default,
             IProgress<StorageTransferStatus> progressTracker = default,
-            CancellationToken token)
+            CancellationToken token = default)
         {
-            StorageTransferItem transferItem = new BlobTransferItem()
-            if (_toScanQueue.Count > 1)
-            {
-                // Call scanning if required. If the job is just one file, we
+            //TODO: if check the local path exists and not a directory
+            // or we can go and check at the start of the job, to prevent
+            // having to check the existence of the path twice.
+            BlobTransferJob transferItem = new BlobTransferJob(sourceLocalPath, destinationClient, transferOptions, uploadOptions, progressTracker, token);
 
-            }
+            // TODO; remove stub
+            return Task.FromResult(new StorageTransferResults());
         }
 
         /// <summary>
         /// Add upload job to perform.
         /// </summary>
-        public Task<StorageTransferResults> ScheduleUploadJob(
-            Stream stream,
-            BlobBaseClient destinationClient,
-            BlobUploadOptions options = default,
+        public static Task<StorageTransferResults> ScheduleDownloadJobAsync(
+            BlobBaseClient sourceClient,
+            string destinationLocalPath,
+            StorageTransferOptions transferOptions = default,
             IProgress<StorageTransferStatus> progressTracker = default,
-            CancellationToken token)
+            CancellationToken token = default)
         {
-            StorageTransferItem transferItem = new StorageTransferItem()
-            if (_toScanQueue.Count > 1)
-            {
-                // Call scanning if required. If the job is just one file, we
+            //TODO: if check the local path exists and not a directory
+            // or we can go and check at the start of the job, to prevent
+            // having to check the existence of the path twice.
+            BlobTransferJob transferItem = new BlobTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
 
-            }
+            // TODO; remove stub
+            return Task.FromResult(new StorageTransferResults());
         }
 
         /// <summary>
         /// Add upload job to perform.
         /// </summary>
-        public Task<StorageTransferResults> ScheduleUploadJob(
-            Stream stream,
-            BlobDirectoryClient destinationClient,
-            BlobUploadOptions options = default,
-            IProgress<StorageTransferStatus> progressTracker = default,
-            CancellationToken token)
-        {
-            StorageTransferItem transferItem = new StorageTransferItem()
-            if (_toScanQueue.Count > 1)
-            {
-                // Call scanning if required. If the job is just one file, we
-
-            }
-        }
-
-        /// <summary>
-        /// Add upload job to perform.
-        /// </summary>
-        public Task<StorageTransferResults> ScheduleDownload Job(
-            string localPath,
+        public static Task<StorageTransferResults> ScheduleUploadDirectoryJobAsync(
+            string sourceLocalPath,
             BlobBaseClient destinationClient,
-            BlobUploadOptions options = default,
+            StorageTransferOptions transferOptions = default,
+            BlobUploadOptions uploadOptions = default,
             IProgress<StorageTransferStatus> progressTracker = default,
-            CancellationToken token)
+            CancellationToken token = default)
         {
-            StorageTransferItem transferItem = new StorageTransferItem()
-            if (_toScanQueue.Count > 1)
-            {
-                // Call scanning if required. If the job is just one file, we
+            //TODO: if check the local path exists and not a directory
+            // or we can go and check at the start of the job, to prevent
+            // having to check the existence of the path twice.
+            BlobDirectoryTransferJob transferItem = new BlobDirectoryTransferJob(sourceLocalPath, destinationClient, transferOptions, uploadOptions, progressTracker, token);
 
-            }
-        }
-
-        /// <summary>
-        /// Add upload job to perform.
-        /// </summary>
-        public Task<StorageTransferResults> ScheduleUploadJob(
-            Stream stream,
-            BlobBaseClient destinationClient,
-            BlobUploadOptions options = default,
-            IProgress<StorageTransferStatus> progressTracker = default,
-            CancellationToken token)
-        {
-            StorageTransferItem transferItem = new StorageTransferItem()
-            if (_toScanQueue.Count > 1)
-            {
-                // Call scanning if required. If the job is just one file, we
-
-            }
+            // TODO; remove stub
+            return Task.FromResult(new StorageTransferResults());
         }
 
         /// <summary>
