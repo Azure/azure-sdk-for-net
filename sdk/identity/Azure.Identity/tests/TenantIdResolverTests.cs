@@ -60,11 +60,11 @@ namespace Azure.Identity.Tests
             {
                 if (switchEnabled != null)
                 {
-                    ctx = new TestAppContextSwitch(IdentityCompatSwitches.AllowMultiTenantAuthSwitchName, switchEnabled.Value.ToString());
+                    ctx = new TestAppContextSwitch(IdentityCompatSwitches.EnableLegacyTenantSelectionSwitchName, switchEnabled.Value.ToString());
                 }
                 if (envVarEnabled != null)
                 {
-                    env = new TestEnvVar(IdentityCompatSwitches.AllowMultiTenantAuthExecutionEnvVar, envVarEnabled.Value.ToString());
+                    env = new TestEnvVar(IdentityCompatSwitches.EnableLegacyTenantSelectionEnvVar, envVarEnabled.Value.ToString());
                 }
 
                 if (IdentityCompatSwitches.EnableLegacyTenantSelection)
