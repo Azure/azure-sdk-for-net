@@ -1,16 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
-using Azure.AI.MetricsAdvisor.Models;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -81,9 +75,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string expectedSubscriptionKey = "newFakeSubscriptionKey";
             string expectedApiKey = "newFakeApiKey";
 
-            credential.Update(expectedSubscriptionKey, expectedApiKey);
-
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport, credential);
+
+            credential.Update(expectedSubscriptionKey, expectedApiKey);
 
             await adminClient.DeleteAlertConfigurationAsync(FakeGuid);
 
