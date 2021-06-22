@@ -1,0 +1,20 @@
+parameters: 
+  DevOpsPat: not-set
+  DevOpsOrg: not-set
+  DevOpsProject: not-set
+  DevOpsPipelineId: not-set
+  RequestBodyJson: not-set
+
+steps:
+  - task: PowerShell@2
+    inputs:
+      pwsh: true
+      targetType: filePath
+      filePath: eng/common/scripts/Start-DevOpsBuild.ps1
+      arguments: >-
+        -DevOpsPat ${{ parameters.DevOpsPat }}
+        -DevOpsOrg ${{ parameters.DevOpsOrg }}
+        -DevOpsProject ${{ parameters.DevOpsProject }}
+        -DevOpsPipelineId ${{ parameters.DevOpsPipelineId }}
+        -RequestBodyJson ${{ parameters.RequestBodyJson }}
+    displayName: Launch DevOps Build
