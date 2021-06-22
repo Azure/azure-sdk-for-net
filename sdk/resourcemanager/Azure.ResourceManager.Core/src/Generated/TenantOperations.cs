@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core
         public static readonly ResourceType ResourceType = ResourceType.RootResourceType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
+        /// Initializes a new instance of the <see cref="TenantOperations"/> class.
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -27,6 +27,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         internal TenantOperations(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
             : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.RootResourceIdentifier)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TenantOperations"/> class.
+        /// </summary>
+        /// <param name="clientContext"> The client context to use. </param>
+        internal TenantOperations(ClientContext clientContext): base(clientContext, ResourceIdentifier.RootResourceIdentifier)
         {
         }
 

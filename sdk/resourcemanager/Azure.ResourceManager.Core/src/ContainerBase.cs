@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Core
         internal ContainerBase(ClientContext clientContext)
             : base(clientContext, ResourceIdentifier.RootResourceIdentifier)
         {
+            Parent = new TenantOperations(clientContext);
         }
 
         /// <summary>
@@ -48,7 +49,6 @@ namespace Azure.ResourceManager.Core
         protected ContainerBase(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
             : this(new ClientContext(options, credential, baseUri, pipeline))
         {
-            Parent = new TenantOperations(options, credential, baseUri, pipeline);
         }
 
         /// <summary>
