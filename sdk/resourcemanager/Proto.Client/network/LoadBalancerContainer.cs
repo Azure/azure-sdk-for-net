@@ -95,7 +95,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override Response<LoadBalancer> Get(string loadBalancerName, CancellationToken cancellationToken = default)
+        public Response<LoadBalancer> Get(string loadBalancerName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, loadBalancerName, null, cancellationToken: cancellationToken);
             return Response.FromValue(new LoadBalancer(Parent, new LoadBalancerData(response.Value)), response.GetRawResponse());
@@ -103,7 +103,7 @@ namespace Proto.Network
         }
         
         /// <inheritdoc/>
-        public override async Task<Response<LoadBalancer>> GetAsync(string loadBalancerName, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancer>> GetAsync(string loadBalancerName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, loadBalancerName, null, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new LoadBalancer(Parent, new LoadBalancerData(response.Value)), response.GetRawResponse());

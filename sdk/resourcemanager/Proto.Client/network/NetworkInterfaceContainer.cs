@@ -198,14 +198,14 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        public override Response<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public Response<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken);
             return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());

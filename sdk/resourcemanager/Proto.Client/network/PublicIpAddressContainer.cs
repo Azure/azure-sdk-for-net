@@ -184,14 +184,14 @@ namespace Proto.Network
             return s => new PublicIpAddress(Parent, new PublicIPAddressData(s));
         }
                 /// <inheritdoc />
-        public override Response<PublicIpAddress> Get(string publicIpAddressesName, CancellationToken cancellationToken = default)
+        public Response<PublicIpAddress> Get(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken);
             return Response.FromValue(new PublicIpAddress(Parent, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new PublicIpAddress(Parent, new PublicIPAddressData(response.Value)), response.GetRawResponse());

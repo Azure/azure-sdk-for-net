@@ -195,14 +195,14 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc />
-        public override Response<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
+        public Response<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken);
             return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
