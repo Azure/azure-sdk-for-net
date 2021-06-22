@@ -67,7 +67,7 @@ namespace Azure.Identity.Tests
                     env = new TestEnvVar(IdentityCompatSwitches.AllowMultiTenantAuthExecutionEnvVar, envVarEnabled.Value.ToString());
                 }
 
-                if (IdentityCompatSwitches.AllowMultiTenantAuth)
+                if (IdentityCompatSwitches.EnableLegacyTenantSelection)
                 {
                     var result = TenantIdResolver.Resolve(TenantId, Context_Hint, false);
                     Assert.AreEqual(TenantId, result);

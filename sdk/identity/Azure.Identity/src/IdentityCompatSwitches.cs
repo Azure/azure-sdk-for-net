@@ -7,8 +7,8 @@ namespace Azure.Identity
 {
     internal class IdentityCompatSwitches
     {
-        internal const string AllowMultiTenantAuthExecutionEnvVar = "AZURE_IDENTITY_ALLOW_MULTITENANT_AUTH";
-        internal const string AllowMultiTenantAuthSwitchName = "Azure.Identity.AllowMultiTenantAuth";
+        internal const string AllowMultiTenantAuthExecutionEnvVar = "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION";
+        internal const string AllowMultiTenantAuthSwitchName = "Azure.Identity.EnableLegacyTenantSelection";
         internal const string DisableInteractiveThreadpoolExecutionSwitchName = "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution";
         internal const string DisableInteractiveThreadpoolExecutionEnvVar = "AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION";
         internal const string DisableCP1ExecutionSwitchName = "Azure.Identity.DisableCP1";
@@ -20,7 +20,7 @@ namespace Azure.Identity
         public static bool DisableCP1
             => AppContextSwitchHelper.GetConfigValue(DisableCP1ExecutionSwitchName, DisableCP1ExecutionEnvVar);
 
-        public static bool AllowMultiTenantAuth
+        public static bool EnableLegacyTenantSelection
             => AppContextSwitchHelper.GetConfigValue(AllowMultiTenantAuthSwitchName, AllowMultiTenantAuthExecutionEnvVar);
     }
 }

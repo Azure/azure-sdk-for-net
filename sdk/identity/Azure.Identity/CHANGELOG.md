@@ -5,11 +5,11 @@
 ### Fixes and improvements
 
 - TenantId values returned from service challenge responses can now be used to request tokens from the correct tenantId. To support this feature, there is a new `AllowMultiTenantAuthentication` option on `TokenCredentialOptions`.
-  - By default, `AllowMultiTenantAuthentication` is false. When this option property is false and the tenant Id configured in the credential options differs from the tenant Id set in the `TokenRequestContext` sent to a credential, an `AuthorizationFailedException` will be thrown. This is potentially breaking change as it could be a different exception than what was thrown previously. This exception behavior can be overridden by either setting an `AppContext` switch named "Azure.Identity.AllowMultiTenantAuth" to `true` or by setting the environment variable "AZURE_IDENTITY_ALLOW_MULTITENANT_AUTH" to "true". Note: AppContext switches can also be configured via configuration like below:
+  - By default, `AllowMultiTenantAuthentication` is false. When this option property is false and the tenant Id configured in the credential options differs from the tenant Id set in the `TokenRequestContext` sent to a credential, an `AuthorizationFailedException` will be thrown. This is potentially breaking change as it could be a different exception than what was thrown previously. This exception behavior can be overridden by either setting an `AppContext` switch named "Azure.Identity.EnableLegacyTenantSelection" to `true` or by setting the environment variable "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION" to "true". Note: AppContext switches can also be configured via configuration like below:
 
 ```xml  
 <ItemGroup>
-    <RuntimeHostConfigurationOption Include="Azure.Identity.AllowMultiTenantAuth" Value="true" />
+    <RuntimeHostConfigurationOption Include="Azure.Identity.EnableLegacyTenantSelection" Value="true" />
 </ItemGroup> 
   ```
 
