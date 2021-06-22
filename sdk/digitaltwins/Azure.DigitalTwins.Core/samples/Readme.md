@@ -85,7 +85,7 @@ Console.WriteLine($"Created models '{componentModelId}' and '{sampleModelId}'.")
 Using `GetModelsAsync`, all created models are returned as `AsyncPageable<DigitalTwinsModelData>`.
 
 ```C# Snippet:DigitalTwinsSampleGetModels
-AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
+AsyncPageable<DigitalTwinsModelData> allModels = _client.GetModelsAsync();
 await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
@@ -242,7 +242,7 @@ Query the Azure Digital Twins instance for digital twins using the [Azure Digita
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
 // happens under the covers.
-AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = _client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 
 // Iterate over the twin instances in the pageable response.
 // The "await" keyword here is required because new pages will be fetched when necessary,
@@ -260,7 +260,7 @@ The SDK also allows you to extract the `query-charge` header from the pageable r
 // the query API. It iterates over the response pages first to access to the query-charge header,
 // and then the digital twin results within each page.
 
-AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = _client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
@@ -288,7 +288,7 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 Delete a digital twin simply by providing Id of a digital twin as below.
 
 ```C# Snippet:DigitalTwinsSampleDeleteTwin
-await client.DeleteDigitalTwinAsync(digitalTwinId);
+await _client.DeleteDigitalTwinAsync(digitalTwinId);
 Console.WriteLine($"Deleted digital twin '{digitalTwinId}'.");
 ```
 
@@ -436,9 +436,9 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 
 ```C# Snippet:DigitalTwinsSampleCreateEventRoute
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
+var eventRoute = new DigitalTwinsEventRoute(_eventhubEndpointName, eventFilter);
 
-await client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
+await _client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
 ```
 
@@ -449,7 +449,7 @@ For more information on the event route filter language, see the "how to manage 
 List a specific event route given event route Id or all event routes setting options with `GetEventRouteAsync` and `GetEventRoutesAsync`.
 
 ```C# Snippet:DigitalTwinsSampleGetEventRoutes
-AsyncPageable<DigitalTwinsEventRoute> response = client.GetEventRoutesAsync();
+AsyncPageable<DigitalTwinsEventRoute> response = _client.GetEventRoutesAsync();
 await foreach (DigitalTwinsEventRoute er in response)
 {
     Console.WriteLine($"Event route '{er.Id}', endpoint name '{er.EndpointName}'");
@@ -461,7 +461,7 @@ await foreach (DigitalTwinsEventRoute er in response)
 Delete an event route given event route Id.
 
 ```C# Snippet:DigitalTwinsSampleDeleteEventRoute
-await client.DeleteEventRouteAsync(_eventRouteId);
+await _client.DeleteEventRouteAsync(_eventRouteId);
 Console.WriteLine($"Deleted event route '{_eventRouteId}'.");
 ```
 
