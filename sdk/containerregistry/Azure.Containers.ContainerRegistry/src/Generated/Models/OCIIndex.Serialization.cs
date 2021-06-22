@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class OCIIndex : IUtf8JsonSerializable
+    public partial class OciIndex : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,15 +41,15 @@ namespace Azure.Containers.ContainerRegistry
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
+                writer.WriteNumberValue(SchemaVersion);
             }
             writer.WriteEndObject();
         }
 
-        internal static OCIIndex DeserializeOCIIndex(JsonElement element)
+        internal static OciIndex DeserializeOciIndex(JsonElement element)
         {
             Optional<IList<ManifestListAttributes>> manifests = default;
-            Optional<Annotations> annotations = default;
+            Optional<OciManifestAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.Containers.ContainerRegistry
                         annotations = null;
                         continue;
                     }
-                    annotations = Annotations.DeserializeAnnotations(property.Value);
+                    annotations = OciManifestAnnotations.DeserializeOciManifestAnnotations(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schemaVersion"))
@@ -89,7 +89,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OCIIndex(Optional.ToNullable(schemaVersion), Optional.ToList(manifests), annotations.Value);
+            return new OciIndex(schemaVersion, Optional.ToList(manifests), annotations.Value);
         }
     }
 }

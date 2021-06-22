@@ -10,29 +10,27 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    /// <summary> Returns the requested OCI Manifest file. </summary>
-    public partial class OciManifest : ImageManifest
+    /// <summary> Returns the requested Docker V2 Manifest file. </summary>
+    public partial class DockerManifestV2 : ImageManifest
     {
-        /// <summary> Initializes a new instance of OciManifest. </summary>
-        public OciManifest()
+        /// <summary> Initializes a new instance of DockerManifestV2. </summary>
+        public DockerManifestV2()
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
         }
 
-        /// <summary> Initializes a new instance of OciManifest. </summary>
+        /// <summary> Initializes a new instance of DockerManifestV2. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="configDescriptor"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciManifest(int schemaVersion, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion)
+        internal DockerManifestV2(int schemaVersion, string mediaType, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers) : base(schemaVersion)
         {
+            MediaType = mediaType;
             ConfigDescriptor = configDescriptor;
             Layers = layers;
-            Annotations = annotations;
         }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }
-        /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public OciManifestAnnotations Annotations { get; set; }
     }
 }

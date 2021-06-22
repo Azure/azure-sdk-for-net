@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public partial class ManifestListAttributes : IUtf8JsonSerializable
+    public partial class ContentDescriptor : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,20 +32,38 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 writer.WritePropertyName("digest");
                 writer.WriteStringValue(Digest);
             }
-            if (Optional.IsDefined(Platform))
+            if (Optional.IsCollectionDefined(Urls))
             {
-                writer.WritePropertyName("platform");
-                writer.WriteObjectValue(Platform);
+                writer.WritePropertyName("urls");
+                writer.WriteStartArray();
+                foreach (var item in Urls)
+                {
+                    writer.WriteStringValue(item.AbsoluteUri);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Annotations))
+            {
+                if (Annotations != null)
+                {
+                    writer.WritePropertyName("annotations");
+                    writer.WriteObjectValue(Annotations);
+                }
+                else
+                {
+                    writer.WriteNull("annotations");
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManifestListAttributes DeserializeManifestListAttributes(JsonElement element)
+        internal static ContentDescriptor DeserializeContentDescriptor(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<RuntimePlatform> platform = default;
+            Optional<IList<Uri>> urls = default;
+            Optional<OciManifestAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -66,18 +86,33 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     digest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("platform"))
+                if (property.NameEquals("urls"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    platform = RuntimePlatform.DeserializeRuntimePlatform(property.Value);
+                    List<Uri> array = new List<Uri>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new Uri(item.GetString()));
+                    }
+                    urls = array;
+                    continue;
+                }
+                if (property.NameEquals("annotations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        annotations = null;
+                        continue;
+                    }
+                    annotations = OciManifestAnnotations.DeserializeOciManifestAnnotations(property.Value);
                     continue;
                 }
             }
-            return new ManifestListAttributes(mediaType.Value, Optional.ToNullable(size), digest.Value, platform.Value);
+            return new ContentDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
         }
     }
 }

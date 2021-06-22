@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public partial class ManifestListAttributes : IUtf8JsonSerializable
+    public partial class DockerManifestList : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,30 +21,29 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 writer.WritePropertyName("mediaType");
                 writer.WriteStringValue(MediaType);
             }
-            if (Optional.IsDefined(Size))
+            if (Optional.IsCollectionDefined(Manifests))
             {
-                writer.WritePropertyName("size");
-                writer.WriteNumberValue(Size.Value);
+                writer.WritePropertyName("manifests");
+                writer.WriteStartArray();
+                foreach (var item in Manifests)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Digest))
+            if (Optional.IsDefined(SchemaVersion))
             {
-                writer.WritePropertyName("digest");
-                writer.WriteStringValue(Digest);
-            }
-            if (Optional.IsDefined(Platform))
-            {
-                writer.WritePropertyName("platform");
-                writer.WriteObjectValue(Platform);
+                writer.WritePropertyName("schemaVersion");
+                writer.WriteNumberValue(SchemaVersion);
             }
             writer.WriteEndObject();
         }
 
-        internal static ManifestListAttributes DeserializeManifestListAttributes(JsonElement element)
+        internal static DockerManifestList DeserializeDockerManifestList(JsonElement element)
         {
             Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<RuntimePlatform> platform = default;
+            Optional<IList<ManifestListAttributes>> manifests = default;
+            Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -51,33 +51,33 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("manifests"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    size = property.Value.GetInt64();
+                    List<ManifestListAttributes> array = new List<ManifestListAttributes>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ManifestListAttributes.DeserializeManifestListAttributes(item));
+                    }
+                    manifests = array;
                     continue;
                 }
-                if (property.NameEquals("digest"))
-                {
-                    digest = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("platform"))
+                if (property.NameEquals("schemaVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    platform = RuntimePlatform.DeserializeRuntimePlatform(property.Value);
+                    schemaVersion = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ManifestListAttributes(mediaType.Value, Optional.ToNullable(size), digest.Value, platform.Value);
+            return new DockerManifestList(schemaVersion, mediaType.Value, Optional.ToList(manifests));
         }
     }
 }

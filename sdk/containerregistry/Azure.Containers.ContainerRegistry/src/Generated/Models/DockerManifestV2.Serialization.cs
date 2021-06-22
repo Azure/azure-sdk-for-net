@@ -11,11 +11,16 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public partial class OciManifest : IUtf8JsonSerializable
+    public partial class DockerManifestV2 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(MediaType))
+            {
+                writer.WritePropertyName("mediaType");
+                writer.WriteStringValue(MediaType);
+            }
             if (Optional.IsDefined(ConfigDescriptor))
             {
                 writer.WritePropertyName("config");
@@ -31,18 +36,6 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
@@ -51,14 +44,19 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             writer.WriteEndObject();
         }
 
-        internal static OciManifest DeserializeOciManifest(JsonElement element)
+        internal static DockerManifestV2 DeserializeDockerManifestV2(JsonElement element)
         {
+            Optional<string> mediaType = default;
             Optional<ContentDescriptor> config = default;
             Optional<IList<ContentDescriptor>> layers = default;
-            Optional<OciManifestAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("mediaType"))
+                {
+                    mediaType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("config"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -84,16 +82,6 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     layers = array;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        annotations = null;
-                        continue;
-                    }
-                    annotations = OciManifestAnnotations.DeserializeOciManifestAnnotations(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("schemaVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -105,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new OciManifest(schemaVersion, config.Value, Optional.ToList(layers), annotations.Value);
+            return new DockerManifestV2(schemaVersion, mediaType.Value, config.Value, Optional.ToList(layers));
         }
     }
 }
