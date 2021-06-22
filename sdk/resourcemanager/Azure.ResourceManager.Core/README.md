@@ -23,7 +23,7 @@ You'll need the following values to authenticate to Azure:
 
 Detailed instructions on getting and setting these values is found in the [Prerequisites guide]<---(docs/Prerequisites.md)-->. 
 
-### Authentication and Creating Resource Management Client
+### Authenticate the Client
 
 Once the environment is set up, create an authenticated client. Our default option is to use `DefaultAzureCredential` and create an `AzureResourceManagerClient`. Since all management APIs go through the same endpoint, you no longer need to create a new client for every resource type.
 
@@ -149,7 +149,7 @@ For more detailed examples, take a look at [samples]<---(samples/)--> we have av
     questions]<---(https://stackoverflow.com/questions/tagged/azure+.net)-->
     or ask new ones on StackOverflow using azure and .NET tags.
 -   If having trouble with authenthication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
-## Next Steps
+## Next steps
 ### More sample code
 
 - [Managing Resource Groups]<---(samples/ManagingResourceGroups.md)-->
