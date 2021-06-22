@@ -313,132 +313,70 @@ namespace Azure.ResourceManager.NewResources
         #endregion
 
         #region PolicyAssignment
-        private static PolicyAssignmentsRestOperations GetPolicyAssignmentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        /// <summary> Gets an object representing a PolicyAssignmentContainer along with the instance operations that can be performed on it. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="PolicyAssignmentContainer" /> object. </returns>
+        private static PolicyAssignmentContainer GetPolicyAssignmentContainer(this SubscriptionOperations subscription)
         {
-            return new PolicyAssignmentsRestOperations(clientDiagnostics, pipeline, endpoint);
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) => new PolicyAssignmentContainer(options, credential, baseUri, pipeline));
         }
 
-        /// <summary> Lists the PolicyAssignment for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
+        /// <summary> Lists the PolicyAssignment for this Azure.ResourceManager.Core.ResourceGroupOperations. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static Pageable<PolicyAssignment> ListPolicyAssignment(this SubscriptionOperations subscription, string filter = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                var result = ListForSubscription(clientDiagnostics, restOperations, subscription.Id.SubscriptionId, filter, cancellationToken);
-                return new PhWrappingPageable<PolicyAssignmentData, PolicyAssignment>(
-                result,
-                s => new PolicyAssignment(subscription, s));
-            }
-            );
+            return subscription.GetPolicyAssignmentContainer().ListAtScope(subscription.Id, filter, cancellationToken);
         }
 
+        /// <summary> Lists the PolicyAssignment for this Azure.ResourceManager.Core.ResourceGroupOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static AsyncPageable<PolicyAssignment> ListPolicyAssignmentAsync(this SubscriptionOperations subscription, string filter = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPolicyAssignmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                var result = ListForSubscriptionAsync(clientDiagnostics, restOperations, subscription.Id.SubscriptionId, filter, cancellationToken);
-                return new PhWrappingAsyncPageable<PolicyAssignmentData, PolicyAssignment>(
-                result,
-                s => new PolicyAssignment(subscription, s));
-            }
-            );
+            return subscription.GetPolicyAssignmentContainer().ListAtScopeAsync(subscription.Id, filter, cancellationToken);
         }
 
-        /// <summary> This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="restOperations"> Resource client operations. </param>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
-        private static Pageable<PolicyAssignmentData> ListForSubscription(ClientDiagnostics clientDiagnostics, PolicyAssignmentsRestOperations restOperations, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        /// <summary> The operation to create or update a PolicyAssignment. Please note some properties can be set only during creation. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
+        /// <param name="parameters"> Parameters for the policy assignment. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public static Response<PolicyAssignment> CreateOrUpdatePolicyAssignment(this SubscriptionOperations subscription, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            Page<PolicyAssignmentData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.List(subscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyAssignmentData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.ListNextPage(nextLink, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return subscription.GetPolicyAssignmentContainer().CreateOrUpdateAtScope(subscription.Id, policyAssignmentName, parameters, cancellationToken);
         }
 
-        /// <summary> This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="restOperations"> Resource client operations. </param>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
-        private static AsyncPageable<PolicyAssignmentData> ListForSubscriptionAsync(ClientDiagnostics clientDiagnostics, PolicyAssignmentsRestOperations restOperations, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        /// <summary> The operation to create or update a PolicyAssignment. Please note some properties can be set only during creation. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
+        /// <param name="parameters"> Parameters for the policy assignment. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public static Task<Response<PolicyAssignment>> CreateOrUpdatePolicyAssignmentAsync(this SubscriptionOperations subscription, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            async Task<Page<PolicyAssignmentData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.ListAsync(subscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyAssignmentData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("PolicyAssignmentTenantContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return subscription.GetPolicyAssignmentContainer().CreateOrUpdateAtScopeAsync(subscription.Id, policyAssignmentName, parameters, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public static Response<PolicyAssignment> GetPolicyAssignment(this SubscriptionOperations subscription, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return subscription.GetPolicyAssignmentContainer().GetAtScope(subscription.Id, policyAssignmentName, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public static Task<Response<PolicyAssignment>> GetPolicyAssignmentAsync(this SubscriptionOperations subscription, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return subscription.GetPolicyAssignmentContainer().GetAtScopeAsync(subscription.Id, policyAssignmentName, cancellationToken);
         }
         #endregion
     }

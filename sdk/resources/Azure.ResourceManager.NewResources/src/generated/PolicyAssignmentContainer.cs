@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.NewResources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
 
+        internal PolicyAssignmentContainer(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline) : base(options, credential, baseUri, pipeline)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+        }
+
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Represents the REST operations. </summary>
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<PolicyAssignment> CreateOrUpdate(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignment> CreateOrUpdateAtScope(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.CreateOrUpdate");
             scope.Start();
@@ -69,7 +74,7 @@ namespace Azure.ResourceManager.NewResources
                     throw new ArgumentNullException(nameof(parameters));
                 }
 
-                return StartCreateOrUpdate(policyAssignmentScope, policyAssignmentName, parameters, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                return StartCreateOrUpdateAtScope(policyAssignmentScope, policyAssignmentName, parameters, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -83,7 +88,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<PolicyAssignment>> CreateOrUpdateAsync(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignment>> CreateOrUpdateAtScopeAsync(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.CreateOrUpdate");
             scope.Start();
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.NewResources
                     throw new ArgumentNullException(nameof(parameters));
                 }
 
-                var operation = await StartCreateOrUpdateAsync(policyAssignmentScope, policyAssignmentName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAtScopeAsync(policyAssignmentScope, policyAssignmentName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -117,7 +122,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public PolicyAssignmentsCreateOperation StartCreateOrUpdate(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        public PolicyAssignmentsCreateOperation StartCreateOrUpdateAtScope(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.StartCreateOrUpdate");
             scope.Start();
@@ -151,7 +156,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<PolicyAssignmentsCreateOperation> StartCreateOrUpdateAsync(string policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        public async Task<PolicyAssignmentsCreateOperation> StartCreateOrUpdateAtScopeAsync(string policyAssignmentScope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.StartCreateOrUpdate");
             scope.Start();
@@ -299,7 +304,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="policyAssignmentScope"> The scope of the policy assignment. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}' </param>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<PolicyAssignment> Get(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignment> GetAtScope(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.Get");
             scope.Start();
@@ -328,7 +333,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="policyAssignmentScope"> The scope of the policy assignment. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}' </param>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<PolicyAssignment>> GetAsync(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignment>> GetAtScopeAsync(ResourceIdentifier policyAssignmentScope, string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentContainer.Get");
             scope.Start();
@@ -402,7 +407,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PolicyAssignment> List(ResourceIdentifier policyAssignmentScope, string filter = null, CancellationToken cancellationToken = default)
+        public Pageable<PolicyAssignment> ListAtScope(ResourceIdentifier policyAssignmentScope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentScope == null)
             {
@@ -434,7 +439,7 @@ namespace Azure.ResourceManager.NewResources
                     }
                     else if (policyAssignmentScope.GetType() == typeof(ResourceGroupResourceIdentifier))
                     {
-                        if (policyAssignmentScope.ResourceType.Equals("Microsoft.Resources/resourceGroups"))
+                        if (policyAssignmentScope.ResourceType.Equals(ResourceGroupOperations.ResourceType))
                         {
                             var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
                             response = _restClient.ListForResourceGroup(s.SubscriptionId, s.ResourceGroupName, filter, cancellationToken);
@@ -448,7 +453,7 @@ namespace Azure.ResourceManager.NewResources
                             var parent = s.Parent;
 
                             var parentParts = new List<string>();
-                            while (!parent.ResourceType.Type.Equals("resourceGroups"))
+                            while (!parent.ResourceType.Equals(ResourceGroupOperations.ResourceType))
                             {
                                 parentParts.Insert(0, $"{parent.ResourceType.Types[parent.ResourceType.Types.Count - 1]}/{parent.Name}");
                                 parent = parent.Parent;
@@ -494,7 +499,7 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PolicyAssignment> ListAsync(ResourceIdentifier policyAssignmentScope, string filter = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<PolicyAssignment> ListAtScopeAsync(ResourceIdentifier policyAssignmentScope, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyAssignment>> FirstPageFunc(int? pageSizeHint)
             {
