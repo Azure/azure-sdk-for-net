@@ -36,12 +36,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Face - Detect. Each of the faces are identified independently. The
         /// valid number of faceIds is between [1, 10].</param>
         /// <param name="personGroupId">PersonGroupId of the target person
-        /// group, created by PersonGroup - Create. Parameter personGroupId and
-        /// largePersonGroupId should not be provided at the same time.</param>
+        /// group, created by PersonGroup - Create. Parameter personGroupId,
+        /// largePersonGroupId, dynamicPersonGroupId, or personIds should not
+        /// be provided at the same time.</param>
         /// <param name="largePersonGroupId">LargePersonGroupId of the target
         /// large person group, created by LargePersonGroup - Create. Parameter
-        /// personGroupId and largePersonGroupId should not be provided at the
-        /// same time.</param>
+        /// personGroupId, largePersonGroupId, dynamicPersonGroupId, or
+        /// personIds should not be provided at the same time.</param>
+        /// <param name="dynamicPersonGroupId">DynamicPersonGroupId of the
+        /// target PersonDirectory dynamic person group to match against.
+        /// Parameter personGroupId, largePersonGroupId, dynamicPersonGroupId,
+        /// or personIds should not be provided at the same time.</param>
+        /// <param name="personIds">Array of personIds created in
+        /// PersonDirectory - PersonCreate. The valid number of personIds is
+        /// between [1,30]. Providing a single '*' in the array identifies
+        /// against all persons inside the PersonDirectory. Parameter
+        /// personGroupId, largePersonGroupId, dynamicPersonGroupId, or
+        /// personIds should not be provided at the same time.</param>
         /// <param name="maxNumOfCandidatesReturned">The range of
         /// maxNumOfCandidatesReturned is between 1 and 5 (default is
         /// 1).</param>
@@ -49,11 +60,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// identification, used to judge whether one face belong to one
         /// person. The range of confidenceThreshold is [0, 1] (default
         /// specified by algorithm).</param>
-        public IdentifyRequest(IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = default(int?), double? confidenceThreshold = default(double?))
+        public IdentifyRequest(IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), string dynamicPersonGroupId = default(string), IList<string> personIds = default(IList<string>), int? maxNumOfCandidatesReturned = default(int?), double? confidenceThreshold = default(double?))
         {
             FaceIds = faceIds;
             PersonGroupId = personGroupId;
             LargePersonGroupId = largePersonGroupId;
+            DynamicPersonGroupId = dynamicPersonGroupId;
+            PersonIds = personIds;
             MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
             ConfidenceThreshold = confidenceThreshold;
             CustomInit();
@@ -74,19 +87,41 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets personGroupId of the target person group, created by
-        /// PersonGroup - Create. Parameter personGroupId and
-        /// largePersonGroupId should not be provided at the same time.
+        /// PersonGroup - Create. Parameter personGroupId, largePersonGroupId,
+        /// dynamicPersonGroupId, or personIds should not be provided at the
+        /// same time.
         /// </summary>
         [JsonProperty(PropertyName = "personGroupId")]
         public string PersonGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets largePersonGroupId of the target large person group,
-        /// created by LargePersonGroup - Create. Parameter personGroupId and
-        /// largePersonGroupId should not be provided at the same time.
+        /// created by LargePersonGroup - Create. Parameter personGroupId,
+        /// largePersonGroupId, dynamicPersonGroupId, or personIds should not
+        /// be provided at the same time.
         /// </summary>
         [JsonProperty(PropertyName = "largePersonGroupId")]
         public string LargePersonGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets dynamicPersonGroupId of the target PersonDirectory
+        /// dynamic person group to match against. Parameter personGroupId,
+        /// largePersonGroupId, dynamicPersonGroupId, or personIds should not
+        /// be provided at the same time.
+        /// </summary>
+        [JsonProperty(PropertyName = "dynamicPersonGroupId")]
+        public string DynamicPersonGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of personIds created in PersonDirectory -
+        /// PersonCreate. The valid number of personIds is between [1,30].
+        /// Providing a single '*' in the array identifies against all persons
+        /// inside the PersonDirectory. Parameter personGroupId,
+        /// largePersonGroupId, dynamicPersonGroupId, or personIds should not
+        /// be provided at the same time.
+        /// </summary>
+        [JsonProperty(PropertyName = "personIds")]
+        public IList<string> PersonIds { get; set; }
 
         /// <summary>
         /// Gets or sets the range of maxNumOfCandidatesReturned is between 1
@@ -142,6 +177,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(LargePersonGroupId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (DynamicPersonGroupId != null)
+            {
+                if (DynamicPersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DynamicPersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(DynamicPersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "DynamicPersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (PersonIds != null)
+            {
+                if (PersonIds.Count > 30)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "PersonIds", 30);
                 }
             }
             if (MaxNumOfCandidatesReturned > 5)

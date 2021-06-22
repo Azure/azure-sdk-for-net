@@ -11,7 +11,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         partial void CustomInitialize()
         {
             PersonDirectoryExtensions.asyncOperationAction = this.Snapshot.GetOperationStatusAsync;
-            //PersonDirectoryExtensions.asyncOperationAction = (Guid operationId, CancellationToken cancellationToken) => SnapshotOperationsExtensions.GetOperationStatusAsync(this.Snapshot, operationId, cancellationToken);
         }
     }
 }
