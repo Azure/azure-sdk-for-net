@@ -76,8 +76,18 @@ namespace Azure.DigitalTwins.Core.Samples
 
 
             ///////////////////////////////////////////////////////////////////////////////////////
+            
+            // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 AND IS_OF_MODEL("dtmi..")
+            AdtQueryBuilder logicalOpsCurrent = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .IsOfModel("dtmi:example:room;1", true)
+                .Build();
 
-            AdtQueryBuilder logicalOpsOption1 = new AdtQueryBuilder()
+            // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..")
+            AdtQueryBuilder logicalOps_SingleOr = new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Where()
@@ -85,6 +95,33 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Or()
                 .IsOfModel("dtmi:example:room;1", true)
                 .Build();
+
+            // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..") OR IS_NUMBER(Temperature)
+            AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .Or()
+                .IsOfModel("dtmi:example:room;1", true)
+                .Or()
+                .IsOfType("Temperature", AdtDataType.AdtNumber)
+                .Build();
+
+            AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
+               .Select("*")
+               .From(AdtCollection.DigitalTwins)
+               .Where()
+               .IsTrue(q => q
+                   .IsOfType("Humidity", AdtDataType.AdtNumber)
+                   .Or()
+                   .IsOfType("Humidity", AdtDataType.AdtPrimative))
+               .Or()
+               .IsTrue(q => q
+                   .IsOfType("Temperature", AdtDataType.AdtNumber)
+                   .Or()
+                   .IsOfType("Temperature", AdtDataType.AdtPrimative))
+               .Build();
         }
     }
 }

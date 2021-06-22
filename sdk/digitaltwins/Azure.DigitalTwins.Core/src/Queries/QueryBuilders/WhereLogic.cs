@@ -184,12 +184,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// TODO.
         /// </summary>
-        /// <param name="condition"></param>
+        /// <param name="p"></param>
         /// <returns></returns>
-        public WhereLogic IsTrue(string condition)
+        public WhereLogic IsTrue(Func<WhereLogic, WhereLogic> p)
         {
-            Console.WriteLine(condition);
-            return this;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -201,8 +200,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             return this;
         }
 
-        /*
-        * The rest of the logical operators defined in a similar manner.
-        */
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
+        public WhereLogic And()
+        {
+            return this;
+        }
     }
 }
