@@ -18,28 +18,11 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    // Avoid running these tests in parallel with anything else that's sharing the event source
-    [NonParallelizable]
     public class BatchingTests : SearchTestBase
     {
-        private TestEventListener _listener;
-
         public BatchingTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            _listener = new TestEventListener();
-            _listener.EnableEvents(AzureSearchDocumentsEventSource.Instance, EventLevel.Verbose);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _listener.Dispose();
         }
 
         #region Utilities
@@ -1066,10 +1049,13 @@ namespace Azure.Search.Documents.Tests
 
             client.SplitNextBatch = true;
 
+            using TestEventListener listener = new();
+            listener.EnableEvents(AzureSearchDocumentsEventSource.Instance, EventLevel.Verbose);
+
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
 
-            List<EventWrittenEventArgs> eventData = _listener.EventData.ToList();
+            List<EventWrittenEventArgs> eventData = listener.EventData.ToList();
 
             Assert.AreEqual(10, eventData.Count);
             Assert.AreEqual("PendingQueueResized", eventData[0].EventName);         // 1. All events are pushed into the pending queue.
