@@ -116,7 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
-            Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
+            Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
             Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
-            Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
+            Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
             Assert.Equal("my-service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal("my-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.Equal(activity.TraceId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
