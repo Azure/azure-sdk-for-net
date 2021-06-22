@@ -113,6 +113,10 @@
 # ServiceLabel: %Cloud Shell %Service Attention
 #/<NotInRepo>/            @maertendMSFT
 
+# PRLabel: %Cognitive - Language
+# ServiceLabel: %Cognitive - Language %Service Attention
+/sdk/cognitivelanguage/                         @heaths @rokulka
+
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/cognitiveservices/AnomalyDetector/            @yingqunpku @bowgong
 
