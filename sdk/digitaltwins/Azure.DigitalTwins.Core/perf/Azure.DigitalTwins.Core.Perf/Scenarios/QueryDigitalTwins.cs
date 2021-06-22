@@ -47,7 +47,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
-            await AdtInstancePopulator.CreateIndividualRoomTwins(_digitalTwinsClient, _testId, _size).ConfigureAwait(false);
+            await AdtInstancePopulator.CreateRoomTwinsForTestIdAsync(_digitalTwinsClient, _testId, _size).ConfigureAwait(false);
 
             // Since it takes some time for the newly created twins to be included in the query result, we have to wait some time.
             await Task.Delay(_delayPeriod);
