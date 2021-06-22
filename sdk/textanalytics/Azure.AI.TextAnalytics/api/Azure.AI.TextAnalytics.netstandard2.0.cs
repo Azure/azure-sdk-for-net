@@ -232,7 +232,7 @@ namespace Azure.AI.TextAnalytics
     public partial class ExtractKeyPhrasesAction
     {
         public ExtractKeyPhrasesAction() { }
-        public ExtractKeyPhrasesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions requestOptions) { }
+        public ExtractKeyPhrasesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
@@ -614,7 +614,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeEntitiesAction
     {
         public RecognizeEntitiesAction() { }
-        public RecognizeEntitiesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions requestOptions) { }
+        public RecognizeEntitiesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
@@ -639,7 +639,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeLinkedEntitiesAction
     {
         public RecognizeLinkedEntitiesAction() { }
-        public RecognizeLinkedEntitiesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions requestOptions) { }
+        public RecognizeLinkedEntitiesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }

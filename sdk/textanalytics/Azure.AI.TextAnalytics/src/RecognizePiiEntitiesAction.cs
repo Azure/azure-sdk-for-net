@@ -35,7 +35,10 @@ namespace Azure.AI.TextAnalytics
             ModelVersion = options.ModelVersion;
             DisableServiceLogs = options.DisableServiceLogs;
             DomainFilter = options.DomainFilter;
-            CategoriesFilter = options.CategoriesFilter ?? new List<PiiEntityCategory>(options.CategoriesFilter);
+            if (options.CategoriesFilter.Count > 0)
+            {
+                CategoriesFilter = new List<PiiEntityCategory>(options.CategoriesFilter);
+            }
         }
 
         /// <summary>

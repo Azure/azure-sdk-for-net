@@ -25,10 +25,10 @@ namespace Azure.AI.TextAnalytics
         /// class based on the values of a <see cref="TextAnalyticsRequestOptions"/>.
         /// It sets the <see cref="ModelVersion"/> and <see cref="DisableServiceLogs"/> properties.
         /// </summary>
-        public RecognizeEntitiesAction(TextAnalyticsRequestOptions requestOptions)
+        public RecognizeEntitiesAction(TextAnalyticsRequestOptions options)
         {
-            ModelVersion = requestOptions.ModelVersion;
-            DisableServiceLogs = requestOptions.DisableServiceLogs;
+            ModelVersion = options.ModelVersion;
+            DisableServiceLogs = options.DisableServiceLogs;
         }
 
         /// <summary>
