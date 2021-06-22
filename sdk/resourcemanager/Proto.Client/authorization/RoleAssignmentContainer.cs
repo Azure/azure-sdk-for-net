@@ -64,7 +64,7 @@ namespace Proto.Authorization
         /// <param name="resourceName"> The role assignment name. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
         /// <returns> The role assignment. </returns>
-        public override Response<RoleAssignment> Get(string resourceName, CancellationToken cancellationToken = default)
+        public Response<RoleAssignment> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id, resourceName, cancellationToken);
             return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
@@ -76,7 +76,7 @@ namespace Proto.Authorization
         /// <param name="resourceName"> The role assignment name. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
         /// <returns> The role assignment. </returns>
-        public async override Task<Response<RoleAssignment>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignment>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
