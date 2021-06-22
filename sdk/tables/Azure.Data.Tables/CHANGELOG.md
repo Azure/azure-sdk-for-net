@@ -1,5 +1,24 @@
 # Release History
 
+## 12.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Support for Azure Active Directory (AAD) authorization has been added to `TableServiceClient` and `TableClient`. This enables use of `TokenCredential` credentials. Note: Only Azure Storage API endpoints currently support AAD authorization.
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 12.0.1 (2021-06-10)
+
+### Key Bugs Fixed
+
+- Fixed an issue which would result in calls to `TableClient.Delete`, `TableClient.DeleteAsync`, `TableClient.DeleteEntity`, `TableClient.DeleteEntityAsync` throwing a `NullReferenceException` if the client was constructed with the `TableClient(string connectionString, string tableName, TableClientOptions options)` constructor.
+
 ## 12.0.0 (2021-06-08)
 
 - Added `GenerateSasUri` methods to both `TableClient` and `TableServiceClient`.

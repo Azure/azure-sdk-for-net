@@ -26,22 +26,23 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="audience"></param>
         /// <param name="claims"></param>
         /// <param name="key"></param>
-        /// <param name="expireAfter"></param>
+        /// <param name="expiresAtUtc">DateTime.Kind must be DateTimeKind.Utc.</param>
         /// <param name="hmacSha512">SHA512 if true, otherwise SHA256</param>
         /// <returns></returns>
         public static string GenerateAccessToken(
             string audience,
             IEnumerable<Claim> claims,
             AzureKeyCredential key,
-            TimeSpan expireAfter = default,
+            DateTime expiresAtUtc = default,
             bool hmacSha512 = false)
         {
-            if (expireAfter == default) expireAfter = TimeSpan.FromMinutes(10);
+            if (expiresAtUtc.Kind != DateTimeKind.Utc)
+                throw new ArgumentOutOfRangeException(nameof(expiresAtUtc));
 
             var jwtToken = JwtUtils.GenerateJwtBearer(
                 audience: audience,
                 claims: claims,
-                expiresAfter: expireAfter,
+                expiresAt: expiresAtUtc,
                 key: key,
                 hmacSha512: hmacSha512
             );
@@ -59,13 +60,11 @@ namespace Azure.Messaging.WebPubSub
             public static string GenerateJwtBearer(
                 string audience,
                 IEnumerable<Claim> claims,
-                TimeSpan expiresAfter,
+                DateTime expiresAt,
                 AzureKeyCredential key,
                 string issuer = null,
                 bool hmacSha512 = false)
             {
-                var expiresAt = DateTime.UtcNow.Add(expiresAfter);
-
                 var subject = claims == null ? null : new ClaimsIdentity(claims);
                 SigningCredentials credentials = null;
                 if (key != null)

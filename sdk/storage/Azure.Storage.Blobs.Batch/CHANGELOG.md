@@ -1,15 +1,8 @@
 # Release History
 
 ## 12.7.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- Added support for service version 2020-10-02.
+- This release contains bug fixes to improve quality.
 
 ## 12.6.0 (2021-06-08)
 - Includes all features from 12.6.0-beta.4.

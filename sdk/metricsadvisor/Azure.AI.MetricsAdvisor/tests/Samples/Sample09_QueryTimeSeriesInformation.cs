@@ -180,10 +180,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(metricId, options))
             {
-                Console.WriteLine($"Time series metric ID: {seriesData.Definition.MetricId}");
+                Console.WriteLine($"Time series metric ID: {seriesData.MetricId}");
                 Console.WriteLine("Time series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in seriesData.Definition.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in seriesData.SeriesKey.AsDictionary())
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -229,7 +229,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
 
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, detectionConfigurationId, startTime, endTime))
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(detectionConfigurationId, seriesKeys, startTime, endTime))
             {
                 Console.WriteLine("Time series key:");
 

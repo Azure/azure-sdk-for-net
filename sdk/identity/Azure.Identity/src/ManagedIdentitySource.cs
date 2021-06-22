@@ -42,21 +42,48 @@ namespace Azure.Identity
 
         protected virtual async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
+            using JsonDocument json = async
+                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                : JsonDocument.Parse(response.ContentStream);
             if (response.Status == 200)
             {
-                using JsonDocument json = async
-                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                    : JsonDocument.Parse(response.ContentStream);
-
                 return GetTokenFromResponse(json.RootElement);
             }
 
+            string message = GetMessageFromResponse(json.RootElement);
             throw async
-                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                : Pipeline.Diagnostics.CreateRequestFailedException(response);
+                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message).ConfigureAwait(false)
+                : Pipeline.Diagnostics.CreateRequestFailedException(response, message);
         }
 
         protected abstract Request CreateRequest(string[] scopes);
+
+        protected static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
+        {
+            if (response?.ContentStream == null)
+            {
+                return null;
+            }
+            response.ContentStream.Position = 0;
+            using JsonDocument json = async
+                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                : JsonDocument.Parse(response.ContentStream);
+
+            return GetMessageFromResponse(json.RootElement);
+        }
+
+        protected static string GetMessageFromResponse(in JsonElement root)
+        {
+            // Parse the error, if possible
+            foreach (var prop in root.EnumerateObject())
+            {
+                if (prop.Name == "Message")
+                {
+                    return prop.Value.GetString();
+                }
+            }
+            return null;
+        }
 
         private static AccessToken GetTokenFromResponse(in JsonElement root)
         {

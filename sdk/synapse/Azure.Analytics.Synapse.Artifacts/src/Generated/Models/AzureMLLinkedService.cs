@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
         /// <param name="updateResourceEndpoint"> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>

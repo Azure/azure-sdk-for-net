@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The CommentFeedback. </summary>
     [CodeGenModel("CommentFeedback")]

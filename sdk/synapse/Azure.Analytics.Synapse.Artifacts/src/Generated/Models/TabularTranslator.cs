@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of TabularTranslator. </summary>
         /// <param name="type"> Copy translator type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="columnMappings"> Column mappings. Example: &quot;UserId: MyUserId, Group: MyGroup, Name: MyName&quot; Type: string (or Expression with resultType string). This property will be retired. Please use mappings property. </param>
         /// <param name="schemaMapping"> The schema mapping to map between tabular data and hierarchical data. Example: {&quot;Column1&quot;: &quot;$.Column1&quot;, &quot;Column2&quot;: &quot;$.Column2.Property1&quot;, &quot;Column3&quot;: &quot;$.Column2.Property2&quot;}. Type: object (or Expression with resultType object). This property will be retired. Please use mappings property. </param>
         /// <param name="collectionReference"> The JSON Path of the Nested Array that is going to do cross-apply. Type: object (or Expression with resultType object). </param>

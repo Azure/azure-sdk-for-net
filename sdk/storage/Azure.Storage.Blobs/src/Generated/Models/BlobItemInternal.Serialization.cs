@@ -24,6 +24,7 @@ namespace Azure.Storage.Blobs.Models
             IReadOnlyDictionary<string, string> metadata = default;
             BlobTags blobTags = default;
             IReadOnlyDictionary<string, string> objectReplicationMetadata = default;
+            bool? hasVersionsOnly = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = (string)nameElement;
@@ -70,7 +71,11 @@ namespace Azure.Storage.Blobs.Models
                 }
                 objectReplicationMetadata = dictionary;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, objectReplicationMetadata);
+            if (element.Element("HasVersionsOnly") is XElement hasVersionsOnlyElement)
+            {
+                hasVersionsOnly = (bool?)hasVersionsOnlyElement;
+            }
+            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, objectReplicationMetadata, hasVersionsOnly);
         }
     }
 }

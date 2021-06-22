@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.Quantum
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IWorkspaceOperations.
+        /// </summary>
+        public virtual IWorkspaceOperations Workspace { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the QuantumManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -330,6 +335,7 @@ namespace Microsoft.Azure.Management.Quantum
             Workspaces = new WorkspacesOperations(this);
             Offerings = new OfferingsOperations(this);
             Operations = new Operations(this);
+            Workspace = new WorkspaceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-11-04-preview";
             AcceptLanguage = "en-US";

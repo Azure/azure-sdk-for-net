@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
@@ -194,168 +195,6 @@ namespace Azure.Messaging.EventGrid
             return new EventHubCaptureFileCreatedEventData(fileurl, fileType, partitionId, sizeInBytes, eventCount, firstSequenceNumber, lastSequenceNumber, firstEnqueueTime, lastEnqueueTime);
         }
 
-        /// <summary> Initializes new instance of ResourceWriteSuccessEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceWriteSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceWriteSuccessEventData ResourceWriteSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceWriteSuccessEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceWriteFailureEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceWriteFailureEventData"/> instance for mocking. </returns>
-        public static ResourceWriteFailureEventData ResourceWriteFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceWriteFailureEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceWriteCancelEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceWriteCancelEventData"/> instance for mocking. </returns>
-        public static ResourceWriteCancelEventData ResourceWriteCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceWriteCancelEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceDeleteSuccessEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceDeleteSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteSuccessEventData ResourceDeleteSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceDeleteSuccessEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceDeleteFailureEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceDeleteFailureEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteFailureEventData ResourceDeleteFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceDeleteFailureEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceDeleteCancelEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceDeleteCancelEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteCancelEventData ResourceDeleteCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceDeleteCancelEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceActionSuccessEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceActionSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceActionSuccessEventData ResourceActionSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceActionSuccessEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceActionFailureEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceActionFailureEventData"/> instance for mocking. </returns>
-        public static ResourceActionFailureEventData ResourceActionFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceActionFailureEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
-        /// <summary> Initializes new instance of ResourceActionCancelEventData class. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceActionCancelEventData"/> instance for mocking. </returns>
-        public static ResourceActionCancelEventData ResourceActionCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceActionCancelEventData(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, authorization, claims, correlationId, httpRequest);
-        }
-
         /// <summary> Initializes new instance of SubscriptionValidationEventData class. </summary>
         /// <param name="validationCode"> The validation code sent by Azure Event Grid to validate an event subscription. To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </param>
         /// <param name="validationUrl"> The validation URL sent by Azure Event Grid (available starting version 2018-05-01-preview). To complete the validation handshake, the subscriber must either respond with the validationCode as part of the validation response, or perform a GET request on the validationUrl (available starting version 2018-05-01-preview). </param>
@@ -363,14 +202,6 @@ namespace Azure.Messaging.EventGrid
         public static SubscriptionValidationEventData SubscriptionValidationEventData(string validationCode = default, string validationUrl = default)
         {
             return new SubscriptionValidationEventData(validationCode, validationUrl);
-        }
-
-        /// <summary> Initializes new instance of SubscriptionValidationResponse class. </summary>
-        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
-        /// <returns> A new <see cref="SystemEvents.SubscriptionValidationResponse"/> instance for mocking. </returns>
-        public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
-        {
-            return new SubscriptionValidationResponse(validationResponse);
         }
 
         /// <summary> Initializes new instance of SubscriptionDeletedEventData class. </summary>
