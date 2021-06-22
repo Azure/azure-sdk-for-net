@@ -88,5 +88,19 @@ namespace Microsoft.Azure.Management.ResourceGraph
         /// </param>
         Task<AzureOperationResponse<QueryResponse>> ResourcesWithHttpMessagesAsync(QueryRequest query, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// List all snapshots of a resource for a given time interval.
+        /// </summary>
+        /// <param name='request'>
+        /// Request specifying the query and its options.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> ResourcesHistoryWithHttpMessagesAsync(ResourcesHistoryRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
     }
 }
