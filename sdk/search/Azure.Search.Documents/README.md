@@ -96,6 +96,47 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
+### ASP.NET Core
+To inject `SearchClient` as a dependency in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`. Then register the client in the `Startup.ConfigureServices` method:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        builder.AddSearchClient(Configuration.GetSection("SearchClient"));
+    });
+  
+    services.AddControllers();
+}
+```
+To use the preceding code, add this to your configuration:
+
+```json
+{
+    "SearchClient": {
+      "endpoint": "https://<resource-name>.search.windows.net",
+      "indexname": "nycjobs"
+    }
+}
+```
+You'll also need to provide your resource key to authenticate the client, but you shouldn't be putting that information in the configuration. Instead, when in development, use [User-Secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#how-the-secret-manager-tool-works). Add the following to `secrets.json`:
+
+```json
+{
+    "SearchClient": {
+      "credential": { "key": "<you resource key>" }
+    }
+}
+```
+When running in production, it's preferable to use [environment variables](https://docs.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#environment-variables):
+
+```
+SEARCH__CREDENTIAL__KEY="..."
+```
+Or use other secure ways of storing secrets like [Azure Key Vault](https://docs.microsoft.com/aspnet/core/security/key-vault-configuration?view=aspnetcore-5.0).
+
+For more details about Dependency Injection in ASP.NET Core apps, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ## Key concepts
 
