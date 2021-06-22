@@ -48,13 +48,13 @@ namespace Azure.DigitalTwins.Core.Samples
 
         private readonly string _eventRouteId = $"sampleEventRouteId-{Guid.NewGuid()}";
 
-        private readonly string _eventhubEndpointName;
-        private readonly DigitalTwinsClient _client;
+        private readonly string eventhubEndpointName;
+        private readonly DigitalTwinsClient client;
 
         public DigitalTwinsLifecycleSamples(DigitalTwinsClient dtClient, string eventhubEndpointName)
         {
-            _eventhubEndpointName = eventhubEndpointName;
-            _client = dtClient;
+            this.eventhubEndpointName = eventhubEndpointName;
+            client = dtClient;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 foreach (string modelId in models)
                 {
-                    await _client.DeleteModelAsync(modelId);
+                    await client.DeleteModelAsync(modelId);
                     Console.WriteLine($"Deleted model '{modelId}'.");
                 }
             }
@@ -145,7 +145,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             try
             {
-                await _client.CreateModelsAsync(modelsToCreate);
+                await client.CreateModelsAsync(modelsToCreate);
                 Console.WriteLine("Created models.");
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -170,7 +170,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 #region Snippet:DigitalTwinsSampleGetModels
 
-                AsyncPageable<DigitalTwinsModelData> allModels = _client.GetModelsAsync();
+                AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
                 await foreach (DigitalTwinsModelData model in allModels)
                 {
                     Console.WriteLine($"Retrieved model '{model.Id}', " +
@@ -202,19 +202,19 @@ namespace Azure.DigitalTwins.Core.Samples
                 try
                 {
                     // Delete all relationships
-                    AsyncPageable<BasicRelationship> relationships = _client.GetRelationshipsAsync<BasicRelationship>(digitalTwinId);
+                    AsyncPageable<BasicRelationship> relationships = client.GetRelationshipsAsync<BasicRelationship>(digitalTwinId);
                     await foreach (BasicRelationship relationship in relationships)
                     {
-                        await _client.DeleteRelationshipAsync(digitalTwinId, relationship.Id);
+                        await client.DeleteRelationshipAsync(digitalTwinId, relationship.Id);
                         Console.WriteLine($"Found and deleted relationship '{relationship.Id}'.");
                     }
 
                     // Delete any incoming relationships
-                    AsyncPageable<IncomingRelationship> incomingRelationships = _client.GetIncomingRelationshipsAsync(digitalTwinId);
+                    AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(digitalTwinId);
 
                     await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
                     {
-                        await _client.DeleteRelationshipAsync(incomingRelationship.SourceId, incomingRelationship.RelationshipId);
+                        await client.DeleteRelationshipAsync(incomingRelationship.SourceId, incomingRelationship.RelationshipId);
                         Console.WriteLine($"Found and deleted incoming relationship '{incomingRelationship.RelationshipId}'.");
                     }
 
@@ -222,7 +222,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                     #region Snippet:DigitalTwinsSampleDeleteTwin
 
-                    await _client.DeleteDigitalTwinAsync(digitalTwinId);
+                    await client.DeleteDigitalTwinAsync(digitalTwinId);
                     Console.WriteLine($"Deleted digital twin '{digitalTwinId}'.");
 
                     #endregion Snippet:DigitalTwinsSampleDeleteTwin
@@ -252,7 +252,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 try
                 {
                     BasicDigitalTwin basicDigitalTwin = JsonSerializer.Deserialize<BasicDigitalTwin>(twin.Value);
-                    Response<BasicDigitalTwin> response = await _client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(twin.Key, basicDigitalTwin);
+                    Response<BasicDigitalTwin> response = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(twin.Key, basicDigitalTwin);
 
                     Console.WriteLine($"Created digital twin '{twin.Key}'.");
                     Console.WriteLine($"\tBody: {JsonSerializer.Serialize(response?.Value)}");
@@ -276,7 +276,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
                 // happens under the covers.
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = _client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 
                 // Iterate over the twin instances in the pageable response.
                 // The "await" keyword here is required because new pages will be fetched when necessary,
@@ -296,7 +296,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 // the query API. It iterates over the response pages first to access to the query-charge header,
                 // and then the digital twin results within each page.
 
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = _client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
                 int pageNum = 0;
 
                 // The "await" keyword here is required as a call is made when fetching a new page.
@@ -348,7 +348,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     try
                     {
-                        Response<BasicRelationship> createRelationshipResponse = await _client.CreateOrReplaceRelationshipAsync<BasicRelationship>(
+                        Response<BasicRelationship> createRelationshipResponse = await client.CreateOrReplaceRelationshipAsync<BasicRelationship>(
                             relationship.SourceId,
                             relationship.Id,
                             relationship);
@@ -374,7 +374,7 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 #region Snippet:DigitalTwinsSampleGetEventRoutes
 
-                AsyncPageable<DigitalTwinsEventRoute> response = _client.GetEventRoutesAsync();
+                AsyncPageable<DigitalTwinsEventRoute> response = client.GetEventRoutesAsync();
                 await foreach (DigitalTwinsEventRoute er in response)
                 {
                     Console.WriteLine($"Event route '{er.Id}', endpoint name '{er.EndpointName}'");
@@ -399,9 +399,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 #region Snippet:DigitalTwinsSampleCreateEventRoute
 
                 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-                var eventRoute = new DigitalTwinsEventRoute(_eventhubEndpointName, eventFilter);
+                var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
-                await _client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
+                await client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
                 Console.WriteLine($"Created event route '{_eventRouteId}'.");
 
                 #endregion Snippet:DigitalTwinsSampleCreateEventRoute
@@ -422,7 +422,7 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 #region Snippet:DigitalTwinsSampleDeleteEventRoute
 
-                await _client.DeleteEventRouteAsync(_eventRouteId);
+                await client.DeleteEventRouteAsync(_eventRouteId);
                 Console.WriteLine($"Deleted event route '{_eventRouteId}'.");
 
                 #endregion Snippet:DigitalTwinsSampleDeleteEventRoute

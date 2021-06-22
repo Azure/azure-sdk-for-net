@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -23,7 +24,14 @@ namespace Azure.DigitalTwins.Core.Perf.Infrastructure
 
         public static async Task CreateRoomModelAsync(DigitalTwinsClient client)
         {
-            await client.CreateModelsAsync(new List<string> { GetRoomModel() }).ConfigureAwait(false);
+            try
+            {
+                await client.CreateModelsAsync(new List<string> { GetRoomModel() }).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            {
+                Console.WriteLine("Model already exists");
+            }
         }
 
         public static async Task<List<BasicDigitalTwin>> CreateRoomTwinsForTestIdAsync(DigitalTwinsClient client, string testId, long countOftwins)

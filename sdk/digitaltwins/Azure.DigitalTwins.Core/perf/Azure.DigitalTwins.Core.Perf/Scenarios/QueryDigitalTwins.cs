@@ -9,6 +9,7 @@ using Azure.DigitalTwins.Core.Perf.Infrastructure;
 using Azure.Identity;
 using Azure.Test.Perf;
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Azure.DigitalTwins.Core.Perf.Scenarios
 {
@@ -89,7 +90,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         {
             Pageable<BasicDigitalTwin> result = _digitalTwinsClient
                 .Query<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", CancellationToken.None);
-            int resultCount = 0;
+            long resultCount = 0;
 
             foreach (BasicDigitalTwin a in result)
             {
@@ -97,7 +98,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
             }
 
 #if DEBUG
-            Assert.AreEqual(_size, resultCount);
+            resultCount.Should().Be(_size);
 #endif
         }
 
@@ -109,7 +110,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         {
             AsyncPageable<BasicDigitalTwin> result = _digitalTwinsClient
                 .QueryAsync<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", CancellationToken.None);
-            int resultCount = 0;
+            long resultCount = 0;
 
             await foreach (BasicDigitalTwin a in result)
             {
@@ -117,7 +118,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
             }
 
 #if DEBUG
-            Assert.AreEqual(_size, resultCount);
+            resultCount.Should().Be(_size);
 #endif
         }
     }
