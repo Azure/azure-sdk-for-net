@@ -415,9 +415,9 @@ await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(aler
     Console.WriteLine($"Severity: {anomaly.Severity}");
     Console.WriteLine("Series key:");
 
-    foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
+    foreach (KeyValuePair<string, string> dimensionColumn in anomaly.SeriesKey)
     {
-        Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
+        Console.WriteLine($"  Dimension '{dimensionColumn.Key}': {dimensionColumn.Value}");
     }
 
     Console.WriteLine();

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
@@ -23,9 +24,14 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            FeedbackDimensionFilter filter = new FeedbackDimensionFilter();
-
-            filter.DimensionFilter.AddDimensionColumn("city", "Belo Horizonte");
+            var dimensionColumns = new Dictionary<string, string>()
+            {
+                { "city", "Belo Horizonte" }
+            };
+            FeedbackDimensionFilter filter = new FeedbackDimensionFilter()
+            {
+                DimensionFilter = new DimensionKey(dimensionColumns)
+            };
 
             var startTime = DateTimeOffset.Parse("2020-02-01T00:00:00Z");
             var endTime = DateTimeOffset.Parse("2020-02-03T00:00:00Z");
