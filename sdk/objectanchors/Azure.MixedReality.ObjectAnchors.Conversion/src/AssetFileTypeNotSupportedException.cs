@@ -66,6 +66,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         protected AssetFileTypeNotSupportedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            AttemptedFileType = (AssetFileType) info.GetValue(nameof(AttemptedFileType), typeof(AssetFileType));
+            SupportedAssetFileTypes = (IReadOnlyList<AssetFileType>) info.GetValue(nameof(SupportedAssetFileTypes), typeof(IReadOnlyList<AssetFileType>));
         }
 
         /// <summary>
