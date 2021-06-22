@@ -508,32 +508,52 @@ namespace Azure.ResourceManager.NewResources
                 try
                 {
                     Response<PolicyAssignmentListResult> response;
-                    var scopeParts = policyAssignmentScope.ToString().Split('/');
 
-                    if (policyAssignmentScope.GetType() == typeof(SubscriptionResourceIdentifier))
+                    if (policyAssignmentScope.GetType() == typeof(TenantResourceIdentifier))
+                    {
+                        if (policyAssignmentScope.ResourceType.Equals("Microsoft.Management/managementGroups"))
+                        {
+                            response = await _restClient.ListForManagementGroupAsync(policyAssignmentScope.Name, filter, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Invalid scope: {policyAssignmentScope}.", nameof(policyAssignmentScope));
+                        }
+                    }
+                    else if (policyAssignmentScope.GetType() == typeof(SubscriptionResourceIdentifier))
                     {
                         var s = policyAssignmentScope as SubscriptionResourceIdentifier;
                         response = await _restClient.ListAsync(s.SubscriptionId, filter, cancellationToken).ConfigureAwait(false);
                     }
-                    else if (policyAssignmentScope.GetType() == typeof(TenantResourceIdentifier) && policyAssignmentScope.ToString().StartsWith("/providers/Microsoft.Management/managementGroups/"))
+                    else if (policyAssignmentScope.GetType() == typeof(ResourceGroupResourceIdentifier))
                     {
-                        response = await _restClient.ListForManagementGroupAsync(policyAssignmentScope.Name, filter, cancellationToken).ConfigureAwait(false);
-                    }
-                    else if (policyAssignmentScope.GetType() == typeof(ResourceGroupResourceIdentifier) && scopeParts[scopeParts.Length - 2].Equals("resourceGroups"))
-                    {
-                        var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
-                        response = await _restClient.ListForResourceGroupAsync(s.SubscriptionId, s.ResourceGroupName, filter, cancellationToken).ConfigureAwait(false);
+                        if (policyAssignmentScope.ResourceType.Equals(ResourceGroupOperations.ResourceType))
+                        {
+                            var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
+                            response = await _restClient.ListForResourceGroupAsync(s.SubscriptionId, s.ResourceGroupName, filter, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
+                            var resourceProviderNamespace = s.ResourceType.Namespace;
+                            var resourceType = s.ResourceType.Types[s.ResourceType.Types.Count - 1];
+                            var resourceName = s.Name;
+                            var parent = s.Parent;
+
+                            var parentParts = new List<string>();
+                            while (!parent.ResourceType.Equals(ResourceGroupOperations.ResourceType))
+                            {
+                                parentParts.Insert(0, $"{parent.ResourceType.Types[parent.ResourceType.Types.Count - 1]}/{parent.Name}");
+                                parent = parent.Parent;
+                            }
+                            var parentResourcePath = parentParts.Count > 0 ? string.Join("/", parentParts) : "";
+                            response = await _restClient.ListForResourceAsync(s.SubscriptionId, s.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, cancellationToken).ConfigureAwait(false);
+                        }
+
                     }
                     else
                     {
-                        var s = policyAssignmentScope as ResourceGroupResourceIdentifier;
-                        var parts = s.ToString().Substring(s.ToString().IndexOf("providers/")).ToString().Split('/');
-                        var resourceProviderNamespace = parts[1];
-                        var resourceType = parts[parts.Length - 2];
-                        var startIndex = s.ToString().IndexOf($"providers/{resourceProviderNamespace}") + $"providers/{resourceProviderNamespace}/".Length;
-                        var endIndex = s.ToString().IndexOf($"/{resourceType}");
-                        var parentResourcePath = startIndex >= endIndex ? "" : s.ToString().Substring(startIndex, endIndex - startIndex);
-                        response = await _restClient.ListForResourceAsync(s.SubscriptionId, s.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, s.Name, filter, cancellationToken).ConfigureAwait(false);
+                        throw new ArgumentException($"Invalid scope: {policyAssignmentScope}.", nameof(policyAssignmentScope));
                     }
 
                     return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
