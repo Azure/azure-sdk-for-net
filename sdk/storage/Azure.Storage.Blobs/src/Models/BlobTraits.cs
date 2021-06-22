@@ -33,9 +33,19 @@ namespace Azure.Storage.Blobs.Models
         Metadata = 2,
 
         /// <summary>
-        /// Flat specifying that the blob's tags should be included.
+        /// Flag specifying that the blob's tags should be included.
         /// </summary>
         Tags = 4,
+
+        /// <summary>
+        /// Flag specifying that the blob's immutibility policy should be included.
+        /// </summary>
+        ImmutabilityPolicy = 8,
+
+        /// <summary>
+        /// Flag specifying that the blob's legal hold should be included.
+        /// </summary>
+        LegalHold = 16,
 
         /// <summary>
         /// Flag specifying that all traits should be included.

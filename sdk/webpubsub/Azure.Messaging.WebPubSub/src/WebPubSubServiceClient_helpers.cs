@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
@@ -22,17 +23,12 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
+        /// <param name="expiresAtUtc">UTC time when the token expires.</param>
         /// <param name="userId"></param>
         /// <param name="roles"></param>
-        /// <param name="expiresAfter">Defaults to one hour, if not specified.</param>
         /// <returns></returns>
-        public virtual Uri GenerateClientAccessUri(string userId = default, string[] roles = default, TimeSpan expiresAfter = default)
+        public virtual Uri GenerateClientAccessUri(DateTime expiresAtUtc, string userId = default, params string[] roles)
         {
-            if (expiresAfter == default)
-            {
-                expiresAfter = TimeSpan.FromHours(1);
-            }
-
             List<Claim> claims = new List<Claim>();
             if (userId != default)
             {
@@ -54,7 +50,7 @@ namespace Azure.Messaging.WebPubSub
             }
             var audience = $"{endpoint}client/hubs/{hub}";
 
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expiresAfter);
+            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expiresAtUtc);
 
             var clientEndpoint = new UriBuilder(endpoint);
             clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";
@@ -64,11 +60,37 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
+        /// Creates a URI with authentication token.
+        /// </summary>
+        /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
+        /// <param name="userId"></param>
+        /// <param name="roles"></param>
+        /// <returns></returns>
+        public virtual Uri GenerateClientAccessUri(TimeSpan expiresAfter = default, string userId = default, params string[] roles)
+        {
+            if (expiresAfter.TotalMilliseconds < 0)
+                throw new ArgumentOutOfRangeException(nameof(expiresAfter));
+
+            DateTime expiresAt = DateTime.UtcNow;
+            if (expiresAfter == default)
+            {
+                expiresAt += TimeSpan.FromHours(1);
+            }
+            else
+            {
+                expiresAt += expiresAfter;
+            }
+            return GenerateClientAccessUri(expiresAt, userId, roles);
+        }
+
+        /// <summary>
         /// Parse connection string to endpoint and credential
         /// </summary>
         /// <returns></returns>
         internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
         {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
             var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
 
             var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -118,6 +140,19 @@ namespace Azure.Messaging.WebPubSub
             }
 
             return (uriBuilder.Uri, new AzureKeyCredential(accessKey));
+        }
+
+        internal static string PermissionToString(WebPubSubPermission permission)
+        {
+            switch (permission)
+            {
+                case WebPubSubPermission.SendToGroup:
+                    return "sendToGroup";
+                case WebPubSubPermission.JoinLeaveGroup:
+                    return "joinLeaveGroup";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(permission));
+            }
         }
     }
 }
