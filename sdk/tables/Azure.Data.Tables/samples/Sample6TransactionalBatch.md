@@ -121,9 +121,9 @@ Let's clean up the rest of the entities remaining in the table with a batch dele
 List<TableTransactionAction> deleteEntitiesBatch = new List<TableTransactionAction>();
 
 // Add the entities for deletion to the batch.
-foreach (TableEntity entity in entityList)
+foreach (TableEntity entityToDelete in entityList)
 {
-    deleteEntitiesBatch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entity));
+    deleteEntitiesBatch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entityToDelete));
 }
 
 // Submit the batch.

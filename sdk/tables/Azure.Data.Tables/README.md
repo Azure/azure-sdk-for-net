@@ -96,7 +96,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 First, we need to construct a `TableServiceClient`.
 
 ```C# Snippet:TablesSample1CreateClient
-// Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+// Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
 var serviceClient = new TableServiceClient(
     new Uri(storageUri),
@@ -107,9 +107,9 @@ var serviceClient = new TableServiceClient(
 Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
-// Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+// Create a new table. The TableItem class stores properties of the created table.
 string tableName = "OfficeSupplies1p1";
-TableItem table = serviceClient.CreateTable(tableName);
+TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
@@ -147,7 +147,6 @@ To interact with table entities, we must first construct a `TableClient`.
 
 ```C# Snippet:TablesSample2CreateTableWithTableClient
 // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
-
 var tableClient = new TableClient(
     new Uri(storageUri),
     tableName,
@@ -163,7 +162,6 @@ Let's define a new `TableEntity` so that we can add it to the table.
 
 ```C# Snippet:TablesSample2CreateDictionaryEntity
 // Make a dictionary entity by defining a <see cref="TableEntity">.
-
 var entity = new TableEntity(partitionKey, rowKey)
 {
     { "Product", "Marker Set" },
@@ -178,7 +176,6 @@ Using the `TableClient` we can now add our new entity to the table.
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-
 tableClient.AddEntity(entity);
 ```
 
@@ -190,7 +187,6 @@ To inspect the set of existing table entities, we can query the table using an O
 Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
 // Iterate the <see cref="Pageable"> to access all queried entities.
-
 foreach (TableEntity qEntity in queryResultsFilter)
 {
     Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
@@ -202,8 +198,6 @@ Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 If you prefer LINQ style query expressions, we can query the table using that syntax as well.
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
-// Use the <see cref="TableClient"> to query the table using a filter expression.
-
 double priceCutOff = 6.00;
 Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
 ```
@@ -214,7 +208,6 @@ If we no longer need our new table entity, it can be deleted.
 
 ```C# Snippet:TablesSample2DeleteEntity
 // Delete the entity given the partition and row key.
-
 tableClient.DeleteEntity(partitionKey, rowKey);
 ```
 
