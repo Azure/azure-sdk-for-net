@@ -26,14 +26,18 @@ namespace Azure.DigitalTwins.Core.Perf.Infrastructure
             await client.CreateModelsAsync(new List<string> { GetRoomModel() }).ConfigureAwait(false);
         }
 
-        public static async Task CreateRoomTwinsForTestIdAsync(DigitalTwinsClient client, string testId, long countOftwins)
+        public static async Task<List<BasicDigitalTwin>> CreateRoomTwinsForTestIdAsync(DigitalTwinsClient client, string testId, long countOftwins)
         {
+            List<BasicDigitalTwin> createdTwins = new List<BasicDigitalTwin>();
+
             string batchTwinPrefix = $"room-{testId}-{Guid.NewGuid().ToString().Substring(0, 8)}";
             for (long i = 0; i < countOftwins; i++)
             {
                 string twinId = $"{batchTwinPrefix}-{i}";
-                await client.CreateOrReplaceDigitalTwinAsync(twinId, GetRoomTwin(testId)).ConfigureAwait(false);
+                createdTwins.Add(await client.CreateOrReplaceDigitalTwinAsync(twinId, GetRoomTwin(testId)).ConfigureAwait(false));
             }
+
+            return createdTwins;
         }
 
         public static string GetRoomModel()

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core.Perf.Infrastructure;
@@ -21,6 +22,7 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         private readonly string _testId;
         private readonly long _size;
         private readonly TimeSpan _delayPeriod = TimeSpan.FromMinutes(1);
+        private List<BasicDigitalTwin> _createdTwins = new List<BasicDigitalTwin>();
 
         public QueryDigitalTwins(SizeOptions options) : base(options)
         {
@@ -47,10 +49,36 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
-            await AdtInstancePopulator.CreateRoomTwinsForTestIdAsync(_digitalTwinsClient, _testId, _size).ConfigureAwait(false);
+            _createdTwins = await AdtInstancePopulator.CreateRoomTwinsForTestIdAsync(_digitalTwinsClient, _testId, _size).ConfigureAwait(false);
 
             // Since it takes some time for the newly created twins to be included in the query result, we have to wait some time.
             await Task.Delay(_delayPeriod);
+        }
+
+        public override async Task CleanupAsync()
+        {
+            // Individual test-level cleanup code that runs for each instance of the test.
+            await base.CleanupAsync();
+
+            // We will delete all twins created by this test instance.
+            foreach (BasicDigitalTwin twin in _createdTwins)
+            {
+                await _digitalTwinsClient.DeleteDigitalTwinAsync(twin.Id).ConfigureAwait(false);
+            }
+        }
+
+        public override async Task GlobalCleanupAsync()
+        {
+            // Global cleanup code that runs once at the end of test execution.
+            await base.GlobalCleanupAsync();
+
+            // List all the models and delete all of them.
+            AsyncPageable<DigitalTwinsModelData> allModels = _digitalTwinsClient.GetModelsAsync();
+
+            await foreach (DigitalTwinsModelData model in allModels)
+            {
+                await _digitalTwinsClient.DeleteModelAsync(model.Id).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
