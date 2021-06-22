@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [OneTimeTearDown]
-        protected void GlobalTagCleanup()
+        protected async Task GlobalTagCleanupAsync()
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
-            var operation = Client.GetTagOperations();
+            var operation = Client.GetPreDefinedTagsOperations();
             var listResult = container.List().Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
-                operation.Delete(item.Details.TagName);
+                await item.DeleteAsync(item.Details.TagName).ConfigureAwait(false);
             };
         }
 

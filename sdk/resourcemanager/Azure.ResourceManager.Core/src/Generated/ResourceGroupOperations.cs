@@ -373,11 +373,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags[key] = value;
-                var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
+                var originalTags = TagsRestClient.GetAtScope(Id, cancellationToken).Value;
+                originalTags.Properties.TagsValue[key] = value;
+                TagsRestClient.CreateOrUpdateAtScope(Id, originalTags, cancellationToken);
+                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
@@ -407,11 +406,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags[key] = value;
-                var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Properties.TagsValue[key] = value;
+                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, originalTags, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
@@ -552,10 +550,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(tags);
-                var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
+                TagsRestClient.DeleteAtScope(Id, cancellationToken);
+                Tags newTags = new Tags();
+                foreach (var item in tags)
+                {
+                    newTags.TagsValue.Add(item);
+                }
+                TagsRestClient.CreateOrUpdateAtScope(Id, new TagsResource(newTags), cancellationToken);
+                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
@@ -584,10 +586,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(tags);
-                var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                await TagsRestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                Tags newTags = new Tags();
+                foreach (var item in tags)
+                {
+                    newTags.TagsValue.Add(item);
+                }
+                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, new TagsResource(newTags), cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
@@ -668,11 +674,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags.Remove(key);
-                var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
+                var originalTags = TagsRestClient.GetAtScope(Id, cancellationToken).Value;
+                originalTags.Properties.TagsValue.Remove(key);
+                TagsRestClient.UpdateAtScope(Id, new TagsPatchResource() 
+                { 
+                    Operation = TagsPatchResourceOperation.Delete, 
+                    Properties = originalTags.Properties 
+                } , cancellationToken);
+                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
@@ -701,11 +710,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags.Remove(key);
-                var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Properties.TagsValue.Remove(key);
+                await TagsRestClient.UpdateAtScopeAsync(Id, new TagsPatchResource()
+                {
+                    Operation = TagsPatchResourceOperation.Delete,
+                    Properties = originalTags.Value.Properties
+                }, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
@@ -968,195 +980,6 @@ namespace Azure.ResourceManager.Core
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
-        }
-
-        /// <summary>
-        /// Creates or updates the entire set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="tags"> The set of tags. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> Tags from the specified object. </returns>
-        public virtual Response<TagsResource> CreateOrUpdateAllTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags is null)
-                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
-
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CreateOrUpdateAllTags");
-            scope.Start();
-
-            try
-            {
-                return TagsRestClient.CreateOrUpdateAtScope(Id, new TagsResource(new Tags(tags)), cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates the entire set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="tags"> The set of tags. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> Tags from the specified object. </returns>
-        public virtual async Task<Response<TagsResource>> CreateOrUpdateAllTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags is null)
-                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
-
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CreateOrUpdateAllTags");
-            scope.Start();
-
-            try
-            {
-                return await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, new TagsResource(new Tags(tags)), cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Selectively updates the set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="tags"> The set of tags. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> Tags from the specified object. </returns>
-        public virtual Response<TagsResource> UpdateAllTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags is null)
-                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
-
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.UpdateAllTags");
-            scope.Start();
-
-            try
-            {
-                return TagsRestClient.UpdateAtScope(Id, new TagsPatchResource() 
-                { 
-                    Operation = TagsPatchResourceOperation.Merge, Properties = new Tags(tags) 
-                }, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Selectively updates the set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="tags"> The set of tags. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> Tags from the specified object. </returns>
-        public virtual async Task<Response<TagsResource>> UpdateAllTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags is null)
-                throw new ArgumentException($"{nameof(tags)} provided cannot be null.", nameof(tags));
-
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.UpdateAllTags");
-            scope.Start();
-
-            try
-            {
-                return await TagsRestClient.UpdateAtScopeAsync(Id, new TagsPatchResource()
-                {
-                    Operation = TagsPatchResourceOperation.Merge,
-                    Properties = new Tags(tags)
-                }, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entire set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> Tags from the specified object. </returns>
-        public virtual Response<TagsResource> GetAllTags(CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.GetAllTags");
-            scope.Start();
-
-            try
-            {
-                return TagsRestClient.GetAtScope(Id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entire set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> Tags from the specified object. </returns>
-        public virtual async Task<Response<TagsResource>> GetAllTagsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.GetAllTags");
-            scope.Start();
-
-            try
-            {
-                return await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the entire set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response DeleteAllTags(CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.DeleteAllTags");
-            scope.Start();
-
-            try
-            {
-                return TagsRestClient.DeleteAtScope(Id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the entire set of tags on a resource or subscription.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual async Task<Response> DeleteAllTagsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.DeleteAllTags");
-            scope.Start();
-
-            try
-            {
-                return await TagsRestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

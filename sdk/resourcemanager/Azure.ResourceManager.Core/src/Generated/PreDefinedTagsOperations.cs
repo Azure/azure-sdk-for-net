@@ -9,12 +9,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The Tags service client. </summary>
-    public class PreDefinedTagsOperations : OperationsBase
+    public class PreDefinedTagsOperations : ResourceOperationsBase
     {
         /// <summary>
         /// The resource type for Tags.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions/tagNames";
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tagNames";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreDefinedTagsOperations"/> class for mocking.
@@ -126,7 +126,8 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(tagName, cancellationToken).ConfigureAwait(false);
+                var operation = await StartDeleteAsync(tagName, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -144,7 +145,46 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                return RestClient.Delete(tagName, cancellationToken);
+                var operation = StartDelete(tagName, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Operation> StartDeleteAsync(string tagName, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.DeleteAsync(tagName, cancellationToken).ConfigureAwait(false);
+                return new PreDefinedTagDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
+        /// <param name="tagName"> The name of the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Operation StartDelete(string tagName, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("PreDefinedTagsOperations.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = RestClient.Delete(tagName, cancellationToken);
+                return new PreDefinedTagDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, response);
             }
             catch (Exception e)
             {

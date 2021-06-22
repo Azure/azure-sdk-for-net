@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the tags operations under this subscription.
+        /// Gets the pre-defined tags operations under this subscription.
         /// </summary>
-        /// <returns> The tags operations. </returns>
-        public virtual PreDefinedTagsOperations GetTagOperations()
+        /// <returns> The pre-defined tags operations. </returns>
+        public virtual PreDefinedTagsOperations GetPreDefinedTagsOperations()
         {
             return new PreDefinedTagsOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), DefaultSubscription.Id, new PreDefinedTagData());
         }

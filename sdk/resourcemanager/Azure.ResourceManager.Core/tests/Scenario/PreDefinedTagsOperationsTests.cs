@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core.Tests
         protected void GlobalTagCleanup()
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
-            var operation = Client.GetTagOperations();
+            var operation = Client.GetPreDefinedTagsOperations();
             var listResult = container.List().Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void GetTagsOperation()
         {
-            var operation = Client.GetTagOperations();
+            var operation = Client.GetPreDefinedTagsOperations();
             string subscriptionId;
             Assert.IsTrue(operation.Id.TryGetSubscriptionId(out subscriptionId));
             Assert.AreEqual(subscriptionId, TestEnvironment.SubscriptionId);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task ValueTest()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var operation = Client.GetTagOperations();
+            var operation = Client.GetPreDefinedTagsOperations();
             var container = Client.DefaultSubscription.GetPredefinedTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             // Assert create tag value
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task DeleteTag()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var operation = Client.GetTagOperations();
+            var operation = Client.GetPreDefinedTagsOperations();
             var container = Client.DefaultSubscription.GetPredefinedTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.DeleteAsync(tagName).ConfigureAwait(false);
