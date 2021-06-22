@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.Security.Models
 {
 
     /// <summary>
-    /// Defines values for Category.
+    /// Defines values for TiStatus.
     /// </summary>
-    public static class Category
+    public static class TiStatus
     {
-        public const string Compute = "Compute";
-        public const string Networking = "Networking";
-        public const string Data = "Data";
-        public const string IdentityAndAccess = "IdentityAndAccess";
-        public const string IoT = "IoT";
+        public const string Ok = "Ok";
+        public const string Failed = "Failed";
+        public const string InProgress = "InProgress";
+        public const string UpdateAvailable = "UpdateAvailable";
     }
 }

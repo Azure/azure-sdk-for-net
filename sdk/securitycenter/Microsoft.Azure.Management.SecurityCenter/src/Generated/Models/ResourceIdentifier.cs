@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +17,6 @@ namespace Microsoft.Azure.Management.Security.Models
     /// alert to the right product exposure group (tenant, workspace,
     /// subscription etc.).
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ResourceIdentifier")]
     public partial class ResourceIdentifier
     {
         /// <summary>

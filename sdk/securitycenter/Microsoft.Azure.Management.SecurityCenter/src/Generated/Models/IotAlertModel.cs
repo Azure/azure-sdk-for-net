@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// IoT alert
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IotAlertModel
+    public partial class IotAlertModel : Resource
     {
         /// <summary>
         /// Initializes a new instance of the IotAlertModel class.
@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the IotAlertModel class.
         /// </summary>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="systemAlertId">Holds the product canonical identifier
         /// of the alert within the scope of a product</param>
         /// <param name="compromisedEntity">Display name of the main entity
@@ -47,7 +50,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// alert</param>
         /// <param name="extendedProperties">A bag of fields which extends the
         /// alert information</param>
-        public IotAlertModel(string systemAlertId = default(string), string compromisedEntity = default(string), string alertType = default(string), string startTimeUtc = default(string), string endTimeUtc = default(string), IList<object> entities = default(IList<object>), object extendedProperties = default(object))
+        public IotAlertModel(string id = default(string), string name = default(string), string type = default(string), string systemAlertId = default(string), string compromisedEntity = default(string), string alertType = default(string), string startTimeUtc = default(string), string endTimeUtc = default(string), IList<object> entities = default(IList<object>), object extendedProperties = default(object))
+            : base(id, name, type)
         {
             SystemAlertId = systemAlertId;
             CompromisedEntity = compromisedEntity;

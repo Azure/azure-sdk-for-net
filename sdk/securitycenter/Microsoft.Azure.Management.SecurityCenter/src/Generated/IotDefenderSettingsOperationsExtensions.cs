@@ -13,8 +13,7 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -85,16 +84,12 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='deviceQuota'>
-            /// Size of the device quota (as a opposed to a Pay as You Go billing model).
-            /// Value is required to be in multiples of 1000.
+            /// <param name='iotDefenderSettingsModel'>
+            /// The IoT defender settings model
             /// </param>
-            /// <param name='sentinelWorkspaceResourceIds'>
-            /// Sentinel Workspace Resource Ids
-            /// </param>
-            public static IotDefenderSettingsModel CreateOrUpdate(this IIotDefenderSettingsOperations operations, int deviceQuota, IList<string> sentinelWorkspaceResourceIds)
+            public static IotDefenderSettingsModel CreateOrUpdate(this IIotDefenderSettingsOperations operations, IotDefenderSettingsModel iotDefenderSettingsModel)
             {
-                return operations.CreateOrUpdateAsync(deviceQuota, sentinelWorkspaceResourceIds).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(iotDefenderSettingsModel).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -103,19 +98,15 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='deviceQuota'>
-            /// Size of the device quota (as a opposed to a Pay as You Go billing model).
-            /// Value is required to be in multiples of 1000.
-            /// </param>
-            /// <param name='sentinelWorkspaceResourceIds'>
-            /// Sentinel Workspace Resource Ids
+            /// <param name='iotDefenderSettingsModel'>
+            /// The IoT defender settings model
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IotDefenderSettingsModel> CreateOrUpdateAsync(this IIotDefenderSettingsOperations operations, int deviceQuota, IList<string> sentinelWorkspaceResourceIds, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IotDefenderSettingsModel> CreateOrUpdateAsync(this IIotDefenderSettingsOperations operations, IotDefenderSettingsModel iotDefenderSettingsModel, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(deviceQuota, sentinelWorkspaceResourceIds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(iotDefenderSettingsModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -172,6 +163,33 @@ namespace Microsoft.Azure.Management.Security
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Download manager activation data defined for this subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static Stream DownloadManagerActivation(this IIotDefenderSettingsOperations operations)
+            {
+                return operations.DownloadManagerActivationAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Download manager activation data defined for this subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> DownloadManagerActivationAsync(this IIotDefenderSettingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.DownloadManagerActivationWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
     }

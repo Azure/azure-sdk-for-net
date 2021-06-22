@@ -182,5 +182,44 @@ namespace Microsoft.Azure.Management.Security
                 return _result.Body;
             }
 
+            /// <summary>
+            /// Download file for reset password of the sensor
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='onPremiseIotSensorName'>
+            /// Name of the on-premise IoT sensor
+            /// </param>
+            /// <param name='applianceId'>
+            /// The appliance id of the sensor.
+            /// </param>
+            public static Stream DownloadResetPassword(this IOnPremiseIotSensorsOperations operations, string onPremiseIotSensorName, string applianceId = default(string))
+            {
+                return operations.DownloadResetPasswordAsync(onPremiseIotSensorName, applianceId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Download file for reset password of the sensor
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='onPremiseIotSensorName'>
+            /// Name of the on-premise IoT sensor
+            /// </param>
+            /// <param name='applianceId'>
+            /// The appliance id of the sensor.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> DownloadResetPasswordAsync(this IOnPremiseIotSensorsOperations operations, string onPremiseIotSensorName, string applianceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.DownloadResetPasswordWithHttpMessagesAsync(onPremiseIotSensorName, applianceId, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
     }
 }

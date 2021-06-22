@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the IotSensorsList class.
         /// </summary>
         /// <param name="value">List data</param>
-        public IotSensorsList(IList<IotSensor> value = default(IList<IotSensor>))
+        public IotSensorsList(IList<IotSensorsModel> value = default(IList<IotSensorsModel>))
         {
             Value = value;
             CustomInit();
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets list data
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<IotSensor> Value { get; private set; }
+        public IList<IotSensorsModel> Value { get; private set; }
 
     }
 }

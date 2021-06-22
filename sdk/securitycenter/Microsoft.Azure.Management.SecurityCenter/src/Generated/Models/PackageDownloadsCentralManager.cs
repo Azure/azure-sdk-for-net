@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="full">Contains full package downloads</param>
         /// <param name="upgrade">Central Manager upgrade package downloads (on
         /// existing installations)</param>
-        public PackageDownloadsCentralManager(PackageDownloadsCentralManagerFull full = default(PackageDownloadsCentralManagerFull), IList<PackageDownloadInfo> upgrade = default(IList<PackageDownloadInfo>))
+        public PackageDownloadsCentralManager(PackageDownloadsCentralManagerFull full = default(PackageDownloadsCentralManagerFull), IList<UpgradePackageDownloadInfo> upgrade = default(IList<UpgradePackageDownloadInfo>))
         {
             Full = full;
             Upgrade = upgrade;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// installations)
         /// </summary>
         [JsonProperty(PropertyName = "upgrade")]
-        public IList<PackageDownloadInfo> Upgrade { get; private set; }
+        public IList<UpgradePackageDownloadInfo> Upgrade { get; private set; }
 
     }
 }

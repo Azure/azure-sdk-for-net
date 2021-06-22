@@ -39,14 +39,18 @@ namespace Microsoft.Azure.Management.Security.Models
         /// multiples of 1000.</param>
         /// <param name="sentinelWorkspaceResourceIds">Sentinel Workspace
         /// Resource Ids</param>
+        /// <param name="onboardingKind">The kind of onboarding for the
+        /// subscription. Possible values include: 'Default',
+        /// 'MigratedToAzure'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public IotDefenderSettingsModel(int deviceQuota, IList<string> sentinelWorkspaceResourceIds, string id = default(string), string name = default(string), string type = default(string))
+        public IotDefenderSettingsModel(int deviceQuota, IList<string> sentinelWorkspaceResourceIds, string onboardingKind, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             DeviceQuota = deviceQuota;
             SentinelWorkspaceResourceIds = sentinelWorkspaceResourceIds;
+            OnboardingKind = onboardingKind;
             CustomInit();
         }
 
@@ -69,6 +73,13 @@ namespace Microsoft.Azure.Management.Security.Models
         public IList<string> SentinelWorkspaceResourceIds { get; set; }
 
         /// <summary>
+        /// Gets or sets the kind of onboarding for the subscription. Possible
+        /// values include: 'Default', 'MigratedToAzure'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.onboardingKind")]
+        public string OnboardingKind { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -79,6 +90,10 @@ namespace Microsoft.Azure.Management.Security.Models
             if (SentinelWorkspaceResourceIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SentinelWorkspaceResourceIds");
+            }
+            if (OnboardingKind == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OnboardingKind");
             }
             if (DeviceQuota < 1000)
             {

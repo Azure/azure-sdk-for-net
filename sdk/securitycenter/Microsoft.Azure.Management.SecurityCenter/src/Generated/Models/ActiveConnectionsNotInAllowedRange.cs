@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of active connections is not in allowed range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ActiveConnectionsNotInAllowedRange")]
     public partial class ActiveConnectionsNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

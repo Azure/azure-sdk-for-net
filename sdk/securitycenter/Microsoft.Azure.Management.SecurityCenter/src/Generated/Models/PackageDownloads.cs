@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Security.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,11 +36,21 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Manager</param>
         /// <param name="threatIntelligence">All downloads for threat
         /// intelligence</param>
-        public PackageDownloads(PackageDownloadsSensor sensor = default(PackageDownloadsSensor), PackageDownloadsCentralManager centralManager = default(PackageDownloadsCentralManager), PackageDownloadsThreatIntelligence threatIntelligence = default(PackageDownloadsThreatIntelligence))
+        /// <param name="snmp">SNMP Server file</param>
+        /// <param name="wmiTool">Used for local configuration export</param>
+        /// <param name="authorizedDevicesImportTemplate">Authorized devices
+        /// import template</param>
+        /// <param name="deviceInformationUpdateImportTemplate">Authorized
+        /// devices import template</param>
+        public PackageDownloads(PackageDownloadsSensor sensor = default(PackageDownloadsSensor), PackageDownloadsCentralManager centralManager = default(PackageDownloadsCentralManager), IList<PackageDownloadInfo> threatIntelligence = default(IList<PackageDownloadInfo>), IList<PackageDownloadInfo> snmp = default(IList<PackageDownloadInfo>), IList<PackageDownloadInfo> wmiTool = default(IList<PackageDownloadInfo>), IList<PackageDownloadInfo> authorizedDevicesImportTemplate = default(IList<PackageDownloadInfo>), IList<PackageDownloadInfo> deviceInformationUpdateImportTemplate = default(IList<PackageDownloadInfo>))
         {
             Sensor = sensor;
             CentralManager = centralManager;
             ThreatIntelligence = threatIntelligence;
+            Snmp = snmp;
+            WmiTool = wmiTool;
+            AuthorizedDevicesImportTemplate = authorizedDevicesImportTemplate;
+            DeviceInformationUpdateImportTemplate = deviceInformationUpdateImportTemplate;
             CustomInit();
         }
 
@@ -63,7 +75,31 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets all downloads for threat intelligence
         /// </summary>
         [JsonProperty(PropertyName = "threatIntelligence")]
-        public PackageDownloadsThreatIntelligence ThreatIntelligence { get; private set; }
+        public IList<PackageDownloadInfo> ThreatIntelligence { get; private set; }
+
+        /// <summary>
+        /// Gets SNMP Server file
+        /// </summary>
+        [JsonProperty(PropertyName = "snmp")]
+        public IList<PackageDownloadInfo> Snmp { get; private set; }
+
+        /// <summary>
+        /// Gets used for local configuration export
+        /// </summary>
+        [JsonProperty(PropertyName = "wmiTool")]
+        public IList<PackageDownloadInfo> WmiTool { get; private set; }
+
+        /// <summary>
+        /// Gets authorized devices import template
+        /// </summary>
+        [JsonProperty(PropertyName = "authorizedDevicesImportTemplate")]
+        public IList<PackageDownloadInfo> AuthorizedDevicesImportTemplate { get; private set; }
+
+        /// <summary>
+        /// Gets authorized devices import template
+        /// </summary>
+        [JsonProperty(PropertyName = "deviceInformationUpdateImportTemplate")]
+        public IList<PackageDownloadInfo> DeviceInformationUpdateImportTemplate { get; private set; }
 
     }
 }

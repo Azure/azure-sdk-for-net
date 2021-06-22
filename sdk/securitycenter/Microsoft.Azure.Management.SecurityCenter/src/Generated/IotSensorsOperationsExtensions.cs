@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
             /// </param>
-            public static IotSensor Get(this IIotSensorsOperations operations, string scope, string iotSensorName)
+            public static IotSensorsModel Get(this IIotSensorsOperations operations, string scope, string iotSensorName)
             {
                 return operations.GetAsync(scope, iotSensorName).GetAwaiter().GetResult();
             }
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IotSensor> GetAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IotSensorsModel> GetAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(scope, iotSensorName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -108,9 +108,12 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
             /// </param>
-            public static IotSensor CreateOrUpdate(this IIotSensorsOperations operations, string scope, string iotSensorName)
+            /// <param name='iotSensorsModel'>
+            /// The IoT sensor model
+            /// </param>
+            public static IotSensorsModel CreateOrUpdate(this IIotSensorsOperations operations, string scope, string iotSensorName, IotSensorsModel iotSensorsModel)
             {
-                return operations.CreateOrUpdateAsync(scope, iotSensorName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(scope, iotSensorName, iotSensorsModel).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,12 +128,15 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
             /// </param>
+            /// <param name='iotSensorsModel'>
+            /// The IoT sensor model
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IotSensor> CreateOrUpdateAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IotSensorsModel> CreateOrUpdateAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, IotSensorsModel iotSensorsModel, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, iotSensorName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, iotSensorName, iotSensorsModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -210,6 +216,88 @@ namespace Microsoft.Azure.Management.Security
                 var _result = await operations.DownloadActivationWithHttpMessagesAsync(scope, iotSensorName, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
+            }
+
+            /// <summary>
+            /// Download file for reset password of the sensor
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
+            /// </param>
+            /// <param name='iotSensorName'>
+            /// Name of the IoT sensor
+            /// </param>
+            /// <param name='applianceId'>
+            /// The appliance id of the sensor.
+            /// </param>
+            public static Stream DownloadResetPassword(this IIotSensorsOperations operations, string scope, string iotSensorName, string applianceId = default(string))
+            {
+                return operations.DownloadResetPasswordAsync(scope, iotSensorName, applianceId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Download file for reset password of the sensor
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
+            /// </param>
+            /// <param name='iotSensorName'>
+            /// Name of the IoT sensor
+            /// </param>
+            /// <param name='applianceId'>
+            /// The appliance id of the sensor.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> DownloadResetPasswordAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, string applianceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.DownloadResetPasswordWithHttpMessagesAsync(scope, iotSensorName, applianceId, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// Trigger threat intelligence package update
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
+            /// </param>
+            /// <param name='iotSensorName'>
+            /// Name of the IoT sensor
+            /// </param>
+            public static void TriggerTiPackageUpdate(this IIotSensorsOperations operations, string scope, string iotSensorName)
+            {
+                operations.TriggerTiPackageUpdateAsync(scope, iotSensorName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Trigger threat intelligence package update
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
+            /// </param>
+            /// <param name='iotSensorName'>
+            /// Name of the IoT sensor
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task TriggerTiPackageUpdateAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.TriggerTiPackageUpdateWithHttpMessagesAsync(scope, iotSensorName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

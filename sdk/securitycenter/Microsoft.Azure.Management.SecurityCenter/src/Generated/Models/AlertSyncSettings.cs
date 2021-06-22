@@ -10,33 +10,36 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// IoT sensor
+    /// Represents an alert sync setting
     /// </summary>
-    public partial class IotSensor : Resource
+    [Rest.Serialization.JsonTransformation]
+    public partial class AlertSyncSettings : Setting
     {
         /// <summary>
-        /// Initializes a new instance of the IotSensor class.
+        /// Initializes a new instance of the AlertSyncSettings class.
         /// </summary>
-        public IotSensor()
+        public AlertSyncSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotSensor class.
+        /// Initializes a new instance of the AlertSyncSettings class.
         /// </summary>
+        /// <param name="enabled">Is the alert sync setting enabled</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="properties">IoT sensor properties</param>
-        public IotSensor(string id = default(string), string name = default(string), string type = default(string), object properties = default(object))
+        public AlertSyncSettings(bool enabled, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
-            Properties = properties;
+            Enabled = enabled;
             CustomInit();
         }
 
@@ -46,10 +49,20 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ioT sensor properties
+        /// Gets or sets is the alert sync setting enabled
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.enabled")]
+        public bool Enabled { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

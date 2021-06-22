@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotSensor>> GetWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotSensorsModel>> GetWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update IoT sensor
         /// </summary>
@@ -82,6 +82,9 @@ namespace Microsoft.Azure.Management.Security
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
+        /// </param>
+        /// <param name='iotSensorsModel'>
+        /// The IoT sensor model
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -98,7 +101,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotSensor>> CreateOrUpdateWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotSensorsModel>> CreateOrUpdateWithHttpMessagesAsync(string scope, string iotSensorName, IotSensorsModel iotSensorsModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete IoT sensor
         /// </summary>
@@ -148,5 +151,57 @@ namespace Microsoft.Azure.Management.Security
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<Stream>> DownloadActivationWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Download file for reset password of the sensor
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query (IoT Hub,
+        /// /providers/Microsoft.Devices/iotHubs/myHub)
+        /// </param>
+        /// <param name='iotSensorName'>
+        /// Name of the IoT sensor
+        /// </param>
+        /// <param name='applianceId'>
+        /// The appliance id of the sensor.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Stream>> DownloadResetPasswordWithHttpMessagesAsync(string scope, string iotSensorName, string applianceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Trigger threat intelligence package update
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query (IoT Hub,
+        /// /providers/Microsoft.Devices/iotHubs/myHub)
+        /// </param>
+        /// <param name='iotSensorName'>
+        /// Name of the IoT sensor
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> TriggerTiPackageUpdateWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

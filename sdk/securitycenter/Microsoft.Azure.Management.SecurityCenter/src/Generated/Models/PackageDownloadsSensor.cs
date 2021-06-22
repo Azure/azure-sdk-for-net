@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="full">Contains full package downloads</param>
         /// <param name="upgrade">Sensor upgrade package downloads (on existing
         /// installations)</param>
-        public PackageDownloadsSensor(PackageDownloadsSensorFull full = default(PackageDownloadsSensorFull), IList<PackageDownloadInfo> upgrade = default(IList<PackageDownloadInfo>))
+        public PackageDownloadsSensor(PackageDownloadsSensorFull full = default(PackageDownloadsSensorFull), IList<UpgradePackageDownloadInfo> upgrade = default(IList<UpgradePackageDownloadInfo>))
         {
             Full = full;
             Upgrade = upgrade;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// installations)
         /// </summary>
         [JsonProperty(PropertyName = "upgrade")]
-        public IList<PackageDownloadInfo> Upgrade { get; set; }
+        public IList<UpgradePackageDownloadInfo> Upgrade { get; set; }
 
     }
 }

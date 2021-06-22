@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// prevalent device alerts.</param>
         /// <param name="mostPrevalentDeviceRecommendations">List of the 3 most
         /// prevalent device recommendations.</param>
-        public IoTSecuritySolutionAnalyticsModel(string id = default(string), string name = default(string), string type = default(string), IoTSeverityMetrics metrics = default(IoTSeverityMetrics), int? unhealthyDeviceCount = default(int?), IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics = default(IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>), IList<IoTSecurityAlertedDevice> topAlertedDevices = default(IList<IoTSecurityAlertedDevice>), IList<IoTSecurityDeviceAlert> mostPrevalentDeviceAlerts = default(IList<IoTSecurityDeviceAlert>), IList<IoTSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default(IList<IoTSecurityDeviceRecommendation>))
+        public IoTSecuritySolutionAnalyticsModel(string id = default(string), string name = default(string), string type = default(string), IoTSeverityMetrics metrics = default(IoTSeverityMetrics), long? unhealthyDeviceCount = default(long?), IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics = default(IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>), IList<IoTSecurityAlertedDevice> topAlertedDevices = default(IList<IoTSecurityAlertedDevice>), IList<IoTSecurityDeviceAlert> mostPrevalentDeviceAlerts = default(IList<IoTSecurityDeviceAlert>), IList<IoTSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default(IList<IoTSecurityDeviceRecommendation>))
             : base(id, name, type)
         {
             Metrics = metrics;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets number of unhealthy devices within your IoT Security solution.
         /// </summary>
         [JsonProperty(PropertyName = "properties.unhealthyDeviceCount")]
-        public int? UnhealthyDeviceCount { get; private set; }
+        public long? UnhealthyDeviceCount { get; private set; }
 
         /// <summary>
         /// Gets list of device metrics by the aggregation date.

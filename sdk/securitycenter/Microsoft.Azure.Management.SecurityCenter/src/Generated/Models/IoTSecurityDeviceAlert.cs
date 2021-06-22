@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// values include: 'Informational', 'Low', 'Medium', 'High'</param>
         /// <param name="alertsCount">Number of alerts raised for this alert
         /// type.</param>
-        public IoTSecurityDeviceAlert(string alertDisplayName = default(string), string reportedSeverity = default(string), int? alertsCount = default(int?))
+        public IoTSecurityDeviceAlert(string alertDisplayName = default(string), string reportedSeverity = default(string), long? alertsCount = default(long?))
         {
             AlertDisplayName = alertDisplayName;
             ReportedSeverity = reportedSeverity;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets number of alerts raised for this alert type.
         /// </summary>
         [JsonProperty(PropertyName = "alertsCount")]
-        public int? AlertsCount { get; private set; }
+        public long? AlertsCount { get; private set; }
 
     }
 }
