@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Gets or sets the status of the operation. </summary>
+    /// <summary> The status of the operation. </summary>
     public readonly partial struct OperationStatus : IEquatable<OperationStatus>
     {
         private readonly string _value;

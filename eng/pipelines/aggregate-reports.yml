@@ -12,7 +12,6 @@ trigger: none
 pr:
   branches:
     include:
-      - master
       - main
   paths:
     include:

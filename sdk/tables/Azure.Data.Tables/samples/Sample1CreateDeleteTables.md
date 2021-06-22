@@ -9,7 +9,7 @@ A `TableServiceClient` performs account-level operations like creating and delet
 In the sample below, we will use a Storage account and authenticate with an endpoint and `TableSharedKeyCredential`, which requires an account name and an account key. You can set `accountName` and `storageAccountKey` with an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:TablesSample1CreateClient
-// Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+// Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
 var serviceClient = new TableServiceClient(
     new Uri(storageUri),
@@ -44,9 +44,9 @@ A table requires a [unique table name](https://docs.microsoft.com/rest/api/stora
 To create a table, invoke `CreateTable` with the table name.
 
 ```C# Snippet:TablesSample1CreateTable
-// Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+// Create a new table. The TableItem class stores properties of the created table.
 string tableName = "OfficeSupplies1p1";
-TableItem table = serviceClient.CreateTable(tableName);
+TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
@@ -55,7 +55,7 @@ Console.WriteLine($"The created table's name is {table.Name}.");
 To create a table, invoke `Create` with the table name.
 
 ```C# Snippet:TablesSample1TableClientCreateTable
-tableClient.Create();
+tableClient.CreateIfNotExists();
 ```
 
 ## Delete a table

@@ -13,6 +13,9 @@ namespace Azure.Storage.Blobs.Models
         IfMatch = 16,
         IfNoneMatch = 32,
         IfAppendPositionEqual = 64,
-        IfMaxSizeLessThanOrEqual = 128
+        IfMaxSizeLessThanOrEqual = 128,
+        IfSequenceNumberLessThan = 256,
+        IfSequenceNumberLessThanOrEqual = 512,
+        IfSequenceNumberEqual = 1024
     }
 }
