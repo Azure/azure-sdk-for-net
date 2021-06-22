@@ -195,7 +195,9 @@ namespace Azure.Storage.Blobs.Test
                 pageBlobClient.CreateAsync(
                     size: 0,
                     options),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e => Assert.AreEqual(
+                    $"Create does not support the {invalidCondition} condition(s). (Parameter 'conditions')",
+                    e.Message));
         }
 
         [RecordedTest]
@@ -1147,7 +1149,9 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 pageBlobClient.GetPageRangesAsync(
                     conditions: conditions),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e => Assert.AreEqual(
+                    $"GetPageRanges does not support the {invalidCondition} condition(s). (Parameter 'conditions')",
+                    e.Message));
         }
 
         [RecordedTest]
@@ -1399,7 +1403,9 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 pageBlobClient.GetPageRangesDiffAsync(
                     conditions: conditions),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e => Assert.AreEqual(
+                    $"GetPageRangesDiff does not support the {invalidCondition} condition(s). (Parameter 'conditions')",
+                    e.Message));
         }
 
         [RecordedTest]
@@ -1889,7 +1895,9 @@ namespace Azure.Storage.Blobs.Test
                 pageBlobClient.ResizeAsync(
                     size: 0,
                     conditions: conditions),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e => Assert.AreEqual(
+                    $"Resize does not support the {invalidCondition} condition(s). (Parameter 'conditions')",
+                    e.Message));
         }
 
         [RecordedTest]
@@ -2106,7 +2114,9 @@ namespace Azure.Storage.Blobs.Test
                 pageBlobClient.UpdateSequenceNumberAsync(
                     SequenceNumberAction.Increment,
                     conditions: conditions),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e => Assert.AreEqual(
+                    $"UpdateSequenceNumber does not support the {invalidCondition} condition(s). (Parameter 'conditions')",
+                e.Message));
         }
 
         [RecordedTest]
@@ -2318,7 +2328,9 @@ namespace Azure.Storage.Blobs.Test
                     uri,
                     "snapshot",
                     conditions: conditions),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e => Assert.AreEqual(
+                    $"StartCopyIncremental does not support the {invalidCondition} condition(s). (Parameter 'conditions')",
+                    e.Message));
         }
 
         [RecordedTest]
@@ -2737,7 +2749,9 @@ namespace Azure.Storage.Blobs.Test
                     httpRange,
                     httpRange,
                     sourceConditions: sourceConditions),
-                e => Assert.AreEqual($"{invalidSourceCondition} is not applicable to this API.", e.Message));
+                e => Assert.AreEqual(
+                    $"UploadPagesFromUri does not support the {invalidSourceCondition} condition(s). (Parameter 'sourceConditions')",
+                    e.Message));
         }
 
         [RecordedTest]
