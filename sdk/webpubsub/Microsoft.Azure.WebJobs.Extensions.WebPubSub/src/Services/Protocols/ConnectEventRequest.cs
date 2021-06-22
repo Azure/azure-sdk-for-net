@@ -3,21 +3,19 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
-    internal sealed class ConnectEventRequest
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    public sealed class ConnectEventRequest : ServiceRequest
     {
-        [JsonProperty("claims")]
-        public IDictionary<string, string[]> Claims { get; set; }
+        public IDictionary<string, string[]> Claims { get; }
 
-        [JsonProperty("query")]
-        public IDictionary<string, string[]> Query { get; set; }
+        public IDictionary<string, string[]> Query { get; }
 
-        [JsonProperty("subprotocols")]
-        public string[] Subprotocols { get; set; }
+        public string[] Subprotocols { get; }
 
-        [JsonProperty("clientCertificates")]
-        public ClientCertificateInfo[] ClientCertificates { get; set; }
+        public ClientCertificateInfo[] ClientCertificates { get; }
     }
 }

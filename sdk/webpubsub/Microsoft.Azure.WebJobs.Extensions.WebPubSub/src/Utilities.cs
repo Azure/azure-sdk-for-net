@@ -8,6 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -16,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private static readonly char[] HeaderSeparator = { ',' };
 
-        public static MediaTypeHeaderValue GetMediaType(MessageDataType dataType) => new MediaTypeHeaderValue(GetContentType(dataType));
+        public static MediaTypeHeaderValue GetMediaType(MessageDataType dataType) => new(GetContentType(dataType));
 
         public static string GetContentType(MessageDataType dataType) =>
             dataType switch
@@ -46,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public static HttpResponseMessage BuildResponse(MessageResponse response)
         {
-            HttpResponseMessage result = new HttpResponseMessage();
+            HttpResponseMessage result = new();
 
             if (response.Message != null)
             {
@@ -59,22 +62,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public static HttpResponseMessage BuildResponse(ConnectResponse response)
         {
-            HttpResponseMessage result = new HttpResponseMessage();
-
-            var connectEvent = new ConnectEventResponse
-            {
-                UserId = response.UserId,
-                Groups = response.Groups,
-                Subprotocol = response.Subprotocol,
-                Roles = response.Roles
-            };
-
-            return BuildResponse(JsonConvert.SerializeObject(connectEvent), MessageDataType.Json);
+            return BuildResponse(JsonConvert.SerializeObject(response), MessageDataType.Json);
         }
 
         public static HttpResponseMessage BuildResponse(string response, MessageDataType dataType = MessageDataType.Text)
         {
-            HttpResponseMessage result = new HttpResponseMessage();
+            HttpResponseMessage result = new();
 
             result.Content = new StringContent(response);
             result.Content.Headers.ContentType = GetMediaType(dataType);
@@ -84,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public static HttpResponseMessage BuildErrorResponse(ErrorResponse error)
         {
-            HttpResponseMessage result = new HttpResponseMessage();
+            HttpResponseMessage result = new();
 
             result.StatusCode = GetStatusCode(error.Code);
             result.Content = new StringContent(error.ErrorMessage);
@@ -140,6 +133,84 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return RequestType.Disconnect;
             }
             return RequestType.Ignored;
+        }
+
+        public static bool ValidateSignature(string connectionId, string signature, HashSet<string> accessKeys)
+        {
+            foreach (var accessKey in accessKeys)
+            {
+                var signatures = Utilities.GetSignatureList(signature);
+                if (signatures == null)
+                {
+                    continue;
+                }
+                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
+                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionId));
+                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
+                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return false;
+        }
+
+        public static bool ValidateMediaType(string mediaType, out MessageDataType dataType)
+        {
+            try
+            {
+                dataType = GetDataType(mediaType);
+                return true;
+            }
+            catch (Exception)
+            {
+                dataType = MessageDataType.Binary;
+                return false;
+            }
+        }
+
+        public static bool RespondToServiceAbuseCheck(HttpRequestMessage req, HashSet<string> allowedHosts, out HttpResponseMessage response)
+        {
+            response = new HttpResponseMessage();
+            if (req.Method == HttpMethod.Options || req.Method == HttpMethod.Get)
+            {
+                var requestHosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin);
+                return RespondToServiceAbuseCheck(requestHosts, allowedHosts, out response);
+            }
+            return false;
+        }
+
+        public static bool RespondToServiceAbuseCheck(HttpRequest req, HashSet<string> allowedHosts, out HttpResponseMessage response)
+        {
+            response = new HttpResponseMessage();
+            if (req.Method.Equals("options", StringComparison.OrdinalIgnoreCase) || req.Method.Equals("get", StringComparison.OrdinalIgnoreCase))
+            {
+                req.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out var requestHosts);
+                return RespondToServiceAbuseCheck(requestHosts, allowedHosts, out response);
+            }
+            return false;
+        }
+
+        private static bool RespondToServiceAbuseCheck(IEnumerable<string> requestHosts, HashSet<string> allowedHosts, out HttpResponseMessage response)
+        {
+            response = new HttpResponseMessage();
+            if (requestHosts != null && requestHosts.Any())
+            {
+                foreach (var item in allowedHosts)
+                {
+                    if (requestHosts.Contains(item))
+                    {
+                        response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, requestHosts);
+                        return true;
+                    }
+                }
+                response.StatusCode = HttpStatusCode.BadRequest;
+            }
+            return true;
         }
     }
 }

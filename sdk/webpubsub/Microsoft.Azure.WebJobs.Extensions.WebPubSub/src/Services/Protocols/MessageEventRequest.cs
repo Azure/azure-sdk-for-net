@@ -1,19 +1,22 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public sealed class ClientCertificateInfo
+    public sealed class MessageEventRequest : ServiceRequest
     {
-        public string Thumbprint { get; }
+        public BinaryData Message { get; }
+        public MessageDataType DataType { get; }
 
-        public ClientCertificateInfo(string thumbprint)
+        public MessageEventRequest(BinaryData message, MessageDataType dataType)
         {
-            Thumbprint = thumbprint;
+            Message = message;
+            DataType = dataType;
         }
     }
 }

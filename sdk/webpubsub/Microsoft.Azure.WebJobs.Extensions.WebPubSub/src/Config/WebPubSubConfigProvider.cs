@@ -79,6 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // bindings
             context
                 .AddConverter<WebPubSubConnection, JObject>(JObject.FromObject)
+                .AddConverter<WebPubSubRequest, JObject>(JObject.FromObject)
                 .AddConverter<JObject, WebPubSubOperation>(ConvertToWebPubSubOperation)
                 .AddConverter<JArray, WebPubSubOperation[]>(ConvertToWebPubSubOperationArray);
 
@@ -86,10 +87,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             context.AddBindingRule<WebPubSubTriggerAttribute>()
                 .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _options, webhookException));
 
+            // Input binding
             var webpubsubConnectionAttributeRule = context.AddBindingRule<WebPubSubConnectionAttribute>();
             webpubsubConnectionAttributeRule.AddValidator(ValidateWebPubSubConnectionAttributeBinding);
             webpubsubConnectionAttributeRule.BindToInput(GetClientConnection);
 
+            var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubRequestAttribute>();
+            webPubSubRequestAttributeRule.Bind(new WebPubSubRequestBindingProvider(_options, _nameResolver, _configuration));
+
+            // Output binding
             var webPubSubAttributeRule = context.AddBindingRule<WebPubSubAttribute>();
             webPubSubAttributeRule.AddValidator(ValidateWebPubSubAttributeBinding);
             webPubSubAttributeRule.BindToCollector(CreateCollector);
