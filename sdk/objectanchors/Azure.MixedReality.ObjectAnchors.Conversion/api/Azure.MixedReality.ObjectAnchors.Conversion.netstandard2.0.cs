@@ -81,6 +81,15 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static bool operator !=(Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType left, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AssetFileTypeNotSupportedException : System.Exception, System.Runtime.Serialization.ISerializable
+    {
+        public AssetFileTypeNotSupportedException() { }
+        protected AssetFileTypeNotSupportedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public AssetFileTypeNotSupportedException(string message) { }
+        public AssetFileTypeNotSupportedException(string message, System.Exception inner) { }
+        public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType AttemptedFileType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
+    }
     public enum AssetLengthUnit
     {
         Meters = 0,
@@ -127,15 +136,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static bool operator !=(Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode left, Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NotSupportedAssetFileTypeException : System.Exception, System.Runtime.Serialization.ISerializable
-    {
-        public NotSupportedAssetFileTypeException() { }
-        protected NotSupportedAssetFileTypeException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public NotSupportedAssetFileTypeException(string message) { }
-        public NotSupportedAssetFileTypeException(string message, System.Exception inner) { }
-        public Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType AttemptedFileType { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
-    }
     public partial class ObjectAnchorsConversionClient
     {
         protected ObjectAnchorsConversionClient() { }
@@ -145,7 +145,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public ObjectAnchorsConversionClient(System.Guid accountId, string accountDomain, Azure.Core.TokenCredential credential, Azure.MixedReality.ObjectAnchors.Conversion.ObjectAnchorsConversionClientOptions options = null) { }
         public string AccountDomain { get { throw null; } }
         public System.Guid AccountId { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType> SupportedAssetFileTypes { get { throw null; } }
         public virtual Azure.Response<Azure.MixedReality.ObjectAnchors.Conversion.AssetUploadUriResult> GetAssetUploadUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.MixedReality.ObjectAnchors.Conversion.AssetUploadUriResult>> GetAssetUploadUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionOperation StartAssetConversion(Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
