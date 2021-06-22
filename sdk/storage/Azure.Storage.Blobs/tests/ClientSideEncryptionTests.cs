@@ -100,7 +100,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 keyMock.Setup(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
-                keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
+                keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, wrappedKey.ToArray()));
             }
 
@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                keyMock.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                keyMock.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()), Times.Once);
             }
         }
 
@@ -341,6 +341,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestCase(Constants.MB, 64*Constants.KB)]
+        [TestCase(Constants.MB, Constants.MB)]
+        [TestCase(Constants.MB, 4*Constants.MB)]
         [LiveOnly] // cannot seed content encryption key
         public async Task RoundtripAsyncWithOpenRead(long dataSize, int bufferSize)
         {
@@ -365,7 +367,13 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new MemoryStream())
                 {
                     using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize }, cancellationToken: s_cancellationToken);
-                    await blobStream.CopyToAsync(stream, bufferSize, s_cancellationToken);
+                    if (IsAsync)
+                    {
+                        await blobStream.CopyToAsync(stream, bufferSize, s_cancellationToken);
+                    } else
+                    {
+                        blobStream.CopyTo(stream, bufferSize);
+                    }
                     downloadData = stream.ToArray();
                 }
 
