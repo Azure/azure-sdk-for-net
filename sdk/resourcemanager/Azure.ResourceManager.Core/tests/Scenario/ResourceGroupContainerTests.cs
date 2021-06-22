@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task DoesExist()
         {
-            var rgName = Recording.GenerateAssetName("testrg");
+            var rgName = Recording.GenerateAssetName("testRg-");
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
             Assert.IsTrue(await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(rgName));
             Assert.IsFalse(await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(rgName + "1"));
