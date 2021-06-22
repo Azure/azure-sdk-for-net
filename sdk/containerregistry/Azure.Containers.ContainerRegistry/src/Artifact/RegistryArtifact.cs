@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Containers.ContainerRegistry.ResumableStorage;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -15,6 +16,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
+        private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         private readonly Uri _registryEndpoint;
         private readonly string _repositoryName;
@@ -40,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal RegistryArtifact(Uri registryEndpoint, string repositoryName, string tagOrDigest, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal RegistryArtifact(Uri registryEndpoint, string repositoryName, string tagOrDigest, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient, ContainerRegistryBlobRestClient blobRestClient)
         {
             _repositoryName = repositoryName;
             _tagOrDigest = tagOrDigest;
@@ -49,6 +51,7 @@ namespace Azure.Containers.ContainerRegistry
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
+            _blobRestClient = blobRestClient;
         }
 
         /// <summary> Initializes a new instance of RegistryArtifact for mocking. </summary>
@@ -465,55 +468,73 @@ namespace Azure.Containers.ContainerRegistry
         }
         #endregion
 
-        //#region Push/Pull
+        #region Push/Pull
 
-        ///// <summary>
-        ///// Push the artifact files in the path directory to the registry.
-        ///// </summary>
-        ///// <param name="path"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual Response Push(string path, CancellationToken cancellationToken)
-        //{
-        //    ContentDescriptor configDescriptor = new ContentDescriptor()
-        //    {
-        //        MediaType = ConfigMediaType.DockerImageV1
-        //    };
+        /// <summary>
+        /// Push the artifact files in the path directory to the registry.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> PushAsync(string path, CancellationToken cancellationToken)
+        {
+            // TODO: Race condition here, do proper validation
+            if (!Directory.Exists(path))
+            {
+                throw new Exception($"{path} not found");
+            }
 
-        //    using Stream configStream = configDescriptor.ToStream();
-        //    configDescriptor.Size = configStream.Length;
-        //    configDescriptor.Digest = ContentDescriptor.ComputeDigest(configStream);
+            var configFilePath = Path.Combine(path, "config.json");
+            var manifestFilePath = Path.Combine(path, "manifest.json");
 
-        //    CreateUploadResult upload = await client.CreateUploadAsync();
-        //    UploadChunkResult uploadChunkResult = await client.UploadChunkAsync(upload, configStream);
-        //    CompleteUploadResult completeUploadResult = await client.CompleteUploadAsync(upload, configDescriptor.Digest);
+            // Upload the config file
+            // TODO: Race condition here, do proper validation
+            if (!File.Exists(configFilePath!))
+            {
+                throw new FileNotFoundException($"File not found.", configFilePath);
+            }
 
-        //    string layerFile = @"path\to\layer";
+            using (var fs = File.OpenRead(configFilePath))
+            {
+                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_fullyQualifiedReference, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(ContentDescriptor.ComputeDigest(fs), startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
+            }
 
-        //    ContentDescriptor layerDescriptor = new ContentDescriptor()
-        //    {
-        //        MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip"
-        //    };
+            // Upload each layer.
+            foreach (var file in Directory.GetFiles(path))
+            {
+                if (file == manifestFilePath || file == configFilePath)
+                {
+                    continue;
+                }
 
-        //    using (var fs = File.OpenRead(layerFile))
-        //    {
-        //        layerDescriptor.Size = fs.Length;
-        //        layerDescriptor.Digest = ContentDescriptor.ComputeDigest(fs);
-        //        upload = await client.CreateUploadAsync();
-        //        uploadChunkResult = await client.UploadChunkAsync(upload, fs);
-        //        completeUploadResult = await client.CompleteUploadAsync(upload, ContentDescriptor.ComputeDigest(fs));
-        //    }
+                using (var fs = File.OpenRead(file))
+                {
+                    ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_fullyQualifiedReference, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(ContentDescriptor.ComputeDigest(fs), startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
+                }
+            }
 
-        //    DockerManifestV2 manifest = new DockerManifestV2()
-        //    {
-        //        ConfigDescriptor = configDescriptor,
-        //        MediaType = ManifestMediaType.DockerManifestV2
-        //    };
+            // Finally, upload the manifest.
+            // TODO: Race condition here, do proper validation
+            if (!File.Exists(manifestFilePath))
+            {
+                throw new FileNotFoundException($"File not found.", manifestFilePath);
+            }
 
-        //    manifest.Layers.Add(layerDescriptor);
-        //    await client.CreateManifestAsync(manifest);
-        //}
+            DockerManifestV2 manifest = null;
+            using (var fs = File.OpenRead(manifestFilePath))
+            {
+                manifest = DockerManifestV2.FromStream(fs);
+            }
 
-        //#endregion
+            return await _restClient.CreateManifestAsync(_repositoryName, _tagOrDigest, manifest, cancellationToken).ConfigureAwait(false);
+
+            // TODO: What would make sense to return for response?
+        }
+
+        #endregion
     }
 }
