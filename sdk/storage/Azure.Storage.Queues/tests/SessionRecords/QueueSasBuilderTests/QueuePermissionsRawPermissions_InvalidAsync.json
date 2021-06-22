@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-7d5fbf16-ece3-42b9-c720-9d073965d9bf",
@@ -64,6 +64,6 @@
   "Variables": {
     "DateTimeOffsetNow": "2021-01-05T20:04:51.1190747-06:00",
     "RandomSeed": "849478636",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttps://seandevtest.file.core.windows.net\nhttps://seandevtest.queue.core.windows.net\nhttps://seandevtest.table.core.windows.net\n\n\n\n\nhttps://seandevtest-secondary.blob.core.windows.net\nhttps://seandevtest-secondary.file.core.windows.net\nhttps://seandevtest-secondary.queue.core.windows.net\nhttps://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=https://seandevtest.queue.core.windows.net/;FileEndpoint=https://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=https://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttps://seandevtest.file.core.windows.net\nhttps://seandevtest.queue.core.windows.net\nhttps://seandevtest.table.core.windows.net\n\n\n\n\nhttps://seandevtest-secondary.blob.core.windows.net\nhttps://seandevtest-secondary.file.core.windows.net\nhttps://seandevtest-secondary.queue.core.windows.net\nhttps://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=https://seandevtest.queue.core.windows.net/;FileEndpoint=https://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=https://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

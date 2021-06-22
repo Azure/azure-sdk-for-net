@@ -146,7 +146,7 @@ foreach (CustomFormSubmodel model in purchaseOrderModel.Submodels)
 
 To see the full example source files, see:
 
-* [Composed Model](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample11_ComposedModel.cs)
+* [Composed Model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample11_ComposedModel.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1

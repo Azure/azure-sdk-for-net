@@ -2,7 +2,7 @@
 
 The `EventProcessorClient` supports a set of options to configure many aspects of its core functionality including how it communicates with the Event Hubs service.  This sample demonstrates some of these options.  Configuration of processing-related configuration will be discussed in the samples dedicated to that feature.
 
-To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
+To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
 ## Influencing load balancing behavior
 

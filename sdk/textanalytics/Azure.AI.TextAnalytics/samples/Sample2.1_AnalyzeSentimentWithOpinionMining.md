@@ -4,7 +4,7 @@ This sample demonstrates how to analyze sentiment of documents and get more gran
 
 For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Opinion Mining will locate targets in the text, and their associated opinion and sentiments. Sentiment Analysis might only report a negative sentiment.
 
-![opinion mining diagram](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/assets/opinion-mining.png)
+![opinion mining diagram](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/assets/opinion-mining.png)
 
 For the purpose of the sample, we will be the administrator of a hotel and we've set a system to look at the online reviews customers are posting to identify the major complaints about our hotel.
 In order to do so, we will use the Sentiment Analysis feature of the Text Analytics client library. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
@@ -104,8 +104,8 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
 
 
 To see the full example source files, see:
-* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
-* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
+* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
+* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

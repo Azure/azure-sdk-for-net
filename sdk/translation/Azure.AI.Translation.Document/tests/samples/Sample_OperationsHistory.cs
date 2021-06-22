@@ -31,11 +31,12 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatuses())
+            foreach (TranslationStatus translationStatus in client.GetAllTranslationStatuses())
             {
-                if (!translationStatus.HasCompleted)
+                if (translationStatus.Status != DocumentTranslationStatus.Failed &&
+                      translationStatus.Status != DocumentTranslationStatus.Succeeded)
                 {
-                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
 
                     while (!operation.HasCompleted)
                     {

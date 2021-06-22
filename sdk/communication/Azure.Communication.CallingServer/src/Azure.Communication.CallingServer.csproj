@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
-      This client library enables working with the Microsoft Azure Communication Service Calling Server APIs.
+      This client library enables working with the Microsoft Azure Communication CallingServer service.
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net-pr/blob/master/sdk/communication/Azure.Communication.ServerCalling/README.md and https://github.com/Azure/azure-sdk-for-net-pr/blob/master/sdk/communication/Azure.Communication.ServerCalling/CHANGELOG.md.
     </Description>
-    <AssemblyTitle>Azure Communication Service Calling Server APIs</AssemblyTitle>
+    <AssemblyTitle>Azure Communication CallingServer Service</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <PackageTags>Microsoft Azure Communication Calling Server APIs;Microsoft;Azure;Azure Communication Service;Azure Communication Calling Server APIs;Calling;Communication;$(PackageCommonTags)</PackageTags>
+    <PackageTags>Microsoft Azure Communication CallingServer Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallingServer Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
