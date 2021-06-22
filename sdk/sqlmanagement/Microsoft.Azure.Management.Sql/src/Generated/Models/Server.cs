@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// restrict outbound network access for this server.  Value is
         /// optional but if passed in, must be 'Enabled' or 'Disabled'.
         /// Possible values include: 'Enabled', 'Disabled'</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), ServerNetworkAccessFlag? publicNetworkAccess = default(ServerNetworkAccessFlag?), ServerWorkspaceFeature? workspaceFeature = default(ServerWorkspaceFeature?), string primaryUserAssignedIdentityId = default(string), System.Guid? federatedClientId = default(System.Guid?), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator), ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default(ServerNetworkAccessFlag?))
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), System.Guid? federatedClientId = default(System.Guid?), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator), string restrictOutboundNetworkAccess = default(string))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
-        public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets whether or not existing server has a workspace created and if
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Connected', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.workspaceFeature")]
-        public ServerWorkspaceFeature? WorkspaceFeature { get; private set; }
+        public string WorkspaceFeature { get; private set; }
 
         /// <summary>
         /// Gets or sets the resource id of a user assigned identity to be used
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.restrictOutboundNetworkAccess")]
-        public ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
+        public string RestrictOutboundNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.

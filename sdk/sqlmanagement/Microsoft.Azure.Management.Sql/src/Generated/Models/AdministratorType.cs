@@ -10,94 +10,12 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for AdministratorType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(AdministratorTypeConverter))]
-    public struct AdministratorType : System.IEquatable<AdministratorType>
+    public static class AdministratorType
     {
-        private AdministratorType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly AdministratorType ActiveDirectory = "ActiveDirectory";
-
-
-        /// <summary>
-        /// Underlying value of enum AdministratorType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for AdministratorType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type AdministratorType
-        /// </summary>
-        public bool Equals(AdministratorType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to AdministratorType
-        /// </summary>
-        public static implicit operator AdministratorType(string value)
-        {
-            return new AdministratorType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert AdministratorType to string
-        /// </summary>
-        public static implicit operator string(AdministratorType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum AdministratorType
-        /// </summary>
-        public static bool operator == (AdministratorType e1, AdministratorType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum AdministratorType
-        /// </summary>
-        public static bool operator != (AdministratorType e1, AdministratorType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for AdministratorType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is AdministratorType && Equals((AdministratorType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode AdministratorType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string ActiveDirectory = "ActiveDirectory";
     }
 }

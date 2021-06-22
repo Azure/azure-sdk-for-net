@@ -10,106 +10,18 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DayOfWeek.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(DayOfWeekConverter))]
-    public struct DayOfWeek : System.IEquatable<DayOfWeek>
+    public static class DayOfWeek
     {
-        private DayOfWeek(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly DayOfWeek Sunday = "Sunday";
-
-        public static readonly DayOfWeek Monday = "Monday";
-
-        public static readonly DayOfWeek Tuesday = "Tuesday";
-
-        public static readonly DayOfWeek Wednesday = "Wednesday";
-
-        public static readonly DayOfWeek Thursday = "Thursday";
-
-        public static readonly DayOfWeek Friday = "Friday";
-
-        public static readonly DayOfWeek Saturday = "Saturday";
-
-
-        /// <summary>
-        /// Underlying value of enum DayOfWeek
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for DayOfWeek
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type DayOfWeek
-        /// </summary>
-        public bool Equals(DayOfWeek e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to DayOfWeek
-        /// </summary>
-        public static implicit operator DayOfWeek(string value)
-        {
-            return new DayOfWeek(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert DayOfWeek to string
-        /// </summary>
-        public static implicit operator string(DayOfWeek e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum DayOfWeek
-        /// </summary>
-        public static bool operator == (DayOfWeek e1, DayOfWeek e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum DayOfWeek
-        /// </summary>
-        public static bool operator != (DayOfWeek e1, DayOfWeek e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for DayOfWeek
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is DayOfWeek && Equals((DayOfWeek)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode DayOfWeek
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Sunday = "Sunday";
+        public const string Monday = "Monday";
+        public const string Tuesday = "Tuesday";
+        public const string Wednesday = "Wednesday";
+        public const string Thursday = "Thursday";
+        public const string Friday = "Friday";
+        public const string Saturday = "Saturday";
     }
 }

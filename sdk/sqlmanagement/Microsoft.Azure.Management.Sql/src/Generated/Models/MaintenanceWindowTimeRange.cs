@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 12am.</param>
         /// <param name="duration">Duration of maintenance window in
         /// minutes.</param>
-        public MaintenanceWindowTimeRange(DayOfWeek? dayOfWeek = default(DayOfWeek?), string startTime = default(string), string duration = default(string))
+        public MaintenanceWindowTimeRange(string dayOfWeek = default(string), string startTime = default(string), string duration = default(string))
         {
             DayOfWeek = dayOfWeek;
             StartTime = startTime;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Saturday'
         /// </summary>
         [JsonProperty(PropertyName = "dayOfWeek")]
-        public DayOfWeek? DayOfWeek { get; set; }
+        public string DayOfWeek { get; set; }
 
         /// <summary>
         /// Gets or sets start time minutes offset from 12am.

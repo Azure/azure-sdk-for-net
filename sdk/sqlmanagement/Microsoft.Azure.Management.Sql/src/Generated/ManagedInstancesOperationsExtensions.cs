@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.Sql
             /// Metric to be used for ranking top queries. Default is 'cpu'. Possible
             /// values include: 'cpu', 'io', 'logIo', 'duration', 'dtu'
             /// </param>
-            public static IPage<TopQueries> ListByManagedInstance(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?), AggregationFunctionType? aggregationFunction = default(AggregationFunctionType?), MetricType? observationMetric = default(MetricType?))
+            public static IPage<TopQueries> ListByManagedInstance(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), string interval = default(string), string aggregationFunction = default(string), string observationMetric = default(string))
             {
                 return operations.ListByManagedInstanceAsync(resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric).GetAwaiter().GetResult();
             }
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TopQueries>> ListByManagedInstanceAsync(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?), AggregationFunctionType? aggregationFunction = default(AggregationFunctionType?), MetricType? observationMetric = default(MetricType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TopQueries>> ListByManagedInstanceAsync(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), string interval = default(string), string aggregationFunction = default(string), string observationMetric = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByManagedInstanceWithHttpMessagesAsync(resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The type of replica to be failed over. Possible values include: 'Primary',
             /// 'ReadableSecondary'
             /// </param>
-            public static void Failover(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?))
+            public static void Failover(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, string replicaType = default(string))
             {
                 operations.FailoverAsync(resourceGroupName, managedInstanceName, replicaType).GetAwaiter().GetResult();
             }
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FailoverAsync(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task FailoverAsync(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, managedInstanceName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The type of replica to be failed over. Possible values include: 'Primary',
             /// 'ReadableSecondary'
             /// </param>
-            public static void BeginFailover(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?))
+            public static void BeginFailover(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, string replicaType = default(string))
             {
                 operations.BeginFailoverAsync(resourceGroupName, managedInstanceName, replicaType).GetAwaiter().GetResult();
             }
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginFailoverAsync(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginFailoverAsync(this IManagedInstancesOperations operations, string resourceGroupName, string managedInstanceName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, managedInstanceName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

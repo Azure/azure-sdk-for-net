@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'None', 'SystemAssigned', 'UserAssigned'</param>
         /// <param name="tenantId">The Azure Active Directory tenant
         /// id.</param>
-        public ResourceIdentity(IDictionary<string, UserIdentity> userAssignedIdentities = default(IDictionary<string, UserIdentity>), System.Guid? principalId = default(System.Guid?), IdentityType? type = default(IdentityType?), System.Guid? tenantId = default(System.Guid?))
+        public ResourceIdentity(IDictionary<string, UserIdentity> userAssignedIdentities = default(IDictionary<string, UserIdentity>), System.Guid? principalId = default(System.Guid?), string type = default(string), System.Guid? tenantId = default(System.Guid?))
         {
             UserAssignedIdentities = userAssignedIdentities;
             PrincipalId = principalId;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SystemAssigned', 'UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public IdentityType? Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets the Azure Active Directory tenant id.

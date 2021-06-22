@@ -10,100 +10,15 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for QueryMetricUnitType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(QueryMetricUnitTypeConverter))]
-    public struct QueryMetricUnitType : System.IEquatable<QueryMetricUnitType>
+    public static class QueryMetricUnitType
     {
-        private QueryMetricUnitType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly QueryMetricUnitType Percentage = "percentage";
-
-        public static readonly QueryMetricUnitType KB = "KB";
-
-        public static readonly QueryMetricUnitType Microseconds = "microseconds";
-
-        public static readonly QueryMetricUnitType Count = "count";
-
-
-        /// <summary>
-        /// Underlying value of enum QueryMetricUnitType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for QueryMetricUnitType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type QueryMetricUnitType
-        /// </summary>
-        public bool Equals(QueryMetricUnitType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to QueryMetricUnitType
-        /// </summary>
-        public static implicit operator QueryMetricUnitType(string value)
-        {
-            return new QueryMetricUnitType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert QueryMetricUnitType to string
-        /// </summary>
-        public static implicit operator string(QueryMetricUnitType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum QueryMetricUnitType
-        /// </summary>
-        public static bool operator == (QueryMetricUnitType e1, QueryMetricUnitType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum QueryMetricUnitType
-        /// </summary>
-        public static bool operator != (QueryMetricUnitType e1, QueryMetricUnitType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for QueryMetricUnitType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is QueryMetricUnitType && Equals((QueryMetricUnitType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode QueryMetricUnitType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Percentage = "percentage";
+        public const string KB = "KB";
+        public const string Microseconds = "microseconds";
+        public const string Count = "count";
     }
 }

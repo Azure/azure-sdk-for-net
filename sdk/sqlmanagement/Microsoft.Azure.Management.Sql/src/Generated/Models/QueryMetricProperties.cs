@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// used over the interval.</param>
         /// <param name="stdev">Metric value when stdev aggregate function is
         /// used over the interval.</param>
-        public QueryMetricProperties(string name = default(string), string displayName = default(string), QueryMetricUnitType? unit = default(QueryMetricUnitType?), double? value = default(double?), double? min = default(double?), double? max = default(double?), double? avg = default(double?), double? sum = default(double?), double? stdev = default(double?))
+        public QueryMetricProperties(string name = default(string), string displayName = default(string), string unit = default(string), double? value = default(double?), double? min = default(double?), double? max = default(double?), double? avg = default(double?), double? sum = default(double?), double? stdev = default(double?))
         {
             Name = name;
             DisplayName = displayName;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'KB', 'microseconds', 'count'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public QueryMetricUnitType? Unit { get; private set; }
+        public string Unit { get; private set; }
 
         /// <summary>
         /// Gets the value of the metric.

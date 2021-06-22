@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByDatabaseWithHttpMessagesAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState? databaseState = default(DatabaseState?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByDatabaseWithHttpMessagesAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the long term retention backups for a given location.
         /// </summary>
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByLocationWithHttpMessagesAsync(string locationName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState? databaseState = default(DatabaseState?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByLocationWithHttpMessagesAsync(string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the long term retention backups for a given server.
         /// </summary>
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByServerWithHttpMessagesAsync(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState? databaseState = default(DatabaseState?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByServerWithHttpMessagesAsync(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Copy an existing long term retention backup to a different server.
         /// </summary>
@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByResourceGroupDatabaseWithHttpMessagesAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState? databaseState = default(DatabaseState?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByResourceGroupDatabaseWithHttpMessagesAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the long term retention backups for a given location.
         /// </summary>
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByResourceGroupLocationWithHttpMessagesAsync(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState? databaseState = default(DatabaseState?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByResourceGroupLocationWithHttpMessagesAsync(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the long term retention backups for a given server.
         /// </summary>
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByResourceGroupServerWithHttpMessagesAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), DatabaseState? databaseState = default(DatabaseState?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<LongTermRetentionBackup>>> ListByResourceGroupServerWithHttpMessagesAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Copy an existing long term retention backup.
         /// </summary>

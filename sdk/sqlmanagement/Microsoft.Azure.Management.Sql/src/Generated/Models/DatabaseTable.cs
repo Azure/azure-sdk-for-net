@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SystemVersionedTemporalTable'</param>
         /// <param name="memoryOptimized">Whether or not the table is memory
         /// optimized.</param>
-        public DatabaseTable(string id = default(string), string name = default(string), string type = default(string), TableTemporalType? temporalType = default(TableTemporalType?), bool? memoryOptimized = default(bool?))
+        public DatabaseTable(string id = default(string), string name = default(string), string type = default(string), string temporalType = default(string), bool? memoryOptimized = default(bool?))
             : base(id, name, type)
         {
             TemporalType = temporalType;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'NonTemporalTable', 'HistoryTable', 'SystemVersionedTemporalTable'
         /// </summary>
         [JsonProperty(PropertyName = "properties.temporalType")]
-        public TableTemporalType? TemporalType { get; set; }
+        public string TemporalType { get; set; }
 
         /// <summary>
         /// Gets or sets whether or not the table is memory optimized.

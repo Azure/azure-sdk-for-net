@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'User', 'System'</param>
         /// <param name="lastModified">Gets the time when the state was last
         /// modified</param>
-        public RecommendedActionStateInfo(RecommendedActionCurrentState currentValue, RecommendedActionInitiatedBy? actionInitiatedBy = default(RecommendedActionInitiatedBy?), System.DateTime? lastModified = default(System.DateTime?))
+        public RecommendedActionStateInfo(string currentValue, RecommendedActionInitiatedBy? actionInitiatedBy = default(RecommendedActionInitiatedBy?), System.DateTime? lastModified = default(System.DateTime?))
         {
             CurrentValue = currentValue;
             ActionInitiatedBy = actionInitiatedBy;
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Ignored', 'Expired', 'Monitoring', 'Resolved', 'Success', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
-        public RecommendedActionCurrentState CurrentValue { get; set; }
+        public string CurrentValue { get; set; }
 
         /// <summary>
         /// Gets who initiated the execution of this recommended action.
@@ -113,11 +114,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (CurrentValue == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CurrentValue");
+            }
         }
     }
 }

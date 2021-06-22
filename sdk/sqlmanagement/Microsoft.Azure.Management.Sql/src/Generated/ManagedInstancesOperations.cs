@@ -965,7 +965,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TopQueries>>> ListByManagedInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?), AggregationFunctionType? aggregationFunction = default(AggregationFunctionType?), MetricType? observationMetric = default(MetricType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TopQueries>>> ListByManagedInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, int? numberOfQueries = default(int?), string databases = default(string), string startTime = default(string), string endTime = default(string), string interval = default(string), string aggregationFunction = default(string), string observationMetric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1025,15 +1025,15 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (interval != null)
             {
-                _queryParameters.Add(string.Format("interval={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(interval, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("interval={0}", System.Uri.EscapeDataString(interval)));
             }
             if (aggregationFunction != null)
             {
-                _queryParameters.Add(string.Format("aggregationFunction={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(aggregationFunction, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("aggregationFunction={0}", System.Uri.EscapeDataString(aggregationFunction)));
             }
             if (observationMetric != null)
             {
-                _queryParameters.Add(string.Format("observationMetric={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(observationMetric, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("observationMetric={0}", System.Uri.EscapeDataString(observationMetric)));
             }
             if (apiVersion != null)
             {
@@ -1184,7 +1184,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> FailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> FailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string replicaType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginFailoverWithHttpMessagesAsync(resourceGroupName, managedInstanceName, replicaType, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -1837,7 +1837,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginFailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = default(ReplicaType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginFailoverWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string replicaType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1875,7 +1875,7 @@ namespace Microsoft.Azure.Management.Sql
             List<string> _queryParameters = new List<string>();
             if (replicaType != null)
             {
-                _queryParameters.Add(string.Format("replicaType={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(replicaType, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("replicaType={0}", System.Uri.EscapeDataString(replicaType)));
             }
             if (apiVersion != null)
             {

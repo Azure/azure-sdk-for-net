@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for AggregationFunctionType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(AggregationFunctionTypeConverter))]
-    public struct AggregationFunctionType : System.IEquatable<AggregationFunctionType>
+    public static class AggregationFunctionType
     {
-        private AggregationFunctionType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly AggregationFunctionType Avg = "avg";
-
-        public static readonly AggregationFunctionType Min = "min";
-
-        public static readonly AggregationFunctionType Max = "max";
-
-        public static readonly AggregationFunctionType Stdev = "stdev";
-
-        public static readonly AggregationFunctionType Sum = "sum";
-
-
-        /// <summary>
-        /// Underlying value of enum AggregationFunctionType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for AggregationFunctionType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type AggregationFunctionType
-        /// </summary>
-        public bool Equals(AggregationFunctionType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to AggregationFunctionType
-        /// </summary>
-        public static implicit operator AggregationFunctionType(string value)
-        {
-            return new AggregationFunctionType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert AggregationFunctionType to string
-        /// </summary>
-        public static implicit operator string(AggregationFunctionType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum AggregationFunctionType
-        /// </summary>
-        public static bool operator == (AggregationFunctionType e1, AggregationFunctionType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum AggregationFunctionType
-        /// </summary>
-        public static bool operator != (AggregationFunctionType e1, AggregationFunctionType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for AggregationFunctionType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is AggregationFunctionType && Equals((AggregationFunctionType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode AggregationFunctionType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Avg = "avg";
+        public const string Min = "min";
+        public const string Max = "max";
+        public const string Stdev = "stdev";
+        public const string Sum = "sum";
     }
 }

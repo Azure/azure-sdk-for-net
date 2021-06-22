@@ -10,160 +10,45 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ColumnDataType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ColumnDataTypeConverter))]
-    public struct ColumnDataType : System.IEquatable<ColumnDataType>
+    public static class ColumnDataType
     {
-        private ColumnDataType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ColumnDataType Image = "image";
-
-        public static readonly ColumnDataType Text = "text";
-
-        public static readonly ColumnDataType Uniqueidentifier = "uniqueidentifier";
-
-        public static readonly ColumnDataType Date = "date";
-
-        public static readonly ColumnDataType Time = "time";
-
-        public static readonly ColumnDataType Datetime2 = "datetime2";
-
-        public static readonly ColumnDataType Datetimeoffset = "datetimeoffset";
-
-        public static readonly ColumnDataType Tinyint = "tinyint";
-
-        public static readonly ColumnDataType Smallint = "smallint";
-
-        public static readonly ColumnDataType Int = "int";
-
-        public static readonly ColumnDataType Smalldatetime = "smalldatetime";
-
-        public static readonly ColumnDataType Real = "real";
-
-        public static readonly ColumnDataType Money = "money";
-
-        public static readonly ColumnDataType Datetime = "datetime";
-
-        public static readonly ColumnDataType Float = "float";
-
-        public static readonly ColumnDataType SqlVariant = "sql_variant";
-
-        public static readonly ColumnDataType Ntext = "ntext";
-
-        public static readonly ColumnDataType Bit = "bit";
-
-        public static readonly ColumnDataType Decimal = "decimal";
-
-        public static readonly ColumnDataType Numeric = "numeric";
-
-        public static readonly ColumnDataType Smallmoney = "smallmoney";
-
-        public static readonly ColumnDataType Bigint = "bigint";
-
-        public static readonly ColumnDataType Hierarchyid = "hierarchyid";
-
-        public static readonly ColumnDataType Geometry = "geometry";
-
-        public static readonly ColumnDataType Geography = "geography";
-
-        public static readonly ColumnDataType Varbinary = "varbinary";
-
-        public static readonly ColumnDataType Varchar = "varchar";
-
-        public static readonly ColumnDataType Binary = "binary";
-
-        public static readonly ColumnDataType Char = "char";
-
-        public static readonly ColumnDataType Timestamp = "timestamp";
-
-        public static readonly ColumnDataType Nvarchar = "nvarchar";
-
-        public static readonly ColumnDataType Nchar = "nchar";
-
-        public static readonly ColumnDataType Xml = "xml";
-
-        public static readonly ColumnDataType Sysname = "sysname";
-
-
-        /// <summary>
-        /// Underlying value of enum ColumnDataType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ColumnDataType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ColumnDataType
-        /// </summary>
-        public bool Equals(ColumnDataType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ColumnDataType
-        /// </summary>
-        public static implicit operator ColumnDataType(string value)
-        {
-            return new ColumnDataType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ColumnDataType to string
-        /// </summary>
-        public static implicit operator string(ColumnDataType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ColumnDataType
-        /// </summary>
-        public static bool operator == (ColumnDataType e1, ColumnDataType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ColumnDataType
-        /// </summary>
-        public static bool operator != (ColumnDataType e1, ColumnDataType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ColumnDataType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ColumnDataType && Equals((ColumnDataType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ColumnDataType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Image = "image";
+        public const string Text = "text";
+        public const string Uniqueidentifier = "uniqueidentifier";
+        public const string Date = "date";
+        public const string Time = "time";
+        public const string Datetime2 = "datetime2";
+        public const string Datetimeoffset = "datetimeoffset";
+        public const string Tinyint = "tinyint";
+        public const string Smallint = "smallint";
+        public const string Int = "int";
+        public const string Smalldatetime = "smalldatetime";
+        public const string Real = "real";
+        public const string Money = "money";
+        public const string Datetime = "datetime";
+        public const string Float = "float";
+        public const string SqlVariant = "sql_variant";
+        public const string Ntext = "ntext";
+        public const string Bit = "bit";
+        public const string Decimal = "decimal";
+        public const string Numeric = "numeric";
+        public const string Smallmoney = "smallmoney";
+        public const string Bigint = "bigint";
+        public const string Hierarchyid = "hierarchyid";
+        public const string Geometry = "geometry";
+        public const string Geography = "geography";
+        public const string Varbinary = "varbinary";
+        public const string Varchar = "varchar";
+        public const string Binary = "binary";
+        public const string Char = "char";
+        public const string Timestamp = "timestamp";
+        public const string Nvarchar = "nvarchar";
+        public const string Nchar = "nchar";
+        public const string Xml = "xml";
+        public const string Sysname = "sysname";
     }
 }

@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<QueryStatistics>>> ListByQueryWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), QueryTimeGrainType? interval = default(QueryTimeGrainType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<QueryStatistics>>> ListByQueryWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string databaseName, string queryId, string startTime = default(string), string endTime = default(string), string interval = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (interval != null)
             {
-                _queryParameters.Add(string.Format("interval={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(interval, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("interval={0}", System.Uri.EscapeDataString(interval)));
             }
             if (apiVersion != null)
             {

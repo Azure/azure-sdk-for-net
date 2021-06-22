@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="requestedBackupStorageRedundancy">The storage
         /// redundancy type of the copied backup. Possible values include:
         /// 'Geo', 'Local', 'Zone'</param>
-        public UpdateLongTermRetentionBackupParameters(RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy = default(RequestedBackupStorageRedundancy?))
+        public UpdateLongTermRetentionBackupParameters(string requestedBackupStorageRedundancy = default(string))
         {
             RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
             CustomInit();
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Geo', 'Local', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedBackupStorageRedundancy")]
-        public RequestedBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public string RequestedBackupStorageRedundancy { get; set; }
 
     }
 }
