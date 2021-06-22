@@ -95,6 +95,3 @@ extends:
     - name: Microsoft.Azure.CognitiveServices.Vision.Face
       safeName: MicrosoftAzureCognitiveServicesVisionFace
       directoryName: Vision.Face
-    - name: Microsoft.Azure.CognitiveServices.Vision.Face.Preview
-      safeName: MicrosoftAzureCognitiveServicesVisionFacePreview
-      directoryName: Vision.Face.Preview
