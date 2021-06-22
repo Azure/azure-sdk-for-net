@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.ResumableStorage;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -82,23 +81,6 @@ namespace Azure.Containers.ContainerRegistry
             relatedArtifacts ??= new List<ArtifactManifestPlatform>();
             tags ??= new List<string>();
             return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, size, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts, tags, canDelete, canWrite, canList, canRead, quarantineState, quarantineDetails);
-        }
-
-        /// <summary> Initializes new instance of DockerManifestV1 class. </summary>
-        /// <param name="schemaVersion"> Schema version. </param>
-        /// <param name="cpuArchitecture"> CPU architecture. </param>
-        /// <param name="name"> Image name. </param>
-        /// <param name="tag"> Image tag. </param>
-        /// <param name="fsLayers"> List of layer information. </param>
-        /// <param name="history"> Image history. </param>
-        /// <param name="signatures"> Image signature. </param>
-        /// <returns> A new <see cref="ResumableStorage.DockerManifestV1"/> instance for mocking. </returns>
-        public static DockerManifestV1 DockerManifestV1(int schemaVersion = default, string cpuArchitecture = default, string name = default, string tag = default, IReadOnlyList<DockerManifestV1FsLayer> fsLayers = default, IReadOnlyList<DockerManifestV1History> history = default, IReadOnlyList<DockerManifestV1ImageSignature> signatures = default)
-        {
-            fsLayers ??= new List<DockerManifestV1FsLayer>();
-            history ??= new List<DockerManifestV1History>();
-            signatures ??= new List<DockerManifestV1ImageSignature>();
-            return new DockerManifestV1(schemaVersion, cpuArchitecture, name, tag, fsLayers, history, signatures);
         }
     }
 }

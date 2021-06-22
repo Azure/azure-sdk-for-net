@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public readonly struct ManifestMediaType : IEquatable<ManifestMediaType>
+    internal readonly struct ManifestMediaType : IEquatable<ManifestMediaType>
     {
         // TODO: Should a customer have to reason about these media types directly?
         public static readonly ManifestMediaType OciManifest = new ManifestMediaType("application/vnd.oci.image.manifest.v1+json");

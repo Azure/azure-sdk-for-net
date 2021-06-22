@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("OCIManifest")]
-    public partial class OciManifest
+    internal partial class OciManifest
     {
         /// <summary> V2 image config descriptor. </summary>
         [CodeGenMember("Config")]

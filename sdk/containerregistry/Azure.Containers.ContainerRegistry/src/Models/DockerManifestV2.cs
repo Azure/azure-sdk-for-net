@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("V2Manifest")]
-    public partial class DockerManifestV2
+    internal partial class DockerManifestV2
     {
         public static Task<DockerManifestV2> FromStreamAsync(Stream stream)
         {

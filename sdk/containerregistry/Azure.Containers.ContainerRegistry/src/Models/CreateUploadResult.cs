@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public class CreateUploadResult
+    internal class CreateUploadResult
     {
         internal CreateUploadResult(string location, HttpRange range, Guid dockerUploadId)
         {

@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("History")]
-    public sealed partial class DockerManifestV1History
+    internal sealed partial class DockerManifestV1History
     {
         /// <summary> Initializes a new instance of DockerManifestV1History. </summary>
         internal DockerManifestV1History()

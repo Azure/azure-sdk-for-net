@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> A JSON web signature. </summary>
-    public partial class DockerManifestV1Jwk
+    internal partial class DockerManifestV1Jwk
     {
 
         /// <summary> Initializes a new instance of DockerManifestV1Jwk. </summary>

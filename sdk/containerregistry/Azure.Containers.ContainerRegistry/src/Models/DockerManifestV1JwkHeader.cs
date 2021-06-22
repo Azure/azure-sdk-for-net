@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("JWKHeader")]
-    public sealed partial class DockerManifestV1JwkHeader
+    internal sealed partial class DockerManifestV1JwkHeader
     {
         /// <summary> Initializes a new instance of DockerManifestV1JwkHeader. </summary>
         internal DockerManifestV1JwkHeader()

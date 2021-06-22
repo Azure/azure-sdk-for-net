@@ -465,55 +465,55 @@ namespace Azure.Containers.ContainerRegistry
         }
         #endregion
 
-        #region Push/Pull
+        //#region Push/Pull
 
-        /// <summary>
-        /// Push the artifact files in the path directory to the registry.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Response Push(string path, CancellationToken cancellationToken)
-        {
-            ContentDescriptor configDescriptor = new ContentDescriptor()
-            {
-                MediaType = ConfigMediaType.DockerImageV1
-            };
+        ///// <summary>
+        ///// Push the artifact files in the path directory to the registry.
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual Response Push(string path, CancellationToken cancellationToken)
+        //{
+        //    ContentDescriptor configDescriptor = new ContentDescriptor()
+        //    {
+        //        MediaType = ConfigMediaType.DockerImageV1
+        //    };
 
-            using Stream configStream = configDescriptor.ToStream();
-            configDescriptor.Size = configStream.Length;
-            configDescriptor.Digest = ContentDescriptor.ComputeDigest(configStream);
+        //    using Stream configStream = configDescriptor.ToStream();
+        //    configDescriptor.Size = configStream.Length;
+        //    configDescriptor.Digest = ContentDescriptor.ComputeDigest(configStream);
 
-            CreateUploadResult upload = await client.CreateUploadAsync();
-            UploadChunkResult uploadChunkResult = await client.UploadChunkAsync(upload, configStream);
-            CompleteUploadResult completeUploadResult = await client.CompleteUploadAsync(upload, configDescriptor.Digest);
+        //    CreateUploadResult upload = await client.CreateUploadAsync();
+        //    UploadChunkResult uploadChunkResult = await client.UploadChunkAsync(upload, configStream);
+        //    CompleteUploadResult completeUploadResult = await client.CompleteUploadAsync(upload, configDescriptor.Digest);
 
-            string layerFile = @"path\to\layer";
+        //    string layerFile = @"path\to\layer";
 
-            ContentDescriptor layerDescriptor = new ContentDescriptor()
-            {
-                MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip"
-            };
+        //    ContentDescriptor layerDescriptor = new ContentDescriptor()
+        //    {
+        //        MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip"
+        //    };
 
-            using (var fs = File.OpenRead(layerFile))
-            {
-                layerDescriptor.Size = fs.Length;
-                layerDescriptor.Digest = ContentDescriptor.ComputeDigest(fs);
-                upload = await client.CreateUploadAsync();
-                uploadChunkResult = await client.UploadChunkAsync(upload, fs);
-                completeUploadResult = await client.CompleteUploadAsync(upload, ContentDescriptor.ComputeDigest(fs));
-            }
+        //    using (var fs = File.OpenRead(layerFile))
+        //    {
+        //        layerDescriptor.Size = fs.Length;
+        //        layerDescriptor.Digest = ContentDescriptor.ComputeDigest(fs);
+        //        upload = await client.CreateUploadAsync();
+        //        uploadChunkResult = await client.UploadChunkAsync(upload, fs);
+        //        completeUploadResult = await client.CompleteUploadAsync(upload, ContentDescriptor.ComputeDigest(fs));
+        //    }
 
-            DockerManifestV2 manifest = new DockerManifestV2()
-            {
-                ConfigDescriptor = configDescriptor,
-                MediaType = ManifestMediaType.DockerManifestV2
-            };
+        //    DockerManifestV2 manifest = new DockerManifestV2()
+        //    {
+        //        ConfigDescriptor = configDescriptor,
+        //        MediaType = ManifestMediaType.DockerManifestV2
+        //    };
 
-            manifest.Layers.Add(layerDescriptor);
-            await client.CreateManifestAsync(manifest);
-        }
+        //    manifest.Layers.Add(layerDescriptor);
+        //    await client.CreateManifestAsync(manifest);
+        //}
 
-        #endregion
+        //#endregion
     }
 }

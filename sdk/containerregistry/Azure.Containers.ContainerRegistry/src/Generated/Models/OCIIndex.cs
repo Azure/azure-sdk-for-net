@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Returns the requested OCI index file. </summary>
-    public partial class OciIndex : ImageManifest
+    internal partial class OciIndex : ImageManifest
     {
         /// <summary> Initializes a new instance of OciIndex. </summary>
         public OciIndex()

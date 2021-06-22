@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public class CompleteUploadResult
+    internal class CompleteUploadResult
     {
         internal CompleteUploadResult(string location, HttpRange range, string digest)
         {
@@ -15,6 +15,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             // TODO: is there a way to rejig this in the swagger file rather than doing it in code?
             Location = new Uri(location.Substring(1));
             Range = range;
+            Digest = digest;
         }
 
         public Uri Location { get; }

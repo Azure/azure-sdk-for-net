@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public class CreateManifestResult
+    internal class CreateManifestResult
     {
         internal CreateManifestResult(string digest, string location, long contentLength)
         {

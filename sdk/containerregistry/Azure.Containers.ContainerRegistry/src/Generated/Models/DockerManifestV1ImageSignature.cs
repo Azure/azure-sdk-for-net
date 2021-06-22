@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Signature of a signed manifest. </summary>
-    public partial class DockerManifestV1ImageSignature
+    internal partial class DockerManifestV1ImageSignature
     {
 
         /// <summary> Initializes a new instance of DockerManifestV1ImageSignature. </summary>

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Additional information provided through arbitrary metadata. </summary>
-    public partial class OciManifestAnnotations
+    internal partial class OciManifestAnnotations
     {
         /// <summary> Initializes a new instance of OciManifestAnnotations. </summary>
         public OciManifestAnnotations()

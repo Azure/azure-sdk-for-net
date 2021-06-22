@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Returns the requested manifest file. </summary>
-    public partial class ImageManifest
+    internal partial class ImageManifest
     {
 
         /// <summary> Initializes a new instance of ImageManifest. </summary>

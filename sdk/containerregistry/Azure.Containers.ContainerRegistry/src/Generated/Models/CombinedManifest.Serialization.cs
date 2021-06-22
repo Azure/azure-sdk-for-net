@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
+                writer.WriteStringValue(MediaType.ToString());
             }
             if (Optional.IsCollectionDefined(Manifests))
             {

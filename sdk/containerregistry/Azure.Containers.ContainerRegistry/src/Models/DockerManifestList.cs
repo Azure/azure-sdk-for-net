@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("ManifestList")]
-    public partial class DockerManifestList
+    internal partial class DockerManifestList
     {
     }
 }

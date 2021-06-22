@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("OCIIndex")]
-    public partial class OciIndex
+    internal partial class OciIndex
     {
     }
 }

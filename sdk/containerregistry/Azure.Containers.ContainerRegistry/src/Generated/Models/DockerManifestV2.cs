@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Returns the requested Docker V2 Manifest file. </summary>
-    public partial class DockerManifestV2 : ImageManifest
+    internal partial class DockerManifestV2 : ImageManifest
     {
         /// <summary> Initializes a new instance of DockerManifestV2. </summary>
         public DockerManifestV2()

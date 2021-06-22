@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("FsLayer")]
-    public sealed partial class DockerManifestV1FsLayer
+    internal sealed partial class DockerManifestV1FsLayer
     {
         /// <summary> Initializes a new instance of DockerManifestV1FsLayer. </summary>
         internal DockerManifestV1FsLayer()

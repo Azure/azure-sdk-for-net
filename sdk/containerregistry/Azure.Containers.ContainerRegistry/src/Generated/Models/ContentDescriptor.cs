@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
-    public partial class ContentDescriptor
+    internal partial class ContentDescriptor
     {
         /// <summary> Initializes a new instance of ContentDescriptor. </summary>
         public ContentDescriptor()

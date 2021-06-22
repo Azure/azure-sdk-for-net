@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> JSON web key parameter. </summary>
-    public partial class DockerManifestV1JwkHeader
+    internal partial class DockerManifestV1JwkHeader
     {
     }
 }

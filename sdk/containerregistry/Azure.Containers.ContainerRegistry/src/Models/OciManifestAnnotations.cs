@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("Annotations")]
-    public partial class OciManifestAnnotations
+    internal partial class OciManifestAnnotations
     {
     }
 }

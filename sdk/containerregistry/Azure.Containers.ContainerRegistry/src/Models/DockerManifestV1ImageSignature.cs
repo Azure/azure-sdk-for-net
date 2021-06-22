@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("ImageSignature")]
-    public sealed partial class DockerManifestV1ImageSignature
+    internal sealed partial class DockerManifestV1ImageSignature
     {
         /// <summary> Initializes a new instance of DockerManifestV1ImageSignature. </summary>
         internal DockerManifestV1ImageSignature()

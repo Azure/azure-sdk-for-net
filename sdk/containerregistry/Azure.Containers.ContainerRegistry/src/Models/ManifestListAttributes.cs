@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("ManifestListAttributes")]
-    public partial class ManifestListAttributes
+    internal partial class ManifestListAttributes
     {
     }
 }

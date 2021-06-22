@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("Descriptor")]
-    public partial class ContentDescriptor
+    internal partial class ContentDescriptor
     {
         public ContentDescriptor(string mediaType)
         {

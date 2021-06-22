@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Returns the requested Docker multi-arch-manifest file. </summary>
-    public partial class DockerManifestList : ImageManifest
+    internal partial class DockerManifestList : ImageManifest
     {
         /// <summary> Initializes a new instance of DockerManifestList. </summary>
         public DockerManifestList()

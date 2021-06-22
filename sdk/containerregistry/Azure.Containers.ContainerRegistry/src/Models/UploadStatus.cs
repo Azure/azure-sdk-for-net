@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public class UploadStatus
+    internal class UploadStatus
     {
         internal UploadStatus(HttpRange range, Guid dockerUploadId)
         {

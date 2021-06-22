@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Image layer information. </summary>
-    public partial class DockerManifestV1FsLayer
+    internal partial class DockerManifestV1FsLayer
     {
 
         /// <summary> Initializes a new instance of DockerManifestV1FsLayer. </summary>

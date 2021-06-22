@@ -9,16 +9,16 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("JWK")]
-    public sealed partial class DockerManifestV1Jwk
-    {        
+    internal sealed partial class DockerManifestV1Jwk
+    {
         /// <summary> Initializes a new instance of DockerManifestV1Jwk. </summary>
         internal DockerManifestV1Jwk()
         {
         }
 
         /// <summary> JSON web key parameter. </summary>
-        public DockerManifestV1JwkHeader Jwk { get;  }
+        public DockerManifestV1JwkHeader Jwk { get; }
         /// <summary> The algorithm used to sign or encrypt the JWT. </summary>
-        public string Alg { get;  }
+        public string Alg { get; }
     }
 }

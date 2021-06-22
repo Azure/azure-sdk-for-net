@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public readonly struct ConfigMediaType : IEquatable<ConfigMediaType>
+    internal readonly struct ConfigMediaType : IEquatable<ConfigMediaType>
     {
         // TODO: confirm this list is complete
         // See: https://github.com/opencontainers/image-spec/blob/28462ef6944123de00cf27e812309cbf5d82da71/media-types.md

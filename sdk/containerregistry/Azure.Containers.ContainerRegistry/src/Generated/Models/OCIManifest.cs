@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    public partial class OciManifest : ImageManifest
+    internal partial class OciManifest : ImageManifest
     {
         /// <summary> Initializes a new instance of OciManifest. </summary>
         public OciManifest()

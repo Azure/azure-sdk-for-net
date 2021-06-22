@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     /// <summary> A list of unstructured historical data for v1 compatibility. </summary>
-    public partial class DockerManifestV1History
+    internal partial class DockerManifestV1History
     {
 
         /// <summary> Initializes a new instance of DockerManifestV1History. </summary>

@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("V1Manifest")]
-    public sealed partial class DockerManifestV1
+    internal sealed partial class DockerManifestV1
     {
         /// <summary> Initializes a new instance of DockerManifestV1. </summary>
         internal DockerManifestV1()

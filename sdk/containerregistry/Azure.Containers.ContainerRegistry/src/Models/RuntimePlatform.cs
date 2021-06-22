@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
     [CodeGenModel("Platform")]
-    public partial class RuntimePlatform
+    internal partial class RuntimePlatform
     {
         /// <summary> CPU architecture. </summary>
         [CodeGenMember("Architecture")]

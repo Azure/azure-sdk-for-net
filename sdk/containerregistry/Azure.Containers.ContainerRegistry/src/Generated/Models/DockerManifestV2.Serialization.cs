@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public partial class DockerManifestV2 : IUtf8JsonSerializable
+    internal partial class DockerManifestV2 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
+                writer.WriteStringValue(MediaType.ToString());
             }
             if (Optional.IsDefined(ConfigDescriptor))
             {

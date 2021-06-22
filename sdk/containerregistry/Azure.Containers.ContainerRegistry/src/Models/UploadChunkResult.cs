@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    public class UploadChunkResult
+    internal class UploadChunkResult
     {
         internal UploadChunkResult(string location, HttpRange range, Guid dockerUploadId)
         {
