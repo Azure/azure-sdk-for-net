@@ -19,3 +19,5 @@ extends:
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE
+      # SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS skips certain callingserver tests that required human interaction
+      SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS: TRUE

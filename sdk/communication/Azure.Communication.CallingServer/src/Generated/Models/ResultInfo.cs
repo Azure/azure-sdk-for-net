@@ -11,50 +11,30 @@ namespace Azure.Communication.CallingServer
     public partial class ResultInfo
     {
         /// <summary> Initializes a new instance of ResultInfo. </summary>
-        internal ResultInfo()
+        /// <param name="code"> The result code associated with the operation. </param>
+        /// <param name="subcode"> The subcode that further classifies the result. </param>
+        internal ResultInfo(int code, int subcode)
         {
+            Code = code;
+            Subcode = subcode;
         }
 
         /// <summary> Initializes a new instance of ResultInfo. </summary>
-        /// <param name="code">
-        /// Gets or sets the result code
-        /// 
-        /// For synchronous failures, this maps one-to-one with HTTP responses. For asynchronous failures or messages, it is contextual.
-        /// </param>
-        /// <param name="subcode">
-        /// Gets or sets the result subcode.
-        /// 
-        /// The subcode further classifies a failure. For example.
-        /// </param>
-        /// <param name="message">
-        /// Gets or sets the message
-        /// 
-        /// The message is a detail explanation of subcode.
-        /// </param>
-        internal ResultInfo(int? code, int? subcode, string message)
+        /// <param name="code"> The result code associated with the operation. </param>
+        /// <param name="subcode"> The subcode that further classifies the result. </param>
+        /// <param name="message"> The message is a detail explanation of subcode. </param>
+        internal ResultInfo(int code, int subcode, string message)
         {
             Code = code;
             Subcode = subcode;
             Message = message;
         }
 
-        /// <summary>
-        /// Gets or sets the result code
-        /// 
-        /// For synchronous failures, this maps one-to-one with HTTP responses. For asynchronous failures or messages, it is contextual.
-        /// </summary>
-        public int? Code { get; }
-        /// <summary>
-        /// Gets or sets the result subcode.
-        /// 
-        /// The subcode further classifies a failure. For example.
-        /// </summary>
-        public int? Subcode { get; }
-        /// <summary>
-        /// Gets or sets the message
-        /// 
-        /// The message is a detail explanation of subcode.
-        /// </summary>
+        /// <summary> The result code associated with the operation. </summary>
+        public int Code { get; }
+        /// <summary> The subcode that further classifies the result. </summary>
+        public int Subcode { get; }
+        /// <summary> The message is a detail explanation of subcode. </summary>
         public string Message { get; }
     }
 }
