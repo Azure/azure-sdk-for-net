@@ -21,6 +21,17 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ExtractKeyPhrasesAction"/>
+        /// class based on the values of a <see cref="TextAnalyticsRequestOptions"/>.
+        /// It sets the <see cref="ModelVersion"/> and <see cref="DisableServiceLogs"/> properties.
+        /// </summary>
+        public ExtractKeyPhrasesAction(TextAnalyticsRequestOptions requestOptions)
+        {
+            ModelVersion = requestOptions.ModelVersion;
+            DisableServiceLogs = requestOptions.DisableServiceLogs;
+        }
+
+        /// <summary>
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:

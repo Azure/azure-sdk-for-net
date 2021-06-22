@@ -25,6 +25,20 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizePiiEntitiesAction"/>
+        /// class based on the values of a <see cref="RecognizePiiEntitiesOptions"/>.
+        /// It sets the <see cref="ModelVersion"/>, <see cref="DisableServiceLogs"/>,
+        /// <see cref="DomainFilter"/>, and <see cref="CategoriesFilter"/> properties.
+        /// </summary>
+        public RecognizePiiEntitiesAction(RecognizePiiEntitiesOptions options)
+        {
+            ModelVersion = options.ModelVersion;
+            DisableServiceLogs = options.DisableServiceLogs;
+            DomainFilter = options.DomainFilter;
+            CategoriesFilter = options.CategoriesFilter ?? new List<PiiEntityCategory>(options.CategoriesFilter);
+        }
+
+        /// <summary>
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:
