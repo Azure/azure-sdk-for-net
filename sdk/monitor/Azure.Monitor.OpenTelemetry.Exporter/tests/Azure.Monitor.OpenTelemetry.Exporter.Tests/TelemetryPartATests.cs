@@ -155,7 +155,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
-        // TODO: GeneratePartAEnvelope_WithActivityParent
+        [Fact]
+        public void PartAEnvelopeContainsParentOperationIdWhenActivityHasParent()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            var parentContext = new ActivityContext(
+                ActivityTraceId.CreateRandom(),
+                ActivitySpanId.CreateRandom(),
+                ActivityTraceFlags.None);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: parentContext,
+                startTime: DateTime.UtcNow);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, null, null);
+
+            Assert.Equal(parentContext.SpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
+        }
 
         /// <summary>
         /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".
