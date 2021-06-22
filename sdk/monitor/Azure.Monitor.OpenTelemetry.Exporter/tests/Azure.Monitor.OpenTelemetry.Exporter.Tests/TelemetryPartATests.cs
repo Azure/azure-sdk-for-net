@@ -113,12 +113,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         public void GeneratePartAEnvelope_DefaultActivity_DefaultResource()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            var activity = activitySource.StartActivity(
+            using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow);
-            activity.Stop();
 
             var resource = CreateTestResource();
 
@@ -137,12 +136,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         public void GeneratePartAEnvelope_Activity_WithResource()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            var activity = activitySource.StartActivity(
+            using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow);
-            activity.Stop();
 
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
 
