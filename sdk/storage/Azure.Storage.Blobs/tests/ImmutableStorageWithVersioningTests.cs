@@ -159,9 +159,11 @@ namespace Azure.Storage.Blobs.Test
                 blobBaseClient.SetImmutabilityPolicyAsync(
                     immutabilityPolicy,
                     conditions),
-                e => Assert.AreEqual(
-                    $"SetImmutabilityPolicy does not support the {invalidCondition} condition(s). (Parameter 'conditions')",
-                    e.Message));
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SetImmutabilityPolicy does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [Test]
