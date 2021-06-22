@@ -4,8 +4,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.DigitalTwins.Core.Perf.Infrastructure;
 using Azure.Identity;
 using Azure.Test.Perf;
+using NUnit.Framework;
 
 namespace Azure.DigitalTwins.Core.Perf.Scenarios
 {
@@ -15,8 +17,10 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
     /// <seealso cref="PerfTest{SizeOptions}" />
     public sealed class QueryDigitalTwins : PerfTest<SizeOptions>
     {
-        private DigitalTwinsClient _digitalTwinsClient;
-        private long _size;
+        private readonly DigitalTwinsClient _digitalTwinsClient;
+        private readonly string _testId;
+        private readonly long _size;
+        private readonly TimeSpan _delayPeriod = TimeSpan.FromMinutes(1);
 
         public QueryDigitalTwins(SizeOptions options) : base(options)
         {
@@ -28,17 +32,25 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
                     PerfTestEnvironment.Instance.DigitalTwinsClientSecret));
 
             _size = options.Size;
-        }
-
-        public override async Task SetupAsync()
-        {
-            await base.SetupAsync();
+            _testId = Guid.NewGuid().ToString().Substring(0, 8);
         }
 
         public override async Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
+
             // Global setup code that runs once at the beginning of test execution.
+            // Create the model globally so all tests can take advantage of it.
+            await AdtInstancePopulator.CreateRoomModelAsync(_digitalTwinsClient).ConfigureAwait(false);
+        }
+
+        public override async Task SetupAsync()
+        {
+            await base.SetupAsync();
+            await AdtInstancePopulator.CreateIndividualRoomTwins(_digitalTwinsClient, _testId, _size).ConfigureAwait(false);
+
+            // Since it takes some time for the newly created twins to be included in the query result, we have to wait some time.
+            await Task.Delay(_delayPeriod);
         }
 
         /// <summary>
@@ -47,13 +59,18 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override void Run(CancellationToken cancellationToken)
         {
-            Pageable<BasicDigitalTwin> result = _digitalTwinsClient.Query<BasicDigitalTwin>("SELECT * FROM DIGITALTWINS");
+            Pageable<BasicDigitalTwin> result = _digitalTwinsClient
+                .Query<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", CancellationToken.None);
             int resultCount = 0;
 
             foreach (BasicDigitalTwin a in result)
             {
                 resultCount++;
             }
+
+#if DEBUG
+            Assert.AreEqual(_size, resultCount);
+#endif
         }
 
         /// <summary>
@@ -62,13 +79,18 @@ namespace Azure.DigitalTwins.Core.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal cancellation request.</param>
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            AsyncPageable<BasicDigitalTwin> result = _digitalTwinsClient.QueryAsync<BasicDigitalTwin>("SELECT * FROM DIGITALTWINS");
+            AsyncPageable<BasicDigitalTwin> result = _digitalTwinsClient
+                .QueryAsync<BasicDigitalTwin>($"SELECT * FROM DIGITALTWINS WHERE TestId = '{_testId}'", CancellationToken.None);
             int resultCount = 0;
 
             await foreach (BasicDigitalTwin a in result)
             {
                 resultCount++;
             }
+
+#if DEBUG
+            Assert.AreEqual(_size, resultCount);
+#endif
         }
     }
 }
