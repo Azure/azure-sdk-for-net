@@ -20,6 +20,7 @@ namespace Azure.Communication.Sms
             V2021_03_07 = 1,
         }
     }
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class SmsSendOptions
     {
         public SmsSendOptions(bool enableDeliveryReport) { }
