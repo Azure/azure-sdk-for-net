@@ -61,23 +61,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a classification rule. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetPropertiesAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetPropertiesRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetPropertiesRequest(options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -100,23 +100,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a classification rule. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetProperties(RequestOptions requestOptions = null)
+        public virtual Response GetProperties(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetPropertiesRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetPropertiesRequest(options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -139,8 +139,8 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetPropertiesRequest(RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetPropertiesRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -159,12 +159,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -185,24 +185,24 @@ namespace Azure.Analytics.Purview.Scanning
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -229,12 +229,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -255,24 +255,24 @@ namespace Azure.Analytics.Purview.Scanning
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -296,9 +296,9 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -311,28 +311,28 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Deletes a classification rule. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -356,23 +356,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes a classification rule. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Delete(RequestOptions requestOptions = null)
+        public virtual Response Delete(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -396,8 +396,8 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -413,23 +413,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the rule versions of a classification rule. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetVersionsAsync(RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetVersionsAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetVersionsRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetVersionsRequest(options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetVersions");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -452,23 +452,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Lists the rule versions of a classification rule. </summary>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetVersions(RequestOptions requestOptions = null)
+        public virtual Response GetVersions(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetVersionsRequest(requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetVersionsRequest(options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetVersions");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -491,8 +491,8 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Create Request for <see cref="GetVersions"/> and <see cref="GetVersionsAsync"/> operations. </summary>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetVersionsRequest(RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetVersionsRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -511,23 +511,23 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestOptions requestOptions = null)
+        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -552,23 +552,23 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestOptions requestOptions = null)
+        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -593,8 +593,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Create Request for <see cref="TagVersion"/> and <see cref="TagVersionAsync"/> operations. </summary>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateTagVersionRequest(int classificationRuleVersion, string action, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateTagVersionRequest(int classificationRuleVersion, string action, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

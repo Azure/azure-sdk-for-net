@@ -31,25 +31,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToAllAsync(string contentType, RequestContent requestBody, IEnumerable<string> excluded = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SendToAllAsync(string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(contentType, requestBody, excluded, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToAllRequest(contentType, content, excluded, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -73,25 +73,25 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToAll(string contentType, RequestContent requestBody, IEnumerable<string> excluded = null, RequestOptions requestOptions = null)
+        public virtual Response SendToAll(string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(contentType, requestBody, excluded, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToAllRequest(contentType, content, excluded, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -115,10 +115,10 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="SendToAll"/> and <see cref="SendToAllAsync"/> operations. </summary>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSendToAllRequest(string contentType, RequestContent requestBody, IEnumerable<string> excluded = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateSendToAllRequest(string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -138,29 +138,29 @@ namespace Azure.Messaging.WebPubSub
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType);
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -185,23 +185,23 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response ConnectionExistsImpl(string connectionId, RequestOptions requestOptions = null)
+        internal virtual Response ConnectionExistsImpl(string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateConnectionExistsImplRequest(connectionId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -226,8 +226,8 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="ConnectionExistsImpl"/> and <see cref="ConnectionExistsImplAsync"/> operations. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateConnectionExistsImplRequest(string connectionId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateConnectionExistsImplRequest(string connectionId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -249,23 +249,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Close the client connection. </summary>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CloseClientConnectionAsync(string connectionId, string reason = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CloseClientConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseClientConnection");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -290,23 +290,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Close the client connection. </summary>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CloseClientConnection(string connectionId, string reason = null, RequestOptions requestOptions = null)
+        public virtual Response CloseClientConnection(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseClientConnection");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -331,8 +331,8 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="CloseClientConnection"/> and <see cref="CloseClientConnectionAsync"/> operations. </summary>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="reason"> The reason closing the client connection. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCloseClientConnectionRequest(string connectionId, string reason = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCloseClientConnectionRequest(string connectionId, string reason = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -358,24 +358,24 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToConnectionAsync(string connectionId, string contentType, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SendToConnectionAsync(string connectionId, string contentType, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, contentType, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToConnectionRequest(connectionId, contentType, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -400,24 +400,24 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToConnection(string connectionId, string contentType, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response SendToConnection(string connectionId, string contentType, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, contentType, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToConnectionRequest(connectionId, contentType, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -442,9 +442,9 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="SendToConnection"/> and <see cref="SendToConnectionAsync"/> operations. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSendToConnectionRequest(string connectionId, string contentType, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateSendToConnectionRequest(string connectionId, string contentType, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -462,29 +462,29 @@ namespace Azure.Messaging.WebPubSub
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType);
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsImplRequest(group, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGroupExistsImplRequest(group, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -509,23 +509,23 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response GroupExistsImpl(string group, RequestOptions requestOptions = null)
+        internal virtual Response GroupExistsImpl(string group, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGroupExistsImplRequest(group, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGroupExistsImplRequest(group, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -550,8 +550,8 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="GroupExistsImpl"/> and <see cref="GroupExistsImplAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGroupExistsImplRequest(string group, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGroupExistsImplRequest(string group, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -573,25 +573,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToGroupAsync(string group, string contentType, RequestContent requestBody, IEnumerable<string> excluded = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SendToGroupAsync(string group, string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, contentType, requestBody, excluded, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToGroupRequest(group, contentType, content, excluded, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -616,25 +616,25 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToGroup(string group, string contentType, RequestContent requestBody, IEnumerable<string> excluded = null, RequestOptions requestOptions = null)
+        public virtual Response SendToGroup(string group, string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, contentType, requestBody, excluded, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToGroupRequest(group, contentType, content, excluded, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -659,10 +659,10 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="SendToGroup"/> and <see cref="SendToGroupAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSendToGroupRequest(string group, string contentType, RequestContent requestBody, IEnumerable<string> excluded = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateSendToGroupRequest(string group, string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -684,30 +684,30 @@ namespace Azure.Messaging.WebPubSub
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType);
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Add a connection to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -733,23 +733,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Add a connection to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddConnectionToGroup(string group, string connectionId, RequestOptions requestOptions = null)
+        public virtual Response AddConnectionToGroup(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -775,8 +775,8 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="AddConnectionToGroup"/> and <see cref="AddConnectionToGroupAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -800,23 +800,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a connection from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -841,23 +841,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a connection from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestOptions requestOptions = null)
+        public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -882,8 +882,8 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="RemoveConnectionFromGroup"/> and <see cref="RemoveConnectionFromGroupAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -906,23 +906,23 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsImplRequest(userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUserExistsImplRequest(userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -947,23 +947,23 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response UserExistsImpl(string userId, RequestOptions requestOptions = null)
+        internal virtual Response UserExistsImpl(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUserExistsImplRequest(userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUserExistsImplRequest(userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -988,8 +988,8 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="UserExistsImpl"/> and <see cref="UserExistsImplAsync"/> operations. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUserExistsImplRequest(string userId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateUserExistsImplRequest(string userId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1011,24 +1011,24 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToUserAsync(string userId, string contentType, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SendToUserAsync(string userId, string contentType, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, contentType, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToUserRequest(userId, contentType, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1053,24 +1053,24 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToUser(string userId, string contentType, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response SendToUser(string userId, string contentType, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, contentType, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSendToUserRequest(userId, contentType, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1095,9 +1095,9 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="SendToUser"/> and <see cref="SendToUserAsync"/> operations. </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSendToUserRequest(string userId, string contentType, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateSendToUserRequest(string userId, string contentType, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1115,30 +1115,30 @@ namespace Azure.Messaging.WebPubSub
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType);
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Add a user to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddUserToGroupRequest(group, userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1164,23 +1164,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Add a user to the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddUserToGroup(string group, string userId, RequestOptions requestOptions = null)
+        public virtual Response AddUserToGroup(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddUserToGroupRequest(group, userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddUserToGroupRequest(group, userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1206,8 +1206,8 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="AddUserToGroup"/> and <see cref="AddUserToGroupAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddUserToGroupRequest(string group, string userId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateAddUserToGroupRequest(string group, string userId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1231,23 +1231,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a user from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1272,23 +1272,23 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Remove a user from the target group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response RemoveUserFromGroup(string group, string userId, RequestOptions requestOptions = null)
+        public virtual Response RemoveUserFromGroup(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRemoveUserFromGroupRequest(group, userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1313,8 +1313,8 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Create Request for <see cref="RemoveUserFromGroup"/> and <see cref="RemoveUserFromGroupAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateRemoveUserFromGroupRequest(string group, string userId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateRemoveUserFromGroupRequest(string group, string userId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1337,23 +1337,23 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Remove a user from all groups. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1377,23 +1377,23 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Remove a user from all groups. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response RemoveUserFromAllGroups(string userId, RequestOptions requestOptions = null)
+        public virtual Response RemoveUserFromAllGroups(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1417,8 +1417,8 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="RemoveUserFromAllGroups"/> and <see cref="RemoveUserFromAllGroupsAsync"/> operations. </summary>
         /// <param name="userId"> Target user Id. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateRemoveUserFromAllGroupsRequest(string userId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateRemoveUserFromAllGroupsRequest(string userId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1442,23 +1442,23 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1484,23 +1484,23 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1526,8 +1526,8 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGrantPermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGrantPermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1556,23 +1556,23 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1598,23 +1598,23 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1640,8 +1640,8 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateRevokePermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateRevokePermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1670,23 +1670,23 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1713,23 +1713,23 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1756,8 +1756,8 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
