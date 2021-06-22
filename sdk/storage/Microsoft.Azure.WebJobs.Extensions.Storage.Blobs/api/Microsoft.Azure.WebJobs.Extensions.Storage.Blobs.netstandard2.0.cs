@@ -1,11 +1,3 @@
-namespace Azure.Messaging.EventGrid.SystemEvents
-{
-    public partial class SubscriptionValidationResponse
-    {
-        public SubscriptionValidationResponse() { }
-        public string ValidationResponse { get { throw null; } set { } }
-    }
-}
 namespace Microsoft.Azure.WebJobs
 {
     [Microsoft.Azure.WebJobs.ConnectionProviderAttribute(typeof(Microsoft.Azure.WebJobs.StorageAccountAttribute))]
