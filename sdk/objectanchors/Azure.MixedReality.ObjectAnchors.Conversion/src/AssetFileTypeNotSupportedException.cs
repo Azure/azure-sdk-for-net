@@ -58,7 +58,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             SupportedAssetFileTypes = supportedAssetFileTypes;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// An Exception thrown during an attempt to provide an unsupported asset file type in an asset conversion operation
+        /// </summary>
+        /// <param name="info">The SerializationInfo</param>
+        /// <param name="context">The StreamingContext</param>
         protected AssetFileTypeNotSupportedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

@@ -18,6 +18,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     public class ObjectAnchorsConversionClient
     {
         private HashSet<AssetFileType> _supportedAssetFileTypesSet;
+
         /// <summary>
         /// The Account ID to be used by the Client
         /// </summary>
