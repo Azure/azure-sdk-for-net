@@ -1457,6 +1457,14 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(Delete)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlobContainerClient.Delete),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
