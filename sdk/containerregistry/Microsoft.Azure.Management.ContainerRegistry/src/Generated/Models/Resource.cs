@@ -39,13 +39,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -84,6 +87,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

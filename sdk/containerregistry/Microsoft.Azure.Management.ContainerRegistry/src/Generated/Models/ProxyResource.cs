@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

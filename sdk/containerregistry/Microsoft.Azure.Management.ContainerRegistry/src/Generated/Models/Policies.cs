@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// registry.</param>
         /// <param name="retentionPolicy">The retention policy for a container
         /// registry.</param>
-        public Policies(QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy))
+        /// <param name="exportPolicy">The export policy for a container
+        /// registry.</param>
+        public Policies(QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), ExportPolicy exportPolicy = default(ExportPolicy))
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
             RetentionPolicy = retentionPolicy;
+            ExportPolicy = exportPolicy;
             CustomInit();
         }
 
@@ -65,6 +68,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "retentionPolicy")]
         public RetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the export policy for a container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "exportPolicy")]
+        public ExportPolicy ExportPolicy { get; set; }
 
     }
 }

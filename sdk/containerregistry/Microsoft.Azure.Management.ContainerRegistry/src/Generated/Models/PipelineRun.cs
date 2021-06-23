@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="provisioningState">The provisioning state of a
         /// pipeline run. Possible values include: 'Creating', 'Updating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Canceled'</param>
@@ -44,8 +46,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="forceUpdateTag">How the pipeline run should be forced
         /// to recreate even if the pipeline run configuration has not
         /// changed.</param>
-        public PipelineRun(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), PipelineRunRequest request = default(PipelineRunRequest), PipelineRunResponse response = default(PipelineRunResponse), string forceUpdateTag = default(string))
-            : base(id, name, type)
+        public PipelineRun(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), PipelineRunRequest request = default(PipelineRunRequest), PipelineRunResponse response = default(PipelineRunResponse), string forceUpdateTag = default(string))
+            : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
             Request = request;

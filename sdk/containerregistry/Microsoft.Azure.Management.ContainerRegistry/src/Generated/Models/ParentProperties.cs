@@ -15,26 +15,29 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of a storage account for a container registry. Only
-    /// applicable to Classic SKU.
+    /// The properties of the connected registry parent.
     /// </summary>
-    public partial class StorageAccountProperties
+    public partial class ParentProperties
     {
         /// <summary>
-        /// Initializes a new instance of the StorageAccountProperties class.
+        /// Initializes a new instance of the ParentProperties class.
         /// </summary>
-        public StorageAccountProperties()
+        public ParentProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageAccountProperties class.
+        /// Initializes a new instance of the ParentProperties class.
         /// </summary>
-        /// <param name="id">The resource ID of the storage account.</param>
-        public StorageAccountProperties(string id)
+        /// <param name="syncProperties">The sync properties of the connected
+        /// registry with its parent.</param>
+        /// <param name="id">The resource ID of the parent to which the
+        /// connected registry will be associated.</param>
+        public ParentProperties(SyncProperties syncProperties, string id = default(string))
         {
             Id = id;
+            SyncProperties = syncProperties;
             CustomInit();
         }
 
@@ -44,10 +47,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the storage account.
+        /// Gets or sets the resource ID of the parent to which the connected
+        /// registry will be associated.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sync properties of the connected registry with its
+        /// parent.
+        /// </summary>
+        [JsonProperty(PropertyName = "syncProperties")]
+        public SyncProperties SyncProperties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -57,9 +68,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (SyncProperties == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "SyncProperties");
+            }
+            if (SyncProperties != null)
+            {
+                SyncProperties.Validate();
             }
         }
     }

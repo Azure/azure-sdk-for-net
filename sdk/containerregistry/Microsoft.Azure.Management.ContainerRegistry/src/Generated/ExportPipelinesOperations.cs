@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "exportPipelineName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -659,7 +659,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 exportPipelineCreateParameters.Validate();
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -921,7 +921,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "exportPipelineName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

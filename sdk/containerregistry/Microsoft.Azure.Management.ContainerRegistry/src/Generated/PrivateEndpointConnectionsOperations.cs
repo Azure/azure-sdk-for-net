@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -631,7 +631,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             PrivateEndpointConnection privateEndpointConnection = new PrivateEndpointConnection();
             if (privateEndpoint != null || privateLinkServiceConnectionState != null)
             {
@@ -885,7 +885,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2019-12-01-preview";
+            string apiVersion = "2021-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

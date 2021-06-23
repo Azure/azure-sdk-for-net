@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="location">The location of the export pipeline.</param>
         /// <param name="identity">The identity of the export pipeline.</param>
         /// <param name="options">The list of all options configured for the
@@ -47,8 +49,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// pipeline at the time the operation was called. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Canceled'</param>
-        public ExportPipeline(ExportPipelineTargetProperties target, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IdentityProperties identity = default(IdentityProperties), IList<string> options = default(IList<string>), string provisioningState = default(string))
-            : base(id, name, type)
+        public ExportPipeline(ExportPipelineTargetProperties target, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), IdentityProperties identity = default(IdentityProperties), IList<string> options = default(IList<string>), string provisioningState = default(string))
+            : base(id, name, type, systemData)
         {
             Location = location;
             Identity = identity;

@@ -49,8 +49,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// properties.</param>
         /// <param name="credentials">The parameters that describes a set of
         /// credentials that will be used when this run is invoked.</param>
+        /// <param name="logTemplate">The template that describes the
+        /// repository and tag information for run log artifact.</param>
         /// <param name="tags">The ARM resource tags.</param>
-        public TaskUpdateParameters(IdentityProperties identity = default(IdentityProperties), string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), string agentPoolName = default(string), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TaskUpdateParameters(IdentityProperties identity = default(IdentityProperties), string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), string agentPoolName = default(string), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), string logTemplate = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Identity = identity;
             Status = status;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Step = step;
             Trigger = trigger;
             Credentials = credentials;
+            LogTemplate = logTemplate;
             Tags = tags;
             CustomInit();
         }
@@ -126,6 +129,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.credentials")]
         public Credentials Credentials { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template that describes the repository and tag
+        /// information for run log artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.logTemplate")]
+        public string LogTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the ARM resource tags.

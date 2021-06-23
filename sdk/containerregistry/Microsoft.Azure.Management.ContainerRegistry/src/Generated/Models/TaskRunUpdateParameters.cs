@@ -39,12 +39,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// run</param>
         /// <param name="forceUpdateTag">How the run should be forced to rerun
         /// even if the run request configuration has not changed</param>
+        /// <param name="location">The location of the resource</param>
         /// <param name="tags">The ARM resource tags.</param>
-        public TaskRunUpdateParameters(IdentityProperties identity = default(IdentityProperties), RunRequest runRequest = default(RunRequest), string forceUpdateTag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TaskRunUpdateParameters(IdentityProperties identity = default(IdentityProperties), RunRequest runRequest = default(RunRequest), string forceUpdateTag = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Identity = identity;
             RunRequest = runRequest;
             ForceUpdateTag = forceUpdateTag;
+            Location = location;
             Tags = tags;
             CustomInit();
         }
@@ -72,6 +74,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the ARM resource tags.
