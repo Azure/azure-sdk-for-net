@@ -1,6 +1,6 @@
 # Add and Delete Entities
 
-This sample demonstrates how to add and delete entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it.To get started, you'll need access to either a Storage or Cosmos DB account.
+This sample demonstrates how to add and delete entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it.To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`
 
@@ -21,7 +21,7 @@ var tableClient = new TableClient(
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
-If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
+If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
 
 ## Create a local entity
 
@@ -99,5 +99,5 @@ tableClient.DeleteEntity(partitionKey, rowKey);
 
 ---
 To see the full example source files, see:
-- [Synchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntities.cs)
-- [Asynchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntitiesAsync.cs)
+- [Synchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntities.cs)
+- [Asynchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntitiesAsync.cs)

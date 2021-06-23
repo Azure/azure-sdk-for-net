@@ -4,7 +4,7 @@ This sample demonstrates how to create and submit transactional batches for tabl
 The Table service supports batch transactions on entities that are in the same table and belong to the same partition group.\
 Multiple Add, Update, Upsert, and Delete operations are supported within a single transaction.
 
-You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to submit a transactional batch request.
+You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to submit a transactional batch request.
 To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`
@@ -26,7 +26,7 @@ var tableClient = new TableClient(
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
-If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
+If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
 
 ## Adding entities with a transactional batch
 
@@ -132,4 +132,4 @@ await client.SubmitTransactionAsync(deleteEntitiesBatch).ConfigureAwait(false);
 
 ---
 To see the full example source files, see:
-- [Transactional batches](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample6_TransactionalBatchAsync.cs)
+- [Transactional batches](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample6_TransactionalBatchAsync.cs)
