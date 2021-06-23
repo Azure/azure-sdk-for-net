@@ -1,6 +1,6 @@
 # Release History
 
-## 12.9.1 (Unreleased)
+## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
 
 ## 12.9.0 (2021-06-08)
