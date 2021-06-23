@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Buffers.Text;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,7 +36,6 @@ namespace Azure.Core
 
         // this is the standrd JWT header. { "alg": "HS256", "typ": "JWT" }
         private static readonly byte[] headerSha256 = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
-        //private static readonly byte[] headerSha256 = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsImtpZCI6IjgyMTcyMDE3Njk5YzRkNWRhMzhkZTg3NWFiYjEwZDc5IiwidHlwIjoiSldUIn0");
 
         private Utf8JsonWriter _writer;
         private MemoryStream _memoryStream;
@@ -97,23 +97,15 @@ namespace Azure.Core
         /// <returns></returns>
         public int End()
         {
-            if (_writer == null)
-            {
-                return _jwtLength;
-            }
-            if (isDisposed)
-                throw new ObjectDisposedException(nameof(JwtBuilder));
+            if (_writer == null) return _jwtLength; // writer is set to null after token is formatted.
+            if (isDisposed) throw new ObjectDisposedException(nameof(JwtBuilder));
 
             _writer.WriteEndObject();
             _writer.Flush();
 
-            // this should never happen. If there are too many claims, MmoryStream.Write would fail first
-            // And so this is more like a RELEASE assert.
-            // TODO: change to assert?
-            if (_writer.BytesCommitted > int.MaxValue)
-                throw new InvalidOperationException("too many claims");
+            Debug.Assert(_memoryStream.GetType() == typeof(MemoryStream));
+            int payloadLength = (int)_writer.BytesCommitted; // writer is wrrapping MemoryStream, and so the length will never overflow int.
 
-            int payloadLength = (int)_writer.BytesCommitted;
             int payloadIndex = headerSha256.Length;
             int maxBufferLength =
                 Base64.GetMaxEncodedToUtf8Length(headerSha256.Length + payloadLength)
@@ -122,12 +114,11 @@ namespace Azure.Core
             _memoryStream.Capacity = maxBufferLength; // make room for in-place Base64 conversion
 
             _jwt = _memoryStream.GetBuffer();
-            _writer = null; // this will prevent subsequent addition of claims.
+            _writer = null; // this will prevent subsequent additions of claims.
 
             Span<byte> toEncode = _jwt.AsSpan(payloadIndex);
             OperationStatus status = NS2Bridge.Base64UrlEncodeInPlace(toEncode, payloadLength, out int payloadWritten);
-            if (status != OperationStatus.Done)
-                throw new NotImplementedException("this should not happen as buffer was adjusted above"); // TODO: change to assert?
+            Debug.Assert(status == OperationStatus.Done); // Buffer is adjusted above, and so encoding should always fit
 
             // Add signature
             int headerAndPayloadLength = payloadWritten + headerSha256.Length;
@@ -137,15 +128,14 @@ namespace Azure.Core
             {
                 var hashed = hash.ComputeHash(_jwt, 0, headerAndPayloadLength);
                 status = NS2Bridge.Base64UrlEncode(hashed, _jwt.AsSpan(headerAndPayloadAndSeparatorLength), out int consumend, out int signatureLength);
-                if (status != OperationStatus.Done)
-                    throw new NotImplementedException();
+                Debug.Assert(status == OperationStatus.Done); // Buffer is adjusted above, and so encoding should always fit
                 _jwtLength = headerAndPayloadAndSeparatorLength + signatureLength;
             }
 
             return _jwtLength;
         }
 
-        public bool TryWriteTo(Span<char> destination, out int charsWritten)
+        public bool TryBuildTo(Span<char> destination, out int charsWritten)
         {
             End();
             if (destination.Length < _jwtLength)
@@ -158,7 +148,7 @@ namespace Azure.Core
             return true;
         }
 
-        public string Build()
+        public string BuildString()
         {
             End();
             var result = NS2Bridge.CreateString(_jwtLength, _jwt, (destination, state) => {

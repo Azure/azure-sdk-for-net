@@ -56,7 +56,7 @@ namespace Azure.Messaging.WebPubSub
             jwt.AddClaim(JwtBuilder.Iat, now);
             jwt.AddClaim(JwtBuilder.Aud, audience);
 
-            string token = jwt.Build();
+            string token = jwt.BuildString();
 
             var clientEndpoint = new UriBuilder(endpoint);
             clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";

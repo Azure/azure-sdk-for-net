@@ -46,7 +46,7 @@ namespace Azure.Messaging.WebPubSub
             var headerValue = NS2Bridge.CreateString(jwtLength + prefix.Length, state, (destination, state) => {
                 var statePrefix = state.prefix;
                 statePrefix.AsSpan().CopyTo(destination);
-                state.writer.TryWriteTo(destination.Slice(statePrefix.Length), out _);
+                state.writer.TryBuildTo(destination.Slice(statePrefix.Length), out _);
             });
 
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
