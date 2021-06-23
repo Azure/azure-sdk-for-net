@@ -18,6 +18,7 @@ namespace Azure.Core
     {
         // this is the standrd JWT header. { "alg": "HS256", "typ": "JWT" }
         private static readonly byte[] headerSha256 = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        //private static readonly byte[] headerSha256 = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsImtpZCI6IjgyMTcyMDE3Njk5YzRkNWRhMzhkZTg3NWFiYjEwZDc5IiwidHlwIjoiSldUIn0");
 
         private Utf8JsonWriter _writer;
         private MemoryStream _memoryStream;
@@ -27,8 +28,8 @@ namespace Azure.Core
         private byte[] _jwt;
         private int _jwtLength;
 
-        public JwtBuilder(byte[] key, int size = 256)
-        { // typical JWT is ~200B UTF8
+        public JwtBuilder(byte[] key, int size = 512)
+        { // typical JWT is ~300B UTF8
             _jwt = null;
             _memoryStream = new MemoryStream(size);
             _memoryStream.Write(headerSha256, 0, headerSha256.Length);
@@ -58,10 +59,10 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns number of ASCII characters of the JTW. The actual token can be retrieved using ToString or WriteTo
+        /// Returns number of ASCII characters of the JTW. The actual token can be retrieved using Build or WriteTo
         /// </summary>
         /// <returns></returns>
-        public int Build()
+        public int End()
         {
             if (_writer == null)
             {
@@ -113,7 +114,7 @@ namespace Azure.Core
 
         public bool TryWriteTo(Span<char> destination, out int charsWritten)
         {
-            Build();
+            End();
             if (destination.Length < _jwtLength)
             {
                 charsWritten = 0;
@@ -124,9 +125,9 @@ namespace Azure.Core
             return true;
         }
 
-        public override string ToString()
+        public string Build()
         {
-            Build();
+            End();
             var result = NS2Bridge.CreateString(_jwtLength, _jwt, (destination, state) => {
                 NS2Bridge.Latin1ToUtf16(state.AsSpan(0, _jwtLength), destination);
             });

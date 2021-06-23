@@ -94,8 +94,8 @@ namespace Azure.Core
             {
                 byte current = buffer[i];
                 if (current == (byte)'+')
-                    buffer[i] = (byte)'/';
-                else if (current == (byte)'-')
+                    buffer[i] = (byte)'-';
+                else if (current == (byte)'/')
                     buffer[i] = (byte)'_';
             }
             return OperationStatus.Done;
@@ -118,8 +118,8 @@ namespace Azure.Core
             {
                 byte current = destination[i];
                 if (current == (byte)'+')
-                    destination[i] = (byte)'/';
-                else if (current == (byte)'-')
+                    destination[i] = (byte)'-';
+                else if (current == (byte)'/')
                     destination[i] = (byte)'_';
             }
             return OperationStatus.Done;
