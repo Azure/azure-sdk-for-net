@@ -16,6 +16,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
     [TestFixture(false)]
     public class ObjectAnchorsConversionClientTests : ClientTestBase
     {
+        private static string anyWorkingUriString = "https://sampleazurestorageurl.com";
+
         public ObjectAnchorsConversionClientTests(bool isAsync) : base(isAsync)
         {
         }
@@ -35,6 +37,21 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
                 }
             };
 
+        public static IEnumerable<object[]> BadFileTypeTestData =>
+            new List<object[]>
+            {
+                new object[]
+                {
+                    AssetFileType.Obj,
+                    true
+                },
+                new object[]
+                {
+                    new AssetFileType(".exe"),
+                    false
+                },
+            };
+
         [Test]
         [TestCaseSource(nameof(BadClientArgumentsTestData))]
         public void BadClientArguments(Guid accountId, string accountDomain, AccessToken credential, bool shouldSucceed)
@@ -50,6 +67,28 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             }
 
             Assert.AreNotEqual(shouldSucceed, excepted);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(BadFileTypeTestData))]
+        public async Task BadFileType(AssetFileType ft, bool passes)
+        {
+            bool exceptedWithUnsupportedFileType = !passes;
+            try
+            {
+                ObjectAnchorsConversionClient client = new ObjectAnchorsConversionClient(Guid.NewGuid(), "eastus2.azure.com", new AccessToken("dummykey", new DateTimeOffset(new DateTime(3000, 1, 1))));
+                await client.StartAssetConversionAsync(new AssetConversionOptions(new Uri(anyWorkingUriString), new AssetFileType(".exe"), new AssetConversionConfiguration(new System.Numerics.Vector3(0, 0, 1), 1)));
+            }
+            catch (AssetFileTypeNotSupportedException)
+            {
+                exceptedWithUnsupportedFileType = true;
+            }
+            catch (Exception)
+            {
+                // This is fine
+            }
+
+            Assert.True(exceptedWithUnsupportedFileType);
         }
     }
 }

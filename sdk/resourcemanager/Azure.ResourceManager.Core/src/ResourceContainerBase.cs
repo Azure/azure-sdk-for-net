@@ -95,24 +95,6 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets details for this resource from the service.
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
-        public abstract Response<TOperations> Get(string resourceName, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Gets details for this resource from the service.
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
-        public abstract Task<Response<TOperations>> GetAsync(string resourceName, CancellationToken cancellationToken = default);
-
-        /// <summary>
         /// Returns the resource from Azure if it exists.
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to get. </param>

@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
+    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
@@ -65,6 +65,11 @@ namespace Azure.Data.Tables.Tests
             {"CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405"}
         };
 
+        private readonly Dictionary<string, string> _AadIgnoreTests = new()
+        {
+            { "GetAccessPoliciesReturnsPolicies", "https://github.com/Azure/azure-sdk-for-net/issues/21913" }
+        };
+
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
@@ -73,43 +78,47 @@ namespace Azure.Data.Tables.Tests
         public async Task TablesTestSetup()
         {
             // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
-            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason))
+            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason) ||
+                _endpointType == TableEndpointType.StorageAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason))
             {
                 Assert.Ignore(ignoreReason);
             }
 
             ServiceUri = _endpointType switch
             {
-                TableEndpointType.Storage => TestEnvironment.StorageUri,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
-                _ => throw new NotSupportedException("Unknown endpoint type")
+                _ => TestEnvironment.StorageUri,
             };
 
             AccountName = _endpointType switch
             {
-                TableEndpointType.Storage => TestEnvironment.StorageAccountName,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
-                _ => throw new NotSupportedException("Unknown endpoint type")
+                _ => TestEnvironment.StorageAccountName,
             };
 
             AccountKey = _endpointType switch
             {
-                TableEndpointType.Storage => TestEnvironment.PrimaryStorageAccountKey,
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
-                _ => throw new NotSupportedException("Unknown endpoint type")
+                _ => TestEnvironment.PrimaryStorageAccountKey,
             };
 
             ConnectionString =_endpointType switch
             {
-                TableEndpointType.Storage => TestEnvironment.StorageConnectionString,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosConnectionString,
-                _ => throw new NotSupportedException("Unknown endpoint type")
+                _ => TestEnvironment.StorageConnectionString,
             };
             var options = InstrumentClientOptions(new TableClientOptions());
-            service = InstrumentClient(new TableServiceClient(
-                new Uri(ServiceUri),
-                new TableSharedKeyCredential(AccountName, AccountKey),
-                options));
+            service = _endpointType switch
+            {
+                TableEndpointType.StorageAAD => InstrumentClient(new TableServiceClient(
+                    new Uri(ServiceUri),
+                    TestEnvironment.Credential,
+                    options)),
+                _ =>InstrumentClient(new TableServiceClient(
+                    new Uri(ServiceUri),
+                    new TableSharedKeyCredential(AccountName, AccountKey),
+                    options))
+            };
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 

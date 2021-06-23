@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1786,6 +1787,10 @@ namespace Azure.Storage.Blobs.Specialized
         {
             PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
 
+            if (UsingClientSideEncryption)
+            {
+                ClientSideDecryptor.BeginContentEncryptionKeyCaching();
+            }
             if (async)
             {
                 return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
@@ -2076,12 +2081,22 @@ namespace Azure.Storage.Blobs.Specialized
                         readConditions = readConditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
                     }
 
+                    ClientSideDecryptor.ContentEncryptionKeyCache contentEncryptionKeyCache = default;
+                    if (UsingClientSideEncryption && !allowModifications)
+                    {
+                        contentEncryptionKeyCache = new();
+                    }
+
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
                         bool rangeGetContentHash,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
+                            if (UsingClientSideEncryption)
+                            {
+                                ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
+                            }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
                                 readConditions,
@@ -2173,6 +2188,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.DestinationConditions,
                 options?.RehydratePriority,
                 options?.ShouldSealDestination,
+                options?.DestinationImmutabilityPolicy,
+                options?.LegalHold,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -2259,6 +2276,8 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationConditions,
                 rehydratePriority,
                 sealBlob: default,
+                destinationImmutabilityPolicy: default,
+                legalHold: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -2324,6 +2343,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.DestinationConditions,
                 options?.RehydratePriority,
                 options?.ShouldSealDestination,
+                options?.DestinationImmutabilityPolicy,
+                options?.LegalHold,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2410,6 +2431,8 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationConditions,
                 rehydratePriority,
                 sealBlob: default,
+                destinationImmutabilityPolicy: default,
+                legalHold: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2472,6 +2495,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// If the destination blob should be sealed.
         /// Only applicable for Append Blobs.
         /// </param>
+        /// <param name="destinationImmutabilityPolicy">
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
+        /// <param name="legalHold">
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2496,6 +2529,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions destinationConditions,
             RehydratePriority? rehydratePriority,
             bool? sealBlob,
+            BlobImmutabilityPolicy destinationImmutabilityPolicy,
+            bool? legalHold,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2536,6 +2571,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             sealBlob: sealBlob,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2559,6 +2597,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             sealBlob: sealBlob,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2790,6 +2831,9 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
+                destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
+                legalHold: options?.LegalHold,
+                sourceAuthentication: options?.SourceAuthentication,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -2840,6 +2884,9 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
+                destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
+                legalHold: options?.LegalHold,
+                sourceAuthentication: options?.SourceAuthentication,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -2882,6 +2929,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
+        /// <param name="destinationImmutabilityPolicy">
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// hasimmutable storage with versioning enabled.
+        /// </param>
+        /// <param name="legalHold">
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </param>
+        /// <param name="sourceAuthentication">
+        /// Optional. Source authentication used to access the source blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2904,6 +2964,9 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier,
             BlobRequestConditions sourceConditions,
             BlobRequestConditions destinationConditions,
+            BlobImmutabilityPolicy destinationImmutabilityPolicy,
+            bool? legalHold,
+            HttpAuthorization sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2942,6 +3005,10 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2962,6 +3029,10 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -4808,6 +4879,438 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return response.GetRawResponse();
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region SetImmutabilityPolicy
+        /// <summary>
+        /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="immutabilityPolicy">
+        /// The <see cref="BlobImmutabilityPolicy"/> to set.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's HTTP headers.
+        /// Note that If Unmodified Since is the only request condition applicable to this API.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobImmutabilityPolicy}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobImmutabilityPolicy> SetImmutabilityPolicy(
+            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            SetImmutabilityPolicyInternal(
+                immutabilityPolicy: immutabilityPolicy,
+                conditions: conditions,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="immutabilityPolicy">
+        /// The <see cref="BlobImmutabilityPolicy"/> to set.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's HTTP headers.
+        /// Note that If Unmodified Since is the only request condition applicable to this API.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobImmutabilityPolicy}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobImmutabilityPolicy>> SetImmutabilityPolicyAsync(
+            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await SetImmutabilityPolicyInternal(
+                immutabilityPolicy: immutabilityPolicy,
+                conditions: conditions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="immutabilityPolicy">
+        /// The <see cref="BlobImmutabilityPolicy"/> to set.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's HTTP headers.
+        /// Note that If Unmodified Since is the only request condition applicable to this API.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobImmutabilityPolicy}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobImmutabilityPolicy>> SetImmutabilityPolicyInternal(
+            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(immutabilityPolicy)}: {immutabilityPolicy}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetImmutabilityPolicy)}");
+
+                if (immutabilityPolicy?.PolicyMode == BlobImmutabilityPolicyMode.Mutable)
+                {
+                    throw new ArgumentException($"{nameof(immutabilityPolicy.PolicyMode)} must be {BlobImmutabilityPolicyMode.Locked} or {BlobImmutabilityPolicyMode.Unlocked}");
+                }
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.LeaseId
+                        | BlobRequestConditionProperty.TagConditions,
+                    operationName: nameof(BlobBaseClient.SetImmutabilityPolicy),
+                    parameterName: nameof(conditions));
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetImmutabilityPolicyAsync(
+                            timeout: null,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetImmutabilityPolicy(
+                            timeout: null,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiresOn,
+                            immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobImmutabilityPolicy(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region DeleteImmutabilityPolicy
+        /// <summary>
+        /// Deletes the Immutability Policy associated with the Blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DeleteImmutabilityPolicy(
+            CancellationToken cancellationToken = default)
+            => DeleteImmutabilityPolicyInternal(
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Deletes the Immutability Policy associated with the Blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteImmutabilityPolicyAsync(
+            CancellationToken cancellationToken = default)
+            => await DeleteImmutabilityPolicyInternal(
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Deletes the Immutability Policy associated with the Blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response> DeleteImmutabilityPolicyInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(DeleteImmutabilityPolicy)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.DeleteImmutabilityPolicyAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.DeleteImmutabilityPolicy(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region SetLegalHold
+        /// <summary>
+        /// Sets a legal hold on the blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="hasLegalHold">
+        /// Set to true to set a legal hold on the blob.
+        /// Set to false to remove an existing legal hold.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobLegalHoldInfo}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobLegalHoldResult> SetLegalHold(
+            bool hasLegalHold,
+            CancellationToken cancellationToken = default)
+            => SetLegalHoldInternal(
+                hasLegalHold: hasLegalHold,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Sets a legal hold on the blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="hasLegalHold">
+        /// Set to true to set a legal hold on the blob.
+        /// Set to false to remove an existing legal hold.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobLegalHoldInfo}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobLegalHoldResult>> SetLegalHoldAsync(
+            bool hasLegalHold,
+            CancellationToken cancellationToken = default)
+            => await SetLegalHoldInternal(
+                hasLegalHold: hasLegalHold,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets a legal hold on the blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with immutable storage with versioning enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="hasLegalHold">
+        /// Set to true to set a legal hold on the blob.
+        /// Set to false to remove an existing legal hold.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobLegalHoldInfo}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobLegalHoldResult>> SetLegalHoldInternal(
+            bool hasLegalHold,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(hasLegalHold)}: {hasLegalHold}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetLegalHold)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<BlobSetLegalHoldHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetLegalHoldAsync(
+                            legalHold: hasLegalHold,
+                            timeout: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetLegalHold(
+                            legalHold: hasLegalHold,
+                            timeout: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobLegalHoldInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

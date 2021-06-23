@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Sas;
+using Azure.Identity;
 using NUnit.Framework;
 using Parms = Azure.Data.Tables.TableConstants.Sas.Parameters;
 
@@ -81,6 +82,11 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should not accept a null credential");
 
             Assert.That(
+                () => new TableClient(_urlHttp, TableName, default(TokenCredential)),
+                Throws.InstanceOf<ArgumentException>(),
+                "The constructor should not accept a null credential");
+
+            Assert.That(
                 () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept valid arguments.");
@@ -89,6 +95,11 @@ namespace Azure.Data.Tables.Tests
                 () => new TableClient(_urlHttp, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept an http url.");
+
+            Assert.That(
+                () => new TableClient(_urlHttp, TableName, new DefaultAzureCredential(), new TableClientOptions()),
+                Throws.Nothing,
+                "The constructor should accept valid arguments.");
         }
 
         public static IEnumerable<object[]> ValidConnStrings()

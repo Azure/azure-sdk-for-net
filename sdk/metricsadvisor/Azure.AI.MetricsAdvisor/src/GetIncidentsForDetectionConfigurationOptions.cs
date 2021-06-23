@@ -10,8 +10,8 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetIncidents(string, GetIncidentsForDetectionConfigurationOptions, CancellationToken)"/>
-    /// or <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, GetIncidentsForDetectionConfigurationOptions, CancellationToken)"/>
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetIncidentsForDetectionConfiguration(string, GetIncidentsForDetectionConfigurationOptions, CancellationToken)"/>
+    /// or <see cref="MetricsAdvisorClient.GetIncidentsForDetectionConfigurationAsync(string, GetIncidentsForDetectionConfigurationOptions, CancellationToken)"/>
     /// to configure the behavior of the request.
     /// </summary>
     public class GetIncidentsForDetectionConfigurationOptions

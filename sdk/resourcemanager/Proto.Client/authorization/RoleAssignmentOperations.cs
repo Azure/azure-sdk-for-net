@@ -13,7 +13,7 @@ namespace Proto.Authorization
     /// <summary>
     /// Operations over Role Assignments for Role-based access control to ARM resources
     /// </summary>
-    public class RoleAssignmentOperations : ExtensionResourceOperationsBase<RoleAssignment>
+    public class RoleAssignmentOperations : ResourceOperationsBase<SubscriptionResourceIdentifier, RoleAssignment>
     {
         /// <summary>
         /// Gets the resource type for Role Assignments.
@@ -25,8 +25,8 @@ namespace Proto.Authorization
         /// Allows creating operations specific to a role assignment from generic ARM operations for the same resource
         /// </summary>
         /// <param name="genericOperations">A generic operations class corresponding to a Role Assignment. </param>
-        internal RoleAssignmentOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+        internal RoleAssignmentOperations(ResourceOperationsBase parent)
+            : base(parent, parent.Id)
         {
             string subscriptionId;
             if (!Id.TryGetSubscriptionId(out subscriptionId))

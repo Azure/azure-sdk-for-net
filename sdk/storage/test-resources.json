@@ -38,6 +38,8 @@
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
         "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
         "location": "[resourceGroup().location]",
+        "resourceGroupName": "[resourceGroup().name]",
+        "subscriptionId": "[subscription().subscriptionId]",
         "encryption": {
             "services": {
                 "file": {
@@ -566,6 +568,14 @@
     "KEYVAULT_URI":{
       "type": "string",
       "value": "[variables('azureKeyVaultUrl')]"
+    },
+    "RESOURCE_GROUP_NAME": {
+      "type": "string",
+      "value": "[variables('resourceGroupName')]"
+    },
+    "SUBSCRIPTION_ID": {
+      "type": "string",
+      "value": "[variables('subscriptionId')]"
     }
   }
 }

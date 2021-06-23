@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
@@ -68,30 +67,6 @@ namespace Azure.Core.Tests.Management
         }
 
         [Test]
-        public async Task ValidateInstrumentPhArmOperation()
-        {
-            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            var sub = client.DefaultSubscription;
-            var operation = (await sub.GetPhArmOperationAsync()).Value;
-            var result = operation.Method();
-
-            Assert.AreEqual("TestResourceProxy", operation.GetType().Name);
-            Assert.AreEqual("success", result);
-        }
-
-        [Test]
-        public async Task ValidateInstrumentPhArmResponse()
-        {
-            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
-            var sub = client.DefaultSubscription;
-            var response = (await sub.GetPhArmOperationAsync()).Value;
-            var result = response.Method();
-
-            Assert.AreEqual("TestResourceProxy", response.GetType().Name);
-            Assert.AreEqual("success", result);
-        }
-
-        [Test]
         [SyncOnly]
         public void ValidateInstrumentGetContainer()
         {
@@ -141,7 +116,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResourceOperations rgOp = client.GetTestResourceOperations();
-            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetArmResponseExceptionAsync());
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetResponseExceptionAsync());
         }
 
         [Test]
@@ -159,6 +134,52 @@ namespace Azure.Core.Tests.Management
             TestResourceOperations rgOp = client.GetTestResourceOperations();
             var testResourceOp = await rgOp.GetArmOperationAsync(true);
             Assert.ThrowsAsync(typeof(ArgumentException), async () => await testResourceOp.WaitForCompletionAsync());
+        }
+
+        [Test]
+        public async Task ValidateLroWrapper()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            TestResource testResource = await rgOp.LroWrapperAsync();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.AreEqual("success", testResource.Method());
+        }
+
+        [Test]
+        public async Task ValidateStartLroWrapper()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            var testResourceOp = await rgOp.StartLroWrapperAsync();
+            TestResource testResource = await testResourceOp.WaitForCompletionAsync();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.AreEqual("success", testResource.Method());
+        }
+
+        [Test]
+        public async Task ValidateSkipWait()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            Stopwatch timer = Stopwatch.StartNew();
+            TestResource testResource = await rgOp.LroWrapperAsync();
+            timer.Stop();
+            //method waits for 10 seconds so timer should easily be less than half of that if we skip
+            Assert.IsTrue(timer.ElapsedMilliseconds < 5000, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
+        }
+
+        [Test]
+        public async Task ValidateStartSkipWait()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            var testResourceOp = await rgOp.StartLroWrapperAsync();
+            Stopwatch timer = Stopwatch.StartNew();
+            TestResource testResource = await testResourceOp.WaitForCompletionAsync();
+            timer.Stop();
+            //method waits for 10 seconds so timer should easily be less than half of that if we skip
+            Assert.IsTrue(timer.ElapsedMilliseconds < 5000, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
         }
     }
 }

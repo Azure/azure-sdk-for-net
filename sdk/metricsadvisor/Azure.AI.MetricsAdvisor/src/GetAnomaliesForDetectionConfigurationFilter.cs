@@ -9,8 +9,8 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// Filters the result of the <see cref="MetricsAdvisorClient.GetAnomalies(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> and
-    /// <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> operations.
+    /// Filters the result of the <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfiguration(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> and
+    /// <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfigurationAsync(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> operations.
     /// </summary>
     public class GetAnomaliesForDetectionConfigurationFilter
     {

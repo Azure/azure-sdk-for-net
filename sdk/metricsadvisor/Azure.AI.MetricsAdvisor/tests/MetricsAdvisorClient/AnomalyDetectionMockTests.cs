@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public async Task GetAnomaliesSetsValue()
+        public async Task GetAnomaliesForDetectionConfigurationSetsValue()
         {
             double originalValue = 3.14;
 
@@ -27,14 +27,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetAnomaliesForDetectionConfigurationOptions(default, default);
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(FakeGuid, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(FakeGuid, options))
             {
                 Assert.That(anomaly.Value, Is.EqualTo(originalValue));
             }
         }
 
         [Test]
-        public async Task GetAnomaliesSetsNullExpectedValue()
+        public async Task GetAnomaliesForDetectionConfigurationSetsNullExpectedValue()
         {
             using Stream responseBody = CreateAnomalyJsonStream(expectedValue: null);
             MockResponse mockResponse = new MockResponse(200) { ContentStream = responseBody };
@@ -43,14 +43,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetAnomaliesForDetectionConfigurationOptions(default, default);
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(FakeGuid, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(FakeGuid, options))
             {
                 Assert.That(anomaly.ExpectedValue, Is.Null);
             }
         }
 
         [Test]
-        public async Task GetAnomaliesSetsExpectedValue()
+        public async Task GetAnomaliesForDetectionConfigurationSetsExpectedValue()
         {
             double originalExpectedValue = 1.62;
 
@@ -61,14 +61,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetAnomaliesForDetectionConfigurationOptions(default, default);
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(FakeGuid, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(FakeGuid, options))
             {
                 Assert.That(anomaly.ExpectedValue, Is.EqualTo(originalExpectedValue));
             }
         }
 
         [Test]
-        public async Task GetIncidentsSetsValueOfRootNode()
+        public async Task GetIncidentsForDetectionConfigurationSetsValueOfRootNode()
         {
             double originalValue = 3.14;
 
@@ -79,14 +79,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetIncidentsForDetectionConfigurationOptions(default, default);
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(FakeGuid, options))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(FakeGuid, options))
             {
                 Assert.That(incident.ValueOfRootNode, Is.EqualTo(originalValue));
             }
         }
 
         [Test]
-        public async Task GetIncidentsSetsNullExpectedValueOfRootNode()
+        public async Task GetIncidentsForDetectionConfigurationSetsNullExpectedValueOfRootNode()
         {
             using Stream responseBody = CreateIncidentJsonStream(expectedValueOfRootNode: null);
             MockResponse mockResponse = new MockResponse(200) { ContentStream = responseBody };
@@ -95,14 +95,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetIncidentsForDetectionConfigurationOptions(default, default);
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(FakeGuid, options))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(FakeGuid, options))
             {
                 Assert.That(incident.ExpectedValueOfRootNode, Is.Null);
             }
         }
 
         [Test]
-        public async Task GetIncidentsSetsExpectedValueOfRootNode()
+        public async Task GetIncidentsForDetectionConfigurationSetsExpectedValueOfRootNode()
         {
             double originalValue = 1.62;
 
@@ -113,7 +113,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetIncidentsForDetectionConfigurationOptions(default, default);
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(FakeGuid, options))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(FakeGuid, options))
             {
                 Assert.That(incident.ExpectedValueOfRootNode, Is.EqualTo(originalValue));
             }

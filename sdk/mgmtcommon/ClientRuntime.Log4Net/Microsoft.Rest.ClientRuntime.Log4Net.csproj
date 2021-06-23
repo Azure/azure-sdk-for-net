@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.3" />
+    <PackageReference Include="log4net" Version="2.0.10" />
     <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />-->
   </ItemGroup>
 </Project>
