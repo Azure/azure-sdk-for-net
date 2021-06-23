@@ -180,10 +180,26 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             var query = new WhereLogic(null);
             query.Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .And()
                 .IsDefined("Humidity");
             query.GetQueryText()
                 .Should()
                 .Be("Temperature = 50 AND IS_DEFINED(Humidity)");
+        }
+
+        [Test]
+        public void WhereLogic_NestedQueries()
+        {
+            var query = new WhereLogic(null);
+            query.Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .And()
+                .IsTrue(q => q
+                   .IsOfType("Humidity", AdtDataType.AdtNumber)
+                   .And()
+                   .IsOfType("Humidity", AdtDataType.AdtPrimative));
+            query.GetQueryText()
+                .Should()
+                .Be("Temperature = 50 AND (IS_NUMBER(Humidity) AND IS_PRIMATIVE(Humidity))");
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
-                .Stringify();
+                .GetQueryText();
 
             #endregion Snippet:DigitalTwinsQueryBuilderToString
 

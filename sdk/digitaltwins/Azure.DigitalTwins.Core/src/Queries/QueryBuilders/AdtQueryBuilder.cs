@@ -79,7 +79,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Turns AdtQueryBuilder into a string.
         /// </summary>
         /// <returns> String represenation of query. </returns>
-        public string Stringify()
+        public string GetQueryText()
         {
             StringBuilder finalQuery = new StringBuilder();
 

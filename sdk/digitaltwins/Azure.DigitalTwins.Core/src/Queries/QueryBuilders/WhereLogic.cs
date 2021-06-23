@@ -154,6 +154,57 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="nested"></param>
+        /// <returns></returns>
+        public WhereLogic IsTrue(Func<WhereLogic, WhereLogic> nested)
+        {
+            // Option 1 : use the current object as the subject.
+            //nested.Invoke(this);
+
+            // Option 2 : use a new object as the subject.
+            var nestedLogic = new WhereLogic(null);
+            nestedLogic = nested.Invoke(nestedLogic);
+
+            _clauses.Add(new WhereClause(QueryConstants.OpenParenthesis + nestedLogic.GetQueryText() + QueryConstants.CloseParenthesis));
+
+            return this;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
+        public WhereLogic Or()
+        {
+            // prevent users from adding Or as the first expression of a WHERE clause
+            if (_clauses.Count == 0)
+            {
+                throw new InvalidOperationException("The 'OR' logical operator cannot be the first part of a WHERE clause.");
+            }
+
+            _clauses.Add(new WhereClause(QueryConstants.Or));
+            return this;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
+        public WhereLogic And()
+        {
+            // prevent users from adding And as the first expression of a WHERE clause
+            if (_clauses.Count == 0)
+            {
+                throw new InvalidOperationException("The 'AND' logical operator cannot be the first part of a WHERE clause.");
+            }
+
+            _clauses.Add(new WhereClause(QueryConstants.And));
+            return this;
+        }
+
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
@@ -174,39 +225,24 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                     conditions.Add(_clause.Condition);
                 }
 
-                whereLogicComponents.Append(string.Join($" {QueryConstants.And} ", conditions).Trim());
+                //// Insert and between most parts of the WHERE clause
+                //foreach (string condition in conditions)
+                //{
+                //    if (condition == QueryConstants.OpenParenthesis || condition == QueryConstants.CloseParenthesis || condition == QueryConstants.Or)
+                //    {
+                //        whereLogicComponents.Append(condition + " ");
+                //    }
+                //    else
+                //    {
+                //        whereLogicComponents.Append($"{condition} {QueryConstants.And} ");
+                //    }
+                //}
+
+                whereLogicComponents.Append(string.Join(" ", conditions).Trim());
                 return whereLogicComponents.ToString().Trim();
             }
 
             return string.Empty;
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        public WhereLogic IsTrue(Func<WhereLogic, WhereLogic> p)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <returns></returns>
-        public WhereLogic Or()
-        {
-            return this;
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <returns></returns>
-        public WhereLogic And()
-        {
-            return this;
         }
     }
 }
