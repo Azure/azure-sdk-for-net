@@ -56,7 +56,12 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the provider for a namespace.
+        /// </summary>
+        /// <param name="resourceProviderNamespace"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Response<Provider> Get(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
@@ -82,7 +87,12 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the provider for a namespace.
+        /// </summary>
+        /// <param name="resourceProviderNamespace"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
