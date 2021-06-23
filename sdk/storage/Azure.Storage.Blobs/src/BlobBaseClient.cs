@@ -3002,6 +3002,17 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}");
 
+                // All BlobRequestConditions are valid for destinationConditions.
+                destinationConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlobBaseClient.SyncCopyFromUri),
+                    parameterName: nameof(destinationConditions));
+
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.LeaseId,
+                    operationName: nameof(BlobBaseClient.SyncCopyFromUri),
+                    parameterName: nameof(sourceConditions));
+
                 try
                 {
                     ClientConfiguration.Pipeline.LogMethodEnter(
