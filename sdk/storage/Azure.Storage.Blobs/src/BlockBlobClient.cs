@@ -1976,6 +1976,12 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}");
 
+                // All BlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.CommitBlockList),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -2222,6 +2228,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.GetBlockList),
+                    parameterName: nameof(conditions));
 
                 try
                 {
