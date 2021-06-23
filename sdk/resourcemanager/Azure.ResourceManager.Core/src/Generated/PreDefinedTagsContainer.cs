@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the valid resource type associated with the container.
         /// </summary>
-        protected override ResourceType ValidResourceType => PreDefinedTagsOperations.ResourceType;
+        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
         /// <summary>
         /// Gets the operations that can be performed on the container.

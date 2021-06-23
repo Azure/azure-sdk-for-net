@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// The resource type for Tags.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tagNames";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreDefinedTagsOperations"/> class for mocking.
