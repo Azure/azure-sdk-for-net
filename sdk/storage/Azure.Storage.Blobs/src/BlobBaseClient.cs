@@ -1787,6 +1787,10 @@ namespace Azure.Storage.Blobs.Specialized
         {
             PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
 
+            if (UsingClientSideEncryption)
+            {
+                ClientSideDecryptor.BeginContentEncryptionKeyCaching();
+            }
             if (async)
             {
                 return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
@@ -2077,12 +2081,22 @@ namespace Azure.Storage.Blobs.Specialized
                         readConditions = readConditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
                     }
 
+                    ClientSideDecryptor.ContentEncryptionKeyCache contentEncryptionKeyCache = default;
+                    if (UsingClientSideEncryption && !allowModifications)
+                    {
+                        contentEncryptionKeyCache = new();
+                    }
+
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
                         bool rangeGetContentHash,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
+                            if (UsingClientSideEncryption)
+                            {
+                                ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
+                            }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
                                 readConditions,
@@ -5003,12 +5017,15 @@ namespace Azure.Storage.Blobs.Specialized
                     throw new ArgumentException($"{nameof(immutabilityPolicy.PolicyMode)} must be {BlobImmutabilityPolicyMode.Locked} or {BlobImmutabilityPolicyMode.Unlocked}");
                 }
 
-                conditions.ValidateConditionsNotPresent(
-                    BlobRequestConditionProperty.IfMatch
-                    | BlobRequestConditionProperty.IfNoneMatch
-                    | BlobRequestConditionProperty.IfModifiedSince
-                    | BlobRequestConditionProperty.LeaseId
-                    | BlobRequestConditionProperty.TagConditions);
+                conditions.ValidateRequestConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.LeaseId
+                        | BlobRequestConditionProperty.TagConditions,
+                    operationName: nameof(BlobBaseClient.SetImmutabilityPolicy),
+                    parameterName: nameof(conditions));
 
                 try
                 {

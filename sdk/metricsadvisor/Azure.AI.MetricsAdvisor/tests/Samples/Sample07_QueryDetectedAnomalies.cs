@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(detectionConfigurationId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(detectionConfigurationId, options))
             {
                 Console.WriteLine($"Anomaly value: {anomaly.Value}");
 
@@ -84,7 +84,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(alertConfigurationId, alertId, options))
             {
                 Console.WriteLine($"Anomaly detection configuration ID: {anomaly.DetectionConfigurationId}");
                 Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");

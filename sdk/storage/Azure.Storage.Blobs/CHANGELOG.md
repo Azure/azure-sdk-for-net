@@ -9,6 +9,7 @@
 - Added support for listing deleted root blobs with versions to BlobContainerClient.GetBlobs() and .GetBlobsByHierarchy()
 - Added support for OAuth copy sources for synchronous copy operations.
 - Added support for Parquet as an input format in BlockBlobClient.Query().
+- Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
 
 ## 12.9.0 (2021-06-08)
 - Includes all features from 12.9.0-beta.4.

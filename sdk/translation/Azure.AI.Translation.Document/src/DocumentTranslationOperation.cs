@@ -490,11 +490,11 @@ namespace Azure.AI.Translation.Document
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<DocumentStatus> GetValuesAsync()
+        public override AsyncPageable<DocumentStatus> GetValuesAsync(CancellationToken cancellationToken = default)
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentStatusesAsync();
+            return GetAllDocumentStatusesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -503,11 +503,11 @@ namespace Azure.AI.Translation.Document
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override Pageable<DocumentStatus> GetValues()
+        public override Pageable<DocumentStatus> GetValues(CancellationToken cancellationToken = default)
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentStatuses();
+            return GetAllDocumentStatuses(cancellationToken);
         }
 
         private void ValidateOperationStatus()

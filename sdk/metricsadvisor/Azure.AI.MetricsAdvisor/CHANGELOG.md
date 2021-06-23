@@ -4,6 +4,8 @@
 
 ### Breaking Changes
 - The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in types, methods, and properties.
+- Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
+- Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
 - `DataFeedMissingDataPointFillSettings` constructor now takes the required `fillType` parameter. For this reason, the property `FillType` is not nullable anymore.
 - `EmailNotificationHook` constructor now takes the required `name` parameter.
@@ -160,5 +162,5 @@ This is the first beta of the `Azure.AI.MetricsAdvisor` client library.
 
 This package's [documentation][readme] and [samples][samples] demonstrate the new API.
 
-[readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/README.md
-[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
+[readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/README.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md

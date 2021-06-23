@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAnomaliesWithMinimumSetup(bool useTokenCredential)
+        public async Task GetAnomaliesForDetectionConfigurationWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Null);
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAnomaliesWithOptionalFilter()
+        public async Task GetAnomaliesForDetectionConfigurationWithOptionalFilter()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -74,7 +74,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Null);
@@ -108,7 +108,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetIncidentsWithMinimumSetup(bool useTokenCredential)
+        public async Task GetIncidentsForDetectionConfigurationWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var incidentCount = 0;
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
                 Assert.That(incident.DataFeedId, Is.Null);
@@ -141,7 +141,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetIncidentsWithOptionalDimensionFilter()
+        public async Task GetIncidentsForDetectionConfigurationWithOptionalDimensionFilter()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -159,7 +159,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var incidentCount = 0;
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
                 Assert.That(incident.DataFeedId, Is.Null);
@@ -229,7 +229,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             options.DimensionsToFilter.Add(groupKey);
 
-            await foreach (AnomalyIncident currentIncident in client.GetIncidentsAsync(DetectionConfigurationId, options))
+            await foreach (AnomalyIncident currentIncident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 if (currentIncident.Id == IncidentId)
                 {
@@ -264,7 +264,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyIncident incident = null;
 
-            await foreach (AnomalyIncident currentIncident in client.GetIncidentsAsync(AlertConfigurationId, AlertId))
+            await foreach (AnomalyIncident currentIncident in client.GetIncidentsForAlertAsync(AlertConfigurationId, AlertId))
             {
                 if (currentIncident.Id == incidentId)
                 {
