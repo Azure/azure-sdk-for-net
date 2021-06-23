@@ -1913,15 +1913,14 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfUnmodifiedSince != default ||
-                        conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(
-                            nameof(RequestConditions.IfUnmodifiedSince),
-                            nameof(RequestConditions.IfMatch),
-                            nameof(RequestConditions.IfNoneMatch));
-                    }
+                    conditions.ValidateConditionsNotPresent(
+                        invalidConditions:
+                            BlobRequestConditionProperty.TagConditions
+                            | BlobRequestConditionProperty.IfMatch
+                            | BlobRequestConditionProperty.IfNoneMatch
+                            | BlobRequestConditionProperty.IfUnmodifiedSince,
+                        operationName: nameof(BlobContainerClient.SetMetadata),
+                        parameterName: nameof(conditions));
 
                     ResponseWithHeaders<ContainerSetMetadataHeaders> response;
 
