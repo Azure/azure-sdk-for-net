@@ -705,42 +705,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task DeleteAsync_AccessConditions_Conditions_IfMatch_Should_Throw()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            await container.CreateIfNotExistsAsync();
-            var conditions = new BlobRequestConditions()
-            {
-                IfMatch = new ETag("etag")
-            };
-
-            // Act
-            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
-                () => container.DeleteAsync(conditions: conditions));
-        }
-
-        [RecordedTest]
-        public async Task DeleteAsync_AccessConditions_Conditions_IfNoneMatch_Should_Throw()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            await container.CreateIfNotExistsAsync();
-            var conditions = new BlobRequestConditions()
-            {
-                IfNoneMatch = new ETag("etag")
-            };
-
-            // Act
-            await TestHelper.CatchAsync<ArgumentOutOfRangeException>(
-                () => container.DeleteAsync(conditions: conditions));
-        }
-
-        [RecordedTest]
         public async Task DeleteAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
