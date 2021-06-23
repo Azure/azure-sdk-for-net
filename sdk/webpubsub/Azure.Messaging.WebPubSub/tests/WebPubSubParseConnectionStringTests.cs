@@ -51,7 +51,11 @@ namespace Azure.Messaging.WebPubSub.Tests
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
             Assert.NotNull(exp);
             Assert.IsTrue(long.TryParse(exp, out var expireAt));
-            Assert.AreEqual(TimeSpan.FromMinutes(5).TotalSeconds, expireAt - issuedAt);
+
+            // default expire atfte should be ~5 minutes (~300 seconds)
+            var expireAfter = expireAt - issuedAt;
+            Assert.IsTrue(expireAfter > 295 && expireAfter < 305);
+
             var sub = jwt.Claims.Where(s => s.Type == "sub").Select(s => s.Value).ToArray();
 
             if (userId != null)
@@ -97,7 +101,11 @@ namespace Azure.Messaging.WebPubSub.Tests
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
             Assert.NotNull(exp);
             Assert.IsTrue(long.TryParse(exp, out var expireAt));
-            Assert.AreEqual(TimeSpan.FromMinutes(5).TotalSeconds, expireAt - issuedAt);
+
+            // default expire atfte should be ~5 minutes (~300 seconds)
+            var expireAfter = expireAt - issuedAt;
+            Assert.IsTrue(expireAfter > 295 && expireAfter < 305);
+
             var sub = jwt.Claims.Where(s => s.Type == "sub").Select(s => s.Value).ToArray();
 
             if (userId != null)

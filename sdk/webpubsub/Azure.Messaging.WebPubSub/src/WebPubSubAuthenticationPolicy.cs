@@ -13,10 +13,10 @@ namespace Azure.Messaging.WebPubSub
     /// </summary>
     internal partial class WebPubSubAuthenticationPolicy : HttpPipelineSynchronousPolicy
     {
-        private static byte[] s_nbf = Encoding.UTF8.GetBytes("nbf");
-        private static byte[] s_exp = Encoding.UTF8.GetBytes("exp");
-        private static byte[] s_iat = Encoding.UTF8.GetBytes("iat");
-        private static byte[] s_aud = Encoding.UTF8.GetBytes("aud");
+        internal static byte[] s_nbf = Encoding.UTF8.GetBytes("nbf");
+        internal static byte[] s_exp = Encoding.UTF8.GetBytes("exp");
+        internal static byte[] s_iat = Encoding.UTF8.GetBytes("iat");
+        internal static byte[] s_aud = Encoding.UTF8.GetBytes("aud");
 
         private readonly AzureKeyCredential _credential;
 

@@ -21,6 +21,9 @@ namespace Azure.Messaging.WebPubSub
         private static readonly char[] KeyValueSeparator = { '=' };
         private static readonly char[] PropertySeparator = { ';' };
 
+        internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
+        internal static byte[] s_sub = Encoding.UTF8.GetBytes("sub");
+
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
@@ -43,16 +46,16 @@ namespace Azure.Messaging.WebPubSub
 
             if (userId != default)
             {
-                jwt.AddClaim("sub", userId);
+                jwt.AddClaim(s_sub, userId);
             }
             if (roles != default && roles.Length > 0)
             {
-                jwt.AddClaim("role", roles);
+                jwt.AddClaim(s_role, roles);
             }
-            jwt.AddClaim("nbf", now);
-            jwt.AddClaim("exp", expiresAt);
-            jwt.AddClaim("iat", now);
-            jwt.AddClaim("aud", audience);
+            jwt.AddClaim(WebPubSubAuthenticationPolicy.s_nbf, now);
+            jwt.AddClaim(WebPubSubAuthenticationPolicy.s_exp, expiresAt);
+            jwt.AddClaim(WebPubSubAuthenticationPolicy.s_iat, now);
+            jwt.AddClaim(WebPubSubAuthenticationPolicy.s_aud, audience);
 
             string token = jwt.Build();
 
