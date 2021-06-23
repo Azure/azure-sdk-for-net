@@ -322,16 +322,22 @@ namespace Azure.AI.TextAnalytics
 
         internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
         {
+            var parameters = new PiiTaskParameters()
+            {
+                Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
+                ModelVersion = action.ModelVersion,
+                StringIndexType = Constants.DefaultStringIndexType,
+                LoggingOptOut = action.DisableServiceLogs
+            };
+
+            if (action.CategoriesFilter.Count > 0)
+            {
+                parameters.PiiCategories = action.CategoriesFilter;
+            }
+
             return new PiiTask()
             {
-                Parameters = new PiiTaskParameters()
-                {
-                    Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
-                    ModelVersion = action.ModelVersion,
-                    StringIndexType = Constants.DefaultStringIndexType,
-                    LoggingOptOut = action.DisableServiceLogs,
-                    PiiCategories = action.CategoriesFilter
-                },
+                Parameters = parameters,
                 TaskName = action.ActionName
             };
         }

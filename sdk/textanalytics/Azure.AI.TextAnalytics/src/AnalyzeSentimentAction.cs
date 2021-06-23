@@ -21,6 +21,19 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeSentimentAction"/>
+        /// class based on the values of a <see cref="AnalyzeSentimentOptions"/>.
+        /// It sets the <see cref="ModelVersion"/>, the <see cref="DisableServiceLogs"/>,
+        /// and the <see cref="IncludeOpinionMining"/> properties.
+        /// </summary>
+        public AnalyzeSentimentAction(AnalyzeSentimentOptions options)
+        {
+            ModelVersion = options.ModelVersion;
+            DisableServiceLogs = options.DisableServiceLogs;
+            IncludeOpinionMining = options.IncludeOpinionMining;
+        }
+
+        /// <summary>
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:

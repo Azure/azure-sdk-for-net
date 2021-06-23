@@ -36,6 +36,8 @@ namespace Azure.AI.TextAnalytics.Tests
             return client;
         }
 
+        #region Key phrases
+
         [Test]
         public async Task AnalyzeOperationKeyPhrasesWithDisableServiceLogs()
         {
@@ -68,6 +70,73 @@ namespace Azure.AI.TextAnalytics.Tests
             var expectedContent = "loggingOptOut\":true";
             Assert.AreEqual(expectedContent, logging);
         }
+
+        [Test]
+        public async Task AnalyzeOperationKeyPhrasesFromRequestOptions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new TextAnalyticsRequestOptions();
+
+            var actions = new ExtractKeyPhrasesAction(options);
+
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationKeyPhrasesFromRequestOptionsFull()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new TextAnalyticsRequestOptions()
+            {
+                ModelVersion = "latest",
+                DisableServiceLogs = true,
+                IncludeStatistics = false
+            };
+
+            var actions = new ExtractKeyPhrasesAction(options);
+
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString, true);
+        }
+
+        #endregion Key phrases
+
+        #region entities
 
         [Test]
         public async Task AnalyzeOperationRecognizeEntitiesWithDisableServiceLogs()
@@ -103,6 +172,73 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task AnalyzeOperationRecognizeEntitiesWithRequestOptions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new TextAnalyticsRequestOptions();
+
+            var actions = new RecognizeEntitiesAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizeEntitiesWithRequestOptionsFull()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new TextAnalyticsRequestOptions()
+            {
+                ModelVersion = "latest",
+                DisableServiceLogs = true,
+                IncludeStatistics = false
+            };
+
+            var actions = new RecognizeEntitiesAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString, true);
+        }
+
+        #endregion entities
+
+        #region linked entities
+
+        [Test]
         public async Task AnalyzeOperationRecognizeLinkedEntitiesWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
@@ -136,6 +272,73 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task AnalyzeOperationRecognizeLinkedEntitiesWithRequestOptions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new TextAnalyticsRequestOptions();
+
+            var actions = new RecognizeLinkedEntitiesAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizeLinkedEntitiesWithRequestOptionsFull()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new TextAnalyticsRequestOptions()
+            {
+                ModelVersion = "latest",
+                DisableServiceLogs = true,
+                IncludeStatistics = false
+            };
+
+            var actions = new RecognizeLinkedEntitiesAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString, true);
+        }
+
+        #endregion linked entities
+
+        #region Pii entities
+
+        [Test]
         public async Task AnalyzeOperationRecognizePiiEntitiesWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
@@ -167,6 +370,192 @@ namespace Azure.AI.TextAnalytics.Tests
             var expectedContent = "loggingOptOut\":true";
             Assert.AreEqual(expectedContent, logging);
         }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizePiiEntitiesWithPiiOptions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new RecognizePiiEntitiesOptions();
+
+            var actions = new RecognizePiiEntitiesAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString);
+            Assert.AreEqual(-1, contentString.IndexOf("domain"));
+            Assert.AreEqual(-1, contentString.IndexOf("piiCategories"));
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizePiiEntitiesWithPiiOptionsFull()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new RecognizePiiEntitiesOptions()
+            {
+                ModelVersion = "latest",
+                DisableServiceLogs = true,
+                IncludeStatistics = true,
+                DomainFilter = PiiEntityDomain.ProtectedHealthInformation,
+                CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber }
+            };
+
+            var actions = new RecognizePiiEntitiesAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString, true);
+
+            string domaintFilter = contentString.Substring(contentString.IndexOf("domain"), 13);
+
+            var expectedDomainFilterContent = "domain\":\"phi\"";
+            Assert.AreEqual(expectedDomainFilterContent, domaintFilter);
+
+            string piiCategories = contentString.Substring(contentString.IndexOf("piiCategories"), 41);
+
+            var expectedPiiCategoriesContent = "piiCategories\":[\"USSocialSecurityNumber\"]";
+            Assert.AreEqual(expectedPiiCategoriesContent, piiCategories);
+        }
+
+        #endregion Pii entities
+
+        #region Analyze sentiment
+
+        [Test]
+        public async Task AnalyzeOperationAnalyzeSentimentWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new AnalyzeSentimentAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationAnalyzeSentimentWithAnalyzeSentimentOptions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new AnalyzeSentimentOptions();
+
+            var actions = new AnalyzeSentimentAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString);
+            Assert.AreEqual(-1, contentString.IndexOf("opinionMining"));
+        }
+
+        [Test]
+        public async Task AnalyzeOperationAnalyzeSentimentWithAnalyzeSentimentOptionsFull()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var options = new AnalyzeSentimentOptions()
+            {
+                ModelVersion = "latest",
+                DisableServiceLogs = true,
+                IncludeStatistics = true,
+                IncludeOpinionMining = true
+            };
+
+            var actions = new AnalyzeSentimentAction(options);
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString, true);
+
+            string opinionMining = contentString.Substring(contentString.IndexOf("opinionMining"), 19);
+
+            var expectedOpinionMiningContent = "opinionMining\":true";
+            Assert.AreEqual(expectedOpinionMiningContent, opinionMining);
+        }
+
+        #endregion Analyze sentiment
 
         [Test]
         public async Task AnalyzeOperationWithActionsError()
@@ -313,6 +702,30 @@ namespace Azure.AI.TextAnalytics.Tests
             content.WriteTo(stream, CancellationToken.None);
 
             return Encoding.UTF8.GetString(stream.ToArray());
+        }
+
+        private static void ValidateRequestOptions(string contentString, bool full = false)
+        {
+            if (!full)
+            {
+                Assert.AreEqual(-1, contentString.IndexOf("loggingOptOut"));
+                Assert.AreEqual(-1, contentString.IndexOf("model-version"));
+                Assert.AreEqual(-1, contentString.IndexOf("show-stats"));
+            }
+            else
+            {
+                string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+                var expectedContent = "loggingOptOut\":true";
+                Assert.AreEqual(expectedContent, logging);
+
+                string modelVersion = contentString.Substring(contentString.IndexOf("model-version"), 23);
+
+                var expectedModelVersionContent = "model-version\":\"latest\"";
+                Assert.AreEqual(expectedModelVersionContent, modelVersion);
+
+                Assert.AreEqual(-1, contentString.IndexOf("show-stats"));
+            }
         }
     }
 }

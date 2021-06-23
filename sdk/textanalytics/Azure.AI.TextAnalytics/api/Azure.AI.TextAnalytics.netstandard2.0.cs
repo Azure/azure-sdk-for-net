@@ -83,6 +83,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeSentimentAction
     {
         public AnalyzeSentimentAction() { }
+        public AnalyzeSentimentAction(Azure.AI.TextAnalytics.AnalyzeSentimentOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public bool? IncludeOpinionMining { get { throw null; } set { } }
@@ -231,6 +232,7 @@ namespace Azure.AI.TextAnalytics
     public partial class ExtractKeyPhrasesAction
     {
         public ExtractKeyPhrasesAction() { }
+        public ExtractKeyPhrasesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
@@ -612,6 +614,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeEntitiesAction
     {
         public RecognizeEntitiesAction() { }
+        public RecognizeEntitiesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
@@ -636,6 +639,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeLinkedEntitiesAction
     {
         public RecognizeLinkedEntitiesAction() { }
+        public RecognizeLinkedEntitiesAction(Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
@@ -660,6 +664,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizePiiEntitiesAction
     {
         public RecognizePiiEntitiesAction() { }
+        public RecognizePiiEntitiesAction(Azure.AI.TextAnalytics.RecognizePiiEntitiesOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntityCategory> CategoriesFilter { get { throw null; } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
