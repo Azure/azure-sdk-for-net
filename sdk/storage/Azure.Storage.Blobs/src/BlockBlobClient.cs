@@ -833,6 +833,13 @@ namespace Azure.Storage.Blobs.Specialized
         {
             content = content?.WithNoDispose().WithProgress(progressHandler);
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+            // All BlobRequestConditions are valid.
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions: BlobRequestConditionProperty.None,
+                operationName: nameof(BlockBlobClient.Upload),
+                parameterName: nameof(conditions));
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
