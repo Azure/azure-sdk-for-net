@@ -106,8 +106,11 @@ namespace Azure.Identity.Tests
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
                 var options = new TokenCredentialOptions() { Transport = mockTransport };
+                var pipeline = CredentialPipeline.GetInstance(options);
 
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(clientId, options));
+                var client = new MockManagedIdentityClient(pipeline, clientId) { ManagedIdentitySourceFactory = () => ImdsManagedIdentitySource.TryCreateAsync(new ManagedIdentityClientOptions() { ClientId = clientId, Options = options, Pipeline = pipeline }, false, default).GetAwaiter().GetResult()  };
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(client));
 
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
