@@ -41,6 +41,7 @@ namespace SnippetGenerator
                 unUsedSnippets = await new DirectoryProcessor(BasePath).ProcessAsync();
             }
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
             string message = $"Not all snippets were used.\n{string.Join(Environment.NewLine, unUsedSnippets)}";
             if (StrictMode)
             {

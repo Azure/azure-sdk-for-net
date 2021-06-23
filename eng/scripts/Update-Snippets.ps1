@@ -17,6 +17,8 @@ if ($ServiceDirectory -and ($ServiceDirectory -ne "*")) {
     $root += '/' + $ServiceDirectory
 }
 
+if (-not (Test-Path env:TF_BUILD)) { $StrictMode = $true }
+
 if($StrictMode) {
     Resolve-Path "$root" | %{ dotnet run -p $generatorProject -b "$_" -sm -c Release }
 } else {
