@@ -50,7 +50,15 @@ namespace Azure.ResourceManager.Core
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.DoesExist");
             scope.Start();
-            return RestClient.CheckExistence(resourceName, cancellationToken).Value;
+            try
+            {
+                return RestClient.CheckExistence(resourceName, cancellationToken).Value;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
@@ -58,8 +66,16 @@ namespace Azure.ResourceManager.Core
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.DoesExist");
             scope.Start();
-            var response = await RestClient.CheckExistenceAsync(resourceName, cancellationToken).ConfigureAwait(false);
-            return response.Value;
+            try
+            {
+                var response = await RestClient.CheckExistenceAsync(resourceName, cancellationToken).ConfigureAwait(false);
+                return response.Value;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
