@@ -13,7 +13,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 Before working on a contribution, it would be beneficial to familiarize yourself with the process and guidelines used for the Azure SDKs so that your submission is consistent with the project standards and is ready to be accepted with fewer changes requested.  In particular, it is recommended to review:
 
   - [Azure SDK README](https://github.com/Azure/azure-sdk), to learn more about the overall project and processes used.
-  - [Azure SDK Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md), for information about how to onboard and contribute to the overall Azure SDK ecosystem.
+  - [Azure SDK Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md), for information about how to onboard and contribute to the overall Azure SDK ecosystem.
   - [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/general_introduction.html), to understand the general guidelines for the Azure SDK across all languages and platforms.
   - [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html), to understand the guidelines specific to the Azure SDK for .NET.
 

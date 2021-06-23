@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedRollupType NoRollup { get; } = new DataFeedRollupType(NoRollupValue);
 
         /// <summary>
-        /// Let the service do the roll-up. The method can be set with <see cref="DataFeedRollupSettings.RollupMethod"/>.
+        /// Let the service do the roll-up. The method can be set with <see cref="DataFeedRollupSettings.AutoRollupMethod"/>.
         /// </summary>
         public static DataFeedRollupType NeedRollup { get; } = new DataFeedRollupType(NeedRollupValue);
 

@@ -43,17 +43,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="parsingMode"> The parsingMode for the skill. Will be set to &apos;default&apos; if not defined. </param>
         /// <param name="dataToExtract"> The type of data to be extracted for the skill. Will be set to &apos;contentAndMetadata&apos; if not defined. </param>
         /// <param name="configuration"> A dictionary of configurations for the skill. </param>
-        internal DocumentExtractionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string parsingMode, string dataToExtract, IDictionary<string, object> configuration) : base(oDataType, name, description, context, inputs, outputs)
+        internal DocumentExtractionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, BlobIndexerParsingMode? parsingMode, BlobIndexerDataToExtract? dataToExtract, IDictionary<string, object> configuration) : base(oDataType, name, description, context, inputs, outputs)
         {
             ParsingMode = parsingMode;
             DataToExtract = dataToExtract;
             Configuration = configuration;
             ODataType = oDataType ?? "#Microsoft.Skills.Util.DocumentExtractionSkill";
         }
-
-        /// <summary> The parsingMode for the skill. Will be set to &apos;default&apos; if not defined. </summary>
-        public string ParsingMode { get; set; }
-        /// <summary> The type of data to be extracted for the skill. Will be set to &apos;contentAndMetadata&apos; if not defined. </summary>
-        public string DataToExtract { get; set; }
     }
 }

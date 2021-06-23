@@ -67,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get repository properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<RepositoryProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRepositoryProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetProperties)}");
             scope.Start();
@@ -85,7 +85,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get repository properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<RepositoryProperties> GetProperties(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRepositoryProperties> GetProperties(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetProperties)}");
             scope.Start();
@@ -105,15 +105,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<RepositoryProperties>> SetPropertiesAsync(RepositoryProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRepositoryProperties>> UpdatePropertiesAsync(ContainerRepositoryProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(SetProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(UpdateProperties)}");
             scope.Start();
             try
             {
-                return await _restClient.SetPropertiesAsync(Name, GetRepositoryWriteableProperties(value), cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdatePropertiesAsync(Name, GetRepositoryWriteableProperties(value), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -122,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private static RepositoryWriteableProperties GetRepositoryWriteableProperties(RepositoryProperties value)
+        private static RepositoryWriteableProperties GetRepositoryWriteableProperties(ContainerRepositoryProperties value)
         {
             return new RepositoryWriteableProperties()
             {
@@ -139,15 +139,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<RepositoryProperties> SetProperties(RepositoryProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRepositoryProperties> UpdateProperties(ContainerRepositoryProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(SetProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(UpdateProperties)}");
             scope.Start();
             try
             {
-                return _restClient.SetProperties(Name, GetRepositoryWriteableProperties(value), cancellationToken);
+                return _restClient.UpdateProperties(Name, GetRepositoryWriteableProperties(value), cancellationToken);
             }
             catch (Exception e)
             {
@@ -159,7 +159,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<DeleteRepositoryResult>> DeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(Delete)}");
             scope.Start();
@@ -177,7 +177,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<DeleteRepositoryResult> Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(Delete)}");
             scope.Start();
@@ -198,15 +198,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual AsyncPageable<ArtifactManifestProperties> GetManifestsAsync(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactManifestProperties> GetManifestPropertiesCollectionAsync(ArtifactManifestOrderBy orderBy = ArtifactManifestOrderBy.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactManifestProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
                     var response = await _restClient.GetManifestsAsync(Name, last: null, n: pageSizeHint, orderby: order, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
@@ -219,11 +219,11 @@ namespace Azure.Containers.ContainerRegistry
 
             async Task<Page<ArtifactManifestProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = await _restClient.GetManifestsNextPageAsync(uriReference, Name, last: null, n: null, orderby: order, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
@@ -242,15 +242,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Pageable<ArtifactManifestProperties> GetManifests(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactManifestProperties> GetManifestPropertiesCollection(ArtifactManifestOrderBy orderBy = ArtifactManifestOrderBy.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactManifestProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
                     var response = _restClient.GetManifests(Name, last: null, n: pageSizeHint, orderby: order, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
@@ -263,11 +263,11 @@ namespace Azure.Containers.ContainerRegistry
 
             Page<ArtifactManifestProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifestPropertiesCollection)}");
                 scope.Start();
                 try
                 {
-                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    string order = orderBy == ArtifactManifestOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = _restClient.GetManifestsNextPage(uriReference, Name, last: null, n: null, orderby: order, cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());

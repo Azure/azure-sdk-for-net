@@ -5,13 +5,13 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
-    internal partial class DataSourceCredential : IUtf8JsonSerializable
+    public partial class DataSourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,11 +19,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("dataSourceCredentialType");
             writer.WriteStringValue(DataSourceCredentialType.ToString());
             writer.WritePropertyName("dataSourceCredentialName");
-            writer.WriteStringValue(DataSourceCredentialName);
-            if (Optional.IsDefined(DataSourceCredentialDescription))
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("dataSourceCredentialDescription");
-                writer.WriteStringValue(DataSourceCredentialDescription);
+                writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
         }
@@ -34,14 +34,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureSQLConnectionString": return AzureSQLConnectionStringCredential.DeserializeAzureSQLConnectionStringCredential(element);
-                    case "DataLakeGen2SharedKey": return DataLakeGen2SharedKeyCredential.DeserializeDataLakeGen2SharedKeyCredential(element);
-                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element);
-                    case "ServicePrincipalInKV": return ServicePrincipalInKVCredential.DeserializeServicePrincipalInKVCredential(element);
+                    case "AzureSQLConnectionString": return SqlConnectionStringDataSourceCredential.DeserializeSqlConnectionStringDataSourceCredential(element);
+                    case "DataLakeGen2SharedKey": return DataLakeGen2SharedKeyDataSourceCredential.DeserializeDataLakeGen2SharedKeyDataSourceCredential(element);
+                    case "ServicePrincipal": return ServicePrincipalDataSourceCredential.DeserializeServicePrincipalDataSourceCredential(element);
+                    case "ServicePrincipalInKV": return ServicePrincipalInKeyVaultDataSourceCredential.DeserializeServicePrincipalInKeyVaultDataSourceCredential(element);
                 }
             }
             DataSourceCredentialType dataSourceCredentialType = default;
-            Optional<Guid> dataSourceCredentialId = default;
+            Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
             Optional<string> dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
@@ -53,12 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dataSourceCredentialId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dataSourceCredentialId = property.Value.GetGuid();
+                    dataSourceCredentialId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialName"))
@@ -72,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataSourceCredential(dataSourceCredentialType, Optional.ToNullable(dataSourceCredentialId), dataSourceCredentialName, dataSourceCredentialDescription.Value);
+            return new DataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
         }
     }
 }

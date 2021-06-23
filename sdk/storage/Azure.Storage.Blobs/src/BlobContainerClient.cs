@@ -416,17 +416,12 @@ namespace Azure.Storage.Blobs
                 clientSideEncryption: null);
         }
 
-        private ContainerRestClient BuildContainerRestClient(Uri uri)
+        private ContainerRestClient BuildContainerRestClient(Uri containerUri)
         {
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(uri);
-            string containerName = uriBuilder.BlobContainerName;
-            uriBuilder.BlobContainerName = null;
-
             return new ContainerRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToString(),
-                containerName: containerName,
+                url: containerUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctor
@@ -2530,7 +2525,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata))
+                            r.ObjectReplicationMetadata,
+                            r.HasVersionsOnly))
                             .ToList();
                     }
 
@@ -2806,7 +2802,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata))
+                            r.ObjectReplicationMetadata,
+                            r.HasVersionsOnly))
                             .ToList();
                     }
 

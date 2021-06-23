@@ -42,6 +42,6 @@ namespace Azure.Storage.Blobs
         /// <summary> Indicates whether the container&apos;s default encryption scope can be overriden. </summary>
         public bool? DenyEncryptionScopeOverride => _response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out bool? value) ? value : null;
         /// <summary> Indicates whether version level worm is enabled on a container. </summary>
-        public bool? IsVersionLevelWormEnabled => _response.Headers.TryGetValue("x-ms-version-level-worm-enabled", out bool? value) ? value : null;
+        public bool? IsImmutableStorageWithVersioningEnabled => _response.Headers.TryGetValue("x-ms-immutable-storage-with-versioning-enabled", out bool? value) ? value : null;
     }
 }

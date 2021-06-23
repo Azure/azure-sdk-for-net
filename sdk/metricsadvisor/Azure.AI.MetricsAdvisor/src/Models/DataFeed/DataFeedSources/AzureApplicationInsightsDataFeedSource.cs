@@ -2,15 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an Azure Application Insights data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class AzureApplicationInsightsDataFeedSource : DataFeedSource
     {
+        private string _apiKey;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureApplicationInsightsDataFeedSource"/> class.
         /// </summary>
@@ -28,8 +32,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
-
             ApplicationId = applicationId;
             ApiKey = apiKey;
             AzureCloud = azureCloud;
@@ -41,8 +43,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ApplicationId = parameter.ApplicationId;
             ApiKey = parameter.ApiKey;
             AzureCloud = parameter.AzureCloud;
@@ -52,21 +52,37 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The Application ID.
         /// </summary>
-        public string ApplicationId { get; }
-
-        /// <summary>
-        /// The API key.
-        /// </summary>
-        public string ApiKey { get; }
+        public string ApplicationId { get; set; }
 
         /// <summary>
         /// The Azure cloud environment.
         /// </summary>
-        public string AzureCloud { get; }
+        public string AzureCloud { get; set; }
 
         /// <summary>
         /// The query used to filter the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
+
+        /// <summary>
+        /// The API key.
+        /// </summary>
+        internal string ApiKey
+        {
+            get => Volatile.Read(ref _apiKey);
+            private set => Volatile.Write(ref _apiKey, value);
+        }
+
+        /// <summary>
+        /// Updates the API key.
+        /// </summary>
+        /// <param name="apiKey">The new API key to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="apiKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="apiKey"/> is empty.</exception>
+        public void UpdateApiKey(string apiKey)
+        {
+            Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
+            ApiKey = apiKey;
+        }
     }
 }

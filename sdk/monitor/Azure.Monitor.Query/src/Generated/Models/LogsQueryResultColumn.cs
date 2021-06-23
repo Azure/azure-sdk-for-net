@@ -5,21 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> A column in a table. </summary>
     public partial class LogsQueryResultColumn
     {
         /// <summary> Initializes a new instance of LogsQueryResultColumn. </summary>
-        internal LogsQueryResultColumn()
-        {
-        }
-
-        /// <summary> Initializes a new instance of LogsQueryResultColumn. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        internal LogsQueryResultColumn(string name, string type)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        internal LogsQueryResultColumn(string name, LogColumnTypes type)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Name = name;
             Type = type;
         }
@@ -27,6 +30,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The name of this column. </summary>
         public string Name { get; }
         /// <summary> The data type of this column. </summary>
-        public string Type { get; }
+        public LogColumnTypes Type { get; }
     }
 }

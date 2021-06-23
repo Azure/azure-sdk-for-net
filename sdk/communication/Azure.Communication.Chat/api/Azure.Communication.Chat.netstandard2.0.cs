@@ -5,6 +5,12 @@ namespace Azure.Communication.Chat
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
+    public static partial class AzureCommunicationServicesModelFactory
+    {
+        public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
+        public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
+        public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id = null, string topic = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastMessageReceivedOn = default(System.DateTimeOffset?)) { throw null; }
+    }
     public partial class ChatClient
     {
         protected ChatClient() { }
@@ -133,7 +139,9 @@ namespace Azure.Communication.Chat
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Chat.SendChatMessageResult>> SendMessageAsync(string content, Azure.Communication.Chat.ChatMessageType type = default(Azure.Communication.Chat.ChatMessageType), string senderDisplayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendReadReceipt(string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendReadReceiptAsync(string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SendTypingNotification(Azure.Communication.Chat.TypingNotificationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendTypingNotification(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendTypingNotificationAsync(Azure.Communication.Chat.TypingNotificationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendTypingNotificationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateMessage(Azure.Communication.Chat.UpdateChatMessageOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateMessage(string messageId, string content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -177,6 +185,11 @@ namespace Azure.Communication.Chat
     {
         internal SendChatMessageResult() { }
         public string Id { get { throw null; } }
+    }
+    public partial class TypingNotificationOptions
+    {
+        public TypingNotificationOptions() { }
+        public string SenderDisplayName { get { throw null; } set { } }
     }
     public partial class UpdateChatMessageOptions
     {

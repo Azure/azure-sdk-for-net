@@ -11,9 +11,13 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientLiveTests : TextAnalyticsClientLiveTestBase
     {
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync) { }
+        public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithEmoji()
         {
             TextAnalyticsClient client = GetClient();
@@ -28,29 +32,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task TextWithStringIndexType()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "👨 Microsoft the company.";
-
-            RecognizeEntitiesResultCollection responseWithUnicodeCodePoint = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en", new TextAnalyticsRequestOptions() { StringIndexType = StringIndexType.UnicodeCodePoint });
-            RecognizeEntitiesResultCollection responseWithUtf16CodeUnit = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en");
-
-            var entitiesWithUnicodeCodePoint = responseWithUnicodeCodePoint.FirstOrDefault().Entities;
-            var entitiesWithUtf16CodeUnit = responseWithUtf16CodeUnit.FirstOrDefault().Entities;
-
-            Assert.AreEqual(1, entitiesWithUnicodeCodePoint.Count);
-            Assert.AreEqual("Microsoft", entitiesWithUnicodeCodePoint.FirstOrDefault().Text);
-            Assert.AreEqual(2, entitiesWithUnicodeCodePoint.FirstOrDefault().Offset);
-            Assert.AreEqual(9, entitiesWithUnicodeCodePoint.FirstOrDefault().Length);
-
-            Assert.AreEqual(1, entitiesWithUtf16CodeUnit.Count);
-            Assert.AreEqual("Microsoft", entitiesWithUtf16CodeUnit.FirstOrDefault().Text);
-            Assert.AreEqual(3, entitiesWithUtf16CodeUnit.FirstOrDefault().Offset);
-            Assert.AreEqual(9, entitiesWithUtf16CodeUnit.FirstOrDefault().Length);
-        }
-
-        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithDiacriticsNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -65,6 +47,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextInKoreanNFC()
         {
             TextAnalyticsClient client = GetClient();

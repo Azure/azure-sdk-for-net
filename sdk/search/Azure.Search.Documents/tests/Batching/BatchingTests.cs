@@ -364,6 +364,8 @@ namespace Azure.Search.Documents.Tests
                         AutoFlushInterval = null
                     });
 
+            int removeFailedCount = 0;
+
             List<IndexDocumentsAction<SimpleDocument>> pending = new List<IndexDocumentsAction<SimpleDocument>>();
             indexer.ActionAdded +=
                 (IndexActionEventArgs<SimpleDocument> e) =>
@@ -374,13 +376,15 @@ namespace Azure.Search.Documents.Tests
             indexer.ActionCompleted +=
                 (IndexActionCompletedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(e.Action);
+                    if (!pending.Remove(e.Action))
+                    { removeFailedCount++; }
                     return Task.CompletedTask;
                 };
             indexer.ActionFailed +=
                 (IndexActionFailedEventArgs<SimpleDocument> e) =>
                 {
-                    pending.Remove(e.Action);
+                    if (!pending.Remove(e.Action))
+                    { removeFailedCount++; }
                     return Task.CompletedTask;
                 };
 
@@ -388,11 +392,15 @@ namespace Azure.Search.Documents.Tests
             await indexer.MergeDocumentsAsync(new[] { new SimpleDocument { Id = "Fake" } });
             await indexer.UploadDocumentsAsync(data.Skip(500));
 
-            await DelayAsync(TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(250));
-            Assert.AreEqual(1001 - BatchSize, pending.Count);
+            int expectedPendingQueueSize = 1001 - BatchSize;
+
+            await ConditionallyDelayAsync(() => (pending.Count == expectedPendingQueueSize), TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(250), 5);
+            Assert.AreEqual(expectedPendingQueueSize, pending.Count);
+            Assert.AreEqual(0, removeFailedCount);
 
             await indexer.FlushAsync();
             Assert.AreEqual(0, pending.Count);
+            Assert.AreEqual(0, removeFailedCount);
         }
         #endregion
 

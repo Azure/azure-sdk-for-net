@@ -19,6 +19,15 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics
 ```
+> Note: This version of the client library defaults to the `v3.1-preview.5` version of the service.
+
+This table shows the relationship between SDK versions and supported API versions of the service:
+
+|SDK version|Supported API version of service
+|-|- |
+|5.1.0-beta.7 (latest Beta) | 3.0, 3.1-preview.5
+|5.0.0 (latest GA) | 3.0
+|1.0.0, 1.0.1 | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -128,11 +137,11 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -426,7 +435,8 @@ catch (RequestFailedException exception)
 ### Recognize Healthcare Entities Asynchronously
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
-```C# Snippet:Sample7_AnalyzeHealthcareEntitiesBatchConvenience
+```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenience
+    // get input documents
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                         HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -439,6 +449,7 @@ Text Analytics for health is a containerized service that extracts and labels re
 
     string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
+    // prepare analyze operation input
     List<string> batchInput = new List<string>()
     {
         document1,
@@ -447,17 +458,20 @@ Text Analytics for health is a containerized service that extracts and labels re
     };
     var options = new AnalyzeHealthcareEntitiesOptions { };
 
+    // start analysis process
     AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, "en", options);
 
     await healthOperation.WaitForCompletionAsync();
 
     Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
 
+    // view operation status
     Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
     Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
     Console.WriteLine($"Status       : {healthOperation.Status}");
     Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 
+    // view operation results
     foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
     {
         Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -475,6 +489,7 @@ Text Analytics for health is a containerized service that extracts and labels re
             {
                 Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
+                // view recognized healthcare entities
                 foreach (HealthcareEntity entity in result.Entities)
                 {
                     Console.WriteLine($"    Entity: {entity.Text}");
@@ -484,12 +499,14 @@ Text Analytics for health is a containerized service that extracts and labels re
                     Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                     Console.WriteLine($"    Links:");
 
+                    // view entity data sources
                     foreach (EntityDataSource entityDataSource in entity.DataSources)
                     {
                         Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                         Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
 
+                    // view assertion
                     if (entity.Assertion != null)
                     {
                         Console.WriteLine($"    Assertions:");
@@ -512,11 +529,13 @@ Text Analytics for health is a containerized service that extracts and labels re
                     Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
                     Console.WriteLine("");
 
+                    // view recognized healthcare relations
                     foreach (HealthcareEntityRelation relations in result.EntityRelations)
                     {
                         Console.WriteLine($"        Relation: {relations.RelationType}");
                         Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
 
+                        // view relation roles
                         foreach (HealthcareEntityRelationRole role in relations.Roles)
                         {
                             Console.WriteLine($"            Role Name: {role.Name}");
@@ -558,11 +577,11 @@ This functionality allows running multiple actions in one or more documents. Act
 
     TextAnalyticsActions actions = new TextAnalyticsActions()
     {
-        ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
-        RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
-        RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
-        RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() },
-        AnalyzeSentimentOptions = new List<AnalyzeSentimentOptions>() { new AnalyzeSentimentOptions() },
+        ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+        RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+        RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
+        RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
+        AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
         DisplayName = "AnalyzeOperationSample"
     };
 
@@ -583,22 +602,22 @@ This functionality allows running multiple actions in one or more documents. Act
 
     await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
-        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
-        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;
-        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = documentsInPage.RecognizePiiEntitiesActionsResults;
-        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = documentsInPage.RecognizeLinkedEntitiesActionsResults;
-        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = documentsInPage.AnalyzeSentimentActionsResults;
+        IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
+        IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
+        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResults = documentsInPage.RecognizePiiEntitiesResults;
+        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingResults = documentsInPage.RecognizeLinkedEntitiesResults;
+        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentResults = documentsInPage.AnalyzeSentimentResults;
 
         Console.WriteLine("Recognized Entities");
         int docNumber = 1;
-        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
+        foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
-            foreach (RecognizeEntitiesResult result in entitiesActionResults.Result)
+            foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
 
-                foreach (CategorizedEntity entity in result.Entities)
+                foreach (CategorizedEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -613,14 +632,14 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Recognized PII Entities");
         docNumber = 1;
-        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
+        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
         {
-            foreach (RecognizePiiEntitiesResult result in piiActionResults.Result)
+            foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} PII entities:");
 
-                foreach (PiiEntity entity in result.Entities)
+                foreach (PiiEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -635,14 +654,14 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Key Phrases");
         docNumber = 1;
-        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
+        foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
         {
-            foreach (ExtractKeyPhrasesResult result in keyPhrasesActionResult.Result)
+            foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+                Console.WriteLine($"  Recognized the following {documentResults.KeyPhrases.Count} Keyphrases:");
 
-                foreach (string keyphrase in result.KeyPhrases)
+                foreach (string keyphrase in documentResults.KeyPhrases)
                 {
                     Console.WriteLine($"  {keyphrase}");
                 }
@@ -652,14 +671,14 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Recognized Linked Entities");
         docNumber = 1;
-        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
+        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
         {
-            foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesActionResults.Result)
+            foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} linked entities:");
 
-                foreach (LinkedEntity entity in result.Entities)
+                foreach (LinkedEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Name}");
                     Console.WriteLine($"  DataSource: {entity.DataSource}");
@@ -683,15 +702,15 @@ This functionality allows running multiple actions in one or more documents. Act
 
         Console.WriteLine("Analyze Sentiment");
         docNumber = 1;
-        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
+        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
         {
-            foreach (AnalyzeSentimentResult result in analyzeSentimentActionsResult.Result)
+            foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
+                Console.WriteLine($"  Sentiment is {documentResults.DocumentSentiment.Sentiment}, with confidence scores: ");
+                Console.WriteLine($"    Positive confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Positive}.");
+                Console.WriteLine($"    Neutral confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Neutral}.");
+                Console.WriteLine($"    Negative confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Negative}.");
                 Console.WriteLine("");
             }
         }
@@ -702,7 +721,6 @@ This functionality allows running multiple actions in one or more documents. Act
 ### Known Issues
 - `StartAnalyzeHealthcareEntities` is in gated preview and can not be used with AAD credentials. For more information, see [the Text Analytics for Health documentation](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
 - The parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions` is currently not working when used in `StartAnalyzeBatchActions`. [19237](https://github.com/Azure/azure-sdk-for-net/issues/19237).
-- `Statistics` for `AnalyzeActionsResult` are not currently returned even if the user passes `IncludeStatistics  = true`. [19268](https://github.com/Azure/azure-sdk-for-net/issues/19268).
 - At time of this SDK release, the `ModelVersion` option to `StartAnalyzeHealthcareEntities` is ignored by the service. The service always processes the operation using the `latest` model.
 
 ## Troubleshooting
@@ -786,18 +804,18 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 
 <!-- LINKS -->
-[textanalytics_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src
+[textanalytics_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/src
 [textanalytics_docs]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
-[textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
+[textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
 [textanalytics_rest_api]: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-Preview-3/operations/Languages
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
-[recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
-[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeActions.md
+[recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
+[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeActions.md
 [analyze_operation_howto]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=synchronous#using-the-api-asynchronously
 [healthcare]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
@@ -807,25 +825,25 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [named_entities_categories]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types
 [pii_entity_type]:https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=personal 
 
-[textanalytics_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src/TextAnalyticsClient.cs
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
+[textanalytics_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/src/TextAnalyticsClient.cs
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
+[logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 
-[detect_language_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md
-[analyze_sentiment_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md
-[analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
-[extract_key_phrases_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md
-[recognize_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
-[recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
-[recognize_linked_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md
-[mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
+[detect_language_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md
+[analyze_sentiment_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md
+[analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
+[extract_key_phrases_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md
+[recognize_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
+[recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
+[recognize_linked_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md
+[mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
