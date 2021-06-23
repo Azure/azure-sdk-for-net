@@ -134,6 +134,7 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         docNumber = 1;
         foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
         {
+            Console.WriteLine($" Action name: {linkedEntitiesActionResults.ActionName}");
             foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");

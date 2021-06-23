@@ -146,6 +146,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 docNumber = 1;
                 foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
                 {
+                    Console.WriteLine($" Action name: {linkedEntitiesActionResults.ActionName}");
                     foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");

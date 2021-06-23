@@ -160,7 +160,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21798")]
         public async Task AnalyzeOperationWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();
@@ -537,7 +536,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21799")]
         public async Task AnalyzeOperationAllActionsAndDisableServiceLogs ()
         {
             TextAnalyticsClient client = GetClient();
@@ -581,7 +579,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21801")]
         public async Task AnalyzeOperationAnalyzeSentimentWithOpinionMining()
         {
             TextAnalyticsClient client = GetClient();
@@ -617,7 +614,6 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21798")]
         public async Task AnalyzeOperationWithActionName(bool useActionName)
         {
             TextAnalyticsClient client = GetClient();
