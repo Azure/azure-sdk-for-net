@@ -146,7 +146,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="expression"> The expression that the query is looking for as a specified type. </param>
         /// <param name="type"> The type in the ADT query language being checked for. </param>
-        /// <returns></returns>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereLogic IsOfType(string expression, AdtDataType type)
         {
             string functionName = QueryConstants.IsOfTypeConversions[type];
@@ -155,16 +155,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO.
+        /// Used to add nested WHERE conditions to a query.
         /// </summary>
-        /// <param name="nested"></param>
-        /// <returns></returns>
+        /// <param name="nested"> WhereLogic functions to perform within a set of parenthesis. </param>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereLogic IsTrue(Func<WhereLogic, WhereLogic> nested)
         {
-            // Option 1 : use the current object as the subject.
-            //nested.Invoke(this);
-
-            // Option 2 : use a new object as the subject.
             var nestedLogic = new WhereLogic(null);
             nestedLogic = nested.Invoke(nestedLogic);
 
@@ -174,9 +170,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO.
+        /// Adds the OR logical operator to a query.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereLogic Or()
         {
             // prevent users from adding Or as the first expression of a WHERE clause
@@ -190,9 +186,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO.
+        /// Adds the AMD logical operator to a query.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereLogic And()
         {
             // prevent users from adding And as the first expression of a WHERE clause
@@ -224,19 +220,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 {
                     conditions.Add(_clause.Condition);
                 }
-
-                //// Insert and between most parts of the WHERE clause
-                //foreach (string condition in conditions)
-                //{
-                //    if (condition == QueryConstants.OpenParenthesis || condition == QueryConstants.CloseParenthesis || condition == QueryConstants.Or)
-                //    {
-                //        whereLogicComponents.Append(condition + " ");
-                //    }
-                //    else
-                //    {
-                //        whereLogicComponents.Append($"{condition} {QueryConstants.And} ");
-                //    }
-                //}
 
                 whereLogicComponents.Append(string.Join(" ", conditions).Trim());
                 return whereLogicComponents.ToString().Trim();
