@@ -303,6 +303,68 @@ namespace Microsoft.Azure.Management.ServiceFabric
             }
 
             /// <summary>
+            /// Operation to get the minimum and maximum upgradable version from the
+            /// current cluster version, or the required path to get to the an specific
+            /// target version.
+            /// </summary>
+            /// <remarks>
+            /// If a target is not provided, it will get the minimum and maximum versions
+            /// available from the current cluster version. If a target is given, it will
+            /// provide the required path to get from the current cluster version to the
+            /// target version.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster resource.
+            /// </param>
+            /// <param name='targetVersion'>
+            /// The target code version.
+            /// </param>
+            public static UpgradableVersionPathResult ListUpgradableVersions(this IClustersOperations operations, string resourceGroupName, string clusterName, string targetVersion)
+            {
+                return operations.ListUpgradableVersionsAsync(resourceGroupName, clusterName, targetVersion).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to get the minimum and maximum upgradable version from the
+            /// current cluster version, or the required path to get to the an specific
+            /// target version.
+            /// </summary>
+            /// <remarks>
+            /// If a target is not provided, it will get the minimum and maximum versions
+            /// available from the current cluster version. If a target is given, it will
+            /// provide the required path to get from the current cluster version to the
+            /// target version.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster resource.
+            /// </param>
+            /// <param name='targetVersion'>
+            /// The target code version.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UpgradableVersionPathResult> ListUpgradableVersionsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, string targetVersion, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListUpgradableVersionsWithHttpMessagesAsync(resourceGroupName, clusterName, targetVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a Service Fabric cluster resource.
             /// </summary>
             /// <remarks>

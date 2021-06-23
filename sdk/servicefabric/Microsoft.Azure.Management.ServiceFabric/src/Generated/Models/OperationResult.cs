@@ -30,14 +30,17 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the OperationResult class.
         /// </summary>
         /// <param name="name">The name of the operation.</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
         /// <param name="origin">Origin result</param>
         /// <param name="nextLink">The URL to use for getting the next set of
         /// results.</param>
-        public OperationResult(string name = default(string), AvailableOperationDisplay display = default(AvailableOperationDisplay), string origin = default(string), string nextLink = default(string))
+        public OperationResult(string name = default(string), bool? isDataAction = default(bool?), AvailableOperationDisplay display = default(AvailableOperationDisplay), string origin = default(string), string nextLink = default(string))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             NextLink = nextLink;
@@ -54,6 +57,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets the object that represents the operation.

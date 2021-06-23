@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="etag">Azure resource etag.</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
-        public ApplicationTypeResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string provisioningState = default(string))
-            : base(id, name, type, location, tags, etag)
+        public ApplicationTypeResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string))
+            : base(id, name, type, location, tags, etag, systemData)
         {
             ProvisioningState = provisioningState;
             CustomInit();

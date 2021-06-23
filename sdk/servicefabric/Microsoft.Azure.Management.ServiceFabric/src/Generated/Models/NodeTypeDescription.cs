@@ -41,33 +41,32 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="isPrimary">The node type on which system services will
         /// run. Only one node type should be marked as primary. Primary node
         /// type cannot be deleted or changed for existing clusters.</param>
-        /// <param name="vmInstanceCount">The number of nodes in the node type.
-        /// This count should match the capacity property in the corresponding
-        /// VirtualMachineScaleSet resource.</param>
+        /// <param name="vmInstanceCount">VMInstanceCount should be 1 to n,
+        /// where n indicates the number of VM instances corresponding to this
+        /// nodeType. VMInstanceCount = 0 can be done only in these scenarios:
+        /// NodeType is a secondary nodeType. Durability = Bronze or Durability
+        /// &gt;= Bronze and InfrastructureServiceManager = true. If
+        /// VMInstanceCount = 0, implies the VMs for this nodeType will not be
+        /// used for the initial cluster size computation.</param>
         /// <param name="placementProperties">The placement tags applied to
         /// nodes in the node type, which can be used to indicate where certain
         /// services (workload) should run.</param>
         /// <param name="capacities">The capacity tags applied to the nodes in
         /// the node type, the cluster resource manager uses these tags to
         /// understand how much resource a node has.</param>
-        /// <param name="durabilityLevel">The durability level of the node
-        /// type. Learn about
-        /// [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        ///
-        /// - Bronze - No privileges. This is the default.
-        /// - Silver - The infrastructure jobs can be paused for a duration of
-        /// 10 minutes per UD.
-        /// - Gold - The infrastructure jobs can be paused for a duration of 2
-        /// hours per UD. Gold durability can be enabled only on full node VM
-        /// skus like D15_V2, G5 etc.
-        /// . Possible values include: 'Bronze', 'Silver', 'Gold'</param>
+        /// <param name="durabilityLevel">Possible values include: 'Bronze',
+        /// 'Silver', 'Gold'</param>
         /// <param name="applicationPorts">The range of ports from which
         /// cluster assigned port to Service Fabric applications.</param>
         /// <param name="ephemeralPorts">The range of ephemeral ports that
         /// nodes in this node type should be configured with.</param>
         /// <param name="reverseProxyEndpointPort">The endpoint used by reverse
         /// proxy.</param>
-        public NodeTypeDescription(string name, int clientConnectionEndpointPort, int httpGatewayEndpointPort, bool isPrimary, int vmInstanceCount, IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), string durabilityLevel = default(string), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), int? reverseProxyEndpointPort = default(int?))
+        /// <param name="isStateless">Indicates if the node type can only host
+        /// Stateless workloads.</param>
+        /// <param name="multipleAvailabilityZones">Indicates if the node type
+        /// is enabled to support multiple zones.</param>
+        public NodeTypeDescription(string name, int clientConnectionEndpointPort, int httpGatewayEndpointPort, bool isPrimary, int vmInstanceCount, IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), string durabilityLevel = default(string), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), int? reverseProxyEndpointPort = default(int?), bool? isStateless = default(bool?), bool? multipleAvailabilityZones = default(bool?))
         {
             Name = name;
             PlacementProperties = placementProperties;
@@ -80,6 +79,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             IsPrimary = isPrimary;
             VmInstanceCount = vmInstanceCount;
             ReverseProxyEndpointPort = reverseProxyEndpointPort;
+            IsStateless = isStateless;
+            MultipleAvailabilityZones = multipleAvailabilityZones;
             CustomInit();
         }
 
@@ -123,16 +124,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public int HttpGatewayEndpointPort { get; set; }
 
         /// <summary>
-        /// Gets or sets the durability level of the node type. Learn about
-        /// [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        ///
-        /// - Bronze - No privileges. This is the default.
-        /// - Silver - The infrastructure jobs can be paused for a duration of
-        /// 10 minutes per UD.
-        /// - Gold - The infrastructure jobs can be paused for a duration of 2
-        /// hours per UD. Gold durability can be enabled only on full node VM
-        /// skus like D15_V2, G5 etc.
-        /// . Possible values include: 'Bronze', 'Silver', 'Gold'
+        /// Gets or sets possible values include: 'Bronze', 'Silver', 'Gold'
         /// </summary>
         [JsonProperty(PropertyName = "durabilityLevel")]
         public string DurabilityLevel { get; set; }
@@ -160,9 +152,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public bool IsPrimary { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in the node type. This count
-        /// should match the capacity property in the corresponding
-        /// VirtualMachineScaleSet resource.
+        /// Gets or sets vMInstanceCount should be 1 to n, where n indicates
+        /// the number of VM instances corresponding to this nodeType.
+        /// VMInstanceCount = 0 can be done only in these scenarios: NodeType
+        /// is a secondary nodeType. Durability = Bronze or Durability
+        /// &amp;gt;= Bronze and InfrastructureServiceManager = true. If
+        /// VMInstanceCount = 0, implies the VMs for this nodeType will not be
+        /// used for the initial cluster size computation.
         /// </summary>
         [JsonProperty(PropertyName = "vmInstanceCount")]
         public int VmInstanceCount { get; set; }
@@ -172,6 +168,20 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "reverseProxyEndpointPort")]
         public int? ReverseProxyEndpointPort { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the node type can only host Stateless
+        /// workloads.
+        /// </summary>
+        [JsonProperty(PropertyName = "isStateless")]
+        public bool? IsStateless { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the node type is enabled to support
+        /// multiple zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "multipleAvailabilityZones")]
+        public bool? MultipleAvailabilityZones { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -197,9 +207,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "VmInstanceCount", 2147483647);
             }
-            if (VmInstanceCount < 1)
+            if (VmInstanceCount < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "VmInstanceCount", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "VmInstanceCount", 0);
             }
         }
     }

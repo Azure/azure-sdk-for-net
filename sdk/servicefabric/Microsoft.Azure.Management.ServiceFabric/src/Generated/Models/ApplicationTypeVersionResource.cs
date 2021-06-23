@@ -48,11 +48,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="etag">Azure resource etag.</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response</param>
-        /// <param name="defaultParameterList">List of application type
-        /// parameters that can be overridden when creating or updating the
-        /// application.</param>
-        public ApplicationTypeVersionResource(string appPackageUrl, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string provisioningState = default(string), IDictionary<string, string> defaultParameterList = default(IDictionary<string, string>))
-            : base(id, name, type, location, tags, etag)
+        public ApplicationTypeVersionResource(string appPackageUrl, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string), IDictionary<string, string> defaultParameterList = default(IDictionary<string, string>))
+            : base(id, name, type, location, tags, etag, systemData)
         {
             ProvisioningState = provisioningState;
             AppPackageUrl = appPackageUrl;
@@ -79,8 +76,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string AppPackageUrl { get; set; }
 
         /// <summary>
-        /// Gets list of application type parameters that can be overridden
-        /// when creating or updating the application.
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultParameterList")]
         public IDictionary<string, string> DefaultParameterList { get; private set; }

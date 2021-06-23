@@ -10,31 +10,34 @@
 
 namespace Microsoft.Azure.Management.ServiceFabric.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Azure resource identifier.
+    /// The list of intermediate cluster code versions for an upgrade or
+    /// downgrade. Or minimum and maximum upgradable version if no target was
+    /// given
     /// </summary>
-    public partial class SubResource : IResource
+    public partial class UpgradableVersionPathResult
     {
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the UpgradableVersionPathResult
+        /// class.
         /// </summary>
-        public SubResource()
+        public UpgradableVersionPathResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the UpgradableVersionPathResult
+        /// class.
         /// </summary>
-        /// <param name="id">Azure resource identifier.</param>
-        public SubResource(string id = default(string))
+        public UpgradableVersionPathResult(IList<string> supportedPath = default(IList<string>))
         {
-            Id = id;
+            SupportedPath = supportedPath;
             CustomInit();
         }
 
@@ -44,10 +47,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets azure resource identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "supportedPath")]
+        public IList<string> SupportedPath { get; set; }
 
     }
 }

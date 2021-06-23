@@ -33,33 +33,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         /// <param name="failureAction">The activation Mode of the service
         /// package. Possible values include: 'Rollback', 'Manual'</param>
-        /// <param name="healthCheckWaitDuration">The amount of time to wait
-        /// after completing an upgrade domain before applying health policies.
-        /// It is first interpreted as a string representing an ISO 8601
-        /// duration. If that fails, then it is interpreted as a number
-        /// representing the total number of milliseconds.</param>
-        /// <param name="healthCheckStableDuration">The amount of time that the
-        /// application or cluster must remain healthy before the upgrade
-        /// proceeds to the next upgrade domain. It is first interpreted as a
-        /// string representing an ISO 8601 duration. If that fails, then it is
-        /// interpreted as a number representing the total number of
-        /// milliseconds.</param>
-        /// <param name="healthCheckRetryTimeout">The amount of time to retry
-        /// health evaluation when the application or cluster is unhealthy
-        /// before FailureAction is executed. It is first interpreted as a
-        /// string representing an ISO 8601 duration. If that fails, then it is
-        /// interpreted as a number representing the total number of
-        /// milliseconds.</param>
-        /// <param name="upgradeTimeout">The amount of time the overall upgrade
-        /// has to complete before FailureAction is executed. It is first
-        /// interpreted as a string representing an ISO 8601 duration. If that
-        /// fails, then it is interpreted as a number representing the total
-        /// number of milliseconds.</param>
-        /// <param name="upgradeDomainTimeout">The amount of time each upgrade
-        /// domain has to complete before FailureAction is executed. It is
-        /// first interpreted as a string representing an ISO 8601 duration. If
-        /// that fails, then it is interpreted as a number representing the
-        /// total number of milliseconds.</param>
         public ArmRollingUpgradeMonitoringPolicy(string failureAction = default(string), string healthCheckWaitDuration = default(string), string healthCheckStableDuration = default(string), string healthCheckRetryTimeout = default(string), string upgradeTimeout = default(string), string upgradeDomainTimeout = default(string))
         {
             FailureAction = failureAction;
@@ -84,51 +57,26 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string FailureAction { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount of time to wait after completing an upgrade
-        /// domain before applying health policies. It is first interpreted as
-        /// a string representing an ISO 8601 duration. If that fails, then it
-        /// is interpreted as a number representing the total number of
-        /// milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "healthCheckWaitDuration")]
         public string HealthCheckWaitDuration { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount of time that the application or cluster
-        /// must remain healthy before the upgrade proceeds to the next upgrade
-        /// domain. It is first interpreted as a string representing an ISO
-        /// 8601 duration. If that fails, then it is interpreted as a number
-        /// representing the total number of milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "healthCheckStableDuration")]
         public string HealthCheckStableDuration { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount of time to retry health evaluation when the
-        /// application or cluster is unhealthy before FailureAction is
-        /// executed. It is first interpreted as a string representing an ISO
-        /// 8601 duration. If that fails, then it is interpreted as a number
-        /// representing the total number of milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "healthCheckRetryTimeout")]
         public string HealthCheckRetryTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount of time the overall upgrade has to complete
-        /// before FailureAction is executed. It is first interpreted as a
-        /// string representing an ISO 8601 duration. If that fails, then it is
-        /// interpreted as a number representing the total number of
-        /// milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "upgradeTimeout")]
         public string UpgradeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount of time each upgrade domain has to complete
-        /// before FailureAction is executed. It is first interpreted as a
-        /// string representing an ISO 8601 duration. If that fails, then it is
-        /// interpreted as a number representing the total number of
-        /// milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "upgradeDomainTimeout")]
         public string UpgradeDomainTimeout { get; set; }

@@ -194,6 +194,42 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// </exception>
         Task<AzureOperationResponse<ClusterListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Operation to get the minimum and maximum upgradable version from
+        /// the current cluster version, or the required path to get to the an
+        /// specific target version.
+        /// </summary>
+        /// <remarks>
+        /// If a target is not provided, it will get the minimum and maximum
+        /// versions available from the current cluster version. If a target is
+        /// given, it will provide the required path to get from the current
+        /// cluster version to the target version.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster resource.
+        /// </param>
+        /// <param name='targetVersion'>
+        /// The target code version.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorModelException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<UpgradableVersionPathResult>> ListUpgradableVersionsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string targetVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates or updates a Service Fabric cluster resource.
         /// </summary>
         /// <remarks>

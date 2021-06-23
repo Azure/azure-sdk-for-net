@@ -14,28 +14,25 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Sku definition
-    /// </summary>
-    public partial class Sku
+    public partial class UpgradableVersionsDescription
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the UpgradableVersionsDescription
+        /// class.
         /// </summary>
-        public Sku()
+        public UpgradableVersionsDescription()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the UpgradableVersionsDescription
+        /// class.
         /// </summary>
-        /// <param name="name">Sku Name. Basic will hav a minimum of 3 seed
-        /// nodes and Standard a minimum of 5. Basic only allows 1 node type.
-        /// Possible values include: 'Basic', 'Standard'</param>
-        public Sku(string name)
+        /// <param name="targetVersion">The target code version.</param>
+        public UpgradableVersionsDescription(string targetVersion)
         {
-            Name = name;
+            TargetVersion = targetVersion;
             CustomInit();
         }
 
@@ -45,12 +42,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku Name. Basic will hav a minimum of 3 seed nodes and
-        /// Standard a minimum of 5. Basic only allows 1 node type. Possible
-        /// values include: 'Basic', 'Standard'
+        /// Gets or sets the target code version.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "targetVersion")]
+        public string TargetVersion { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -60,9 +55,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (TargetVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetVersion");
             }
         }
     }

@@ -41,13 +41,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// location depends on the parent resource.</param>
         /// <param name="tags">Azure resource tags.</param>
         /// <param name="etag">Azure resource etag.</param>
-        /// <param name="typeVersion">The version of the application type as
-        /// defined in the application manifest.</param>
-        /// <param name="parameters">List of application parameters with
-        /// overridden values from their default values specified in the
-        /// application manifest.</param>
-        /// <param name="upgradePolicy">Describes the policy for a monitored
-        /// application upgrade.</param>
         /// <param name="minimumNodes">The minimum number of nodes where
         /// Service Fabric will reserve capacity for this application. Note
         /// that this does not mean that the services of this application will
@@ -62,12 +55,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// any node.</param>
         /// <param name="removeApplicationCapacity">Remove the current
         /// application capacity settings.</param>
-        /// <param name="metrics">List of application capacity metric
-        /// description.</param>
         /// <param name="managedIdentities">List of user assigned identities
         /// for the application, each mapped to a friendly name.</param>
-        public ApplicationResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>), IList<ApplicationUserAssignedIdentity> managedIdentities = default(IList<ApplicationUserAssignedIdentity>))
-            : base(id, name, type, location, tags, etag)
+        public ApplicationResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>), IList<ApplicationUserAssignedIdentity> managedIdentities = default(IList<ApplicationUserAssignedIdentity>))
+            : base(id, name, type, location, tags, etag, systemData)
         {
             TypeVersion = typeVersion;
             Parameters = parameters;
@@ -86,22 +77,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the version of the application type as defined in the
-        /// application manifest.
         /// </summary>
         [JsonProperty(PropertyName = "properties.typeVersion")]
         public string TypeVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets list of application parameters with overridden values
-        /// from their default values specified in the application manifest.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, string> Parameters { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the policy for a monitored application
-        /// upgrade.
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradePolicy")]
         public ApplicationUpgradePolicy UpgradePolicy { get; set; }
@@ -134,7 +119,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public bool? RemoveApplicationCapacity { get; set; }
 
         /// <summary>
-        /// Gets or sets list of application capacity metric description.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metrics")]
         public IList<ApplicationMetricDescription> Metrics { get; set; }

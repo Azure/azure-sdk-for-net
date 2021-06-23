@@ -55,9 +55,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// cluster. The certificate provided will be used for node to node
         /// security within the cluster, SSL certificate for cluster management
         /// endpoint and default admin client.</param>
-        /// <param name="certificateCommonNames">Describes a list of server
-        /// certificates referenced by common name that are used to secure the
-        /// cluster.</param>
         /// <param name="clientCertificateCommonNames">The list of client
         /// certificates referenced by common name that are allowed to manage
         /// the cluster.</param>
@@ -74,38 +71,11 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// A system service in the cluster connects to this  endpoint.</param>
         /// <param name="clusterId">A service generated unique identifier for
         /// the cluster resource.</param>
-        /// <param name="clusterState">The current state of the cluster.
-        ///
-        /// - WaitingForNodes - Indicates that the cluster resource is created
-        /// and the resource provider is waiting for Service Fabric VM
-        /// extension to boot up and report to it.
-        /// - Deploying - Indicates that the Service Fabric runtime is being
-        /// installed on the VMs. Cluster resource will be in this state until
-        /// the cluster boots up and system services are up.
-        /// - BaselineUpgrade - Indicates that the cluster is upgrading to
-        /// establishes the cluster version. This upgrade is automatically
-        /// initiated when the cluster boots up for the first time.
-        /// - UpdatingUserConfiguration - Indicates that the cluster is being
-        /// upgraded with the user provided configuration.
-        /// - UpdatingUserCertificate - Indicates that the cluster is being
-        /// upgraded with the user provided certificate.
-        /// - UpdatingInfrastructure - Indicates that the cluster is being
-        /// upgraded with the latest Service Fabric runtime version. This
-        /// happens only when the **upgradeMode** is set to 'Automatic'.
-        /// - EnforcingClusterVersion - Indicates that cluster is on a
-        /// different version than expected and the cluster is being upgraded
-        /// to the expected version.
-        /// - UpgradeServiceUnreachable - Indicates that the system service in
-        /// the cluster is no longer polling the Resource Provider. Clusters in
-        /// this state cannot be managed by the Resource Provider.
-        /// - AutoScale - Indicates that the ReliabilityLevel of the cluster is
-        /// being adjusted.
-        /// - Ready - Indicates that the cluster is in a stable state.
-        /// . Possible values include: 'WaitingForNodes', 'Deploying',
-        /// 'BaselineUpgrade', 'UpdatingUserConfiguration',
-        /// 'UpdatingUserCertificate', 'UpdatingInfrastructure',
-        /// 'EnforcingClusterVersion', 'UpgradeServiceUnreachable',
-        /// 'AutoScale', 'Ready'</param>
+        /// <param name="clusterState">Possible values include:
+        /// 'WaitingForNodes', 'Deploying', 'BaselineUpgrade',
+        /// 'UpdatingUserConfiguration', 'UpdatingUserCertificate',
+        /// 'UpdatingInfrastructure', 'EnforcingClusterVersion',
+        /// 'UpgradeServiceUnreachable', 'AutoScale', 'Ready'</param>
         /// <param name="diagnosticsStorageAccountConfig">The storage account
         /// information for storing Service Fabric diagnostic logs.</param>
         /// <param name="eventStoreServiceEnabled">Indicates if the event store
@@ -115,45 +85,42 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="provisioningState">The provisioning state of the
         /// cluster resource. Possible values include: 'Updating', 'Succeeded',
         /// 'Failed', 'Canceled'</param>
-        /// <param name="reliabilityLevel">The reliability level sets the
-        /// replica set size of system services. Learn about
-        /// [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        ///
-        /// - None - Run the System services with a target replica set count of
-        /// 1. This should only be used for test clusters.
-        /// - Bronze - Run the System services with a target replica set count
-        /// of 3. This should only be used for test clusters.
-        /// - Silver - Run the System services with a target replica set count
-        /// of 5.
-        /// - Gold - Run the System services with a target replica set count of
-        /// 7.
-        /// - Platinum - Run the System services with a target replica set
-        /// count of 9.
-        /// . Possible values include: 'None', 'Bronze', 'Silver', 'Gold',
-        /// 'Platinum'</param>
+        /// <param name="reliabilityLevel">Possible values include: 'None',
+        /// 'Bronze', 'Silver', 'Gold', 'Platinum'</param>
         /// <param name="reverseProxyCertificate">The server certificate used
         /// by reverse proxy.</param>
-        /// <param name="reverseProxyCertificateCommonNames">Describes a list
-        /// of server certificates referenced by common name that are used to
-        /// secure the cluster.</param>
         /// <param name="upgradeDescription">The policy to use when upgrading
         /// the cluster.</param>
-        /// <param name="upgradeMode">The upgrade mode of the cluster when new
-        /// Service Fabric runtime version is available.
-        ///
-        /// - Automatic - The cluster will be automatically upgraded to the
-        /// latest Service Fabric runtime version as soon as it is available.
-        /// - Manual - The cluster will not be automatically upgraded to the
-        /// latest Service Fabric runtime version. The cluster is upgraded by
-        /// setting the **clusterCodeVersion** property in the cluster
-        /// resource.
-        /// . Possible values include: 'Automatic', 'Manual'</param>
+        /// <param name="upgradeMode">Possible values include: 'Automatic',
+        /// 'Manual'</param>
         /// <param name="applicationTypeVersionsCleanupPolicy">The policy used
         /// to clean up unused versions.</param>
         /// <param name="vmImage">The VM image VMSS has been configured with.
         /// Generic names such as Windows or Linux can be used.</param>
-        public Cluster(string location, string managementEndpoint, IList<NodeTypeDescription> nodeTypes, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<string> addOnFeatures = default(IList<string>), IList<ClusterVersionDetails> availableClusterVersions = default(IList<ClusterVersionDetails>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), string clusterEndpoint = default(string), string clusterId = default(string), string clusterState = default(string), DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default(DiagnosticsStorageAccountConfig), bool? eventStoreServiceEnabled = default(bool?), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ServerCertificateCommonNames reverseProxyCertificateCommonNames = default(ServerCertificateCommonNames), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default(ApplicationTypeVersionsCleanupPolicy), string vmImage = default(string))
-            : base(location, id, name, type, tags, etag)
+        /// <param name="sfZonalUpgradeMode">Possible values include:
+        /// 'Parallel', 'Hierarchical'</param>
+        /// <param name="vmssZonalUpgradeMode">Possible values include:
+        /// 'Parallel', 'Hierarchical'</param>
+        /// <param name="infrastructureServiceManager">Indicates if
+        /// infrastructure service manager is enabled.</param>
+        /// <param name="upgradeWave">Indicates when new cluster runtime
+        /// version upgrades will be applied after they are released. By
+        /// default is Wave0. Only applies when **upgradeMode** is set to
+        /// 'Automatic'. Possible values include: 'Wave0', 'Wave1',
+        /// 'Wave2'</param>
+        /// <param name="upgradePauseStartTimestampUtc">Indicates the start
+        /// date and time to pause automatic runtime version upgrades on the
+        /// cluster for an specific period of time on the cluster
+        /// (UTC).</param>
+        /// <param name="upgradePauseEndTimestampUtc">Indicates the end date
+        /// and time to pause automatic runtime version upgrades on the cluster
+        /// for an specific period of time on the cluster (UTC).</param>
+        /// <param name="waveUpgradePaused">Boolean to pause automatic runtime
+        /// version upgrades to the cluster.</param>
+        /// <param name="notifications">Indicates a list of notification
+        /// channels for cluster events.</param>
+        public Cluster(string location, string managementEndpoint, IList<NodeTypeDescription> nodeTypes, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), IList<string> addOnFeatures = default(IList<string>), IList<ClusterVersionDetails> availableClusterVersions = default(IList<ClusterVersionDetails>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), string clusterEndpoint = default(string), string clusterId = default(string), string clusterState = default(string), DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default(DiagnosticsStorageAccountConfig), bool? eventStoreServiceEnabled = default(bool?), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ServerCertificateCommonNames reverseProxyCertificateCommonNames = default(ServerCertificateCommonNames), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default(ApplicationTypeVersionsCleanupPolicy), string vmImage = default(string), string sfZonalUpgradeMode = default(string), string vmssZonalUpgradeMode = default(string), bool? infrastructureServiceManager = default(bool?), string upgradeWave = default(string), System.DateTime? upgradePauseStartTimestampUtc = default(System.DateTime?), System.DateTime? upgradePauseEndTimestampUtc = default(System.DateTime?), bool? waveUpgradePaused = default(bool?), IList<Notification> notifications = default(IList<Notification>))
+            : base(location, id, name, type, tags, etag, systemData)
         {
             AddOnFeatures = addOnFeatures;
             AvailableClusterVersions = availableClusterVersions;
@@ -179,6 +146,14 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             UpgradeMode = upgradeMode;
             ApplicationTypeVersionsCleanupPolicy = applicationTypeVersionsCleanupPolicy;
             VmImage = vmImage;
+            SfZonalUpgradeMode = sfZonalUpgradeMode;
+            VmssZonalUpgradeMode = vmssZonalUpgradeMode;
+            InfrastructureServiceManager = infrastructureServiceManager;
+            UpgradeWave = upgradeWave;
+            UpgradePauseStartTimestampUtc = upgradePauseStartTimestampUtc;
+            UpgradePauseEndTimestampUtc = upgradePauseEndTimestampUtc;
+            WaveUpgradePaused = waveUpgradePaused;
+            Notifications = notifications;
             CustomInit();
         }
 
@@ -216,8 +191,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public CertificateDescription Certificate { get; set; }
 
         /// <summary>
-        /// Gets or sets describes a list of server certificates referenced by
-        /// common name that are used to secure the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.certificateCommonNames")]
         public ServerCertificateCommonNames CertificateCommonNames { get; set; }
@@ -262,34 +235,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ClusterId { get; private set; }
 
         /// <summary>
-        /// Gets the current state of the cluster.
-        ///
-        /// - WaitingForNodes - Indicates that the cluster resource is created
-        /// and the resource provider is waiting for Service Fabric VM
-        /// extension to boot up and report to it.
-        /// - Deploying - Indicates that the Service Fabric runtime is being
-        /// installed on the VMs. Cluster resource will be in this state until
-        /// the cluster boots up and system services are up.
-        /// - BaselineUpgrade - Indicates that the cluster is upgrading to
-        /// establishes the cluster version. This upgrade is automatically
-        /// initiated when the cluster boots up for the first time.
-        /// - UpdatingUserConfiguration - Indicates that the cluster is being
-        /// upgraded with the user provided configuration.
-        /// - UpdatingUserCertificate - Indicates that the cluster is being
-        /// upgraded with the user provided certificate.
-        /// - UpdatingInfrastructure - Indicates that the cluster is being
-        /// upgraded with the latest Service Fabric runtime version. This
-        /// happens only when the **upgradeMode** is set to 'Automatic'.
-        /// - EnforcingClusterVersion - Indicates that cluster is on a
-        /// different version than expected and the cluster is being upgraded
-        /// to the expected version.
-        /// - UpgradeServiceUnreachable - Indicates that the system service in
-        /// the cluster is no longer polling the Resource Provider. Clusters in
-        /// this state cannot be managed by the Resource Provider.
-        /// - AutoScale - Indicates that the ReliabilityLevel of the cluster is
-        /// being adjusted.
-        /// - Ready - Indicates that the cluster is in a stable state.
-        /// . Possible values include: 'WaitingForNodes', 'Deploying',
+        /// Gets possible values include: 'WaitingForNodes', 'Deploying',
         /// 'BaselineUpgrade', 'UpdatingUserConfiguration',
         /// 'UpdatingUserCertificate', 'UpdatingInfrastructure',
         /// 'EnforcingClusterVersion', 'UpgradeServiceUnreachable',
@@ -338,22 +284,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the reliability level sets the replica set size of
-        /// system services. Learn about
-        /// [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        ///
-        /// - None - Run the System services with a target replica set count of
-        /// 1. This should only be used for test clusters.
-        /// - Bronze - Run the System services with a target replica set count
-        /// of 3. This should only be used for test clusters.
-        /// - Silver - Run the System services with a target replica set count
-        /// of 5.
-        /// - Gold - Run the System services with a target replica set count of
-        /// 7.
-        /// - Platinum - Run the System services with a target replica set
-        /// count of 9.
-        /// . Possible values include: 'None', 'Bronze', 'Silver', 'Gold',
-        /// 'Platinum'
+        /// Gets or sets possible values include: 'None', 'Bronze', 'Silver',
+        /// 'Gold', 'Platinum'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reliabilityLevel")]
         public string ReliabilityLevel { get; set; }
@@ -365,8 +297,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public CertificateDescription ReverseProxyCertificate { get; set; }
 
         /// <summary>
-        /// Gets or sets describes a list of server certificates referenced by
-        /// common name that are used to secure the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.reverseProxyCertificateCommonNames")]
         public ServerCertificateCommonNames ReverseProxyCertificateCommonNames { get; set; }
@@ -378,16 +308,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public ClusterUpgradePolicy UpgradeDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the upgrade mode of the cluster when new Service
-        /// Fabric runtime version is available.
-        ///
-        /// - Automatic - The cluster will be automatically upgraded to the
-        /// latest Service Fabric runtime version as soon as it is available.
-        /// - Manual - The cluster will not be automatically upgraded to the
-        /// latest Service Fabric runtime version. The cluster is upgraded by
-        /// setting the **clusterCodeVersion** property in the cluster
-        /// resource.
-        /// . Possible values include: 'Automatic', 'Manual'
+        /// Gets or sets possible values include: 'Automatic', 'Manual'
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradeMode")]
         public string UpgradeMode { get; set; }
@@ -404,6 +325,64 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmImage")]
         public string VmImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Parallel', 'Hierarchical'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sfZonalUpgradeMode")]
+        public string SfZonalUpgradeMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Parallel', 'Hierarchical'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vmssZonalUpgradeMode")]
+        public string VmssZonalUpgradeMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if infrastructure service manager is
+        /// enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.infrastructureServiceManager")]
+        public bool? InfrastructureServiceManager { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates when new cluster runtime version upgrades
+        /// will be applied after they are released. By default is Wave0. Only
+        /// applies when **upgradeMode** is set to 'Automatic'. Possible values
+        /// include: 'Wave0', 'Wave1', 'Wave2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.upgradeWave")]
+        public string UpgradeWave { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the start date and time to pause automatic
+        /// runtime version upgrades on the cluster for an specific period of
+        /// time on the cluster (UTC).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.upgradePauseStartTimestampUtc")]
+        public System.DateTime? UpgradePauseStartTimestampUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the end date and time to pause automatic
+        /// runtime version upgrades on the cluster for an specific period of
+        /// time on the cluster (UTC).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.upgradePauseEndTimestampUtc")]
+        public System.DateTime? UpgradePauseEndTimestampUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets boolean to pause automatic runtime version upgrades to
+        /// the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.waveUpgradePaused")]
+        public bool? WaveUpgradePaused { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates a list of notification channels for cluster
+        /// events.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.notifications")]
+        public IList<Notification> Notifications { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -481,6 +460,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             if (ApplicationTypeVersionsCleanupPolicy != null)
             {
                 ApplicationTypeVersionsCleanupPolicy.Validate();
+            }
+            if (Notifications != null)
+            {
+                foreach (var element4 in Notifications)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
+                    }
+                }
             }
         }
     }

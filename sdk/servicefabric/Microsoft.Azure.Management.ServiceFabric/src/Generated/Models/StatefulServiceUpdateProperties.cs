@@ -41,15 +41,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// based on the service requirements. For example, to place a service
         /// on nodes where NodeType is blue specify the following: "NodeColor
         /// == blue)".</param>
-        /// <param name="correlationScheme">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="serviceLoadMetrics">The service load metrics is given
-        /// as an array of ServiceLoadMetricDescription objects.</param>
-        /// <param name="servicePlacementPolicies">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="defaultMoveCost">Specifies the move cost for the
-        /// service. Possible values include: 'Zero', 'Low', 'Medium',
-        /// 'High'</param>
+        /// <param name="defaultMoveCost">Possible values include: 'Zero',
+        /// 'Low', 'Medium', 'High'</param>
         /// <param name="targetReplicaSetSize">The target replica set size as a
         /// number.</param>
         /// <param name="minReplicaSetSize">The minimum replica set size as a

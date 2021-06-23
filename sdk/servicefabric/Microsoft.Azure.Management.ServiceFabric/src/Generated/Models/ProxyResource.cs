@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// location depends on the parent resource.</param>
         /// <param name="tags">Azure resource tags.</param>
         /// <param name="etag">Azure resource etag.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             Location = location;
             Tags = tags;
             Etag = etag;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -92,6 +93,11 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
     }
 }

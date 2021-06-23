@@ -37,9 +37,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="commonNames">The list of server certificates
         /// referenced by common name that are used to secure the
         /// cluster.</param>
-        /// <param name="x509StoreName">The local certificate store location.
-        /// Possible values include: 'AddressBook', 'AuthRoot',
-        /// 'CertificateAuthority', 'Disallowed', 'My', 'Root',
+        /// <param name="x509StoreName">Possible values include: 'AddressBook',
+        /// 'AuthRoot', 'CertificateAuthority', 'Disallowed', 'My', 'Root',
         /// 'TrustedPeople', 'TrustedPublisher'</param>
         public ServerCertificateCommonNames(IList<ServerCertificateCommonName> commonNames = default(IList<ServerCertificateCommonName>), string x509StoreName = default(string))
         {
@@ -61,9 +60,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public IList<ServerCertificateCommonName> CommonNames { get; set; }
 
         /// <summary>
-        /// Gets or sets the local certificate store location. Possible values
-        /// include: 'AddressBook', 'AuthRoot', 'CertificateAuthority',
-        /// 'Disallowed', 'My', 'Root', 'TrustedPeople', 'TrustedPublisher'
+        /// Gets or sets possible values include: 'AddressBook', 'AuthRoot',
+        /// 'CertificateAuthority', 'Disallowed', 'My', 'Root',
+        /// 'TrustedPeople', 'TrustedPublisher'
         /// </summary>
         [JsonProperty(PropertyName = "x509StoreName")]
         public string X509StoreName { get; set; }

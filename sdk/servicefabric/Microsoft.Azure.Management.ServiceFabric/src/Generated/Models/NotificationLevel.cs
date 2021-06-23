@@ -12,11 +12,17 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
 {
 
     /// <summary>
-    /// Defines values for Protocol.
+    /// Defines values for NotificationLevel.
     /// </summary>
-    public static class Protocol
+    public static class NotificationLevel
     {
-        public const string Tcp = "tcp";
-        public const string Udp = "udp";
+        /// <summary>
+        /// Receive only critical notifications.
+        /// </summary>
+        public const string Critical = "Critical";
+        /// <summary>
+        /// Receive all notifications.
+        /// </summary>
+        public const string All = "All";
     }
 }

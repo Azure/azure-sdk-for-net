@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         /// <param name="maxUnusedVersionsToKeep">Number of unused versions per
         /// application type to keep.</param>
-        public ApplicationTypeVersionsCleanupPolicy(int maxUnusedVersionsToKeep)
+        public ApplicationTypeVersionsCleanupPolicy(long maxUnusedVersionsToKeep)
         {
             MaxUnusedVersionsToKeep = maxUnusedVersionsToKeep;
             CustomInit();
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// keep.
         /// </summary>
         [JsonProperty(PropertyName = "maxUnusedVersionsToKeep")]
-        public int MaxUnusedVersionsToKeep { get; set; }
+        public long MaxUnusedVersionsToKeep { get; set; }
 
         /// <summary>
         /// Validate the object.

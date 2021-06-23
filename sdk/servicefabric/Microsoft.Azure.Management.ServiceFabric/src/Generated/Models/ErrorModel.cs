@@ -29,7 +29,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the ErrorModel class.
         /// </summary>
-        /// <param name="error">The error details.</param>
         public ErrorModel(ErrorModelError error = default(ErrorModelError))
         {
             Error = error;
@@ -42,7 +41,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error details.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ErrorModelError Error { get; set; }

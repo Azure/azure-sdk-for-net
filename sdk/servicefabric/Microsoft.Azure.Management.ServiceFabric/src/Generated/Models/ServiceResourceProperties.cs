@@ -37,20 +37,11 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// based on the service requirements. For example, to place a service
         /// on nodes where NodeType is blue specify the following: "NodeColor
         /// == blue)".</param>
-        /// <param name="correlationScheme">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="serviceLoadMetrics">The service load metrics is given
-        /// as an array of ServiceLoadMetricDescription objects.</param>
-        /// <param name="servicePlacementPolicies">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="defaultMoveCost">Specifies the move cost for the
-        /// service. Possible values include: 'Zero', 'Low', 'Medium',
-        /// 'High'</param>
+        /// <param name="defaultMoveCost">Possible values include: 'Zero',
+        /// 'Low', 'Medium', 'High'</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response</param>
         /// <param name="serviceTypeName">The name of the service type</param>
-        /// <param name="partitionDescription">Describes how the service is
-        /// partitioned.</param>
         /// <param name="servicePackageActivationMode">The activation Mode of
         /// the service package. Possible values include: 'SharedProcess',
         /// 'ExclusiveProcess'</param>
@@ -87,7 +78,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ServiceTypeName { get; set; }
 
         /// <summary>
-        /// Gets or sets describes how the service is partitioned.
         /// </summary>
         [JsonProperty(PropertyName = "partitionDescription")]
         public PartitionSchemeDescription PartitionDescription { get; set; }

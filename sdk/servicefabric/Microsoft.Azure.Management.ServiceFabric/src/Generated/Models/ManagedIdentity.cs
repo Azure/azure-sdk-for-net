@@ -37,14 +37,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="tenantId">The tenant id of the managed identity. This
         /// property will only be provided for a system assigned
         /// identity.</param>
-        /// <param name="type">The type of managed identity for the resource.
-        /// Possible values include: 'SystemAssigned', 'UserAssigned',
-        /// 'SystemAssigned, UserAssigned', 'None'</param>
-        /// <param name="userAssignedIdentities">The list of user identities
-        /// associated with the resource. The user identity dictionary key
-        /// references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        /// </param>
+        /// <param name="type">Possible values include: 'SystemAssigned',
+        /// 'UserAssigned', 'SystemAssigned, UserAssigned', 'None'</param>
         public ManagedIdentity(string principalId = default(string), string tenantId = default(string), ManagedIdentityType? type = default(ManagedIdentityType?), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             PrincipalId = principalId;
@@ -74,19 +68,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of managed identity for the resource.
-        /// Possible values include: 'SystemAssigned', 'UserAssigned',
-        /// 'SystemAssigned, UserAssigned', 'None'
+        /// Gets or sets possible values include: 'SystemAssigned',
+        /// 'UserAssigned', 'SystemAssigned, UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ManagedIdentityType? Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of user identities associated with the
-        /// resource. The user identity dictionary key references will be ARM
-        /// resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        ///
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }

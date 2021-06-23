@@ -47,28 +47,19 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// based on the service requirements. For example, to place a service
         /// on nodes where NodeType is blue specify the following: "NodeColor
         /// == blue)".</param>
-        /// <param name="correlationScheme">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="serviceLoadMetrics">The service load metrics is given
-        /// as an array of ServiceLoadMetricDescription objects.</param>
-        /// <param name="servicePlacementPolicies">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="defaultMoveCost">Specifies the move cost for the
-        /// service. Possible values include: 'Zero', 'Low', 'Medium',
-        /// 'High'</param>
+        /// <param name="defaultMoveCost">Possible values include: 'Zero',
+        /// 'Low', 'Medium', 'High'</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response</param>
         /// <param name="serviceTypeName">The name of the service type</param>
-        /// <param name="partitionDescription">Describes how the service is
-        /// partitioned.</param>
         /// <param name="servicePackageActivationMode">The activation Mode of
         /// the service package. Possible values include: 'SharedProcess',
         /// 'ExclusiveProcess'</param>
         /// <param name="serviceDnsName">Dns name used for the service. If this
         /// is specified, then the service can be accessed via its DNS name
         /// instead of service name.</param>
-        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string), string serviceDnsName = default(string))
-            : base(id, name, type, location, tags, etag)
+        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string), string serviceDnsName = default(string))
+            : base(id, name, type, location, tags, etag, systemData)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;
@@ -99,29 +90,23 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string PlacementConstraints { get; set; }
 
         /// <summary>
-        /// Gets or sets a list that describes the correlation of the service
-        /// with other services.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlationScheme")]
         public IList<ServiceCorrelationDescription> CorrelationScheme { get; set; }
 
         /// <summary>
-        /// Gets or sets the service load metrics is given as an array of
-        /// ServiceLoadMetricDescription objects.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceLoadMetrics")]
         public IList<ServiceLoadMetricDescription> ServiceLoadMetrics { get; set; }
 
         /// <summary>
-        /// Gets or sets a list that describes the correlation of the service
-        /// with other services.
         /// </summary>
         [JsonProperty(PropertyName = "properties.servicePlacementPolicies")]
         public IList<ServicePlacementPolicyDescription> ServicePlacementPolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the move cost for the service. Possible
-        /// values include: 'Zero', 'Low', 'Medium', 'High'
+        /// Gets or sets possible values include: 'Zero', 'Low', 'Medium',
+        /// 'High'
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultMoveCost")]
         public string DefaultMoveCost { get; set; }
@@ -140,7 +125,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ServiceTypeName { get; set; }
 
         /// <summary>
-        /// Gets or sets describes how the service is partitioned.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partitionDescription")]
         public PartitionSchemeDescription PartitionDescription { get; set; }

@@ -38,15 +38,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// based on the service requirements. For example, to place a service
         /// on nodes where NodeType is blue specify the following: "NodeColor
         /// == blue)".</param>
-        /// <param name="correlationScheme">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="serviceLoadMetrics">The service load metrics is given
-        /// as an array of ServiceLoadMetricDescription objects.</param>
-        /// <param name="servicePlacementPolicies">A list that describes the
-        /// correlation of the service with other services.</param>
-        /// <param name="defaultMoveCost">Specifies the move cost for the
-        /// service. Possible values include: 'Zero', 'Low', 'Medium',
-        /// 'High'</param>
+        /// <param name="defaultMoveCost">Possible values include: 'Zero',
+        /// 'Low', 'Medium', 'High'</param>
         public ServiceResourceUpdateProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string))
             : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost)
         {

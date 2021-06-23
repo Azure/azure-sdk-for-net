@@ -34,9 +34,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// certificate.</param>
         /// <param name="thumbprintSecondary">Thumbprint of the secondary
         /// certificate.</param>
-        /// <param name="x509StoreName">The local certificate store location.
-        /// Possible values include: 'AddressBook', 'AuthRoot',
-        /// 'CertificateAuthority', 'Disallowed', 'My', 'Root',
+        /// <param name="x509StoreName">Possible values include: 'AddressBook',
+        /// 'AuthRoot', 'CertificateAuthority', 'Disallowed', 'My', 'Root',
         /// 'TrustedPeople', 'TrustedPublisher'</param>
         public CertificateDescription(string thumbprint, string thumbprintSecondary = default(string), string x509StoreName = default(string))
         {
@@ -64,9 +63,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string ThumbprintSecondary { get; set; }
 
         /// <summary>
-        /// Gets or sets the local certificate store location. Possible values
-        /// include: 'AddressBook', 'AuthRoot', 'CertificateAuthority',
-        /// 'Disallowed', 'My', 'Root', 'TrustedPeople', 'TrustedPublisher'
+        /// Gets or sets possible values include: 'AddressBook', 'AuthRoot',
+        /// 'CertificateAuthority', 'Disallowed', 'My', 'Root',
+        /// 'TrustedPeople', 'TrustedPublisher'
         /// </summary>
         [JsonProperty(PropertyName = "x509StoreName")]
         public string X509StoreName { get; set; }
