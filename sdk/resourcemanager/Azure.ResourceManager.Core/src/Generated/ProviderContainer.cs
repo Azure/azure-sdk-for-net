@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc />
-        public override Response<Provider> Get(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public Response<Provider> Get(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc />
-        public override async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
             scope.Start();
