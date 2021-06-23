@@ -360,5 +360,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
         }
         #endregion
+
+        #region Push/Pull Tests
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact(_repositoryName, "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\acr-pull");
+
+            // Assert
+            // TODO
+        }
+
+        #endregion
     }
 }

@@ -24,6 +24,7 @@ namespace Azure.Containers.ContainerRegistry
             DateTimeOffset lastUpdateTime = default;
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
+            Optional<string> mediaType = default;
             Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<bool> deleteEnabled = default;
@@ -96,6 +97,11 @@ namespace Azure.Containers.ContainerRegistry
                                 continue;
                             }
                             os = new ArtifactOperatingSystem(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("mediaType"))
+                        {
+                            mediaType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("references"))
@@ -194,7 +200,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
+            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), mediaType.Value, Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
         }
     }
 }

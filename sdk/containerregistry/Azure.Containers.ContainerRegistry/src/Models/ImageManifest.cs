@@ -11,9 +11,9 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     {
         internal ImageManifest() { }
 
-        internal string Digest { get; set; }
+        //internal string Digest { get; set; }
 
-        public ManifestMediaType MediaType { get; set; }
+        //public ManifestMediaType MediaType { get; set; }
 
         /// <summary> Schema version. </summary>
         public int SchemaVersion { get; set; }

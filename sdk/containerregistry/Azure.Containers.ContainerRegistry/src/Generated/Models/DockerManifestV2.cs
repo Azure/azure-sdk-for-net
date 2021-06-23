@@ -30,6 +30,9 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             ConfigDescriptor = configDescriptor;
             Layers = layers;
         }
+
+        /// <summary> Media type for this Manifest. </summary>
+        public string MediaType { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }
     }

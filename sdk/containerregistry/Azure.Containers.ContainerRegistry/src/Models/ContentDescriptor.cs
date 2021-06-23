@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         }
 
         /// <summary> Layer media type. </summary>
-        public ConfigMediaType MediaType { get; set; }
+        public string MediaType { get; set; }
         /// <summary> Layer size. </summary>
         public long? Size { get; set; }
         /// <summary> Layer digest. </summary>

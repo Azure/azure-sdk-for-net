@@ -50,6 +50,9 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             History = history;
             Signatures = signatures;
         }
+
+        /// <summary> Media type for this Manifest. </summary>
+        public string MediaType { get; set; }
         /// <summary> (ManifestList, OCIIndex) List of V2 image layer information. </summary>
         public IList<ManifestListAttributes> Manifests { get; }
         /// <summary> (V2, OCI) Image config descriptor. </summary>

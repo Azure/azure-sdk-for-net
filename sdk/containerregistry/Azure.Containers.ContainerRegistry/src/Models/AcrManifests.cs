@@ -34,6 +34,7 @@ namespace Azure.Containers.ContainerRegistry
                 attributesBase.LastUpdatedOn,
                 attributesBase.Architecture,
                 attributesBase.OperatingSystem,
+                attributesBase.MediaType,
                 attributesBase.RelatedArtifacts,
                 attributesBase.Tags,
                 attributesBase.CanDelete,

@@ -194,7 +194,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public async Task<ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, ImageManifest payload, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, ImageManifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -215,12 +215,7 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 201:
-                    {
-                        object value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetObject();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -232,7 +227,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="payload"> Manifest body, can take v1 or v2 values depending on accept header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/>, or <paramref name="payload"/> is null. </exception>
-        public ResponseWithHeaders<object, ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, ImageManifest payload, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, ImageManifest payload, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -253,12 +248,7 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 201:
-                    {
-                        object value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetObject();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

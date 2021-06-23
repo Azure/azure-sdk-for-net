@@ -543,16 +543,18 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="path"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> PullToAsync(string path, CancellationToken cancellationToken)
+        // TODO: provide another overload instead of setting cancellationToken default
+        public virtual async Task<Response> PullToAsync(string path, CancellationToken cancellationToken = default)
         {
             // Get Manifest
             // TODO: should we expose the option to use the accept header string for this method?
             // /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
-            Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<ImageManifest> baseManifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // Get Attributes (need digest and mediaType)
-            // TODO: we could cache these
+            // TODO: we could cache these ... or if we could get digest and media type from the manifest itself, we wouldn't need them from the attributes/properties
             ArtifactManifestProperties properties = await this.GetManifestPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            var manifest = GetManifestSubtype(baseManifest, properties.MediaType);
 
             // TODO: is this the best way to do this?
             if (!Directory.Exists(path))
@@ -561,12 +563,12 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             // Download manifest
+            // TODO: Actually, we've already downloaded it, now we're just writing it to file
             string manifestFile = Path.Combine(path, "manifest.json");
 
             using (FileStream fs = File.OpenWrite(manifestFile))
-            using (StreamWriter streamWriter = new StreamWriter(fs))
             {
-                JsonSerializer.Serialize(streamWriter);
+                await JsonSerializer.SerializeAsync(fs, manifest, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
 
             // Download config
@@ -594,7 +596,38 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             // TODO: need to return an appropriate response
-            return manifest.GetRawResponse();
+            return baseManifest.GetRawResponse();
+        }
+
+        private static ImageManifest GetManifestSubtype(ImageManifest baseManifest, ManifestMediaType mediaType)
+        {
+            if (mediaType == ManifestMediaType.DockerManifestV2)
+            {
+                return (DockerManifestV2)baseManifest;
+            }
+
+            if (mediaType == ManifestMediaType.DockerManifestV1)
+            {
+                return (DockerManifestV1)baseManifest;
+            }
+
+            if (mediaType == ManifestMediaType.DockerManifestList)
+            {
+                return (DockerManifestList)baseManifest;
+            }
+
+            if (mediaType == ManifestMediaType.OciIndex)
+            {
+                return (OciIndex)baseManifest;
+            }
+
+            if (mediaType == ManifestMediaType.OciManifest)
+            {
+                return (OciIndex)baseManifest;
+            }
+
+            // TODO: what behavior would we expect here?
+            throw new System.Exception($"Invlid media type {mediaType}");
         }
 
         private static ContentDescriptor GetConfigDescriptor(ImageManifest manifest)
