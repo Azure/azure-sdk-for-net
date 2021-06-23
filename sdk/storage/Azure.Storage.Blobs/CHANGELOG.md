@@ -10,6 +10,7 @@
 - Added support for OAuth copy sources for synchronous copy operations.
 - Added support for Parquet as an input format in BlockBlobClient.Query().
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
+- Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and Arguement Exception will be thrown.
 
 ## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.

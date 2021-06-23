@@ -2746,6 +2746,16 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(AbortCopyFromUri)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.TagConditions,
+                    operationName: nameof(BlobBaseClient.AbortCopyFromUri),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
