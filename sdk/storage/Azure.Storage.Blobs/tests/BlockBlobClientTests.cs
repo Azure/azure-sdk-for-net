@@ -247,6 +247,52 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        public async Task StageBlockAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlockBlobClient blockBlobClient = new BlockBlobClient(uri, GetOptions());
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.TagConditions):
+                    conditions.TagConditions = string.Empty;
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blockBlobClient.StageBlockAsync(
+                    base64BlockId: string.Empty,
+                    content: new MemoryStream(),
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"StageBlock does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                }); ;
+        }
+
+        [RecordedTest]
         public async Task StageBlockAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

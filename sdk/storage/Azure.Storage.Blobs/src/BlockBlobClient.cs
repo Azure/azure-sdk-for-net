@@ -1135,6 +1135,16 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlock)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.StageBlock),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -2394,6 +2404,12 @@ namespace Azure.Storage.Blobs.Specialized
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(Query)}");
+
+                // All BlobRequestConditions are valid.
+                options?.Conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.Query),
+                    parameterName: nameof(BlobQueryOptions.Conditions));
 
                 try
                 {
