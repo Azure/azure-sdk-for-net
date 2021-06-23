@@ -11,6 +11,9 @@
 - Added support for Parquet as an input format in BlockBlobClient.Query().
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
 
+## 12.9.1 (2021-06-23)
+- Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
+
 ## 12.9.0 (2021-06-08)
 - Includes all features from 12.9.0-beta.4.
 - Fixed bug where BlobClient.DownloadStreaming or BlobClient.DownloadData could corrupt data on retry.
