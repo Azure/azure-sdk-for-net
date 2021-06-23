@@ -544,10 +544,6 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = false,
                 ExcludeAzureCliCredential = false,
                 ExcludeInteractiveBrowserCredential = false,
-                Diagnostics =
-                {
-                    IsLoggingContentEnabled = true
-                }
             };
 
             var cred = new DefaultAzureCredential(credFactory, options);
