@@ -92,7 +92,6 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeSentimentActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal AnalyzeSentimentActionResult() { }
-        public string ActionName { get { throw null; } }
         public Azure.AI.TextAnalytics.AnalyzeSentimentResultCollection DocumentsResults { get { throw null; } }
     }
     public partial class AnalyzeSentimentOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
@@ -240,7 +239,6 @@ namespace Azure.AI.TextAnalytics
     public partial class ExtractKeyPhrasesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal ExtractKeyPhrasesActionResult() { }
-        public string ActionName { get { throw null; } }
         public Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection DocumentsResults { get { throw null; } }
     }
     public partial class ExtractKeyPhrasesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
@@ -622,7 +620,6 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal RecognizeEntitiesActionResult() { }
-        public string ActionName { get { throw null; } }
         public Azure.AI.TextAnalytics.RecognizeEntitiesResultCollection DocumentsResults { get { throw null; } }
     }
     public partial class RecognizeEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
@@ -647,7 +644,6 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeLinkedEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal RecognizeLinkedEntitiesActionResult() { }
-        public string ActionName { get { throw null; } }
         public Azure.AI.TextAnalytics.RecognizeLinkedEntitiesResultCollection DocumentsResults { get { throw null; } }
     }
     public partial class RecognizeLinkedEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
@@ -674,7 +670,6 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizePiiEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal RecognizePiiEntitiesActionResult() { }
-        public string ActionName { get { throw null; } }
         public Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection DocumentsResults { get { throw null; } }
     }
     public partial class RecognizePiiEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
@@ -735,6 +730,7 @@ namespace Azure.AI.TextAnalytics
     public partial class TextAnalyticsActionResult
     {
         internal TextAnalyticsActionResult() { }
+        public string ActionName { get { throw null; } }
         public System.DateTimeOffset CompletedOn { get { throw null; } }
         public Azure.AI.TextAnalytics.TextAnalyticsError Error { get { throw null; } }
         public bool HasError { get { throw null; } }
@@ -937,8 +933,6 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SentenceOpinion> opinions) { throw null; }
         public static Azure.AI.TextAnalytics.SentimentConfidenceScores SentimentConfidenceScores(double positiveScore, double neutralScore, double negativeScore) { throw null; }
         public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
-        public static Azure.AI.TextAnalytics.TextAnalyticsActionResult TextAnalyticsActionResult(System.DateTimeOffset completedOn) { throw null; }
-        public static Azure.AI.TextAnalytics.TextAnalyticsActionResult TextAnalyticsActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.TextDocumentBatchStatistics TextDocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount) { throw null; }
