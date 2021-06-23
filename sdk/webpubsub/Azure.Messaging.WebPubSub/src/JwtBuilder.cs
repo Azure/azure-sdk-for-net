@@ -42,20 +42,36 @@ namespace Azure.Core
         public void AddClaim(ReadOnlySpan<byte> utf8Name, bool value) => _writer.WriteBoolean(utf8Name, value);
         public void AddClaim(ReadOnlySpan<byte> utf8Name, long value) => _writer.WriteNumber(utf8Name, value);
         public void AddClaim(ReadOnlySpan<byte> utf8Name, double value) => _writer.WriteNumber(utf8Name, value);
-
         public void AddClaim(ReadOnlySpan<byte> utf8Name, DateTimeOffset value)
         {
             AddClaim(utf8Name, value.ToUnixTimeSeconds());
+        }
+        public void AddClaim(ReadOnlySpan<byte> utf8Name, string[] value)
+        {
+            _writer.WriteStartArray(utf8Name);
+            foreach (var item in value)
+            {
+                _writer.WriteStringValue(item);
+            }
+            _writer.WriteEndArray();
         }
 
         public void AddClaim(string name, string value) => _writer.WriteString(name, value);
         public void AddClaim(string name, bool value) => _writer.WriteBoolean(name, value);
         public void AddClaim(string name, long value) => _writer.WriteNumber(name, value);
         public void AddClaim(string name, double value) => _writer.WriteNumber(name, value);
-
         public void AddClaim(string name, DateTimeOffset value)
         {
             AddClaim(name, value.ToUnixTimeSeconds());
+        }
+        public void AddClaim(string name, string[] value)
+        {
+            _writer.WriteStartArray(name);
+            foreach (var item in value)
+            {
+                _writer.WriteStringValue(item);
+            }
+            _writer.WriteEndArray();
         }
 
         /// <summary>

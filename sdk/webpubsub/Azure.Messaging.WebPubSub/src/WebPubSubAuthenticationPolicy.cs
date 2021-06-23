@@ -31,7 +31,7 @@ namespace Azure.Messaging.WebPubSub
         {
             string audience = message.Request.Uri.ToUri().AbsoluteUri;
             var now = DateTimeOffset.UtcNow;
-            var expiresAt = now + TimeSpan.FromMinutes(10);
+            var expiresAt = now + TimeSpan.FromMinutes(5);
 
             // TODO: is this a bug in the service?
             // The service accepts ASCII of the portal key, but not Base64 decoded.
