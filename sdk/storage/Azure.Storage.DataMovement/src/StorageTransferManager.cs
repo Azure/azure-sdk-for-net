@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement
         private AsyncQueue<StorageTransferJob> _toScanQueue;
         // To hold the jobs that have finished scanning and ready to run; This will help with grabbing required
         // authentication from the original job and for updating the jobs for progress tracking
-        private IList<StorageTransferJob> _jobsInProgress;
+        private AsyncQueue<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
         private string _progressLogDirectoryPath;
@@ -34,14 +34,14 @@ namespace Azure.Storage.DataMovement
         public StorageTransferManager(string progressLogDirectoryPath = default)
         {
             _toScanQueue = new AsyncQueue<StorageTransferJob>();
-            _jobsInProgress = new List<StorageTransferJob>();
+            _jobsInProgress = new AsyncQueue<StorageTransferJob>();
             _progressLogDirectoryPath = progressLogDirectoryPath;
         }
 
         /// <summary>
         /// Add upload job to perform.
         /// </summary>
-        public static Task<StorageTransferResults> ScheduleUploadJobAsync(
+        public async Task<StorageTransferResults> ScheduleUploadJobAsync(
             string sourceLocalPath,
             BlobBaseClient destinationClient,
             StorageTransferOptions transferOptions = default,
@@ -52,16 +52,17 @@ namespace Azure.Storage.DataMovement
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobTransferJob transferItem = new BlobTransferJob(sourceLocalPath, destinationClient, transferOptions, uploadOptions, progressTracker, token);
+            BlobTransferJob transferJob = new BlobTransferJob(sourceLocalPath, destinationClient, transferOptions, uploadOptions, progressTracker, token);
+            _jobsInProgress.Enqueue(transferJob);
 
-            // TODO; remove stub
-            return Task.FromResult(new StorageTransferResults());
+            // TODO: remove stub
+            return new StorageTransferResults();
         }
 
         /// <summary>
         /// Add upload job to perform.
         /// </summary>
-        public static Task<StorageTransferResults> ScheduleDownloadJobAsync(
+        public async Task<StorageTransferResults> ScheduleDownloadJobAsync(
             BlobBaseClient sourceClient,
             string destinationLocalPath,
             StorageTransferOptions transferOptions = default,
@@ -71,16 +72,17 @@ namespace Azure.Storage.DataMovement
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobTransferJob transferItem = new BlobTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
+            BlobTransferJob transferJob = new BlobTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
+            _jobsInProgress.Enqueue(transferJob);
 
             // TODO; remove stub
-            return Task.FromResult(new StorageTransferResults());
+            return new StorageTransferResults();
         }
 
         /// <summary>
         /// Add upload job to perform.
         /// </summary>
-        public static Task<StorageTransferResults> ScheduleUploadDirectoryJobAsync(
+        public async Task<StorageTransferResults> ScheduleUploadDirectoryJobAsync(
             string sourceLocalPath,
             BlobBaseClient destinationClient,
             StorageTransferOptions transferOptions = default,
