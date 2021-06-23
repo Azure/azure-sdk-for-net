@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.Http.Headers;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,6 +13,11 @@ namespace Azure.Messaging.WebPubSub
     /// </summary>
     internal partial class WebPubSubAuthenticationPolicy : HttpPipelineSynchronousPolicy
     {
+        private static byte[] s_nbf = Encoding.UTF8.GetBytes("nbf");
+        private static byte[] s_exp = Encoding.UTF8.GetBytes("exp");
+        private static byte[] s_iat = Encoding.UTF8.GetBytes("iat");
+        private static byte[] s_aud = Encoding.UTF8.GetBytes("aud");
+
         private readonly AzureKeyCredential _credential;
 
         /// <summary>
@@ -26,12 +30,27 @@ namespace Azure.Messaging.WebPubSub
         public override void OnSendingRequest(HttpMessage message)
         {
             string audience = message.Request.Uri.ToUri().AbsoluteUri;
-            var expiresAt = DateTime.UtcNow + TimeSpan.FromMinutes(10);
+            var now = DateTimeOffset.UtcNow;
+            var expiresAt = now + TimeSpan.FromMinutes(10);
 
-            string accessToken = JwtUtils.GenerateJwtBearer(audience, claims: null, expiresAt, _credential);
+            var keyBytes = Convert.FromBase64String(_credential.Key);
 
-            var header = new AuthenticationHeaderValue("Bearer", accessToken);
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, header.ToString());
+            var writer = new JwtBuilder(keyBytes);
+            writer.AddClaim(s_nbf, now);
+            writer.AddClaim(s_exp, expiresAt);
+            writer.AddClaim(s_iat, now);
+            writer.AddClaim(s_aud, audience);
+            int jwtLength = writer.Build();
+
+            var prefix = "Bearer ";
+            var state = (prefix, writer);
+            var headerValue = NS2Bridge.CreateString(jwtLength + prefix.Length, state, (destination, state) => {
+                var statePrefix = state.prefix;
+                statePrefix.AsSpan().CopyTo(destination);
+                state.writer.TryWriteTo(destination.Slice(statePrefix.Length), out _);
+            });
+
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
     }
 }
