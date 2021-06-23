@@ -784,12 +784,12 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
-                        {
-                            throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(RequestConditions.IfMatch),
-                                nameof(RequestConditions.IfNoneMatch));
-                        }
+                        conditions.ValidateConditionsNotPresent(
+                            invalidConditions:
+                                BlobRequestConditionProperty.IfMatch
+                                | BlobRequestConditionProperty.IfNoneMatch,
+                            operationName: nameof(BlobLeaseClient.Release),
+                            parameterName: nameof(conditions));
 
                         ResponseWithHeaders<ContainerReleaseLeaseHeaders> response;
 
