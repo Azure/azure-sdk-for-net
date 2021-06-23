@@ -19,7 +19,7 @@ namespace SnippetGenerator
 
         public async Task OnExecuteAsync()
         {
-            IEnumerable<string> unUsedSnippets = null;
+            List<string> unUsedSnippets = null;
             Stopwatch sw = new Stopwatch();
             sw.Start();
             var baseDirectory = new DirectoryInfo(BasePath).Name;
@@ -38,11 +38,12 @@ namespace SnippetGenerator
             }
             else
             {
-                unUsedSnippets = await new DirectoryProcessor(BasePath).ProcessAsync();
+                unUsedSnippets = (await new DirectoryProcessor(BasePath).ProcessAsync()).ToList();
             }
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Red;
             string message = $"Not all snippets were used.\n{string.Join(Environment.NewLine, unUsedSnippets)}";
+            unUsedSnippets.Sort();
             if (StrictMode)
             {
                 if (unUsedSnippets.Any())

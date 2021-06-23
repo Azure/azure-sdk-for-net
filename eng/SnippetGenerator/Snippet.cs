@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace SnippetGenerator
 {
-    internal class Snippet
+    public class Snippet
     {
         public string Name { get; }
         public SourceText Text { get; }

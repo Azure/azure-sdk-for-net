@@ -91,10 +91,17 @@ namespace SnippetGenerator
             var snippets = await _snippets.Value;
             var unUsedSnippets = snippets
                 .Where(s => !s.IsUsed)
-                .Select(s => s.Name)
-                .ToList();
+                .Select(s => $"{GetServiceDirName(s.FilePath)}: {s.Name}");
             return unUsedSnippets;
 
+        }
+
+        private string GetServiceDirName(string path)
+        {
+            string sdk = $"{Path.DirectorySeparatorChar}sdk{Path.DirectorySeparatorChar}";
+            int start = path.IndexOf(sdk) + sdk.Length;
+            int end = path.IndexOf(Path.DirectorySeparatorChar, start);
+            return path.Substring(start, end - start);
         }
 
         private async Task<List<Snippet>> DiscoverSnippetsAsync()
