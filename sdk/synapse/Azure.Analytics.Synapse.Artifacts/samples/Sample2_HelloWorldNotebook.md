@@ -1,6 +1,6 @@
 # Create, Retrieve and Delete a Synapse Notebook
 
-This sample demonstrates basic operations with two core classes in this library: `NotebookClient` and `NotebookResource`. `NotebookClient` is used to interact with notebooks on Azure Synapse - each method call sends a request to the service's REST API. `NotebookResource`, along with related classes Notebook and `NotebookCell`, represent a notebook within Synapse. The sample walks through the basics of adding, retrieving, deleting a notebook. To get started, you'll need a connection endpoint to Azure Synapse. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/README.md) for links and instructions.
+This sample demonstrates basic operations with two core classes in this library: `NotebookClient` and `NotebookResource`. `NotebookClient` is used to interact with notebooks on Azure Synapse - each method call sends a request to the service's REST API. `NotebookResource`, along with related classes Notebook and `NotebookCell`, represent a notebook within Synapse. The sample walks through the basics of adding, retrieving, deleting a notebook. To get started, you'll need a connection endpoint to Azure Synapse. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.Artifacts/README.md) for links and instructions.
 
 ## Create pipeline client
 

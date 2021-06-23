@@ -134,13 +134,13 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.Storage)
+            if (_endpointType == TableEndpointType.CosmosTable)
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
             else
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
             }
         }
 
@@ -175,13 +175,13 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.Storage)
+            if (_endpointType == TableEndpointType.CosmosTable)
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
             else
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
             }
         }
 

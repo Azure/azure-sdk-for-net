@@ -40,10 +40,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="retentionDays">The backup retention period in days.
         /// This is how many days Point-in-Time Restore will be
         /// supported.</param>
-        public BackupShortTermRetentionPolicy(string id = default(string), string name = default(string), string type = default(string), int? retentionDays = default(int?))
+        /// <param name="diffBackupIntervalInHours">The differential backup
+        /// interval in hours. This is how many interval hours between each
+        /// differential backup will be supported. This is only applicable to
+        /// live databases but not dropped databases.</param>
+        public BackupShortTermRetentionPolicy(string id = default(string), string name = default(string), string type = default(string), int? retentionDays = default(int?), int? diffBackupIntervalInHours = default(int?))
             : base(id, name, type)
         {
             RetentionDays = retentionDays;
+            DiffBackupIntervalInHours = diffBackupIntervalInHours;
             CustomInit();
         }
 
@@ -58,6 +63,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionDays")]
         public int? RetentionDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the differential backup interval in hours. This is how
+        /// many interval hours between each differential backup will be
+        /// supported. This is only applicable to live databases but not
+        /// dropped databases.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diffBackupIntervalInHours")]
+        public int? DiffBackupIntervalInHours { get; set; }
 
     }
 }

@@ -90,7 +90,7 @@ namespace Azure.Template.Tests.Samples
             client.AddUserToGroup("some_group", "some_user");
 
             // Avoid sending messages to users who do not exist.
-            if (client.UserExists("some_user", CancellationToken.None).Value)
+            if (client.UserExists("some_user").Value)
             {
                 client.SendToUser("some_user", "Hi, I am glad you exist!");
             }

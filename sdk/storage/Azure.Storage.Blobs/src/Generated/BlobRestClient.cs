@@ -27,10 +27,10 @@ namespace Azure.Storage.Blobs
         /// <summary> Initializes a new instance of BlobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
+        /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-08-04")
+        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02")
         {
             if (url == null)
             {
@@ -1742,7 +1742,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, byte[] sourceContentMD5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        internal HttpMessage CreateCopyFromURLRequest(string copySource, int? timeout, IDictionary<string, string> metadata, AccessTier? tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string leaseId, byte[] sourceContentMD5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1825,6 +1825,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-legal-hold", legalHold.Value);
             }
+            if (copySourceAuthorization != null)
+            {
+                request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1849,16 +1853,17 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobCopyFromURLHeaders>> CopyFromURLAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
+            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1890,16 +1895,17 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobCopyFromURLHeaders> CopyFromURL(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, AccessTier? tier = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string leaseId = null, byte[] sourceContentMD5 = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
+            using var message = CreateCopyFromURLRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, leaseId, sourceContentMD5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobCopyFromURLHeaders(message.Response);
             switch (message.Response.Status)

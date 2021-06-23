@@ -128,7 +128,7 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 #### Authenticating with a static access token
 
 You can pass a Mixed Reality access token as an `AccessToken` previously retrieved from the
-[Mixed Reality STS service](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.Authentication)
+[Mixed Reality STS service](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/mixedreality/Azure.MixedReality.Authentication)
 to be used with a Mixed Reality client library:
 
 ```csharp Snippet:CreateAClientWithStaticAccessToken
