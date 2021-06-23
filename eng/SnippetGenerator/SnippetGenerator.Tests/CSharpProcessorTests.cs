@@ -69,6 +69,14 @@ namespace SnippetGenerator.Tests
                 @"    /// </example>" + Environment.NewLine +
                 "     foo"
             };
+
+            yield return new[]
+            {
+                @"/// <code snippet=""Snippet:AcceptsAnyTagSuffix"" any string here></code>",
+                @"/// <code snippet=""Snippet:AcceptsAnyTagSuffix"" language=""csharp"">" + Environment.NewLine +
+                $"/// {Processed} </code>"
+            };
+
         }
     }
 }
