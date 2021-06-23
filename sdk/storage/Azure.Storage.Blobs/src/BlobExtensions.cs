@@ -1375,7 +1375,7 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ValidateConditionsNotPresent
-        internal static void ValidateRequestConditionsNotPresent(
+        internal static void ValidateConditionsNotPresent(
             this BlobRequestConditions requestConditions,
             BlobRequestConditionProperty invalidConditions,
             string operationName,
