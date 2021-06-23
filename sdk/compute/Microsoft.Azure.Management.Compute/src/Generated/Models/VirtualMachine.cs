@@ -50,6 +50,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine.</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
+        /// <param name="capacityReservation">Specifies the capacity
+        /// reservation related details of a virtual machine.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-07-01.</param>
         /// <param name="additionalCapabilities">Specifies additional
         /// capabilities enabled or disabled on the virtual machine.</param>
         /// <param name="osProfile">Specifies the operating system settings
@@ -162,12 +165,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="zones">The virtual machine zones.</param>
         /// <param name="extendedLocation">The extended location of the Virtual
         /// Machine.</param>
-        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
+            CapacityReservation = capacityReservation;
             AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
@@ -226,6 +230,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
         public StorageProfile StorageProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the capacity reservation related details of
+        /// a virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
+        /// api-version: 2021-07-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacityReservation")]
+        public CapacityReservationProfile CapacityReservation { get; set; }
 
         /// <summary>
         /// Gets or sets specifies additional capabilities enabled or disabled
