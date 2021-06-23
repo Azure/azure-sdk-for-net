@@ -1,0 +1,80 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/sanitized/providers/Microsoft.EdgeOrder/productFamiliesMetadata?api-version=2020-12-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7aad3edf83b4c7469b6cf494c6e40ec0-2eb3cf7b68ce2e47-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20210621.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "294269adc63001b18e31c2b6546a6d8e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1195",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 21 Jun 2021 12:00:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "294269adc63001b18e31c2b6546a6d8e",
+        "x-ms-correlation-request-id": "64f52198-9b00-4cd6-856c-f7b753620785",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "64f52198-9b00-4cd6-856c-f7b753620785",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20210621T120047Z:64f52198-9b00-4cd6-856c-f7b753620785"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "productLines": [],
+              "filterableProperties": [
+                {
+                  "type": "ShipToCountries",
+                  "supportedValues": [
+                    "US"
+                  ]
+                },
+                {
+                  "type": "DoubleEncryptionStatus",
+                  "supportedValues": [
+                    "Enabled"
+                  ]
+                }
+              ],
+              "displayName": "Azure Stack Edge",
+              "description": {
+                "descriptionType": "Base",
+                "shortDescription": "Azure managed physical edge compute device",
+                "keywords": [],
+                "attributes": [],
+                "links": []
+              },
+              "imageInformation": [],
+              "availabilityInformation": {
+                "availabilityStage": "Available",
+                "disabledReason": "None"
+              },
+              "hierarchyInformation": {
+                "productFamilyName": "azurestackedge",
+                "productLineName": "",
+                "productName": "",
+                "configurationName": ""
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2104694882",
+    "SUBSCRIPTION_ID": "sanitized"
+  }
+}

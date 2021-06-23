@@ -1,0 +1,139 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/sanitized/resourcegroups/SdkRg808?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-ee0a8ced9d2bde469716ee2baacb76bd-f57455d1b5f41e41-00",
+        "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d78d41ab1654d5bb6822328e25a6a931",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "186",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 21 Jun 2021 12:00:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "680c892f-5adb-4a53-b056-f9d025874eae",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "680c892f-5adb-4a53-b056-f9d025874eae",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20210621T120028Z:680c892f-5adb-4a53-b056-f9d025874eae"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/sanitized/resourceGroups/SdkRg808",
+        "name": "SdkRg808",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/sanitized/resourceGroups/SdkRg808/providers/Microsoft.EdgeOrder/addresses/SdkAddress2610?api-version=2020-12-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "385",
+        "Content-Type": "application/json",
+        "traceparent": "00-883144bd294e91489d78238b14385142-d17dd2d12e73174c-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20210621.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "a664282a4ccd0d107d73bda80fe1d44d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus",
+        "properties": {
+          "shippingAddress": {
+            "streetAddress1": "16 TOWNSEND ST",
+            "streetAddress2": "Unit 1",
+            "city": "San Francisco",
+            "stateOrProvince": "CA",
+            "country": "US",
+            "postalCode": "94107",
+            "companyName": "Microsoft",
+            "addressType": "Commercial"
+          },
+          "contactDetails": {
+            "contactName": "Public SDK Test",
+            "phone": "1234567890",
+            "phoneExtension": "1234",
+            "emailList": [
+              "testing@microsoft.com"
+            ]
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "833",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 21 Jun 2021 12:00:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "437eb63f-df71-40ad-8c7c-045f52206f85",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "437eb63f-df71-40ad-8c7c-045f52206f85",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20210621T120032Z:437eb63f-df71-40ad-8c7c-045f52206f85"
+      },
+      "ResponseBody": {
+        "properties": {
+          "shippingAddress": {
+            "streetAddress1": "16 TOWNSEND ST",
+            "streetAddress2": "Unit 1",
+            "city": "San Francisco",
+            "stateOrProvince": "CA",
+            "country": "US",
+            "postalCode": "94107",
+            "companyName": "Microsoft",
+            "addressType": "Commercial"
+          },
+          "contactDetails": {
+            "contactName": "Public SDK Test",
+            "phone": "1234567890",
+            "phoneExtension": "1234",
+            "emailList": [
+              "testing@microsoft.com"
+            ]
+          }
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2021-06-21T12:00:30.447748\u002B00:00",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2021-06-21T12:00:30.447748\u002B00:00"
+        },
+        "location": "eastus",
+        "tags": {},
+        "sku": {},
+        "identity": "Sanitized",
+        "name": "SdkAddress2610",
+        "id": "/subscriptions/sanitized/resourceGroups/SdkRg808/providers/Microsoft.EdgeOrder/addresses/SdkAddress2610",
+        "type": "Microsoft.EdgeOrder/addresses"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1412349035",
+    "SUBSCRIPTION_ID": "sanitized"
+  }
+}

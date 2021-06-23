@@ -1,0 +1,319 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/sanitized/providers/Microsoft.EdgeOrder/listProductFamilies?api-version=2020-12-01-preview\u0026$expand=configurations",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "97",
+        "Content-Type": "application/json",
+        "traceparent": "00-90da8119335acb4c9a87020967b5f67f-b56bfe026e5daa43-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20210621.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "121eb29982463215c715e34413d3a73f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "filterableProperties": {
+          "azurestackedge": [
+            {
+              "type": "ShipToCountries",
+              "supportedValues": [
+                "US"
+              ]
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "26216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 21 Jun 2021 12:00:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "121eb29982463215c715e34413d3a73f",
+        "x-ms-correlation-request-id": "5b5f6e63-e351-4873-a4fb-095c00259e25",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "5b5f6e63-e351-4873-a4fb-095c00259e25",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20210621T120046Z:5b5f6e63-e351-4873-a4fb-095c00259e25"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "productLines": [
+                {
+                  "properties": {
+                    "products": [
+                      {
+                        "properties": {
+                          "configurations": [
+                            {
+                              "properties": {
+                                "specifications": [
+                                  {
+                                    "name": "Usable compute",
+                                    "value": "40 vCPU"
+                                  },
+                                  {
+                                    "name": "Usable memory",
+                                    "value": "102 GB"
+                                  },
+                                  {
+                                    "name": "Usable storage",
+                                    "value": "4.2 TB"
+                                  }
+                                ],
+                                "dimensions": {
+                                  "length": 50.0,
+                                  "height": 15.0,
+                                  "width": 5.0,
+                                  "lengthHeightUnit": "IN",
+                                  "weight": 50.0,
+                                  "depth": 2.0,
+                                  "weightUnit": "LBS"
+                                },
+                                "filterableProperties": [
+                                  {
+                                    "type": "ShipToCountries",
+                                    "supportedValues": [
+                                      "US"
+                                    ]
+                                  }
+                                ],
+                                "displayName": "Azure Stack Edge Pro - 1 GPU",
+                                "description": {
+                                  "descriptionType": "Base",
+                                  "shortDescription": "",
+                                  "longDescription": "",
+                                  "keywords": [
+                                    "GPU"
+                                  ],
+                                  "attributes": [],
+                                  "links": []
+                                },
+                                "imageInformation": [],
+                                "costInformation": {
+                                  "billingMeterDetails": [
+                                    {
+                                      "name": "RentalFee",
+                                      "meterDetails": {
+                                        "meterGuid": "91edd360-e07c-5529-a0fd-99f30b20cf21",
+                                        "billingType": "Pav2",
+                                        "multiplier": 1.0,
+                                        "chargingType": "PerOrder"
+                                      },
+                                      "meteringType": "Recurring",
+                                      "frequency": "P1D"
+                                    },
+                                    {
+                                      "name": "ShippingFee",
+                                      "meterDetails": {
+                                        "meterGuid": "97b0cf84-c662-567c-bcbb-4158fa54ccc9",
+                                        "billingType": "Pav2",
+                                        "multiplier": 1.0,
+                                        "chargingType": "PerOrder"
+                                      },
+                                      "meteringType": "OneTime",
+                                      "frequency": ""
+                                    },
+                                    {
+                                      "name": "SecureDeviceDestructionFees",
+                                      "meterDetails": {
+                                        "meterGuid": "15fa76e6-7af9-591c-a1f5-729af1d3b15e",
+                                        "billingType": "Pav2",
+                                        "multiplier": 1.0,
+                                        "chargingType": "PerOrder"
+                                      },
+                                      "meteringType": "Adhoc",
+                                      "frequency": ""
+                                    },
+                                    {
+                                      "name": "ReturnWithoutDriveFees",
+                                      "meterDetails": {
+                                        "meterGuid": "7caed8ae-1989-5de5-bf25-efa586f1f7e1",
+                                        "billingType": "Pav2",
+                                        "multiplier": 1.0,
+                                        "chargingType": "PerOrder"
+                                      },
+                                      "meteringType": "Adhoc",
+                                      "frequency": ""
+                                    },
+                                    {
+                                      "name": "LostOrDamagedFee",
+                                      "meterDetails": {
+                                        "meterGuid": "f9f4bf11-9b94-5074-9f90-3359020b2555",
+                                        "billingType": "Pav2",
+                                        "multiplier": 1.0,
+                                        "chargingType": "PerOrder"
+                                      },
+                                      "meteringType": "Adhoc",
+                                      "frequency": ""
+                                    },
+                                    {
+                                      "name": "DataDestructionFees",
+                                      "meterDetails": {
+                                        "meterGuid": "ce0432b0-f0fd-5084-9e94-cb2cd5e0efaf",
+                                        "billingType": "Pav2",
+                                        "multiplier": 1.0,
+                                        "chargingType": "PerOrder"
+                                      },
+                                      "meteringType": "Adhoc",
+                                      "frequency": ""
+                                    }
+                                  ]
+                                },
+                                "availabilityInformation": {
+                                  "availabilityStage": "Available",
+                                  "disabledReason": "None"
+                                },
+                                "hierarchyInformation": {
+                                  "productFamilyName": "azurestackedge",
+                                  "productLineName": "azurestackedge",
+                                  "productName": "azurestackedgegpu",
+                                  "configurationName": "edgep_base"
+                                }
+                              }
+                            }
+                          ],
+                          "filterableProperties": [
+                            {
+                              "type": "ShipToCountries",
+                              "supportedValues": [
+                                "US"
+                              ]
+                            }
+                          ],
+                          "displayName": "Azure Stack Edge Pro - GPU",
+                          "description": {
+                            "descriptionType": "Base",
+                            "shortDescription": "Azure managed physical edge compute device",
+                            "longDescription": "Azure Stack Edge is an AI-enabled edge computing device with network data transfer capabilities. The device is powered with NVIDIA T4 GPUs to provide accelerated AI inferencing at the edge. You can choose from the available configurations with one or two GPUs basis your business need",
+                            "keywords": [
+                              "GPU"
+                            ],
+                            "attributes": [
+                              "1U rack mount device with network data transfer capabilities",
+                              "Hardware accelerated ML using Nvidia T4 GPU",
+                              "Azure Private Edge Zones enabled"
+                            ],
+                            "links": [
+                              {
+                                "linkType": "Specification",
+                                "linkUrl": "https://aka.ms/edgeHWcenter-asepro-devicespec"
+                              },
+                              {
+                                "linkType": "Generic",
+                                "linkUrl": "https://aka.ms/ase-gpu-billing"
+                              },
+                              {
+                                "linkType": "TermsAndConditions",
+                                "linkUrl": "https://aka.ms/ase-gpu-product-terms"
+                              },
+                              {
+                                "linkType": "KnowMore",
+                                "linkUrl": "https://aka.ms/edgeHWcenter-asepro-documentation"
+                              }
+                            ]
+                          },
+                          "imageInformation": [],
+                          "costInformation": {
+                            "billingMeterDetails": []
+                          },
+                          "availabilityInformation": {
+                            "availabilityStage": "Available",
+                            "disabledReason": "None"
+                          },
+                          "hierarchyInformation": {
+                            "productFamilyName": "azurestackedge",
+                            "productLineName": "azurestackedge",
+                            "productName": "azurestackedgegpu",
+                            "configurationName": ""
+                          }
+                        }
+                      } 
+                    ],
+                    "filterableProperties": [
+                      {
+                        "type": "ShipToCountries",
+                        "supportedValues": [
+                          "US"
+                        ]
+                      },
+                      {
+                        "type": "DoubleEncryptionStatus",
+                        "supportedValues": [
+                          "Enabled"
+                        ]
+                      }
+                    ],
+                    "displayName": "Azure Stack Edge",
+                    "description": {
+                      "descriptionType": "Base",
+                      "keywords": [],
+                      "attributes": [],
+                      "links": []
+                    },
+                    "imageInformation": [],
+                    "availabilityInformation": {
+                      "availabilityStage": "Available",
+                      "disabledReason": "None"
+                    },
+                    "hierarchyInformation": {
+                      "productFamilyName": "azurestackedge",
+                      "productLineName": "azurestackedge",
+                      "productName": "",
+                      "configurationName": ""
+                    }
+                  }
+                }
+              ],
+              "filterableProperties": [
+                {
+                  "type": "ShipToCountries",
+                  "supportedValues": [
+                    "US"
+                  ]
+                },
+                {
+                  "type": "DoubleEncryptionStatus",
+                  "supportedValues": [
+                    "Enabled"
+                  ]
+                }
+              ],
+              "displayName": "Azure Stack Edge",
+              "description": {
+                "descriptionType": "Base",
+                "shortDescription": "Azure managed physical edge compute device",
+                "keywords": [],
+                "attributes": [],
+                "links": []
+              },
+              "imageInformation": [],
+              "availabilityInformation": {
+                "availabilityStage": "Available",
+                "disabledReason": "None"
+              },
+              "hierarchyInformation": {
+                "productFamilyName": "azurestackedge",
+                "productLineName": "",
+                "productName": "",
+                "configurationName": ""
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1504037526",
+    "SUBSCRIPTION_ID": "sanitized"
+  }
+}

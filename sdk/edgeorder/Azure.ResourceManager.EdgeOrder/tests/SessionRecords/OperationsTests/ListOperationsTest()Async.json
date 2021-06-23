@@ -1,0 +1,207 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.EdgeOrder/operations?api-version=2020-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f2d95d0d37ba584e8897a42c1a17b001-ad5dd5de5121824e-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20210621.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "83e900a02f5aa0859b7aa4ea966a7e6f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3599",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 21 Jun 2021 12:00:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "83e900a02f5aa0859b7aa4ea966a7e6f",
+        "x-ms-correlation-request-id": "1ad8a0f7-3826-4e86-96d6-e1bd275acb89",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "1ad8a0f7-3826-4e86-96d6-e1bd275acb89",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20210621T120037Z:1ad8a0f7-3826-4e86-96d6-e1bd275acb89"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "Microsoft.EdgeOrder/addresses/read",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "Addresses",
+              "operation": "List or Get Addresses",
+              "description": "List or get the Addresses"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/addresses/delete",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "Addresses",
+              "operation": "Delete Addresses",
+              "description": "Delete the Addresses"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/addresses/write",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "Addresses",
+              "operation": "Create or Update Addresses",
+              "description": "Create or update the Addresses"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/locations/operationResults/read",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "Operation Results",
+              "operation": "List or Get Operation Results",
+              "description": "List or get the Operation Results"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/operations/read",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "Operations",
+              "operation": "List or Get Operations",
+              "description": "List or get the Operations"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/locations/orders/read",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "Order",
+              "operation": "List or Get Order",
+              "description": "List or get the Order"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/orders/read",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "Order",
+              "operation": "List or Get Order",
+              "description": "List or get the Order"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/orderItems/cancel/action",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "OrderItem",
+              "operation": "Cancel OrderItem",
+              "description": "Cancels an OrderItem in progress."
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/orderItems/return/action",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "OrderItem",
+              "operation": "Return OrderItem",
+              "description": "Return an OrderItem."
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/orderItems/read",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "OrderItem",
+              "operation": "List or Get OrderItem",
+              "description": "List or get the OrderItem"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/orderItems/delete",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "OrderItem",
+              "operation": "Delete OrderItem",
+              "description": "Delete the OrderItem"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/orderItems/write",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "OrderItem",
+              "operation": "Create or Update OrderItem",
+              "description": "Create or update the OrderItem"
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/productFamiliesMetadata/action",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "ArmApiRes_Microsoft.EdgeOrder",
+              "operation": "List or Get product families metadata",
+              "description": "This method lists or gets the product families metadata."
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/listProductFamilies/read",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "ArmApiRes_Microsoft.EdgeOrder",
+              "operation": "List Product Families",
+              "description": "This method returns list of product families."
+            },
+            "origin": "user",
+            "isDataAction": false
+          },
+          {
+            "name": "Microsoft.EdgeOrder/listConfigurations/action",
+            "display": {
+              "provider": "Edge Ordering",
+              "resource": "ArmApiRes_Microsoft.EdgeOrder",
+              "operation": "List Product Configurations",
+              "description": "This method returns list of product configurations."
+            },
+            "origin": "user",
+            "isDataAction": false
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "297500412",
+    "SUBSCRIPTION_ID": "sanitized"
+  }
+}

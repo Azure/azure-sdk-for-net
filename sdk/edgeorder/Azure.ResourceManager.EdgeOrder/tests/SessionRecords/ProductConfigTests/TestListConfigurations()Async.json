@@ -1,0 +1,190 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/sanitized/providers/Microsoft.EdgeOrder/listConfigurations?api-version=2020-12-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "267",
+        "Content-Type": "application/json",
+        "traceparent": "00-4ce917af00726c40963db4c9e913cb97-42bcabac8bb4204f-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20210621.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "a7cf3a3c175bac4b3a510add3a60f4cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "configurationFilters": [
+          {
+            "hierarchyInformation": {
+              "productFamilyName": "AzureStackEdge",
+              "productLineName": "AzureStackEdge",
+              "productName": "AzureStackEdgeGPU",
+              "configurationName": "EdgeP_Base"
+            },
+            "filterableProperty": [
+              {
+                "type": "ShipToCountries",
+                "supportedValues": [
+                  "US"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2671",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 21 Jun 2021 12:00:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a7cf3a3c175bac4b3a510add3a60f4cb",
+        "x-ms-correlation-request-id": "4328cf00-a34b-43b8-9218-188b78928cba",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "4328cf00-a34b-43b8-9218-188b78928cba",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20210621T120039Z:4328cf00-a34b-43b8-9218-188b78928cba"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "specifications": [
+                {
+                  "name": "Usable compute",
+                  "value": "40 vCPU"
+                },
+                {
+                  "name": "Usable memory",
+                  "value": "102 GB"
+                },
+                {
+                  "name": "Usable storage",
+                  "value": "4.2 TB"
+                }
+              ],
+              "dimensions": {
+                "length": 50.0,
+                "height": 15.0,
+                "width": 5.0,
+                "lengthHeightUnit": "IN",
+                "weight": 50.0,
+                "depth": 2.0,
+                "weightUnit": "LBS"
+              },
+              "filterableProperties": [
+                {
+                  "type": "ShipToCountries",
+                  "supportedValues": [
+                    "US"
+                  ]
+                }
+              ],
+              "displayName": "Azure Stack Edge Pro - 1 GPU",
+              "description": {
+                "descriptionType": "Base",
+                "shortDescription": "",
+                "longDescription": "",
+                "keywords": [
+                  "GPU"
+                ],
+                "attributes": [],
+                "links": []
+              },
+              "imageInformation": [],
+              "costInformation": {
+                "billingMeterDetails": [
+                  {
+                    "name": "RentalFee",
+                    "meterDetails": {
+                      "meterGuid": "91edd360-e07c-5529-a0fd-99f30b20cf21",
+                      "billingType": "Pav2",
+                      "multiplier": 1.0,
+                      "chargingType": "PerOrder"
+                    },
+                    "meteringType": "Recurring",
+                    "frequency": "P1D"
+                  },
+                  {
+                    "name": "ShippingFee",
+                    "meterDetails": {
+                      "meterGuid": "97b0cf84-c662-567c-bcbb-4158fa54ccc9",
+                      "billingType": "Pav2",
+                      "multiplier": 1.0,
+                      "chargingType": "PerOrder"
+                    },
+                    "meteringType": "OneTime",
+                    "frequency": ""
+                  },
+                  {
+                    "name": "SecureDeviceDestructionFees",
+                    "meterDetails": {
+                      "meterGuid": "15fa76e6-7af9-591c-a1f5-729af1d3b15e",
+                      "billingType": "Pav2",
+                      "multiplier": 1.0,
+                      "chargingType": "PerOrder"
+                    },
+                    "meteringType": "Adhoc",
+                    "frequency": ""
+                  },
+                  {
+                    "name": "ReturnWithoutDriveFees",
+                    "meterDetails": {
+                      "meterGuid": "7caed8ae-1989-5de5-bf25-efa586f1f7e1",
+                      "billingType": "Pav2",
+                      "multiplier": 1.0,
+                      "chargingType": "PerOrder"
+                    },
+                    "meteringType": "Adhoc",
+                    "frequency": ""
+                  },
+                  {
+                    "name": "LostOrDamagedFee",
+                    "meterDetails": {
+                      "meterGuid": "f9f4bf11-9b94-5074-9f90-3359020b2555",
+                      "billingType": "Pav2",
+                      "multiplier": 1.0,
+                      "chargingType": "PerOrder"
+                    },
+                    "meteringType": "Adhoc",
+                    "frequency": ""
+                  },
+                  {
+                    "name": "DataDestructionFees",
+                    "meterDetails": {
+                      "meterGuid": "ce0432b0-f0fd-5084-9e94-cb2cd5e0efaf",
+                      "billingType": "Pav2",
+                      "multiplier": 1.0,
+                      "chargingType": "PerOrder"
+                    },
+                    "meteringType": "Adhoc",
+                    "frequency": ""
+                  }
+                ]
+              },
+              "availabilityInformation": {
+                "availabilityStage": "Available",
+                "disabledReason": "None"
+              },
+              "hierarchyInformation": {
+                "productFamilyName": "azurestackedge",
+                "productLineName": "azurestackedge",
+                "productName": "azurestackedgegpu",
+                "configurationName": "edgep_base"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "837779083",
+    "SUBSCRIPTION_ID": "sanitized"
+  }
+}

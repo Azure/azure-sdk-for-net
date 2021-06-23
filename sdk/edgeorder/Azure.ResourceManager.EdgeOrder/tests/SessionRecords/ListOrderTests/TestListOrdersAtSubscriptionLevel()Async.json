@@ -1,0 +1,67 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/sanitized/providers/Microsoft.EdgeOrder/orders?api-version=2020-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-95bf5becdd4e324faa50811f5443d1de-5ebafce78e8cff4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.EdgeOrder/1.0.0-alpha.20210621.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "41bf004a9fb0062e98129be97f940237",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "17893",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 21 Jun 2021 12:37:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d905c7bc-9fac-401f-8a93-f4bdafeeb3f0",
+        "x-ms-original-request-ids": "",
+        "x-ms-ratelimit-remaining-subscription-reads": "11837",
+        "x-ms-request-id": "d905c7bc-9fac-401f-8a93-f4bdafeeb3f0",
+        "x-ms-routing-request-id": "SOUTHINDIA:20210621T123751Z:d905c7bc-9fac-401f-8a93-f4bdafeeb3f0"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "orderItemIds": [
+                "/subscriptions/sanitized/resourceGroups/SdkRg8480/providers/Microsoft.EdgeOrder/orderItems/SdkOrderItem2997"
+              ],
+              "currentStage": {
+                "stageStatus": "Succeeded",
+                "stageName": "Placed",
+                "startTime": "2021-06-21T12:37:43.0270336\u002B00:00"
+              },
+              "orderStageHistory": [
+                {
+                  "stageStatus": "Succeeded",
+                  "stageName": "Placed",
+                  "startTime": "2021-06-21T12:37:43.0270336\u002B00:00"
+                },
+                {
+                  "stageStatus": "None",
+                  "stageName": "InReview"
+                }
+              ]
+            },
+            "name": "SdkOrderItem2997",
+            "id": "/subscriptions/sanitized/resourceGroups/SdkRg8480/providers/Microsoft.EdgeOrder/locations/eastus/orders/SdkOrderItem2997",
+            "type": "Microsoft.EdgeOrder/orders"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "111800800",
+    "SUBSCRIPTION_ID": "sanitized"
+  }
+}
