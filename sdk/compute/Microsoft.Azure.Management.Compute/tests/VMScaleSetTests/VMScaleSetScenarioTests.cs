@@ -270,7 +270,7 @@ namespace Compute.Tests
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, associateWithCapacityReservationGroup: true,
-                        vmSize: VirtualMachineSizeTypes.StandardDS1V2, faultDomainCount: 1, capacity: 1, shouldOverProvision: false,
+                        vmSize: VirtualMachineSizeTypes.StandardDS1V2, faultDomainCount: 1, capacity: 1,
                         validateVmssVMInstanceView: true, validateListSku: false, deleteAsPartOfTest: false);
                 }
             }
@@ -559,6 +559,7 @@ namespace Compute.Tests
                     dedicatedHostReferenceId = Helpers.GetDedicatedHostRef(m_subId, rgName, dedicatedHostGroupName, dedicatedHostName);
                 }
 
+                bool singlePlacementGroup = true;
                 string capacityReservationGroupName = null, capacityReservationGroupReferenceId = null, capacityReservationName = null;
                 if (associateWithCapacityReservationGroup)
                 {
@@ -567,6 +568,7 @@ namespace Compute.Tests
                     CreateCapacityReservationGroup(rgName, capacityReservationGroupName);
                     CreateCapacityReservation(rgName, capacityReservationGroupName, capacityReservationName, VirtualMachineSizeTypes.StandardDS1V2, reservedCount: 1);
                     capacityReservationGroupReferenceId = Helpers.GetCapacityReservationGroupRef(m_subId, rgName, capacityReservationGroupName);
+                    singlePlacementGroup = false;
                 }
 
                 VirtualMachineScaleSet getResponse = CreateVMScaleSet_NoAsyncTracking(
@@ -597,7 +599,8 @@ namespace Compute.Tests
                     dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                     dedicatedHostGroupName: dedicatedHostGroupName,
                     dedicatedHostName: dedicatedHostName,
-                    capacityReservationGroupReferenceId: capacityReservationGroupReferenceId);
+                    capacityReservationGroupReferenceId: capacityReservationGroupReferenceId,
+                    singlePlacementGroup: singlePlacementGroup);
 
                 if (diskEncryptionSetId != null)
                 {
@@ -620,7 +623,7 @@ namespace Compute.Tests
                     CapacityReservation capacityReservation =
                          m_CrpClient.CapacityReservations.Get(rgName, capacityReservationGroupName, capacityReservationName, CapacityReservationInstanceViewTypes.InstanceView);
 
-                    string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMScaleSet.Name, "0");
+                    string expectedVMReferenceId = Helpers.GetVMScaleSetVMReferenceId(m_subId, rgName, inputVMScaleSet.Name, "0");
 
                     Assert.True(capacityReservation.VirtualMachinesAssociated.Any(), "capacityReservation.VirtualMachinesAssociated is not empty");
                     Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.VirtualMachinesAssociated.First().Id), "capacityReservation.VirtualMachinesAssociated are not matching");
