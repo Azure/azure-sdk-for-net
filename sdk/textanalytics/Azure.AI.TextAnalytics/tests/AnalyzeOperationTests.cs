@@ -579,7 +579,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21801")]
         public async Task AnalyzeOperationAnalyzeSentimentWithOpinionMining()
         {
             TextAnalyticsClient client = GetClient();
