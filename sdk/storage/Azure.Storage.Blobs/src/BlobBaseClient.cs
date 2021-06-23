@@ -5017,7 +5017,7 @@ namespace Azure.Storage.Blobs.Specialized
                     throw new ArgumentException($"{nameof(immutabilityPolicy.PolicyMode)} must be {BlobImmutabilityPolicyMode.Locked} or {BlobImmutabilityPolicyMode.Unlocked}");
                 }
 
-                conditions.ValidateRequestConditionsNotPresent(
+                conditions.ValidateConditionsNotPresent(
                     invalidConditions:
                         BlobRequestConditionProperty.IfMatch
                         | BlobRequestConditionProperty.IfNoneMatch
