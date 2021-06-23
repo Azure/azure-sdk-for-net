@@ -2552,6 +2552,18 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(StartCopyFromUri)}");
 
+                // All BlobRequestConditions are valid.
+                destinationConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlobBaseClient.StartCopyFromUri),
+                    parameterName: nameof(destinationConditions));
+
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.LeaseId,
+                    operationName: nameof(BlobBaseClient.StartCopyFromUri),
+                    parameterName: nameof(sourceConditions));
+
                 try
                 {
                     scope.Start();

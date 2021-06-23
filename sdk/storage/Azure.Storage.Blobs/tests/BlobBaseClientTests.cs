@@ -2323,6 +2323,40 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.LeaseId))]
+        public async Task StartCopyFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobBaseClient blobBaseClient = new BlobBaseClient(uri, GetOptions());
+
+            BlobRequestConditions sourceConditions = new BlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(BlobRequestConditions.LeaseId):
+                    sourceConditions.LeaseId = string.Empty;
+                    break;
+            }
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blobBaseClient.StartCopyFromUriAsync(
+                    uri,
+                    options: options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"StartCopyFromUri does not support the {invalidSourceCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                });
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task StartCopyFromUriAsync_Tags()
         {
