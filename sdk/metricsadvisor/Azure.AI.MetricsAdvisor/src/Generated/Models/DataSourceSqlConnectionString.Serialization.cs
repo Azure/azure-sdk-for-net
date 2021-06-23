@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static DataSourceSqlConnectionString DeserializeSqlConnectionStringDataSourceCredential(JsonElement element)
+        internal static DataSourceSqlConnectionString DeserializeDataSourceSqlConnectionString(JsonElement element)
         {
             AzureSQLConnectionStringParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;

@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     public partial class DataSourceCredentialEntity
     {
 
-        /// <summary> Initializes a new instance of DataSourceCredential. </summary>
+        /// <summary> Initializes a new instance of DataSourceCredentialEntity. </summary>
         /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
         /// <param name="id"> Unique id of data source credential. </param>
         /// <param name="name"> Name of data source credential. </param>

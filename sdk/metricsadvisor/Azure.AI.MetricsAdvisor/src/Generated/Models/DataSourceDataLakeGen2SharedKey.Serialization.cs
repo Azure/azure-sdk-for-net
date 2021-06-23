@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class DataSourceServicePrincipal : IUtf8JsonSerializable
+    public partial class DataSourceDataLakeGen2SharedKey : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static DataSourceServicePrincipal DeserializeServicePrincipalDataSourceCredential(JsonElement element)
+        internal static DataSourceDataLakeGen2SharedKey DeserializeDataSourceDataLakeGen2SharedKey(JsonElement element)
         {
-            ServicePrincipalParam parameters = default;
+            DataLakeGen2SharedKeyParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = ServicePrincipalParam.DeserializeServicePrincipalParam(property.Value);
+                    parameters = DataLakeGen2SharedKeyParam.DeserializeDataLakeGen2SharedKeyParam(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new DataSourceServicePrincipal(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataSourceDataLakeGen2SharedKey(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

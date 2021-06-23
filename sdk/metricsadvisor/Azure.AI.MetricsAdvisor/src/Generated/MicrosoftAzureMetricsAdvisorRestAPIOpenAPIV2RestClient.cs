@@ -1557,7 +1557,7 @@ namespace Azure.AI.MetricsAdvisor
                     {
                         DataSourceCredentialEntity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataSourceCredentialEntity.DeserializeDataSourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1585,7 +1585,7 @@ namespace Azure.AI.MetricsAdvisor
                     {
                         DataSourceCredentialEntity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataSourceCredentialEntity.DeserializeDataSourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1668,7 +1668,7 @@ namespace Azure.AI.MetricsAdvisor
                     {
                         DataSourceCredentialEntity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataSourceCredentialEntity.DeserializeDataSourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1689,7 +1689,7 @@ namespace Azure.AI.MetricsAdvisor
                     {
                         DataSourceCredentialEntity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataSourceCredentialEntity.DeserializeDataSourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

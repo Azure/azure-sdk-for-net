@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<DataSourceCredentialEntity> array = new List<DataSourceCredentialEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourceCredentialEntity.DeserializeDataSourceCredential(item));
+                        array.Add(DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(item));
                     }
                     value = array;
                     continue;

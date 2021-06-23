@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static DataSourceServicePrincipalInKeyVault DeserializeServicePrincipalInKeyVaultDataSourceCredential(JsonElement element)
+        internal static DataSourceServicePrincipalInKeyVault DeserializeDataSourceServicePrincipalInKeyVault(JsonElement element)
         {
             ServicePrincipalInKVParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
