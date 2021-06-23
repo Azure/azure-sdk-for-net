@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.ResumableStorage;
@@ -535,6 +537,119 @@ namespace Azure.Containers.ContainerRegistry
             // TODO: What would make sense to return for response?
         }
 
+        /// <summary>
+        /// Pull this artifact to the specified directory.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> PullToAsync(string path, CancellationToken cancellationToken)
+        {
+            // Get Manifest
+            // TODO: should we expose the option to use the accept header string for this method?
+            // /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
+            Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+            // Get Attributes (need digest and mediaType)
+            // TODO: we could cache these
+            ArtifactManifestProperties properties = await this.GetManifestPropertiesAsync(cancellationToken).ConfigureAwait(false);
+
+            // TODO: is this the best way to do this?
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            // Download manifest
+            string manifestFile = Path.Combine(path, "manifest.json");
+
+            using (FileStream fs = File.OpenWrite(manifestFile))
+            using (StreamWriter streamWriter = new StreamWriter(fs))
+            {
+                JsonSerializer.Serialize(streamWriter);
+            }
+
+            // Download config
+            string configFile = Path.Combine(path, "config.json");
+            ContentDescriptor configDescriptor = GetConfigDescriptor(manifest);
+            if (configDescriptor != null)
+            {
+                // TODO: do we need the digest from the properties, or could we get it from the one cached in this class?
+                // ACTUALLY: we need the one from the config, because that's what we're retrieving!
+                await DownloadLayerAsync(_repositoryName, configDescriptor.Digest, configFile, cancellationToken).ConfigureAwait(false);
+            }
+
+            //Write Layers
+            IList<ContentDescriptor> layerDescriptors = GetLayerDescriptors(manifest);
+            if (layerDescriptors != null)
+            {
+                for (int i = 0; i < layerDescriptors.Count; i++)
+                {
+                    ContentDescriptor layerDescriptor = layerDescriptors[i];
+                    // Trim "sha256:" from the digest
+                    var fileName = layerDescriptor.Annotations?.Title ?? TrimSha(layerDescriptor.Digest);
+                    fileName = Path.Combine(path, fileName);
+                    await DownloadLayerAsync(_repositoryName, layerDescriptor.Digest, fileName, cancellationToken).ConfigureAwait(false);
+                }
+            }
+
+            // TODO: need to return an appropriate response
+            return manifest.GetRawResponse();
+        }
+
+        private static ContentDescriptor GetConfigDescriptor(ImageManifest manifest)
+        {
+            switch (manifest)
+            {
+                case OciManifest ociManifest:
+                    return ociManifest.ConfigDescriptor;
+                case DockerManifestV2 dockerManifestV2:
+                    return dockerManifestV2.ConfigDescriptor;
+            }
+
+            return null;
+        }
+
+        private static IList<ContentDescriptor> GetLayerDescriptors(ImageManifest manifest)
+        {
+            switch (manifest)
+            {
+                case OciManifest ociManifest:
+                    return ociManifest.Layers;
+                case DockerManifestV2 dockerManifestV2:
+                    return dockerManifestV2.Layers;
+            }
+
+            return null;
+        }
+
+        // TODO: Can we make this more performant?
+        private static string TrimSha(string digest)
+        {
+            int index = digest.IndexOf(':');
+            if (index > -1)
+            {
+                return digest.Substring(index + 1);
+            }
+
+            return digest;
+        }
+
+        private async Task DownloadLayerAsync(string repo, string digest, string filename, CancellationToken cancellationToken)
+        {
+            if (String.IsNullOrEmpty(filename))
+            {
+                throw new ArgumentNullException(nameof(filename));
+            }
+
+            // TODO: we'll need to dispose the stream properly
+            ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(repo, digest, cancellationToken).ConfigureAwait(false);
+
+            using (FileStream fs = File.OpenWrite(filename))
+            {
+                await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
+            }
+        }
         #endregion
     }
 }
