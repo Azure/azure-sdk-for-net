@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer.Models
     public partial class MultiSlotRewardRequest
     {
         /// <summary> Initializes a new instance of MultiSlotRewardRequest. </summary>
-        /// <param name="reward"> . </param>
+        /// <param name="reward"> List of SlotRewards. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reward"/> is null. </exception>
         public MultiSlotRewardRequest(IEnumerable<SlotReward> reward)
         {
@@ -27,6 +27,7 @@ namespace Azure.AI.Personalizer.Models
             Reward = reward.ToList();
         }
 
+        /// <summary> List of SlotRewards. </summary>
         public IList<SlotReward> Reward { get; }
     }
 }

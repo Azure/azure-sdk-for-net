@@ -1,49 +1,41 @@
 ﻿using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Xunit;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.Personalizer;
 using Azure.AI.Personalizer.Models;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.AI.Personalizer.Tests
 {
-    public class ModelTests : BaseTests
+    public class ModelTests : PersonalizerTestBase
     {
-        [Fact]
+        public ModelTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        [Test]
         public async Task GetModel()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "GetModel");
-                ModelRestClient client = GetModelClient(HttpMockServer.CreateInstance());
-                Stream stream = await client.GetAsync();
-                Assert.NotEqual(-1 , stream.ReadByte());
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            Stream stream = await client.Model.GetAsync();
+            Assert.AreNotEqual(-1 , stream.ReadByte());
         }
 
-        [Fact]
+        [Test]
         public async Task ResetModel()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "ResetModel");
-                ModelRestClient client = GetModelClient(HttpMockServer.CreateInstance());
-                await client.ResetAsync();
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            await client.Model.ResetAsync();
         }
 
-        [Fact]
+        [Test]
         public async Task GetModelProperties()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "GetModelProperties");
-                ModelRestClient client = GetModelClient(HttpMockServer.CreateInstance());
-                ModelProperties modelProperties = await client.GetPropertiesAsync();
-                Assert.True(modelProperties.CreationTime != null);
-                Assert.True(modelProperties.LastModifiedTime != null);
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            ModelProperties modelProperties = await client.Model.GetPropertiesAsync();
+            Assert.True(modelProperties.CreationTime != null);
+            Assert.True(modelProperties.LastModifiedTime != null);
         }
     }
 }

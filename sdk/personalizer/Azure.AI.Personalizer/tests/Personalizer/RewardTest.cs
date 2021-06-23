@@ -2,22 +2,22 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Threading.Tasks;
 using Azure.AI.Personalizer.Models;
-using Xunit;
 using Azure.AI.Personalizer;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.AI.Personalizer.Tests
 {
-    public class RewardTest : BaseTests
+    public class RewardTest : PersonalizerTestBase
     {
-        [Fact]
+        public RewardTest(bool isAsync) : base(isAsync)
+        {
+        }
+
+        [Test]
         public async Task Reward()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "Reward");
-                EventsRestClient client = GetEventsClient(HttpMockServer.CreateInstance());
-                await client.RewardAsync("123456789", new RewardRequest((float)0.5));
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            await client.Events.RewardAsync("123456789", new RewardRequest((float)0.5));
         }
     }
 }

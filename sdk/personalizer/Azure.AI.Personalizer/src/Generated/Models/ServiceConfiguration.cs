@@ -74,7 +74,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="logRetentionDays"> Number of days historical logs are to be maintained. -1 implies the logs will never be deleted. </param>
         /// <param name="lastConfigurationEditDate"> Last time model training configuration was updated. </param>
         /// <param name="learningMode"> Learning Modes for Personalizer. </param>
-        /// <param name="latestApprenticeModeMetrics"> . </param>
+        /// <param name="latestApprenticeModeMetrics"> Most recent Apprentice Mode metrics. </param>
         /// <param name="isAutoOptimizationEnabled"> Flag indicating whether Personalizer will automatically optimize Learning Settings by running Offline Evaluations periodically. </param>
         /// <param name="autoOptimizationFrequency">
         /// Frequency of automatic optimization. Only relevant if IsAutoOptimizationEnabled is true.
@@ -136,6 +136,7 @@ namespace Azure.AI.Personalizer.Models
         public DateTimeOffset? LastConfigurationEditDate { get; set; }
         /// <summary> Learning Modes for Personalizer. </summary>
         public LearningMode? LearningMode { get; set; }
+        /// <summary> Most recent Apprentice Mode metrics. </summary>
         public ApprenticeModeMetrics LatestApprenticeModeMetrics { get; set; }
         /// <summary> Flag indicating whether Personalizer will automatically optimize Learning Settings by running Offline Evaluations periodically. </summary>
         public bool? IsAutoOptimizationEnabled { get; set; }

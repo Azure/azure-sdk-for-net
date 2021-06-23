@@ -13,12 +13,12 @@ namespace Azure.AI.Personalizer.Models
     public partial class ApprenticeModeMetrics
     {
         /// <summary> Initializes a new instance of ApprenticeModeMetrics. </summary>
-        /// <param name="startTime"> . </param>
-        /// <param name="lastProcessedEventTime"> . </param>
-        /// <param name="numberOfEvents"> . </param>
-        /// <param name="sumOfRewards"> . </param>
-        /// <param name="numberOfImitatedEvents"> . </param>
-        /// <param name="sumOfImitatedRewards"> . </param>
+        /// <param name="startTime"> Start time. </param>
+        /// <param name="lastProcessedEventTime"> Last processed event time. </param>
+        /// <param name="numberOfEvents"> Number of Events. </param>
+        /// <param name="sumOfRewards"> Sum of Rewards. </param>
+        /// <param name="numberOfImitatedEvents"> Number of Events where Personalizer predicted &apos;Baseline Action&apos;. </param>
+        /// <param name="sumOfImitatedRewards"> Sum of Rewards where Personalizer predicted &apos;Baseline Action&apos;. </param>
         public ApprenticeModeMetrics(DateTimeOffset startTime, DateTimeOffset lastProcessedEventTime, long numberOfEvents, float sumOfRewards, long numberOfImitatedEvents, float sumOfImitatedRewards)
         {
             StartTime = startTime;
@@ -30,13 +30,13 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary> Initializes a new instance of ApprenticeModeMetrics. </summary>
-        /// <param name="startTime"> . </param>
-        /// <param name="lastProcessedEventTime"> . </param>
-        /// <param name="lastBatchMetrics"> . </param>
-        /// <param name="numberOfEvents"> . </param>
-        /// <param name="sumOfRewards"> . </param>
-        /// <param name="numberOfImitatedEvents"> . </param>
-        /// <param name="sumOfImitatedRewards"> . </param>
+        /// <param name="startTime"> Start time. </param>
+        /// <param name="lastProcessedEventTime"> Last processed event time. </param>
+        /// <param name="lastBatchMetrics"> Previous batch of Apprentice Mode metrics. </param>
+        /// <param name="numberOfEvents"> Number of Events. </param>
+        /// <param name="sumOfRewards"> Sum of Rewards. </param>
+        /// <param name="numberOfImitatedEvents"> Number of Events where Personalizer predicted &apos;Baseline Action&apos;. </param>
+        /// <param name="sumOfImitatedRewards"> Sum of Rewards where Personalizer predicted &apos;Baseline Action&apos;. </param>
         internal ApprenticeModeMetrics(DateTimeOffset startTime, DateTimeOffset lastProcessedEventTime, ApprenticeLearningMetrics lastBatchMetrics, long numberOfEvents, float sumOfRewards, long numberOfImitatedEvents, float sumOfImitatedRewards)
         {
             StartTime = startTime;
@@ -48,12 +48,19 @@ namespace Azure.AI.Personalizer.Models
             SumOfImitatedRewards = sumOfImitatedRewards;
         }
 
+        /// <summary> Start time. </summary>
         public DateTimeOffset StartTime { get; set; }
+        /// <summary> Last processed event time. </summary>
         public DateTimeOffset LastProcessedEventTime { get; set; }
+        /// <summary> Previous batch of Apprentice Mode metrics. </summary>
         public ApprenticeLearningMetrics LastBatchMetrics { get; set; }
+        /// <summary> Number of Events. </summary>
         public long NumberOfEvents { get; set; }
+        /// <summary> Sum of Rewards. </summary>
         public float SumOfRewards { get; set; }
+        /// <summary> Number of Events where Personalizer predicted &apos;Baseline Action&apos;. </summary>
         public long NumberOfImitatedEvents { get; set; }
+        /// <summary> Sum of Rewards where Personalizer predicted &apos;Baseline Action&apos;. </summary>
         public float SumOfImitatedRewards { get; set; }
     }
 }

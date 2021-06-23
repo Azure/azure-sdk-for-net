@@ -12,7 +12,7 @@ using Azure.AI.Personalizer.Models;
 namespace Azure.AI.Personalizer
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class PersonalizerClientV1Preview1ModelFactory
+    public static partial class PersonalizerV1Preview1ModelFactory
     {
         /// <summary> Initializes new instance of Evaluation class. </summary>
         /// <param name="id"> The ID of the evaluation. </param>
@@ -22,10 +22,10 @@ namespace Azure.AI.Personalizer
         /// <param name="jobId"> The ID of the job processing the evaluation. </param>
         /// <param name="status"> The status of the job processing the evaluation. </param>
         /// <param name="policyResults"> The results of the evaluation. </param>
-        /// <param name="featureImportance"> . </param>
-        /// <param name="evaluationType"> . </param>
-        /// <param name="optimalPolicy"> . </param>
-        /// <param name="creationTime"> . </param>
+        /// <param name="featureImportance"> Feature Importance. </param>
+        /// <param name="evaluationType"> Evaluation type (manual or through Automatic Optimization). </param>
+        /// <param name="optimalPolicy"> Thr optimal policy. </param>
+        /// <param name="creationTime"> Craetion time. </param>
         /// <returns> A new <see cref="Models.Evaluation"/> instance for mocking. </returns>
         public static Evaluation Evaluation(string id = default, string name = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string jobId = default, EvaluationJobStatus? status = default, IReadOnlyList<PolicyResult> policyResults = default, IReadOnlyList<IList<string>> featureImportance = default, EvaluationType? evaluationType = default, string optimalPolicy = default, DateTimeOffset? creationTime = default)
         {
@@ -39,7 +39,7 @@ namespace Azure.AI.Personalizer
         /// <param name="arguments"> The arguments of the Learning Settings. </param>
         /// <param name="policySource"> The source of the Learning Settings. </param>
         /// <param name="summary"> The aggregate results of the Offline Evaluation. </param>
-        /// <param name="totalSummary"> . </param>
+        /// <param name="totalSummary"> The aggregate total of the Offline Evaluation. </param>
         /// <returns> A new <see cref="Models.PolicyResult"/> instance for mocking. </returns>
         public static PolicyResult PolicyResult(string name = default, string arguments = default, PolicySource? policySource = default, IReadOnlyList<PolicyResultSummary> summary = default, PolicyResultTotalSummary totalSummary = default)
         {
@@ -70,7 +70,7 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Initializes new instance of LogsProperties class. </summary>
-        /// <param name="dateRange"> . </param>
+        /// <param name="dateRange"> Date range. </param>
         /// <returns> A new <see cref="Models.LogsProperties"/> instance for mocking. </returns>
         public static LogsProperties LogsProperties(LogsPropertiesDateRange dateRange = default)
         {

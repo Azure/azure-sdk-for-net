@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer.Models
 {
-    /// <summary> A counterfactual evaluation. </summary>
+    /// <summary> A Counterfactual Evaluation. </summary>
     public partial class Evaluation
     {
         /// <summary> Initializes a new instance of Evaluation. </summary>
@@ -29,10 +29,10 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="jobId"> The ID of the job processing the evaluation. </param>
         /// <param name="status"> The status of the job processing the evaluation. </param>
         /// <param name="policyResults"> The results of the evaluation. </param>
-        /// <param name="featureImportance"> . </param>
-        /// <param name="evaluationType"> . </param>
-        /// <param name="optimalPolicy"> . </param>
-        /// <param name="creationTime"> . </param>
+        /// <param name="featureImportance"> Feature Importance. </param>
+        /// <param name="evaluationType"> Evaluation type (manual or through Automatic Optimization). </param>
+        /// <param name="optimalPolicy"> Thr optimal policy. </param>
+        /// <param name="creationTime"> Craetion time. </param>
         internal Evaluation(string id, string name, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, EvaluationJobStatus? status, IReadOnlyList<PolicyResult> policyResults, IReadOnlyList<IList<string>> featureImportance, EvaluationType? evaluationType, string optimalPolicy, DateTimeOffset? creationTime)
         {
             Id = id;
@@ -62,9 +62,13 @@ namespace Azure.AI.Personalizer.Models
         public EvaluationJobStatus? Status { get; }
         /// <summary> The results of the evaluation. </summary>
         public IReadOnlyList<PolicyResult> PolicyResults { get; }
+        /// <summary> Feature Importance. </summary>
         public IReadOnlyList<IList<string>> FeatureImportance { get; }
+        /// <summary> Evaluation type (manual or through Automatic Optimization). </summary>
         public EvaluationType? EvaluationType { get; }
+        /// <summary> Thr optimal policy. </summary>
         public string OptimalPolicy { get; }
+        /// <summary> Craetion time. </summary>
         public DateTimeOffset? CreationTime { get; }
     }
 }

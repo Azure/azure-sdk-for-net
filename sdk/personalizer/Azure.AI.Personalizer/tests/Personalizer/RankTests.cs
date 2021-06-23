@@ -1,77 +1,75 @@
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer.Models;
-using Xunit;
 using Azure.AI.Personalizer;
+using Azure.AI.Personalizer.Models;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.AI.Personalizer.Tests
 {
-    public class RankTests : BaseTests
+    public class RankTests : PersonalizerTestBase
     {
-        [Fact]
+        public RankTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        [Test]
         public async Task RankNullParameters()
         {
-            using (MockContext.Start(this.GetType()))
+            PersonalizerClient client = GetPersonalizerClient();
+            IList<RankableAction> actions = new List<RankableAction>();
+            actions.Add
+                (new RankableAction(
+                    id: "Person",
+                    features:
+                    new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
+            ));
+            var request = new RankRequest(actions);
+            // Action
+            RankResponse response = await client.PersonalizerV1Preview1.RankAsync(request);
+            // Assert
+            Assert.AreEqual(actions.Count, response.Ranking.Count);
+            for (int i = 0; i < response.Ranking.Count; i++)
             {
-                HttpMockServer.Initialize(this.GetType(), "RankNullParameters");
-                PersonalizerClientV1Preview1RestClient client = GetPersonalizerClient(HttpMockServer.CreateInstance());
-                IList<RankableAction> actions = new List<RankableAction>();
-                actions.Add
-                    (new RankableAction(
-                        id: "Person",
-                        features:
-                        new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
-                ));
-                var request = new RankRequest(actions);
-                // Action
-                RankResponse response = await client.RankAsync(request);
-                // Assert
-                Assert.Equal(actions.Count, response.Ranking.Count);
-                for (int i = 0; i < response.Ranking.Count; i++)
-                {
-                    Assert.Equal(actions[i].Id, response.Ranking[i].Id);
-                }
+                Assert.AreEqual(actions[i].Id, response.Ranking[i].Id);
             }
         }
 
-        [Fact]
+        [Test]
         public async Task RankServerFeatures()
         {
-            using (MockContext.Start(this.GetType()))
+            PersonalizerClient client = GetPersonalizerClient();
+            IList<object> contextFeatures = new List<object>() {
+                new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },
+                new { Features = new { userId = "1234", payingUser = true, favoriteGenre = "documentary", hoursOnSite = 0.12, lastwatchedType = "movie" } }
+            };
+            IList<RankableAction> actions = new List<RankableAction>();
+            actions.Add(
+                new RankableAction(
+                    id: "Person1",
+                    features:
+                    new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
+            ));
+            actions.Add(
+                new RankableAction(
+                    id: "Person2",
+                    features:
+                        new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "40-45" }}
+            ));
+            IList<string> excludeActions = new List<string> { "Person1" };
+            string eventId = "123456789";
+            var request = new RankRequest(actions, contextFeatures, excludeActions, eventId);
+            // Action
+            RankResponse response = await client.PersonalizerV1Preview1.RankAsync(request);
+            // Assert
+            Assert.AreEqual(eventId, response.EventId);
+            Assert.AreEqual(actions.Count, response.Ranking.Count);
+            for (int i = 0; i < response.Ranking.Count; i++)
             {
-                HttpMockServer.Initialize(this.GetType(), "RankServerFeatures");
-                PersonalizerClientV1Preview1RestClient client = GetPersonalizerClient(HttpMockServer.CreateInstance());
-                IList<object> contextFeatures = new List<object>() {
-                    new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },
-                    new { Features = new { userId = "1234", payingUser = true, favoriteGenre = "documentary", hoursOnSite = 0.12, lastwatchedType = "movie" } }
-                };
-                IList<RankableAction> actions = new List<RankableAction>();
-                actions.Add(
-                    new RankableAction(
-                        id: "Person1",
-                        features:
-                        new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
-                ));
-                actions.Add(
-                    new RankableAction(
-                        id: "Person2",
-                        features:
-                            new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "40-45" }}
-                ));
-                IList<string> excludeActions = new List<string> { "Person1" };
-                string eventId = "123456789";
-                var request = new RankRequest(actions, contextFeatures, excludeActions, eventId);
-                // Action
-                RankResponse response = await client.RankAsync(request);
-                // Assert
-                Assert.Equal(eventId, response.EventId);
-                Assert.Equal(actions.Count, response.Ranking.Count);
-                for (int i = 0; i < response.Ranking.Count; i++)
-                {
-                    Assert.Equal(actions[i].Id, response.Ranking[i].Id);
-                }
+                Assert.AreEqual(actions[i].Id, response.Ranking[i].Id);
             }
         }
     }

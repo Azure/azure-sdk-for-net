@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.Personalizer.Models
 {
-    /// <summary> The PolicyResultTotalSummary. </summary>
+    /// <summary> The aggregate total of the Offline Evaluation. </summary>
     public partial class PolicyResultTotalSummary : PolicyResultSummary
     {
         /// <summary> Initializes a new instance of PolicyResultTotalSummary. </summary>

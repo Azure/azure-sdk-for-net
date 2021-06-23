@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Personalizer.Models
 {
-    /// <summary> The EvaluationType. </summary>
+    /// <summary> Evaluation type (manual or through Automatic Optimization). </summary>
     public readonly partial struct EvaluationType : IEquatable<EvaluationType>
     {
         private readonly string _value;

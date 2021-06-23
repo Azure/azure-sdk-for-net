@@ -11,10 +11,10 @@ namespace Azure.AI.Personalizer.Models
     public partial class ApprenticeLearningMetrics
     {
         /// <summary> Initializes a new instance of ApprenticeLearningMetrics. </summary>
-        /// <param name="numberOfEvents"> . </param>
-        /// <param name="sumOfRewards"> . </param>
-        /// <param name="numberOfImitatedEvents"> . </param>
-        /// <param name="sumOfImitatedRewards"> . </param>
+        /// <param name="numberOfEvents"> Number of Events. </param>
+        /// <param name="sumOfRewards"> Sum of Rewards. </param>
+        /// <param name="numberOfImitatedEvents"> Number of Events where Personalizer predicted &apos;Baseline Action&apos;. </param>
+        /// <param name="sumOfImitatedRewards"> Sum of Rewards for Events where Personalizer predicted &apos;Baseline Action&apos;. </param>
         public ApprenticeLearningMetrics(long numberOfEvents, float sumOfRewards, long numberOfImitatedEvents, float sumOfImitatedRewards)
         {
             NumberOfEvents = numberOfEvents;
@@ -23,9 +23,13 @@ namespace Azure.AI.Personalizer.Models
             SumOfImitatedRewards = sumOfImitatedRewards;
         }
 
+        /// <summary> Number of Events. </summary>
         public long NumberOfEvents { get; set; }
+        /// <summary> Sum of Rewards. </summary>
         public float SumOfRewards { get; set; }
+        /// <summary> Number of Events where Personalizer predicted &apos;Baseline Action&apos;. </summary>
         public long NumberOfImitatedEvents { get; set; }
+        /// <summary> Sum of Rewards for Events where Personalizer predicted &apos;Baseline Action&apos;. </summary>
         public float SumOfImitatedRewards { get; set; }
     }
 }

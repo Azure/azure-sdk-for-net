@@ -1,102 +1,86 @@
 ﻿using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Xunit;
 using System;
 using System.Threading.Tasks;
 using Azure.AI.Personalizer.Models;
 using Azure.AI.Personalizer;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.AI.Personalizer.Tests
 {
-    public class ConfigurationsTests : BaseTests
+    public class ConfigurationsTests : PersonalizerTestBase
     {
-        [Fact]
+        public ConfigurationsTests(bool isAsync): base(isAsync)
+        {
+        }
+
+        [Test]
         public async Task GetServiceConfiguration()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "GetServiceConfiguration");
-                ServiceConfigurationRestClient client = GetServiceConfigurationClient(HttpMockServer.CreateInstance());
-                ServiceConfiguration defaultConfig = await client.GetAsync();
-                Assert.Equal(TimeSpan.FromMinutes(1), defaultConfig.RewardWaitTime);
-                Assert.Equal(TimeSpan.FromHours(1), defaultConfig.ModelExportFrequency);
-                Assert.Equal(1, defaultConfig.DefaultReward);
-                Assert.Equal(0.2, defaultConfig.ExplorationPercentage);
-                Assert.Equal(0, defaultConfig.LogRetentionDays);
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            ServiceConfiguration defaultConfig = await client.ServiceConfiguration.GetAsync();
+            Assert.AreEqual(TimeSpan.FromMinutes(1), defaultConfig.RewardWaitTime);
+            Assert.AreEqual(TimeSpan.FromHours(1), defaultConfig.ModelExportFrequency);
+            Assert.AreEqual(1, defaultConfig.DefaultReward);
+            Assert.AreEqual(0.2, defaultConfig.ExplorationPercentage, 0.00000001);
+            Assert.AreEqual(0, defaultConfig.LogRetentionDays);
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateServiceConfiguration()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "UpdateServiceConfiguration");
-                ServiceConfigurationRestClient client = GetServiceConfigurationClient(HttpMockServer.CreateInstance());
-                TimeSpan newExperimentalUnitDuration = TimeSpan.FromMinutes(1);
-                TimeSpan modelExportFrequency = TimeSpan.FromHours(1);
-                double newDefaultReward = 1.0;
-                string newRewardFuntion = "average";
-                double newExplorationPercentage = 0.2f;
-                var config = new ServiceConfiguration(
-                    rewardAggregation: newRewardFuntion,
-                    modelExportFrequency: modelExportFrequency,
-                    defaultReward: (float)newDefaultReward,
-                    rewardWaitTime: newExperimentalUnitDuration,
-                    explorationPercentage: (float)newExplorationPercentage,
-                    logRetentionDays: int.MaxValue
-                );
-                ServiceConfiguration result = await client.UpdateAsync(config);
-                Assert.Equal(config.DefaultReward, result.DefaultReward);
-                Assert.True(Math.Abs(config.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
-                Assert.Equal(config.ModelExportFrequency, result.ModelExportFrequency);
-                Assert.Equal(config.RewardAggregation, result.RewardAggregation);
-                Assert.Equal(config.RewardWaitTime, result.RewardWaitTime);
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            TimeSpan newExperimentalUnitDuration = TimeSpan.FromMinutes(1);
+            TimeSpan modelExportFrequency = TimeSpan.FromHours(1);
+            double newDefaultReward = 1.0;
+            string newRewardFuntion = "average";
+            double newExplorationPercentage = 0.2f;
+            var config = new ServiceConfiguration(
+                rewardAggregation: newRewardFuntion,
+                modelExportFrequency: modelExportFrequency,
+                defaultReward: (float)newDefaultReward,
+                rewardWaitTime: newExperimentalUnitDuration,
+                explorationPercentage: (float)newExplorationPercentage,
+                logRetentionDays: int.MaxValue
+            );
+            ServiceConfiguration result = await client.ServiceConfiguration.UpdateAsync(config);
+            Assert.AreEqual(config.DefaultReward, result.DefaultReward);
+            Assert.True(Math.Abs(config.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
+            Assert.AreEqual(config.ModelExportFrequency, result.ModelExportFrequency);
+            Assert.AreEqual(config.RewardAggregation, result.RewardAggregation);
+            Assert.AreEqual(config.RewardWaitTime, result.RewardWaitTime);
         }
 
-        [Fact]
+        [Test]
         public async Task GetPolicy()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "GetPolicy");
-                PolicyRestClient client = GetPolicyClient(HttpMockServer.CreateInstance());
-                PolicyContract policy = await client.GetAsync();
-                Assert.Equal("app1", policy.Name);
-                Assert.Equal("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
-                policy.Arguments);
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            PolicyContract policy = await client.Policy.GetAsync();
+            Assert.AreEqual("app1", policy.Name);
+            Assert.AreEqual("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
+            policy.Arguments);
         }
 
-        [Fact]
+        [Test]
         public async Task UpdatePolicy()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "UpdatePolicy");
-                PolicyRestClient client = GetPolicyClient(HttpMockServer.CreateInstance());
-                var policy = new PolicyContract(
-                    name: "app1",
-                    arguments: "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
-                );
-                PolicyContract updatedPolicy = await client.UpdateAsync(policy);
-                Assert.NotNull(updatedPolicy);
-                Assert.Equal(policy.Arguments, updatedPolicy.Arguments);
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            var policy = new PolicyContract(
+                name: "app1",
+                arguments: "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
+            );
+            PolicyContract updatedPolicy = await client.Policy.UpdateAsync(policy);
+            Assert.NotNull(updatedPolicy);
+            Assert.AreEqual(policy.Arguments, updatedPolicy.Arguments);
         }
 
-        [Fact]
+        [Test]
         public async Task ResetPolicy()
         {
-            using (MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "ResetPolicy");
-                PolicyRestClient client = GetPolicyClient(HttpMockServer.CreateInstance());
-                PolicyContract policy = await client.ResetAsync();
-                Assert.Equal("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
-                policy.Arguments);
-            }
+            PersonalizerClient client = GetPersonalizerClient();
+            PolicyContract policy = await client.Policy.ResetAsync();
+            Assert.AreEqual("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
+            policy.Arguments);
         }
     }
 }

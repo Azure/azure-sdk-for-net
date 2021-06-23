@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.Personalizer.Models
 {
-    /// <summary> The LogsPropertiesDateRange. </summary>
+    /// <summary> Date range. </summary>
     public partial class LogsPropertiesDateRange : DateRange
     {
         /// <summary> Initializes a new instance of LogsPropertiesDateRange. </summary>

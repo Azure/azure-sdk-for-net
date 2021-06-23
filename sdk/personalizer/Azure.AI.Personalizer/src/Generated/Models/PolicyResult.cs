@@ -24,7 +24,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="arguments"> The arguments of the Learning Settings. </param>
         /// <param name="policySource"> The source of the Learning Settings. </param>
         /// <param name="summary"> The aggregate results of the Offline Evaluation. </param>
-        /// <param name="totalSummary"> . </param>
+        /// <param name="totalSummary"> The aggregate total of the Offline Evaluation. </param>
         internal PolicyResult(string name, string arguments, PolicySource? policySource, IReadOnlyList<PolicyResultSummary> summary, PolicyResultTotalSummary totalSummary)
         {
             Name = name;
@@ -42,6 +42,7 @@ namespace Azure.AI.Personalizer.Models
         public PolicySource? PolicySource { get; }
         /// <summary> The aggregate results of the Offline Evaluation. </summary>
         public IReadOnlyList<PolicyResultSummary> Summary { get; }
+        /// <summary> The aggregate total of the Offline Evaluation. </summary>
         public PolicyResultTotalSummary TotalSummary { get; }
     }
 }
