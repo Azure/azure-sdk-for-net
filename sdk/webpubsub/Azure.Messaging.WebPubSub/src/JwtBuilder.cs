@@ -34,13 +34,13 @@ namespace Azure.Core
         public static ReadOnlySpan<byte> Iss => s_iss;
         public static ReadOnlySpan<byte> Jti => s_jti;
 
-        // this is the standrd JWT header. { "alg": "HS256", "typ": "JWT" }
+        // this is Base64 encoding of the standard JWT header. { "alg": "HS256", "typ": "JWT" }
         private static readonly byte[] headerSha256 = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
 
         private Utf8JsonWriter _writer;
         private MemoryStream _memoryStream;
         private byte[] _key;
-        private bool isDisposed;
+        private bool _isDisposed;
 
         private byte[] _jwt;
         private int _jwtLength;
@@ -98,7 +98,7 @@ namespace Azure.Core
         public int End()
         {
             if (_writer == null) return _jwtLength; // writer is set to null after token is formatted.
-            if (isDisposed) throw new ObjectDisposedException(nameof(JwtBuilder));
+            if (_isDisposed) throw new ObjectDisposedException(nameof(JwtBuilder));
 
             _writer.WriteEndObject();
             _writer.Flush();
@@ -107,10 +107,14 @@ namespace Azure.Core
             int payloadLength = (int)_writer.BytesCommitted; // writer is wrrapping MemoryStream, and so the length will never overflow int.
 
             int payloadIndex = headerSha256.Length;
-            int maxBufferLength =
-                Base64.GetMaxEncodedToUtf8Length(headerSha256.Length + payloadLength)
-                + 1 // dot
-                + Base64.GetMaxEncodedToUtf8Length(32); // signature SHA256 hash size
+
+            int maxBufferLength;
+            checked {
+                maxBufferLength =
+                    Base64.GetMaxEncodedToUtf8Length(headerSha256.Length + payloadLength)
+                    + 1 // dot
+                    + Base64.GetMaxEncodedToUtf8Length(32); // signature SHA256 hash size
+            }
             _memoryStream.Capacity = maxBufferLength; // make room for in-place Base64 conversion
 
             _jwt = _memoryStream.GetBuffer();
@@ -159,7 +163,7 @@ namespace Azure.Core
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!isDisposed)
+            if (!_isDisposed)
             {
                 if (disposing)
                 {
@@ -172,7 +176,7 @@ namespace Azure.Core
                 _memoryStream = null;
                 _writer = null;
                 _key = null;
-                isDisposed = true;
+                _isDisposed = true;
             }
         }
 

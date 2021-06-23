@@ -26,17 +26,6 @@ namespace Azure.Core
             return result;
         }
 
-        public static void Append(this StringBuilder sb, ReadOnlySpan<char> value)
-        {
-            unsafe
-            {
-                fixed (char* chars = value)
-                {
-                    sb.Append(chars, value.Length);
-                }
-            }
-        }
-
         public static void Latin1ToUtf16(ReadOnlySpan<byte> latin1, Span<char> utf16)
         {
             if (utf16.Length < latin1.Length)
@@ -47,35 +36,6 @@ namespace Azure.Core
             }
         }
 
-        public static int Latin1ToUtf16InPlace(byte[] latin1, int dataLength)
-        {
-            int utf16ByteLength = dataLength << 1;
-            if (latin1.Length < utf16ByteLength)
-                throw new ArgumentOutOfRangeException(nameof(dataLength));
-
-            int destination = utf16ByteLength - 1;
-
-            if (BitConverter.IsLittleEndian)
-            {
-                for (int i = dataLength - 1; i >= 0; i--)
-                {
-                    latin1[destination - 1] = latin1[i];
-                    latin1[destination] = 0;
-                    destination -= 2;
-                }
-            }
-            else
-            {
-                for (int i = dataLength - 1; i >= 0; i--)
-                {
-                    latin1[destination - 1] = 0;
-                    latin1[destination] = latin1[i];
-                    destination -= 2;
-                }
-            }
-
-            return utf16ByteLength;
-        }
         public static OperationStatus Base64UrlEncodeInPlace(Span<byte> buffer, long dataLength, out int bytesWritten)
         {
             OperationStatus status = Base64.EncodeToUtf8InPlace(buffer, (int)dataLength, out bytesWritten);
@@ -84,6 +44,24 @@ namespace Azure.Core
                 return status;
             }
 
+            bytesWritten = Base64ToBase64Url(buffer.Slice(0, bytesWritten));
+            return OperationStatus.Done;
+        }
+        public static OperationStatus Base64UrlEncode(ReadOnlySpan<byte> buffer, Span<byte> destination, out int bytesConsumend, out int bytesWritten)
+        {
+            OperationStatus status = Base64.EncodeToUtf8(buffer, destination, out bytesConsumend, out bytesWritten, isFinalBlock: true);
+            if (status != OperationStatus.Done)
+            {
+                return status;
+            }
+
+            bytesWritten = Base64ToBase64Url(destination.Slice(0,bytesWritten));
+            return OperationStatus.Done;
+        }
+
+        private static int Base64ToBase64Url(Span<byte> buffer)
+        {
+            var bytesWritten = buffer.Length;
             if (buffer[bytesWritten - 1] == (byte)'=')
             {
                 bytesWritten--;
@@ -98,31 +76,7 @@ namespace Azure.Core
                 else if (current == (byte)'/')
                     buffer[i] = (byte)'_';
             }
-            return OperationStatus.Done;
-        }
-        public static OperationStatus Base64UrlEncode(ReadOnlySpan<byte> buffer, Span<byte> destination, out int bytesConsumend, out int bytesWritten)
-        {
-            OperationStatus status = Base64.EncodeToUtf8(buffer, destination, out bytesConsumend, out bytesWritten, isFinalBlock: true);
-            if (status != OperationStatus.Done)
-            {
-                return status;
-            }
-
-            if (destination[bytesWritten - 1] == (byte)'=')
-            {
-                bytesWritten--;
-                if (destination[bytesWritten - 1] == (byte)'=')
-                    bytesWritten--;
-            }
-            for (int i = 0; i < bytesWritten; i++)
-            {
-                byte current = destination[i];
-                if (current == (byte)'+')
-                    destination[i] = (byte)'-';
-                else if (current == (byte)'/')
-                    destination[i] = (byte)'_';
-            }
-            return OperationStatus.Done;
+            return bytesWritten;
         }
     }
 }
