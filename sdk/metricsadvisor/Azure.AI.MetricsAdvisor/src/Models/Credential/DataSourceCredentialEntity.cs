@@ -11,19 +11,19 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// Provides different ways of authenticating to a <see cref="DataFeedSource"/> for data ingestion when the
     /// default authentication method does not suffice. The supported credentials are:
     /// <list type="bullet">
-    ///   <item><see cref="DataLakeGen2SharedKeyDataSourceCredential"/></item>
-    ///   <item><see cref="ServicePrincipalDataSourceCredential"/></item>
-    ///   <item><see cref="ServicePrincipalInKeyVaultDataSourceCredential"/></item>
-    ///   <item><see cref="SqlConnectionStringDataSourceCredential"/></item>
+    ///   <item><see cref="DataSourceDataLakeGen2SharedKey"/></item>
+    ///   <item><see cref="DataSourceServicePrincipal"/></item>
+    ///   <item><see cref="DataSourceServicePrincipalInKeyVault"/></item>
+    ///   <item><see cref="DataSourceSqlConnectionString"/></item>
     /// </list>
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
-    public partial class DataSourceCredential
+    public partial class DataSourceCredentialEntity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataSourceCredential"/> class.
+        /// Initializes a new instance of the <see cref="DataSourceCredentialEntity"/> class.
         /// </summary>
-        internal DataSourceCredential(string name)
+        internal DataSourceCredentialEntity(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -31,19 +31,19 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="DataSourceCredential"/>. Set by the service.
+        /// The unique identifier of this <see cref="DataSourceCredentialEntity"/>. Set by the service.
         /// </summary>
         [CodeGenMember("DataSourceCredentialId")]
         public string Id { get; }
 
         /// <summary>
-        /// A custom unique name for this <see cref="DataSourceCredential"/> to be displayed on the web portal.
+        /// A custom unique name for this <see cref="DataSourceCredentialEntity"/> to be displayed on the web portal.
         /// </summary>
         [CodeGenMember("DataSourceCredentialName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// A description of this <see cref="DataSourceCredential"/>.
+        /// A description of this <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
         [CodeGenMember("DataSourceCredentialDescription")]
         public string Description { get; set; }
@@ -52,15 +52,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             DataSourceCredentialPatch patch = this switch
             {
-                DataLakeGen2SharedKeyDataSourceCredential c => new DataLakeGen2SharedKeyCredentialPatch()
+                DataSourceDataLakeGen2SharedKey c => new DataLakeGen2SharedKeyCredentialPatch()
                 {
                     Parameters = new() { AccountKey = c.AccountKey }
                 },
-                ServicePrincipalDataSourceCredential c => new ServicePrincipalCredentialPatch()
+                DataSourceServicePrincipal c => new ServicePrincipalCredentialPatch()
                 {
                     Parameters = new() { ClientId = c.ClientId, ClientSecret = c.ClientSecret, TenantId = c.TenantId }
                 },
-                ServicePrincipalInKeyVaultDataSourceCredential c => new ServicePrincipalInKVCredentialPatch()
+                DataSourceServicePrincipalInKeyVault c => new ServicePrincipalInKVCredentialPatch()
                 {
                     Parameters = new()
                     {
@@ -72,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                         ServicePrincipalSecretNameInKV = c.SecretNameForClientSecret
                     }
                 },
-                SqlConnectionStringDataSourceCredential c => new AzureSQLConnectionStringCredentialPatch()
+                DataSourceSqlConnectionString c => new AzureSQLConnectionStringCredentialPatch()
                 {
                     Parameters = new() { ConnectionString = c.ConnectionString }
                 },

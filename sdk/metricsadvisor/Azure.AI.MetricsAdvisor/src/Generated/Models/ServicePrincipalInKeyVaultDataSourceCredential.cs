@@ -11,7 +11,7 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary> The ServicePrincipalInKVCredential. </summary>
-    public partial class ServicePrincipalInKeyVaultDataSourceCredential : DataSourceCredential
+    public partial class DataSourceServicePrincipalInKeyVault : DataSourceCredentialEntity
     {
     }
 }

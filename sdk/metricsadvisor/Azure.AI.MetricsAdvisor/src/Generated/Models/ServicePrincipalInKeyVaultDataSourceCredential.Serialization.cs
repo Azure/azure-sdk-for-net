@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class ServicePrincipalInKeyVaultDataSourceCredential : IUtf8JsonSerializable
+    public partial class DataSourceServicePrincipalInKeyVault : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalInKeyVaultDataSourceCredential DeserializeServicePrincipalInKeyVaultDataSourceCredential(JsonElement element)
+        internal static DataSourceServicePrincipalInKeyVault DeserializeServicePrincipalInKeyVaultDataSourceCredential(JsonElement element)
         {
             ServicePrincipalInKVParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new ServicePrincipalInKeyVaultDataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataSourceServicePrincipalInKeyVault(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

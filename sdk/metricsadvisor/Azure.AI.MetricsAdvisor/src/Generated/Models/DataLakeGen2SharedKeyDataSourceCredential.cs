@@ -11,7 +11,7 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary> The DataLakeGen2SharedKeyCredential. </summary>
-    public partial class DataLakeGen2SharedKeyDataSourceCredential : DataSourceCredential
+    public partial class DataSourceDataLakeGen2SharedKey : DataSourceCredentialEntity
     {
     }
 }

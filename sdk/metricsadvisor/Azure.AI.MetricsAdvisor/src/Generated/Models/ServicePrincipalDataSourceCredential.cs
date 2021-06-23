@@ -11,7 +11,7 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary> The ServicePrincipalCredential. </summary>
-    public partial class ServicePrincipalDataSourceCredential : DataSourceCredential
+    public partial class DataSourceServicePrincipal : DataSourceCredentialEntity
     {
     }
 }
