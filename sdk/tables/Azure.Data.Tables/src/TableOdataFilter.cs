@@ -14,8 +14,8 @@ namespace Azure.Data.Tables
     /// The <see cref="TableOdataFilter"/> class is used to help construct valid OData filter
     /// expressions, like the kind used by <see cref="TableClient.Query{T}(string,System.Nullable{int},System.Collections.Generic.IEnumerable{string},System.Threading.CancellationToken)"/>,
     /// <see cref="TableClient.QueryAsync{T}(string,System.Nullable{int},System.Collections.Generic.IEnumerable{string},System.Threading.CancellationToken)"/>,
-    /// <see cref="TableServiceClient.GetTables(string,System.Nullable{int},System.Threading.CancellationToken)"/>, and
-    /// <see cref="TableServiceClient.GetTablesAsync(string,System.Nullable{int},System.Threading.CancellationToken)"/>,
+    /// <see cref="TableServiceClient.Query(string,System.Nullable{int},System.Threading.CancellationToken)"/>, and
+    /// <see cref="TableServiceClient.QueryAsync(string,System.Nullable{int},System.Threading.CancellationToken)"/>,
     /// by automatically replacing, quoting, and escaping interpolated parameters.
     /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings">Constructing Filter Strings</see>.
     /// </summary>
@@ -68,9 +68,9 @@ namespace Azure.Data.Tables
                     DateTime x => $"{XmlConstants.LiteralPrefixDateTime}'{XmlConvert.ToString(x.ToUniversalTime(), XmlDateTimeSerializationMode.RoundtripKind)}'",
 
                     // Text
-                    string x => $"'{x.Replace("'", "''")}'",
-                    char x => $"'{x.ToString().Replace("'", "''")}'",
-                    StringBuilder x => $"'{x.Replace("'", "''")}'",
+                    string x => $"'{EscapeStringValue(x)}'",
+                    char x => $"'{EscapeStringValue(x)}'",
+                    StringBuilder x => $"'{EscapeStringValue(x)}'",
 
                     // Everything else
                     object x => throw new ArgumentException(
@@ -80,5 +80,15 @@ namespace Azure.Data.Tables
 
             return string.Format(CultureInfo.InvariantCulture, filter.Format, args);
         }
+
+        internal static string EscapeStringValue(string s) => s.Replace("'", "''");
+        internal static StringBuilder EscapeStringValue(StringBuilder s) => s.Replace("'", "''");
+
+        internal static string EscapeStringValue(char s) =>
+            s switch
+            {
+                _ when s == '\'' => "''",
+                _ => s.ToString()
+            };
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async ValueTask DisposeAsync()
         {
             PipelineDeletePipelineOperation operation = await _client.StartDeletePipelineAsync (Name);
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionResponseAsync();
         }
     }
 }

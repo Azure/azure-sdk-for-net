@@ -184,7 +184,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
-                indexClient = resources.GetIndexClient();
+                indexClient = resources.GetIndexClient(new SearchClientOptions(ServiceVersion));
 #endif
 
                 // Create a synonym map from a file containing country names and abbreviations
@@ -323,7 +323,10 @@ namespace Azure.Search.Documents.Tests.Samples
                     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
                 {
                     CognitiveServicesAccount =  new CognitiveServicesAccountKey(
-                        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY"))
+                        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
+                    KnowledgeStore = new KnowledgeStore(
+                        Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
+                        new List<KnowledgeStoreProjection>()),
                 };
 
                 await indexerClient.CreateSkillsetAsync(skillset);

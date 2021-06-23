@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.IoT.TimeSeriesInsights.Models;
-
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Definition of how time series instances are sorted before being returned by search instances call. </summary>

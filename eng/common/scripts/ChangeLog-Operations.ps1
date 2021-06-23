@@ -2,7 +2,7 @@
 . "${PSScriptRoot}\logging.ps1"
 . "${PSScriptRoot}\SemVer.ps1"
 
-$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s+(?<releaseStatus>\(.*\)))?)"
+$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 
@@ -13,36 +13,69 @@ function Get-ChangeLogEntries {
     [String]$ChangeLogLocation
   )
 
-  $changeLogEntries = [Ordered]@{}
   if (!(Test-Path $ChangeLogLocation)) {
     LogError "ChangeLog[${ChangeLogLocation}] does not exist"
     return $null
   }
+  LogDebug "Extracting entries from [${ChangeLogLocation}]."
+  return Get-ChangeLogEntriesFromContent (Get-Content -Path $ChangeLogLocation)
+}
 
+function Get-ChangeLogEntriesFromContent {
+  param (
+    [Parameter(Mandatory = $true)]
+    $changeLogContent
+  )
+
+  if ($changeLogContent -is [string])
+  {
+    $changeLogContent = $changeLogContent.Split("`n")
+  }
+  elseif($changeLogContent -isnot [array])
+  {
+    LogError "Invalid ChangelogContent passed"
+    return $null
+  }
+
+  $changelogEntry = $null
+  $sectionName = $null
+  $changeLogEntries = [Ordered]@{}
   try {
-    $contents = Get-Content $ChangeLogLocation
     # walk the document, finding where the version specifiers are and creating lists
-    $changeLogEntry = $null
-    foreach ($line in $contents) {
+    foreach ($line in $changeLogContent) {
       if ($line -match $RELEASE_TITLE_REGEX) {
-        $changeLogEntry = [pscustomobject]@{ 
+        $changeLogEntry = [pscustomobject]@{
           ReleaseVersion = $matches["version"]
           ReleaseStatus  =  $matches["releaseStatus"]
           ReleaseTitle   = "## {0} {1}" -f $matches["version"], $matches["releaseStatus"]
           ReleaseContent = @()
+          Sections = @{}
         }
         $changeLogEntries[$changeLogEntry.ReleaseVersion] = $changeLogEntry
       }
       else {
         if ($changeLogEntry) {
+          if ($line.Trim() -match "^###\s(?<sectionName>.*)")
+          {
+            $sectionName = $matches["sectionName"].Trim()
+            $changeLogEntry.Sections[$sectionName] = @()
+            $changeLogEntry.ReleaseContent += $line
+            continue
+          }
+
+          if ($sectionName)
+          {
+            $changeLogEntry.Sections[$sectionName] += $line
+          }
+
           $changeLogEntry.ReleaseContent += $line
         }
       }
     }
   }
   catch {
-    Write-Host "Error parsing $ChangeLogLocation."
-    Write-Host $_.Exception.Message
+    Write-Error "Error parsing Changelog."
+    Write-Error $_
   }
   return $changeLogEntries
 }
@@ -120,7 +153,17 @@ function Confirm-ChangeLogEntry {
     else {
       $status = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
       try {
-        [DateTime]$status
+        $releaseDate = [DateTime]$status
+        if ($status -ne ($releaseDate.ToString($CHANGELOG_DATE_FORMAT)))
+        {
+          LogError "Date must be in the format $($CHANGELOG_DATE_FORMAT)"
+          return $false
+        }
+        if (((Get-Date).AddMonths(-1) -gt $releaseDate) -or ($releaseDate -gt (Get-Date).AddMonths(1)))
+        {
+          LogError "The date must be within +/- one month from today."
+          return $false
+        }
       }
       catch {
           LogError "Invalid date [ $status ] passed as status for Version [$($changeLogEntry.ReleaseVersion)]."
@@ -130,6 +173,21 @@ function Confirm-ChangeLogEntry {
 
     if ([System.String]::IsNullOrWhiteSpace($changeLogEntry.ReleaseContent)) {
       LogError "Entry has no content. Please ensure to provide some content of what changed in this version."
+      return $false
+    }
+
+    $emptySections = @()
+    foreach ($key in $changeLogEntry.Sections.Keys)
+    {
+      $sectionContent = $changeLogEntry.Sections[$key]
+      if ([System.String]::IsNullOrWhiteSpace(($sectionContent | Out-String)))
+      {
+        $emptySections += $key
+      }
+    }
+    if ($emptySections.Count -gt 0)
+    {
+      LogError "The changelog entry has the following sections with no content ($($emptySections -join ', ')). Please ensure to either remove the empty sections or add content to the section."
       return $false
     }
   }
@@ -167,9 +225,21 @@ function New-ChangeLogEntry {
     return $null
   }
 
-  if (!$Content) { $Content = @() }
+  if (!$Content) {
+    $Content = @()
+    $Content += ""
+    $Content += "### Features Added"
+    $Content += ""
+    $Content += "### Breaking Changes"
+    $Content += ""
+    $Content += "### Key Bugs Fixed"
+    $Content += ""
+    $Content += "### Fixed"
+    $Content += ""
+    $Content += ""
+  }
 
-  $newChangeLogEntry = [pscustomobject]@{ 
+  $newChangeLogEntry = [pscustomobject]@{
     ReleaseVersion = $Version
     ReleaseStatus  = $Status
     ReleaseTitle   = "## $Version $Status"

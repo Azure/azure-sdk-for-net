@@ -2,15 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an SQL Server data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class SqlServerDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlServerDataFeedSource"/> class.
         /// </summary>
@@ -24,31 +28,135 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new SqlSourceParameter(connectionString, query);
-
             ConnectionString = connectionString;
             Query = query;
         }
 
-        internal SqlServerDataFeedSource(SqlSourceParameter parameter)
+        internal SqlServerDataFeedSource(SqlSourceParameter parameter, AuthenticationTypeEnum? authentication, string credentialId)
             : base(DataFeedSourceType.SqlServer)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ConnectionString = parameter.ConnectionString;
             Query = parameter.Query;
+
+            SetAuthentication(authentication);
+            DataSourceCredentialId = credentialId;
         }
 
         /// <summary>
-        /// The connection string.
+        /// The different ways of authenticating to a <see cref="SqlServerDataFeedSource"/>. Be aware that
+        /// some authentication types require you to have a <see cref="DataSourceCredential"/> in the service. In this
+        /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
+        /// to use. Defaults to <see cref="Basic"/>.
         /// </summary>
-        public string ConnectionString { get; }
+        public enum AuthenticationType
+        {
+            /// <summary>
+            /// Only uses the <see cref="ConnectionString"/> present in this <see cref="SqlServerDataFeedSource"/>
+            /// instance for authentication.
+            /// </summary>
+            Basic,
+
+            /// <summary>
+            /// Uses Managed Identity authentication.
+            /// </summary>
+            ManagedIdentity,
+
+            /// <summary>
+            /// Uses a SQL Server connection string for authentication. You need to have a
+            /// <see cref="SqlConnectionStringDataSourceCredential"/> in the server in order to use this type of
+            /// authentication.
+            /// </summary>
+            SqlConnectionString,
+
+            /// <summary>
+            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalDataSourceCredential"/>
+            /// in the server in order to use this type of authentication.
+            /// </summary>
+            ServicePrincipal,
+
+            /// <summary>
+            /// Uses Service Principal authentication, but the client ID and the client secret must be
+            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultDataSourceCredential"/>
+            /// in the server in order to use this type of authentication.
+            /// </summary>
+            ServicePrincipalInKeyVault
+        };
+
+        /// <summary>
+        /// The method used to authenticate to this <see cref="SqlServerDataFeedSource"/>. Be aware that some
+        /// authentication types require you to have a <see cref="DataSourceCredential"/> in the service. In this
+        /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
+        /// to use. Defaults to <see cref="AuthenticationType.Basic"/>.
+        /// </summary>
+        public AuthenticationType? Authentication { get; set; }
+
+        /// <summary>
+        /// The ID of the <see cref="DataSourceCredential"/> to use for authentication. The type of authentication to use
+        /// must also be specified in the property <see cref="Authentication"/>.
+        /// </summary>
+        public string DataSourceCredentialId { get; set; }
 
         /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
+
+        /// <summary>
+        /// Updates the connection string.
+        /// </summary>
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            ConnectionString = connectionString;
+        }
+
+        internal AuthenticationTypeEnum? GetAuthenticationTypeEnum() => Authentication switch
+        {
+            null => default(AuthenticationTypeEnum?),
+            AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+            AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
+            AuthenticationType.SqlConnectionString => AuthenticationTypeEnum.AzureSQLConnectionString,
+            AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
+            AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
+            _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
+        };
+
+        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
+        {
+            if (authentication == AuthenticationTypeEnum.Basic)
+            {
+                Authentication = AuthenticationType.Basic;
+            }
+            else if (authentication == AuthenticationTypeEnum.ManagedIdentity)
+            {
+                Authentication = AuthenticationType.ManagedIdentity;
+            }
+            else if (authentication == AuthenticationTypeEnum.AzureSQLConnectionString)
+            {
+                Authentication = AuthenticationType.SqlConnectionString;
+            }
+            else if (authentication == AuthenticationTypeEnum.ServicePrincipal)
+            {
+                Authentication = AuthenticationType.ServicePrincipal;
+            }
+            else if (authentication == AuthenticationTypeEnum.ServicePrincipalInKV)
+            {
+                Authentication = AuthenticationType.ServicePrincipalInKeyVault;
+            }
+        }
     }
 }

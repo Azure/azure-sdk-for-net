@@ -10,13 +10,16 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Tenant access information contract of the API Management service.
+    /// Tenant Settings.
     /// </summary>
-    public partial class AccessInformationContract
+    [Rest.Serialization.JsonTransformation]
+    public partial class AccessInformationContract : Resource
     {
         /// <summary>
         /// Initializes a new instance of the AccessInformationContract class.
@@ -29,20 +32,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the AccessInformationContract class.
         /// </summary>
-        /// <param name="id">Identifier.</param>
-        /// <param name="primaryKey">Primary access key. This property will not
-        /// be filled on 'GET' operations! Use '/listSecrets' POST request to
-        /// get the value.</param>
-        /// <param name="secondaryKey">Secondary access key. This property will
-        /// not be filled on 'GET' operations! Use '/listSecrets' POST request
-        /// to get the value.</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type for API Management
+        /// resource.</param>
+        /// <param name="accessInformationContractId">Access Information type
+        /// ('access' or 'gitAccess')</param>
+        /// <param name="principalId">Principal (User) Identifier.</param>
         /// <param name="enabled">Determines whether direct access is
         /// enabled.</param>
-        public AccessInformationContract(string id = default(string), string primaryKey = default(string), string secondaryKey = default(string), bool? enabled = default(bool?))
+        public AccessInformationContract(string id = default(string), string name = default(string), string type = default(string), string accessInformationContractId = default(string), string principalId = default(string), bool? enabled = default(bool?))
+            : base(id, name, type)
         {
-            Id = id;
-            PrimaryKey = primaryKey;
-            SecondaryKey = secondaryKey;
+            AccessInformationContractId = accessInformationContractId;
+            PrincipalId = principalId;
             Enabled = enabled;
             CustomInit();
         }
@@ -53,31 +56,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets identifier.
+        /// Gets or sets access Information type ('access' or 'gitAccess')
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "properties.id")]
+        public string AccessInformationContractId { get; set; }
 
         /// <summary>
-        /// Gets or sets primary access key. This property will not be filled
-        /// on 'GET' operations! Use '/listSecrets' POST request to get the
-        /// value.
+        /// Gets or sets principal (User) Identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "primaryKey")]
-        public string PrimaryKey { get; set; }
-
-        /// <summary>
-        /// Gets or sets secondary access key. This property will not be filled
-        /// on 'GET' operations! Use '/listSecrets' POST request to get the
-        /// value.
-        /// </summary>
-        [JsonProperty(PropertyName = "secondaryKey")]
-        public string SecondaryKey { get; set; }
+        [JsonProperty(PropertyName = "properties.principalId")]
+        public string PrincipalId { get; set; }
 
         /// <summary>
         /// Gets or sets determines whether direct access is enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "enabled")]
+        [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
 
     }

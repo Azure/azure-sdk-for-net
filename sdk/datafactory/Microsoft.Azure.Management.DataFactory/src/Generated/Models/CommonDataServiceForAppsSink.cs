@@ -48,6 +48,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="ignoreNullValues">The flag indicating whether to
         /// ignore null values from input dataset (except key fields) during
         /// write operation. Default is false. Type: boolean (or Expression
@@ -55,8 +58,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="alternateKeyName">The logical name of the alternate
         /// key which will be used when upserting records. Type: string (or
         /// Expression with resultType string).</param>
-        public CommonDataServiceForAppsSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object ignoreNullValues = default(object), object alternateKeyName = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
+        public CommonDataServiceForAppsSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object ignoreNullValues = default(object), object alternateKeyName = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             IgnoreNullValues = ignoreNullValues;
             AlternateKeyName = alternateKeyName;

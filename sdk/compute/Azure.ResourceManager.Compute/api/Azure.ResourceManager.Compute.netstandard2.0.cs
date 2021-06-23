@@ -1890,9 +1890,27 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ContainerServiceMasterProfile
     {
         public ContainerServiceMasterProfile(string dnsPrefix) { }
-        public Azure.ResourceManager.Compute.Models.Enum31? Count { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount? Count { get { throw null; } set { } }
         public string DnsPrefix { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerServiceMasterProfileCount : System.IEquatable<Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount>
+    {
+        private readonly int _dummyPrimitive;
+        public ContainerServiceMasterProfileCount(int value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount Five { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount One { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount Three { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount left, Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount (int value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount left, Azure.ResourceManager.Compute.Models.ContainerServiceMasterProfileCount right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ContainerServiceOrchestratorProfile
     {
@@ -2381,24 +2399,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Azure.ResourceManager.Compute.Models.EncryptionType left, Azure.ResourceManager.Compute.Models.EncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.EncryptionType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.EncryptionType left, Azure.ResourceManager.Compute.Models.EncryptionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum31 : System.IEquatable<Azure.ResourceManager.Compute.Models.Enum31>
-    {
-        private readonly int _dummyPrimitive;
-        public Enum31(int value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.Enum31 Five { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.Enum31 One { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.Enum31 Three { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.Enum31 other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.Enum31 left, Azure.ResourceManager.Compute.Models.Enum31 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.Enum31 (int value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.Enum31 left, Azure.ResourceManager.Compute.Models.Enum31 right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class Gallery : Azure.ResourceManager.Compute.Models.Resource

@@ -108,7 +108,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 StartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z"),
                 EndTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z"),
                 TimeMode = FeedbackQueryTimeMode.MetricTimestamp,
-                TopCount = 5
+                MaxPageSize = 5
             };
 
             int feedbackCount = 0;

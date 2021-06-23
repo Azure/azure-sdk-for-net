@@ -10,9 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
     public class RecognizeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeHealthcareEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private static List<string> s_batchConvenienceDocuments = new List<string>
         {
@@ -49,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "heart failure"
         };
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -110,7 +114,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -174,7 +178,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             }
         }
-        [Test]
+
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -197,7 +202,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -227,7 +232,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[2].Error.ErrorCode.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -250,7 +255,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -278,7 +283,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -301,7 +306,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -329,7 +334,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
         {
             TextAnalyticsClient client = GetClient();
@@ -364,7 +369,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();

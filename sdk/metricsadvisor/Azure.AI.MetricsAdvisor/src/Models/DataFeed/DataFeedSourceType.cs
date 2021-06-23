@@ -38,25 +38,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedSourceType AzureDataLakeStorageGen2 { get; } = new DataFeedSourceType(AzureDataLakeStorageGen2Value);
 
         /// <summary>
+        /// Azure Event Hubs.
+        /// </summary>
+        public static DataFeedSourceType AzureEventHubs { get; } = new DataFeedSourceType(AzureEventHubsValue);
+
+        /// <summary>
         /// Azure Table.
         /// </summary>
         public static DataFeedSourceType AzureTable { get; } = new DataFeedSourceType(AzureTableValue);
-
-        /// <summary>
-        /// Elasticsearch.
-        /// </summary>
-        public static DataFeedSourceType Elasticsearch { get; } = new DataFeedSourceType(ElasticsearchValue);
-
-        /// <summary>
-        /// HTTP Request.
-        /// </summary>
-        public static DataFeedSourceType HttpRequest { get; } = new DataFeedSourceType(HttpRequestValue);
 
         /// <summary>
         /// InfluxDB.
         /// </summary>
         [CodeGenMember("InfluxDB")]
         public static DataFeedSourceType InfluxDb { get; } = new DataFeedSourceType(InfluxDbValue);
+
+        /// <summary>
+        /// Log Analytics.
+        /// </summary>
+        [CodeGenMember("AzureLogAnalytics")]
+        public static DataFeedSourceType LogAnalytics { get; } = new DataFeedSourceType(LogAnalyticsValue);
 
         /// <summary>
         /// MongoDB.

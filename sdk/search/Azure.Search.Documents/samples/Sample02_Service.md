@@ -183,7 +183,10 @@ SearchIndexerSkillset skillset = new SearchIndexerSkillset(
     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
 {
     CognitiveServicesAccount =  new CognitiveServicesAccountKey(
-        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY"))
+        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
+    KnowledgeStore = new KnowledgeStore(
+        Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
+        new List<KnowledgeStoreProjection>()),
 };
 
 await indexerClient.CreateSkillsetAsync(skillset);

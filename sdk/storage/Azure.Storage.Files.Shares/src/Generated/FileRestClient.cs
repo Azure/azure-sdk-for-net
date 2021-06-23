@@ -20,7 +20,6 @@ namespace Azure.Storage.Files.Shares
     internal partial class FileRestClient
     {
         private string url;
-        private string path;
         private string version;
         private string fileRangeWriteFromUrl;
         private ClientDiagnostics _clientDiagnostics;
@@ -30,19 +29,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="path"> path. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="path"/>, <paramref name="version"/>, or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string path, string version = "2020-04-08", string fileRangeWriteFromUrl = "update")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="version"/>, or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02", string fileRangeWriteFromUrl = "update")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
-            }
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
             }
             if (version == null)
             {
@@ -54,7 +48,6 @@ namespace Azure.Storage.Files.Shares
             }
 
             this.url = url;
-            this.path = path;
             this.version = version;
             this.fileRangeWriteFromUrl = fileRangeWriteFromUrl;
             _clientDiagnostics = clientDiagnostics;
@@ -68,8 +61,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -213,8 +204,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -292,8 +281,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (sharesnapshot != null)
             {
                 uri.AppendQuery("sharesnapshot", sharesnapshot, true);
@@ -357,8 +344,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -416,8 +401,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
             {
@@ -557,8 +540,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "metadata", true);
             if (timeout != null)
             {
@@ -623,8 +604,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -690,8 +669,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -760,8 +737,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -836,8 +811,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "lease", true);
             if (timeout != null)
             {
@@ -897,8 +870,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "range", true);
             if (timeout != null)
             {
@@ -984,15 +955,13 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateUploadRangeFromURLRequest(string range, string copySource, long contentLength, int? timeout, string sourceRange, byte[] sourceContentCrc64, SourceModifiedAccessConditions sourceModifiedAccessConditions, ShareFileRequestConditions leaseAccessConditions)
+        internal HttpMessage CreateUploadRangeFromURLRequest(string range, string copySource, long contentLength, int? timeout, string sourceRange, byte[] sourceContentCrc64, string copySourceAuthorization, SourceModifiedAccessConditions sourceModifiedAccessConditions, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "range", true);
             if (timeout != null)
             {
@@ -1023,6 +992,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
+            if (copySourceAuthorization != null)
+            {
+                request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1034,11 +1007,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileUploadRangeFromURLHeaders>> UploadRangeFromURLAsync(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileUploadRangeFromURLHeaders>> UploadRangeFromURLAsync(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, string copySourceAuthorization = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
@@ -1049,7 +1023,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, sourceModifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, copySourceAuthorization, sourceModifiedAccessConditions, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileUploadRangeFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1068,11 +1042,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<FileUploadRangeFromURLHeaders> UploadRangeFromURL(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileUploadRangeFromURLHeaders> UploadRangeFromURL(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, string copySourceAuthorization = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
@@ -1083,7 +1058,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, sourceModifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, copySourceAuthorization, sourceModifiedAccessConditions, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileUploadRangeFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1102,8 +1077,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "rangelist", true);
             if (sharesnapshot != null)
             {
@@ -1196,8 +1169,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -1314,8 +1285,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "copy", true);
             uri.AppendQuery("copyid", copyId, true);
             if (timeout != null)
@@ -1390,8 +1359,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "listhandles", true);
             if (marker != null)
             {
@@ -1478,8 +1445,6 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(path, false);
             uri.AppendQuery("comp", "forceclosehandles", true);
             if (timeout != null)
             {

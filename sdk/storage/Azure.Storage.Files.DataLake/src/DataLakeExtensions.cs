@@ -383,6 +383,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return dataLakeQueryArrowOptions.ToBlobQueryArrowOptions();
             }
+
             if (textConfiguration is DataLakeQueryParquetTextOptions dataLakeQueryParquetOptions)
             {
                 if (!isInput)
@@ -424,7 +425,7 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static BlobQueryParquetTextOptions ToBlobQueryParquetTextOptions (this DataLakeQueryParquetTextOptions options)
+        internal static BlobQueryParquetTextOptions ToBlobQueryParquetTextOptions(this DataLakeQueryParquetTextOptions options)
         {
             if (options == null)
             {
@@ -498,7 +499,7 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            return new BlobOpenReadOptions(options.Conditions == null)
+            return new BlobOpenReadOptions(options.AllowModifications)
             {
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),

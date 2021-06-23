@@ -7,9 +7,10 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     public partial class EmailNotificationHook : IUtf8JsonSerializable
     {
@@ -27,10 +28,20 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExternalLink))
+            if (Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink");
-                writer.WriteStringValue(ExternalLink);
+                writer.WriteStringValue(InternalExternalLink);
+            }
+            if (Optional.IsCollectionDefined(AdministratorsEmails))
+            {
+                writer.WritePropertyName("admins");
+                writer.WriteStartArray();
+                foreach (var item in AdministratorsEmails)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

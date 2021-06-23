@@ -69,8 +69,8 @@ namespace Azure.Core.TestFramework
                 var interval = (TimeSpan) invocationArguments[0];
                 if (interval < TimeSpan.FromSeconds(1))
                 {
-                    throw new InvalidOperationException($"Fast polling interval of {interval} detected in playback mode." +
-                                                        $"Please use the default WaitForCompletion()." +
+                    throw new InvalidOperationException($"Fast polling interval of {interval} detected in playback mode. " +
+                                                        $"Please use the default WaitForCompletion(). " +
                                                         $"The test framework would automatically reduce the interval in playback.");
                 }
             }

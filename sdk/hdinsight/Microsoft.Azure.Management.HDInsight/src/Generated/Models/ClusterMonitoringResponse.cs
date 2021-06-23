@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The Operations Management Suite (OMS) status response
+    /// The cluster monitoring status response.
     /// </summary>
     public partial class ClusterMonitoringResponse
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Initializes a new instance of the ClusterMonitoringResponse class.
         /// </summary>
-        /// <param name="clusterMonitoringEnabled">The status of the Operations
-        /// Management Suite (OMS) on the HDInsight cluster.</param>
-        /// <param name="workspaceId">The workspace ID of the Operations
-        /// Management Suite (OMS) on the HDInsight cluster.</param>
+        /// <param name="clusterMonitoringEnabled">The status of the monitor on
+        /// the HDInsight cluster.</param>
+        /// <param name="workspaceId">The workspace ID of the monitor on the
+        /// HDInsight cluster.</param>
         public ClusterMonitoringResponse(bool? clusterMonitoringEnabled = default(bool?), string workspaceId = default(string))
         {
             ClusterMonitoringEnabled = clusterMonitoringEnabled;
@@ -46,15 +46,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the status of the Operations Management Suite (OMS) on
-        /// the HDInsight cluster.
+        /// Gets or sets the status of the monitor on the HDInsight cluster.
         /// </summary>
         [JsonProperty(PropertyName = "clusterMonitoringEnabled")]
         public bool? ClusterMonitoringEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the workspace ID of the Operations Management Suite
-        /// (OMS) on the HDInsight cluster.
+        /// Gets or sets the workspace ID of the monitor on the HDInsight
+        /// cluster.
         /// </summary>
         [JsonProperty(PropertyName = "workspaceId")]
         public string WorkspaceId { get; set; }

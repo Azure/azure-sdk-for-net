@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.IoT.TimeSeriesInsights.Models;
 using FluentAssertions;
 using Microsoft.Azure.Devices.Client;
 using NUnit.Framework;
@@ -32,13 +31,16 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
+            TimeSeriesInsightsModelSettings timeSeriesModelSettings = tsiClient.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = tsiClient.GetInstancesClient();
+            TimeSeriesInsightsQueries queriesClient = tsiClient.GetQueriesClient();
             DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
-            TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
+            TimeSeriesModelSettings modelSettings = await timeSeriesModelSettings.GetAsync().ConfigureAwait(false);
 
             // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, modelSettings.TimeSeriesIdProperties.Count)
                 .ConfigureAwait(false);
 
             try
@@ -61,12 +63,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
                 queryAggregateSeriesRequestOptions.InlineVariables[QueryTestsHelper.Temperature] = temperatureNumericVariable;
-                queryAggregateSeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Temperature);
+                queryAggregateSeriesRequestOptions.ProjectedVariableNames.Add(QueryTestsHelper.Temperature);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQueryAnalyzer queryAggregateSeriesPages = queriesClient.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
@@ -99,7 +101,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     new TimeSeriesExpression($"$event.{QueryTestsHelper.Temperature}"),
                     new TimeSeriesExpression("left($value)"));
 
-                linearInterpolationNumericVariable.Interpolation = new InterpolationOperation
+                linearInterpolationNumericVariable.Interpolation = new TimeSeriesInterpolation
                 {
                     Kind = InterpolationKind.Linear,
                     Boundary = new InterpolationBoundary()
@@ -110,11 +112,11 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 const string linearInterpolation = "linearInterpolation";
                 queryAggregateSeriesRequestOptions.InlineVariables[linearInterpolation] = linearInterpolationNumericVariable;
-                queryAggregateSeriesRequestOptions.ProjectedVariables.Add(linearInterpolation);
+                queryAggregateSeriesRequestOptions.ProjectedVariableNames.Add(linearInterpolation);
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQueryAnalyzer queryAggregateSeriesPages = queriesClient.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
@@ -155,10 +157,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 sendEventAct.Should().NotThrow();
 
                 // Query for the two events with a filter
-                queryAggregateSeriesRequestOptions.Filter = "$event.Temperature.Double = 1.2";
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                queryAggregateSeriesRequestOptions.Filter = new TimeSeriesExpression("$event.Temperature.Double = 1.2");
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQueryAnalyzer queryAggregateSeriesPages = queriesClient.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
@@ -197,13 +199,16 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
+            TimeSeriesInsightsModelSettings timeSeriesModelSettings = tsiClient.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = tsiClient.GetInstancesClient();
+            TimeSeriesInsightsQueries queriesClient = tsiClient.GetQueriesClient();
             DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
-            TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
+            TimeSeriesModelSettings modelSettings = await timeSeriesModelSettings.GetAsync().ConfigureAwait(false);
 
             // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, modelSettings.TimeSeriesIdProperties.Count)
                 .ConfigureAwait(false);
 
             try
@@ -227,28 +232,26 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
                 queryAggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
-                queryAggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
+                queryAggregateSeriesRequestOptions.ProjectedVariableNames.Add("Count");
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQueryAnalyzer queryAggregateSeriesPages = queriesClient.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
                         TimeSpan.FromSeconds(5),
                         queryAggregateSeriesRequestOptions);
 
-                    var countFound = false;
+                    long? totalCount = 0;
                     await foreach (TimeSeriesPoint point in queryAggregateSeriesPages.GetResultsAsync())
                     {
-                        if ((long?)point.GetValue("Count") == 30)
-                        {
-                            countFound = true;
-                        }
+                        var currentCount = (long?)point.GetValue("Count");
+                        totalCount += currentCount;
                     }
 
-                    countFound.Should().BeTrue();
+                    totalCount.Should().Be(30);
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
@@ -264,13 +267,16 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
+            TimeSeriesInsightsModelSettings timeSeriesInsightsModelSettings = tsiClient.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = tsiClient.GetInstancesClient();
+            TimeSeriesInsightsQueries queriesClient = tsiClient.GetQueriesClient();
             DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
-            TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
+            TimeSeriesModelSettings modelSettings = await timeSeriesInsightsModelSettings.GetAsync().ConfigureAwait(false);
 
             // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, modelSettings.TimeSeriesIdProperties.Count)
                 .ConfigureAwait(false);
 
             try
@@ -296,9 +302,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 queryAggregateSeriesRequestOptions.InlineVariables["categorical"] = categoricalVariable;
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQueryAnalyzer queryAggregateSeriesPages = queriesClient.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,

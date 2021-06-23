@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The AnomalyFeedback. </summary>
     public partial class MetricAnomalyFeedback : MetricFeedback

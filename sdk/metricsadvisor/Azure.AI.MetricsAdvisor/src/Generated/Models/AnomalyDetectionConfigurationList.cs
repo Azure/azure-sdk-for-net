@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,25 +14,21 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AnomalyDetectionConfigurationList
     {
         /// <summary> Initializes a new instance of AnomalyDetectionConfigurationList. </summary>
-        /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AnomalyDetectionConfigurationList(IEnumerable<AnomalyDetectionConfiguration> value)
+        internal AnomalyDetectionConfigurationList()
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<AnomalyDetectionConfiguration>();
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectionConfigurationList. </summary>
         /// <param name="value"> . </param>
-        internal AnomalyDetectionConfigurationList(IReadOnlyList<AnomalyDetectionConfiguration> value)
+        /// <param name="nextLink"> . </param>
+        internal AnomalyDetectionConfigurationList(IReadOnlyList<AnomalyDetectionConfiguration> value, string nextLink)
         {
             Value = value;
+            NextLink = nextLink;
         }
 
         public IReadOnlyList<AnomalyDetectionConfiguration> Value { get; }
+        public string NextLink { get; }
     }
 }

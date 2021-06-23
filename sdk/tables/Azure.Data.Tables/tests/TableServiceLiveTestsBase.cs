@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
 {
-    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
     /// <summary>
     /// The suite of tests for the <see cref="TableServiceClient"/> class.
     /// </summary>
@@ -18,6 +17,7 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
@@ -34,6 +34,8 @@ namespace Azure.Data.Tables.Tests
 
         protected TableServiceClient service { get; private set; }
         protected TableClient client { get; private set; }
+        protected TableClient connectionStringClient { get; private set; }
+        protected string ConnectionString { get; private set; }
 
         protected string tableName { get; private set; }
         protected const string PartitionKeyValue = "somPartition";
@@ -50,8 +52,8 @@ namespace Azure.Data.Tables.Tests
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
-        protected string ConnectionString;
-        private readonly Dictionary<string, string> _cosmosIgnoreTests = new Dictionary<string, string>
+
+        private readonly Dictionary<string, string> _cosmosIgnoreTests = new()
         {
             {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
             {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
@@ -60,6 +62,12 @@ namespace Azure.Data.Tables.Tests
             {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
+            {"CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405"}
+        };
+
+        private readonly Dictionary<string, string> _AadIgnoreTests = new()
+        {
+            { "GetAccessPoliciesReturnsPolicies", "https://github.com/Azure/azure-sdk-for-net/issues/21913" }
         };
 
         /// <summary>
@@ -70,42 +78,54 @@ namespace Azure.Data.Tables.Tests
         public async Task TablesTestSetup()
         {
             // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
-            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason))
+            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason) ||
+                _endpointType == TableEndpointType.StorageAAD && _AadIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out ignoreReason))
             {
                 Assert.Ignore(ignoreReason);
             }
 
             ServiceUri = _endpointType switch
             {
-                TableEndpointType.Storage => TestEnvironment.StorageUri,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
-                _ => throw new NotSupportedException("Unknown endpoint type")
+                _ => TestEnvironment.StorageUri,
             };
 
             AccountName = _endpointType switch
             {
-                TableEndpointType.Storage => TestEnvironment.StorageAccountName,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
-                _ => throw new NotSupportedException("Unknown endpoint type")
+                _ => TestEnvironment.StorageAccountName,
             };
 
             AccountKey = _endpointType switch
             {
-                TableEndpointType.Storage => TestEnvironment.PrimaryStorageAccountKey,
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
-                _ => throw new NotSupportedException("Unknown endpoint type")
+                _ => TestEnvironment.PrimaryStorageAccountKey,
             };
 
-            service = InstrumentClient(new TableServiceClient(
-                new Uri(ServiceUri),
-                new TableSharedKeyCredential(AccountName, AccountKey),
-                InstrumentClientOptions(new TableClientOptions())));
+            ConnectionString =_endpointType switch
+            {
+                TableEndpointType.CosmosTable => TestEnvironment.CosmosConnectionString,
+                _ => TestEnvironment.StorageConnectionString,
+            };
+            var options = InstrumentClientOptions(new TableClientOptions());
+            service = _endpointType switch
+            {
+                TableEndpointType.StorageAAD => InstrumentClient(new TableServiceClient(
+                    new Uri(ServiceUri),
+                    TestEnvironment.Credential,
+                    options)),
+                _ =>InstrumentClient(new TableServiceClient(
+                    new Uri(ServiceUri),
+                    new TableSharedKeyCredential(AccountName, AccountKey),
+                    options))
+            };
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
             await CosmosThrottleWrapper(async () => await service.CreateTableAsync(tableName).ConfigureAwait(false));
 
             client = InstrumentClient(service.GetTableClient(tableName));
+            connectionStringClient = InstrumentClient(new TableClient(ConnectionString, tableName, options));
         }
 
         [TearDown]
@@ -127,7 +147,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
+        internal static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -155,7 +175,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
+        internal static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -183,7 +203,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
+        internal static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -211,7 +231,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
+        internal static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>

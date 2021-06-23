@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 new Tuple<string, string, string>("OperationalInsights", "Schema", "2020-08-01"),
                 new Tuple<string, string, string>("OperationalInsights", "SharedKeys", "2020-08-01"),
                 new Tuple<string, string, string>("OperationalInsights", "StorageInsightConfigs", "2020-08-01"),
-                new Tuple<string, string, string>("OperationalInsights", "Tables", "2020-10-01"),
+                new Tuple<string, string, string>("OperationalInsights", "Tables", "2020-08-01"),
                 new Tuple<string, string, string>("OperationalInsights", "Usages", "2020-08-01"),
                 new Tuple<string, string, string>("OperationalInsights", "WorkspacePurge", "2020-08-01"),
                 new Tuple<string, string, string>("OperationalInsights", "Workspaces", "2020-10-01"),
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/operationalinsights/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\One\\SDK_repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "e5839301dfd424559851119c99ef0a2699fbd228";
+      public static readonly String GithubCommidId = "e401e457b5e95941f241f5c71bc56d42d431a4e0";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
