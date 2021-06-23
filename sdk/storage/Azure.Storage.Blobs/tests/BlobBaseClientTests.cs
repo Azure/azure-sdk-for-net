@@ -6638,6 +6638,49 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        public async Task SetTagsAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobBaseClient blobBaseClient = new BlobBaseClient(uri, GetOptions());
+
+            BlobRequestConditions conditions = new BlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(BlobRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blobBaseClient.SetTagsAsync(
+                    tags,
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SetTags does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetTagsAsync_Error()
         {
