@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.NewResources
     public partial class ManagementLockObjectResourceGroupsOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ManagementLockObject>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal ManagementLocksRestOperations RestClient { get; }
+        private ManagementLocksRestOperations _restClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementLockObjectResourceGroupsOperations"/> class for mocking. </summary>
         protected ManagementLockObjectResourceGroupsOperations()
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.NewResources
         protected internal ManagementLockObjectResourceGroupsOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            RestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/locks";
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.GetAtResourceGroupLevelAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtResourceGroupLevelAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.GetAtResourceGroupLevel(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.GetAtResourceGroupLevel(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.NewResources
         }
 
         /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P: System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.NewResources
         }
 
         /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P: System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAtResourceGroupLevelAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAtResourceGroupLevelAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ManagementLocksDeleteAtResourceGroupLevelOperation(response);
             }
             catch (Exception e)
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.DeleteAtResourceGroupLevel(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.DeleteAtResourceGroupLevel(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return new ManagementLocksDeleteAtResourceGroupLevelOperation(response);
             }
             catch (Exception e)
@@ -167,7 +168,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.DeleteByScopeAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteByScopeAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -184,7 +186,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.DeleteByScope(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.DeleteByScope(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -201,7 +204,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetByScopeAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetByScopeAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -218,7 +222,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetByScope(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.GetByScope(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -235,7 +240,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.DeleteAtResourceLevelAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAtResourceLevelAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -252,7 +258,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.DeleteAtResourceLevel(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.DeleteAtResourceLevel(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -269,7 +276,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetAtResourceLevelAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtResourceLevelAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -286,7 +294,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetAtResourceLevel(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetAtResourceLevel(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -303,7 +312,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.DeleteAtSubscriptionLevelAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAtSubscriptionLevelAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -320,7 +330,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.DeleteAtSubscriptionLevel(Id.ResourceGroupName, cancellationToken);
+                var response = _restClient.DeleteAtSubscriptionLevel(Id.ResourceGroupName, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -337,7 +348,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetAtSubscriptionLevelAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtSubscriptionLevelAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -354,7 +366,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetAtSubscriptionLevel(Id.ResourceGroupName, cancellationToken);
+                var response = _restClient.GetAtSubscriptionLevel(Id.ResourceGroupName, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

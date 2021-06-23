@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Entity representing the reference to the template. </summary>
-    public partial class TemplateLink : WritableSubResource
+    public partial class TemplateLink : WritableSubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of TemplateLink. </summary>
         public TemplateLink()

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.NewResources
     public partial class DeploymentExtendedOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, DeploymentExtended>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal DeploymentsRestOperations RestClient { get; }
+        private DeploymentsRestOperations _restClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="DeploymentExtendedOperations"/> class for mocking. </summary>
         protected DeploymentExtendedOperations()
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.NewResources
         protected internal DeploymentExtendedOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            RestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.Resources/deployments";
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.GetAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.GetAtScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetAtScope(Id.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.NewResources
         }
 
         /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P: System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.NewResources
         }
 
         /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P: System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
@@ -132,8 +133,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsDeleteAtScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtScopeRequest(Id.Name, Id.Name).Request, response);
+                var response = await _restClient.DeleteAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsDeleteAtScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtScopeRequest(Id.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -150,8 +151,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.DeleteAtScope(Id.Name, Id.Name, cancellationToken);
-                return new DeploymentsDeleteAtScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtScopeRequest(Id.Name, Id.Name).Request, response);
+                var response = _restClient.DeleteAtScope(Id.Name, Id.Name, cancellationToken);
+                return new DeploymentsDeleteAtScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtScopeRequest(Id.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -167,7 +168,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CheckExistenceAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CheckExistenceAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -184,7 +186,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CheckExistenceAtScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.CheckExistenceAtScope(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -201,7 +204,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CancelAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CancelAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -218,7 +222,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CancelAtScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.CancelAtScope(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -235,7 +240,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.ExportTemplateAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.ExportTemplateAtScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -252,7 +258,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.ExportTemplateAtScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.ExportTemplateAtScope(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -269,7 +276,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CheckExistenceAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CheckExistenceAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -286,7 +294,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CheckExistenceAtTenantScope(Id.Name, cancellationToken);
+                var response = _restClient.CheckExistenceAtTenantScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -303,7 +312,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -320,7 +330,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetAtTenantScope(Id.Name, cancellationToken);
+                var response = _restClient.GetAtTenantScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -337,7 +348,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CancelAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CancelAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -354,7 +366,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CancelAtTenantScope(Id.Name, cancellationToken);
+                var response = _restClient.CancelAtTenantScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -371,7 +384,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.ExportTemplateAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.ExportTemplateAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -388,7 +402,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.ExportTemplateAtTenantScope(Id.Name, cancellationToken);
+                var response = _restClient.ExportTemplateAtTenantScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -405,7 +420,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CheckExistenceAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CheckExistenceAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -422,7 +438,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CheckExistenceAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.CheckExistenceAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -439,7 +456,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -456,7 +474,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -473,7 +492,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CancelAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CancelAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -490,7 +510,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CancelAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.CancelAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -507,7 +528,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.ExportTemplateAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.ExportTemplateAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -524,7 +546,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.ExportTemplateAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.ExportTemplateAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -541,7 +564,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CheckExistenceAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CheckExistenceAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -558,7 +582,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CheckExistenceAtSubscriptionScope(Id.Name, cancellationToken);
+                var response = _restClient.CheckExistenceAtSubscriptionScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -575,7 +600,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -592,7 +618,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetAtSubscriptionScope(Id.Name, cancellationToken);
+                var response = _restClient.GetAtSubscriptionScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -609,7 +636,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CancelAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CancelAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -626,7 +654,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CancelAtSubscriptionScope(Id.Name, cancellationToken);
+                var response = _restClient.CancelAtSubscriptionScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -643,7 +672,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.ExportTemplateAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.ExportTemplateAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -660,7 +690,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.ExportTemplateAtSubscriptionScope(Id.Name, cancellationToken);
+                var response = _restClient.ExportTemplateAtSubscriptionScope(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -677,7 +708,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CheckExistenceAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CheckExistenceAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -694,7 +726,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CheckExistence(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.CheckExistence(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -711,7 +744,8 @@ namespace Azure.ResourceManager.NewResources
         //     scope.Start();
         //     try
         //     {
-        //         return await RestClient.GetAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+        //         var response = await _restClient.GetAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+        //         return response;
         //     }
         //     catch (Exception e)
         //     {
@@ -720,15 +754,16 @@ namespace Azure.ResourceManager.NewResources
         //     }
         // }
 
-        /// <summary> Gets a deployment. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        // /// <summary> Gets a deployment. </summary>
+        // /// <param name="cancellationToken"> The cancellation token to use. </param>
         // public virtual Response<DeploymentExtendedData> Get(CancellationToken cancellationToken = default)
         // {
         //     using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.Get");
         //     scope.Start();
         //     try
         //     {
-        //         return RestClient.Get(Id.Name, Id.Name, cancellationToken);
+        //         var response = _restClient.Get(Id.Name, Id.Name, cancellationToken);
+        //         return response;
         //     }
         //     catch (Exception e)
         //     {
@@ -745,7 +780,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CancelAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CancelAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -762,7 +798,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.Cancel(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.Cancel(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -779,7 +816,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.ExportTemplateAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.ExportTemplateAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -796,7 +834,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.ExportTemplate(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.ExportTemplate(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -820,7 +859,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -844,7 +884,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.CalculateTemplateHash(template, cancellationToken);
+                var response = _restClient.CalculateTemplateHash(template, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -918,8 +959,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.ValidateAtScopeAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsValidateAtScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtScopeRequest(Id.Name, Id.Name, parameters).Request, response);
+                var response = await _restClient.ValidateAtScopeAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsValidateAtScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtScopeRequest(Id.Name, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -943,8 +984,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.ValidateAtScope(Id.Name, Id.Name, parameters, cancellationToken);
-                return new DeploymentsValidateAtScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtScopeRequest(Id.Name, Id.Name, parameters).Request, response);
+                var response = _restClient.ValidateAtScope(Id.Name, Id.Name, parameters, cancellationToken);
+                return new DeploymentsValidateAtScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtScopeRequest(Id.Name, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -997,8 +1038,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsDeleteAtTenantScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtTenantScopeRequest(Id.Name).Request, response);
+                var response = await _restClient.DeleteAtTenantScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsDeleteAtTenantScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtTenantScopeRequest(Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1015,8 +1056,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.DeleteAtTenantScope(Id.Name, cancellationToken);
-                return new DeploymentsDeleteAtTenantScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtTenantScopeRequest(Id.Name).Request, response);
+                var response = _restClient.DeleteAtTenantScope(Id.Name, cancellationToken);
+                return new DeploymentsDeleteAtTenantScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtTenantScopeRequest(Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1090,8 +1131,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.ValidateAtTenantScopeAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsValidateAtTenantScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtTenantScopeRequest(Id.Name, parameters).Request, response);
+                var response = await _restClient.ValidateAtTenantScopeAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsValidateAtTenantScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtTenantScopeRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1115,8 +1156,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.ValidateAtTenantScope(Id.Name, parameters, cancellationToken);
-                return new DeploymentsValidateAtTenantScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtTenantScopeRequest(Id.Name, parameters).Request, response);
+                var response = _restClient.ValidateAtTenantScope(Id.Name, parameters, cancellationToken);
+                return new DeploymentsValidateAtTenantScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtTenantScopeRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1205,8 +1246,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
+                var response = await _restClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
             }
             catch (Exception e)
             {
@@ -1235,8 +1276,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
-                return new DeploymentsWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
+                var response = _restClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
+                return new DeploymentsWhatIfAtTenantScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
             }
             catch (Exception e)
             {
@@ -1289,8 +1330,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsDeleteAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtManagementGroupScopeRequest(Id.Name, Id.Name).Request, response);
+                var response = await _restClient.DeleteAtManagementGroupScopeAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsDeleteAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtManagementGroupScopeRequest(Id.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1307,8 +1348,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.DeleteAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
-                return new DeploymentsDeleteAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtManagementGroupScopeRequest(Id.Name, Id.Name).Request, response);
+                var response = _restClient.DeleteAtManagementGroupScope(Id.Name, Id.Name, cancellationToken);
+                return new DeploymentsDeleteAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtManagementGroupScopeRequest(Id.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1382,8 +1423,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.ValidateAtManagementGroupScopeAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsValidateAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtManagementGroupScopeRequest(Id.Name, Id.Name, parameters).Request, response);
+                var response = await _restClient.ValidateAtManagementGroupScopeAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsValidateAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtManagementGroupScopeRequest(Id.Name, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1407,8 +1448,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.ValidateAtManagementGroupScope(Id.Name, Id.Name, parameters, cancellationToken);
-                return new DeploymentsValidateAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtManagementGroupScopeRequest(Id.Name, Id.Name, parameters).Request, response);
+                var response = _restClient.ValidateAtManagementGroupScope(Id.Name, Id.Name, parameters, cancellationToken);
+                return new DeploymentsValidateAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtManagementGroupScopeRequest(Id.Name, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1497,8 +1538,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.WhatIfAtManagementGroupScopeAsync(Id.Name, Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsWhatIfAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Name, Id.Name, location, properties).Request, response);
+                var response = await _restClient.WhatIfAtManagementGroupScopeAsync(Id.Name, Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsWhatIfAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Name, Id.Name, location, properties).Request, response);
             }
             catch (Exception e)
             {
@@ -1527,8 +1568,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.WhatIfAtManagementGroupScope(Id.Name, Id.Name, location, properties, cancellationToken);
-                return new DeploymentsWhatIfAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Name, Id.Name, location, properties).Request, response);
+                var response = _restClient.WhatIfAtManagementGroupScope(Id.Name, Id.Name, location, properties, cancellationToken);
+                return new DeploymentsWhatIfAtManagementGroupScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Name, Id.Name, location, properties).Request, response);
             }
             catch (Exception e)
             {
@@ -1581,8 +1622,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsDeleteAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtSubscriptionScopeRequest(Id.Name).Request, response);
+                var response = await _restClient.DeleteAtSubscriptionScopeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsDeleteAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtSubscriptionScopeRequest(Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1599,8 +1640,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.DeleteAtSubscriptionScope(Id.Name, cancellationToken);
-                return new DeploymentsDeleteAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteAtSubscriptionScopeRequest(Id.Name).Request, response);
+                var response = _restClient.DeleteAtSubscriptionScope(Id.Name, cancellationToken);
+                return new DeploymentsDeleteAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteAtSubscriptionScopeRequest(Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1674,8 +1715,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.ValidateAtSubscriptionScopeAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsValidateAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtSubscriptionScopeRequest(Id.Name, parameters).Request, response);
+                var response = await _restClient.ValidateAtSubscriptionScopeAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsValidateAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtSubscriptionScopeRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1699,8 +1740,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.ValidateAtSubscriptionScope(Id.Name, parameters, cancellationToken);
-                return new DeploymentsValidateAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateAtSubscriptionScopeRequest(Id.Name, parameters).Request, response);
+                var response = _restClient.ValidateAtSubscriptionScope(Id.Name, parameters, cancellationToken);
+                return new DeploymentsValidateAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateAtSubscriptionScopeRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1777,8 +1818,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.WhatIfAtSubscriptionScopeAsync(Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsWhatIfAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
+                var response = await _restClient.WhatIfAtSubscriptionScopeAsync(Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsWhatIfAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
             }
             catch (Exception e)
             {
@@ -1803,8 +1844,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.WhatIfAtSubscriptionScope(Id.Name, properties, location, cancellationToken);
-                return new DeploymentsWhatIfAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
+                var response = _restClient.WhatIfAtSubscriptionScope(Id.Name, properties, location, cancellationToken);
+                return new DeploymentsWhatIfAtSubscriptionScopeOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Name, properties, location).Request, response);
             }
             catch (Exception e)
             {
@@ -1857,8 +1898,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsDeleteOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name, Id.Name).Request, response);
+                var response = await _restClient.DeleteAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1875,8 +1916,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.Delete(Id.Name, Id.Name, cancellationToken);
-                return new DeploymentsDeleteOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name, Id.Name).Request, response);
+                var response = _restClient.Delete(Id.Name, Id.Name, cancellationToken);
+                return new DeploymentsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -1950,8 +1991,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.ValidateAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsValidateOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateRequest(Id.Name, Id.Name, parameters).Request, response);
+                var response = await _restClient.ValidateAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsValidateOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateRequest(Id.Name, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1975,8 +2016,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.Validate(Id.Name, Id.Name, parameters, cancellationToken);
-                return new DeploymentsValidateOperation(_clientDiagnostics, Pipeline, RestClient.CreateValidateRequest(Id.Name, Id.Name, parameters).Request, response);
+                var response = _restClient.Validate(Id.Name, Id.Name, parameters, cancellationToken);
+                return new DeploymentsValidateOperation(_clientDiagnostics, Pipeline, _restClient.CreateValidateRequest(Id.Name, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -2053,8 +2094,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.WhatIfAsync(Id.Name, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfRequest(Id.Name, Id.Name, properties, location).Request, response);
+                var response = await _restClient.WhatIfAsync(Id.Name, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
+                return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfRequest(Id.Name, Id.Name, properties, location).Request, response);
             }
             catch (Exception e)
             {
@@ -2079,8 +2120,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.WhatIf(Id.Name, Id.Name, properties, location, cancellationToken);
-                return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, RestClient.CreateWhatIfRequest(Id.Name, Id.Name, properties, location).Request, response);
+                var response = _restClient.WhatIf(Id.Name, Id.Name, properties, location, cancellationToken);
+                return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfRequest(Id.Name, Id.Name, properties, location).Request, response);
             }
             catch (Exception e)
             {

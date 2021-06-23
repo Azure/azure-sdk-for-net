@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Common properties for all Azure resources. </summary>
-    public partial class AzureResourceBase : Core.SubResource
+    public partial class AzureResourceBase : SubResource<ResourceGroupResourceIdentifier>
     {
         /// <summary> Initializes a new instance of AzureResourceBase. </summary>
         public AzureResourceBase()

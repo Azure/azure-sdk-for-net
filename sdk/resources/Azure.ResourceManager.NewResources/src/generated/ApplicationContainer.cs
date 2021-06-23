@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<Application> Get(string applicationName, CancellationToken cancellationToken = default)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<Application>> GetAsync(string applicationName, CancellationToken cancellationToken = default)

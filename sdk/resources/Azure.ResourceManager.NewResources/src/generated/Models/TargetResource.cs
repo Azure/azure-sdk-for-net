@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Target resource. </summary>
-    public partial class TargetResource : Core.SubResource
+    public partial class TargetResource : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of TargetResource. </summary>
         internal TargetResource()

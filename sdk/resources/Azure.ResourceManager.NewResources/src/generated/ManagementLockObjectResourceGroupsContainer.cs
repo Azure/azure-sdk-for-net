@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<ManagementLockObject> Get(string lockName, CancellationToken cancellationToken = default)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<ManagementLockObject>> GetAsync(string lockName, CancellationToken cancellationToken = default)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAtResourceGroupLevel(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.ListAtResourceGroupLevel(Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAtResourceGroupLevelNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.ListAtResourceGroupLevelNextPage(nextLink, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAtResourceGroupLevelAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListAtResourceGroupLevelAsync(Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.NewResources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAtResourceGroupLevelNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListAtResourceGroupLevelNextPageAsync(nextLink, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -321,6 +321,156 @@ namespace Azure.ResourceManager.NewResources
                 var filters = new ResourceFilterCollection(ManagementLockObject.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or update a management lock by scope. </summary>
+        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<ManagementLockObjectData>> CreateOrUpdateByScopeAsync(ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectResourceGroupsContainer.CreateOrUpdateByScope");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CreateOrUpdateByScopeAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or update a management lock by scope. </summary>
+        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ManagementLockObjectData> CreateOrUpdateByScope(ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectResourceGroupsContainer.CreateOrUpdateByScope");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CreateOrUpdateByScope(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> When you apply a lock at a parent scope, all child resources inherit the same lock. To create management locks, you must have access to Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of the built-in roles, only Owner and User Access Administrator are granted those actions. </summary>
+        /// <param name="parameters"> Parameters for creating or updating a  management lock. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<ManagementLockObjectData>> CreateOrUpdateAtResourceLevelAsync(ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectResourceGroupsContainer.CreateOrUpdateAtResourceLevel");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CreateOrUpdateAtResourceLevelAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> When you apply a lock at a parent scope, all child resources inherit the same lock. To create management locks, you must have access to Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of the built-in roles, only Owner and User Access Administrator are granted those actions. </summary>
+        /// <param name="parameters"> Parameters for creating or updating a  management lock. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ManagementLockObjectData> CreateOrUpdateAtResourceLevel(ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectResourceGroupsContainer.CreateOrUpdateAtResourceLevel");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CreateOrUpdateAtResourceLevel(Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> When you apply a lock at a parent scope, all child resources inherit the same lock. To create management locks, you must have access to Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of the built-in roles, only Owner and User Access Administrator are granted those actions. </summary>
+        /// <param name="parameters"> The management lock parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<ManagementLockObjectData>> CreateOrUpdateAtSubscriptionLevelAsync(ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectResourceGroupsContainer.CreateOrUpdateAtSubscriptionLevel");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CreateOrUpdateAtSubscriptionLevelAsync(Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> When you apply a lock at a parent scope, all child resources inherit the same lock. To create management locks, you must have access to Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of the built-in roles, only Owner and User Access Administrator are granted those actions. </summary>
+        /// <param name="parameters"> The management lock parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ManagementLockObjectData> CreateOrUpdateAtSubscriptionLevel(ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectResourceGroupsContainer.CreateOrUpdateAtSubscriptionLevel");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CreateOrUpdateAtSubscriptionLevel(Id.ResourceGroupName, parameters, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

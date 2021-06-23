@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Resource provider information. </summary>
-    public partial class Provider : Core.SubResource
+    public partial class Provider : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of Provider. </summary>
         internal Provider()

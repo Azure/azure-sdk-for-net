@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Tag details. </summary>
-    internal partial class TagDetails : Core.SubResource
+    internal partial class TagDetails : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of TagDetails. </summary>
         internal TagDetails()

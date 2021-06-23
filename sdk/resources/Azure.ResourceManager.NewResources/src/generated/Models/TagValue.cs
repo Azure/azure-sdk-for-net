@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Tag information. </summary>
-    internal partial class TagValue : Core.SubResource
+    internal partial class TagValue : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of TagValue. </summary>
         internal TagValue()

@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Deployment operation information. </summary>
-    public partial class DeploymentOperation : Core.SubResource
+    public partial class DeploymentOperation : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of DeploymentOperation. </summary>
         internal DeploymentOperation()

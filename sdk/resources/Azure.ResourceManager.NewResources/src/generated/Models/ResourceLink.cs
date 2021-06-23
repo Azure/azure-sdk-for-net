@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> The resource link. </summary>
-    public partial class ResourceLink : Core.SubResource
+    public partial class ResourceLink : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of ResourceLink. </summary>
         public ResourceLink()

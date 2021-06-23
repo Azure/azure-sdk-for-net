@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -34,51 +35,39 @@ namespace Azure.ResourceManager.NewResources
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                var result = ListBySubscriptionAsync(clientDiagnostics, restOperations);
-                return new PhWrappingAsyncPageable<DeploymentScriptData, DeploymentScript>(
-                result,
-                s => new DeploymentScript(subscription, s));
+                async Task<Page<DeploymentScript>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                async Task<Page<DeploymentScript>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
             );
-        }
-
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="restOperations"> Resource client operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private static AsyncPageable<DeploymentScriptData> ListBySubscriptionAsync(ClientDiagnostics clientDiagnostics, DeploymentScriptsRestOperations restOperations, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeploymentScriptData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.ListBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeploymentScriptData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Lists the DeploymentScripts for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
@@ -91,51 +80,39 @@ namespace Azure.ResourceManager.NewResources
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                var result = ListBySubscription(clientDiagnostics, restOperations);
-                return new PhWrappingPageable<DeploymentScriptData, DeploymentScript>(
-                result,
-                s => new DeploymentScript(subscription, s));
+                Page<DeploymentScript> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                Page<DeploymentScript> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
             );
-        }
-
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="restOperations"> Resource client operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private static Pageable<DeploymentScriptData> ListBySubscription(ClientDiagnostics clientDiagnostics, DeploymentScriptsRestOperations restOperations, CancellationToken cancellationToken = default)
-        {
-            Page<DeploymentScriptData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.ListBySubscription(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeploymentScriptData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("DeploymentScriptOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Filters the list of DeploymentScripts for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
@@ -181,51 +158,39 @@ namespace Azure.ResourceManager.NewResources
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                var result = ListBySubscriptionAsync(clientDiagnostics, restOperations);
-                return new PhWrappingAsyncPageable<ApplicationData, Application>(
-                result,
-                s => new Application(subscription, s));
+                async Task<Page<Application>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                async Task<Page<Application>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
             );
-        }
-
-        /// <summary> Gets all the applications within a subscription. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="restOperations"> Resource client operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private static AsyncPageable<ApplicationData> ListBySubscriptionAsync(ClientDiagnostics clientDiagnostics, ApplicationsRestOperations restOperations, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApplicationData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.ListBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApplicationData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Lists the Applications for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
@@ -238,51 +203,39 @@ namespace Azure.ResourceManager.NewResources
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                var result = ListBySubscription(clientDiagnostics, restOperations);
-                return new PhWrappingPageable<ApplicationData, Application>(
-                result,
-                s => new Application(subscription, s));
+                Page<Application> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                Page<Application> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
             );
-        }
-
-        /// <summary> Gets all the applications within a subscription. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="restOperations"> Resource client operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private static Pageable<ApplicationData> ListBySubscription(ClientDiagnostics clientDiagnostics, ApplicationsRestOperations restOperations, CancellationToken cancellationToken = default)
-        {
-            Page<ApplicationData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.ListBySubscription(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApplicationData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = clientDiagnostics.CreateScope("ApplicationOperations.ListBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Filters the list of Applications for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>

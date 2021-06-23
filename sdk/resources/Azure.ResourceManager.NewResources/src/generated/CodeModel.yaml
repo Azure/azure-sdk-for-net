@@ -43,18 +43,26 @@ schemas: !Schemas
       protocol: !Protocols {}
     - !NumberSchema &ref_295
       type: integer
+      apiVersions:
+        - !ApiVersion 
+          version: '2021-04-01'
+        - !ApiVersion 
+          version: '2018-06-01'
       precision: 32
       language: !Languages 
         default:
-          name: Integer
+          name: SkuCapacity
           description: The SKU capacity.
       protocol: !Protocols {}
     - !NumberSchema &ref_354
       type: integer
+      apiVersions:
+        - !ApiVersion 
+          version: '2021-04-01'
       precision: 32
       language: !Languages 
         default:
-          name: Integer
+          name: TagCountValue
           description: Value of count.
       protocol: !Protocols {}
   strings:

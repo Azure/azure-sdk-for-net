@@ -327,6 +327,56 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
+        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <param name="parameters"> The policy definition properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<PolicyDefinitionData>> CreateOrUpdateAtManagementGroupAsync(PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PolicyDefinitionTenantContainer.CreateOrUpdateAtManagementGroup");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CreateOrUpdateAtManagementGroupAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+        /// <param name="parameters"> The policy definition properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<PolicyDefinitionData> CreateOrUpdateAtManagementGroup(PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PolicyDefinitionTenantContainer.CreateOrUpdateAtManagementGroup");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CreateOrUpdateAtManagementGroup(Id.Name, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         // Builders.
         // public ArmBuilder<ResourceGroupResourceIdentifier, PolicyDefinition, PolicyDefinitionData> Construct() { }
     }

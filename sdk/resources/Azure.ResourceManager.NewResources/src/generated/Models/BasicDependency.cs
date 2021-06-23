@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Deployment dependency information. </summary>
-    public partial class BasicDependency : Core.SubResource
+    public partial class BasicDependency : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of BasicDependency. </summary>
         internal BasicDependency()

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.NewResources
     public partial class PolicySetDefinitionTenantOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, PolicySetDefinition>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal PolicySetDefinitionsRestOperations RestClient { get; }
+        private PolicySetDefinitionsRestOperations _restClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="PolicySetDefinitionTenantOperations"/> class for mocking. </summary>
         protected PolicySetDefinitionTenantOperations()
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.NewResources
         protected internal PolicySetDefinitionTenantOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            RestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/policySetDefinitions";
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.Get(Id.Name, cancellationToken);
+                var response = _restClient.Get(Id.Name, cancellationToken);
                 return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.NewResources
         }
 
         /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P: System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.NewResources
         }
 
         /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P: System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new PolicySetDefinitionsDeleteOperation(response);
             }
             catch (Exception e)
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.Delete(Id.Name, cancellationToken);
+                var response = _restClient.Delete(Id.Name, cancellationToken);
                 return new PolicySetDefinitionsDeleteOperation(response);
             }
             catch (Exception e)
@@ -167,7 +168,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -184,7 +186,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetBuiltIn(Id.Name, cancellationToken);
+                var response = _restClient.GetBuiltIn(Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -201,7 +204,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.DeleteAtManagementGroupAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAtManagementGroupAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -218,7 +222,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.DeleteAtManagementGroup(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.DeleteAtManagementGroup(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -235,7 +240,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return await RestClient.GetAtManagementGroupAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtManagementGroupAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -252,7 +258,8 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                return RestClient.GetAtManagementGroup(Id.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetAtManagementGroup(Id.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

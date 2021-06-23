@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> Role definition properties. </summary>
-    internal partial class RoleDefinition : Core.SubResource
+    internal partial class RoleDefinition : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of RoleDefinition. </summary>
         internal RoleDefinition()

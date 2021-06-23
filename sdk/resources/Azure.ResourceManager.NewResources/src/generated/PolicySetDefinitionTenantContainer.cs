@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<PolicySetDefinition> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<PolicySetDefinition>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
@@ -319,6 +319,56 @@ namespace Azure.ResourceManager.NewResources
                 var filters = new ResourceFilterCollection(PolicySetDefinition.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation creates or updates a policy set definition in the given management group with the given name. </summary>
+        /// <param name="parameters"> The policy set definition properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<PolicySetDefinitionData>> CreateOrUpdateAtManagementGroupAsync(PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.CreateOrUpdateAtManagementGroup");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CreateOrUpdateAtManagementGroupAsync(Id.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation creates or updates a policy set definition in the given management group with the given name. </summary>
+        /// <param name="parameters"> The policy set definition properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<PolicySetDefinitionData> CreateOrUpdateAtManagementGroup(PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.CreateOrUpdateAtManagementGroup");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CreateOrUpdateAtManagementGroup(Id.Name, Id.Name, parameters, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
