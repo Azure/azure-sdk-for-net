@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -32,12 +33,24 @@ namespace Azure.ResourceManager.TestFramework
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
+            Initialize();
         }
 
         protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                var opInternalType = typeof(OperationInternals);
+                var pollField = opInternalType.GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
+                pollField.SetValue(null, TimeSpan.Zero);
+            }
         }
 
         private ArmClient GetCleanupClient()
