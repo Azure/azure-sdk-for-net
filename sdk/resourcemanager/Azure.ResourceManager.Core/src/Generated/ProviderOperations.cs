@@ -15,6 +15,9 @@ namespace Azure.ResourceManager.Core
     /// <summary> The Providers service client. </summary>
     public partial class ProviderOperations : ResourceOperationsBase<TenantProviderIdentifier, Provider>
     {
+        internal ProviderOperations()
+        { }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// </summary>

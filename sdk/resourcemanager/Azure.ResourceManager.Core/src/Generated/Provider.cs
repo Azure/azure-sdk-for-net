@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Core
             Data = providerData;
         }
 
+        internal Provider(ProviderData result) => Data = result;
+
         /// <summary>
         /// Gets the data representing this generic azure resource.
         /// </summary>

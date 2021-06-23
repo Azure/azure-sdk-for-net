@@ -109,6 +109,8 @@ namespace Azure.ResourceManager.Core
                 {
                     result = await RestClient.GetAtTenantScopeAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 }
+                if (Parent is null)
+                    return Response.FromValue(new Provider(result), result.GetRawResponse());
                 return Response.FromValue(new Provider(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)

@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase("microsoft.insights")]
         [RecordedTest]
-        public async Task GetFromSubscription(string resourceId)
+        public async Task GetFromSubscription(string resourceNamespace)
         {
             var providerContainer = Client.DefaultSubscription.GetProviders();
-            var result = await providerContainer.GetAsync(resourceId);
+            var result = await providerContainer.GetAsync(resourceNamespace);
             Assert.IsNotNull(result);
         }
 
-        [TestCase("/providers/microsoft.compute")]
+        [TestCase("microsoft.compute")]
         [RecordedTest]
-        public async Task GetFromTenant(string resourceId)
+        public async Task GetFromTenant(string resourceNamespace)
         {
             var providerContainer = Client.Tenant.GetProviders();
-            var result = await providerContainer.GetAsync(resourceId);
+            var result = await providerContainer.GetAsync(resourceNamespace);
             Assert.IsNotNull(result);
         }
 
