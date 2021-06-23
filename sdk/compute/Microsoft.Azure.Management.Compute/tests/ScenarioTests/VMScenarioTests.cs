@@ -342,7 +342,6 @@ namespace Compute.Tests
 
                     if (diskEncryptionSetId != null)
                     {
-
                         Assert.True(getVMWithInstanceViewResponse.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet != null, "OsDisk.ManagedDisk.DiskEncryptionSet is null");
                         Assert.True(string.Equals(diskEncryptionSetId, getVMWithInstanceViewResponse.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
                             "OsDisk.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
@@ -353,7 +352,7 @@ namespace Compute.Tests
                             "DataDisks.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
                     }
 
-                    if (string.IsNullOrEmpty(capacityReservationGroupReferenceId))
+                    if (associateWithCapacityReservation)
                     {
                         Assert.True(getVMWithInstanceViewResponse.CapacityReservation.CapacityReservationGroup != null, "CapacityReservation.CapacityReservationGroup is null");
                         Assert.True(string.Equals(capacityReservationGroupReferenceId, getVMWithInstanceViewResponse.CapacityReservation.CapacityReservationGroup.Id, StringComparison.OrdinalIgnoreCase),
@@ -363,10 +362,10 @@ namespace Compute.Tests
                             m_CrpClient.CapacityReservations.Get(rgName, capacityReservationGroupName, capacityReservationName,CapacityReservationInstanceViewTypes.InstanceView);
 
                         Assert.True(capacityReservation.VirtualMachinesAssociated.Any(), "capacityReservation.VirtualMachinesAssociated is not empty");
-                        Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.VirtualMachinesAssociated.First().Id), "capacityReservation.VirtualMachinesAssociated are not matching");
+                        Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.VirtualMachinesAssociated.First().Id, StringComparison.OrdinalIgnoreCase), "capacityReservation.VirtualMachinesAssociated are not matching");
 
-                        Assert.True(capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.Any(), "InstanceView.UtilizationInfo.VirtualMachinesAllocated is not empty");
-                        Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.First().Id),
+                        Assert.True(capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.Any(), "InstanceView.UtilizationInfo.VirtualMachinesAllocated is empty");
+                        Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.First().Id, StringComparison.OrdinalIgnoreCase),
                             "InstanceView.UtilizationInfo.VirtualMachinesAllocated are not matching");
                     }
                     
