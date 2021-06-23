@@ -4,9 +4,9 @@
 namespace Azure.Identity
 {
     /// <summary>
-    /// Options for configuring the <see cref="AzurePowerShellCredential"/>.
+    /// Options for configuring the <see cref="AzureCliCredential"/>.
     /// </summary>
-    public class AzurePowerShellCredentialOptions : TokenCredentialOptions
+    public class AzureCliCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
         /// The Azure Active Directory tenant (directory) Id of the service principal

@@ -50,8 +50,14 @@ namespace Azure.Identity
     public partial class AzureCliCredential : Azure.Core.TokenCredential
     {
         public AzureCliCredential() { }
+        public AzureCliCredential(Azure.Identity.AzureCliCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AzureCliCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzureCliCredentialOptions() { }
+        public string TenantId { get { throw null; } set { } }
     }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
@@ -63,6 +69,7 @@ namespace Azure.Identity
     public partial class AzurePowerShellCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzurePowerShellCredentialOptions() { }
+        public string TenantId { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
@@ -250,6 +257,7 @@ namespace Azure.Identity
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        public bool AllowMultiTenantAuthentication { get { throw null; } set { } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
