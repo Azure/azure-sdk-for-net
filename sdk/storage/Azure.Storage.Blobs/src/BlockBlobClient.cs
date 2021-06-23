@@ -3018,14 +3018,26 @@ namespace Azure.Storage.Blobs.Specialized
                         async,
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
-                    => await client.StageBlockInternal(
-                        Shared.StorageExtensions.GenerateBlockId(offset),
-                        stream,
-                        transactionalContentHash: default,
-                        args?.Conditions,
-                        progressHandler,
-                        async,
-                        cancellationToken).ConfigureAwait(false),
+                    =>
+                {
+                    // Stage Block only accepts LeaseId.
+                    BlobRequestConditions conditions = null;
+                    if (args?.Conditions != null)
+                    {
+                        conditions = new BlobRequestConditions
+                        {
+                            LeaseId = args.Conditions.LeaseId
+                        };
+                    }
+                    await client.StageBlockInternal(
+                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            stream,
+                            transactionalContentHash: default,
+                            conditions,
+                            progressHandler,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
                         partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),

@@ -2139,7 +2139,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task UploadAsync_AccessConditions()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task UploadAsync_AccessConditions(bool multiPart)
         {
             foreach (AccessConditionParameters parameters in AccessConditions_Data)
             {
@@ -2158,12 +2160,26 @@ namespace Azure.Storage.Blobs.Test
                 parameters.SourceIfMatch = await SetupBlobMatchCondition(blob, parameters.SourceIfMatch);
                 RequestConditions accessConditions = BuildRequestConditions(parameters);
 
+                BlobUploadOptions options = new BlobUploadOptions
+                {
+                    Conditions = accessConditions.ToBlobRequestConditions()
+                };
+
+                if (multiPart)
+                {
+                    options.TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumTransferSize = Size / 4,
+                        InitialTransferSize = Size / 4
+                    };
+                }
+
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
                     Response<BlobContentInfo> response = await blob.UploadAsync(
                         content: stream,
-                        conditions: accessConditions.ToBlobRequestConditions());
+                        options: options);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
