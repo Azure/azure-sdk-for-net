@@ -684,16 +684,75 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(keyPhrasesActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => keyPhrasesActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(piiActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => piiActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(entityLinkingActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => entityLinkingActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(analyzeSentimentActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => analyzeSentimentActionsResults.DocumentsResults.GetType());
+        }
+
+        [Test]
+        public void AnalyzeOperationWithGenericError()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""displayName"": ""AnalyzeOperationBatchWithErrorTest"",
+                    ""jobId"": ""75d521bc-c2aa-4d8a-aabe-713e72d53a2d"",
+                    ""lastUpdateDateTime"": ""2021-03-03T22:39:37Z"",
+                    ""createdDateTime"": ""2021-03-03T22:39:36Z"",
+                    ""expirationDateTime"": ""2021-03-04T22:39:36Z"",
+                    ""status"": ""failed"",
+                    ""errors"": [
+                      {
+                        ""code"": ""InternalServerError"",
+                        ""message"": ""Some error""
+                      }
+                    ],
+                    ""tasks"": {
+                      ""details"": {
+                        ""name"": ""AnalyzeOperationBatchWithErrorTest"",
+                        ""lastUpdateDateTime"": ""2021-03-03T22:39:37Z""
+                      },
+                      ""completed"": 0,
+                      ""failed"": 1,
+                      ""inProgress"": 0,
+                      ""total"": 1,
+                      ""entityRecognitionTasks"": [
+                        {
+                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
+                          ""taskName"": ""something"",
+                          ""state"": ""failed""
+                        }
+                      ]
+                    }
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+                DisplayName = "AnalyzeOperationBatchWithErrorTest"
+            };
+
+            var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
+            Assert.AreEqual("InternalServerError", ex.ErrorCode);
+            Assert.IsTrue(ex.Message.Contains("Some error"));
         }
 
         private static string GetString(RequestContent content)

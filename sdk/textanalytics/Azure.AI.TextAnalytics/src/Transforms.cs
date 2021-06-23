@@ -494,7 +494,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     string[] targetPair = parseActionErrorTarget(error.Target);
                     if (targetPair == null)
-                        throw new InvalidOperationException("Invalid action/id error");
+                        throw new InvalidOperationException($"Invalid action/id error. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
 
                     string taskName = targetPair[0];
                     int taskIndex = int.Parse(targetPair[1], CultureInfo.InvariantCulture);
@@ -521,7 +521,7 @@ namespace Azure.AI.TextAnalytics
                     }
                     else
                     {
-                        throw new InvalidOperationException($"Invalid task name in target reference - {taskName}");
+                        throw new InvalidOperationException($"Invalid task name in target reference - {taskName}. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
                     }
                 }
             }
