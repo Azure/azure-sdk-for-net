@@ -1,6 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
+using System.Text;
+using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
@@ -50,7 +55,9 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var resource1 = new SubResource("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1");
             SubResource resource2 = null;
+            var resource3 = new SubResource();
             Assert.AreEqual(1, resource1.CompareTo(resource2));
+            Assert.AreEqual(1, resource1.CompareTo(resource3));
             Assert.AreEqual(1, resource1.CompareTo((string)null));
         }
 
@@ -60,6 +67,20 @@ namespace Azure.ResourceManager.Core.Tests
             var resource1 = new SubResource("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1");
             var resource2 = resource1;
             Assert.AreEqual(0, resource1.CompareTo(resource2));
+        }
+
+        [Test]
+        public void Deserialization()
+        {
+            var id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1";
+            var resource1 = new SubResource(id);
+            var jsonString = JsonHelper.SerializeToString(resource1);
+            var json = JsonDocument.Parse(jsonString).RootElement;
+            var resource2 = SubResource.DeserializeSubResource(json);
+            Assert.AreEqual(0, resource1.CompareTo(resource2));
+            Assert.IsTrue(resource1.Equals(resource2));
+            Assert.IsTrue(resource1.Equals(id));
+            Assert.IsFalse(resource1.Equals(id + "1"));
         }
     }
 }
