@@ -12,15 +12,15 @@ namespace Azure.Core
     /// Represents an error returned by an Azure Service.
     /// </summary>
     [JsonConverter(typeof(Converter))]
-    public sealed class ServiceError
+    public sealed class AzureError
     {
-        internal ServiceError(string? code, string? message, ServiceInnerError? innerError, string? target, IReadOnlyList<ServiceError>? details)
+        internal AzureError(string? code, string? message, ServiceInnerError? innerError, string? target, IReadOnlyList<AzureError>? details)
         {
             Code = code;
             Message = message;
             InnerError = innerError;
             Target = target;
-            Details = details ?? Array.Empty<ServiceError>();
+            Details = details ?? Array.Empty<AzureError>();
         }
 
         /// <summary>
@@ -46,18 +46,18 @@ namespace Azure.Core
         /// <summary>
         /// Gets the list of related errors.
         /// </summary>
-        public IReadOnlyList<ServiceError> Details { get; }
+        public IReadOnlyList<AzureError> Details { get; }
 
-        private class Converter : JsonConverter<ServiceError?>
+        private class Converter : JsonConverter<AzureError?>
         {
-            public override ServiceError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override AzureError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 var element = document.RootElement;
                 return Read(element);
             }
 
-            private static ServiceError? Read(JsonElement element)
+            private static AzureError? Read(JsonElement element)
             {
                 if (element.ValueKind == JsonValueKind.Null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.Core
                     innererror = ServiceInnerError.Converter.Read(property);
                 }
 
-                List<ServiceError>? details = null;
+                List<AzureError>? details = null;
                 if (element.TryGetProperty("details", out property) &&
                     property.ValueKind == JsonValueKind.Array)
                 {
@@ -103,10 +103,10 @@ namespace Azure.Core
                     }
                 }
 
-                return new ServiceError(code, message, innererror, target, details);
+                return new AzureError(code, message, innererror, target, details);
             }
 
-            public override void Write(Utf8JsonWriter writer, ServiceError? value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, AzureError? value, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }

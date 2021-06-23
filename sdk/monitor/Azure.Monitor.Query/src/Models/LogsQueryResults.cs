@@ -39,6 +39,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Get's the error that occured during query processing. The value would be <c>null</c> if the query succeeds.
         /// </summary>
-        public ServiceError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ServiceError>(_error.GetRawText());
+        public AzureError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<AzureError>(_error.GetRawText());
     }
 }
