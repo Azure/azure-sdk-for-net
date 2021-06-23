@@ -3,7 +3,12 @@
 ## 1.0.0-beta.5 (Unreleased)
 
 ### Breaking Changes
-- The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in types, methods, and properties.
+- The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in methods, method parameters, and properties.
+  - Renamed class `DatasourceCredential` to `DataSourceCredentialEntity`.
+  - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataSourceDataLakeGen2SharedKey`.
+  - Renamed class `ServicePrincipalDatasourceCredential` to `DataSourceServicePrincipal`.
+  - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `DataSourceServicePrincipalInKeyVault`.
+  - Renamed class `SqlConnectionStringDatasourceCredential` to `DataSourceSqlConnectionString`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
