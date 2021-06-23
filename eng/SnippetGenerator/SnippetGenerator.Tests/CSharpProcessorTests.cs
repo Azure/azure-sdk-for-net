@@ -8,6 +8,7 @@ namespace SnippetGenerator.Tests
     public class Tests
     {
         private const string Processed = "processed";
+        private const string ProcessedAgain = "processed again";
 
         [Test]
         [TestCaseSource(nameof(CodeInputs))]
@@ -16,11 +17,12 @@ namespace SnippetGenerator.Tests
             var actual = await CSharpProcessor.ProcessAsync(code, SnippetProvider);
             Assert.AreEqual(expected, actual);
 
-            var reProcessed = await CSharpProcessor.ProcessAsync(actual, SnippetProvider);
-            Assert.AreEqual(expected, reProcessed);
+            var reProcessed = await CSharpProcessor.ProcessAsync(actual, SnippetProvider2);
+            Assert.AreEqual(expected.Replace(Processed, ProcessedAgain), reProcessed);
         }
 
         private ValueTask<string> SnippetProvider(string s) => new(Processed);
+        private ValueTask<string> SnippetProvider2(string s) => new(ProcessedAgain);
 
         public static IEnumerable<object[]> CodeInputs()
         {
