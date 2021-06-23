@@ -20,24 +20,7 @@ namespace Azure.Storage.Common.DataMovement
 
         public PathScanner BuildPathScanner()
         {
-            try
-            {
-                // Ensure we're dealing with an absolute, well-formatted path
-                string fullPath = Path.GetFullPath(_path);
-
-                // Check if path exists and whether it points to a directory
-                bool isDir = (File.GetAttributes(fullPath) & FileAttributes.Directory) == FileAttributes.Directory;
-
-                return new PathScanner(fullPath, isDir);
-            }
-            catch
-            {
-                // If there's an error here, there aren't any valid entries to scan at the given path;
-                // the path is either invalid or nonexistant. In this case, throw the exception.
-                //
-                // TODO: Logging for bad path exceptions
-                throw;
-            }
+            return new PathScanner(_path);
         }
     }
 }

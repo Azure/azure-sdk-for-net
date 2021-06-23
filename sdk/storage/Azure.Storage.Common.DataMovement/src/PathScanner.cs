@@ -15,63 +15,75 @@ namespace Azure.Storage.Common.DataMovement
         /// The fully qualified path to be scanned.
         /// </summary>
         private readonly string _basePath;
-        private readonly bool _isDir;
 
-        public PathScanner(string path, bool isDir)
+        public PathScanner(string path)
         {
-            _basePath = path;
-            _isDir = isDir;
+            // Resolve the given path to an absolute path in case it isn't one already
+            _basePath = Path.GetFullPath(path);
+
+            // If there's no file/directory at the given path, Throw an exception.
+            //
+            // TODO: Logging for bad path
+            if (!(Directory.Exists(_basePath) || File.Exists(_basePath)))
+            {
+                throw new ArgumentException($"No item(s) located at the path '{_basePath}'.");
+            }
         }
 
         public IEnumerable<string> Scan(bool skipSubdirectories = true)
         {
-            // If we're given a directory, parse its children recursively
-            if (_isDir)
-            {
-                // Create a queue of folders to enumerate files from, starting with provided path
-                Queue<string> folders = new();
-                folders.Enqueue(_basePath);
-
-                while (folders.Count > 0)
-                {
-                    // Grab a folder from the queue
-                    string dir = folders.Dequeue();
-
-                    // Try to enumerate and queue all subdirectories of the current folder
-                    try
-                    {
-                        foreach (string subdir in EnumerateDirectories(dir))
-                        {
-                            folders.Enqueue(subdir);
-                        }
-                    }
-                    catch
-                    {
-                        // If we lack permissions to enumerate, throw if we fail on the main directory or
-                        // if the user instructs us to do so on failing to enumerate a subdirectory.
-                        //
-                        // TODO: Logging for missing permissions to enumerate folder
-                        if ((dir == _basePath) || !skipSubdirectories)
-                        {
-                            throw;
-                        }
-
-                        // Otherwise, just log the failed subdirectory and continue to list as many
-                        // files as accessible.
-                        continue;
-                    }
-
-                    // Add all files in the directory to be returned
-                    foreach (string file in EnumerateFiles(dir))
-                    {
-                        yield return file;
-                    }
-                }
-            }
-            // Otherwise we can just return the original path
-            else
+            // If the given path is a single file, return only the given path
+            if (!((File.GetAttributes(_basePath) & FileAttributes.Directory) == FileAttributes.Directory))
             {
                 yield return _basePath;
+                yield break;
+            }
+
+            // Create a queue of folders to enumerate files from, starting with provided path
+            Queue<string> folders = new();
+            folders.Enqueue(_basePath);
+
+            while (folders.Count > 0)
+            {
+                // Grab a folder from the queue
+                string dir = folders.Dequeue();
+
+                // Send the current directory to the scan results
+                yield return dir;
+
+                // Try to enumerate and queue all subdirectories of the current folder
+                try
+                {
+                    foreach (string subdir in EnumerateDirectories(dir))
+                    {
+                        folders.Enqueue(subdir);
+                    }
+                }
+                catch
+                {
+                    // If we lack permissions to enumerate, throw if we fail on the main directory or
+                    // if the user instructs us to do so on failing to enumerate a subdirectory.
+                    //
+                    // TODO: Logging for missing permissions to enumerate folder
+                    //
+                    // Afterthought: once logging is implemented, we can maybe just log any problems
+                    // (whether with given dir or subdir), and skip if told to/throw if not. No need for
+                    // the `dir == _basePath` check.
+                    if ((dir == _basePath) || !skipSubdirectories)
+                    {
+                        throw;
+                    }
+
+                    // Otherwise, just log the failed subdirectory and continue to list as many
+                    // files as accessible.
+                    continue;
+                }
+
+                // Send all files in the directory to the scan results
+                foreach (string file in EnumerateFiles(dir))
+                {
+                    yield return file;
+                }
             }
         }
 
