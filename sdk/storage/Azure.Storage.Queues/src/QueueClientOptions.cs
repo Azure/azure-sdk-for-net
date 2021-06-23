@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Queues
 {
@@ -13,7 +14,7 @@ namespace Azure.Storage.Queues
     /// Provides the client configuration options for connecting to Azure Queue
     /// Storage
     /// </summary>
-    public class QueueClientOptions : ClientOptions
+    public class QueueClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -68,7 +69,12 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// The 2020-08-14 service version.
             /// </summary>
-            V2020_08_04 = 7
+            V2020_08_04 = 7,
+
+            /// <summary>
+            /// The 2020-10-02 service version.
+            /// </summary>
+            V2020_10_02 = 8
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -122,6 +128,9 @@ namespace Azure.Storage.Queues
         /// The default is <see cref="QueueMessageEncoding.None"/>.
         /// </summary>
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
+
+        /// <inheritdoc />
+        public bool EnableTenantDiscovery { get; set; }
 
         /// <summary>
         /// Optional. Performs the tasks needed when a message is received or peaked from the queue but cannot be decoded.

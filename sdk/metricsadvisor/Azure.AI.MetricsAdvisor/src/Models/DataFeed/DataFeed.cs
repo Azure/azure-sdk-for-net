@@ -89,11 +89,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeedSource DataSource { get; set; }
 
         /// <summary>
-        /// The type of data source that ingests this <see cref="DataFeed"/> with data.
-        /// </summary>
-        public DataFeedSourceType? SourceType => DataSource?.Type;
-
-        /// <summary>
         /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
         /// in terms of metrics and dimensions.
         /// </summary>
@@ -264,15 +259,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     break;
                 case AzureDataExplorerDataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    detail.CredentialId = s.DatasourceCredentialId;
+                    detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageGen2DataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    detail.CredentialId = s.DatasourceCredentialId;
+                    detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    detail.CredentialId = s.DatasourceCredentialId;
+                    detail.CredentialId = s.DataSourceCredentialId;
                     break;
             }
         }
@@ -286,15 +281,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     break;
                 case AzureDataExplorerDataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    patch.CredentialId = s.DatasourceCredentialId;
+                    patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageGen2DataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    patch.CredentialId = s.DatasourceCredentialId;
+                    patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
-                    patch.CredentialId = s.DatasourceCredentialId;
+                    patch.CredentialId = s.DataSourceCredentialId;
                     break;
             }
         }

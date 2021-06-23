@@ -38,12 +38,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
@@ -59,12 +59,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -182,12 +182,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -245,12 +245,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -314,12 +314,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>ContactBasic</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -335,12 +335,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -361,24 +361,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -408,12 +408,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
@@ -429,12 +429,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -552,12 +552,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -615,12 +615,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -684,12 +684,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>ContactBasic</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -705,12 +705,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -731,24 +731,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -771,9 +771,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -785,7 +785,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -794,23 +794,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -837,23 +837,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -880,8 +880,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -916,12 +916,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
@@ -937,12 +937,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -1060,12 +1060,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -1123,12 +1123,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -1192,12 +1192,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>ContactBasic</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -1213,12 +1213,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -1239,24 +1239,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1286,12 +1286,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
@@ -1307,12 +1307,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -1430,12 +1430,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -1493,12 +1493,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -1562,12 +1562,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>ContactBasic</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -1583,12 +1583,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -1609,24 +1609,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateEntities(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdateEntities(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1649,9 +1649,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdateEntities"/> and <see cref="CreateOrUpdateEntitiesAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1663,29 +1663,29 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidsRequest(guids, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteByGuidsRequest(guids, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1709,23 +1709,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestOptions requestOptions = null)
+        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidsRequest(guids, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteByGuidsRequest(guids, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1749,8 +1749,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="DeleteByGuids"/> and <see cref="DeleteByGuidsAsync"/> operations. </summary>
         /// <param name="guids"> An array of GUIDs of entities to delete. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1769,12 +1769,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classification</term>
         ///     <term>AtlasClassification</term>
@@ -1790,12 +1790,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -1853,12 +1853,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -1879,24 +1879,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddClassificationRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1922,12 +1922,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classification</term>
         ///     <term>AtlasClassification</term>
@@ -1943,12 +1943,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -2006,12 +2006,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -2032,24 +2032,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddClassification(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response AddClassification(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddClassificationRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2072,9 +2072,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="AddClassification"/> and <see cref="AddClassificationAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddClassificationRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateAddClassificationRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2085,7 +2085,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -2093,23 +2093,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2135,23 +2135,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2177,8 +2177,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2209,24 +2209,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2256,24 +2256,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2298,9 +2298,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="PartialUpdateEntityAttributeByGuid"/> and <see cref="PartialUpdateEntityAttributeByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2314,29 +2314,29 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2360,23 +2360,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response DeleteByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2400,8 +2400,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="DeleteByGuid"/> and <see cref="DeleteByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2419,23 +2419,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationRequest(guid, classificationName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2460,23 +2460,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetClassification(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual Response GetClassification(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationRequest(guid, classificationName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2501,8 +2501,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="GetClassification"/> and <see cref="GetClassificationAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetClassificationRequest(string guid, string classificationName, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetClassificationRequest(string guid, string classificationName, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2522,23 +2522,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2563,23 +2563,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteClassification(string guid, string classificationName, RequestOptions requestOptions = null)
+        public virtual Response DeleteClassification(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteClassificationRequest(guid, classificationName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2604,8 +2604,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="DeleteClassification"/> and <see cref="DeleteClassificationAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2623,23 +2623,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationsRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationsRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2663,23 +2663,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetClassifications(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetClassifications(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationsRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationsRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2703,8 +2703,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetClassifications"/> and <see cref="GetClassificationsAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetClassificationsRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetClassificationsRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2724,12 +2724,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -2787,12 +2787,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -2814,24 +2814,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddClassificationsRequest(guid, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2857,12 +2857,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -2920,12 +2920,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -2947,24 +2947,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddClassifications(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response AddClassifications(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddClassificationsRequest(guid, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2988,9 +2988,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="AddClassifications"/> and <see cref="AddClassificationsAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddClassificationsRequest(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateAddClassificationsRequest(string guid, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -3003,7 +3003,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -3011,12 +3011,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -3074,12 +3074,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -3101,24 +3101,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateClassificationsRequest(guid, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3144,12 +3144,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -3207,12 +3207,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -3234,24 +3234,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response UpdateClassifications(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response UpdateClassifications(string guid, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsRequest(guid, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateClassificationsRequest(guid, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3275,9 +3275,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="UpdateClassifications"/> and <see cref="UpdateClassificationsAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -3290,7 +3290,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -3306,23 +3306,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3356,23 +3356,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3399,8 +3399,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -3440,12 +3440,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
@@ -3461,12 +3461,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -3584,12 +3584,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -3647,12 +3647,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -3716,12 +3716,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>ContactBasic</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -3737,12 +3737,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -3764,25 +3764,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3817,12 +3817,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
@@ -3838,12 +3838,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -3961,12 +3961,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -4024,12 +4024,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -4093,12 +4093,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>ContactBasic</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
@@ -4114,12 +4114,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -4141,25 +4141,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, content, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4183,10 +4183,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="PartialUpdateEntityByUniqueAttributes"/> and <see cref="PartialUpdateEntityByUniqueAttributesAsync"/> operations. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4203,7 +4203,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -4217,23 +4217,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4265,23 +4265,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4306,8 +4306,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="DeleteByUniqueAttribute"/> and <see cref="DeleteByUniqueAttributeAsync"/> operations. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4330,23 +4330,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4372,23 +4372,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteClassificationByUniqueAttributeRequest(typeName, classificationName, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4414,8 +4414,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4439,12 +4439,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -4502,12 +4502,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -4529,25 +4529,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4573,12 +4573,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -4636,12 +4636,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -4663,25 +4663,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4705,10 +4705,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="AddClassificationsByUniqueAttribute"/> and <see cref="AddClassificationsByUniqueAttributeAsync"/> operations. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4725,7 +4725,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -4733,12 +4733,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -4796,12 +4796,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -4823,25 +4823,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4867,12 +4867,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -4930,12 +4930,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -4957,25 +4957,25 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response UpdateClassificationsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateClassificationsByUniqueAttributeRequest(typeName, content, attrQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -4999,10 +4999,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="UpdateClassificationsByUniqueAttribute"/> and <see cref="UpdateClassificationsByUniqueAttributeAsync"/> operations. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="requestBody"> The request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -5019,7 +5019,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -5027,12 +5027,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>guidHeaderMap</term>
         ///     <term>Dictionary&lt;string, AtlasEntityHeader&gt;</term>
@@ -5042,12 +5042,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -5111,12 +5111,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -5174,12 +5174,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -5243,12 +5243,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -5269,24 +5269,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SetClassificationsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SetClassificationsAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSetClassificationsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSetClassificationsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5312,12 +5312,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>guidHeaderMap</term>
         ///     <term>Dictionary&lt;string, AtlasEntityHeader&gt;</term>
@@ -5327,12 +5327,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -5396,12 +5396,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -5459,12 +5459,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>confidence</term>
         ///     <term>number</term>
@@ -5528,12 +5528,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string</term>
@@ -5554,24 +5554,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SetClassifications(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response SetClassifications(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSetClassificationsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSetClassificationsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5594,9 +5594,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="SetClassifications"/> and <see cref="SetClassificationsAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSetClassificationsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateSetClassificationsRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -5608,7 +5608,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -5629,23 +5629,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5684,23 +5684,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEntitiesByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5727,8 +5727,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -5757,23 +5757,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetHeaderRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetHeaderRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5797,23 +5797,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetHeader(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetHeader(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetHeaderRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetHeaderRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5837,8 +5837,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetHeader"/> and <see cref="GetHeaderAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetHeaderRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetHeaderRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
