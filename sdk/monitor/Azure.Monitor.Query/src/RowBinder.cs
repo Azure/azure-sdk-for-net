@@ -9,6 +9,7 @@ namespace Azure.Monitor.Query
 {
     internal class RowBinder: TypeBinder<LogsQueryResultRow>
     {
+        internal static RowBinder Shared = new();
         internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsQueryResultTable> tables)
         {
             List<T> results = new List<T>();

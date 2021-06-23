@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
         {
             Optional<string> id = default;
             Optional<int> status = default;
-            Optional<LogsBatchQueryResultInternal> body = default;
+            Optional<LogsBatchQueryResult> body = default;
             Optional<IReadOnlyDictionary<string, string>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    body = LogsBatchQueryResultInternal.DeserializeLogsBatchQueryResultInternal(property.Value);
+                    body = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("headers"))

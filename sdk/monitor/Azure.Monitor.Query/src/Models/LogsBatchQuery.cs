@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
-        /// <returns>The query identifier that has to be passed into <see cref="LogsBatchQueryResult.GetResult"/> to get the result.</returns>
+        /// <returns>The query identifier that has to be passed into <see cref="LogsBatchQueryResults.GetResult"/> to get the result.</returns>
         public virtual string AddQuery(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
