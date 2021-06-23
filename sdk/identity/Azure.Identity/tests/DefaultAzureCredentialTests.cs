@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Moq;
@@ -524,8 +526,13 @@ namespace Azure.Identity.Tests
 
         [Test]
         [TestCaseSource(nameof(AllCredentialTypes))]
-        public async Task CredentialType(Type availableCredential)
+        public async Task CredentialTypeLogged(Type availableCredential)
         {
+            List<string> messages = new();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (_, message) => messages.Add(message),
+                EventLevel.Informational);
+
             var expToken = new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.MaxValue);
             List<Type> calledCredentials = new();
             var credFactory = GetMockDefaultAzureCredentialFactory(availableCredential, expToken, calledCredentials);
@@ -536,17 +543,18 @@ namespace Azure.Identity.Tests
                 ExcludeManagedIdentityCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
                 ExcludeAzureCliCredential = false,
-                ExcludeInteractiveBrowserCredential = false
+                ExcludeInteractiveBrowserCredential = false,
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = true
+                }
             };
 
             var cred = new DefaultAzureCredential(credFactory, options);
 
-            // CredentialType is null before GetToken is called
-            Assert.That(cred.CredentialType, Is.Null);
-
             await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.That(availableCredential.Name, Is.SubsetOf(cred.CredentialType.Name));
+            Assert.That(messages, Has.Some.Match(availableCredential.Name).And.Some.Match("DefaultAzureCredential credential selected"));
         }
 
         internal MockDefaultAzureCredentialFactory GetMockDefaultAzureCredentialFactory(Type availableCredential, AccessToken expToken, List<Type> calledCredentials)
