@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ProviderContainerTests : ResourceManagerTestBase
     {
         public ProviderContainerTests(bool isAsync)
-         : base(isAsync)//, RecordedTestMode.Record)
+         : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsNotNull(result);
         }
 
-        [TestCase("/providers/microsoft.insights")]
+        [TestCase("/providers/microsoft.compute")]
         [RecordedTest]
         public async Task GetFromTenant(string resourceId)
         {

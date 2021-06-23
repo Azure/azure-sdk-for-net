@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Make a provider resource client class.
         /// </summary>
-        internal void SetProviderClient(TokenCredential credential, Uri baseUri, string subscription)
+        internal void SetProviderClient(ArmClient armClient)
         {
-            _armClient = new ArmClient(subscription, baseUri, credential, _clientOptions);
+            _armClient = armClient;            ;
         }
 
         private ConcurrentDictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Core
             {
                 return val;
             }
-            return _armClient == null ? null : LoadApiVersion(resourceType.ToString(), cancellationToken);
+            return _armClient == null ? null : LoadApiVersion(resourceType.ToString(), cancellationToken); //_armClient is null
         }
 
         /// <summary>

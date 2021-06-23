@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Core
             get
             {
                 string subscription;
-                if (!Id.TryGetSubscriptionId(out subscription))
+                if (Id is null || !Id.TryGetSubscriptionId(out subscription))
                 {
                     subscription = Guid.Empty.ToString();
                 }

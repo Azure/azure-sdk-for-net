@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
             get
             {
                 string subscription;
-                if (!Id.TryGetSubscriptionId(out subscription))
+                if (Id is null || !Id.TryGetSubscriptionId(out subscription))
                 {
                     subscription = Guid.Empty.ToString();
                 }
@@ -61,9 +61,18 @@ namespace Azure.ResourceManager.Core
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
+
             try
             {
-                var result = RestClient.Get(resourceProviderNamespace, null, cancellationToken);
+                Response<ProviderData> result;
+                if (Id.GetType().Name == "SubscriptionResourceIdentifier")
+                {
+                    result = RestClient.Get(resourceProviderNamespace, null, cancellationToken);
+                }
+                else
+                {
+                    result = RestClient.GetAtTenantScope(resourceProviderNamespace, null, cancellationToken);
+                }
                 return Response.FromValue(new Provider(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -81,7 +90,15 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var result = await RestClient.GetAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                Response<ProviderData> result;
+                if (Id.GetType().Name == "SubscriptionResourceIdentifier")
+                {
+                    result = await RestClient.GetAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    result = await RestClient.GetAtTenantScopeAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                }
                 return Response.FromValue(new Provider(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)

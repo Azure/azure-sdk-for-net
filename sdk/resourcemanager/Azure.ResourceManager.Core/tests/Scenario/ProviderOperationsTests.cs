@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ProviderOperationsTests : ResourceManagerTestBase
     {
         public ProviderOperationsTests(bool isAsync)
-         : base(isAsync)//, RecordedTestMode.Record)
+         : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task Register()
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
-            Response<Provider> response = await providerContainer.GetAsync("microsoft.insights");
+            Response<Provider> response = await providerContainer.GetAsync("microsoft.compute");
             var result = response.Value;
             var register = await result.RegisterAsync("testerNamespace");
             Assert.IsNotNull(register);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task Unegister()
+        public async Task Unregister()
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
             Response<Provider> response = await providerContainer.GetAsync("microsoft.insights");
