@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Defines the set of rules that must be satisfied by an anomaly before it can trigger an alert.
     /// </summary>
     [CodeGenModel("AnomalyAlertingConfiguration")]
-    [CodeGenSuppress(nameof(AnomalyAlertConfiguration), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<MetricAnomalyAlertConfiguration>))]
+    [CodeGenSuppress(nameof(AnomalyAlertConfiguration), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<MetricAlertConfiguration>))]
     public partial class AnomalyAlertConfiguration
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalyAlertConfiguration()
         {
             IdsOfHooksToAlert = new ChangeTrackingList<string>();
-            MetricAlertConfigurations = new ChangeTrackingList<MetricAnomalyAlertConfiguration>();
+            MetricAlertConfigurations = new ChangeTrackingList<MetricAlertConfiguration>();
             SplitAlertByDimensions = new ChangeTrackingList<string>();
         }
 
@@ -48,10 +48,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The configurations that define which anomalies are eligible for triggering an alert.
         /// </summary>
         [CodeGenMember("MetricAlertingConfigurations")]
-        public IList<MetricAnomalyAlertConfiguration> MetricAlertConfigurations { get; }
+        public IList<MetricAlertConfiguration> MetricAlertConfigurations { get; }
 
         /// <summary>
-        /// The operator to be applied between <see cref="MetricAnomalyAlertConfiguration"/>s in this
+        /// The operator to be applied between <see cref="MetricAlertConfiguration"/>s in this
         /// <see cref="AnomalyAlertConfiguration"/> instance. This property must be set if more than one
         /// configuration is defined in <see cref="MetricAlertConfigurations"/>.
         /// </summary>
