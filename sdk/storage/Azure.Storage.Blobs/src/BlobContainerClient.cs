@@ -2295,6 +2295,14 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(SetAccessPolicy)}");
 
+                conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    BlobRequestConditionProperty.TagConditions
+                    | BlobRequestConditionProperty.IfMatch
+                    | BlobRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(BlobContainerClient.SetAccessPolicy),
+                parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
