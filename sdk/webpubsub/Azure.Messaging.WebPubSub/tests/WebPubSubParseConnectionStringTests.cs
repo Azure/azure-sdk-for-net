@@ -102,7 +102,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             Assert.NotNull(exp);
             Assert.IsTrue(long.TryParse(exp, out var expireAt));
 
-            // default expire atfte should be ~5 minutes (~300 seconds)
+            // default expire after should be ~5 minutes (~300 seconds)
             var expireAfter = expireAt - issuedAt;
             Assert.IsTrue(expireAfter > 295 && expireAfter < 305);
 
