@@ -1614,6 +1614,40 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(RequestConditions.IfMatch))]
+        [TestCase(nameof(RequestConditions.IfNoneMatch))]
+        public async Task RenewLeaseAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobContainerClient containerClient = new BlobContainerClient(uri, GetOptions());
+            string id = Recording.Random.NewGuid().ToString();
+            BlobLeaseClient leaseClient = InstrumentClient(containerClient.GetBlobLeaseClient(id));
+
+            RequestConditions conditions = new RequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(RequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(RequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                leaseClient.RenewAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Release does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task RenewLeaseAsync_Error()
         {
             // Arrange

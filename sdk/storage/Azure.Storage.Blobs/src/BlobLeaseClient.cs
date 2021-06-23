@@ -561,12 +561,12 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
-                        {
-                            throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(conditions.IfMatch),
-                                nameof(conditions.IfNoneMatch));
-                        }
+                        conditions.ValidateConditionsNotPresent(
+                            invalidConditions:
+                                BlobRequestConditionProperty.IfMatch
+                                | BlobRequestConditionProperty.IfNoneMatch,
+                            operationName: nameof(BlobLeaseClient.Release),
+                            parameterName: nameof(conditions));
 
                         ResponseWithHeaders<ContainerRenewLeaseHeaders> containerClientResponse;
 
