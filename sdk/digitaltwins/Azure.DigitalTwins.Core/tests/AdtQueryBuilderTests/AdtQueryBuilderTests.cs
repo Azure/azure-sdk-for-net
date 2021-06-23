@@ -177,5 +177,27 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Should()
                 .Be("SELECT Temperature FROM DigitalTwins WHERE IS_DEFINED(Humidity) AND Occupants < 10");
         }
+
+        [Test]
+        public void AdtQueryBuilder_MultipleNested()
+        {
+            new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .IsTrue(q => q
+                    .IsOfType("Humidity", AdtDataType.AdtNumber)
+                    .Or()
+                    .IsOfType("Humidity", AdtDataType.AdtPrimative))
+                .Or()
+                .IsTrue(q => q
+                    .IsOfType("Temperature", AdtDataType.AdtNumber)
+                    .Or()
+                    .IsOfType("Temperature", AdtDataType.AdtPrimative))
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
+        }
     }
 }

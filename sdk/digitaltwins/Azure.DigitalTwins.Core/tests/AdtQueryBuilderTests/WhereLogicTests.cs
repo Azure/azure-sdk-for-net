@@ -176,7 +176,7 @@ namespace Azure.DigitalTwins.Core.Tests
         }
 
         [Test]
-        public void WhereLogic_MultipleQueryies()
+        public void WhereLogic_MultipleQueryies_And()
         {
             var query = new WhereLogic(null);
             query.Compare("Temperature", QueryComparisonOperator.Equal, 50)
@@ -185,6 +185,18 @@ namespace Azure.DigitalTwins.Core.Tests
             query.GetQueryText()
                 .Should()
                 .Be("Temperature = 50 AND IS_DEFINED(Humidity)");
+        }
+
+        [Test]
+        public void WhereLogic_MultipleQueryies_Or()
+        {
+            var query = new WhereLogic(null);
+            query.Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .Or()
+                .IsDefined("Humidity");
+            query.GetQueryText()
+                .Should()
+                .Be("Temperature = 50 OR IS_DEFINED(Humidity)");
         }
 
         [Test]
@@ -200,6 +212,42 @@ namespace Azure.DigitalTwins.Core.Tests
             query.GetQueryText()
                 .Should()
                 .Be("Temperature = 50 AND (IS_NUMBER(Humidity) AND IS_PRIMATIVE(Humidity))");
+        }
+
+        [Test]
+        public void WhereLogic_NestedWithinNestedQueries()
+        {
+            var query = new WhereLogic(null);
+            query.Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .And()
+                .IsTrue(q => q
+                   .IsOfType("Humidity", AdtDataType.AdtNumber)
+                   .And()
+                   .IsTrue(q => q
+                        .IsOfModel("dtmi:example:room;1", true)
+                        .Or()
+                        .IsOfType("isOccupied", AdtDataType.AdtBool)));
+            query.GetQueryText()
+                .Should()
+                .Be("Temperature = 50 AND (IS_NUMBER(Humidity) AND (IS_OF_MODEL('dtmi:example:room;1', exact) OR IS_BOOL(isOccupied)))");
+        }
+
+        [Test]
+        public void WhereLogic_MultipleNestedQueries()
+        {
+            var query = new WhereLogic(null);
+            query.IsTrue(q => q
+                    .IsOfType("Humidity", AdtDataType.AdtNumber)
+                    .Or()
+                    .IsOfType("Humidity", AdtDataType.AdtPrimative))
+                .Or()
+                .IsTrue(q => q
+                    .IsOfType("Temperature", AdtDataType.AdtNumber)
+                    .Or()
+                    .IsOfType("Temperature", AdtDataType.AdtPrimative));
+            query.GetQueryText()
+                .Should()
+                .Be("(IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
         }
     }
 }
