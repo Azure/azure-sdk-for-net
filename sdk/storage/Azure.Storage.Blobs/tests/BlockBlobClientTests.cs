@@ -3137,6 +3137,41 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(nameof(BlobRequestConditions.LeaseId))]
+        public async Task SyncUploadFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlockBlobClient blockBlobClient = new BlockBlobClient(uri, GetOptions());
+
+            BlobRequestConditions sourceConditions = new BlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(BlobRequestConditions.LeaseId):
+                    sourceConditions.LeaseId = string.Empty;
+                    break;
+            }
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blockBlobClient.SyncUploadFromUriAsync(
+                    copySource: uri,
+                    options: options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SyncUploadFromUri does not support the {invalidSourceCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("SourceConditions"));
+                });
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SyncUploadFromUriAsync_Error()
         {
             // Arrange

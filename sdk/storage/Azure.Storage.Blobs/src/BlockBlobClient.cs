@@ -2874,6 +2874,17 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}");
 
+                // All BlobRequestConditions are valid for options.DestinationConditions.
+                options?.DestinationConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.SyncUploadFromUri),
+                    parameterName: nameof(BlobSyncUploadFromUriOptions.DestinationConditions));
+
+                options?.SourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.LeaseId,
+                    operationName: nameof(BlockBlobClient.SyncUploadFromUri),
+                    parameterName: nameof(BlobSyncUploadFromUriOptions.SourceConditions));
+
                 try
                 {
                     scope.Start();
