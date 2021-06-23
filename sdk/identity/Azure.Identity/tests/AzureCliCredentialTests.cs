@@ -51,15 +51,17 @@ namespace Azure.Identity.Tests
         }
 
         private const string RefreshTokenExpiredError = "Azure CLI authentication failed due to an unknown error. ERROR: Get Token request returned http error: 400 and server response: {\"error\":\"invalid_grant\",\"error_description\":\"AADSTS70008: The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
+
         public static IEnumerable<object[]> AzureCliExceptionScenarios()
         {
             // params
             // az thrown Exception message, expected message, expected  exception
-            yield return new object[] { "'az' is not recognized", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] { "az: command not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] { "az: not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { "Please run 'az login'", AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
+            yield return new object[] { AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
             yield return new object[] { RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
+            yield return new object[] { AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] { "random unknown exception", AzureCliCredential.AzureCliFailedError + " random unknown exception", typeof(AuthenticationFailedException) };
         }
 

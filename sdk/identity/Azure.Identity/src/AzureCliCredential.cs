@@ -22,10 +22,11 @@ namespace Azure.Identity
     {
         internal const string AzureCLINotInstalled = "Azure CLI not installed";
         internal const string AzNotLogIn = "Please run 'az login' to set up account";
-        private const string WinAzureCLIError = "'az' is not recognized";
-        private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
+        internal const string WinAzureCLIError = "'az' is not recognized";
+        internal const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
         internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
+        internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         private const int CliProcessTimeoutMs = 13000;
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
@@ -125,14 +126,17 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzureCLINotInstalled);
                 }
 
-                bool isLoginError = exception.Message.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isLoginError = exception.Message.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 ||
+                                    exception.Message.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isLoginError)
                 {
                     throw new CredentialUnavailableException(AzNotLogIn);
                 }
 
-                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzureCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 && exception.Message.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1;
+                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzureCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 &&
+                                                 exception.Message.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1 ||
+                                                 exception.Message.IndexOf("CLIInternalError", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isRefreshTokenFailedError)
                 {
