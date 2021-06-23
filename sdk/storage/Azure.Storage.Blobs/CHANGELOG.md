@@ -1,5 +1,16 @@
 # Release History
 
+## 12.10.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
 ## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
 
