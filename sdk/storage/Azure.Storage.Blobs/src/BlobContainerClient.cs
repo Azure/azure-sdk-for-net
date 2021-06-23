@@ -3314,6 +3314,16 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(Rename)}");
 
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince,
+                    operationName: nameof(BlobContainerClient.Rename),
+                    parameterName: nameof(sourceConditions));
+
                 try
                 {
                     scope.Start();
