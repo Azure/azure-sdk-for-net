@@ -157,7 +157,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to add nested WHERE conditions to a query.
         /// </summary>
-        /// <param name="nested"> WhereLogic functions to perform within a set of parenthesis. </param>
+        /// <param name="nested"> WhereLogic methods to perform within a set of parenthesis. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public WhereLogic IsTrue(Func<WhereLogic, WhereLogic> nested)
         {
