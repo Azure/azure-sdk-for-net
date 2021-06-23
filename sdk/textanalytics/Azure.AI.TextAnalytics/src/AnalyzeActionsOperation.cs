@@ -300,6 +300,15 @@ namespace Azure.AI.TextAnalytics
 
             Response rawResponse = response.GetRawResponse();
 
+            if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            {
+                if (CheckIfGenericError(response.Value))
+                {
+                    RequestFailedException requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors).ConfigureAwait(false);
+                    return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
+                }
+            }
+
             if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
                 response.Value.Status == TextAnalyticsOperationStatus.Failed)
             {
@@ -311,6 +320,16 @@ namespace Azure.AI.TextAnalytics
             }
 
             return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
+        }
+
+        private static bool CheckIfGenericError(AnalyzeJobState jobState)
+        {
+            foreach (TextAnalyticsErrorInternal error in jobState.Errors)
+            {
+                if (string.IsNullOrEmpty(error.Target))
+                    return true;
+            }
+            return false;
         }
     }
 }
