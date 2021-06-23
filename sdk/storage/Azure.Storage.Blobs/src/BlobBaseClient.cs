@@ -1135,7 +1135,7 @@ namespace Azure.Storage.Blobs.Specialized
             // All BlobRequestConditions are valid.
             conditions.ValidateConditionsNotPresent(
                 invalidConditions: BlobRequestConditionProperty.None,
-                operationName: nameof(BlobBaseClient.CreateSnapshot),
+                operationName: nameof(BlobBaseClient.Download),
                 parameterName: nameof(conditions));
 
             if (async)
@@ -3405,7 +3405,7 @@ namespace Azure.Storage.Blobs.Specialized
                 // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
-                    operationName: nameof(BlobBaseClient.CreateSnapshot),
+                    operationName: nameof(BlobBaseClient.Delete),
                     parameterName: nameof(conditions));
 
                 try
@@ -3815,7 +3815,7 @@ namespace Azure.Storage.Blobs.Specialized
                 // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
-                    operationName: nameof(BlobBaseClient.CreateSnapshot),
+                    operationName: nameof(BlobBaseClient.GetProperties),
                     parameterName: nameof(conditions));
 
                 try
@@ -4000,7 +4000,7 @@ namespace Azure.Storage.Blobs.Specialized
                 // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
-                    operationName: nameof(BlobBaseClient.CreateSnapshot),
+                    operationName: nameof(BlobBaseClient.SetHttpHeaders),
                     parameterName: nameof(conditions));
 
                 try
@@ -4189,7 +4189,7 @@ namespace Azure.Storage.Blobs.Specialized
                 // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
-                    operationName: nameof(BlobBaseClient.CreateSnapshot),
+                    operationName: nameof(BlobBaseClient.SetMetadata),
                     parameterName: nameof(conditions));
 
                 try
