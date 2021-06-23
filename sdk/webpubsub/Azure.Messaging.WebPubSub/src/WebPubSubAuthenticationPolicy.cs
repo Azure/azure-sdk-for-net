@@ -13,11 +13,6 @@ namespace Azure.Messaging.WebPubSub
     /// </summary>
     internal partial class WebPubSubAuthenticationPolicy : HttpPipelineSynchronousPolicy
     {
-        internal static byte[] s_nbf = Encoding.UTF8.GetBytes("nbf");
-        internal static byte[] s_exp = Encoding.UTF8.GetBytes("exp");
-        internal static byte[] s_iat = Encoding.UTF8.GetBytes("iat");
-        internal static byte[] s_aud = Encoding.UTF8.GetBytes("aud");
-
         private readonly AzureKeyCredential _credential;
 
         /// <summary>
@@ -40,10 +35,10 @@ namespace Azure.Messaging.WebPubSub
             var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
 
             var writer = new JwtBuilder(keyBytes);
-            writer.AddClaim(s_nbf, now);
-            writer.AddClaim(s_exp, expiresAt);
-            writer.AddClaim(s_iat, now);
-            writer.AddClaim(s_aud, audience);
+            writer.AddClaim(JwtBuilder.Nbf, now);
+            writer.AddClaim(JwtBuilder.Exp, expiresAt);
+            writer.AddClaim(JwtBuilder.Iat, now);
+            writer.AddClaim(JwtBuilder.Aud, audience);
             int jwtLength = writer.End();
 
             var prefix = "Bearer ";

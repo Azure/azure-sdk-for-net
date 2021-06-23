@@ -16,6 +16,23 @@ namespace Azure.Core
     /// </summary>
     internal class JwtBuilder : IDisposable
     {
+        // Registered claims
+        private static byte[] s_nbf = Encoding.UTF8.GetBytes("nbf");
+        private static byte[] s_exp = Encoding.UTF8.GetBytes("exp");
+        private static byte[] s_iat = Encoding.UTF8.GetBytes("iat");
+        private static byte[] s_aud = Encoding.UTF8.GetBytes("aud");
+        private static byte[] s_sub = Encoding.UTF8.GetBytes("sub");
+        private static byte[] s_iss = Encoding.UTF8.GetBytes("iss");
+        private static byte[] s_jti = Encoding.UTF8.GetBytes("jti");
+
+        public static ReadOnlySpan<byte> Nbf => s_nbf;
+        public static ReadOnlySpan<byte> Exp => s_exp;
+        public static ReadOnlySpan<byte> Iat => s_iat;
+        public static ReadOnlySpan<byte> Aud => s_aud;
+        public static ReadOnlySpan<byte> Sub => s_sub;
+        public static ReadOnlySpan<byte> Iss => s_iss;
+        public static ReadOnlySpan<byte> Jti => s_jti;
+
         // this is the standrd JWT header. { "alg": "HS256", "typ": "JWT" }
         private static readonly byte[] headerSha256 = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
         //private static readonly byte[] headerSha256 = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsImtpZCI6IjgyMTcyMDE3Njk5YzRkNWRhMzhkZTg3NWFiYjEwZDc5IiwidHlwIjoiSldUIn0");
