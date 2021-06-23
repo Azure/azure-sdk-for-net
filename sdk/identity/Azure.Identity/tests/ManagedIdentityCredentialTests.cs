@@ -122,11 +122,11 @@ namespace Azure.Identity.Tests
 
                 string query = request.Uri.Query;
 
-                Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-                Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                Assert.That(query, Does.Contain("api-version=2018-02-01"));
+                Assert.That(query, Does.Contain($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
                 if (clientId != null)
                 {
-                    Assert.IsTrue(query.Contains($"client_id=mock-client-id"));
+                    Assert.That(query, Does.Contain($"client_id=mock-client-id"));
                 }
                 Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadataValue));
                 Assert.AreEqual("true", actMetadataValue);
