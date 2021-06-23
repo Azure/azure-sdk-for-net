@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\eventgrid\Microsoft.Azure.WebJobs.Extensions.EventGrid\src\TriggerBinding\HttpRequestProcessor.cs" Link="EventGrid\HttpRequestProcessor.cs" />
-    <Compile Include="..\..\..\eventgrid\Microsoft.Azure.WebJobs.Extensions.EventGrid\src\TriggerBinding\SubscriptionValidationResponse.cs" Link="EventGrid\SubscriptionValidationResponse.cs" />
   </ItemGroup>
  
   <ItemGroup>

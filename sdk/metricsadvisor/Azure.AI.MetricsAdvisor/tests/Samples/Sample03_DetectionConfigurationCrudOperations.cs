@@ -13,6 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21663")]
         public async Task CreateAndDeleteDetectionConfigurationAsync()
         {
             string endpoint = MetricsAdvisorUri;

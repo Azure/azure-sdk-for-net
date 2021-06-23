@@ -17,36 +17,36 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
         {
-            ExtractKeyPhrasesActionsResults = extractKeyPhrasesActionResult;
-            RecognizeEntitiesActionsResults = recognizeEntitiesActionResults;
-            RecognizePiiEntitiesActionsResults = recognizePiiEntitiesActionResults;
-            RecognizeLinkedEntitiesActionsResults = recognizeLinkedEntitiesActionsResults;
-            AnalyzeSentimentActionsResults = analyzeSentimentActionsResults;
+            ExtractKeyPhrasesResults = extractKeyPhrasesActionResult;
+            RecognizeEntitiesResults = recognizeEntitiesActionResults;
+            RecognizePiiEntitiesResults = recognizePiiEntitiesActionResults;
+            RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionsResults;
+            AnalyzeSentimentResults = analyzeSentimentActionsResults;
         }
 
         /// <summary>
         /// Determines the collection of <see cref="ExtractKeyPhrasesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults { get; }
+        public IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesResults { get; }
 
         /// <summary>
         /// Determines the collection of <see cref="RecognizeEntitiesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults { get; }
+        public IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesResults { get; }
 
         /// <summary>
         /// Determines the collection of <see cref="RecognizePiiEntitiesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get; }
+        public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesResults { get; }
 
         /// <summary>
         /// Determines the collection of <see cref="RecognizeLinkedEntitiesActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
+        public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesResults { get; }
 
         /// <summary>
         /// Determines the collection of <see cref="AnalyzeSentimentActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults { get; }
+        public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentResults { get; }
     }
 }

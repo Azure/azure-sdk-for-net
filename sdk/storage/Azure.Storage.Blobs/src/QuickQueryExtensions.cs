@@ -33,18 +33,22 @@ namespace Azure.Storage.Blobs
             if (textConfiguration is BlobQueryCsvTextOptions cvsTextConfiguration)
             {
                 serialization.Format.Type = QueryFormatType.Delimited;
-                serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal(
-                    columnSeparator: cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
-                    fieldQuote: cvsTextConfiguration.QuotationCharacter?.ToString(CultureInfo.InvariantCulture),
-                    recordSeparator: cvsTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture),
-                    escapeChar: cvsTextConfiguration.EscapeCharacter?.ToString(CultureInfo.InvariantCulture),
-                    headersPresent: cvsTextConfiguration.HasHeaders);
+                serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
+                {
+                    ColumnSeparator = cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
+                    FieldQuote = cvsTextConfiguration.QuotationCharacter?.ToString(CultureInfo.InvariantCulture),
+                    RecordSeparator = cvsTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture),
+                    EscapeChar = cvsTextConfiguration.EscapeCharacter?.ToString(CultureInfo.InvariantCulture),
+                    HeadersPresent = cvsTextConfiguration.HasHeaders
+                };
             }
             else if (textConfiguration is BlobQueryJsonTextOptions jsonTextConfiguration)
             {
                 serialization.Format.Type = QueryFormatType.Json;
-                serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal(
-                    jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture));
+                serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
+                {
+                    RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
+                };
             }
             else if (textConfiguration is BlobQueryArrowOptions arrowConfiguration)
             {

@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.20.0
+###  Feature Additions
+- Added disableMetricsCollection in read/wirte properties
+
 ## Version 4.19.0
 ###  Feature Additions
 - Support sheetIndex in excel and set sheetName from required to optional

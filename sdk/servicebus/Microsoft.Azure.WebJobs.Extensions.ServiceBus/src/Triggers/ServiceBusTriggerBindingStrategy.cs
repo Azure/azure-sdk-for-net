@@ -84,9 +84,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "ReplyTo", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "SequenceNumber", typeof(long), isSingleDispatch);
             AddBindingContractMember(contract, "To", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "Subject", typeof(string), isSingleDispatch);
+            // for backcompat
             AddBindingContractMember(contract, "Label", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "CorrelationId", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ApplicationProperties", typeof(IDictionary<string, object>), isSingleDispatch);
+            // for backcompat
+            AddBindingContractMember(contract, "UserProperties", typeof(IDictionary<string, object>), isSingleDispatch);
             contract.Add("MessageReceiver", typeof(ServiceBusMessageActions));
             contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
             contract.Add("MessageActions", typeof(ServiceBusMessageActions));
@@ -122,16 +126,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add("SequenceNumberArray", sequenceNumbers));
             SafeAddValue(() => bindingData.Add("ToArray", tos));
             SafeAddValue(() => bindingData.Add("SubjectArray", subjects));
+            // for backcompat
+            SafeAddValue(() => bindingData.Add("LabelArray", subjects));
             SafeAddValue(() => bindingData.Add("CorrelationIdArray", correlationIds));
             SafeAddValue(() => bindingData.Add("ApplicationPropertiesArray", applicationProperties));
-
+            // for backcompat
+            SafeAddValue(() => bindingData.Add("UserPropertiesArray", applicationProperties));
             for (int i = 0; i < messages.Length; i++)
             {
                 deliveryCounts[i] = messages[i].DeliveryCount;
                 deadLetterSources[i] = messages[i].DeadLetterSource;
                 lockTokens[i] = messages[i].LockToken;
-                //this is temporary until the Service Bus SDK addresses the missing timezone issue in case DateTime.MaxValue, github.com/Azure/azure-sdk-for-net/issues/15343
-                expiresAtUtcs[i] = messages[i].ExpiresAt.DateTime.ToUniversalTime();
+                expiresAtUtcs[i] = messages[i].ExpiresAt.DateTime;
                 enqueuedTimeUtcs[i] = messages[i].EnqueuedTime.DateTime;
                 messageIds[i] = messages[i].MessageId;
                 contentTypes[i] = messages[i].ContentType;
@@ -144,23 +150,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
         }
 
-        //TODO add tests for all binding parameters
         private static void AddBindingData(Dictionary<string, object> bindingData, ServiceBusReceivedMessage value)
         {
             SafeAddValue(() => bindingData.Add(nameof(value.DeliveryCount), value.DeliveryCount));
             SafeAddValue(() => bindingData.Add(nameof(value.DeadLetterSource), value.DeadLetterSource));
             SafeAddValue(() => bindingData.Add(nameof(value.LockToken), value.LockToken));
-            //this is temporary until the Service Bus SDK addresses the missing timezone issue in case DateTime.MaxValue, github.com/Azure/azure-sdk-for-net/issues/15343
-            SafeAddValue(() => bindingData.Add("ExpiresAtUtc", value.ExpiresAt.ToUniversalTime()));
-            SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", value.EnqueuedTime));
+            SafeAddValue(() => bindingData.Add("ExpiresAtUtc", value.ExpiresAt.DateTime));
+            SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", value.EnqueuedTime.DateTime));
             SafeAddValue(() => bindingData.Add(nameof(value.MessageId), value.MessageId));
             SafeAddValue(() => bindingData.Add(nameof(value.ContentType), value.ContentType));
             SafeAddValue(() => bindingData.Add(nameof(value.ReplyTo), value.ReplyTo));
             SafeAddValue(() => bindingData.Add(nameof(value.SequenceNumber), value.SequenceNumber));
             SafeAddValue(() => bindingData.Add(nameof(value.To), value.To));
+            SafeAddValue(() => bindingData.Add(nameof(value.Subject), value.Subject));
+            // for backcompat
             SafeAddValue(() => bindingData.Add("Label", value.Subject));
             SafeAddValue(() => bindingData.Add(nameof(value.CorrelationId), value.CorrelationId));
             SafeAddValue(() => bindingData.Add(nameof(value.ApplicationProperties), value.ApplicationProperties));
+            // for backcompat
+            SafeAddValue(() => bindingData.Add("UserProperties", value.ApplicationProperties));
         }
 
         private static void SafeAddValue(Action addValue)
@@ -171,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
             catch
             {
-                // some message propery getters can throw, based on the
+                // some message property getters can throw, based on the
                 // state of the message
             }
         }

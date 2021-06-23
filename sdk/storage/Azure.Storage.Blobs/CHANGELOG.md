@@ -1,15 +1,15 @@
 # Release History
 
 ## 12.10.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- Added support for service version 2020-10-02.
+- Added support for Immutable Storage with Versioning
+    - Added BlobBaseClient.SetImmutibilityPolicy()
+    - Added BlobBaseClient.DeleteImmutabilityPolicy()
+    - Added BlobBaseClient.SetLegalHold()
+- Added support for listing deleted root blobs with versions to BlobContainerClient.GetBlobs() and .GetBlobsByHierarchy()
+- Added support for OAuth copy sources for synchronous copy operations.
+- Added support for Parquet as an input format in BlockBlobClient.Query().
+- Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
 
 ## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.

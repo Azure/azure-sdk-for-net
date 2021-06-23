@@ -71,7 +71,7 @@ else
 {
     Write-Host "The function for 'FindArtifactForApiReviewFn' was not found.`
     Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+    See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
     exit(1)
 }
 
@@ -104,7 +104,7 @@ if ($packages)
         Write-Host "Version: $($version)"
         Write-Host "SDK Type: $($pkgInfo.SdkType)"
 
-        # Run create review step only if build is triggered from master branch or if version is GA.
+        # Run create review step only if build is triggered from main branch or if version is GA.
         # This is to avoid invalidating review status by a build triggered from feature branch
         if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease))
         {

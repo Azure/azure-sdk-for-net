@@ -1,7 +1,7 @@
 # Setting, getting, updating, and deleting certificates
 
 This sample demonstrates how to set, get, update, and delete a certificate.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
@@ -90,7 +90,7 @@ while (!operation.HasCompleted)
 
 To see the full example source, see:
 
-* [Synchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorld.cs)
-* [ASynchronous Sample1_HelloWorldAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorldAsync.cs)
+* [Synchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorld.cs)
+* [ASynchronous Sample1_HelloWorldAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample1_HelloWorldAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
