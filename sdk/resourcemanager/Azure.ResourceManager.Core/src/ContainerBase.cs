@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Core
         internal ContainerBase(ClientContext clientContext)
             : base(clientContext, ResourceIdentifier.RootResourceIdentifier)
         {
-            Parent = new TenantOperations(clientContext);
         }
 
         /// <summary>

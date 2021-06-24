@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NewResources
         /// <returns> Returns a <see cref="PolicyAssignmentContainer" /> object. </returns>
         public static PolicyAssignmentContainer GetPolicyAssignmentContainer(this ArmClient armClient)
         {
-            return new PolicyAssignmentContainer(armClient.Tenant);
+            return armClient.GetContainer((options, credential, baseUri, pipeline) => new PolicyAssignmentContainer(options, credential, baseUri, pipeline));
         }
         #endregion
     }

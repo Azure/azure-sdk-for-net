@@ -31,14 +31,6 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TenantOperations"/> class.
-        /// </summary>
-        /// <param name="clientContext"> The client context to use. </param>
-        internal TenantOperations(ClientContext clientContext): base(clientContext, ResourceIdentifier.RootResourceIdentifier)
-        {
-        }
-
-        /// <summary>
         /// Gets the valid resource type for this operation class
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;

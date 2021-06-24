@@ -25,13 +25,6 @@ namespace Azure.ResourceManager.NewResources
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentContainer class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PolicyAssignmentContainer(OperationsBase parent) : base(parent)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-        }
-
         internal PolicyAssignmentContainer(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline) : base(options, credential, baseUri, pipeline)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -142,7 +135,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var originalResponse = _restClient.Create(policyAssignmentScope, policyAssignmentName, parameters, cancellationToken: cancellationToken);
-                return new PolicyAssignmentsCreateOperation(Parent, originalResponse);
+                return new PolicyAssignmentsCreateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -176,7 +169,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var originalResponse = await _restClient.CreateAsync(policyAssignmentScope, policyAssignmentName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new PolicyAssignmentsCreateOperation(Parent, originalResponse);
+                return new PolicyAssignmentsCreateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -262,7 +255,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var originalResponse = _restClient.CreateById(policyAssignmentId, parameters, cancellationToken: cancellationToken);
-                return new PolicyAssignmentsCreateByIdOperation(Parent, originalResponse);
+                return new PolicyAssignmentsCreateByIdOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -291,7 +284,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var originalResponse = await _restClient.CreateByIdAsync(policyAssignmentId, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new PolicyAssignmentsCreateByIdOperation(Parent, originalResponse);
+                return new PolicyAssignmentsCreateByIdOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -320,7 +313,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var response = _restClient.Get(policyAssignmentScope, policyAssignmentName, cancellationToken: cancellationToken);
-                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -345,7 +338,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var response = await _restClient.GetAsync(policyAssignmentScope, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -369,7 +362,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var response = _restClient.GetById(policyAssignmentId, cancellationToken: cancellationToken);
-                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -393,7 +386,7 @@ namespace Azure.ResourceManager.NewResources
                 }
 
                 var response = await _restClient.GetByIdAsync(policyAssignmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicyAssignment(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -468,7 +461,7 @@ namespace Azure.ResourceManager.NewResources
                         throw new ArgumentException($"Invalid scope: {policyAssignmentScope}.", nameof(policyAssignmentScope));
                     }
 
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -483,7 +476,7 @@ namespace Azure.ResourceManager.NewResources
                 try
                 {
                     var response = _restClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -556,7 +549,7 @@ namespace Azure.ResourceManager.NewResources
                         throw new ArgumentException($"Invalid scope: {policyAssignmentScope}.", nameof(policyAssignmentScope));
                     }
 
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -571,7 +564,7 @@ namespace Azure.ResourceManager.NewResources
                 try
                 {
                     var response = await _restClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
