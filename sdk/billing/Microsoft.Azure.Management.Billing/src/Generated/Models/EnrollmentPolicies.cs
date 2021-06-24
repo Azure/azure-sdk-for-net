@@ -33,16 +33,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// whether Account Owners can view charges.</param>
         /// <param name="departmentAdminViewCharges">The policy that controls
         /// whether Department Administrators can view charges.</param>
-        /// <param name="marketplacesEnabled">The policy that controls whether
+        /// <param name="marketplaceEnabled">The policy that controls whether
         /// Azure marketplace purchases are allowed in the enrollment.</param>
         /// <param name="reservedInstancesEnabled">The policy that controls
         /// whether Azure reservation purchases are allowed in the
         /// enrollment.</param>
-        public EnrollmentPolicies(bool? accountOwnerViewCharges = default(bool?), bool? departmentAdminViewCharges = default(bool?), bool? marketplacesEnabled = default(bool?), bool? reservedInstancesEnabled = default(bool?))
+        public EnrollmentPolicies(bool? accountOwnerViewCharges = default(bool?), bool? departmentAdminViewCharges = default(bool?), bool? marketplaceEnabled = default(bool?), bool? reservedInstancesEnabled = default(bool?))
         {
             AccountOwnerViewCharges = accountOwnerViewCharges;
             DepartmentAdminViewCharges = departmentAdminViewCharges;
-            MarketplacesEnabled = marketplacesEnabled;
+            MarketplaceEnabled = marketplaceEnabled;
             ReservedInstancesEnabled = reservedInstancesEnabled;
             CustomInit();
         }
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Gets the policy that controls whether Azure marketplace purchases
         /// are allowed in the enrollment.
         /// </summary>
-        [JsonProperty(PropertyName = "marketplacesEnabled")]
-        public bool? MarketplacesEnabled { get; private set; }
+        [JsonProperty(PropertyName = "marketplaceEnabled")]
+        public bool? MarketplaceEnabled { get; private set; }
 
         /// <summary>
         /// Gets the policy that controls whether Azure reservation purchases

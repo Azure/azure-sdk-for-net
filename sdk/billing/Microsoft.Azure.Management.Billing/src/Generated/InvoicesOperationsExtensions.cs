@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Billing
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -276,6 +278,54 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file. The operation is supported for
+            /// billing accounts with agreement type Microsoft Partner Agreement or
+            /// Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            public static DownloadUrl DownloadMultipleBillingProfileInvoices(this IInvoicesOperations operations, string billingAccountName, IList<string> downloadUrls)
+            {
+                return operations.DownloadMultipleBillingProfileInvoicesAsync(billingAccountName, downloadUrls).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file. The operation is supported for
+            /// billing accounts with agreement type Microsoft Partner Agreement or
+            /// Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> DownloadMultipleBillingProfileInvoicesAsync(this IInvoicesOperations operations, string billingAccountName, IList<string> downloadUrls, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DownloadMultipleBillingProfileInvoicesWithHttpMessagesAsync(billingAccountName, downloadUrls, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
@@ -396,6 +446,44 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            public static DownloadUrl DownloadMultipleBillingSubscriptionInvoices(this IInvoicesOperations operations, IList<string> downloadUrls)
+            {
+                return operations.DownloadMultipleBillingSubscriptionInvoicesAsync(downloadUrls).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> DownloadMultipleBillingSubscriptionInvoicesAsync(this IInvoicesOperations operations, IList<string> downloadUrls, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DownloadMultipleBillingSubscriptionInvoicesWithHttpMessagesAsync(downloadUrls, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a URL to download an invoice. The operation is supported for billing
             /// accounts with agreement type Microsoft Partner Agreement or Microsoft
             /// Customer Agreement.
@@ -448,6 +536,54 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file. The operation is supported for
+            /// billing accounts with agreement type Microsoft Partner Agreement or
+            /// Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            public static DownloadUrl BeginDownloadMultipleBillingProfileInvoices(this IInvoicesOperations operations, string billingAccountName, IList<string> downloadUrls)
+            {
+                return operations.BeginDownloadMultipleBillingProfileInvoicesAsync(billingAccountName, downloadUrls).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file. The operation is supported for
+            /// billing accounts with agreement type Microsoft Partner Agreement or
+            /// Microsoft Customer Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> BeginDownloadMultipleBillingProfileInvoicesAsync(this IInvoicesOperations operations, string billingAccountName, IList<string> downloadUrls, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDownloadMultipleBillingProfileInvoicesWithHttpMessagesAsync(billingAccountName, downloadUrls, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a URL to download an invoice.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
@@ -484,6 +620,44 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<DownloadUrl> BeginDownloadBillingSubscriptionInvoiceAsync(this IInvoicesOperations operations, string invoiceName, string downloadToken, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginDownloadBillingSubscriptionInvoiceWithHttpMessagesAsync(invoiceName, downloadToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            public static DownloadUrl BeginDownloadMultipleBillingSubscriptionInvoices(this IInvoicesOperations operations, IList<string> downloadUrls)
+            {
+                return operations.BeginDownloadMultipleBillingSubscriptionInvoicesAsync(downloadUrls).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+            /// receipts, credit notes) as a zip file.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='downloadUrls'>
+            /// An array of download urls for individual documents
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> BeginDownloadMultipleBillingSubscriptionInvoicesAsync(this IInvoicesOperations operations, IList<string> downloadUrls, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDownloadMultipleBillingSubscriptionInvoicesWithHttpMessagesAsync(downloadUrls, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

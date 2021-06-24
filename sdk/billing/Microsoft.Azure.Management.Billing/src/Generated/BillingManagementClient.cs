@@ -53,11 +53,6 @@ namespace Microsoft.Azure.Management.Billing
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        public string SubscriptionId1 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -164,6 +159,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IAgreementsOperations.
         /// </summary>
         public virtual IAgreementsOperations Agreements { get; private set; }
+
+        /// <summary>
+        /// Gets the IReservationsOperations.
+        /// </summary>
+        public virtual IReservationsOperations Reservations { get; private set; }
 
         /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
@@ -434,6 +434,7 @@ namespace Microsoft.Azure.Management.Billing
             BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
             BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);
+            Reservations = new ReservationsOperations(this);
             EnrollmentAccounts = new EnrollmentAccountsOperations(this);
             BillingPeriods = new BillingPeriodsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

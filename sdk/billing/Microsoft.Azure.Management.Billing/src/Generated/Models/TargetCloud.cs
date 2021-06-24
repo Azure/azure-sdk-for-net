@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.Billing.Models
 {
 
     /// <summary>
-    /// Defines values for InvoiceStatus.
+    /// Defines values for TargetCloud.
     /// </summary>
-    public static class InvoiceStatus
+    public static class TargetCloud
     {
-        public const string Due = "Due";
-        public const string OverDue = "OverDue";
-        public const string Paid = "Paid";
-        public const string Void = "Void";
+        public const string USGov = "USGov";
+        public const string USNat = "USNat";
+        public const string USSec = "USSec";
     }
 }

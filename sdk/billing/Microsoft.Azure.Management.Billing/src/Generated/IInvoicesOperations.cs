@@ -179,6 +179,35 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> DownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+        /// receipts, credit notes) as a zip file. The operation is supported
+        /// for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The ID that uniquely identifies a billing account.
+        /// </param>
+        /// <param name='downloadUrls'>
+        /// An array of download urls for individual documents
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadMultipleBillingProfileInvoicesHeaders>> DownloadMultipleBillingProfileInvoicesWithHttpMessagesAsync(string billingAccountName, IList<string> downloadUrls, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the invoices for a subscription.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
@@ -254,6 +283,30 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadBillingSubscriptionInvoiceHeaders>> DownloadBillingSubscriptionInvoiceWithHttpMessagesAsync(string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+        /// receipts, credit notes) as a zip file.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='downloadUrls'>
+        /// An array of download urls for individual documents
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadMultipleBillingSubscriptionInvoicesHeaders>> DownloadMultipleBillingSubscriptionInvoicesWithHttpMessagesAsync(IList<string> downloadUrls, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a URL to download an invoice. The operation is supported for
         /// billing accounts with agreement type Microsoft Partner Agreement or
         /// Microsoft Customer Agreement.
@@ -285,6 +338,35 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> BeginDownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+        /// receipts, credit notes) as a zip file. The operation is supported
+        /// for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The ID that uniquely identifies a billing account.
+        /// </param>
+        /// <param name='downloadUrls'>
+        /// An array of download urls for individual documents
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadMultipleBillingProfileInvoicesHeaders>> BeginDownloadMultipleBillingProfileInvoicesWithHttpMessagesAsync(string billingAccountName, IList<string> downloadUrls, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a URL to download an invoice.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
@@ -310,6 +392,30 @@ namespace Microsoft.Azure.Management.Billing
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadBillingSubscriptionInvoiceHeaders>> BeginDownloadBillingSubscriptionInvoiceWithHttpMessagesAsync(string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a URL to download multiple invoice documents (invoice pdf, tax
+        /// receipts, credit notes) as a zip file.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='downloadUrls'>
+        /// An array of download urls for individual documents
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadMultipleBillingSubscriptionInvoicesHeaders>> BeginDownloadMultipleBillingSubscriptionInvoicesWithHttpMessagesAsync(IList<string> downloadUrls, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the invoices for a billing account for a given start date and
         /// end date. The operation is supported for billing accounts with

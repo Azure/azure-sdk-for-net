@@ -61,7 +61,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// enrollment.</param>
         /// <param name="hasReadAccess">Indicates whether user has read access
         /// to the billing account.</param>
-        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails soldTo = default(AddressDetails), string agreementType = default(string), string accountType = default(string), string accountStatus = default(string), BillingProfilesOnExpand billingProfiles = default(BillingProfilesOnExpand), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), bool? hasReadAccess = default(bool?))
+        /// <param name="notificationEmailAddress">Notification email address,
+        /// only for legacy accounts</param>
+        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails soldTo = default(AddressDetails), string agreementType = default(string), string accountType = default(string), string accountStatus = default(string), BillingProfilesOnExpand billingProfiles = default(BillingProfilesOnExpand), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), bool? hasReadAccess = default(bool?), string notificationEmailAddress = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -74,6 +76,7 @@ namespace Microsoft.Azure.Management.Billing.Models
             Departments = departments;
             EnrollmentAccounts = enrollmentAccounts;
             HasReadAccess = hasReadAccess;
+            NotificationEmailAddress = notificationEmailAddress;
             CustomInit();
         }
 
@@ -150,6 +153,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hasReadAccess")]
         public bool? HasReadAccess { get; private set; }
+
+        /// <summary>
+        /// Gets or sets notification email address, only for legacy accounts
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.notificationEmailAddress")]
+        public string NotificationEmailAddress { get; set; }
 
         /// <summary>
         /// Validate the object.
