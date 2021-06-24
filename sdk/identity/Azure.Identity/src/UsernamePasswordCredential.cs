@@ -26,6 +26,8 @@ namespace Azure.Identity
         private readonly string _username;
         private readonly SecureString _password;
         private AuthenticationRecord _record;
+        private readonly string _tenantId;
+        private readonly bool _allowMultiTenantAuthentication;
 
         /// <summary>
         /// Protected constructor for mocking
@@ -77,16 +79,16 @@ namespace Azure.Identity
 
         internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            _username = username ?? throw new ArgumentNullException(nameof(username));
+            Argument.AssertNotNull(username, nameof(username));
+            Argument.AssertNotNull(password, nameof(password));
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
 
-            _password = (password != null) ? password.ToSecureString() : throw new ArgumentNullException(nameof(password));
-
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-
-            Validations.ValidateTenantId(tenantId, nameof(tenantId));
-
+            _username = username;
+            _password = password.ToSecureString();
+            _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-
             _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions);
         }
 
@@ -140,7 +142,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries.
+        /// You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -152,7 +155,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries.
+        /// You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -184,8 +188,10 @@ namespace Azure.Identity
 
             try
             {
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+
                 AuthenticationResult result = await _client
-                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, async, cancellationToken)
+                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
                     .ConfigureAwait(false);
 
                 _record = new AuthenticationRecord(result, _clientId);

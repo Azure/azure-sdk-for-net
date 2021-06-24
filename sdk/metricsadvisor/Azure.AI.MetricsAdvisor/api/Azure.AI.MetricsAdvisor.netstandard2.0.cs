@@ -307,6 +307,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     public abstract partial class DataFeedSource
     {
         internal DataFeedSource() { }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType DataSourceType { get { throw null; } }
     }
     public partial class DataLakeGen2SharedKeyDataSourceCredential : Azure.AI.MetricsAdvisor.Administration.DataSourceCredential
     {
@@ -739,7 +740,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Name { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedSchema Schema { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType? SourceType { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedStatus? Status { get { throw null; } }
         public System.Collections.Generic.IList<string> ViewersEmails { get { throw null; } }
     }
