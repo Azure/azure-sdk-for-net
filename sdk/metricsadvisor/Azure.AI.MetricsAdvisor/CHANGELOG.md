@@ -2,7 +2,15 @@
 
 ## 1.0.0-beta.5 (Unreleased)
 
+### New Features
+- `DimensionKey` now implements the `IEnumerable<KeyValuePair<string, string>>` interface. Dimension columns can now be enumerated.
+- Added method `Contains` to `DimensionKey` to check whether or not a dimension column is present.
+- Added a property setter to `MetricSeriesGroupDetectionCondition.SeriesGroupKey` and to `MetricSingleSeriesDetectionCondition.SeriesKey`.
+
 ### Breaking Changes
+- Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
+- `DimensionKey` is not an `IEquatable` anymore. Equality will be calculated based on reference only.
+- `DimensionKey` constructor now takes the required `dimension` parameter.
 - The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in methods, method parameters, and properties.
   - Renamed class `DatasourceCredential` to `DataSourceCredentialEntity`.
   - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataSourceDataLakeGen2SharedKey`.
@@ -15,6 +23,8 @@
 - `DataFeedMissingDataPointFillSettings` constructor now takes the required `fillType` parameter. For this reason, the property `FillType` is not nullable anymore.
 - `EmailNotificationHook` constructor now takes the required `name` parameter.
 - `WebNotificationHook` constructor now takes the required `name` and `endpoint` parameters.
+- `MetricSeriesGroupDetectionCondition` constructor now takes the required `seriesGroupKey` parameter.
+- `MetricSingleSeriesDetectionCondition` constructor now takes the required `seriesKey` parameter.
 - In `MetricSeriesData`, removed the `Definition` property. Now, properties `MetricId` and `SeriesKey` can be accessed directly from `MetricSeriesData`.
 - In `DataPointAnomaly`, renamed property `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`.
 - In `DataFeedMetric`, renamed constructor parameter `metricName` to `name` only.
@@ -23,6 +33,7 @@
 - Moved `DatasourceCredential`, `DataFeedSource`, `NotificationHook`, and all of their concrete child types to the `Azure.AI.MetricsAdvisor.Administration` namespace.
 - Moved `MetricFeedback` and all of its concrete child types to the `Azure.AI.MetricsAdvisor` namespace.
 - Changed order of parameters of `MetricsAdvisorClient.GetMetricEnrichedSeriesData`. Now, `detectionConfigurationId` appears first.
+- Optional properties `GetAllFeedbackOptions.Filter`, `GetAnomalyDimensionValuesOptions.DimensionToFilter`, and `FeedbackDimensionFilter.DimensionFilter` must now be manually added with setters to be used.
 - Moved property `DataFeed.SourceType` to `DataFeedSource.DataSourceType`.
 - In `MetricsAdvisorKeyCredential`, merged `UpdateSubscriptionKey` and `UpdateApiKey` into a single method, `Update`, to make it an atomic operation.
 
