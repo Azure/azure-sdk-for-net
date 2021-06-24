@@ -336,7 +336,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     registration = cancellationToken.Register(static state =>
                     {
-                        var (tcs, link) = (Tuple<TaskCompletionSource<bool>, ReceivingAmqpLink>) state;
+                        var (tcs, link) = ((TaskCompletionSource<IEnumerable<AmqpMessage>>, ReceivingAmqpLink)) state;
 
                         // Since we are cancelling the receive, reset the credits to 0. It is possible
                         // that a message can still be delivered after setting the credits to 0, if it is already in flight.
