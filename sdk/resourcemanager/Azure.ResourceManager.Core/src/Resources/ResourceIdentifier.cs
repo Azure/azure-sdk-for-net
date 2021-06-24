@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
 
         internal const string BuiltInResourceNamespace = "Microsoft.Resources";
 
-        internal static readonly IDictionary<string, string> ResourceWithImplicitProviderList =
+        internal static readonly IDictionary<string, string> SubscriptionResourceWithImplicitProviderList =
             new Dictionary<string, string>() { { "tagnames", "Microsoft.Resources" } };
 
         internal static ResourceType SubscriptionType => new ResourceType(BuiltInResourceNamespace, SubscriptionsKey);
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Core
                     default:
                         {
                             // Check for resources that has implicit(omitted) provider
-                            if (ResourceWithImplicitProviderList.Keys.Contains(parts[0].ToLowerInvariant()))
+                            if (SubscriptionResourceWithImplicitProviderList.Keys.Contains(parts[0].ToLowerInvariant()))
                             {
                                 var resourceTypeName = parts[0].ToLowerInvariant();
-                                var providerName = ResourceWithImplicitProviderList[parts[0].ToLowerInvariant()];
+                                var providerName = SubscriptionResourceWithImplicitProviderList[parts[0].ToLowerInvariant()];
                                 var providerIdentifier = new SubscriptionProviderIdentifier(subscription, providerName);
                                 if (parts.Count == 1 || parts[1] == ProvidersKey)
                                 {
