@@ -28,10 +28,6 @@ namespace Azure.Messaging.WebPubSub
             var now = DateTimeOffset.UtcNow;
             var expiresAt = now + TimeSpan.FromMinutes(5);
 
-            // TODO: is this a bug in the service?
-            // The service accepts ASCII of the portal key, but not Base64 decoded.
-            //
-            //var keyBytes = Convert.FromBase64String(_credential.Key);
             var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
 
             var writer = new JwtBuilder(keyBytes);
