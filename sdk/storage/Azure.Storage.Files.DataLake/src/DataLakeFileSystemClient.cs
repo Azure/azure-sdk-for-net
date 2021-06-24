@@ -865,6 +865,14 @@ namespace Azure.Storage.Files.DataLake
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
 
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(conditions));
+
             try
             {
                 scope.Start();
@@ -913,6 +921,14 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
+
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(conditions));
 
             try
             {
@@ -966,6 +982,14 @@ namespace Azure.Storage.Files.DataLake
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteIfExists)}");
 
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(conditions));
+
             try
             {
                 scope.Start();
@@ -1014,6 +1038,14 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteIfExists)}");
+
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(conditions));
 
             try
             {
