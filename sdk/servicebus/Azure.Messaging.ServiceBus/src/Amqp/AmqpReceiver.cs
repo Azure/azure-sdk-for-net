@@ -334,21 +334,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // This would occur when the processor is stopped or closed by the user.
                 if (_isProcessor)
                 {
-                    registration = cancellationToken.Register(static state =>
+                    registration = cancellationToken.Register(async static state =>
                     {
-                        var (tcs, link) = ((TaskCompletionSource<IEnumerable<AmqpMessage>>, ReceivingAmqpLink)) state;
+                        var (tcs, link, maxMessages) = ((TaskCompletionSource<IEnumerable<AmqpMessage>>, ReceivingAmqpLink, int)) state;
 
-                        // Since we are cancelling the receive, reset the credits to 0. It is possible
-                        // that a message can still be delivered after setting the credits to 0, if it is already in flight.
-                        // Unfortunately, simply delaying for a short time after resetting the link credit to 0 won't work,
-                        // as the transfer will not be accepted by the client if the link credit is 0.
+                        // Since we are cancelling the receive, send a drain flow and wait for a small amount
+                        // of time for any messages to be delivered. This is a workaround until the service
+                        // adds support for respecting the DefaultOutcome on the link.
                         link.IssueCredit(
-                            credit: 0,
-                            // drain value doesn't matter since credits are being set to 0
+                            credit: (uint) maxMessages,
                             drain: true,
                             txnId: s_emptyArraySegment);
+                        await Task.Delay(100, CancellationToken.None).ConfigureAwait(false);
                         tcs.TrySetCanceled();
-                    }, (receiveMessagesCompletionSource, link), useSynchronizationContext: false);
+                    }, (receiveMessagesCompletionSource, link, maxMessages), useSynchronizationContext: false);
                 }
 
                 // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
