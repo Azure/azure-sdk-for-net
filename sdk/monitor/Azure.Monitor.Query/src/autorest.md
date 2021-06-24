@@ -53,6 +53,7 @@ directive:
 - from: swagger-document
   where: $.definitions.queryResults
   transform: >
+    $.properties["error"] = { "type": "object" };
     $.properties["statistics"] = { "type": "object" };
     $.properties["render"] = { "type": "object" };
 ```

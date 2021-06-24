@@ -4,12 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.Query.Models;
@@ -26,7 +24,6 @@ namespace Azure.Monitor.Query
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly RowBinder _rowBinder;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
@@ -72,7 +69,6 @@ namespace Azure.Monitor.Query
                 credential,
                 options.AuthenticationScope ?? "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
-            _rowBinder = new RowBinder();
         }
 
         /// <summary>
@@ -95,7 +91,7 @@ namespace Azure.Monitor.Query
         {
             Response<LogsQueryResult> response = Query(workspace, query, timeRange, options, cancellationToken);
 
-            return Response.FromValue(_rowBinder.BindResults<T>(response.Value.Tables), response.GetRawResponse());
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
         }
 
         /// <summary>
@@ -111,7 +107,7 @@ namespace Azure.Monitor.Query
         {
             Response<LogsQueryResult> response = await QueryAsync(workspace, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
-            return Response.FromValue(_rowBinder.BindResults<T>(response.Value.Tables), response.GetRawResponse());
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
         }
 
         /// <summary>
@@ -167,8 +163,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResult.GetResult"/> to get the result.</returns>
-        public virtual Response<LogsBatchQueryResult> QueryBatch(LogsBatchQuery batch, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="LogsBatchQueryResults"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResults.GetResult"/> to get the result.</returns>
+        public virtual Response<LogsBatchQueryResults> QueryBatch(LogsBatchQuery batch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
@@ -177,7 +173,6 @@ namespace Azure.Monitor.Query
             try
             {
                 var response = _queryClient.Batch(batch.Batch, cancellationToken);
-                response.Value.RowBinder = _rowBinder;
                 return response;
             }
             catch (Exception e)
@@ -192,8 +187,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> that allows retrieving query results.</returns>
-        public virtual async Task<Response<LogsBatchQueryResult>> QueryBatchAsync(LogsBatchQuery batch, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="LogsBatchQueryResults"/> that allows retrieving query results.</returns>
+        public virtual async Task<Response<LogsBatchQueryResults>> QueryBatchAsync(LogsBatchQuery batch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
@@ -202,7 +197,6 @@ namespace Azure.Monitor.Query
             try
             {
                 var response = await _queryClient.BatchAsync(batch.Batch, cancellationToken).ConfigureAwait(false);
-                response.Value.RowBinder = _rowBinder;
                 return response;
             }
             catch (Exception e)
