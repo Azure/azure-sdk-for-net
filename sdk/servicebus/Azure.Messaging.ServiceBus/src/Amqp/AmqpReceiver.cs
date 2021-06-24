@@ -334,9 +334,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // This would occur when the processor is stopped or closed by the user.
                 if (_isProcessor)
                 {
-                    registration = cancellationToken.Register(state =>
+                    registration = cancellationToken.Register(static state =>
                     {
-                        var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
+                        var (tcs, link) = (Tuple<TaskCompletionSource<bool>, ReceivingAmqpLink>) state;
 
                         // Since we are cancelling the receive, reset the credits to 0. It is possible
                         // that a message can still be delivered after setting the credits to 0, if it is already in flight.
@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             drain: true,
                             txnId: s_emptyArraySegment);
                         tcs.TrySetCanceled();
-                    }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+                    }, (receiveMessagesCompletionSource, link), useSynchronizationContext: false);
                 }
 
                 // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
