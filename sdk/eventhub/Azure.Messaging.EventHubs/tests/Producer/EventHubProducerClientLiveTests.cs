@@ -325,9 +325,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     EventData[] events = new[]
                     {
-                        new EventData(Array.Empty<byte>()),
-                        new EventData(Array.Empty<byte>()),
-                        new EventData(Array.Empty<byte>())
+                        new EventData(new BinaryData(Array.Empty<byte>())),
+                        new EventData(new BinaryData(Array.Empty<byte>())),
+                        new EventData(new BinaryData(Array.Empty<byte>()))
                     };
 
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
@@ -490,7 +490,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString))
                 {
                     using EventDataBatch batch = await producer.CreateBatchAsync();
-                    batch.TryAdd(new EventData(Array.Empty<byte>()));
+                    batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>())));
 
                     Assert.That(batch.Count, Is.EqualTo(1), "The batch should contain a single event.");
                     Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);

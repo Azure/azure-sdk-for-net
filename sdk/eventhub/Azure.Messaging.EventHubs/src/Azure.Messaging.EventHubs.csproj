@@ -15,6 +15,17 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+
+    <!-- TEMP:
+        Shift to a project reference for Azure.Core.Amqp until the
+        changes with "HasSection" are released to a package.
+    -->
+
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj" />
+    <!--PackageReference Include="Azure.Core.Amqp" / -->
+
+    <!-- END TEMP -->
+
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />

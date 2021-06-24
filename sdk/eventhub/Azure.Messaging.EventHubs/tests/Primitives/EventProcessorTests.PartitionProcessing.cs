@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var eventBatch = new[] { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) };
+            var eventBatch = new[] { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) };
             var partition = new EventProcessorPartition { PartitionId = "123" };
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
@@ -281,7 +281,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = true };
-            var lastEvent = new EventData(Array.Empty<byte>(), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
+            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();
@@ -330,7 +330,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = true, RetryOptions = retryOptions };
-            var lastEvent = new EventData(Array.Empty<byte>(), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
+            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();
@@ -408,7 +408,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) })
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) })
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor
@@ -465,7 +465,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) })
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) })
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor
@@ -519,7 +519,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) })
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) })
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor
@@ -770,7 +770,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) });
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -1055,7 +1055,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) });
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -1114,7 +1114,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) });
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
 
             mockProcessor.Object.Logger = mockLogger.Object;
 
@@ -1176,7 +1176,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) });
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -1464,7 +1464,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var partition = new EventProcessorPartition { PartitionId = "4" };
-            var lastEventBatch = new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>(), offset: 9987) };
+            var lastEventBatch = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>()), offset: 9987) };
             var initialStartingPosition = EventPosition.FromSequenceNumber(332);
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
@@ -1478,7 +1478,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             badMockConsumer
                 .SetupSequence(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(Array.Empty<byte>()) })
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())) })
                 .ReturnsAsync(lastEventBatch)
                 .Throws(new DllNotFoundException());
 
