@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// identities associated with the resource. The user identity
         /// dictionary key references will be ARM resource ids in the form:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}</param>
-        public ManagedServiceIdentity(ManagedServiceIdentityType? type = default(ManagedServiceIdentityType?), string tenantId = default(string), string principalId = default(string), IDictionary<string, ManagedServiceIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, ManagedServiceIdentityUserAssignedIdentitiesValue>))
+        public ManagedServiceIdentity(ManagedServiceIdentityType? type = default(ManagedServiceIdentityType?), string tenantId = default(string), string principalId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             Type = type;
             TenantId = tenantId;
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, ManagedServiceIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
 
     }
 }

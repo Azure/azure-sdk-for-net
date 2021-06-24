@@ -30,9 +30,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the CsmOperationDescription class.
         /// </summary>
-        public CsmOperationDescription(string name = default(string), CsmOperationDisplay display = default(CsmOperationDisplay), string origin = default(string), CsmOperationDescriptionProperties properties = default(CsmOperationDescriptionProperties))
+        public CsmOperationDescription(string name = default(string), bool? isDataAction = default(bool?), CsmOperationDisplay display = default(CsmOperationDisplay), string origin = default(string), CsmOperationDescriptionProperties properties = default(CsmOperationDescriptionProperties))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             Properties = properties;
@@ -48,6 +49,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// </summary>

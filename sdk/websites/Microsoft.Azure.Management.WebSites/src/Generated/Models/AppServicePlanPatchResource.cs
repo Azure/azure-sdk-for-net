@@ -53,6 +53,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App
         /// Service plan will scale to all instances of the plan.</param>
+        /// <param name="elasticScaleEnabled">ServerFarm supports ElasticScale.
+        /// Apps in this plan will scale as if the ServerFarm was
+        /// ElasticPremium sku</param>
         /// <param name="maximumElasticWorkerCount">Maximum number of total
         /// workers allowed for this ElasticScaleEnabled App Service
         /// Plan</param>
@@ -82,7 +85,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Canceled', 'InProgress', 'Deleting'</param>
         /// <param name="kubeEnvironmentProfile">Specification for the
         /// Kubernetes Environment to use for the App Service plan.</param>
-        public AppServicePlanPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), KubeEnvironmentProfile kubeEnvironmentProfile = default(KubeEnvironmentProfile))
+        public AppServicePlanPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), bool? elasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), KubeEnvironmentProfile kubeEnvironmentProfile = default(KubeEnvironmentProfile))
             : base(id, name, kind, type)
         {
             WorkerTierName = workerTierName;
@@ -92,6 +95,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             MaximumNumberOfWorkers = maximumNumberOfWorkers;
             GeoRegion = geoRegion;
             PerSiteScaling = perSiteScaling;
+            ElasticScaleEnabled = elasticScaleEnabled;
             MaximumElasticWorkerCount = maximumElasticWorkerCount;
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
@@ -160,6 +164,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.perSiteScaling")]
         public bool? PerSiteScaling { get; set; }
+
+        /// <summary>
+        /// Gets or sets serverFarm supports ElasticScale. Apps in this plan
+        /// will scale as if the ServerFarm was ElasticPremium sku
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.elasticScaleEnabled")]
+        public bool? ElasticScaleEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets maximum number of total workers allowed for this
