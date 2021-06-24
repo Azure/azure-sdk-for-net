@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the provider container under this subscription.
         /// </summary>
         /// <returns> The provider container. </returns>
-        public ProviderContainer GetProviders()
+        public virtual ProviderContainer GetProviders()
         {
             return new ProviderContainer(this);
         }

@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ProviderOperationsTests : ResourceManagerTestBase
     {
         public ProviderOperationsTests(bool isAsync)
-         : base(isAsync, RecordedTestMode.Record)
+         : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
             Response<Provider> response = providerContainer.Get("microsoft.insights");
-            Assert.Throws<ArgumentNullException>(() => {response.Value.Register(null); });
+            Assert.Throws<ArgumentNullException>(async () => {await response.Value.RegisterAsync(null); });
         }
 
         [TestCase]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
             Response<Provider> response = providerContainer.Get("microsoft.insights");
-            Assert.Throws<ArgumentException>(() => { response.Value.Register(""); });
+            Assert.Throws<ArgumentException>(async () => {await response.Value.RegisterAsync(""); });
         }
 
         [TestCase]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
             Response<Provider> response = providerContainer.Get("microsoft.insights");
-            Assert.Throws<ArgumentNullException>(() => { response.Value.Unregister(null); });
+            Assert.Throws<ArgumentNullException>(async () => {await response.Value.UnregisterAsync(null); });
         }
 
         [TestCase]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
             Response<Provider> response = providerContainer.Get("microsoft.insights");
-            Assert.Throws<ArgumentException>(() => { response.Value.Unregister(""); });
+            Assert.Throws<ArgumentException>(async () => {await response.Value.UnregisterAsync(""); });
         }
     }
 }

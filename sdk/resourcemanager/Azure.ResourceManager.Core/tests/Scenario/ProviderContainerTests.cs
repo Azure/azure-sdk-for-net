@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ProviderContainerTests : ResourceManagerTestBase
     {
         public ProviderContainerTests(bool isAsync)
-         : base(isAsync, RecordedTestMode.Record)
+         : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 

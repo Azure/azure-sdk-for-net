@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Core
     /// <summary> The Providers service client. </summary>
     public partial class ProviderOperations : ResourceOperationsBase<TenantProviderIdentifier, Provider>
     {
-        internal ProviderOperations()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProviderOperations"/> class for mocking.
+        /// </summary>
+        protected ProviderOperations()
         { }
 
         /// <summary>
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.Core
             {
                 if (Id.TryGetSubscriptionId(out subscriptionId))
                 {
-                    var originalResponse = RestClient.Get(Id.Name, null, cancellationToken); //set expand to null?
+                    var originalResponse = RestClient.Get(Id.Name, null, cancellationToken);
                     return Response.FromValue(new Provider(this, originalResponse), originalResponse.GetRawResponse());
                 }
                 else

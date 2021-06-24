@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Core
             return results;
         }
 
-        private string LoadApiVersion(ResourceType resourceType, CancellationToken cancellationToken)
+        private string LoadApiVersion(ResourceType resourceType, CancellationToken cancellationToken, string expand = null)
         {
             Response<Provider> results;
             try
             {
-                results = _armClient.DefaultSubscription.GetProviders().Get(resourceType.Namespace, cancellationToken);
+                results = _armClient.DefaultSubscription.GetProviders().Get(resourceType.Namespace, expand, cancellationToken);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Core
             return null;
         }
 
-        private async Task<string> LoadApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken)
+        private async Task<string> LoadApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken, string expand = null)
         {
             Response<Provider> results;
             try
             {
-                results = await _armClient.DefaultSubscription.GetProviders().GetAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
+                results = await _armClient.DefaultSubscription.GetProviders().GetAsync(resourceType.Namespace, expand, cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Core
             {
                 return val;
             }
-            return _armClient == null ? null : LoadApiVersion(resourceType.ToString(), cancellationToken); //_armClient is null
+            return _armClient == null ? null : LoadApiVersion(resourceType.ToString(), cancellationToken);
         }
 
         /// <summary>

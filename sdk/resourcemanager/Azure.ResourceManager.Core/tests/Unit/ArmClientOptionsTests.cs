@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
@@ -10,9 +9,7 @@ namespace Azure.ResourceManager.Core.Tests
     [Parallelizable]
     public class ArmClientOptionsTests : ResourceManagerTestBase
     {
-        public ArmClientOptionsTests(bool isAsync) : 
-            base(isAsync, RecordedTestMode.Record)
-            { }
+        public ArmClientOptionsTests(bool isAsync) : base(isAsync) { }
 
         [TestCase]
         public void ValidateClone()

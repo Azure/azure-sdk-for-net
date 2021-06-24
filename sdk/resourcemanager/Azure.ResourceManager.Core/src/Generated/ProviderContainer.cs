@@ -60,9 +60,10 @@ namespace Azure.ResourceManager.Core
         /// Gets the provider for a namespace.
         /// </summary>
         /// <param name="resourceProviderNamespace"></param>
+        /// <param name="expand"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Response<Provider> Get(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
@@ -70,13 +71,13 @@ namespace Azure.ResourceManager.Core
             try
             {
                 Response<ProviderData> result;
-                if (Id.GetType().Name == "SubscriptionResourceIdentifier")
+                if (Id is SubscriptionResourceIdentifier)
                 {
-                    result = RestClient.Get(resourceProviderNamespace, null, cancellationToken);
+                    result = RestClient.Get(resourceProviderNamespace, expand, cancellationToken);
                 }
                 else
                 {
-                    result = RestClient.GetAtTenantScope(resourceProviderNamespace, null, cancellationToken);
+                    result = RestClient.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
                 }
                 return Response.FromValue(new Provider(Parent, result), result.GetRawResponse());
             }
@@ -91,9 +92,10 @@ namespace Azure.ResourceManager.Core
         /// Gets the provider for a namespace.
         /// </summary>
         /// <param name="resourceProviderNamespace"></param>
+        /// <param name="expand"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
             scope.Start();
@@ -101,13 +103,13 @@ namespace Azure.ResourceManager.Core
             try
             {
                 Response<ProviderData> result;
-                if (Id.GetType().Name == "SubscriptionResourceIdentifier")
+                if (Id is SubscriptionResourceIdentifier)
                 {
-                    result = await RestClient.GetAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                    result = await RestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    result = await RestClient.GetAtTenantScopeAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                    result = await RestClient.GetAtTenantScopeAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
                 }
                 if (Parent is null)
                     return Response.FromValue(new Provider(result), result.GetRawResponse());
@@ -136,9 +138,13 @@ namespace Azure.ResourceManager.Core
                 {
                     Response<ProviderListResult> response;
                     if (Id.TryGetSubscriptionId(out subscriptionId))
+                    {
                         response = RestClient.List(top, expand, cancellationToken);
+                    }
                     else
+                    {
                         response = RestClient.ListAtTenantScope(top, expand, cancellationToken);
+                    }
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -157,9 +163,13 @@ namespace Azure.ResourceManager.Core
                 {
                     Response<ProviderListResult> response;
                     if (Id.TryGetSubscriptionId(out subscriptionId))
+                    {
                         response = RestClient.ListNextPage(nextLink, top, expand, cancellationToken);
+                    }
                     else
+                    {
                         response = RestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken);
+                    }
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -187,9 +197,13 @@ namespace Azure.ResourceManager.Core
                 {
                     Response<ProviderListResult> response;
                     if (Id.TryGetSubscriptionId(out subscriptionId))
+                    {
                         response = await RestClient.ListAsync(top, expand, cancellationToken).ConfigureAwait(false);
+                    }
                     else
+                    {
                         response = await RestClient.ListAtTenantScopeAsync(top, expand, cancellationToken).ConfigureAwait(false);
+                    }
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -208,9 +222,13 @@ namespace Azure.ResourceManager.Core
                 {
                     Response<ProviderListResult> response;
                     if (Id.TryGetSubscriptionId(out subscriptionId))
+                    {
                         response = await RestClient.ListNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
+                    }
                     else
+                    {
                         response = await RestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
+                    }
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
