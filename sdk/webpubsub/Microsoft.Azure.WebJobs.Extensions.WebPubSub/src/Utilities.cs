@@ -139,10 +139,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             foreach (var accessKey in accessKeys)
             {
-                var signatures = Utilities.GetSignatureList(signature);
+                var signatures = GetSignatureList(signature);
                 if (signatures == null)
                 {
-                    continue;
+                    break;
                 }
                 using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
                 var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionId));
