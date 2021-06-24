@@ -25,7 +25,7 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> CloseClientConnectionAsync(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response<bool> ConnectionExists(string connectionId, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Uri GenerateClientAccessUri(System.DateTime expiresAtUtc, string userId = null, params string[] roles) { throw null; }
+        public virtual System.Uri GenerateClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, params string[] roles) { throw null; }
         public virtual System.Uri GenerateClientAccessUri(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, params string[] roles) { throw null; }
         public virtual Azure.Response GrantPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
