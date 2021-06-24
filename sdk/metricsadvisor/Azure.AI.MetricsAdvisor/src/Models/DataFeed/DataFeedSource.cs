@@ -3,8 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.

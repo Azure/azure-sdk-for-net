@@ -277,8 +277,14 @@ namespace Azure.ResourceManager.Core
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <inheritdoc />
-        public override Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets details for this resource group from the service.
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="Response{ResourceGroup}"/> operation for this resource group. </returns>
+        /// <exception cref="ArgumentException"> resourceGroupName cannot be null or a whitespace. </exception>
+        public Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
             scope.Start();
@@ -295,8 +301,14 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets details for this resource group from the service.
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{ResourceGroup}"/> operation for this resource group. </returns>
+        /// <exception cref="ArgumentException"> resourceGroupName cannot be null or a whitespace. </exception>
+        public virtual async Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
             scope.Start();

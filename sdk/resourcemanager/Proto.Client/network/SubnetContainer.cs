@@ -154,14 +154,14 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override Response<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
+        public Response<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, Id.Name, subnetName, cancellationToken: cancellationToken);
             return Response.FromValue(new Subnet(Parent, new SubnetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
+        public async Task<Response<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, null, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new Subnet(Parent, new SubnetData(response.Value)), response.GetRawResponse());

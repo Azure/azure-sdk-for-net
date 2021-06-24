@@ -14,6 +14,7 @@ namespace Azure.Storage.Files.DataLake
             V2020_04_08 = 5,
             V2020_06_12 = 6,
             V2020_08_04 = 7,
+            V2020_10_02 = 8,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
@@ -587,6 +588,10 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { add { } remove { } }
+    }
+    public partial class DataLakeQueryParquetTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
+    {
+        public DataLakeQueryParquetTextOptions() { }
     }
     public abstract partial class DataLakeQueryTextOptions
     {

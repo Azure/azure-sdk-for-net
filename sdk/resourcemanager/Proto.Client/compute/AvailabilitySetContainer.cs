@@ -152,14 +152,14 @@ namespace Proto.Compute
 
 
         /// <inheritdoc />
-        public override Response<AvailabilitySet> Get(string availabilitySetName, CancellationToken cancellationToken = default)
+        public Response<AvailabilitySet> Get(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, availabilitySetName);
             return Response.FromValue(new AvailabilitySet(Parent, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<AvailabilitySet>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailabilitySet>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, availabilitySetName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new AvailabilitySet(Parent, new AvailabilitySetData(response.Value)), response.GetRawResponse());

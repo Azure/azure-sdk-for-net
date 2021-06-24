@@ -184,14 +184,14 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override Response<VirtualNetwork> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
+        public Response<VirtualNetwork> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, virtualNetworkName, cancellationToken: cancellationToken);
             return Response.FromValue(new VirtualNetwork(Parent, new VirtualNetworkData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new VirtualNetwork(Parent, new VirtualNetworkData(response.Value)), response.GetRawResponse());

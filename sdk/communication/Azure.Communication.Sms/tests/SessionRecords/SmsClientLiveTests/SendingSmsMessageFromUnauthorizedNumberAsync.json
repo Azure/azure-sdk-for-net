@@ -8,11 +8,15 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Mon, 26 Apr 2021 16:58:14 GMT",
-        "traceparent": "00-6c4e249a8883d749a2d437d57828a8b1-0d222d8f848a974e-00",
-        "User-Agent": "azsdk-net-Communication.Sms/1.1.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "Date": "Tue, 15 Jun 2021 17:54:48 GMT",
+        "traceparent": "00-03f58c63e0e80043af361cafad721edb-8e247c4f3b6ef249-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Sms/1.1.0-alpha.20210615.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+        ],
         "x-ms-client-request-id": "29955a9cfed96eb9debd52c0effcf838",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 15 Jun 2021 17:54:48 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,18 +34,19 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Length": "0",
-        "Date": "Mon, 26 Apr 2021 16:58:13 GMT",
-        "MS-CV": "QXYzWaUeJ0m083rd1JW0iw.0",
+        "Date": "Tue, 15 Jun 2021 17:54:47 GMT",
+        "MS-CV": "QdIhgG3x70WOogcCvIWxWA.0",
         "Request-Context": "appId=",
-        "X-Azure-Ref": "0JfGGYAAAAADa/6n8fhI4TaMPPJDsV//oWVZSMzBFREdFMDQxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "267ms"
+        "X-Azure-Ref": "0aOnIYAAAAACR8UQ3B8vrRLEh0Pqp161qWVZSMzBFREdFMDQxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "281ms"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
     "AZURE_PHONE_NUMBER": "\u002B14255550123",
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "257421069"
   }
 }

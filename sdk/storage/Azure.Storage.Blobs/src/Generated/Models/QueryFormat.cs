@@ -17,11 +17,11 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> The quick query format type. </summary>
         public QueryFormatType? Type { get; set; }
-        /// <summary> delimited text configuration. </summary>
+        /// <summary> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </summary>
         public DelimitedTextConfigurationInternal DelimitedTextConfiguration { get; set; }
         /// <summary> json text configuration. </summary>
         public JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
-        /// <summary> arrow configuration. </summary>
+        /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
         public ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
         /// <summary> Any object. </summary>
         public object ParquetTextConfiguration { get; set; }

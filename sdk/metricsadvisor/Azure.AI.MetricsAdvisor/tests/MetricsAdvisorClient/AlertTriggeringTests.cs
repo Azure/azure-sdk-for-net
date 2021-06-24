@@ -54,68 +54,68 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetAnomaliesValidatesArguments()
+        public void GetAnomaliesForAlertValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            Assert.That(() => client.GetAnomaliesAsync(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetAnomaliesAsync("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAnomaliesAsync("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetAnomaliesAsync(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetAnomaliesAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomaliesForAlertAsync(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomaliesForAlertAsync("", "alertId"), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomaliesForAlertAsync("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomaliesForAlertAsync(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomaliesForAlertAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
 
-            Assert.That(() => client.GetAnomalies(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetAnomalies("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetAnomalies("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetAnomalies(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetAnomalies(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomaliesForAlert(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomaliesForAlert("", "alertId"), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomaliesForAlert("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomaliesForAlert(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomaliesForAlert(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
-        public void GetAnomaliesRespectsTheCancellationToken()
+        public void GetAnomaliesForAlertRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<DataPointAnomaly> asyncEnumerator = client.GetAnomaliesAsync(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<DataPointAnomaly> asyncEnumerator = client.GetAnomaliesForAlertAsync(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<DataPointAnomaly> enumerator = client.GetAnomalies(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetEnumerator();
+            IEnumerator<DataPointAnomaly> enumerator = client.GetAnomaliesForAlert(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]
-        public void GetIncidentsValidatesArguments()
+        public void GetIncidentsForAlertValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            Assert.That(() => client.GetIncidentsAsync(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidentsAsync("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidentsAsync("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetIncidentsAsync(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidentsAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidentsForAlertAsync(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentsForAlertAsync("", "alertId"), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidentsForAlertAsync("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidentsForAlertAsync(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentsForAlertAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
 
-            Assert.That(() => client.GetIncidents(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidents("", "alertId"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetIncidents("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetIncidents(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetIncidents(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidentsForAlert(null, "alertId"), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentsForAlert("", "alertId"), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetIncidentsForAlert("configId", "alertId"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetIncidentsForAlert(FakeGuid, alertId: null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetIncidentsForAlert(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
-        public void GetIncidentsRespectsTheCancellationToken()
+        public void GetIncidentsForAlertRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<AnomalyIncident> asyncEnumerator = client.GetIncidentsAsync(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<AnomalyIncident> asyncEnumerator = client.GetIncidentsForAlertAsync(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<AnomalyIncident> enumerator = client.GetIncidents(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetEnumerator();
+            IEnumerator<AnomalyIncident> enumerator = client.GetIncidentsForAlert(FakeGuid, "alertId", cancellationToken: cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 

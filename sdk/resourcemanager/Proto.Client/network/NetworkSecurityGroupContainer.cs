@@ -234,14 +234,14 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        public override Response<NetworkSecurityGroup> Get(string networkSecurityGroup, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityGroup> Get(string networkSecurityGroup, CancellationToken cancellationToken = default)
         {
             var response = Operations.Get(Id.ResourceGroupName, networkSecurityGroup, cancellationToken: cancellationToken);
             return Response.FromValue(new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<NetworkSecurityGroup>> GetAsync(string networkSecurityGroup, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityGroup>> GetAsync(string networkSecurityGroup, CancellationToken cancellationToken = default)
         {
             var response = await Operations.GetAsync(Id.ResourceGroupName, networkSecurityGroup, null, cancellationToken);
             return Response.FromValue(new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());

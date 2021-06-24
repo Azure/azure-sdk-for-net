@@ -91,23 +91,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.ListByFarmerId");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -166,23 +166,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ListByFarmerId(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual Response ListByFarmerId(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.ListByFarmerId");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -241,8 +241,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListByFarmerIdRequest(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -402,23 +402,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ListAsync(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.List");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -476,23 +476,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response List(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual Response List(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.List");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -550,8 +550,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateListRequest(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListRequest(double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -676,23 +676,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified planting data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string plantingDataId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetAsync(string farmerId, string plantingDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, plantingDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(farmerId, plantingDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.Get");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -717,23 +717,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified planting data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string plantingDataId, RequestOptions requestOptions = null)
+        public virtual Response Get(string farmerId, string plantingDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, plantingDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(farmerId, plantingDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.Get");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -758,8 +758,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetRequest(string farmerId, string plantingDataId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetRequest(string farmerId, string plantingDataId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -780,12 +780,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>avgPlantingRate</term>
         ///     <term>Measure</term>
@@ -927,12 +927,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </list>
         /// Schema for <c>Measure</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>unit</term>
         ///     <term>string</term>
@@ -948,12 +948,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </list>
         /// Schema for <c>PlantingProductDetail</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>productName</term>
         ///     <term>string</term>
@@ -982,24 +982,24 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string plantingDataId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string plantingDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, plantingDataId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, plantingDataId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1026,12 +1026,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>avgPlantingRate</term>
         ///     <term>Measure</term>
@@ -1173,12 +1173,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </list>
         /// Schema for <c>Measure</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>unit</term>
         ///     <term>string</term>
@@ -1194,12 +1194,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </list>
         /// Schema for <c>PlantingProductDetail</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>productName</term>
         ///     <term>string</term>
@@ -1228,24 +1228,24 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(string farmerId, string plantingDataId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdate(string farmerId, string plantingDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, plantingDataId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, plantingDataId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1271,9 +1271,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string plantingDataId, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string plantingDataId, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1288,30 +1288,30 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Deletes a specified planting data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(string farmerId, string plantingDataId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteAsync(string farmerId, string plantingDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, plantingDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(farmerId, plantingDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.Delete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1336,23 +1336,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified planting data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Delete(string farmerId, string plantingDataId, RequestOptions requestOptions = null)
+        public virtual Response Delete(string farmerId, string plantingDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, plantingDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(farmerId, plantingDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PlantingDataClient.Delete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1377,8 +1377,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string farmerId, string plantingDataId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(string farmerId, string plantingDataId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

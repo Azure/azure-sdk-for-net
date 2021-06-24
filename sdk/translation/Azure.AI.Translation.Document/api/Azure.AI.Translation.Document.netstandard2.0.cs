@@ -2,7 +2,7 @@ namespace Azure.AI.Translation.Document
 {
     public static partial class BatchDocumentTranslationModelFactory
     {
-        public static Azure.AI.Translation.Document.DocumentStatusResult DocumentStatusResult(System.Uri translatedDocumentUri = null, System.Uri sourceDocumentUri = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastModified = default(System.DateTimeOffset), Azure.AI.Translation.Document.TranslationStatus status = default(Azure.AI.Translation.Document.TranslationStatus), string translatedTo = null, Azure.AI.Translation.Document.DocumentTranslationError error = null, float progress = 0f, string documentId = null, long charactersCharged = (long)0) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(System.Uri translatedDocumentUri = null, System.Uri sourceDocumentUri = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastModified = default(System.DateTimeOffset), Azure.AI.Translation.Document.DocumentTranslationStatus status = default(Azure.AI.Translation.Document.DocumentTranslationStatus), string translatedTo = null, Azure.AI.Translation.Document.DocumentTranslationError error = null, float progress = 0f, string id = null, long charactersCharged = (long)0) { throw null; }
         public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IReadOnlyList<string> fileExtensions = null, System.Collections.Generic.IReadOnlyList<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IReadOnlyList<string> formatVersions = null) { throw null; }
     }
     public partial class DocumentFilter
@@ -11,17 +11,16 @@ namespace Azure.AI.Translation.Document
         public string Prefix { get { throw null; } set { } }
         public string Suffix { get { throw null; } set { } }
     }
-    public partial class DocumentStatusResult
+    public partial class DocumentStatus
     {
-        internal DocumentStatusResult() { }
+        internal DocumentStatus() { }
         public long CharactersCharged { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public string DocumentId { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationError Error { get { throw null; } }
-        public bool HasCompleted { get { throw null; } }
+        public string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public System.Uri SourceDocumentUri { get { throw null; } }
-        public Azure.AI.Translation.Document.TranslationStatus Status { get { throw null; } }
+        public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
         public System.Uri TranslatedDocumentUri { get { throw null; } }
         public string TranslatedTo { get { throw null; } }
         public float TranslationProgressPercentage { get { throw null; } }
@@ -35,14 +34,14 @@ namespace Azure.AI.Translation.Document
         public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.Translation.Document.TranslationStatusResult> GetAllTranslationStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.TranslationStatusResult> GetAllTranslationStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>> GetDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>>> GetDocumentFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>> GetGlossaryFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>>> GetGlossaryFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Translation.Document.TranslationStatus> GetAllTranslationStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.TranslationStatus> GetAllTranslationStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>> GetSupportedDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>>> GetSupportedDocumentFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>> GetSupportedGlossaryFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>>> GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.Translation.Document.DocumentTranslationOperation StartTranslation(Azure.AI.Translation.Document.DocumentTranslationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.Translation.Document.DocumentTranslationOperation StartTranslation(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.DocumentTranslationInput> inputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.Translation.Document.DocumentTranslationOperation> StartTranslationAsync(Azure.AI.Translation.Document.DocumentTranslationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -97,7 +96,7 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationTarget> Targets { get { throw null; } }
         public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null) { }
     }
-    public partial class DocumentTranslationOperation : Azure.AI.Translation.Document.PageableOperation<Azure.AI.Translation.Document.DocumentStatusResult>
+    public partial class DocumentTranslationOperation : Azure.PageableOperation<Azure.AI.Translation.Document.DocumentStatus>
     {
         protected DocumentTranslationOperation() { }
         public DocumentTranslationOperation(string translationId, Azure.AI.Translation.Document.DocumentTranslationClient client) { }
@@ -112,22 +111,45 @@ namespace Azure.AI.Translation.Document
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public virtual System.DateTimeOffset LastModified { get { throw null; } }
-        public virtual Azure.AI.Translation.Document.TranslationStatus Status { get { throw null; } }
+        public virtual Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatusResult> Value { get { throw null; } }
+        public override Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus> Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.Translation.Document.DocumentStatusResult> GetAllDocumentStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatusResult> GetAllDocumentStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Translation.Document.DocumentStatusResult> GetDocumentStatus(string documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.DocumentStatusResult>> GetDocumentStatusAsync(string documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Translation.Document.DocumentStatus> GetAllDocumentStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus> GetAllDocumentStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Translation.Document.DocumentStatus> GetDocumentStatus(string documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.DocumentStatus>> GetDocumentStatusAsync(string documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Pageable<Azure.AI.Translation.Document.DocumentStatusResult> GetValues() { throw null; }
-        public override Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatusResult> GetValuesAsync() { throw null; }
+        public override Azure.Pageable<Azure.AI.Translation.Document.DocumentStatus> GetValues(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus> GetValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatusResult>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatusResult>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentTranslationStatus : System.IEquatable<Azure.AI.Translation.Document.DocumentTranslationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentTranslationStatus(string value) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus Cancelled { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus Cancelling { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus Failed { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus NotStarted { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus Running { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus Succeeded { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus ValidationFailed { get { throw null; } }
+        public bool Equals(Azure.AI.Translation.Document.DocumentTranslationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Translation.Document.DocumentTranslationStatus left, Azure.AI.Translation.Document.DocumentTranslationStatus right) { throw null; }
+        public static implicit operator Azure.AI.Translation.Document.DocumentTranslationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Translation.Document.DocumentTranslationStatus left, Azure.AI.Translation.Document.DocumentTranslationStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class FileFormat
     {
@@ -137,13 +159,6 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IReadOnlyList<string> FileExtensions { get { throw null; } }
         public string Format { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FormatVersions { get { throw null; } }
-    }
-    public abstract partial class PageableOperation<T> : Azure.Operation<Azure.AsyncPageable<T>> where T : notnull
-    {
-        protected PageableOperation() { }
-        public override Azure.AsyncPageable<T> Value { get { throw null; } }
-        public abstract Azure.Pageable<T> GetValues();
-        public abstract Azure.AsyncPageable<T> GetValuesAsync();
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageInputType : System.IEquatable<Azure.AI.Translation.Document.StorageInputType>
@@ -177,32 +192,9 @@ namespace Azure.AI.Translation.Document
         public string LanguageCode { get { throw null; } set { } }
         public System.Uri SourceUri { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TranslationStatus : System.IEquatable<Azure.AI.Translation.Document.TranslationStatus>
+    public partial class TranslationStatus
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TranslationStatus(string value) { throw null; }
-        public static Azure.AI.Translation.Document.TranslationStatus Cancelled { get { throw null; } }
-        public static Azure.AI.Translation.Document.TranslationStatus Cancelling { get { throw null; } }
-        public static Azure.AI.Translation.Document.TranslationStatus Failed { get { throw null; } }
-        public static Azure.AI.Translation.Document.TranslationStatus NotStarted { get { throw null; } }
-        public static Azure.AI.Translation.Document.TranslationStatus Running { get { throw null; } }
-        public static Azure.AI.Translation.Document.TranslationStatus Succeeded { get { throw null; } }
-        public static Azure.AI.Translation.Document.TranslationStatus ValidationFailed { get { throw null; } }
-        public bool Equals(Azure.AI.Translation.Document.TranslationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Translation.Document.TranslationStatus left, Azure.AI.Translation.Document.TranslationStatus right) { throw null; }
-        public static implicit operator Azure.AI.Translation.Document.TranslationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Translation.Document.TranslationStatus left, Azure.AI.Translation.Document.TranslationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TranslationStatusResult
-    {
-        internal TranslationStatusResult() { }
+        internal TranslationStatus() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public int DocumentsCancelled { get { throw null; } }
         public int DocumentsFailed { get { throw null; } }
@@ -211,11 +203,10 @@ namespace Azure.AI.Translation.Document
         public int DocumentsSucceeded { get { throw null; } }
         public int DocumentsTotal { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationError Error { get { throw null; } }
-        public bool HasCompleted { get { throw null; } }
+        public string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
-        public Azure.AI.Translation.Document.TranslationStatus Status { get { throw null; } }
+        public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
         public long TotalCharactersCharged { get { throw null; } }
-        public string TranslationId { get { throw null; } }
     }
     public partial class TranslationTarget
     {

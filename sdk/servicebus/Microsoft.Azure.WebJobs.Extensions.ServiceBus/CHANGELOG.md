@@ -1,6 +1,17 @@
 # Release History
 
-## 5.0.0-beta.4 (2021-06-09)
+## 5.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 5.0.0-beta.4 (2021-06-22)
 
 ### Added
 - Added `AutoCompleteMessages` property to `ServiceBusTriggerAttribute` which allows configuring autocompletion at the function level.

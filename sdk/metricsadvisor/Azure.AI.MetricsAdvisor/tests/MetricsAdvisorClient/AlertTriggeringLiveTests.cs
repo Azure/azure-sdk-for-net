@@ -92,18 +92,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAnomalies(bool useTokenCredential)
+        public async Task GetAnomaliesForAlert(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(AlertConfigurationId, AlertId))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(AlertConfigurationId, AlertId))
             {
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.MetricId, Is.Not.Null.And.Not.Empty);
-                Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Not.Null.And.Not.Empty);
+                Assert.That(anomaly.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.Timestamp, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(anomaly.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(anomaly.ModifiedTime, Is.Not.EqualTo(default(DateTimeOffset)));
@@ -124,13 +124,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetIncidents(bool useTokenCredential)
+        public async Task GetIncidentsForAlert(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var incidentCount = 0;
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(AlertConfigurationId, AlertId))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForAlertAsync(AlertConfigurationId, AlertId))
             {
                 Assert.That(incident, Is.Not.Null);
 
