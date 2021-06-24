@@ -61,11 +61,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion);
-            }
+            writer.WritePropertyName("schemaVersion");
+            writer.WriteNumberValue(SchemaVersion);
             writer.WritePropertyName("mediaType");
             writer.WriteStringValue(MediaType);
             writer.WriteEndObject();
@@ -79,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             Optional<IReadOnlyList<DockerManifestV1FsLayer>> fsLayers = default;
             Optional<IReadOnlyList<DockerManifestV1History>> history = default;
             Optional<IReadOnlyList<DockerManifestV1ImageSignature>> signatures = default;
-            Optional<int> schemaVersion = default;
+            int schemaVersion = default;
             string mediaType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -145,11 +142,6 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 }
                 if (property.NameEquals("schemaVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }

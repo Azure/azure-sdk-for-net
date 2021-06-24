@@ -14,7 +14,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     internal partial class DockerManifestV2 : ImageManifest
     {
         /// <summary> Initializes a new instance of DockerManifestV2. </summary>
-        public DockerManifestV2()
+        /// <param name="schemaVersion"> Schema version. </param>
+        public DockerManifestV2(int schemaVersion) : base(schemaVersion)
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
             MediaType = "application/vnd.docker.distribution.manifest.v2+json";

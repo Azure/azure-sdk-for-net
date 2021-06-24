@@ -15,11 +15,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion);
-            }
+            writer.WritePropertyName("schemaVersion");
+            writer.WriteNumberValue(SchemaVersion);
             writer.WritePropertyName("mediaType");
             writer.WriteStringValue(MediaType);
             writer.WriteEndObject();
@@ -38,17 +35,12 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     case "application/vnd.oci.image.manifest.v1+json": return DockerManifestV1.DeserializeDockerManifestV1(element);
                 }
             }
-            Optional<int> schemaVersion = default;
+            int schemaVersion = default;
             string mediaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }

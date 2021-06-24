@@ -570,6 +570,7 @@ namespace Azure.Containers.ContainerRegistry
             // and end up with a corrupted format.
             using (FileStream fs = File.Create(manifestFile))
             {
+                // TODO: an extra allocation to new this each time
                 JsonSerializerOptions options = new JsonSerializerOptions()
                 {
                     WriteIndented = true
@@ -582,12 +583,10 @@ namespace Azure.Containers.ContainerRegistry
             ContentDescriptor configDescriptor = GetConfigDescriptor(manifest);
             if (configDescriptor != null)
             {
-                // TODO: do we need the digest from the properties, or could we get it from the one cached in this class?
-                // ACTUALLY: we need the one from the config, because that's what we're retrieving!
                 await DownloadLayerAsync(_repositoryName, configDescriptor.Digest, configFile, cancellationToken).ConfigureAwait(false);
             }
 
-            //Write Layers
+            // Write Layers
             IList<ContentDescriptor> layerDescriptors = GetLayerDescriptors(manifest);
             if (layerDescriptors != null)
             {
@@ -603,37 +602,6 @@ namespace Azure.Containers.ContainerRegistry
 
             // TODO: need to return an appropriate response
             return manifest.GetRawResponse();
-        }
-
-        private static ImageManifest GetManifestSubtype(ImageManifest baseManifest, ManifestMediaType mediaType)
-        {
-            if (mediaType == ManifestMediaType.DockerManifestV2)
-            {
-                return (DockerManifestV2)baseManifest;
-            }
-
-            if (mediaType == ManifestMediaType.DockerManifestV1)
-            {
-                return (DockerManifestV1)baseManifest;
-            }
-
-            if (mediaType == ManifestMediaType.DockerManifestList)
-            {
-                return (DockerManifestList)baseManifest;
-            }
-
-            if (mediaType == ManifestMediaType.OciIndex)
-            {
-                return (OciIndex)baseManifest;
-            }
-
-            if (mediaType == ManifestMediaType.OciManifest)
-            {
-                return (OciIndex)baseManifest;
-            }
-
-            // TODO: what behavior would we expect here?
-            throw new System.Exception($"Invlid media type {mediaType}");
         }
 
         private static ContentDescriptor GetConfigDescriptor(ImageManifest manifest)
@@ -684,8 +652,13 @@ namespace Azure.Containers.ContainerRegistry
             // TODO: we'll need to dispose the stream properly
             ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(repo, digest, cancellationToken).ConfigureAwait(false);
 
-            using (FileStream fs = File.OpenWrite(filename))
+            using (FileStream fs = File.Create(filename))
             {
+                JsonSerializerOptions options = new JsonSerializerOptions()
+                {
+                    WriteIndented = true
+                };
+
                 await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
             }
         }

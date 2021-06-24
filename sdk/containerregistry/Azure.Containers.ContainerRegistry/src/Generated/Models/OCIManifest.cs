@@ -14,7 +14,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     internal partial class OciManifest : ImageManifest
     {
         /// <summary> Initializes a new instance of OciManifest. </summary>
-        public OciManifest()
+        /// <param name="schemaVersion"> Schema version. </param>
+        public OciManifest(int schemaVersion) : base(schemaVersion)
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
             MediaType = "application/vnd.oci.image.manifest.v1+json";

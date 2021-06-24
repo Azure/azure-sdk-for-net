@@ -14,7 +14,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     internal partial class OciIndex : ImageManifest
     {
         /// <summary> Initializes a new instance of OciIndex. </summary>
-        public OciIndex()
+        /// <param name="schemaVersion"> Schema version. </param>
+        public OciIndex(int schemaVersion) : base(schemaVersion)
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             MediaType = "application/vnd.oci.image.index.v1+json";

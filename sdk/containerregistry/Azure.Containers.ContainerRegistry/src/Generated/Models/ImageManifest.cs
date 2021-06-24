@@ -10,6 +10,12 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     /// <summary> Returns the requested manifest file. </summary>
     internal partial class ImageManifest
     {
+        /// <summary> Initializes a new instance of ImageManifest. </summary>
+        /// <param name="schemaVersion"> Schema version. </param>
+        public ImageManifest(int schemaVersion)
+        {
+            SchemaVersion = schemaVersion;
+        }
 
         /// <summary> Initializes a new instance of ImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
@@ -19,7 +25,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             SchemaVersion = schemaVersion;
             MediaType = mediaType;
         }
-        /// <summary> Media type for this Manifest. </summary>
-        internal string MediaType { get; set; }
+
+        /// <summary> Schema version. </summary>
+        public int SchemaVersion { get; set; }
     }
 }

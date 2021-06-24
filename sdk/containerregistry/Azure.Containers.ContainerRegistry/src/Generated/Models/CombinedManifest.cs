@@ -14,7 +14,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     internal partial class CombinedManifest : ImageManifest
     {
         /// <summary> Initializes a new instance of CombinedManifest. </summary>
-        public CombinedManifest()
+        /// <param name="schemaVersion"> Schema version. </param>
+        public CombinedManifest(int schemaVersion) : base(schemaVersion)
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             Layers = new ChangeTrackingList<ContentDescriptor>();

@@ -11,13 +11,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     [CodeGenModel("V1Manifest")]
     internal sealed partial class DockerManifestV1
     {
-        /// <summary> Initializes a new instance of DockerManifestV1. </summary>
-        internal DockerManifestV1()
-        {
-            FsLayers = new ChangeTrackingList<DockerManifestV1FsLayer>();
-            History = new ChangeTrackingList<DockerManifestV1History>();
-            Signatures = new ChangeTrackingList<DockerManifestV1ImageSignature>();
-        }
+        ///// <summary> Initializes a new instance of DockerManifestV1. </summary>
+        //internal DockerManifestV1()
+        //{
+        //    FsLayers = new ChangeTrackingList<DockerManifestV1FsLayer>();
+        //    History = new ChangeTrackingList<DockerManifestV1History>();
+        //    Signatures = new ChangeTrackingList<DockerManifestV1ImageSignature>();
+        //}
 
         /// <summary> CPU architecture. </summary>
         [CodeGenMember("Architecture")]

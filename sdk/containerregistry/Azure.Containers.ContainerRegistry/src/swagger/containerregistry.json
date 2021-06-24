@@ -2443,7 +2443,10 @@
     },
     "Manifest": {
       "discriminator": "mediaType",
-      "required": [ "mediaType" ],
+      "required": [
+          "mediaType",
+          "schemaVersion"
+        ],
       "description": "Returns the requested manifest file",
       "x-accessibility": "internal",
       "properties": {
@@ -2461,10 +2464,6 @@
       "description": "Returns the requested manifest file",
       "x-accessibility": "internal",
       "properties": {
-        "mediaType": {
-          "type": "string",
-          "description": "Media type for this Manifest"
-        },
         "manifests": {
           "type": "array",
           "description": "(ManifestList, OCIIndex) List of V2 image layer information",
@@ -2532,10 +2531,6 @@
       "description": "Returns the requested Docker multi-arch-manifest file",
       "x-accessibility": "internal",
       "properties": {
-        "mediaType": {
-          "type": "string",
-          "description": "Media type for this Manifest"
-        },
         "manifests": {
           "type": "array",
           "description": "List of V2 image layer information",

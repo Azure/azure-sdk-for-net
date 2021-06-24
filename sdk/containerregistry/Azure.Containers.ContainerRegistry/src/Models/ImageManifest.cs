@@ -9,13 +9,16 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     [CodeGenModel("Manifest")]
     internal partial class ImageManifest
     {
-        internal ImageManifest() { }
+        //internal ImageManifest() { }
 
-        //internal string Digest { get; set; }
+        ////internal string Digest { get; set; }
 
-        //public ManifestMediaType MediaType { get; set; }
+        ////public ManifestMediaType MediaType { get; set; }
 
-        /// <summary> Schema version. </summary>
-        public int SchemaVersion { get; set; }
+        /////// <summary> Schema version. </summary>
+        ////public int SchemaVersion { get; set; }
+
+        /// <summary> Media type for this Manifest. </summary>
+        public string MediaType { get; set; }
     }
 }
