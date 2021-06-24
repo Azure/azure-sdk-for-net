@@ -41,11 +41,9 @@ namespace Azure.Template.Tests.Samples
         {
             var connectionString = TestEnvironment.ConnectionString;
 
-            #region Snippet:WebPubSubHelloWorldConnStr
             var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
             serviceClient.SendToAll("Hello World!");
-            #endregion
         }
 
         public void JsonMessage()
@@ -84,7 +82,6 @@ namespace Azure.Template.Tests.Samples
             var endpoint = TestEnvironment.Endpoint;
             var key = TestEnvironment.Key;
 
-            #region Snippet:WebPubAddUserToGroup
             var client = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             client.AddUserToGroup("some_group", "some_user");
@@ -96,7 +93,6 @@ namespace Azure.Template.Tests.Samples
             }
 
             client.RemoveUserFromGroup("some_group", "some_user");
-            #endregion
         }
     }
 }
