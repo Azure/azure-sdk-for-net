@@ -30,7 +30,9 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
+        /// Calls to <see cref="GetToken"/> and <see cref="GetTokenAsync"/> should be wrapped with a using block that constructs an instance of
+        /// <see cref="UserAssertionScope"/> with the user's <see cref="AccessToken"/> to be used in the On-Behalf-Of flow.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -62,27 +64,13 @@ namespace Azure.Identity
             _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return GetTokenInternalAsync(requestContext, false, cancellationToken).EnsureCompleted();
-        }
+        /// <inheritdoc />
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+            GetTokenInternalAsync(requestContext, false, cancellationToken).EnsureCompleted();
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return GetTokenInternalAsync(requestContext, true, cancellationToken);
-        }
+        /// <inheritdoc />
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+            GetTokenInternalAsync(requestContext, true, cancellationToken);
 
         internal async ValueTask<AccessToken> GetTokenInternalAsync(TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
