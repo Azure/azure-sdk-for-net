@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.Http.Headers;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -26,12 +25,27 @@ namespace Azure.Messaging.WebPubSub
         public override void OnSendingRequest(HttpMessage message)
         {
             string audience = message.Request.Uri.ToUri().AbsoluteUri;
-            var expiresAt = DateTime.UtcNow + TimeSpan.FromMinutes(10);
+            var now = DateTimeOffset.UtcNow;
+            var expiresAt = now + TimeSpan.FromMinutes(5);
 
-            string accessToken = JwtUtils.GenerateJwtBearer(audience, claims: null, expiresAt, _credential);
+            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
 
-            var header = new AuthenticationHeaderValue("Bearer", accessToken);
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, header.ToString());
+            var writer = new JwtBuilder(keyBytes);
+            writer.AddClaim(JwtBuilder.Nbf, now);
+            writer.AddClaim(JwtBuilder.Exp, expiresAt);
+            writer.AddClaim(JwtBuilder.Iat, now);
+            writer.AddClaim(JwtBuilder.Aud, audience);
+            int jwtLength = writer.End();
+
+            var prefix = "Bearer ";
+            var state = (prefix, writer);
+            var headerValue = NS2Bridge.CreateString(jwtLength + prefix.Length, state, (destination, state) => {
+                var statePrefix = state.prefix;
+                statePrefix.AsSpan().CopyTo(destination);
+                state.writer.TryBuildTo(destination.Slice(statePrefix.Length), out _);
+            });
+
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
     }
 }
