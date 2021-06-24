@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Models
             if (result == null)
             {
                 throw new ArgumentException($"Query with ID '{queryId}' wasn't part of the batch." +
-                                            $" Please use the return value of the {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
+                                            $" Please use the return value of {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
             }
 
             if (result.Body.HasFailed)
