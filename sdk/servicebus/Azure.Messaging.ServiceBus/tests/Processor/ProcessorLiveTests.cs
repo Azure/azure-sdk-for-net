@@ -852,7 +852,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task StoppingProcessorAllowsInflightMessagesToBeReceived()
+        public async Task StopProcessingDoesNotResultInRedeliveredMessages()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
