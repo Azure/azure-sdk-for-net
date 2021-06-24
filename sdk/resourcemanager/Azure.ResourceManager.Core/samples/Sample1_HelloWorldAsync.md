@@ -1,6 +1,6 @@
 # Example: Getting a susbcription
 
->Note: Before getting started with the samples, make sure to go trought [prerequisites guide]<---(./docs/Prerequistes.md)-->.
+>Note: Before getting started with the samples, make sure to go trought [prerequisites guide](./docs/Prerequistes.md).
 
 The following code shows how to get the default subscription:
 
@@ -28,4 +28,4 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 ```
 
 ## Next stepts
-Take a look at the [Managing Resource Groups]<---(ManagingResourceGroups.md)--> samples.
+Take a look at the [Managing Resource Groups](ManagingResourceGroups.md) samples.

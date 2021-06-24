@@ -1,12 +1,12 @@
 # Azure ResourceManager Core client library for .NET
 
-This package follows the [new Azure SDK guidelines]<---(https://azure.github.io/azure-sdk/general_introduction.html)--> which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
 ## Getting started 
 
 ### Install the package
 
-Install the Azure Resources management core library for .NET with [NuGet]<---(https://www.nuget.org/)-->:
+Install the Azure Resources management core library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
 Install-Package Azure.ResourceManager.Core -Version 1.0.0-beta.1
@@ -18,7 +18,7 @@ Set up a way to authenticate to Azure with Azure Identity.
 Some options are:
 - Trough the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
 - Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
-- Setting [Environment Variables]<--(docs/AuthUsingEnvironmentVariables.md)-->.
+- Setting [Environment Variables](docs/AuthUsingEnvironmentVariables.md).
 
 More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
@@ -125,7 +125,7 @@ await foreach (ResourceGroup rg in response)
 }
 ```
 
-For more detailed examples, take a look at [samples]<---(samples/)--> we have available.
+For more detailed examples, take a look at [samples](samples/) we have available.
 
 ## Troubleshooting
 
@@ -139,12 +139,12 @@ For more detailed examples, take a look at [samples]<---(samples/)--> we have av
 ## Next steps
 ### More sample code
 
-- [Managing Resource Groups]<---(samples/ManagingResourceGroups.md)-->
-- [Creating a Virtual Network]<---(samples/CreatingAVirtualNetwork.md)-->
-- [.NET Management Library Code Samples]<---(https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)-->
+- [Managing Resource Groups](samples/ManagingResourceGroups.md)
+- [Creating a Virtual Network](samples/CreatingAVirtualNetwork.md)
+- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
-For more information on Azure SDK, please refer to [this website]<---(https://azure.github.io/azure-sdk/)-->.
+For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 
