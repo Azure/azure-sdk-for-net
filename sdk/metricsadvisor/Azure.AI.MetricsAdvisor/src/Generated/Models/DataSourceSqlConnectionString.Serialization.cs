@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class ServicePrincipalInKeyVaultDataSourceCredential : IUtf8JsonSerializable
+    public partial class DataSourceSqlConnectionString : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalInKeyVaultDataSourceCredential DeserializeServicePrincipalInKeyVaultDataSourceCredential(JsonElement element)
+        internal static DataSourceSqlConnectionString DeserializeDataSourceSqlConnectionString(JsonElement element)
         {
-            ServicePrincipalInKVParam parameters = default;
+            AzureSQLConnectionStringParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = ServicePrincipalInKVParam.DeserializeServicePrincipalInKVParam(property.Value);
+                    parameters = AzureSQLConnectionStringParam.DeserializeAzureSQLConnectionStringParam(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new ServicePrincipalInKeyVaultDataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataSourceSqlConnectionString(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

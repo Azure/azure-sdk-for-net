@@ -11,13 +11,11 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class ServicePrincipalDataSourceCredential : IUtf8JsonSerializable
+    public partial class DataSourceCredentialEntity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Parameters);
             writer.WritePropertyName("dataSourceCredentialType");
             writer.WriteStringValue(DataSourceCredentialType.ToString());
             writer.WritePropertyName("dataSourceCredentialName");
@@ -30,20 +28,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalDataSourceCredential DeserializeServicePrincipalDataSourceCredential(JsonElement element)
+        internal static DataSourceCredentialEntity DeserializeDataSourceCredentialEntity(JsonElement element)
         {
-            ServicePrincipalParam parameters = default;
+            if (element.TryGetProperty("dataSourceCredentialType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureSQLConnectionString": return DataSourceSqlConnectionString.DeserializeDataSourceSqlConnectionString(element);
+                    case "DataLakeGen2SharedKey": return DataSourceDataLakeGen2SharedKey.DeserializeDataSourceDataLakeGen2SharedKey(element);
+                    case "ServicePrincipal": return DataSourceServicePrincipal.DeserializeDataSourceServicePrincipal(element);
+                    case "ServicePrincipalInKV": return DataSourceServicePrincipalInKeyVault.DeserializeDataSourceServicePrincipalInKeyVault(element);
+                }
+            }
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
             Optional<string> dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
-                {
-                    parameters = ServicePrincipalParam.DeserializeServicePrincipalParam(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("dataSourceCredentialType"))
                 {
                     dataSourceCredentialType = new DataSourceCredentialType(property.Value.GetString());
@@ -65,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new ServicePrincipalDataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataSourceCredentialEntity(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
         }
     }
 }

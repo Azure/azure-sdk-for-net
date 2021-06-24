@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class DataLakeGen2SharedKeyDataSourceCredential : IUtf8JsonSerializable
+    public partial class DataSourceServicePrincipal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteEndObject();
         }
 
-        internal static DataLakeGen2SharedKeyDataSourceCredential DeserializeDataLakeGen2SharedKeyDataSourceCredential(JsonElement element)
+        internal static DataSourceServicePrincipal DeserializeDataSourceServicePrincipal(JsonElement element)
         {
-            DataLakeGen2SharedKeyParam parameters = default;
+            ServicePrincipalParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = DataLakeGen2SharedKeyParam.DeserializeDataLakeGen2SharedKeyParam(property.Value);
+                    parameters = ServicePrincipalParam.DeserializeServicePrincipalParam(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new DataLakeGen2SharedKeyDataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataSourceServicePrincipal(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

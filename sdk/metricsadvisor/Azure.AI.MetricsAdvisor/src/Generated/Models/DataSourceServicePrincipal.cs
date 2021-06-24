@@ -10,8 +10,8 @@ using Azure.AI.MetricsAdvisor.Models;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    /// <summary> The AzureSQLConnectionStringCredential. </summary>
-    public partial class SqlConnectionStringDataSourceCredential : DataSourceCredential
+    /// <summary> The ServicePrincipalCredential. </summary>
+    public partial class DataSourceServicePrincipal : DataSourceCredentialEntity
     {
     }
 }
