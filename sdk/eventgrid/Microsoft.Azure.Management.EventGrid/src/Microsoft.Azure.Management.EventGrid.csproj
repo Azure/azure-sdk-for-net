@@ -19,7 +19,7 @@
         5. New AttributeFiltering Operators for Event Channels
         6. Exposing Source scopes on the TopicType resource
        
-       For a complete list of changes for all various release versions, please refer to: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Microsoft.Azure.Management.EventGrid/CHANGELOG.md
+       For a complete list of changes for all various release versions, please refer to: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Microsoft.Azure.Management.EventGrid/CHANGELOG.md
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

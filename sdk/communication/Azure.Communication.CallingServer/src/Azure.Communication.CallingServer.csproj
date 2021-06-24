@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication CallingServer service.
-      For this release, see notes - https://github.com/Azure/azure-sdk-for-net-pr/blob/master/sdk/communication/Azure.Communication.ServerCalling/README.md and https://github.com/Azure/azure-sdk-for-net-pr/blob/master/sdk/communication/Azure.Communication.ServerCalling/CHANGELOG.md.
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net-pr/blob/main/sdk/communication/Azure.Communication.ServerCalling/README.md and https://github.com/Azure/azure-sdk-for-net-pr/blob/main/sdk/communication/Azure.Communication.ServerCalling/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication CallingServer Service</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
