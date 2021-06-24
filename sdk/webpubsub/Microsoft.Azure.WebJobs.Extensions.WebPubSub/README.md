@@ -56,11 +56,11 @@ In `Connect` and `Message` events, function will respect return values to send b
 
 ### Functions that uses Web PubSub input binding
 
-```cs
-[FunctionName("WebPubSubInputBindingFunction")]
+```c# Snippet:WebPubSubConnectionBindingFunction
+[FunctionName("WebPubSubConnectionBindingFunction")]
 public static WebPubSubConnection Run(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-    [WebPubSubConnection(Hub = "simplechat", UserId = "{query.userid}")] WebPubSubConnection connection)
+    [WebPubSubConnection(Hub = "hub", UserId = "{query.userid}")] WebPubSubConnection connection)
 {
     Console.WriteLine("login");
     return connection;
@@ -69,11 +69,11 @@ public static WebPubSubConnection Run(
 
 ### Functions that uses Web PubSub output binding
 
-```cs
+```c# Snippet:WebPubSubOutputBindingFunction
 [FunctionName("WebPubSubOutputBindingFunction")]
 public static async Task RunAsync(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-    [WebPubSub(Hub = "simplechat")] IAsyncCollector<WebPubSubOperation> operation)
+    [WebPubSub(Hub = "hub")] IAsyncCollector<WebPubSubOperation> operation)
 {
     await operation.AddAsync(new SendToAll
     {
@@ -85,25 +85,24 @@ public static async Task RunAsync(
 
 ### Functions that uses Web PubSub trigger
 
-```cs
+```c# Snippet: WebPubSubTriggerFunction
 [FunctionName("WebPubSubTriggerFunction")]
 public static void Run(
-    [WebPubSubTrigger("message", WebPubSubEventType.User)] 
-    ConnectionContext context,
+    ILogger logger,
+    [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] ConnectionContext context,
     string message,
     MessageDataType dataType)
 {
-    Console.WriteLine($"Request from: {context.userId}");
-    Console.WriteLine($"Request message: {message}");
-    Console.WriteLine($"Request message DataType: {dataType}");
+    logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
+        context.UserId, message, dataType);
 }
 ```
 
 ### Functions that uses Web PubSub trigger return value
 
-```cs
+```c# Snippet: WebPubSubTriggerReturnValueFunction
 [FunctionName("WebPubSubTriggerReturnValueFunction")]
-public static MessageResponse RunAsync(
+public static MessageResponse Run(
     [WebPubSubTrigger("message", WebPubSubEventType.User)] ConnectionContext context)
 {
     return new MessageResponse
