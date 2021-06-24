@@ -17,6 +17,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         public DockerManifestV2()
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
+            MediaType = "application/vnd.docker.distribution.manifest.v2+json";
         }
 
         /// <summary> Initializes a new instance of DockerManifestV2. </summary>
@@ -24,15 +25,12 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="configDescriptor"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
-        internal DockerManifestV2(int schemaVersion, string mediaType, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers) : base(schemaVersion)
+        internal DockerManifestV2(int schemaVersion, string mediaType, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers) : base(schemaVersion, mediaType)
         {
-            MediaType = mediaType;
             ConfigDescriptor = configDescriptor;
             Layers = layers;
+            MediaType = mediaType ?? "application/vnd.docker.distribution.manifest.v2+json";
         }
-
-        /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }
     }

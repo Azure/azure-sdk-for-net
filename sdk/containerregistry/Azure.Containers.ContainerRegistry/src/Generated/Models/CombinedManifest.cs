@@ -21,6 +21,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             FsLayers = new ChangeTrackingList<DockerManifestV1FsLayer>();
             History = new ChangeTrackingList<DockerManifestV1History>();
             Signatures = new ChangeTrackingList<DockerManifestV1ImageSignature>();
+            MediaType = "ManifestWrapper";
         }
 
         /// <summary> Initializes a new instance of CombinedManifest. </summary>
@@ -36,9 +37,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal CombinedManifest(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
+        internal CombinedManifest(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion, mediaType)
         {
-            MediaType = mediaType;
             Manifests = manifests;
             Config = config;
             Layers = layers;
@@ -49,10 +49,9 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             FsLayers = fsLayers;
             History = history;
             Signatures = signatures;
+            MediaType = mediaType ?? "ManifestWrapper";
         }
 
-        /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; set; }
         /// <summary> (ManifestList, OCIIndex) List of V2 image layer information. </summary>
         public IList<ManifestListAttributes> Manifests { get; }
         /// <summary> (V2, OCI) Image config descriptor. </summary>

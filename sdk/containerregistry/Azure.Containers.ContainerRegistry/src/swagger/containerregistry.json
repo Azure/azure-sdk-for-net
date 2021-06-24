@@ -2442,12 +2442,18 @@
       }
     },
     "Manifest": {
+      "discriminator": "mediaType",
+      "required": [ "mediaType" ],
       "description": "Returns the requested manifest file",
       "x-accessibility": "internal",
       "properties": {
         "schemaVersion": {
           "type": "integer",
           "description": "Schema version"
+        },
+        "mediaType": {
+          "type": "string",
+          "description": "Media type for this Manifest"
         }
       }
     },
@@ -2606,10 +2612,6 @@
       "x-accessibility": "internal",
       "description": "Returns the requested Docker V2 Manifest file",
       "properties": {
-        "mediaType": {
-          "type": "string",
-          "description": "Media type for this Manifest"
-        },
         "config": {
           "description": "V2 image config descriptor",
           "$ref": "#/definitions/Descriptor"

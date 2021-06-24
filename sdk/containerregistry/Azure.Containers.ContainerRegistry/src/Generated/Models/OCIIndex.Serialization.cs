@@ -43,6 +43,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 writer.WritePropertyName("schemaVersion");
                 writer.WriteNumberValue(SchemaVersion);
             }
+            writer.WritePropertyName("mediaType");
+            writer.WriteStringValue(MediaType);
             writer.WriteEndObject();
         }
 
@@ -51,6 +53,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             Optional<IList<ManifestListAttributes>> manifests = default;
             Optional<OciManifestAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
+            string mediaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifests"))
@@ -88,8 +91,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("mediaType"))
+                {
+                    mediaType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new OciIndex(schemaVersion, Optional.ToList(manifests), annotations.Value);
+            return new OciIndex(schemaVersion, mediaType, Optional.ToList(manifests), annotations.Value);
         }
     }
 }

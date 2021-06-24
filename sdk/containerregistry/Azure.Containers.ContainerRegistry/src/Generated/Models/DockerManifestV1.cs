@@ -16,13 +16,14 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
 
         /// <summary> Initializes a new instance of DockerManifestV1. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="cpuArchitecture"> CPU architecture. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="tag"> Image tag. </param>
         /// <param name="fsLayers"> List of layer information. </param>
         /// <param name="history"> Image history. </param>
         /// <param name="signatures"> Image signature. </param>
-        internal DockerManifestV1(int schemaVersion, string cpuArchitecture, string name, string tag, IReadOnlyList<DockerManifestV1FsLayer> fsLayers, IReadOnlyList<DockerManifestV1History> history, IReadOnlyList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion)
+        internal DockerManifestV1(int schemaVersion, string mediaType, string cpuArchitecture, string name, string tag, IReadOnlyList<DockerManifestV1FsLayer> fsLayers, IReadOnlyList<DockerManifestV1History> history, IReadOnlyList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion, mediaType)
         {
             CpuArchitecture = cpuArchitecture;
             Name = name;
@@ -30,6 +31,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             FsLayers = fsLayers;
             History = history;
             Signatures = signatures;
+            MediaType = mediaType ?? "application/vnd.oci.image.manifest.v1+json";
         }
     }
 }

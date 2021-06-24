@@ -16,11 +16,6 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType.ToString());
-            }
             if (Optional.IsCollectionDefined(Manifests))
             {
                 writer.WritePropertyName("manifests");
@@ -108,12 +103,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 writer.WritePropertyName("schemaVersion");
                 writer.WriteNumberValue(SchemaVersion);
             }
+            writer.WritePropertyName("mediaType");
+            writer.WriteStringValue(MediaType);
             writer.WriteEndObject();
         }
 
         internal static CombinedManifest DeserializeCombinedManifest(JsonElement element)
         {
-            Optional<string> mediaType = default;
             Optional<IList<ManifestListAttributes>> manifests = default;
             Optional<ContentDescriptor> config = default;
             Optional<IList<ContentDescriptor>> layers = default;
@@ -125,13 +121,9 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             Optional<IList<DockerManifestV1History>> history = default;
             Optional<IList<DockerManifestV1ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
+            string mediaType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
-                {
-                    mediaType = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("manifests"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -252,8 +244,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("mediaType"))
+                {
+                    mediaType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CombinedManifest(schemaVersion, mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new CombinedManifest(schemaVersion, mediaType, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

@@ -549,12 +549,12 @@ namespace Azure.Containers.ContainerRegistry
             // Get Manifest
             // TODO: should we expose the option to use the accept header string for this method?
             // /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
-            Response<ImageManifest> baseManifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // Get Attributes (need digest and mediaType)
             // TODO: we could cache these ... or if we could get digest and media type from the manifest itself, we wouldn't need them from the attributes/properties
-            ArtifactManifestProperties properties = await this.GetManifestPropertiesAsync(cancellationToken).ConfigureAwait(false);
-            var manifest = GetManifestSubtype(baseManifest, properties.MediaType);
+            //ArtifactManifestProperties properties = await this.GetManifestPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            //var manifest = GetManifestSubtype(baseManifest, properties.MediaType);
 
             // TODO: is this the best way to do this?
             if (!Directory.Exists(path))
@@ -566,9 +566,15 @@ namespace Azure.Containers.ContainerRegistry
             // TODO: Actually, we've already downloaded it, now we're just writing it to file
             string manifestFile = Path.Combine(path, "manifest.json");
 
-            using (FileStream fs = File.OpenWrite(manifestFile))
+            // TODO: is Create the proper semantics here?  OpenWrite could write a shorter string to the file
+            // and end up with a corrupted format.
+            using (FileStream fs = File.Create(manifestFile))
             {
-                await JsonSerializer.SerializeAsync(fs, manifest, cancellationToken: cancellationToken).ConfigureAwait(false);
+                JsonSerializerOptions options = new JsonSerializerOptions()
+                {
+                    WriteIndented = true
+                };
+                await JsonSerializer.SerializeAsync(fs, manifest.Value, manifest.Value.GetType(), options, cancellationToken).ConfigureAwait(false);
             }
 
             // Download config
@@ -596,7 +602,7 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             // TODO: need to return an appropriate response
-            return baseManifest.GetRawResponse();
+            return manifest.GetRawResponse();
         }
 
         private static ImageManifest GetManifestSubtype(ImageManifest baseManifest, ManifestMediaType mediaType)

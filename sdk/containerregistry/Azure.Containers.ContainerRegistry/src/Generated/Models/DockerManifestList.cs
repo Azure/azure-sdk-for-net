@@ -17,20 +17,19 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         public DockerManifestList()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
+            MediaType = "application/vnd.docker.distribution.manifest.list.v2+json";
         }
 
         /// <summary> Initializes a new instance of DockerManifestList. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> List of V2 image layer information. </param>
-        internal DockerManifestList(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests) : base(schemaVersion)
+        internal DockerManifestList(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests) : base(schemaVersion, mediaType)
         {
-            MediaType = mediaType;
             Manifests = manifests;
+            MediaType = mediaType ?? "application/vnd.docker.distribution.manifest.list.v2+json";
         }
 
-        /// <summary> Media type for this Manifest. </summary>
-        public string MediaType { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ManifestListAttributes> Manifests { get; }
     }

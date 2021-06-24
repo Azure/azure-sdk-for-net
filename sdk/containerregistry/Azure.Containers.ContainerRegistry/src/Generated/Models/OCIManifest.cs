@@ -17,18 +17,21 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         public OciManifest()
         {
             Layers = new ChangeTrackingList<ContentDescriptor>();
+            MediaType = "application/vnd.oci.image.manifest.v1+json";
         }
 
         /// <summary> Initializes a new instance of OciManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="configDescriptor"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciManifest(int schemaVersion, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion)
+        internal OciManifest(int schemaVersion, string mediaType, ContentDescriptor configDescriptor, IList<ContentDescriptor> layers, OciManifestAnnotations annotations) : base(schemaVersion, mediaType)
         {
             ConfigDescriptor = configDescriptor;
             Layers = layers;
             Annotations = annotations;
+            MediaType = mediaType ?? "application/vnd.oci.image.manifest.v1+json";
         }
         /// <summary> List of V2 image layer information. </summary>
         public IList<ContentDescriptor> Layers { get; }

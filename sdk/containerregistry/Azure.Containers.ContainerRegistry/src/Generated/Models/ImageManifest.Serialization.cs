@@ -20,12 +20,26 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 writer.WritePropertyName("schemaVersion");
                 writer.WriteNumberValue(SchemaVersion);
             }
+            writer.WritePropertyName("mediaType");
+            writer.WriteStringValue(MediaType);
             writer.WriteEndObject();
         }
 
         internal static ImageManifest DeserializeImageManifest(JsonElement element)
         {
+            if (element.TryGetProperty("mediaType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "ManifestWrapper": return CombinedManifest.DeserializeCombinedManifest(element);
+                    case "application/vnd.docker.distribution.manifest.list.v2+json": return DockerManifestList.DeserializeDockerManifestList(element);
+                    case "application/vnd.docker.distribution.manifest.v2+json": return DockerManifestV2.DeserializeDockerManifestV2(element);
+                    case "application/vnd.oci.image.index.v1+json": return OciIndex.DeserializeOciIndex(element);
+                    case "application/vnd.oci.image.manifest.v1+json": return DockerManifestV1.DeserializeDockerManifestV1(element);
+                }
+            }
             Optional<int> schemaVersion = default;
+            string mediaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersion"))
@@ -38,8 +52,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("mediaType"))
+                {
+                    mediaType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ImageManifest(schemaVersion);
+            return new ImageManifest(schemaVersion, mediaType);
         }
     }
 }

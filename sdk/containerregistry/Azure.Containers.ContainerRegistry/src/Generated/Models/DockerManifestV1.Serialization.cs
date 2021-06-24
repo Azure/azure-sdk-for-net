@@ -66,6 +66,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 writer.WritePropertyName("schemaVersion");
                 writer.WriteNumberValue(SchemaVersion);
             }
+            writer.WritePropertyName("mediaType");
+            writer.WriteStringValue(MediaType);
             writer.WriteEndObject();
         }
 
@@ -78,6 +80,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             Optional<IReadOnlyList<DockerManifestV1History>> history = default;
             Optional<IReadOnlyList<DockerManifestV1ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
+            string mediaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"))
@@ -150,8 +153,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("mediaType"))
+                {
+                    mediaType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DockerManifestV1(schemaVersion, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new DockerManifestV1(schemaVersion, mediaType, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

@@ -13,9 +13,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
 
         /// <summary> Initializes a new instance of ImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal ImageManifest(int schemaVersion)
+        /// <param name="mediaType"> Media type for this Manifest. </param>
+        internal ImageManifest(int schemaVersion, string mediaType)
         {
             SchemaVersion = schemaVersion;
+            MediaType = mediaType;
         }
+        /// <summary> Media type for this Manifest. </summary>
+        internal string MediaType { get; set; }
     }
 }

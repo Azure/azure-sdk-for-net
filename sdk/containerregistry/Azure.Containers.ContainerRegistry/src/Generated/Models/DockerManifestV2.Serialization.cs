@@ -16,11 +16,6 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType.ToString());
-            }
             if (Optional.IsDefined(ConfigDescriptor))
             {
                 writer.WritePropertyName("config");
@@ -41,22 +36,19 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 writer.WritePropertyName("schemaVersion");
                 writer.WriteNumberValue(SchemaVersion);
             }
+            writer.WritePropertyName("mediaType");
+            writer.WriteStringValue(MediaType);
             writer.WriteEndObject();
         }
 
         internal static DockerManifestV2 DeserializeDockerManifestV2(JsonElement element)
         {
-            Optional<string> mediaType = default;
             Optional<ContentDescriptor> config = default;
             Optional<IList<ContentDescriptor>> layers = default;
             Optional<int> schemaVersion = default;
+            string mediaType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
-                {
-                    mediaType = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("config"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -92,8 +84,13 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("mediaType"))
+                {
+                    mediaType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DockerManifestV2(schemaVersion, mediaType.Value, config.Value, Optional.ToList(layers));
+            return new DockerManifestV2(schemaVersion, mediaType, config.Value, Optional.ToList(layers));
         }
     }
 }
