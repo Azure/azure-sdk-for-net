@@ -31,13 +31,22 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
-            throw new InvalidOperationException("Invalid query: Missing WHERE logic.");
+            return _parent;
         }
 
         /// <inheritdoc/>
         public override string GetQueryText()
         {
-            return QueryConstants.Where;
+            string whereLogicString = _upstreamWhereLogic.GetQueryText();
+
+            if (whereLogicString.Length > 0)
+            {
+                return $"{QueryConstants.Where} " + whereLogicString;
+            }
+            else
+            {
+                return whereLogicString;
+            }
         }
     }
 }

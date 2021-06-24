@@ -89,11 +89,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             // build the from string
             finalQuery.Append(' ').Append(_fromQuery.GetQueryText());
 
-            // build the where statement string
+            // build the where string
             finalQuery.Append(' ').Append(_whereStatement.GetQueryText());
-
-            // build the where logic string
-            finalQuery.Append(' ').Append(_whereLogic.GetQueryText());
 
             return finalQuery.ToString().Trim();
         }

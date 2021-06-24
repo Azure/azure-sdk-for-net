@@ -15,6 +15,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
+                .Where()
                 .Build()
                 .GetQueryText()
                 .Should()
