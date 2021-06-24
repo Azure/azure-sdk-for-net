@@ -20,8 +20,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         internal WhereLogic(AdtQueryBuilder parent)
         {
             _parent = parent;
-            _logicalOperator = new LogicalOperator(this, _conditions);
+            _logicalOperator = new LogicalOperator(this);
             _conditions = new StringBuilder();
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="logicalOperator"></param>
+        public void AppendLogicalOperator(string logicalOperator)
+        {
+            _conditions.Append(logicalOperator);
         }
 
         /// <summary>
@@ -138,7 +147,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             }
 
             whereClauseArg.Append(')');
-            _conditions.Append(new WhereClause(whereClauseArg.ToString()));
+            _conditions.Append(whereClauseArg.ToString());
 
             return _logicalOperator;
         }
@@ -171,38 +180,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             return _logicalOperator;
         }
 
-        ///// <summary>
-        ///// Adds the OR logical operator to a query.
-        ///// </summary>
-        ///// <returns> ADT query that already contains SELECT and FROM. </returns>
-        //public WhereLogic Or()
-        //{
-        //    // prevent users from adding Or as the first expression of a WHERE clause
-        //    if (_clauses.Count == 0)
-        //    {
-        //        throw new InvalidOperationException("The 'OR' logical operator cannot be the first part of a WHERE clause.");
-        //    }
-
-        //    _clauses.Add(new WhereClause(QueryConstants.Or));
-        //    return this;
-        //}
-
-        ///// <summary>
-        ///// Adds the AMD logical operator to a query.
-        ///// </summary>
-        ///// <returns> ADT query that already contains SELECT and FROM. </returns>
-        //public WhereLogic And()
-        //{
-        //    // prevent users from adding And as the first expression of a WHERE clause
-        //    if (_clauses.Count == 0)
-        //    {
-        //        throw new InvalidOperationException("The 'AND' logical operator cannot be the first part of a WHERE clause.");
-        //    }
-
-        //    _clauses.Add(new WhereClause(QueryConstants.And));
-        //    return this;
-        //}
-
         /// <inheritdoc/>
         internal AdtQueryBuilder Build()
         {
@@ -214,17 +191,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             if (_conditions.Length > 0)
             {
-                //// Where keyword only needs to be appened one time, happends outside of loop
-                //var whereLogicComponents = new StringBuilder();
-
-                //var conditions = new List<string>(_conditions.Length);
-                //foreach (string _clause in _conditions)
-                //{
-                //    conditions.Add(_clause);
-                //}
-
-                //whereLogicComponents.Append(string.Join(" ", conditions).Trim());
-                //return whereLogicComponents.ToString().Trim();
                 return _conditions.ToString();
             }
 

@@ -13,12 +13,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     public class LogicalOperator : QueryBase
     {
         private WhereLogic _whereLogic;
-        private StringBuilder _conditions;
 
-        internal LogicalOperator(WhereLogic whereLogic, StringBuilder conditions)
+        internal LogicalOperator(WhereLogic whereLogic)
         {
             _whereLogic = whereLogic;
-            _conditions = conditions;
         }
 
         /// <summary>
@@ -27,7 +25,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public WhereLogic And()
         {
-            _conditions.Append(QueryConstants.And);
+            _whereLogic.AppendLogicalOperator($" {QueryConstants.And} ");
             return _whereLogic;
         }
 
@@ -37,7 +35,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public WhereLogic Or()
         {
-            _conditions.Append(QueryConstants.Or);
+            _whereLogic.AppendLogicalOperator($" {QueryConstants.Or} ");
             return _whereLogic;
         }
 
