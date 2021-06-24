@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core.Tests
             query.Compare("Temperature", QueryComparisonOperator.Equal, 5)
                 .Or()
                 .Compare("Humidity", QueryComparisonOperator.Equal, 10);
-            query.GetQueryText()
+            query.GetLogicText()
                 .Should()
                 .Be("Temperature = 5 OR Humidity = 10");
         }
@@ -28,7 +28,7 @@ namespace Azure.DigitalTwins.Core.Tests
             query.Compare("Temperature", QueryComparisonOperator.Equal, 5)
                 .And()
                 .Compare("Humidity", QueryComparisonOperator.Equal, 10);
-            query.GetQueryText()
+            query.GetLogicText()
                 .Should()
                 .Be("Temperature = 5 AND Humidity = 10");
         }

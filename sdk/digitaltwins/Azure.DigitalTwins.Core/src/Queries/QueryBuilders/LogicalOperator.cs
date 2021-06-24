@@ -38,13 +38,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
-            return _whereLogic.Build();
+            return _whereLogic.BuildLogic();
         }
 
         /// <inheritdoc/>
         public override string GetQueryText()
         {
-            return _whereLogic.GetQueryText();
+            return _whereLogic.GetLogicText();
         }
     }
 }

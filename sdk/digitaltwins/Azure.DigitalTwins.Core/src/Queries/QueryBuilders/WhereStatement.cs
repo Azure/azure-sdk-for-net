@@ -37,16 +37,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string GetQueryText()
         {
-            string whereLogicString = _upstreamWhereLogic.GetQueryText();
+            string whereLogicString = _upstreamWhereLogic.GetLogicText();
 
             if (whereLogicString.Length > 0)
             {
-                return $"{QueryConstants.Where} " + whereLogicString;
+                return $"{QueryConstants.Where} {whereLogicString}";
             }
-            else
-            {
-                return whereLogicString;
-            }
+
+            return whereLogicString;
         }
     }
 }

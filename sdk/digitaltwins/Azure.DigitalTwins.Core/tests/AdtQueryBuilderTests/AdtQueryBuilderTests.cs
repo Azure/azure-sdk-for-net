@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Where()
-                .Build()
+                .BuildLogic()
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins");

@@ -106,7 +106,8 @@ namespace Azure.DigitalTwins.Core.Samples
                 .IsOfType("Temperature", AdtDataType.AdtNumber)
                 .Build();
 
-            // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))
+            // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity))
+            // AND (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))
             AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
                .Select("*")
                .From(AdtCollection.DigitalTwins)
@@ -115,7 +116,7 @@ namespace Azure.DigitalTwins.Core.Samples
                    .IsOfType("Humidity", AdtDataType.AdtNumber)
                    .Or()
                    .IsOfType("Humidity", AdtDataType.AdtPrimative))
-               .Or()
+               .And()
                .IsTrue(q => q
                    .IsOfType("Temperature", AdtDataType.AdtNumber)
                    .Or()

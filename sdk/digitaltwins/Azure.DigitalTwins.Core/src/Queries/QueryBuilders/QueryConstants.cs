@@ -20,9 +20,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public const string And = "AND";
         public const string Or = "OR";
 
-        public const string OpenParenthesis = "(";
-        public const string CloseParenthesis = ")";
-
         public const string IsDefined = "IS_DEFINED";
         public const string IsNull = "IS_NULL";
         public const string StartsWith = "STARTSWITH";

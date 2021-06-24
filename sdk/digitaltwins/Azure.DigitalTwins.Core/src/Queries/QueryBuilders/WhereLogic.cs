@@ -170,19 +170,19 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             var nestedLogic = new WhereLogic(null);
             nested.Invoke(nestedLogic);
 
-            _conditions.Append(new WhereClause(QueryConstants.OpenParenthesis + nestedLogic.GetQueryText() + QueryConstants.CloseParenthesis).Condition);
+            _conditions.Append(new WhereClause("(" + nestedLogic.GetLogicText() + ")").Condition);
 
             return _logicalOperator;
         }
 
         /// <inheritdoc/>
-        internal AdtQueryBuilder Build()
+        internal AdtQueryBuilder BuildLogic()
         {
             return _parent;
         }
 
         /// <inheritdoc/>
-        internal string GetQueryText()
+        internal string GetLogicText()
         {
             if (_conditions.Length > 0)
             {
