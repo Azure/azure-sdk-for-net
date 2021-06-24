@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -14,8 +13,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     public sealed class WhereLogic
     {
         private readonly AdtQueryBuilder _parent;
-        private LogicalOperator _logicalOperator;
-        private StringBuilder _conditions; //stbuilder, public method that exposes stringbuilder to logical op class
+        private readonly LogicalOperator _logicalOperator;
+        private readonly StringBuilder _conditions;
 
         internal WhereLogic(AdtQueryBuilder parent)
         {
@@ -25,7 +24,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO
+        /// Add a logical operator (AND/OR) to a query.
         /// </summary>
         /// <param name="logicalOperator"></param>
         public void AppendLogicalOperator(string logicalOperator)

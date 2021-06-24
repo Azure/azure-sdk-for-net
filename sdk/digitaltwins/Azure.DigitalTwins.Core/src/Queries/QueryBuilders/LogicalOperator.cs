@@ -1,14 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// TODO.
+    /// Logical operators (AND/OR) and the ADT query language.
     /// </summary>
     public class LogicalOperator : QueryBase
     {
@@ -20,9 +16,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO
+        /// Adds the AND logical operator to a query.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> A query that already contains SELECT and FROM. </returns>
         public WhereLogic And()
         {
             _whereLogic.AppendLogicalOperator($" {QueryConstants.And} ");
@@ -30,28 +26,22 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO
+        /// Adds the OR logical operator to a query.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> A query that already contains SELECT and FROM. </returns>
         public WhereLogic Or()
         {
             _whereLogic.AppendLogicalOperator($" {QueryConstants.Or} ");
             return _whereLogic;
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
             return _whereLogic.Build();
         }
 
-        /// <summary>
-        /// TODO. Inheritdoc
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override string GetQueryText()
         {
             return _whereLogic.GetQueryText();
