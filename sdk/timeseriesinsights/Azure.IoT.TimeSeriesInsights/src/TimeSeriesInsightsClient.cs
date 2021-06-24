@@ -84,7 +84,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
         /// </seealso>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret" language="csharp">
         /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
         /// // It attempts to use multiple credential types in an order until it finds a working credential.
         /// var tokenCredential = new DefaultAzureCredential();

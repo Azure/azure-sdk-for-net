@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace Azure.Identity
 {
@@ -62,11 +60,25 @@ namespace Azure.Identity
             return confClientBuilder.Build();
         }
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientAsync(
+            string[] scopes,
+            string tenantId,
+            bool async,
+            CancellationToken cancellationToken)
         {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
-            return await client.AcquireTokenForClient(scopes).WithSendX5C(_includeX5CClaimHeader).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+            var builder = client
+                .AcquireTokenForClient(scopes)
+                .WithSendX5C(_includeX5CClaimHeader);
+
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+            return await builder
+                .ExecuteAsync(async, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(
