@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Batch
     using Newtonsoft.Json;
 
     /// <summary>
+    /// The Batch Management Client.
     /// </summary>
     public partial interface IBatchManagementClient : System.IDisposable
     {
