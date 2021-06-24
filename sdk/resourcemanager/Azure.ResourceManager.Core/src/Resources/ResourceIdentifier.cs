@@ -20,6 +20,9 @@ namespace Azure.ResourceManager.Core
 
         internal const string BuiltInResourceNamespace = "Microsoft.Resources";
 
+        internal static readonly IDictionary<string, string> SubscriptionResourceWithImplicitProviderList =
+            new Dictionary<string, string>() { { "tagnames", "Microsoft.Resources" } };
+
         internal static ResourceType SubscriptionType => new ResourceType(BuiltInResourceNamespace, SubscriptionsKey);
         internal static ResourceType LocationsType =>
             new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{LocationsKey}");
@@ -130,6 +133,25 @@ namespace Azure.ResourceManager.Core
                         }
                     default:
                         {
+                            // Check for resources that has implicit(omitted) provider
+                            if (SubscriptionResourceWithImplicitProviderList.Keys.Contains(parts[0].ToLowerInvariant()))
+                            {
+                                var resourceTypeName = parts[0].ToLowerInvariant();
+                                var providerName = SubscriptionResourceWithImplicitProviderList[parts[0].ToLowerInvariant()];
+                                var providerIdentifier = new SubscriptionProviderIdentifier(subscription, providerName);
+                                if (parts.Count == 1 || parts[1] == ProvidersKey)
+                                {
+                                    return CreateSubscriptionProviderIdentifier(providerIdentifier, parts.Trim(1));
+                                }
+
+                                if (parts.Count > 1)
+                                {
+                                    return CreateSubscriptionIdentifier(
+                                        new SubscriptionResourceIdentifier(providerIdentifier, providerName, resourceTypeName, parts[1]),
+                                        parts.Skip(2).ToList());
+                                }
+                            }
+
                             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
                         }
                 }
