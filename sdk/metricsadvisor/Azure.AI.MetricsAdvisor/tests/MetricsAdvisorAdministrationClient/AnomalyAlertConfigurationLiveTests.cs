@@ -271,7 +271,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            // Configure the Metric Anomaly Alert Configurations to be used.
+            // Configure the Metric Alert Configurations to be used.
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
@@ -316,7 +316,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
             Assert.That(createdConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
 
-            // Validate the first Metric Anomaly Alert Configuration.
+            // Validate the first Metric Alert Configuration.
 
             MetricAlertConfiguration createdMetricAlertConfig0 = createdConfig.MetricAlertConfigurations[0];
 
@@ -339,7 +339,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
             Assert.That(createdMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.True);
 
-            // Validate the second Metric Anomaly Alert Configuration.
+            // Validate the second Metric Alert Configuration.
 
             MetricAlertConfiguration createdMetricAlertConfig1 = createdConfig.MetricAlertConfigurations[1];
 
@@ -373,7 +373,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            // Configure the Metric Anomaly Alert Configurations to be used.
+            // Configure the Metric Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
@@ -435,7 +435,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
             Assert.That(updatedConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
 
-            // Validate the first Metric Anomaly Alert Configuration.
+            // Validate the first Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
 
@@ -464,7 +464,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
 
-            // Validate the second Metric Anomaly Alert Configuration.
+            // Validate the second Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
 
@@ -490,7 +490,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            // Configure the Metric Anomaly Alert Configurations to be used.
+            // Configure the Metric Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
@@ -575,7 +575,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
             Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
 
-            // Validate the first Metric Anomaly Alert Configuration.
+            // Validate the first Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
 
@@ -600,7 +600,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
             Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
 
-            // Validate the second Metric Anomaly Alert Configuration.
+            // Validate the second Metric Alert Configuration.
 
             MetricAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
 
@@ -667,7 +667,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 foreach (MetricAlertConfiguration metricConfig in config.MetricAlertConfigurations)
                 {
-                    ValidateMetricAnomalyAlertConfiguration(metricConfig);
+                    ValidateMetricAlertConfiguration(metricConfig);
                 }
 
                 if (++configCount >= MaximumSamplesCount)
@@ -719,7 +719,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
-        private void ValidateMetricAnomalyAlertConfiguration(MetricAlertConfiguration configuration)
+        private void ValidateMetricAlertConfiguration(MetricAlertConfiguration configuration)
         {
             Assert.That(configuration.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
             Assert.That(configuration.AlertScope, Is.Not.Null);
