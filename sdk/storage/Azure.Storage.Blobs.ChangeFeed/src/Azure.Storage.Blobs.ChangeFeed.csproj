@@ -10,7 +10,7 @@
     <Description>
       This client library enables working with the Microsoft Azure Storage Change Feed feature to review and monitor changes to an Azure Storage account.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.ChangeFeed/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.ChangeFeed/CHANGELOG.md
-      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/BreakingChanges.txt
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.ChangeFeed/BreakingChanges.txt
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
   </PropertyGroup>
