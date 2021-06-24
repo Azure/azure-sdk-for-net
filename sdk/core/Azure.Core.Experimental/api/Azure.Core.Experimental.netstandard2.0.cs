@@ -18,15 +18,6 @@ namespace Azure
 }
 namespace Azure.Core
 {
-    public sealed partial class AzureError
-    {
-        internal AzureError() { }
-        public string? Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureError> Details { get { throw null; } }
-        public Azure.Core.ServiceInnerError? InnerError { get { throw null; } }
-        public string? Message { get { throw null; } }
-        public string? Target { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
     {
@@ -200,11 +191,20 @@ namespace Azure.Core
     {
         public ProtocolClientOptions() { }
     }
-    public sealed partial class ServiceInnerError
+    public sealed partial class ResponseError
     {
-        internal ServiceInnerError() { }
+        internal ResponseError() { }
         public string? Code { get { throw null; } }
-        public Azure.Core.ServiceInnerError? InnerError { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError> Details { get { throw null; } }
+        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
+        public string? Message { get { throw null; } }
+        public string? Target { get { throw null; } }
+    }
+    public sealed partial class ResponseInnerError
+    {
+        internal ResponseInnerError() { }
+        public string? Code { get { throw null; } }
+        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
         public string? Message { get { throw null; } }
     }
 }

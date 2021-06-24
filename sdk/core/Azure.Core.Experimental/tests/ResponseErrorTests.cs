@@ -6,18 +6,18 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class AzureErrorTests
+    public class ResponseErrorTests
     {
         [Test]
         public void CanDeserializeNull()
         {
-            Assert.Null(JsonSerializer.Deserialize<AzureError>("null"));
+            Assert.Null(JsonSerializer.Deserialize<ResponseError>("null"));
         }
 
         [Test]
         public void CanDeserializeSimple()
         {
-            var error = JsonSerializer.Deserialize<AzureError>(
+            var error = JsonSerializer.Deserialize<ResponseError>(
                 "{" +
                 "\"code\":\"BadError\"," +
                 "\"message\":\"Something wasn't awesome\"," +
@@ -40,7 +40,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanDeserializeComplex()
         {
-            var error = JsonSerializer.Deserialize<AzureError>(
+            var error = JsonSerializer.Deserialize<ResponseError>(
                 "{" +
                 "\"code\":\"BadError\"," +
                 "\"message\":\"Something wasn't awesome\"," +

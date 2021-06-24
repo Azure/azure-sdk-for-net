@@ -12,15 +12,15 @@ namespace Azure.Core
     /// Represents an error returned by an Azure Service.
     /// </summary>
     [JsonConverter(typeof(Converter))]
-    public sealed class AzureError
+    public sealed class ResponseError
     {
-        internal AzureError(string? code, string? message, ServiceInnerError? innerError, string? target, IReadOnlyList<AzureError>? details)
+        internal ResponseError(string? code, string? message, ResponseInnerError? innerError, string? target, IReadOnlyList<ResponseError>? details)
         {
             Code = code;
             Message = message;
             InnerError = innerError;
             Target = target;
-            Details = details ?? Array.Empty<AzureError>();
+            Details = details ?? Array.Empty<ResponseError>();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the inner error.
         /// </summary>
-        public ServiceInnerError? InnerError { get; }
+        public ResponseInnerError? InnerError { get; }
 
         /// <summary>
         /// Gets the error target.
@@ -46,18 +46,18 @@ namespace Azure.Core
         /// <summary>
         /// Gets the list of related errors.
         /// </summary>
-        public IReadOnlyList<AzureError> Details { get; }
+        public IReadOnlyList<ResponseError> Details { get; }
 
-        private class Converter : JsonConverter<AzureError?>
+        private class Converter : JsonConverter<ResponseError?>
         {
-            public override AzureError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ResponseError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 var element = document.RootElement;
                 return Read(element);
             }
 
-            private static AzureError? Read(JsonElement element)
+            private static ResponseError? Read(JsonElement element)
             {
                 if (element.ValueKind == JsonValueKind.Null)
                 {
@@ -82,13 +82,13 @@ namespace Azure.Core
                     target = property.GetString();
                 }
 
-                ServiceInnerError? innererror = null;
+                ResponseInnerError? innererror = null;
                 if (element.TryGetProperty("innererror", out property))
                 {
-                    innererror = ServiceInnerError.Converter.Read(property);
+                    innererror = ResponseInnerError.Converter.Read(property);
                 }
 
-                List<AzureError>? details = null;
+                List<ResponseError>? details = null;
                 if (element.TryGetProperty("details", out property) &&
                     property.ValueKind == JsonValueKind.Array)
                 {
@@ -103,10 +103,10 @@ namespace Azure.Core
                     }
                 }
 
-                return new AzureError(code, message, innererror, target, details);
+                return new ResponseError(code, message, innererror, target, details);
             }
 
-            public override void Write(Utf8JsonWriter writer, AzureError? value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ResponseError? value, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }

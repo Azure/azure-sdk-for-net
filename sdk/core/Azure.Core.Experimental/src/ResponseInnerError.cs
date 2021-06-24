@@ -11,9 +11,9 @@ namespace Azure.Core
     /// Represents an inner error.
     /// </summary>
     [JsonConverter(typeof(Converter))]
-    public sealed class ServiceInnerError
+    public sealed class ResponseInnerError
     {
-        internal ServiceInnerError(string? code, string? message, ServiceInnerError? innerError)
+        internal ResponseInnerError(string? code, string? message, ResponseInnerError? innerError)
         {
             Code = code;
             Message = message;
@@ -33,18 +33,18 @@ namespace Azure.Core
         /// <summary>
         /// Gets the inner error.
         /// </summary>
-        public ServiceInnerError? InnerError { get; }
+        public ResponseInnerError? InnerError { get; }
 
-        internal class Converter : JsonConverter<ServiceInnerError?>
+        internal class Converter : JsonConverter<ResponseInnerError?>
         {
-            public override ServiceInnerError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ResponseInnerError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 var element = document.RootElement;
                 return Read(element);
             }
 
-            internal static ServiceInnerError? Read(JsonElement element)
+            internal static ResponseInnerError? Read(JsonElement element)
             {
                 if (element.ValueKind == JsonValueKind.Null)
                 {
@@ -63,16 +63,16 @@ namespace Azure.Core
                     message = property.GetString();
                 }
 
-                ServiceInnerError? innererror = null;
+                ResponseInnerError? innererror = null;
                 if (element.TryGetProperty("innererror", out property))
                 {
                     innererror = Read(property);
                 }
 
-                return new ServiceInnerError(code, message, innererror);
+                return new ResponseInnerError(code, message, innererror);
             }
 
-            public override void Write(Utf8JsonWriter writer, ServiceInnerError? value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ResponseInnerError? value, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
