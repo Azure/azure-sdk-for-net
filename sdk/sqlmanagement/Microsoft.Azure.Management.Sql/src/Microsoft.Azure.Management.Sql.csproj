@@ -7,13 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.54.0-preview</Version>
+		<Version>1.55.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
 - Update SQL DB Databases (2021-02-01-preview), Ledger Digest Upload (2021-02-01-preview), Outbound Firewall Rules APIs (2021-02-01-preview), Long Term Retention Backups (2020-11-01-preview), Update Encryption Protector (2020-11-01-preview), SQL v5 SDK release,
 Update ResourceIdentity model.
+- Add a new version SQL DB Short Term Retention Policy API (2021-02-01-preview) with a new parameter Diff Backup Frequency. 
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

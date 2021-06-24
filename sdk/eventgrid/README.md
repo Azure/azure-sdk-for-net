@@ -8,17 +8,17 @@ The current generation of the Azure Event Grid client library uses the package n
 
 ### `Azure.Messaging.EventGrid`
 
-This package is the current generation client library and is of the Azure SDK for .NET. The source code is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid).
+This package is the current generation client library and is of the Azure SDK for .NET. The source code is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid).
 
 Use the following packages to publish and consume events from Event Grid:
 
 | Nuget Package | Reference | Samples |
 |--------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------|
-| [Azure.Messaging.EventGrid](https://www.nuget.org/packages/Azure.Messaging.EventGrid)  |  [API Reference for Azure.Messaging.EventGrid](https://docs.microsoft.com/dotnet/api/azure.messaging.eventgrid?view=azure-dotnet)  |  [Samples for Azure.Messaging.EventGrid](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples) |
+| [Azure.Messaging.EventGrid](https://www.nuget.org/packages/Azure.Messaging.EventGrid)  |  [API Reference for Azure.Messaging.EventGrid](https://docs.microsoft.com/dotnet/api/azure.messaging.eventgrid?view=azure-dotnet)  |  [Samples for Azure.Messaging.EventGrid](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid/samples) |
 
 ### `Microsoft.Azure.EventGrid`
 
-The source code for the previous generation client library, `Microsoft.Azure.EventGrid` is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Microsoft.Azure.EventGrid).
+The source code for the previous generation client library, `Microsoft.Azure.EventGrid` is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Microsoft.Azure.EventGrid).
 
 Use the following legacy packages to publish and consume events from Event Grid:
 

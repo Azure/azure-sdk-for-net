@@ -10,24 +10,24 @@ namespace Azure.Identity.Tests.Mock
 {
     internal class MockMsalConfidentialClient : MsalConfidentialClient
     {
-        internal Func<string[], AuthenticationResult> ClientFactory { get; set; }
+        internal Func<string[], string, AuthenticationResult> ClientFactory { get; set; }
         internal Func<string[], string, string, AuthenticationAccount, ValueTask<AuthenticationResult>> SilentFactory  { get; set; }
         internal Func<string[], string, string, string, AuthenticationResult> AuthcodeFactory { get; set; }
 
         public MockMsalConfidentialClient(AuthenticationResult result)
         {
-            ClientFactory = (_) => result;
+            ClientFactory = (_,_) => result;
             AuthcodeFactory = (_, _, _, _) => result;
         }
 
         public MockMsalConfidentialClient(Exception exception)
         {
-            ClientFactory = (_) => throw exception;
+            ClientFactory = (_,_) => throw exception;
             SilentFactory = (_, _, _, _) => throw exception;
             AuthcodeFactory = (_, _, _, _) => throw exception;
         }
 
-        public MockMsalConfidentialClient(Func<string[], AuthenticationResult> clientFactory)
+        public MockMsalConfidentialClient(Func<string[], string, AuthenticationResult> clientFactory)
         {
             ClientFactory = clientFactory;
         }
@@ -42,9 +42,9 @@ namespace Azure.Identity.Tests.Mock
             AuthcodeFactory = factory;
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, string tenantId, bool async, CancellationToken cancellationToken)
         {
-            return new(ClientFactory(scopes));
+            return new(ClientFactory(scopes, tenantId));
         }
 
         public override async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(

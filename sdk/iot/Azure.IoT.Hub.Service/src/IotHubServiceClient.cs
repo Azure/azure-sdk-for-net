@@ -123,7 +123,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="options">
         /// (optional) Options that allow configuration of requests sent to the IoT Hub service.
         /// </param>
-        /// <code snippet="Snippet:IotHubServiceClientInitializeWithIotHubSasCredential">
+        /// <code snippet="Snippet:IotHubServiceClientInitializeWithIotHubSasCredential" language="csharp">
         /// // Create an IotHubSasCredential type to use sas tokens to authenticate against your IoT Hub instance.
         /// // The default lifespan of the sas token is 30 minutes, and it is set to be renewed when at 15% or less of its lifespan.
         /// var credential = new IotHubSasCredential(options.IotHubSharedAccessPolicy, options.IotHubSharedAccessKey);

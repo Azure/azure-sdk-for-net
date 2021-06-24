@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using Azure.Core.Amqp;
 using Azure.Messaging.EventHubs.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -184,7 +185,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var eventData = new EventData(
-                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
                 properties: propertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value));
 
             using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
@@ -217,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                          long? pendingGroupId,
                                                                          short? pendingOwnerLevel)
         {
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 });
+            var eventData = new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 }));
             eventData.PendingPublishSequenceNumber = pendingSequenceNumber;
             eventData.PendingProducerGroupId = pendingGroupId;
             eventData.PendingProducerOwnerLevel = pendingOwnerLevel;
@@ -270,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                    Func<object, object> propertyValueAccessor)
         {
             var eventData = new EventData(
-                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
                 properties: new Dictionary<string, object> { { "TestProp", propertyValueRaw } });
 
             using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
@@ -299,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                 byte[] contents)
         {
             var eventData = new EventData(
-                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
                 properties: new Dictionary<string, object> { { "TestProp", propertyStream } });
 
             using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
@@ -325,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateMessageFromEventFailsForUnknownApplicationPropertyType()
         {
             var eventData = new EventData(
-                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
                 properties: new Dictionary<string, object> { { "TestProperty", new RankException() } });
 
             Assert.That(() => new AmqpMessageConverter().CreateMessageFromEvent(eventData), Throws.InstanceOf<SerializationException>());
@@ -380,7 +381,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
 
-            Assert.That(GetEventDataPropertiesBackingStore(eventData), Is.Null, "Translation should not have cause the properties dictionary to be instantiated.");
+            Assert.That(eventData.GetRawAmqpMessage().HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "Translation should not have cause the properties dictionary to be instantiated.");
         }
 
         /// <summary>
@@ -405,7 +406,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CreateBatchFromEventsAllowsNoPartitionKey(string partitionKey)
         {
-            EventData[] events = new[] { new EventData(new byte[] { 0x11, 0x22, 0x33 }) };
+            EventData[] events = new[] { new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 })) };
             Assert.That(() => new AmqpMessageConverter().CreateBatchFromEvents(events, partitionKey), Throws.Nothing);
         }
 
@@ -420,7 +421,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("a-key-that-is-for-partitions")]
         public void CreateBatchFromEventsWithOneMessagePopulatesEnvelopeProperties(string partitionKey)
         {
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 });
+            var eventData = new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 }));
             var converter = new AmqpMessageConverter();
 
             using AmqpMessage message = converter.CreateBatchFromEvents(new[] { eventData }, partitionKey);
@@ -450,7 +451,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             EventData[] events = new[]
             {
-                new EventData(new byte[] { 0x11, 0x22, 0x33 }),
+                new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 })),
                 new EventData(new byte[] { 0x44, 0x55, 0x66 })
             };
 
@@ -476,7 +477,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateBatchFromEventWithOneEventUsesItForTheEnvelope()
         {
-            var body = new byte[] { 0x11, 0x22, 0x33 };
+            var body = new BinaryData(new byte[] { 0x11, 0x22, 0x33 });
             var property = 65;
 
             var eventData = new EventData(
@@ -507,11 +508,11 @@ namespace Azure.Messaging.EventHubs.Tests
             using var secondEventStream = new MemoryStream(new byte[] { 0x73, 0x93 });
 
             var firstEvent = new EventData(
-                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
                 properties: new Dictionary<string, object> { { nameof(MemoryStream), firstEventStream } });
 
             var secondEvent = new EventData(
-                eventBody: new byte[] { 0x44, 0x55, 0x66 },
+                eventBody: new BinaryData(new byte[] { 0x44, 0x55, 0x66 }),
                 properties: new Dictionary<string, object> { { nameof(MemoryStream), secondEventStream } });
 
             EventData[] events = new[] { firstEvent, secondEvent };
@@ -554,7 +555,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchFromEventsWithMultipleEventsAssignsThePartitionKeyToBodyMessages()
         {
             var partitionKey = "sOmE-kEY";
-            var firstEvent = new EventData(new byte[] { 0x11, 0x22, 0x33 });
+            var firstEvent = new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 }));
             var secondEvent = new EventData(new byte[] { 0x44, 0x55, 0x66 });
             EventData[] events = new[] { firstEvent, secondEvent };
             var converter = new AmqpMessageConverter();
@@ -620,7 +621,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("a-key-that-is-for-partitions")]
         public void CreateBatchFromMessagesWithOneMessagePopulatesEnvelopeProperties(string partitionKey)
         {
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 });
+            var eventData = new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 }));
             var converter = new AmqpMessageConverter();
 
             using AmqpMessage source = converter.CreateMessageFromEvent(eventData);
@@ -650,7 +651,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchFromMessagesWithMultipleEventsMessagePopulatesEnvelopeProperties(string partitionKey)
         {
             var converter = new AmqpMessageConverter();
-            using AmqpMessage first = converter.CreateMessageFromEvent(new EventData(new byte[] { 0x11, 0x22, 0x33 }));
+            using AmqpMessage first = converter.CreateMessageFromEvent(new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 })));
             using AmqpMessage second = converter.CreateMessageFromEvent(new EventData(new byte[] { 0x44, 0x55, 0x66 }));
             AmqpMessage[] source = new[] { first, second };
 
@@ -677,7 +678,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchFromMessagesWithOneEventUsesItForTheEnvelope()
         {
             var converter = new AmqpMessageConverter();
-            var body = new byte[] { 0x11, 0x22, 0x33 };
+            var body = new BinaryData(new byte[] { 0x11, 0x22, 0x33 });
             var property = 65;
 
             var eventData = new EventData(
@@ -711,11 +712,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var converter = new AmqpMessageConverter();
 
             var firstEvent = new EventData(
-                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
                 properties: new Dictionary<string, object> { { nameof(MemoryStream), firstEventStream } });
 
             var secondEvent = new EventData(
-                eventBody: new byte[] { 0x44, 0x55, 0x66 },
+                eventBody: new BinaryData(new byte[] { 0x44, 0x55, 0x66 }),
                 properties: new Dictionary<string, object> { { nameof(MemoryStream), secondEventStream } });
 
             using AmqpMessage firstMessage = converter.CreateMessageFromEvent(firstEvent);
@@ -759,7 +760,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchFromMessagesWithMultipleEventsAssignsThePartitionKeyToBodyMessages()
         {
             var partitionKey = "sOmE-kEY";
-            var firstEvent = new EventData(new byte[] { 0x11, 0x22, 0x33 });
+            var firstEvent = new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 }));
             var secondEvent = new EventData(new byte[] { 0x44, 0x55, 0x66 });
             var converter = new AmqpMessageConverter();
 
@@ -1284,8 +1285,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(GetEventDataPropertiesBackingStore(eventData), Is.Null, "The event should have a null properties dictionary.");
-            Assert.That(eventData.SystemProperties, Is.SameAs(GetEventDataEmptySystemProperties()), "The event should have the default empty system properties.");
+            Assert.That(eventData.GetRawAmqpMessage().HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "The event should not have application properties by default.");
+            Assert.That(GetEventDataSystemPropertiesBackingStore(eventData), Is.Null, "The event should have a null system properties dictionary.");
         }
 
         /// <summary>
@@ -1297,7 +1298,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void AnEventCanBeTranslatedToItself()
         {
             var sourceEvent = new EventData(
-                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
                 properties: new Dictionary<string, object> { { "Test", 1234 } });
 
             var converter = new AmqpMessageConverter();
@@ -1600,31 +1601,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Retrieves the empty system properties dictionary from the Event Data
-        ///   type, using its private field.
-        /// </summary>
-        ///
-        /// <returns>The empty dictionary used as the default for the <see cref="EventData.SystemProperties" /> set.</returns>
-        ///
-        private static IReadOnlyDictionary<string, object> GetEventDataEmptySystemProperties() =>
-            (IReadOnlyDictionary<string, object>)
-                typeof(EventData)
-                    .GetField("EmptySystemProperties", BindingFlags.Static | BindingFlags.NonPublic)
-                    .GetValue(null);
-
-        /// <summary>
-        ///   Retrieves the backing store for the Properties dictionary from the Event Data
+        ///   Retrieves the backing store for the System Properties dictionary from the Event Data
         ///   type, using its private field.
         /// </summary>
         ///
         /// <param name="eventData">The instance to read the field from.</param>
         ///
-        /// <returns>The backing store for the <see cref="EventData.Properties" /> set.</returns>
+        /// <returns>The backing store for the <see cref="EventData.SystemProperties" /> set.</returns>
         ///
-        private static IReadOnlyDictionary<string, object> GetEventDataPropertiesBackingStore(EventData eventData) =>
+        private static IReadOnlyDictionary<string, object> GetEventDataSystemPropertiesBackingStore(EventData eventData) =>
             (IReadOnlyDictionary<string, object>)
                 typeof(EventData)
-                    .GetField("_properties", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetField("_systemProperties", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(eventData);
     }
 }
