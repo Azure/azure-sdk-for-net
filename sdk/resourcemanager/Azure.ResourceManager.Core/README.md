@@ -12,20 +12,11 @@ Install the Azure Resources management core library for .NET with [NuGet]<---(ht
 Install-Package Azure.ResourceManager.Core -Version 1.0.0-beta.1
 ```
 
-### Prerequisites
-
-You'll need the following values to authenticate to Azure:
-
--   **Subscription ID**
--   **Client ID**
--   **Client Secret**
--   **Tenant ID**
-
-Detailed instructions on getting and setting these values is found in the [Prerequisites guide]<---(docs/Prerequisites.md)-->. 
-
 ### Authenticate the Client
 
-Once the environment is set up, create an authenticated client. Our default option is to use `DefaultAzureCredential` and create an `AzureResourceManagerClient`. Since all management APIs go through the same endpoint, you no longer need to create a new client for every resource type.
+The default option to create an authenticated client is to use `DefaultAzureCredential`, and there are several ways to authenticate with it. One option is using the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli), or via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio). More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+
+Since all management APIs go through the same endpoint, in order to interact with Resources, only one top-level  `AzureResourceManagerClient` has to be created.
 
 To authenticate to Azure and create an ARM client, do the following:
 
@@ -39,9 +30,7 @@ To authenticate to Azure and create an ARM client, do the following:
     ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
-From this code snippet, we showed that in order to interact with Resources, we need to create the top-level client first **AzureResourceManagerClient**
-
-More information and different authentication approaches using Azure Identity can be found in [this document]<---(https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)-->.
+Additional documentation for the `Azure.Identity.DefaultAzureCredential` Class can be found in [this document](https://docs.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 ### Understanding Azure Resource Hierarchy
