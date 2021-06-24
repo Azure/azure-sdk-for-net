@@ -30,7 +30,7 @@ To authenticate to Azure and create an ARM client, do the following:
     ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
-Additional documentation for the `Azure.Identity.DefaultAzureCredential` Class can be found in [this document](https://docs.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential).
+Additional documentation for the `Azure.Identity.DefaultAzureCredential` Class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 ### Understanding Azure Resource Hierarchy
