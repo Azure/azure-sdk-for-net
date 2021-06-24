@@ -12,21 +12,21 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of Tags and their operations.
     /// </summary>
-    public class PreDefinedTagsContainer : ContainerBase
+    public class PreDefinedTagContainer : ContainerBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreDefinedTagsContainer"/> class for mocking.
+        /// Initializes a new instance of the <see cref="PreDefinedTagContainer"/> class for mocking.
         /// </summary>
-        protected PreDefinedTagsContainer()
+        protected PreDefinedTagContainer()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreDefinedTagsContainer"/> class.
+        /// Initializes a new instance of the <see cref="PreDefinedTagContainer"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="subscription"></param>
-        internal PreDefinedTagsContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription)
+        internal PreDefinedTagContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription)
             : base(clientContext, new SubscriptionResourceIdentifier(subscription))
         {
             RestClient = new TagsRestOperations(Diagnostics, Pipeline, subscription.SubscriptionId, BaseUri);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PreDefinedTag>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PreDefinedTagsContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PreDefinedTag> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PreDefinedTagsContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Core
             if (string.IsNullOrWhiteSpace(tagName))
                 throw new ArgumentException("tagName cannot be null or a whitespace.", nameof(tagName));
 
-            using var scope = Diagnostics.CreateScope("PreDefinedTagsContainer.StartCreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagContainer.StartCreateOrUpdate");
             scope.Start();
 
             try
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Core
             if (string.IsNullOrWhiteSpace(tagName))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(tagName));
 
-            using var scope = Diagnostics.CreateScope("PreDefinedTagsContainer.StartCreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("PreDefinedTagContainer.StartCreateOrUpdate");
             scope.Start();
 
             try
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Core
         {
             async Task<Page<PreDefinedTag>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagContainer.List");
                 scope0.Start();
                 try
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Core
             }
             async Task<Page<PreDefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagContainer.List");
                 scope0.Start();
                 try
                 {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Core
         {
             Page<PreDefinedTag> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagContainer.List");
                 scope0.Start();
                 try
                 {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Core
             }
             Page<PreDefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PreDefinedTagsContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PreDefinedTagContainer.List");
                 scope0.Start();
                 try
                 {

@@ -6,7 +6,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a Tags along with the instance operations that can be performed on it.
     /// </summary>
-    public class PreDefinedTag : PreDefinedTagsOperations
+    public class PreDefinedTag : PreDefinedTagOperations
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PreDefinedTag"/> class for mocking.
