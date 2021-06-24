@@ -9,7 +9,8 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    ///
+    /// Creates a scope which will be used by <see cref="OnBehalfOfCredential"/> to request tokens on behalf of the user's token used to initialize
+    /// the <see cref="UserAssertionScope"/> instance.
     /// </summary>
     public class UserAssertionScope : IDisposable
     {
@@ -22,9 +23,9 @@ namespace Azure.Identity
         internal static UserAssertionScope Current => _currentAsyncLocal.Value;
 
         /// <summary>
-        ///
+        /// Initializes a new instance of <see cref="UserAssertionScope"/> using the supplied access token.
         /// </summary>
-        /// <param name="accessToken"></param>
+        /// <param name="accessToken">The access token that will be used bu <see cref="OnBehalfOfCredential"/> when requesting On-Behalf-Of tokens.</param>
         public UserAssertionScope(string accessToken)
         {
             UserAssertion = new UserAssertion(accessToken);
@@ -32,9 +33,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of <see cref="UserAssertionScope"/> using the supplied <paramref name="accessToken"/>.
         /// </summary>
-        /// <param name="accessToken"></param>
+        /// <param name="accessToken">The <see cref="AccessToken"/> that will be used bu <see cref="OnBehalfOfCredential"/> when requesting On-Behalf-Of tokens.</param>
         public UserAssertionScope(AccessToken accessToken)
         {
             UserAssertion = new UserAssertion(accessToken.Token);
