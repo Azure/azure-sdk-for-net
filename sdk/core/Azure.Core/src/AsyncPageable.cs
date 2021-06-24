@@ -15,7 +15,7 @@ namespace Azure
     /// <typeparam name="T">The type of the values.</typeparam>
     /// <example>
     /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:
-    /// <code snippet="Snippet:AsyncPageable">
+    /// <code snippet="Snippet:AsyncPageable" language="csharp">
     /// // call a service method, which returns AsyncPageable&lt;T&gt;
     /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
     ///
@@ -25,7 +25,7 @@ namespace Azure
     /// }
     /// </code>
     /// or using a while loop:
-    /// <code snippet="Snippet:AsyncPageableLoop">
+    /// <code snippet="Snippet:AsyncPageableLoop" language="csharp">
     /// // call a service method, which returns AsyncPageable&lt;T&gt;
     /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
     ///

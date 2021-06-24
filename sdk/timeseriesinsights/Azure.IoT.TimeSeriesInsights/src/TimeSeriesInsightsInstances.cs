@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsGetAllInstances">
+        /// <code snippet="Snippet:TimeSeriesInsightsGetAllInstances" language="csharp">
         /// // Get all instances for the Time Series Insights environment
         /// AsyncPageable&lt;TimeSeriesInstance&gt; tsiInstances = instancesClient.GetAsync();
         /// await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
@@ -281,7 +281,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsGetnstancesById">
+        /// <code snippet="Snippet:TimeSeriesInsightsGetnstancesById" language="csharp">
         /// // Get Time Series Insights instances by Id
         /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
         /// var timeSeriesIds = new List&lt;TimeSeriesId&gt;
@@ -413,7 +413,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateInstance">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateInstance" language="csharp">
         /// // Create a Time Series Instance object with the default Time Series Insights type Id.
         /// // The default type Id can be obtained programmatically by using the ModelSettings client.
         /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
@@ -557,7 +557,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsReplaceInstance">
+        /// <code snippet="Snippet:TimeSeriesInsightsReplaceInstance" language="csharp">
         /// // Get Time Series Insights instances by Id
         /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
         /// var instanceIdsToGet = new List&lt;TimeSeriesId&gt;
@@ -699,7 +699,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstanceById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstanceById" language="csharp">
         /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
         /// var instancesToDelete = new List&lt;TimeSeriesId&gt;
         /// {

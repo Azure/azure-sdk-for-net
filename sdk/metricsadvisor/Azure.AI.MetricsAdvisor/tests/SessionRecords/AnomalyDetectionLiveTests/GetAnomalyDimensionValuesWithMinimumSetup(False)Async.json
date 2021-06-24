@@ -5,11 +5,14 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "127",
+        "Content-Length": "92",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2d6128328641d44194a6589fcf708c2f-9a1b673782f90449-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210604.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-0362dc9ef20a3a4aa0271471d1eccef7-4c5c9c1677814c44-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210617.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "1b3201153b6a0425b654c9297dbf44bb",
         "x-ms-return-client-request-id": "true"
@@ -17,21 +20,18 @@
       "RequestBody": {
         "startTime": "2020-10-01T00:00:00Z",
         "endTime": "2020-10-31T00:00:00Z",
-        "dimensionName": "city",
-        "dimensionFilter": {
-          "dimension": {}
-        }
+        "dimensionName": "city"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "06e8665a-80fb-4e85-b2fc-4475b1d9fdb6",
+        "apim-request-id": "bd7e859d-99f1-41f9-aa90-673f47ac7fc7",
         "Content-Length": "675",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 04 Jun 2021 10:27:54 GMT",
+        "Date": "Thu, 17 Jun 2021 21:03:24 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "223",
-        "x-request-id": "06e8665a-80fb-4e85-b2fc-4475b1d9fdb6"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5309",
+        "X-Request-ID": "bd7e859d-99f1-41f9-aa90-673f47ac7fc7"
       },
       "ResponseBody": {
         "value": [

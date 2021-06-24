@@ -41,7 +41,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesHierarchy}"/> of Time Series hierarchies with the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllHierarchies">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllHierarchies" language="csharp">
         /// // Get all Time Series hierarchies in the environment
         /// AsyncPageable&lt;TimeSeriesHierarchy&gt; getAllHierarchies = hierarchiesClient.GetAsync();
         /// await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
@@ -285,7 +285,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetHierarchiesById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetHierarchiesById" language="csharp">
         /// var tsiHierarchyIds = new List&lt;string&gt;
         /// {
         ///     &quot;sampleHierarchyId&quot;
@@ -413,7 +413,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies" language="csharp">
         /// TimeSeriesInsightsHierarchies hierarchiesClient = client.GetHierarchiesClient();
         ///
         /// var hierarchySource = new TimeSeriesHierarchySource();
@@ -651,7 +651,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById" language="csharp">
         /// // Delete Time Series hierarchies with Ids
         /// var tsiHierarchyIdsToDelete = new List&lt;string&gt;
         /// {

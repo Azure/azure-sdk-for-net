@@ -5,11 +5,12 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace SnippetGenerator
 {
-    internal class Snippet
+    public class Snippet
     {
         public string Name { get; }
         public SourceText Text { get; }
         public string FilePath { get; }
+        public bool IsUsed { get; set; }
 
         public Snippet(string name, SourceText text, string filePath)
         {
