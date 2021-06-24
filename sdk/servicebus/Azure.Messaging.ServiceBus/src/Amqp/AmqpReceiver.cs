@@ -77,6 +77,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private const int SizeOfGuidInBytes = 16;
 
+        private static readonly ArraySegment<byte> s_emptyArraySegment = new(Array.Empty<byte>());
+
         /// <summary>
         /// Gets the sequence number of the last peeked message.
         /// </summary>
@@ -332,9 +334,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // This would occur when the processor is stopped or closed by the user.
                 if (_isProcessor)
                 {
-                    registration = cancellationToken.Register(static state =>
+                    registration = cancellationToken.Register(state =>
                     {
                         var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
+
+                        // Since we are cancelling the receive, reset the credits to 0. It is possible
+                        // that a message can still be delivered after setting the credits to 0, if it is already in flight.
+                        // Unfortunately, simply delaying for a short time after resetting the link credit to 0 won't work,
+                        // as the transfer will not be accepted by the client if the link credit is 0.
+                        link.IssueCredit(
+                            credit: 0,
+                            // drain value doesn't matter since credits are being set to 0
+                            drain: true,
+                            txnId: s_emptyArraySegment);
                         tcs.TrySetCanceled();
                     }, receiveMessagesCompletionSource, useSynchronizationContext: false);
                 }
