@@ -503,7 +503,7 @@ namespace Azure.Monitor.Query.Tests
             var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
 
             Assert.AreEqual("queryId", exception.ParamName);
-            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
+            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
         }
 
         [RecordedTest]
