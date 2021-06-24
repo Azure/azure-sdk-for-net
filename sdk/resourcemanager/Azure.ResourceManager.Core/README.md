@@ -104,10 +104,9 @@ Subscription subscription = armClient.DefaultSubscription;
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
-// With the container we can create a new resource group with an specifc name and location
-LocationData location = LocationData.WestUS2;
+// With the container we can create a new resource group with an specifc name
 string rgName = "myRgName";
-ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateAsync(rgName);
+ResourceGroup resourceGroup = await rgContainer.CreateAsync(rgName);
 ```
 
 ### List all resource groups
