@@ -3,6 +3,7 @@
 
 using System.Net;
 using System.Net.Http;
+using Azure.Messaging.WebPubSub;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
