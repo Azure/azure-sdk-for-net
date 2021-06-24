@@ -11,6 +11,7 @@
 - Added support for Parquet as an input format in BlockBlobClient.Query().
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
 - Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and Arguement Exception will be thrown.
+    - This feature can be disabled with the environment variable "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION" or the App Context switch "Azure.Storage.DisableRequestConditionsValidation".
 
 ## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
