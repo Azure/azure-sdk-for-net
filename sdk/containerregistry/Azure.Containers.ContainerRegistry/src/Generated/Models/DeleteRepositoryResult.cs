@@ -11,26 +11,17 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Deleted repository. </summary>
-    public partial class DeleteRepositoryResult
+    internal partial class DeleteRepositoryResult
     {
         /// <summary> Initializes a new instance of DeleteRepositoryResult. </summary>
         internal DeleteRepositoryResult()
         {
-            DeletedRegistryArtifactDigests = new ChangeTrackingList<string>();
+            DeletedManifests = new ChangeTrackingList<string>();
             DeletedTags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DeleteRepositoryResult. </summary>
-        /// <param name="deletedRegistryArtifactDigests"> SHA of the deleted image. </param>
-        /// <param name="deletedTags"> Tag of the deleted image. </param>
-        internal DeleteRepositoryResult(IReadOnlyList<string> deletedRegistryArtifactDigests, IReadOnlyList<string> deletedTags)
-        {
-            DeletedRegistryArtifactDigests = deletedRegistryArtifactDigests;
-            DeletedTags = deletedTags;
-        }
-
         /// <summary> SHA of the deleted image. </summary>
-        public IReadOnlyList<string> DeletedRegistryArtifactDigests { get; }
+        public IReadOnlyList<string> DeletedManifests { get; }
         /// <summary> Tag of the deleted image. </summary>
         public IReadOnlyList<string> DeletedTags { get; }
     }

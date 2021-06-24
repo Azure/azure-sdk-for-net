@@ -12,6 +12,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
@@ -167,8 +168,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string snapshot = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?snapshot={snapshot}");
 
             // Act
             BlockBlobClient blockBlobClient = new BlockBlobClient(uri);
@@ -196,8 +197,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string versionId = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?versionid={versionId}");
 
             // Act
             BlockBlobClient blockBlobClient = new BlockBlobClient(uri);
@@ -1070,7 +1071,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task CommitBlockListAsync_Headers()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
@@ -1856,7 +1857,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task UploadAsync_Headers()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
@@ -2833,7 +2834,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2890,7 +2891,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_Error()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2906,7 +2907,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_OverwiteSourceBlobProperties()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -3400,6 +3401,45 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, overwrite: false),
                 e => Assert.AreEqual(BlobErrorCode.BlobAlreadyExists.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task WithCustomerProvidedKey()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlockBlobClient cpkBlob = InstrumentClient(test.Container.GetBlockBlobClient(blobName).WithCustomerProvidedKey(customerProvidedKey));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            Stream stream = new MemoryStream(data);
+            await cpkBlob.UploadAsync(stream);
+            BlockBlobClient noCpkBlob = InstrumentClient(cpkBlob.WithCustomerProvidedKey(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noCpkBlob.DownloadAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task WithEncryptionScope()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            string encryptionScope = TestConfigDefault.EncryptionScope;
+            BlockBlobClient encryptionScopeBlob = InstrumentClient(test.Container.GetBlockBlobClient(blobName).WithEncryptionScope(encryptionScope));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            Stream stream = new MemoryStream(data);
+            await encryptionScopeBlob.UploadAsync(stream);
+            BlockBlobClient noEncryptionScopeBlobClient = InstrumentClient(encryptionScopeBlob.WithEncryptionScope(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noEncryptionScopeBlobClient.SetMetadataAsync(BuildMetadata()),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

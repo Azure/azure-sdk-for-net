@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> An answer is a text passage extracted from the contents of the most relevant documents that matched the query. Answers are extracted from the top search results. Answer candidates are scored and the top answers are selected. </summary>
-    internal partial class AnswerResult : IReadOnlyDictionary<string, object>
+    public partial class AnswerResult : IReadOnlyDictionary<string, object>
     {
         /// <summary> Initializes a new instance of AnswerResult. </summary>
         internal AnswerResult()

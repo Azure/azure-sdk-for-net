@@ -736,5 +736,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("IdempotentAlreadyPublished", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The ListCheckpointsAsync method has been superseded by GetCheckpointAsync and should no longer be called..
+        /// </summary>
+        internal static string ListCheckpointsAsyncObsolete
+        {
+            get
+            {
+                return ResourceManager.GetString("ListCheckpointsAsyncObsolete", resourceCulture);
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ pr:
     include:
     - master
     - '*-preview'
+    - 'feature/cplat*'
   paths:
     include:
     - Directory.Build.props
@@ -63,6 +64,7 @@ pr:
     - sdk/datalake-analytics/Microsoft.Azure.Management.DataLake.Analytics
     - sdk/datalake-store/Microsoft.Azure.Management.DataLake.Store
     - sdk/datamigration/Microsoft.Azure.Management.DataMigration
+    - sdk/dataprotection/Microsoft.Azure.Management.DataProtection
     - sdk/datashare/Microsoft.Azure.Management.DataShare
     - sdk/deploymentmanager/Microsoft.Azure.Management.DeploymentManager
     - sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices
@@ -72,6 +74,7 @@ pr:
     - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
+    - sdk/elastic/Microsoft.Azure.Management.Elastic
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid
     - sdk/eventhub/Microsoft.Azure.Management.EventHub
@@ -93,6 +96,7 @@ pr:
     - sdk/labservices/Microsoft.Azure.Management.LabServices
     - sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices
     - sdk/logic/Microsoft.Azure.Management.Logic
+    - sdk/logz/Microsoft.Azure.Management.Logz
     - sdk/machinelearning/Microsoft.Azure.Management.MachineLearning
     - sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute
     - sdk/machinelearningservices/Microsoft.Azure.Management.MachineLearningServices

@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -252,7 +252,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: credential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -340,7 +340,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: null,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -409,24 +409,19 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new ClientDiagnostics(options),
+                    clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
                     encryptionScope: null),
                 clientSideEncryption: null);
         }
 
-        private ContainerRestClient BuildContainerRestClient(Uri uri)
+        private ContainerRestClient BuildContainerRestClient(Uri containerUri)
         {
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(uri);
-            string containerName = uriBuilder.BlobContainerName;
-            uriBuilder.BlobContainerName = null;
-
             return new ContainerRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToString(),
-                containerName: containerName,
+                url: containerUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctor

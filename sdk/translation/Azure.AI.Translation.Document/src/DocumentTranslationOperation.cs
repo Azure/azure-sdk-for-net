@@ -28,47 +28,47 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// The date time when the translation operation was created.
         /// </summary>
-        public DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// The date time when the translation operation's status was last updated.
         /// </summary>
-        public DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// The current status of the translation operation.
         /// </summary>
-        public TranslationStatus Status => _status;
+        public virtual TranslationStatus Status => _status;
 
         /// <summary>
         /// Total number of expected translated documents.
         /// </summary>
-        public int DocumentsTotal => _documentsTotal;
+        public virtual int DocumentsTotal => _documentsTotal;
 
         /// <summary>
         /// Number of documents failed to translate.
         /// </summary>
-        public int DocumentsFailed => _documentsFailed;
+        public virtual int DocumentsFailed => _documentsFailed;
 
         /// <summary>
         /// Number of documents translated successfully.
         /// </summary>
-        public int DocumentsSucceeded => _documentsSucceeded;
+        public virtual int DocumentsSucceeded => _documentsSucceeded;
 
         /// <summary>
         /// Number of documents in progress.
         /// </summary>
-        public int DocumentsInProgress => _documentsInProgress;
+        public virtual int DocumentsInProgress => _documentsInProgress;
 
         /// <summary>
         /// Number of documents in queue for translation.
         /// </summary>
-        public int DocumentsNotStarted => _documentsNotStarted;
+        public virtual int DocumentsNotStarted => _documentsNotStarted;
 
         /// <summary>
         /// Number of documents cancelled.
         /// </summary>
-        public int DocumentsCancelled => _documentsCancelled;
+        public virtual int DocumentsCancelled => _documentsCancelled;
 
         private int _documentsTotal;
         private int _documentsFailed;
@@ -233,7 +233,7 @@ namespace Azure.AI.Translation.Document
                 }
                 else
                 {
-                    var response = await _serviceClient.GetOperationDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     _hasValue = true;
                     async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
@@ -241,7 +241,7 @@ namespace Azure.AI.Translation.Document
                         // TODO: diagnostics scope?
                         try
                         {
-                            Response<DocumentStatusResponse> response = await _serviceClient.GetOperationDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                            var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
 
                             return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                         }
@@ -273,8 +273,8 @@ namespace Azure.AI.Translation.Document
                 try
                 {
                     var update = async
-                        ? await _serviceClient.GetOperationStatusAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                        : _serviceClient.GetOperationStatus(new Guid(Id), cancellationToken);
+                        ? await _serviceClient.GetTranslationStatusAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetTranslationStatus(new Guid(Id), cancellationToken);
 
                     _response = update.GetRawResponse();
                     _retryAfterHeaderValue = update.Headers.RetryAfter;
@@ -369,7 +369,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = _serviceClient.GetOperationDocumentsStatus(new Guid(Id), cancellationToken: cancellationToken);
+                    var response = _serviceClient.GetDocumentsStatus(new Guid(Id), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -386,7 +386,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = _serviceClient.GetOperationDocumentsStatusNextPage(nextLink, new Guid(Id), cancellationToken: cancellationToken);
+                    var response = _serviceClient.GetDocumentsStatusNextPage(nextLink, new Guid(Id), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -412,7 +412,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = await _serviceClient.GetOperationDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -429,7 +429,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = await _serviceClient.GetOperationDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -453,7 +453,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                Response<TranslationStatusResult> response = _serviceClient.CancelOperation(new Guid(Id), cancellationToken);
+                Response<TranslationStatusResult> response = _serviceClient.CancelTranslation(new Guid(Id), cancellationToken);
                 _response = response.GetRawResponse();
             }
             catch (Exception e)
@@ -474,7 +474,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                Response<TranslationStatusResult> response = await _serviceClient.CancelOperationAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
+                Response<TranslationStatusResult> response = await _serviceClient.CancelTranslationAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
                 _response = response.GetRawResponse();
             }
             catch (Exception e)

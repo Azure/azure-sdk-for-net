@@ -14,7 +14,8 @@ namespace NetApp.Tests.Helpers
         private const string remoteSuffix = "-R";
         //public const string vnet = "sdknettestqa2vnet464";
         public const string vnet = "sdknettestqa2vnet464";
-        public const string backupVnet = "sdknettestqa2vnet464euap";
+        //public const string backupVnet = "sdknettestqa2vnet464euap";
+        public const string backupVnet = "sdknettestqa2vnet464southcentralus";
         public const string repVnet = "sdktestqa2vnet464";
         //public const string remoteVnet = repVnet + remoteSuffix;
         public const string remoteVnet = "sdktestqa2vnet464east-R";
@@ -24,10 +25,10 @@ namespace NetApp.Tests.Helpers
         public const string location = "westus2";
         //public const string location = "eastus2euap";
         //public const string remoteLocation = "southcentralus";
-        public const string remoteLocation = "eastus";
-        //public const string backupLocation = "westus2";
-        //public const string backupLocation = "westus2"; //"westusstage";
-        public const string backupLocation = "eastus2euap"; //"westusstage";
+        public const string remoteLocation = "eastus";                        
+        //public const string backupLocation = "eastus2euap"; //"westusstage";
+        public const string backupLocation = "southcentralusstage";        
+
         public const string resourceGroup = "sdk-net-test-qa2";
         //public const string resourceGroup = "ab_sdk_test_rg";
         public const string repResourceGroup = "sdk-test-qa2";
@@ -43,8 +44,10 @@ namespace NetApp.Tests.Helpers
         public const string volumeName1 = "sdk-net-tests-vol-2105";
         
         public const string volumeBackupAccountName1 = "sdk-net-tests-acc-213v";
+        public const string backupName1 = backupVolumeName1+"-b1";
+        public const string backupName2 = backupVolumeName1 + "-b2";
         public const string backupVolumeName1 = "sdk-net-tests-vol-2109";
-
+        
         public const string volumeName1ReplSource = "sdk-net-tests-vol-1001b-source";        
         public const string volumeName1ReplDest = volumeName1ReplSource + remoteSuffix+"dest";
         public const string volumeName2 = "sdk-net-tests-vol-1001";
@@ -158,7 +161,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null)
+        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "")
         {
             if (!volumeOnly)
             {
@@ -175,7 +178,8 @@ namespace NetApp.Tests.Helpers
                 SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                 Tags = tags,
                 ExportPolicy = exportPolicy,
-                SnapshotId = snapshotId,                
+                SnapshotId = snapshotId, 
+                SecurityStyle = "unix"
             };
             if (snapshotPolicyId != null)
             {

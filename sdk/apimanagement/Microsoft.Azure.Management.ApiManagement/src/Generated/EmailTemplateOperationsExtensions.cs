@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class EmailTemplateOperationsExtensions
     {
             /// <summary>
-            /// Lists a collection of properties defined within a service instance.
+            /// Gets all email templates
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='filter'>
-            /// |   Field     |     Usage     |     Supported operators     |     Supported
-            /// functions
+            /// |     Field     |     Usage     |     Supported operators     |
+            /// Supported functions
             /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
             /// name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
-            /// endswith | &lt;/br&gt;
+            /// endswith |&lt;/br&gt;
             /// </param>
             /// <param name='top'>
             /// Number of records to return.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of properties defined within a service instance.
+            /// Gets all email templates
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,11 +64,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='filter'>
-            /// |   Field     |     Usage     |     Supported operators     |     Supported
-            /// functions
+            /// |     Field     |     Usage     |     Supported operators     |
+            /// Supported functions
             /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
             /// name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
-            /// endswith | &lt;/br&gt;
+            /// endswith |&lt;/br&gt;
             /// </param>
             /// <param name='top'>
             /// Number of records to return.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific Email Template.
+            /// Updates API Management email template
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -312,21 +312,21 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'passwordResetByAdminNotificationMessage',
             /// 'rejectDeveloperNotificationMessage', 'requestDeveloperNotificationMessage'
             /// </param>
-            /// <param name='parameters'>
-            /// Update parameters.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters, string ifMatch)
+            /// <param name='parameters'>
+            /// Update parameters.
+            /// </param>
+            public static EmailTemplateContract Update(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, string ifMatch, EmailTemplateUpdateParameters parameters)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, templateName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, templateName, ifMatch, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates the specific Email Template.
+            /// Updates API Management email template
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -348,20 +348,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'passwordResetByAdminNotificationMessage',
             /// 'rejectDeveloperNotificationMessage', 'requestDeveloperNotificationMessage'
             /// </param>
-            /// <param name='parameters'>
-            /// Update parameters.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
             /// update.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EmailTemplateContract> UpdateAsync(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, string ifMatch, EmailTemplateUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, templateName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, templateName, ifMatch, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -436,7 +439,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of properties defined within a service instance.
+            /// Gets all email templates
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -450,7 +453,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of properties defined within a service instance.
+            /// Gets all email templates
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

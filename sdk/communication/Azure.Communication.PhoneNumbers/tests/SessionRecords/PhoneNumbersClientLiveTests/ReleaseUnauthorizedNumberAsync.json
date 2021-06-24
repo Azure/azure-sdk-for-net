@@ -1,0 +1,45 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/Sanitized?api-version=2021-03-07",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 25 May 2021 07:27:39 GMT",
+        "traceparent": "00-955ce71a51435b458d1e03f908760bfc-60d88c14b3b5cd49-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.1-alpha.20210525.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "86fdc2e520b87e3cd915ba88a243d145",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-03-07",
+        "Content-Type": "application/json",
+        "Date": "Tue, 25 May 2021 07:27:39 GMT",
+        "MS-CV": "SJqIWA/X0Eanw1A7paw/AA.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "066asYAAAAADSLAOlQi79TKUpi/adJy7/TEFYRURHRTEyMTIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "426ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InternalError",
+          "message": "The server encountered an internal error.",
+          "innererror": {
+            "code": "BadRequest",
+            "message": "Numbers: [Sanitized] do not belong to the Tenant:ac80d96a-85de-48b1-995d-a3a3fa3627c8."
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1015248932"
+  }
+}

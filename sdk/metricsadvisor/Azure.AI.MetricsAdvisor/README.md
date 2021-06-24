@@ -201,7 +201,7 @@ string sqlServerQuery = "<query>";
 
 var dataFeed = new DataFeed();
 
-dataFeed.Name = "Sample data feed";
+dataFeed.Name = "<dataFeedName>";
 dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
 dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
@@ -225,7 +225,7 @@ Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
 Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in createdDataFeed.Administrators)
+foreach (string admin in createdDataFeed.AdministratorsEmails)
 {
     Console.WriteLine($" - {admin}");
 }
@@ -233,13 +233,13 @@ foreach (string admin in createdDataFeed.Administrators)
 Console.WriteLine($"Metric IDs:");
 foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
 {
-    Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+    Console.WriteLine($" - {metric.Name}: {metric.Id}");
 }
 
 Console.WriteLine($"Dimension columns:");
 foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
 {
-    Console.WriteLine($" - {dimension.DimensionName}");
+    Console.WriteLine($" - {dimension.Name}");
 }
 ```
 
@@ -254,7 +254,7 @@ var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
 var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
 {
-    TopCount = 5
+    MaxPageSize = 5
 };
 
 Console.WriteLine("Ingestion statuses:");
@@ -283,7 +283,7 @@ Create an [`AnomalyDetectionConfiguration`](#data-point-anomaly) to tell the ser
 
 ```C# Snippet:CreateDetectionConfigurationAsync
 string metricId = "<metricId>";
-string configurationName = "Sample anomaly detection configuration";
+string configurationName = "<configurationName>";
 
 var detectionConfiguration = new AnomalyDetectionConfiguration()
 {
@@ -317,7 +317,7 @@ Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfigu
 Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and the [`WebNotificationHook`](#notification-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailNotificationHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
 ```C# Snippet:CreateHookAsync
-string hookName = "Sample hook";
+string hookName = "<hookName>";
 
 var emailHook = new EmailNotificationHook()
 {
@@ -341,8 +341,7 @@ Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service whic
 ```C# Snippet:CreateAlertConfigurationAsync
 string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
-
-string configurationName = "Sample anomaly alert configuration";
+string configurationName = "<configurationName>";
 
 AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 {
@@ -374,7 +373,7 @@ var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.UtcNow;
 var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
 {
-    TopCount = 5
+    MaxPageSize = 5
 };
 
 int alertCount = 0;
@@ -400,14 +399,22 @@ Once you know an alert's ID, list the [anomalies](#data-point-anomaly) that trig
 string alertConfigurationId = "<alertConfigurationId>";
 string alertId = "<alertId>";
 
-var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
+var options = new GetAnomaliesForAlertOptions() { MaxPageSize = 3 };
 
 int anomalyCount = 0;
 
 await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
 {
     Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
+    Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");
     Console.WriteLine($"Metric ID: {anomaly.MetricId}");
+    Console.WriteLine($"Anomaly value: {anomaly.Value}");
+
+    if (anomaly.ExpectedValue.HasValue)
+    {
+        Console.WriteLine($"Anomaly expected value: {anomaly.ExpectedValue}");
+    }
+
     Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
     Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
     Console.WriteLine($"Status: {anomaly.Status}");

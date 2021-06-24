@@ -37,17 +37,15 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="category">The category of the saved search. This helps
         /// the user to find a saved search faster. </param>
         /// <param name="displayName">Saved search display name.</param>
-        /// <param name="query">The query expression for the saved search.
-        /// Please see
-        /// https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-search-reference
-        /// for reference.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="query">The query expression for the saved
+        /// search.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="eTag">The ETag of the saved search.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="etag">The ETag of the saved search.</param>
         /// <param name="functionAlias">The function alias if query serves as a
         /// function.</param>
         /// <param name="functionParameters">The optional function parameters
@@ -59,10 +57,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="version">The version number of the query language. The
         /// current version is 2 and is the default.</param>
         /// <param name="tags">The tags attached to the saved search.</param>
-        public SavedSearch(string category, string displayName, string query, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string functionAlias = default(string), string functionParameters = default(string), long? version = default(long?), IList<Tag> tags = default(IList<Tag>))
+        public SavedSearch(string category, string displayName, string query, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string functionAlias = default(string), string functionParameters = default(string), long? version = default(long?), IList<Tag> tags = default(IList<Tag>))
             : base(id, name, type)
         {
-            ETag = eTag;
+            Etag = etag;
             Category = category;
             DisplayName = displayName;
             Query = query;
@@ -81,8 +79,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Gets or sets the ETag of the saved search.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; set; }
 
         /// <summary>
         /// Gets or sets the category of the saved search. This helps the user
@@ -98,9 +96,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the query expression for the saved search. Please see
-        /// https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-search-reference
-        /// for reference.
+        /// Gets or sets the query expression for the saved search.
         /// </summary>
         [JsonProperty(PropertyName = "properties.query")]
         public string Query { get; set; }

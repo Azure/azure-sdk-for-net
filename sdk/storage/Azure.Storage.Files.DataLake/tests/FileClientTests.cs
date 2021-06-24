@@ -16,6 +16,7 @@ using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -141,7 +142,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
 
             // Act
-            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};BlobEndpoint={TestConfigHierarchicalNamespace.BlobServiceEndpoint};FileEndpoint={TestConfigHierarchicalNamespace.FileServiceEndpoint};QueueEndpoint={TestConfigHierarchicalNamespace.QueueServiceEndpoint};TableEndpoint={TestConfigHierarchicalNamespace.TableServiceEndpoint}";
             DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
 
             // Assert
@@ -160,7 +161,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
 
             // Act
-            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};BlobEndpoint={TestConfigHierarchicalNamespace.BlobServiceEndpoint};FileEndpoint={TestConfigHierarchicalNamespace.FileServiceEndpoint};QueueEndpoint={TestConfigHierarchicalNamespace.QueueServiceEndpoint};TableEndpoint={TestConfigHierarchicalNamespace.TableServiceEndpoint}";
             DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
             Uri sasUri = connStringFile.GenerateSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddDays(1));
             DataLakeFileClient sasFileClient = InstrumentClient(new DataLakeFileClient(sasUri, GetOptions()));
@@ -458,7 +459,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.ExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.AreEqual(
+                    _serviceVersion >= DataLakeClientOptions.ServiceVersion.V2019_12_12 ?
+                        "NoAuthenticationInformation" :
+                        "ResourceNotFound",
+                    e.ErrorCode));
         }
 
         [RecordedTest]
@@ -768,7 +773,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
             await directory.CreateAsync();
             DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(GetNewFileName());
-            Uri expectedDestFileUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/{Uri.EscapeDataString(destFileName)}");
+            Uri expectedDestFileUri = new Uri($"{BlobEndpointToDfsEndpoint(TestConfigHierarchicalNamespace.BlobServiceEndpoint)}/{test.FileSystem.Name}/{directoryName}/{Uri.EscapeDataString(destFileName)}");
             string destFilePath = $"{directoryName}/{destFileName}";
 
             // Act
@@ -795,7 +800,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directory.CreateAsync();
             DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(sourceFileName);
             string destFileName = GetNewFileName();
-            Uri expectedDestFileUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/{destFileName}");
+            Uri expectedDestFileUri = new Uri($"{BlobEndpointToDfsEndpoint(TestConfigHierarchicalNamespace.BlobServiceEndpoint)}/{test.FileSystem.Name}/{directoryName}/{destFileName}");
             string destFilePath = $"{directoryName}/{destFileName}";
 
             // Act
@@ -1480,7 +1485,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
@@ -1509,7 +1514,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync_Error()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -1533,7 +1538,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync_Conditions()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in Conditions_Data)
             {
@@ -1569,7 +1574,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync_ConditionsFail()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
@@ -1703,7 +1708,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task AppendDataAsync_EmptyStream()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateAsync();
@@ -1717,9 +1721,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     {
                         Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
                         Assert.IsTrue(e.Message.Contains("The value for one of the HTTP headers is not in the correct format."));
-                        Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
-                        Assert.AreEqual("0", e.Data["HeaderValue"]);
-                    });
+                        if (_serviceVersion > DataLakeClientOptions.ServiceVersion.V2019_02_02)
+                        {
+                            Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
+                            Assert.AreEqual("0", e.Data["HeaderValue"]);
+                        }
+                    }
+                );
             }
         }
 
@@ -2262,12 +2270,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
+            var leaseClient = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
 
             // Act
-            Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
+            Response<DataLakeLease> response = await leaseClient.AcquireAsync(duration);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
         }
 
         [RecordedTest]
@@ -2357,6 +2367,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
         }
 
         [RecordedTest]
@@ -2538,6 +2549,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
         }
 
         [RecordedTest]
@@ -3404,6 +3416,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Min()
         {
             // Arrange
@@ -3425,6 +3438,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Error()
         {
             // Arrange
@@ -3441,6 +3455,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Progress()
         {
             // Arrange
@@ -3472,6 +3487,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_QueryTextConfigurations()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3516,6 +3532,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_NonFatalError()
         {
             // Arrange
@@ -3556,6 +3573,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_FatalError()
         {
             // Arrange
@@ -3604,6 +3622,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3640,6 +3659,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3671,6 +3691,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ArrowConfiguration()
         {
             // Arrange
@@ -3710,6 +3731,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ArrowConfigurationInput()
         {
             // Arrange
@@ -3747,6 +3769,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetConfigurationInput()
         {
             // Arrange
@@ -3777,6 +3801,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetConfigurationOutputError()
         {
             // Arrange
@@ -4856,7 +4882,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Act - DataLakeFileClient(Uri blobContainerUri, fileClientOptions options = default)
@@ -4902,7 +4928,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
@@ -4939,7 +4965,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
@@ -4982,7 +5008,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullFileSystemName()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
@@ -5026,7 +5052,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_BuilderWrongFileSystemName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5057,7 +5083,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullFileName()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
@@ -5101,7 +5127,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_BuilderWrongFileName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5132,7 +5158,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderIsDirectoryError()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string fileName = GetNewFileName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");

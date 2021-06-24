@@ -252,9 +252,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch)
+            public static BackendContract Update(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -284,9 +284,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackendContract> UpdateAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

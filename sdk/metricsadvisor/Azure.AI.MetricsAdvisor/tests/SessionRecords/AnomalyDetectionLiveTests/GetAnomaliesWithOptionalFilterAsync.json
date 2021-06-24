@@ -8,7 +8,8 @@
         "Content-Length": "235",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-a7cfa5dfead1ff41ba46f6d87efb7c19-a245f993d1a5d145-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "89908a6900db6ec129257645700980d5",
         "x-ms-return-client-request-id": "true"
@@ -38,14 +39,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2b45a8cc-1db5-4f13-8700-bcaab8f021d8",
-        "Content-Length": "2771",
+        "apim-request-id": "c84753b3-c658-4689-a34d-4508632ba7d8",
+        "Content-Length": "3775",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Dec 2020 01:34:36 GMT",
+        "Date": "Wed, 12 May 2021 23:59:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "121",
-        "x-request-id": "2b45a8cc-1db5-4f13-8700-bcaab8f021d8"
+        "x-envoy-upstream-service-time": "5232",
+        "x-request-id": "c84753b3-c658-4689-a34d-4508632ba7d8"
       },
       "ResponseBody": {
         "value": [
@@ -56,7 +57,9 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 503106.4,
+              "expectedValue": 548623.43471338938
             }
           },
           {
@@ -66,7 +69,9 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 513455.6,
+              "expectedValue": 596967.90257180436
             }
           },
           {
@@ -76,7 +81,9 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 545699.2,
+              "expectedValue": 594737.42482575425
             }
           },
           {
@@ -86,7 +93,9 @@
               "category": "Office Products"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 16421.2,
+              "expectedValue": 21204.543526424892
             }
           },
           {
@@ -96,7 +105,9 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 543222.8,
+              "expectedValue": 602399.09709896054
             }
           },
           {
@@ -106,7 +117,9 @@
               "category": "Office Products"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 16483.0,
+              "expectedValue": 23894.711895819302
             }
           },
           {
@@ -116,7 +129,9 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 527925.6,
+              "expectedValue": 598760.19567730289
             }
           },
           {
@@ -126,7 +141,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 10214.6,
+              "expectedValue": 5814.5345982604567
             }
           },
           {
@@ -136,7 +153,9 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 391302.2,
+              "expectedValue": 411264.18596229109
             }
           },
           {
@@ -146,7 +165,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 10627.4,
+              "expectedValue": 6053.3799953486205
             }
           },
           {
@@ -156,7 +177,9 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 385288.2,
+              "expectedValue": 345875.75775733317
             }
           },
           {
@@ -166,7 +189,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 10585.6,
+              "expectedValue": 6241.9352917782044
             }
           },
           {
@@ -176,7 +201,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 10031.4,
+              "expectedValue": 8311.78399381909
             }
           },
           {
@@ -186,7 +213,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 9835.8,
+              "expectedValue": 8074.0853592633985
             }
           },
           {
@@ -196,7 +225,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 9534.6,
+              "expectedValue": 7836.3867247077069
             }
           },
           {
@@ -206,7 +237,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 9074.8,
+              "expectedValue": 7598.6880901520153
             }
           },
           {
@@ -216,7 +249,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 12700.0,
+              "expectedValue": 6455.5325031346383
             }
           },
           {
@@ -226,7 +261,9 @@
               "category": "Electronics (Consumer)"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 14035.2,
+              "expectedValue": 5874.202401374966
             }
           },
           {
@@ -236,7 +273,9 @@
               "category": "Shoes Handbags \u0026 Sunglasses"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 606448.2,
+              "expectedValue": 556953.98523267184
             }
           },
           {
@@ -246,11 +285,12 @@
               "category": "Handmade"
             },
             "property": {
-              "anomalySeverity": "Medium"
+              "anomalySeverity": "Medium",
+              "value": 671330.0,
+              "expectedValue": 642187.698892426
             }
           }
-        ],
-        "@nextLink": null
+        ]
       }
     }
   ],

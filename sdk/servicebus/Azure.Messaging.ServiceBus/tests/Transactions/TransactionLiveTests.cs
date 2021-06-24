@@ -2,10 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Messaging.ServiceBus.Amqp;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Transaction;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -401,7 +407,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                    await receiver.CompleteMessageAsync(receivedMessage);
                     await sender.SendMessageAsync(message2);
                 }
 
@@ -410,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 // Following should succeed without exceptions
-                await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                await receiver.CompleteMessageAsync(receivedMessage);
 
                 // Assert that send failed
                 receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
@@ -423,7 +429,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [TestCase(true, false)]
         [TestCase(false, false)]
         [TestCase(false, true)]
-        public async Task TransactionGroupReceivesFirst(bool partitioned, bool enableSessions)
+        public async Task CrossEntityTransactionReceivesFirst(bool partitioned, bool enableSessions)
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -471,7 +477,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
        [Test]
        [Ignore("Send claims are not available for the topic. Leaving for now in case this is supported in the future.")]
-        public async Task TransactionGroupReceivesFirstRollbackSubscription()
+        public async Task CrossEntityTransactionReceivesFirstRollbackSubscription()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var topicA = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
@@ -530,7 +536,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupReceivesFirstRollback()
+        public async Task CrossEntityTransactionReceivesFirstRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -588,7 +594,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupFirstOperationTransacted()
+        public async Task CrossEntityTransactionFirstOperationTransacted()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -609,7 +615,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [Test]
         [TestCase(true, false)]
         [TestCase(false, true)]
-        public async Task TransactionGroupSendsFirst(bool partitioned, bool enableSessions)
+        public async Task CrossEntityTransactionSendsFirst(bool partitioned, bool enableSessions)
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -700,7 +706,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSendsFirstRollback()
+        public async Task CrossEntityTransactionSendsFirstRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -771,7 +777,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupProcessorRollback()
+        public async Task CrossEntityTransactionProcessorRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -816,7 +822,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupProcessor()
+        public async Task CrossEntityTransactionProcessor()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var noTxClient = CreateClient();
@@ -867,7 +873,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSessionProcessorRollback()
+        public async Task CrossEntityTransactionSessionProcessorRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -910,7 +916,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSessionProcessor()
+        public async Task CrossEntityTransactionSessionProcessor()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -956,6 +962,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             // should not throw
             _ = await noTxClient.AcceptNextSessionAsync(queueB.QueueName);
             _ = await noTxClient.AcceptNextSessionAsync(queueC.QueueName);
+        }
+
+        [Test]
+        public async Task CrossEntityTransactionConnectionDropped()
+        {
+            await using var client = CreateCrossEntityTxnClient();
+            await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+
+            await using var noTxClient = CreateNoRetryClient();
+            var senderA = noTxClient.CreateSender(queueA.QueueName);
+            await senderA.SendMessageAsync(new ServiceBusMessage());
+
+            var receiverA = client.CreateReceiver(queueA.QueueName);
+            var senderB = client.CreateSender(queueB.QueueName);
+
+            var receivedMessage = await receiverA.ReceiveMessageAsync();
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+
+                SimulateNetworkFailure(client);
+                Assert.That(
+                    async () => await senderB.SendMessageAsync(new ServiceBusMessage()),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+
+            // allow enough time for the service to discard the transaction
+            receivedMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(200));
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(new ServiceBusMessage());
+                ts.Complete();
+            }
+
+            var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
+            Assert.IsNotNull(await receiverB.ReceiveMessageAsync());
+        }
+
+        private static void SimulateNetworkFailure(ServiceBusClient client)
+        {
+            var connection = client.Connection;
+            AmqpClient amqpClient = (AmqpClient) typeof(ServiceBusConnection).GetField(
+                    "_innerClient",
+                    BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(connection);
+            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
+                "ConnectionScope",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
+            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
+                "ActiveConnection",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
+
+            typeof(AmqpConnection).GetMethod("AbortInternal", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(activeConnection, null);
         }
 
         private ServiceBusClient CreateCrossEntityTxnClient() =>

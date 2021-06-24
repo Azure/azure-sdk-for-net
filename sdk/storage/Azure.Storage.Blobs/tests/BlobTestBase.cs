@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
@@ -26,9 +27,11 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2020_04_08,
         BlobClientOptions.ServiceVersion.V2020_06_12,
         BlobClientOptions.ServiceVersion.V2020_08_04,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public abstract class BlobTestBase : StorageTestBase
+    public abstract class BlobTestBase : StorageTestBase<BlobTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
@@ -594,25 +597,19 @@ namespace Azure.Storage.Test.Shared
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
             {
-                return TestExtensions.CreateStorageConnectionString(
-                    credentials,
-                    TestConfigDefault.AccountName);
+                return new StorageConnectionString(credentials,
+                    (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.QueueServiceEndpoint), new Uri(TestConfigDefault.QueueServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint)));
             }
 
-            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
+            (Uri, Uri) blobUri = (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint));
 
             (Uri, Uri) tableUri = default;
             if (includeTable)
             {
-                tableUri = StorageConnectionString.ConstructTableEndpoint(
-                    Constants.Https,
-                    TestConfigDefault.AccountName,
-                    default,
-                    default);
+                tableUri = (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint));
             }
 
             return new StorageConnectionString(

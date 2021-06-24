@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-022cc6af6ca5404eac54f2b1d6d8ea64-19365e4068898549-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-2780ef089c16cd43be28d9dc165f5510-acd0de3f813bd04b-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210604.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "de043ae6086efcc6c5a88d76b032986e",
         "x-ms-return-client-request-id": "true"
@@ -15,18 +15,19 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e8901517-ab57-4d7e-bd94-b08a074b59b5",
-        "Content-Length": "5816",
+        "apim-request-id": "fef0c39f-f531-4010-9ee5-19e4215a92c3",
+        "Content-Length": "7524",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 17:42:24 GMT",
+        "Date": "Fri, 04 Jun 2021 12:14:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "493",
-        "x-request-id": "e8901517-ab57-4d7e-bd94-b08a074b59b5"
+        "x-envoy-upstream-service-time": "458",
+        "x-request-id": "fef0c39f-f531-4010-9ee5-19e4215a92c3"
       },
       "ResponseBody": {
         "value": [
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "0f099f2089162cab683d305ad1a9cba8-17571a77000",
@@ -39,10 +40,13 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "incidentStatus": "Resolved",
+              "valueOfRootNode": 3.4,
+              "expectedValueOfRootNode": 1.8564662412054167
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "15ee0a88ee90d2b7580b07acac9b5f1b-17571a77000",
@@ -56,10 +60,13 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 0.2,
+              "expectedValueOfRootNode": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "2b03e492fd98f311dac5754867352e2f-17571a77000",
@@ -73,10 +80,13 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 0.4,
+              "expectedValueOfRootNode": 0.23381129349099047
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "2dfaa266fcd69f2019345aee741a23a4-17571a77000",
@@ -90,10 +100,13 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 0.6,
+              "expectedValueOfRootNode": 0.13304319424495817
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "323c79b4e6fc7e6aef0a75852c909fde-17571a77000",
@@ -107,10 +120,13 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 0.2,
+              "expectedValueOfRootNode": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "39545810eabd039e3c5bca795889e4d5-17571a77000",
@@ -124,10 +140,13 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 0.6,
+              "expectedValueOfRootNode": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "596c3ea953875e9e69bfe44b2f9c6d9c-17571a77000",
@@ -140,10 +159,13 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "incidentStatus": "Resolved",
+              "valueOfRootNode": 0.0,
+              "expectedValueOfRootNode": 5.89638307091832
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "5a0692283edccf37ce825b3a8d475f4e-17571a77000",
@@ -157,10 +179,13 @@
             },
             "property": {
               "maxSeverity": "High",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 79092033.4,
+              "expectedValueOfRootNode": 83904129.166464686
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "740e015e72e8de201191854db904421b-17571a77000",
@@ -173,10 +198,13 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "incidentStatus": "Resolved",
+              "valueOfRootNode": 0.2,
+              "expectedValueOfRootNode": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "ade81d2ff75a21ac9f496133d1484c89-17571a77000",
@@ -189,10 +217,13 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "incidentStatus": "Resolved",
+              "valueOfRootNode": 0.0,
+              "expectedValueOfRootNode": 0.21970638531468334
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "c3b1690cc5c7a724cb728eb74c084a4c-17571a77000",
@@ -205,10 +236,13 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "incidentStatus": "Resolved",
+              "valueOfRootNode": 1.0,
+              "expectedValueOfRootNode": 0.012328166585182702
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "c87ace3b9f582c6a6142026c80f2de44-17571a77000",
@@ -222,10 +256,13 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 0.2,
+              "expectedValueOfRootNode": 0.0
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "ca46ba86922052929ece3d4c8794c442-17571a77000",
@@ -239,10 +276,13 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 2.8,
+              "expectedValueOfRootNode": 0.32331066012917681
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "dd1566e6ab95777eab6d996389dba73d-17571a77000",
@@ -255,10 +295,13 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved"
+              "incidentStatus": "Resolved",
+              "valueOfRootNode": 0.0,
+              "expectedValueOfRootNode": 1.7619857385604643
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "f0b8fda3844b8d12d646fadbad496347-17571a77000",
@@ -272,11 +315,12 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 1.4,
+              "expectedValueOfRootNode": 0.00082077254676293527
             }
           }
-        ],
-        "@nextLink": null
+        ]
       }
     }
   ],

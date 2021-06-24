@@ -288,14 +288,14 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _blockBlobClient = BlockBlobClientInternals.Create(
                 _blobUri,
                 _clientConfiguration);
 
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_uri);
+            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
         }
@@ -475,7 +475,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
@@ -486,7 +486,7 @@ namespace Azure.Storage.Files.DataLake
                 uriBuilder.ToDfsUri(),
                 _clientConfiguration);
 
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_uri);
+            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
         }
@@ -526,7 +526,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: pipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
@@ -537,7 +537,7 @@ namespace Azure.Storage.Files.DataLake
                 uriBuilder.ToDfsUri(),
                 _clientConfiguration);
 
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_uri);
+            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
         }
@@ -575,7 +575,7 @@ namespace Azure.Storage.Files.DataLake
                 uriBuilder.ToDfsUri(),
                 _clientConfiguration);
 
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_uri);
+            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
         }
@@ -604,33 +604,23 @@ namespace Azure.Storage.Files.DataLake
                 uriBuilder.ToDfsUri(),
                 clientConfiguration);
 
-            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_uri);
+            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
         }
 
-        private (PathRestClient DfsPathClient, PathRestClient BlobPathClient) BuildPathRestClients(Uri uri)
+        private (PathRestClient DfsPathClient, PathRestClient BlobPathClient) BuildPathRestClients(Uri dfsUri, Uri blobUri)
         {
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
-            string fileSystmeName = uriBuilder.FileSystemName;
-            string path = uriBuilder.DirectoryOrFilePath;
-            uriBuilder.FileSystemName = null;
-            uriBuilder.DirectoryOrFilePath = null;
-
             PathRestClient dfsPathRestClient =  new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToDfsUri().ToString(),
-                fileSystem: fileSystmeName,
-                path: path.EscapePath(),
+                url: dfsUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             PathRestClient blobPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToBlobUri().ToString(),
-                fileSystem: fileSystmeName,
-                path: path.EscapePath(),
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             return (dfsPathRestClient, blobPathRestClient);

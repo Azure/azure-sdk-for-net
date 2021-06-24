@@ -127,5 +127,179 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             Assert.Fail("StartSearchAvailablePhoneNumbersAsync should have thrown an exception.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task CreateSearchAsync()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            await searchOperation.WaitForCompletionAsync();
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateSearch()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            var searchOperation = client.StartSearchAvailablePhoneNumbers("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task UpdateCapabilitiesAsync()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var number = GetTestPhoneNumber();
+
+            var client = CreateClient();
+            var phoneNumber = await client.GetPurchasedPhoneNumberAsync(number);
+            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
+            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
+
+            var updateOperation = await client.StartUpdateCapabilitiesAsync(number, callingCapabilityType, smsCapabilityType);
+            await updateOperation.WaitForCompletionAsync();
+
+            Assert.IsTrue(updateOperation.HasCompleted);
+            Assert.IsNotNull(updateOperation.Value);
+            Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
+            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public async Task ReleaseUnauthorizedNumber()
+        {
+            var client = CreateClient();
+            try
+            {
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(UnauthorizedNumber);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(400, ex.Status);
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task UpdateCapabilitiesUnauthorizedNumber()
+        {
+            var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
+            var client = CreateClient();
+            try
+            {
+                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(UnauthorizedNumber);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(400, ex.Status);
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task GetPurchasedUnauthorizedNumber()
+        {
+            var client = CreateClient();
+            try
+            {
+                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task StartPurchasedUnauthorizedNumber()
+        {
+            var client = CreateClient();
+            try
+            {
+                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(UnauthorizedNumber);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(404, ex.Status);
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task GetPurchasedPhoneNumbersNextPage()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+            var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
+
+            await foreach (PurchasedPhoneNumber purchasedPhone in purchasedPhoneNumbers)
+            {
+                Console.WriteLine("phone " + purchasedPhone.PhoneNumber);
+            }
+
+            Assert.NotNull(purchasedPhoneNumbers);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void UpdateCapabilities()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var number = GetTestPhoneNumber();
+
+            var client = CreateClient();
+            var phoneNumber = client.GetPurchasedPhoneNumber(number);
+            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
+            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
+
+            var updateOperation = client.StartUpdateCapabilities(number, callingCapabilityType, smsCapabilityType);
+
+            while (!updateOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                updateOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(updateOperation.HasCompleted);
+            Assert.IsNotNull(updateOperation.Value);
+            Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
+            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+        }
     }
 }

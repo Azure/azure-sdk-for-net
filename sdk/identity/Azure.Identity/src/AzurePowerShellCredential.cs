@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,12 +20,12 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using Azure PowerShell to obtain an access token.
     /// </summary>
-    public class AzurePowerShellCredential: TokenCredential
+    public class AzurePowerShellCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
         private const int PowerShellProcessTimeoutMs = 10000;
-        internal bool UseLegacyPowerShell { get; }
+        internal bool UseLegacyPowerShell { get; set; }
 
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
@@ -34,7 +36,11 @@ namespace Azure.Identity
         private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultWorkingDirNonWindows = "/bin/";
-        private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
+
+        private static readonly string DefaultWorkingDir =
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
+
+        private const int ERROR_FILE_NOT_FOUND = 2;
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
@@ -48,12 +54,11 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
         public AzurePowerShellCredential(AzurePowerShellCredentialOptions options) : this(options, default, default)
-        {
-        }
+        { }
 
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
-            UseLegacyPowerShell = options?.UseLegacyPowerShell ?? new AzurePowerShellCredentialOptions().UseLegacyPowerShell;
+            UseLegacyPowerShell = false;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
         }
@@ -89,6 +94,19 @@ namespace Azure.Identity
                 AccessToken token = await RequestAzurePowerShellAccessTokenAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(token);
             }
+            catch (Win32Exception ex) when (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                UseLegacyPowerShell = true;
+                try
+                {
+                    AccessToken token = await RequestAzurePowerShellAccessTokenAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+                    return scope.Succeeded(token);
+                }
+                catch (Exception e)
+                {
+                    throw scope.FailWrapAndThrow(e);
+                }
+            }
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
@@ -103,13 +121,15 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(resource, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs), cancellationToken);
+            using var processRunner = new ProcessRunner(
+                _processService.Create(processStartInfo),
+                TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs),
+                cancellationToken);
 
             string output;
             try
             {
                 output = async ? await processRunner.RunAsync().ConfigureAwait(false) : processRunner.Run();
-
                 CheckForErrors(output);
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
@@ -118,7 +138,8 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
-                bool noPowerShell = exception.Message.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
+                bool noPowerShell = exception.Message.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
+                                    exception.Message.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (noPowerShell)
                 {
@@ -134,7 +155,6 @@ namespace Azure.Identity
 
                 throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
             }
-
             return DeserializeOutput(output);
         }
 
@@ -143,6 +163,14 @@ namespace Azure.Identity
             if (output.IndexOf(AzurePowerShellNoAzAccountModule, StringComparison.OrdinalIgnoreCase) != -1)
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
+            }
+            if (output.IndexOf("is not recognized as an internal or external command", StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                throw new Win32Exception(ERROR_FILE_NOT_FOUND);
+            }
+            if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
+            {
+                throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
         }
 
@@ -159,11 +187,11 @@ namespace Azure.Identity
 
         private void GetFileNameAndArguments(string resource, out string fileName, out string argument)
         {
-            string powershellExe = "pwsh -EncodedCommand";
+            string powershellExe = "pwsh -NonInteractive -EncodedCommand";
 
             if (UseLegacyPowerShell)
             {
-                powershellExe = "powershell -EncodedCommand";
+                powershellExe = "powershell -NonInteractive -EncodedCommand";
             }
 
             string command = @$"
@@ -179,7 +207,8 @@ if (! $m) {{
 
 $token = Get-AzAccessToken -ResourceUrl '{resource}'
 
-return $token | ConvertTo-Json
+$x = $token | ConvertTo-Xml
+return $x.Objects.FirstChild.OuterXml
 ";
 
             string commandBase64 = Base64Encode(command);
@@ -198,11 +227,35 @@ return $token | ConvertTo-Json
 
         private static AccessToken DeserializeOutput(string output)
         {
-            using JsonDocument document = JsonDocument.Parse(output);
+            XDocument document = XDocument.Parse(output);
+            string accessToken = null;
+            DateTimeOffset expiresOn = default;
 
-            JsonElement root = document.RootElement;
-            string accessToken = root.GetProperty("Token").GetString();
-            DateTimeOffset expiresOn = DateTimeOffset.ParseExact(root.GetProperty("ExpiresOn").GetString(), "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            if (document?.Root == null)
+            {
+                throw new CredentialUnavailableException("Error parsing token response.");
+            }
+
+            foreach (var e in document.Root.Elements())
+            {
+                switch (e.Attribute("Name")?.Value)
+                {
+                    case "Token":
+                        accessToken = e.Value;
+                        break;
+
+                    case "ExpiresOn":
+                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.InvariantCulture).ToUniversalTime();
+                        break;
+                }
+
+                if (expiresOn != default && accessToken != null) break;
+            }
+
+            if (accessToken == null)
+            {
+                throw new CredentialUnavailableException("Error parsing token response.");
+            }
 
             return new AccessToken(accessToken, expiresOn);
         }

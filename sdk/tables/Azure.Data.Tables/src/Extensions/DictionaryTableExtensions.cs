@@ -30,7 +30,7 @@ namespace Azure.Data.Tables
             foreach (var item in tableEntityProperties)
             {
                 // Remove the ETag property, as it does not need to be serialized
-                if (item.Key == TableConstants.PropertyNames.ETag || item.Key == TableConstants.PropertyNames.Timestamp)
+                if (item.Key == TableConstants.PropertyNames.EtagOdata || item.Key == TableConstants.PropertyNames.Timestamp)
                 {
                     continue;
                 }
@@ -127,13 +127,6 @@ namespace Azure.Data.Tables
 
             // Remove odata metadata.
             entity.Remove(TableConstants.PropertyNames.OdataMetadata);
-
-            // Set odata.etag as the proper ETag property
-            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
-            {
-                entity[TableConstants.PropertyNames.ETag] = etag;
-                entity.Remove(TableConstants.PropertyNames.EtagOdata);
-            }
         }
 
         /// <summary>

@@ -31,7 +31,24 @@ namespace KeyVault.TestFramework
         public string keyVersion;
         public KeyIdentifier keyIdentifier;
         public ClientCredential clientCredential;
-        public RetryPolicy retryExecutor;
+        public RetryPolicy retryExecutor
+        {
+            get
+            {
+                switch (HttpMockServer.Mode)
+                {
+                    case HttpRecorderMode.None:
+                        return new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new FixedIntervalRetryStrategy(5, TimeSpan.FromSeconds(5.0)));
+                    case HttpRecorderMode.Record:
+                        return new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new ExponentialBackoffRetryStrategy(8, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
+                    case HttpRecorderMode.Playback:
+                        return new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new FixedIntervalRetryStrategy(5, TimeSpan.Zero));
+                    default:
+                        throw new NotSupportedException($"{HttpMockServer.Mode} is not supported");
+                }
+            }
+        }
+
         public string StorageResourceUrl1;
         public string StorageResourceUrl2;
 
@@ -58,10 +75,6 @@ namespace KeyVault.TestFramework
                 keyVersion = keyIdentifier.Version;
                 tokenCache = new TokenCache();
                 _deviceCodeForStorageTests = null;
-                retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new ExponentialBackoffRetryStrategy(8, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
-            } else
-            {
-                retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>( new FixedIntervalRetryStrategy( 5, TimeSpan.FromSeconds( 5.0 ) ) );
             }
         }
 

@@ -1,37 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/documents/formats",
+      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0/documents/formats",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-823031427c63b34880c027079a4915f5-b27336e8410b8244-00",
-        "User-Agent": "azsdk-net-AI.DocumentTranslation/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-dd86c05b6d4a4b45bfb6447d63b563cf-edc43845a295aa43-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210524.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "1b6d256ced018bc79c6c514db058b487",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "483d9b91-97cb-40c5-bad4-2bdf99dbb52c",
+        "apim-request-id": "a83053a2-5ac2-456e-b3d6-9c67dbd57e8e",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 22:09:37 GMT",
-        "ETag": "\u0022F50180F3F7A3DA2AD0976187D2FFC4ACD76EE3CF8049CD8DC1CB04DC7EE88660\u0022",
+        "Date": "Mon, 24 May 2021 21:24:02 GMT",
+        "ETag": "\u002244A88B37BE223B6C068718250B179D652514ABB810E8DD9DCD271B2759493859\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
-          "ARRAffinity=19727efd86700e5294e01d3d9816fda18b4016b330aceb2a79043575a77e402c;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
-          "ARRAffinitySameSite=19727efd86700e5294e01d3d9816fda18b4016b330aceb2a79043575a77e402c;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
+          "ARRAffinity=0ff46fa6d58b00f2d44b7073721903c0eace480139d8ecfc38f61130af5e1587;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=0ff46fa6d58b00f2d44b7073721903c0eace480139d8ecfc38f61130af5e1587;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "483d9b91-97cb-40c5-bad4-2bdf99dbb52c"
+        "X-RequestId": "a83053a2-5ac2-456e-b3d6-9c67dbd57e8e"
       },
       "ResponseBody": {
         "value": [
@@ -128,6 +128,86 @@
             ],
             "contentTypes": [
               "text/tab-separated-values"
+            ],
+            "versions": []
+          },
+          {
+            "format": "CSV",
+            "fileExtensions": [
+              ".csv"
+            ],
+            "contentTypes": [
+              "text/csv"
+            ],
+            "versions": []
+          },
+          {
+            "format": "RichTextFormat",
+            "fileExtensions": [
+              ".rtf"
+            ],
+            "contentTypes": [
+              "application/rtf"
+            ],
+            "versions": []
+          },
+          {
+            "format": "WordDocument",
+            "fileExtensions": [
+              ".doc"
+            ],
+            "contentTypes": [
+              "application/msword"
+            ],
+            "versions": []
+          },
+          {
+            "format": "PowerpointPresentation",
+            "fileExtensions": [
+              ".ppt"
+            ],
+            "contentTypes": [
+              "application/vnd.ms-powerpoint"
+            ],
+            "versions": []
+          },
+          {
+            "format": "ExcelSpreadsheet",
+            "fileExtensions": [
+              ".xls"
+            ],
+            "contentTypes": [
+              "application/vnd.ms-excel"
+            ],
+            "versions": []
+          },
+          {
+            "format": "OpenDocumentText",
+            "fileExtensions": [
+              ".odt"
+            ],
+            "contentTypes": [
+              "application/vnd.oasis.opendocument.text"
+            ],
+            "versions": []
+          },
+          {
+            "format": "OpenDocumentPresentation",
+            "fileExtensions": [
+              ".odp"
+            ],
+            "contentTypes": [
+              "application/vnd.oasis.opendocument.presentation"
+            ],
+            "versions": []
+          },
+          {
+            "format": "OpenDocumentSpreadsheet",
+            "fileExtensions": [
+              ".ods"
+            ],
+            "contentTypes": [
+              "application/vnd.oasis.opendocument.spreadsheet"
             ],
             "versions": []
           }

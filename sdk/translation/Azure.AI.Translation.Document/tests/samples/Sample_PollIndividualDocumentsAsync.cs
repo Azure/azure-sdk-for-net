@@ -21,13 +21,9 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:PollIndividualDocumentsAsync
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
-
-            #region Snippet:PollIndividualDocumentsAsync
-
-            //@@ Uri sourceUri = <source SAS URI>;
-            //@@ Uri targetUri = <target SAS URI>;
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
@@ -55,7 +51,7 @@ namespace Azure.AI.Translation.Document.Samples
                 if (responseDocumentStatus.Value.Status == TranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else

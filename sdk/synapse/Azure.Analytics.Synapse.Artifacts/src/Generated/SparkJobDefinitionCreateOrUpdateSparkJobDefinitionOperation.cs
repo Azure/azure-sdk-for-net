@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a Spark Job Definition. </summary>
     public partial class SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation : Operation<SparkJobDefinitionResource>, IOperationSource<SparkJobDefinitionResource>
     {
-        private readonly ArmOperationHelpers<SparkJobDefinitionResource> _operation;
+        private readonly OperationInternals<SparkJobDefinitionResource> _operation;
 
         /// <summary> Initializes a new instance of SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation for mocking. </summary>
         protected SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation()
@@ -28,8 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<SparkJobDefinitionResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation");
+            _operation = new OperationInternals<SparkJobDefinitionResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

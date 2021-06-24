@@ -230,7 +230,8 @@ namespace Azure.Storage.Test.Shared
         public int BlobsPort { get; set; }
         public int QueuesPort { get; set; }
 
-        public string Endpoint => $"https://127.0.0.1:{BlobsPort}/{Name}";
+        public string BlobEndpoint => $"https://127.0.0.1:{BlobsPort}/{Name}";
+        public string QueueEndpoint => $"https://127.0.0.1:{QueuesPort}/{Name}";
 
         public string ConnectionString
         {

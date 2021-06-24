@@ -429,16 +429,12 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
             SearchClient client = resources.GetSearchClient(
-                new SearchClientOptions()
+                new SearchClientOptions(ServiceVersion)
                 {
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            Converters =
-                            {
-                                new GeoJsonConverter()
-                            }
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                         })
                 });
             UncasedHotel expected = new UncasedHotel

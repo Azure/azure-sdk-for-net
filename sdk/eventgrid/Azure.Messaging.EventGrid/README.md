@@ -125,19 +125,29 @@ await client.SendEventAsync(egEvent);
 
 To publish a batch of events, use the `SendEvents`/`SendEventsAsync` method.
 ```C# Snippet:SendEGEventsToTopic
+// Example of a custom ObjectSerializer used to serialize the event payload to JSON
+var myCustomDataSerializer = new JsonObjectSerializer(
+    new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
+
 // Add EventGridEvents to a list to publish to the topic
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
+    // EventGridEvent with custom model serialized to JSON
     new EventGridEvent(
         "ExampleEventSubject",
         "Example.EventType",
         "1.0",
-        "This is the data for the first event"),
-   new EventGridEvent(
+        new CustomModel() { A = 5, B = true }),
+
+    // EventGridEvent with custom model serialized to JSON using a custom serializer
+    new EventGridEvent(
         "ExampleEventSubject",
         "Example.EventType",
         "1.0",
-        "This is the data for the second event")
+        myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true })),
 };
 
 // Send the events
@@ -312,6 +322,9 @@ You can also easily [enable console logging](https://github.com/Azure/azure-sdk-
 
 ### Distributed Tracing
 The Event Grid library supports distributing tracing out of the box. In order to adhere to the CloudEvents specification's [guidance](https://github.com/cloudevents/spec/blob/master/extensions/distributed-tracing.md) on distributing tracing, the library will set the `traceparent` and `tracestate` on the `ExtensionAttributes` of a `CloudEvent` when distributed tracing is enabled. To learn more about how to enable distributed tracing in your application, take a look at the Azure SDK [distributed tracing documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#Distributed-tracing).
+
+### Event Grid on Kubernetes 
+This library has been tested and validated on Kubernetes using Azure Arc.
 
 ## Next steps
 

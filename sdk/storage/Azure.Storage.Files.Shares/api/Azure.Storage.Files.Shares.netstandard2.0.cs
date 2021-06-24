@@ -95,7 +95,7 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_06_12) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_08_04) { }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -672,6 +672,16 @@ namespace Azure.Storage.Files.Shares.Models
         public string LeaseId { get { throw null; } }
         public int? LeaseTime { get { throw null; } }
     }
+    public partial class ShareFileModificationException : System.Exception, System.Runtime.Serialization.ISerializable
+    {
+        protected ShareFileModificationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext streamingContext) { }
+        public ShareFileModificationException(string message, System.Uri resurceUri, Azure.ETag expectedETag, Azure.ETag actualEtag, Azure.HttpRange range) { }
+        public Azure.ETag ActualETag { get { throw null; } }
+        public Azure.ETag ExpectedETag { get { throw null; } }
+        public Azure.HttpRange Range { get { throw null; } }
+        public System.Uri ResourceUri { get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+    }
     public partial class ShareFileOpenReadOptions
     {
         public ShareFileOpenReadOptions(bool allowModifications) { }
@@ -1010,6 +1020,7 @@ namespace Azure.Storage.Sas
         public string Resource { get { throw null; } set { } }
         public string ShareName { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Version { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

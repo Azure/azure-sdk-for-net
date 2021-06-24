@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
@@ -102,7 +103,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
             // Arrange
@@ -160,8 +160,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string snapshot = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?snapshot={snapshot}");
 
             // Act
             AppendBlobClient appendBlobClient = new AppendBlobClient(uri);
@@ -189,8 +189,8 @@ namespace Azure.Storage.Blobs.Test
             string containerName = GetNewContainerName();
             string blobName = "my/blob/name";
             string versionId = "2020-07-03T12:45:46.1234567Z";
-            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName.EscapePath()}?versionid={versionId}");
 
             // Act
             AppendBlobClient appendBlobClient = new AppendBlobClient(uri);
@@ -1834,6 +1834,39 @@ namespace Azure.Storage.Blobs.Test
                         await openWriteStream.FlushAsync();
                     });
             }
+        }
+
+        [RecordedTest]
+        public async Task WithCustomerProvidedKey()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            AppendBlobClient cpkBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()).WithCustomerProvidedKey(customerProvidedKey));
+            await cpkBlob.CreateAsync();
+            AppendBlobClient noCpkBlob = InstrumentClient(cpkBlob.WithCustomerProvidedKey(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noCpkBlob.GetPropertiesAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task WithEncryptionScope()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string encryptionScope = TestConfigDefault.EncryptionScope;
+            AppendBlobClient encryptionScopeBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()).WithEncryptionScope(encryptionScope));
+            await encryptionScopeBlob.CreateAsync();
+            AppendBlobClient noEncryptionScopeBlob = InstrumentClient(encryptionScopeBlob.WithEncryptionScope(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noEncryptionScopeBlob.SetMetadataAsync(BuildMetadata()),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

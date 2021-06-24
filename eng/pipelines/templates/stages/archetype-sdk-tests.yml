@@ -38,6 +38,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: Project
+  type: string
+  default: '**'
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -74,8 +77,7 @@ parameters:
   default: []
 - name: PlatformPreSteps
   type: object
-  default:
-    - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+  default: []
 - name: PlatformPostSteps
   type: object
   default:
@@ -125,6 +127,7 @@ stages:
               Location: ${{ parameters.Location }}
               SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              Project: ${{ parameters.Project }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
             MatrixConfigs:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
@@ -142,5 +145,6 @@ stages:
               - ${{ parameters.MatrixReplace }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+              SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
               Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
               Cloud: ${{ cloud.key }}
