@@ -11,15 +11,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Query that already contains a SELECT, FROM and a WHERE statement.
     /// </summary>
-    public sealed class WhereLogic : QueryBase
+    public sealed class WhereLogic
     {
         private readonly AdtQueryBuilder _parent;
-        private IList<WhereClause> _clauses;
+        private LogicalOperator _logicalOperator;
+        private StringBuilder _conditions; //stbuilder, public method that exposes stringbuilder to logical op class
 
         internal WhereLogic(AdtQueryBuilder parent)
         {
             _parent = parent;
-            _clauses = new List<WhereClause>();
+            _logicalOperator = new LogicalOperator(this, _conditions);
+            _conditions = new StringBuilder();
         }
 
         /// <summary>
@@ -30,10 +32,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="comparisonOperator"> The comparison operator being invoked. </param>
         /// <param name="value"> The value being checked against a Field. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic Compare<T>(string field, QueryComparisonOperator comparisonOperator, T value)
+        public LogicalOperator Compare<T>(string field, QueryComparisonOperator comparisonOperator, T value)
         {
-            _clauses.Add(new WhereClause(new ComparisonCondition<T>(field, comparisonOperator, value)));
-            return this;
+            _conditions.Append(new WhereClause(new ComparisonCondition<T>(field, comparisonOperator, value)).Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -43,10 +45,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="value"> User specified property to look for. </param>
         /// <param name="searched"> Field of possible options to check for the 'value' parameter. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic Contains(string value, string[] searched)
+        public LogicalOperator Contains(string value, string[] searched)
         {
-            _clauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.In, searched)));
-            return this;
+            _conditions.Append(new WhereClause(new ContainsCondition(value, QueryContainsOperator.In, searched)).Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -56,10 +58,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="value"> User specified property to look for. </param>
         /// <param name="searched"> Field of possible options to check for the 'value' parameter. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic NotContains(string value, string[] searched)
+        public LogicalOperator NotContains(string value, string[] searched)
         {
-            _clauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.NotIn, searched)));
-            return this;
+            _conditions.Append(new WhereClause(new ContainsCondition(value, QueryContainsOperator.NotIn, searched)).Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -67,10 +69,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="condition"> The verbatim condition (SQL-like syntax) in string format. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic CustomClause(string condition)
+        public LogicalOperator CustomClause(string condition)
         {
-            _clauses.Add(new WhereClause(condition));
-            return this;
+            _conditions.Append(condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -78,10 +80,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="property"> The property that the query is looking for as defined. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic IsDefined(string property)
+        public LogicalOperator IsDefined(string property)
         {
-            _clauses.Add(new WhereClause($"{QueryConstants.IsDefined}({property})"));
-            return this;
+            _conditions.Append(new WhereClause($"{QueryConstants.IsDefined}({property})").Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -89,10 +91,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="expression"> The expression being checked for null. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic IsNull(string expression)
+        public LogicalOperator IsNull(string expression)
         {
-            _clauses.Add(new WhereClause($"{QueryConstants.IsNull}({expression})"));
-            return this;
+            _conditions.Append(new WhereClause($"{QueryConstants.IsNull}({expression})").Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -101,10 +103,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="stringToCheck"> String to check the beginning of. </param>
         /// <param name="beginningString"> String representing the beginning to check for. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic StartsWith(string stringToCheck, string beginningString)
+        public LogicalOperator StartsWith(string stringToCheck, string beginningString)
         {
-            _clauses.Add(new WhereClause($"{QueryConstants.StartsWith}({stringToCheck}, '{beginningString}')"));
-            return this;
+            _conditions.Append(new WhereClause($"{QueryConstants.StartsWith}({stringToCheck}, '{beginningString}')").Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -113,10 +115,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="stringToCheck"> String to check the ending of. </param>
         /// <param name="endingString"> String representing the ending to check for. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic EndsWith(string stringToCheck, string endingString)
+        public LogicalOperator EndsWith(string stringToCheck, string endingString)
         {
-            _clauses.Add(new WhereClause($"{QueryConstants.EndsWith}({stringToCheck}, '{endingString}')"));
-            return this;
+            _conditions.Append(new WhereClause($"{QueryConstants.EndsWith}({stringToCheck}, '{endingString}')").Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -125,7 +127,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="model"> Model ID to check for. </param>
         /// <param name="exact"> Whether or not an exact match is required. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic IsOfModel(string model, bool exact = false)
+        public LogicalOperator IsOfModel(string model, bool exact = false)
         {
             var whereClauseArg = new StringBuilder();
             whereClauseArg.Append($"{QueryConstants.IsOfModel}('{model}'");
@@ -136,9 +138,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             }
 
             whereClauseArg.Append(')');
-            _clauses.Add(new WhereClause(whereClauseArg.ToString()));
+            _conditions.Append(new WhereClause(whereClauseArg.ToString()));
 
-            return this;
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -147,11 +149,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="expression"> The expression that the query is looking for as a specified type. </param>
         /// <param name="type"> The type in the ADT query language being checked for. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic IsOfType(string expression, AdtDataType type)
+        public LogicalOperator IsOfType(string expression, AdtDataType type)
         {
-            string functionName = QueryConstants.IsOfTypeConversions[type];
-            _clauses.Add(new WhereClause($"{functionName}({expression})"));
-            return this;
+            string functionName = QueryConstants.DataTypeToFunctionNameMap[type];
+            _conditions.Append(new WhereClause($"{functionName}({expression})").Condition);
+            return _logicalOperator;
         }
 
         /// <summary>
@@ -159,70 +161,71 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="nested"> WhereLogic methods to perform within a set of parenthesis. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic IsTrue(Func<WhereLogic, WhereLogic> nested)
+        public LogicalOperator IsTrue(Func<WhereLogic, LogicalOperator> nested)
         {
             var nestedLogic = new WhereLogic(null);
-            nestedLogic = nested.Invoke(nestedLogic);
+            nested.Invoke(nestedLogic);
 
-            _clauses.Add(new WhereClause(QueryConstants.OpenParenthesis + nestedLogic.GetQueryText() + QueryConstants.CloseParenthesis));
+            _conditions.Append(new WhereClause(QueryConstants.OpenParenthesis + nestedLogic.GetQueryText() + QueryConstants.CloseParenthesis).Condition);
 
-            return this;
+            return _logicalOperator;
         }
 
-        /// <summary>
-        /// Adds the OR logical operator to a query.
-        /// </summary>
-        /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic Or()
-        {
-            // prevent users from adding Or as the first expression of a WHERE clause
-            if (_clauses.Count == 0)
-            {
-                throw new InvalidOperationException("The 'OR' logical operator cannot be the first part of a WHERE clause.");
-            }
+        ///// <summary>
+        ///// Adds the OR logical operator to a query.
+        ///// </summary>
+        ///// <returns> ADT query that already contains SELECT and FROM. </returns>
+        //public WhereLogic Or()
+        //{
+        //    // prevent users from adding Or as the first expression of a WHERE clause
+        //    if (_clauses.Count == 0)
+        //    {
+        //        throw new InvalidOperationException("The 'OR' logical operator cannot be the first part of a WHERE clause.");
+        //    }
 
-            _clauses.Add(new WhereClause(QueryConstants.Or));
-            return this;
-        }
+        //    _clauses.Add(new WhereClause(QueryConstants.Or));
+        //    return this;
+        //}
 
-        /// <summary>
-        /// Adds the AMD logical operator to a query.
-        /// </summary>
-        /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public WhereLogic And()
-        {
-            // prevent users from adding And as the first expression of a WHERE clause
-            if (_clauses.Count == 0)
-            {
-                throw new InvalidOperationException("The 'AND' logical operator cannot be the first part of a WHERE clause.");
-            }
+        ///// <summary>
+        ///// Adds the AMD logical operator to a query.
+        ///// </summary>
+        ///// <returns> ADT query that already contains SELECT and FROM. </returns>
+        //public WhereLogic And()
+        //{
+        //    // prevent users from adding And as the first expression of a WHERE clause
+        //    if (_clauses.Count == 0)
+        //    {
+        //        throw new InvalidOperationException("The 'AND' logical operator cannot be the first part of a WHERE clause.");
+        //    }
 
-            _clauses.Add(new WhereClause(QueryConstants.And));
-            return this;
-        }
+        //    _clauses.Add(new WhereClause(QueryConstants.And));
+        //    return this;
+        //}
 
         /// <inheritdoc/>
-        public override AdtQueryBuilder Build()
+        internal AdtQueryBuilder Build()
         {
             return _parent;
         }
 
         /// <inheritdoc/>
-        public override string GetQueryText()
+        internal string GetQueryText()
         {
-            if (_clauses.Any())
+            if (_conditions.Length > 0)
             {
-                // Where keyword only needs to be appened one time, happends outside of loop
-                var whereLogicComponents = new StringBuilder();
+                //// Where keyword only needs to be appened one time, happends outside of loop
+                //var whereLogicComponents = new StringBuilder();
 
-                var conditions = new List<string>(_clauses.Count);
-                foreach (WhereClause _clause in _clauses)
-                {
-                    conditions.Add(_clause.Condition);
-                }
+                //var conditions = new List<string>(_conditions.Length);
+                //foreach (string _clause in _conditions)
+                //{
+                //    conditions.Add(_clause);
+                //}
 
-                whereLogicComponents.Append(string.Join(" ", conditions).Trim());
-                return whereLogicComponents.ToString().Trim();
+                //whereLogicComponents.Append(string.Join(" ", conditions).Trim());
+                //return whereLogicComponents.ToString().Trim();
+                return _conditions.ToString();
             }
 
             return string.Empty;

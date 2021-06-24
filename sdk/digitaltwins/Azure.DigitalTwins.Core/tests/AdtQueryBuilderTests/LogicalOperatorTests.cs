@@ -10,15 +10,15 @@ namespace Azure.DigitalTwins.Core.Tests
 {
     public class LogicalOperatorTests
     {
-        [Test]
-        public void LogicalOperator_InvalidOr()
-        {
-            var query = new WhereLogic(null);
-            Action act = () => query.Or();
-            act.Should()
-                .Throw<InvalidOperationException>()
-                .WithMessage("The 'OR' logical operator cannot be the first part of a WHERE clause.");
-        }
+        //[Test]
+        //public void LogicalOperator_InvalidOr()
+        //{
+        //    var query = new WhereLogic(null);
+        //    Action act = () => query.Or();
+        //    act.Should()
+        //        .Throw<InvalidOperationException>()
+        //        .WithMessage("The 'OR' logical operator cannot be the first part of a WHERE clause.");
+        //}
 
         [Test]
         public void LogicalOperator_ValidOr()
@@ -32,15 +32,15 @@ namespace Azure.DigitalTwins.Core.Tests
                 .Be("Temperature = 5 OR Humidity = 10");
         }
 
-        [Test]
-        public void LogicalOperator_InvalidAnd()
-        {
-            var query = new WhereLogic(null);
-            Action act = () => query.And();
-            act.Should()
-                .Throw<InvalidOperationException>()
-                .WithMessage("The 'AND' logical operator cannot be the first part of a WHERE clause.");
-        }
+        //[Test]
+        //public void LogicalOperator_InvalidAnd()
+        //{
+        //    var query = new WhereLogic(null);
+        //    Action act = () => query.And();
+        //    act.Should()
+        //        .Throw<InvalidOperationException>()
+        //        .WithMessage("The 'AND' logical operator cannot be the first part of a WHERE clause.");
+        //}
 
         [Test]
         public void LogicalOperator_ValidAnd()

@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override string Stringify()
         {
             var conditionString = new StringBuilder();
-            conditionString.Append($"{Field} {QueryConstants.ComparisonOperators[Operator]} ");
+            conditionString.Append($"{Field} {QueryConstants.ComparisonOperatorMap[Operator]} ");
 
             // check to see if the input is numeric value -- if not, we need single quotes around Value
             if (typeof(T) == typeof(string))
