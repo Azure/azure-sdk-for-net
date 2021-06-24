@@ -897,6 +897,44 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeRequestConditions.IfUnmodifiedSince))]
+        [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
+        public async Task SetMetadataAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+
+            IDictionary<string, string> metadata = BuildMetadata();
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(DataLakeRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(DataLakeRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                fileSystemClient.SetMetadataAsync(
+                    metadata: metadata,
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SetMetadata does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
