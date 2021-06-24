@@ -121,7 +121,7 @@ if ($packages)
                 # Ignore API review status for prerelease version
                 Write-Host "Package version is not GA. Ignoring API view approval status"
             }
-            elseif (!$pkgInfo.ReleaseDate -or $pkgInfo.ReleaseDate -eq "Unreleased")
+            elseif (!$pkgInfo.ReleaseStatus -or $pkgInfo.ReleaseStatus -eq "Unreleased")
             {
                 Write-Host "Release date is not set for current version in change log file for package. Ignoring API review approval status since package is not yet ready for release."
             }

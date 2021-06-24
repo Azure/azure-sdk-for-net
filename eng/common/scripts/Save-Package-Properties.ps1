@@ -22,7 +22,7 @@ if ($allPackageProperties)
             Write-Host "Package Version: $($pkg.Version)"
             Write-Host "Package SDK Type: $($pkg.SdkType)"
             Write-Host "Artifact Name: $($pkg.ArtifactName)"
-            Write-Host "Release date: $($pkg.ReleaseDate)"
+            Write-Host "Release date: $($pkg.ReleaseStatus)"
             $configFilePrefix = $pkg.Name
             if ($pkg.ArtifactName)
             {

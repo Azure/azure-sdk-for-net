@@ -13,7 +13,7 @@ class PackageProps
     [string]$SdkType
     [boolean]$IsNewSdk
     [string]$ArtifactName
-    [string]$ReleaseDate
+    [string]$ReleaseStatus
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -51,9 +51,9 @@ class PackageProps
             $this.ChangeLogPath = Join-Path $directoryPath "CHANGELOG.md"
             # Get release date for current version and set in package property
             $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $this.ChangeLogPath -VersionString $this.Version
-            if ($changeLogEntry -and ![System.String]::IsNullOrEmpty($changeLogEntry.ReleaseStatus))
+            if ($changeLogEntry -and !$changeLogEntry.ReleaseStatus)
             {
-              $this.ReleaseDate = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
+              $this.ReleaseStatus = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
             } 
         }
         else
