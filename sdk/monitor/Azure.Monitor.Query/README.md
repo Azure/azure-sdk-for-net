@@ -187,33 +187,26 @@ foreach (var row in table.Rows)
 
 ### Increase query timeout
 
-Some queries take longer to execute than the default service timeout allows. You can use the `LogsQueryOptions` parameter to specify the service timeout.
+Some Logs queries take longer than 3 minutes to execute. The default server timeout is 3 minutes. You can increase the server timeout to a maximum of 10 minutes. In the following example, the `LogsQueryOptions` object's `ServerTimeout` property is used to set the server timeout to 10 minutes:
 
-```C# Snippet:QueryLogsPrintTable
+```C# Snippet:QueryLogsWithTimeout
 Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
 
 LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
-LogsQueryResultTable table = response.Value.PrimaryTable;
-
-foreach (var column in table.Columns)
-{
-    Console.Write(column.Name + ";");
-}
-
-Console.WriteLine();
-
-var columnCount = table.Columns.Count;
-foreach (var row in table.Rows)
-{
-    for (int i = 0; i < columnCount; i++)
+// Query TOP 10 resource groups by event count
+Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(workspaceId,
+    "AzureActivity | summarize count()",
+    TimeSpan.FromDays(1),
+    options: new LogsQueryOptions()
     {
-        Console.Write(row[i] + ";");
-    }
+        ServerTimeout = TimeSpan.FromMinutes(10)
+    });
 
-    Console.WriteLine();
+foreach (var resourceGroup in response.Value)
+{
+    Console.WriteLine(resourceGroup);
 }
 ```
 

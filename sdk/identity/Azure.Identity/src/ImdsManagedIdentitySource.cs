@@ -23,11 +23,18 @@ namespace Azure.Identity
         internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
 
         private readonly string _clientId;
+        private readonly Uri _imdsEndpoint;
 
         private string _identityUnavailableErrorMessage;
 
         public static async ValueTask<ManagedIdentitySource> TryCreateAsync(ManagedIdentityClientOptions options, bool async, CancellationToken cancellationToken)
         {
+            // if the PodIdenityEndpoint environment variable was set no need to probe the endpoint, it can be assumed to exist
+            if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
+            {
+                return new ImdsManagedIdentitySource(options.Pipeline, options.ClientId, new Uri(EnvironmentVariables.PodIdentityEndpoint));
+            }
+
             AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
 
             bool available;
@@ -71,9 +78,10 @@ namespace Azure.Identity
             return available ? new ImdsManagedIdentitySource(options.Pipeline, options.ClientId) : default;
         }
 
-        internal ImdsManagedIdentitySource(CredentialPipeline pipeline, string clientId) : base(pipeline)
+        internal ImdsManagedIdentitySource(CredentialPipeline pipeline, string clientId, Uri imdsEndpoint = default) : base(pipeline)
         {
             _clientId = clientId;
+            _imdsEndpoint = imdsEndpoint ?? s_imdsEndpoint;
         }
 
         protected override Request CreateRequest(string[] scopes)
@@ -89,7 +97,7 @@ namespace Azure.Identity
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Headers.Add("Metadata", "true");
-            request.Uri.Reset(s_imdsEndpoint);
+            request.Uri.Reset(_imdsEndpoint);
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
             request.Uri.AppendQuery("resource", resource);

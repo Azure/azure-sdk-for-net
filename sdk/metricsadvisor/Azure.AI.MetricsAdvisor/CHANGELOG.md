@@ -10,8 +10,13 @@
 ### Breaking Changes
 - Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
 - `DimensionKey` is not an `IEquatable` anymore. Equality will be calculated based on reference only.
-- The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in types, methods, and properties.
 - `DimensionKey` constructor now takes the required `dimension` parameter.
+- The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in methods, method parameters, and properties.
+  - Renamed class `DatasourceCredential` to `DataSourceCredentialEntity`.
+  - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataSourceDataLakeGen2SharedKey`.
+  - Renamed class `ServicePrincipalDatasourceCredential` to `DataSourceServicePrincipal`.
+  - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `DataSourceServicePrincipalInKeyVault`.
+  - Renamed class `SqlConnectionStringDatasourceCredential` to `DataSourceSqlConnectionString`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
