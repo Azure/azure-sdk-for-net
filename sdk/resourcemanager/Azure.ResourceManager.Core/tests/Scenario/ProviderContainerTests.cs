@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void GetNullException()
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
-            Assert.Throws<ArgumentNullException>(() => { providerContainer.Get(null); });
+            Assert.Throws<ArgumentNullException>(async () => {await providerContainer.GetAsync(null); });
         }
 
         [TestCase]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void GetEmptyException()
         {
             ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
-            Assert.Throws<ArgumentException>(() => { providerContainer.Get(""); });
+            Assert.Throws<ArgumentException>(async () => {await providerContainer.GetAsync(""); });
         }
 
         [TestCase]
