@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
@@ -235,14 +236,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}}";
             Sku sku = new("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 123456789);
-            var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteObjectValue(sku);
-            writer.WriteEndObject();
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            var json = JsonHelper.SerializePropertiesToString(sku);
             Assert.IsTrue(expected.Equals(json));
         }
 
@@ -250,14 +244,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void InvalidSerializationTest()
         {
             Sku sku = new(null, null, null, null);
-            var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteObjectValue(sku);
-            writer.WriteEndObject();
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            var json = JsonHelper.SerializePropertiesToString(sku);
             Assert.IsTrue(json.Equals("{\"properties\":{}}"));
         }
 

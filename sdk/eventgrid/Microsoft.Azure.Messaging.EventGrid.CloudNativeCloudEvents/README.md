@@ -54,7 +54,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
         new AzureKeyCredential(TestEnvironment.CloudEventTopicKey));
 
 var cloudEvent =
-    new CloudEvent 
+    new CloudEvent
     {
         Type = "record",
         Source = new Uri("http://www.contoso.com"),
