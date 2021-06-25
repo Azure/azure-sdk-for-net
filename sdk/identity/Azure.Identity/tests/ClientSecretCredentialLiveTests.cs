@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
@@ -48,8 +48,10 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(token.Token, cachedToken.Token);
 
+            var options2 = InstrumentClientOptions(new ClientSecretCredentialOptions());
+
             // ensure new credentials don't share tokens from the cache
-            var credential2 = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential2 = new ClientSecretCredential(tenantId, clientId, secret, options2);
 
             AccessToken token2 = await credential2.GetTokenAsync(tokenRequestContext);
 
@@ -70,7 +72,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure we can initially acquire a  token
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext));

@@ -23,7 +23,6 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
-using System.Collections.Generic;
 using Azure.Communication.Sms;
 ```
 
@@ -57,7 +56,7 @@ Console.WriteLine($"Sms id: {sendResult.MessageId}");
 ### Send a 1:N SMS Message
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
 You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
-```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
+```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptionsAsync
 var response = await smsClient.SendAsync(
     from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers

@@ -45,5 +45,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The retention policy which determines how long the associated data should persist.
         /// </summary>
         public DataLakeRetentionPolicy DeleteRetentionPolicy { get; set; }
+
+        /// <summary>
+        /// The properties that enable an account to host a static website.
+        /// </summary>
+        public DataLakeStaticWebsite StaticWebsite { get; set; }
     }
 }

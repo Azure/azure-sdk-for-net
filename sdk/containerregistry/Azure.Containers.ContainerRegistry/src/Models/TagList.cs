@@ -10,28 +10,32 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class TagList
     {
         /// <summary> List of tag attribute details. </summary>
-        public IReadOnlyList<TagProperties> Tags
+        public IReadOnlyList<ArtifactTagProperties> Tags
         {
             get
             {
-                List<TagProperties> tags = new List<TagProperties>();
+                List<ArtifactTagProperties> tags = new List<ArtifactTagProperties>(this.TagAttributeBases.Count);
                 foreach (var tag in this.TagAttributeBases)
                 {
-                    tags.Add(FromTagAttributesBase(this.Repository, tag));
+                    tags.Add(FromTagAttributesBase(this.RegistryLoginServer, this.Repository, tag));
                 }
                 return tags.AsReadOnly();
             }
         }
 
-        internal static TagProperties FromTagAttributesBase(string repository, TagAttributesBase attributesBase)
+        internal static ArtifactTagProperties FromTagAttributesBase(string registry, string repository, TagAttributesBase attributesBase)
         {
-            return new TagProperties(
+            return new ArtifactTagProperties(
+                registry,
                 repository,
                 attributesBase.Name,
                 attributesBase.Digest,
                 attributesBase.CreatedOn,
                 attributesBase.LastUpdatedOn,
-                attributesBase.WriteableProperties);
+                attributesBase.CanDelete,
+                attributesBase.CanWrite,
+                attributesBase.CanList,
+                attributesBase.CanRead);
         }
     }
 }

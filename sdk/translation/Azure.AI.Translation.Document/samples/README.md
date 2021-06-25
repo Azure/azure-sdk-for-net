@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-document-translation
+- azure-translator
 name: Azure DocumentTranslation samples for .NET
 description: Samples for the Azure.AI.Translation.Document client library
 ---
@@ -24,5 +24,6 @@ Azure Cognitive Services Document Translation is a cloud service that translates
 
 ## Advanced samples
 - [Multiple Inputs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/Sample4_MultipleInputs.md)
+- [Create Storage Containers And Submit Operation (code sample)](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslationWithAzureBlob.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

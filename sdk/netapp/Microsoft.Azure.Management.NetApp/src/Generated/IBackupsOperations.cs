@@ -24,6 +24,40 @@ namespace Microsoft.Azure.Management.NetApp
     public partial interface IBackupsOperations
     {
         /// <summary>
+        /// Get volume's backup status
+        /// </summary>
+        /// <remarks>
+        /// Get the status of the backup for a volume
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the NetApp account
+        /// </param>
+        /// <param name='poolName'>
+        /// The name of the capacity pool
+        /// </param>
+        /// <param name='volumeName'>
+        /// The name of the volume
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BackupStatus>> GetStatusWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List Backups
         /// </summary>
         /// <remarks>
@@ -61,7 +95,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Get a backup
         /// </summary>
         /// <remarks>
-        /// Get a particular backup of the volume
+        /// Gets the specified backup of the volume
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

@@ -65,5 +65,5 @@ To delete a pipeline no longer needed call `StartDeletePipeline`, passing in the
 
 ```C# Snippet:DeletePipeline
 PipelineDeletePipelineOperation deleteOperation = client.StartDeletePipeline(pipelineName);
-await deleteOperation.WaitForCompletionAsync();
+await deleteOperation.WaitForCompletionResponseAsync();
 ```

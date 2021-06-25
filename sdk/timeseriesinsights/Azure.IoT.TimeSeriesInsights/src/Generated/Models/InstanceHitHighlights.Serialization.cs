@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.IoT.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class InstanceHitHighlights
+    internal partial class InstanceHitHighlights
     {
         internal static InstanceHitHighlights DeserializeInstanceHitHighlights(JsonElement element)
         {

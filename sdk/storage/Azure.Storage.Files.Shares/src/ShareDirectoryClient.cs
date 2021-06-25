@@ -193,7 +193,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
             _directoryRestClient = BuildDirectoryRestClient(_uri);
         }
@@ -297,7 +297,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
@@ -325,16 +325,10 @@ namespace Azure.Storage.Files.Shares
 
         private DirectoryRestClient BuildDirectoryRestClient(Uri uri)
         {
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
-            {
-                ShareName = null,
-                DirectoryOrFilePath = null
-            };
             return new DirectoryRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: $"{ShareName}/{Path.EscapePath()}",
+                uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

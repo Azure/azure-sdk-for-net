@@ -9,7 +9,7 @@ using Azure.Test.Perf;
 namespace Azure.Messaging.EventHubs.Perf
 {
     /// <summary>
-    ///   A base class for Event Hubs performance test scenarios, facilitating.
+    ///   A base class for Event Hubs performance test scenarios.
     /// </summary>
     ///
     /// <seealso cref="Azure.Test.Perf.PerfTest{SizeCountOptions}" />

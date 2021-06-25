@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     /// <summary>
-    /// Represents a response for an Attestation Service API.
+    /// Represents a response from an Attestation Service API.
     /// </summary>
     public class AttestationResponse<T> : Response<T>
         where T: class
@@ -32,7 +32,10 @@ namespace Azure.Security.Attestation
             _body = body;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the body of the response. This normally corresponds to the structure returned by the attestation
+        /// service.
+        /// </summary>
         public override T Value => _body ?? _token.GetBody<T>();
 
         /// <summary>
@@ -40,7 +43,10 @@ namespace Azure.Security.Attestation
         /// </summary>
         public AttestationToken Token => _token;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the underlying <see cref="Response"/> returned from the remote service.
+        /// </summary>
+        /// <returns>The response returned from the remote service. <see cref="Response{T}.GetRawResponse"/></returns>
         public override Response GetRawResponse() => _response;
     }
 }

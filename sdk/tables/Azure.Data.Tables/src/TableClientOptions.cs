@@ -49,5 +49,14 @@ namespace Azure.Data.Tables
             V2019_02_02 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        internal static TableClientOptions DefaultOptions => new()
+        {
+            Diagnostics =
+            {
+                LoggedHeaderNames = { "x-ms-request-id", "DataServiceVersion" },
+                LoggedQueryParameters = { "api-version", "format", "filter" }
+            }
+        };
     }
 }

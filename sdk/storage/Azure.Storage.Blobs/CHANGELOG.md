@@ -1,9 +1,31 @@
 # Release History
 
-## 12.9.0-beta.3 (Unreleased)
+## 12.9.0-beta.5 (Unreleased)
+- Fixed bug where BlobClient.DownloadStreaming or BlobClient.DownloadData could corrupt data on retry.
+- Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in BlobClient.DownloadTo.
+- Fixed bug where specifying conditions in BlobBaseClient.OpenRead could override allowModifications flag in BlobOpenReadOptions leading to inconsistent read.
+- Fixed bug where BlobProperties.IsLatestVersion from BlobBaseClient.GetProperties did not set the value (defaulted to false).
+- Fixed bug where reading blob with Client Side Encryption enabled results in high CPU.
+
+## 12.8.4 (2021-05-20)
+- Fixed bug where Client Side Encryption during large transactions (greater than max int value) would throw an exception.
+
+## 12.9.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
-- Added support for Blob Query Parquet input format.
+- Added WithCustomerProvidedKey() and WithEncryptionScope() to BlobClient, BlobBaseClient, AppendBlobClient, and PageBlobClient.
+- BlobLeaseClient now remembers the Lease ID after a lease change.
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a BlobSasBuilder parameter.
+- Fixed bug where BlobBaseClient.Exists() would not function correctly on blobs encrypted with CPK.
+- Includes all updates and fixes from 12.8.2 and 12.8.3
+
+## 12.8.3 (2021-04-27)
+- Fixed bug where Stream returned by BlockBlobClient.OpenWrite could corrupt blocks if flushed between writes.
+
+## 12.8.2 (2021-04-27)
+- This release contains bug fixes to improve quality.
+
+## 12.9.0-beta.3 (2021-04-09)
+- This release contains bug fixes to improve quality.
 
 ## 12.8.1 (2021-03-29)
 - Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.

@@ -19,11 +19,17 @@ param(
 Set-StrictMode -Version 3
 
 if (!(Get-Command az -ErrorAction SilentlyContinue)) {
-  Write-Host 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
+  Write-Error 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
   exit 1
 }
 
-az extension show -n azure-devops > $null
+az account show *> $null
+if (!$?) {
+  Write-Host 'Running az login...'
+  az login *> $null
+}
+
+az extension show -n azure-devops *> $null
 if (!$?){
   Write-Host 'Installing azure-devops extension'
   az extension add --name azure-devops
@@ -58,51 +64,22 @@ $plannedVersions = @(
   }
 )
 
-$workItem = FindPackageWorkItem -lang $language -packageName $packageName -version $versionMajorMinor -includeClosed $true -outputCommand $false
-
-if (!$workItem) {
-  $latestVersionItem = FindLatestPackageWorkItem -lang $language -packageName $packageName -outputCommand $false
-  $assignedTo = "me"
-  if ($latestVersionItem) {
-    Write-Host "Copying data from latest matching [$($latestVersionItem.id)] with version $($latestVersionItem.fields["Custom.PackageVersionMajorMinor"])"
-    if ($latestVersionItem.fields["System.AssignedTo"]) {
-      $assignedTo = $latestVersionItem.fields["System.AssignedTo"]["uniqueName"]
-    }
-    $packageInfo.DisplayName = $latestVersionItem.fields["Custom.PackageDisplayName"]
-    $packageInfo.ServiceName = $latestVersionItem.fields["Custom.ServiceName"]
-    if (!$packageInfo.RepoPath -and $packageInfo.RepoPath -ne "NA" -and $packageInfo.fields["Custom.PackageRepoPath"]) {
-      $packageInfo.RepoPath = $packageInfo.fields["Custom.PackageRepoPath"]
-    }
-  }
-
-  Write-Host "Creating a release work item for a package release with the following properties:"
-  Write-Host "  Lanuage: $language"
-  Write-Host "  Version: $versionMajorMinor"
-  Write-Host "  Package: $packageName"
-  Write-Host "  AssignedTo: $assignedTo"
-
-  if (!$packageInfo.DisplayName) {
-    Write-Host "We need a package display name to be used in various places and it should be consistent across languages for similar packages."
-    while (($readInput = Read-Host -Prompt "Input the display name") -eq "") { }
-    $packageInfo.DisplayName = $readInput
-  }
-  Write-Host "  PackageDisplayName: $($packageInfo.DisplayName)"
-
-  if (!$packageInfo.ServiceName) {
-    Write-Host "We need a package service name to be used in various places and it should be consistent across languages for similar packages."
-    while (($readInput = Read-Host -Prompt "Input the service name") -eq "") { }
-    $packageInfo.ServiceName = $readInput
-  }
-  Write-Host "  ServiceName: $($packageInfo.ServiceName)"
-  Write-Host "  PackageType: $packageType"
-
-  $workItem = CreateOrUpdatePackageWorkItem -lang $language -pkg $packageInfo -verMajorMinor $versionMajorMinor -assignedTo $assignedTo -outputCommand $false
-}
+$workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false
 
 if (!$workItem) {
   Write-Host "Something failed as we don't have a work-item so exiting."
   exit 1
 }
+
+Write-Host "Updated or created a release work item for a package release with the following properties:"
+Write-Host "  Lanuage: $($workItem.fields['Custom.Language'])"
+Write-Host "  Version: $($workItem.fields['Custom.PackageVersionMajorMinor'])"
+Write-Host "  Package: $($workItem.fields['Custom.Package'])"
+Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+Write-Host "  PackageDisplayName: $($workItem.fields['Custom.PackageDisplayName'])"
+Write-Host "  ServiceName: $($workItem.fields['Custom.ServiceName'])"
+Write-Host "  PackageType: $($workItem.fields['Custom.PackageType'])"
+Write-Host ""
 Write-Host "Marking item [$($workItem.id)]$($workItem.fields['System.Title']) as '$state' for '$releaseType'"
 $updatedWI = UpdatePackageWorkItemReleaseState -id $workItem.id -state "In Release" -releaseType $releaseType -outputCommand $false
 $updatedWI = UpdatePackageVersions $workItem -plannedVersions $plannedVersions

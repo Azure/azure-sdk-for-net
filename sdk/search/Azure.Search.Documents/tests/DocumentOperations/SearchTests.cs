@@ -174,16 +174,12 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchClient client = resources.GetQueryClient(
-                new SearchClientOptions()
+                new SearchClientOptions(ServiceVersion)
                 {
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            Converters =
-                            {
-                                new GeoJsonConverter()
-                            }
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                         })
                 });
             SearchResults<UncasedHotel> response = await client.SearchAsync<UncasedHotel>("*");

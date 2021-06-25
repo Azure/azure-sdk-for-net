@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices.ComTypes;
 using Azure.Core;
 
 namespace Azure.Data.Tables
@@ -59,8 +58,8 @@ namespace Azure.Data.Tables
         /// <value>An <see cref="ETag"/> containing the ETag value for the entity.</value>
         public ETag ETag
         {
-            get { return new ETag(GetString(TableConstants.PropertyNames.ETag)); }
-            set { _properties[TableConstants.PropertyNames.ETag] = value.ToString(); }
+            get { return new(GetString(TableConstants.PropertyNames.EtagOdata)); }
+            set { _properties[TableConstants.PropertyNames.EtagOdata] = value.ToString(); }
         }
 
         /// <summary>

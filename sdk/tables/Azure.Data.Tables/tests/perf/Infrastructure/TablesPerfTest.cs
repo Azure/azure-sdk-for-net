@@ -16,16 +16,25 @@ namespace Azure.Data.Tables.Performance
         private const string stringValue = "This is a string";
         private Guid guid = Guid.NewGuid();
         private DateTime dt = DateTime.UtcNow;
-        private byte[] binary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
-        private static TablesTestEnvironment _environment = new TablesTestEnvironment();
+
+        private byte[] binary =
+        {
+            0x01,
+            0x02,
+            0x03,
+            0x04,
+            0x05
+        };
+
+        private static TablesTestEnvironment _environment = new();
         private const string PartitionKey = "performance";
         private const string TableName = "perfTestTable";
 
         protected TablesTestEnvironment TestEnvironment => _environment;
 
-        protected TableTransactionalBatch GetBatch() => Client?.CreateTransactionalBatch(PartitionKey);
+        protected List<TableTransactionAction> GetBatch() => new();
 
-        protected TableClient Client {get; private set; }
+        protected TableClient Client { get; private set; }
 
         public TablesPerfTest(TablePerfOptions options) : base(options)
         { }
@@ -54,10 +63,10 @@ namespace Azure.Data.Tables.Performance
             };
 
             Client = new TableClient(
-                 new Uri(serviceUri),
-                 TableName,
-                 new TableSharedKeyCredential(accountName, accountKey),
-                 new TableClientOptions());
+                new Uri(serviceUri),
+                TableName,
+                new TableSharedKeyCredential(accountName, accountKey),
+                new TableClientOptions());
 
             await Client.CreateIfNotExistsAsync().ConfigureAwait(false);
 
@@ -76,7 +85,8 @@ namespace Azure.Data.Tables.Performance
             var entity = new T();
             return entity switch
             {
-                SimplePerfEntity _ => (IEnumerable<T>)Enumerable.Range(1, Options.Count).Select(n =>
+                SimplePerfEntity _ => (IEnumerable<T>)Enumerable.Range(1, Options.Count)
+                    .Select(n =>
                     {
                         string number = n.ToString();
                         return new SimplePerfEntity
@@ -92,7 +102,8 @@ namespace Azure.Data.Tables.Performance
                             StringTypeProperty7 = stringValue,
                         };
                     }),
-                ComplexPerfEntity _ => (IEnumerable<T>)Enumerable.Range(1, Options.Count).Select(n =>
+                ComplexPerfEntity _ => (IEnumerable<T>)Enumerable.Range(1, Options.Count)
+                    .Select(n =>
                     {
                         string number = n.ToString();
                         return new ComplexPerfEntity
@@ -116,6 +127,7 @@ namespace Azure.Data.Tables.Performance
         {
             await BatchInsertEntitiesInternalAsync(true, entities, cancellationToken).ConfigureAwait(false);
         }
+
         protected void BatchInsertEntities<T>(IEnumerable<T> entities, CancellationToken cancellationToken) where T : class, ITableEntity, new()
         {
             BatchInsertEntitiesInternalAsync(false, entities, cancellationToken).GetAwaiter().GetResult();
@@ -123,23 +135,23 @@ namespace Azure.Data.Tables.Performance
 
         protected async Task BatchInsertEntitiesInternalAsync<T>(bool async, IEnumerable<T> entities, CancellationToken cancellationToken) where T : class, ITableEntity, new()
         {
-            TableTransactionalBatch batch = GetBatch();
+            List<TableTransactionAction> batch = GetBatch();
 
             int i = 1;
             foreach (T entity in entities)
             {
-                batch.AddEntity(entity);
+                batch.Add(new TableTransactionAction(TableTransactionActionType.Add, entity));
                 i++;
                 if (i % 100 == 0 || i == Options.Count)
                 {
                     // Maximum batch size is 100. Submit the current batch and create a new one.
                     if (async)
                     {
-                        await batch.SubmitBatchAsync(cancellationToken).ConfigureAwait(false);
+                        await Client.SubmitTransactionAsync(batch, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        batch.SubmitBatch(cancellationToken);
+                        Client.SubmitTransaction(batch, cancellationToken);
                     }
                     batch = GetBatch();
                 }

@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0_preview_1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when making requests
@@ -36,7 +36,7 @@ namespace Azure.AI.Translation.Document
         {
             return Version switch
             {
-                ServiceVersion.V1_0_preview_1 => "1.0-preview.1",
+                ServiceVersion.V1_0 => "1.0",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }
@@ -48,9 +48,9 @@ namespace Azure.AI.Translation.Document
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Version 1.0-preview.1
+            /// Version 1.0 .
             /// </summary>
-            V1_0_preview_1 = 1
+            V1_0 = 1
         }
     }
 }

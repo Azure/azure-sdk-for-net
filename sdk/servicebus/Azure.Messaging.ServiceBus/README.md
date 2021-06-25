@@ -56,6 +56,34 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
+### ASP.NET Core
+
+To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, register the client in the `Startup.ConfigureServices` method:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        builder.AddServiceBusClient(Configuration.GetConnectionString("ServiceBus"));
+    });
+  
+    services.AddControllers();
+}
+```
+
+To use the preceding code, add this to your configuration:
+
+```json
+{
+  "ConnectionStrings": {
+    "ServiceBus": "<connection_string>"
+  }
+}
+```
+
+For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
+
 ## Key concepts
 
 Once you've initialized a `ServiceBusClient`, you can interact with the primary resource types within a Service Bus Namespace, of which multiple can exist and on which actual message transmission takes place, the namespace often serving as an application container:
@@ -263,7 +291,7 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 
 ### Dead letter a message
 
-Dead lettering a message is similar to deferring with one main difference being that messages will be automatically dead lettered by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue.
+Dead lettering a message is similar to deferring with one main difference being that messages will be automatically dead lettered by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue. Note that the `ServiceBusReceiver` is used to receive messages from the dead letter subqueue regardless of whether or not the main queue is session-enabled.
 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();

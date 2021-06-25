@@ -36,5 +36,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Consumption SKU of Api Management.
         /// </summary>
         public const string Consumption = "Consumption";
+        /// <summary>
+        /// Isolated SKU of Api Management.
+        /// </summary>
+        public const string Isolated = "Isolated";
     }
 }

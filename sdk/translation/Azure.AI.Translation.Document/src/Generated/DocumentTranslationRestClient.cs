@@ -40,24 +40,21 @@ namespace Azure.AI.Translation.Document
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSubmitBatchRequestRequest(BatchSubmissionRequest body)
+        internal HttpMessage CreateStartTranslationRequest(StartTranslationDetails body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
@@ -82,11 +79,17 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="body"> request details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders>> SubmitBatchRequestAsync(BatchSubmissionRequest body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<DocumentTranslationStartTranslationHeaders>> StartTranslationAsync(StartTranslationDetails body, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSubmitBatchRequestRequest(body);
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateStartTranslationRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationSubmitBatchRequestHeaders(message.Response);
+            var headers = new DocumentTranslationStartTranslationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -117,11 +120,17 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="body"> request details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders> SubmitBatchRequest(BatchSubmissionRequest body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> StartTranslation(StartTranslationDetails body, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSubmitBatchRequestRequest(body);
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateStartTranslationRequest(body);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationSubmitBatchRequestHeaders(message.Response);
+            var headers = new DocumentTranslationStartTranslationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -131,14 +140,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetOperationsRequest(int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        internal HttpMessage CreateGetTranslationsStatusRequest(int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches", false);
             if (top != null)
             {
@@ -263,18 +272,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BatchStatusResponse, DocumentTranslationGetOperationsHeaders>> GetOperationsAsync(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusAsync(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationsRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetTranslationsStatusRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetOperationsHeaders(message.Response);
+            var headers = new DocumentTranslationGetTranslationsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BatchStatusResponse value = default;
+                        TranslationsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BatchStatusResponse.DeserializeBatchStatusResponse(document.RootElement);
+                        value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -368,18 +377,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BatchStatusResponse, DocumentTranslationGetOperationsHeaders> GetOperations(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatus(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationsRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetTranslationsStatusRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetOperationsHeaders(message.Response);
+            var headers = new DocumentTranslationGetTranslationsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BatchStatusResponse value = default;
+                        TranslationsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BatchStatusResponse.DeserializeBatchStatusResponse(document.RootElement);
+                        value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -394,7 +403,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/documents/", false);
@@ -450,14 +459,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetOperationStatusRequest(Guid id)
+        internal HttpMessage CreateGetTranslationStatusRequest(Guid id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             request.Uri = uri;
@@ -472,11 +481,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetOperationStatusHeaders>> GetOperationStatusAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationStatusRequest(id);
+            using var message = CreateGetTranslationStatusRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetOperationStatusHeaders(message.Response);
+            var headers = new DocumentTranslationGetTranslationStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -498,11 +507,11 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetOperationStatusHeaders> GetOperationStatus(Guid id, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationStatusRequest(id);
+            using var message = CreateGetTranslationStatusRequest(id);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetOperationStatusHeaders(message.Response);
+            var headers = new DocumentTranslationGetTranslationStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -517,14 +526,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateCancelOperationRequest(Guid id)
+        internal HttpMessage CreateCancelTranslationRequest(Guid id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             request.Uri = uri;
@@ -533,11 +542,11 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Cancel a currently processing or queued operation.
+        /// Cancel a currently processing or queued translation.
         /// 
-        /// Cancel a currently processing or queued operation.
+        /// Cancel a currently processing or queued translation.
         /// 
-        /// An operation will not be cancelled if it is already completed or failed or cancelling. A bad request will be returned.
+        /// A translation will not be cancelled if it is already completed or failed or cancelling. A bad request will be returned.
         /// 
         /// All documents that have completed translation will not be cancelled and will be charged.
         /// 
@@ -545,9 +554,9 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TranslationStatusResult>> CancelOperationAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Response<TranslationStatusResult>> CancelTranslationAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCancelOperationRequest(id);
+            using var message = CreateCancelTranslationRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -564,11 +573,11 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Cancel a currently processing or queued operation.
+        /// Cancel a currently processing or queued translation.
         /// 
-        /// Cancel a currently processing or queued operation.
+        /// Cancel a currently processing or queued translation.
         /// 
-        /// An operation will not be cancelled if it is already completed or failed or cancelling. A bad request will be returned.
+        /// A translation will not be cancelled if it is already completed or failed or cancelling. A bad request will be returned.
         /// 
         /// All documents that have completed translation will not be cancelled and will be charged.
         /// 
@@ -576,9 +585,9 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<TranslationStatusResult> CancelOperation(Guid id, CancellationToken cancellationToken = default)
+        public Response<TranslationStatusResult> CancelTranslation(Guid id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCancelOperationRequest(id);
+            using var message = CreateCancelTranslationRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -594,14 +603,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetOperationDocumentsStatusRequest(Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        internal HttpMessage CreateGetDocumentsStatusRequest(Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/documents", false);
@@ -723,18 +732,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DocumentStatusResponse, DocumentTranslationGetOperationDocumentsStatusHeaders>> GetOperationDocumentsStatusAsync(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusAsync(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetOperationDocumentsStatusHeaders(message.Response);
+            var headers = new DocumentTranslationGetDocumentsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentStatusResponse value = default;
+                        DocumentsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DocumentStatusResponse.DeserializeDocumentStatusResponse(document.RootElement);
+                        value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -823,18 +832,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DocumentStatusResponse, DocumentTranslationGetOperationDocumentsStatusHeaders> GetOperationDocumentsStatus(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatus(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetOperationDocumentsStatusHeaders(message.Response);
+            var headers = new DocumentTranslationGetDocumentsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentStatusResponse value = default;
+                        DocumentsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DocumentStatusResponse.DeserializeDocumentStatusResponse(document.RootElement);
+                        value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -842,14 +851,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetDocumentFormatsRequest()
+        internal HttpMessage CreateGetSupportedDocumentFormatsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/documents/formats", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -862,18 +871,18 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension, as well as the content-type if using the upload API.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileFormatListResult, DocumentTranslationGetDocumentFormatsHeaders>> GetDocumentFormatsAsync(CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetDocumentFormatsRequest();
+            using var message = CreateGetSupportedDocumentFormatsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetDocumentFormatsHeaders(message.Response);
+            var headers = new DocumentTranslationGetSupportedDocumentFormatsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FileFormatListResult value = default;
+                        SupportedFileFormats value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FileFormatListResult.DeserializeFileFormatListResult(document.RootElement);
+                        value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -887,18 +896,18 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension, as well as the content-type if using the upload API.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileFormatListResult, DocumentTranslationGetDocumentFormatsHeaders> GetDocumentFormats(CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetDocumentFormatsRequest();
+            using var message = CreateGetSupportedDocumentFormatsRequest();
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetDocumentFormatsHeaders(message.Response);
+            var headers = new DocumentTranslationGetSupportedDocumentFormatsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FileFormatListResult value = default;
+                        SupportedFileFormats value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FileFormatListResult.DeserializeFileFormatListResult(document.RootElement);
+                        value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -906,14 +915,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetGlossaryFormatsRequest()
+        internal HttpMessage CreateGetSupportedGlossaryFormatsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/glossaries/formats", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -926,18 +935,18 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension used.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileFormatListResult, DocumentTranslationGetGlossaryFormatsHeaders>> GetGlossaryFormatsAsync(CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetGlossaryFormatsRequest();
+            using var message = CreateGetSupportedGlossaryFormatsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetGlossaryFormatsHeaders(message.Response);
+            var headers = new DocumentTranslationGetSupportedGlossaryFormatsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FileFormatListResult value = default;
+                        SupportedFileFormats value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FileFormatListResult.DeserializeFileFormatListResult(document.RootElement);
+                        value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -951,18 +960,18 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension used.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileFormatListResult, DocumentTranslationGetGlossaryFormatsHeaders> GetGlossaryFormats(CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetGlossaryFormatsRequest();
+            using var message = CreateGetSupportedGlossaryFormatsRequest();
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetGlossaryFormatsHeaders(message.Response);
+            var headers = new DocumentTranslationGetSupportedGlossaryFormatsHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FileFormatListResult value = default;
+                        SupportedFileFormats value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FileFormatListResult.DeserializeFileFormatListResult(document.RootElement);
+                        value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -970,14 +979,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetDocumentStorageSourceRequest()
+        internal HttpMessage CreateGetSupportedStorageSourcesRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/storagesources", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -986,18 +995,18 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Returns a list of storage sources/options supported by the Document Translation service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<StorageSourceListResult, DocumentTranslationGetDocumentStorageSourceHeaders>> GetDocumentStorageSourceAsync(CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders>> GetSupportedStorageSourcesAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetDocumentStorageSourceRequest();
+            using var message = CreateGetSupportedStorageSourcesRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetDocumentStorageSourceHeaders(message.Response);
+            var headers = new DocumentTranslationGetSupportedStorageSourcesHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StorageSourceListResult value = default;
+                        SupportedStorageSources value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageSourceListResult.DeserializeStorageSourceListResult(document.RootElement);
+                        value = SupportedStorageSources.DeserializeSupportedStorageSources(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -1007,18 +1016,18 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Returns a list of storage sources/options supported by the Document Translation service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StorageSourceListResult, DocumentTranslationGetDocumentStorageSourceHeaders> GetDocumentStorageSource(CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders> GetSupportedStorageSources(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetDocumentStorageSourceRequest();
+            using var message = CreateGetSupportedStorageSourcesRequest();
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetDocumentStorageSourceHeaders(message.Response);
+            var headers = new DocumentTranslationGetSupportedStorageSourcesHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StorageSourceListResult value = default;
+                        SupportedStorageSources value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageSourceListResult.DeserializeStorageSourceListResult(document.RootElement);
+                        value = SupportedStorageSources.DeserializeSupportedStorageSources(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -1026,14 +1035,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        internal HttpMessage CreateGetTranslationsStatusNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1128,23 +1137,23 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BatchStatusResponse, DocumentTranslationGetOperationsHeaders>> GetOperationsNextPageAsync(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusNextPageAsync(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetOperationsNextPageRequest(nextLink, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetTranslationsStatusNextPageRequest(nextLink, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetOperationsHeaders(message.Response);
+            var headers = new DocumentTranslationGetTranslationsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BatchStatusResponse value = default;
+                        TranslationsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BatchStatusResponse.DeserializeBatchStatusResponse(document.RootElement);
+                        value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -1240,23 +1249,23 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<BatchStatusResponse, DocumentTranslationGetOperationsHeaders> GetOperationsNextPage(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatusNextPage(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetOperationsNextPageRequest(nextLink, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetTranslationsStatusNextPageRequest(nextLink, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetOperationsHeaders(message.Response);
+            var headers = new DocumentTranslationGetTranslationsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BatchStatusResponse value = default;
+                        TranslationsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BatchStatusResponse.DeserializeBatchStatusResponse(document.RootElement);
+                        value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -1264,14 +1273,14 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        internal HttpMessage CreateGetOperationDocumentsStatusNextPageRequest(string nextLink, Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        internal HttpMessage CreateGetDocumentsStatusNextPageRequest(string nextLink, Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1361,23 +1370,23 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentStatusResponse, DocumentTranslationGetOperationDocumentsStatusHeaders>> GetOperationDocumentsStatusNextPageAsync(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusNextPageAsync(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetOperationDocumentsStatusNextPageRequest(nextLink, id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetDocumentsStatusNextPageRequest(nextLink, id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentTranslationGetOperationDocumentsStatusHeaders(message.Response);
+            var headers = new DocumentTranslationGetDocumentsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentStatusResponse value = default;
+                        DocumentsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DocumentStatusResponse.DeserializeDocumentStatusResponse(document.RootElement);
+                        value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -1468,23 +1477,23 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<DocumentStatusResponse, DocumentTranslationGetOperationDocumentsStatusHeaders> GetOperationDocumentsStatusNextPage(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatusNextPage(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetOperationDocumentsStatusNextPageRequest(nextLink, id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
+            using var message = CreateGetDocumentsStatusNextPageRequest(nextLink, id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentTranslationGetOperationDocumentsStatusHeaders(message.Response);
+            var headers = new DocumentTranslationGetDocumentsStatusHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentStatusResponse value = default;
+                        DocumentsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DocumentStatusResponse.DeserializeDocumentStatusResponse(document.RootElement);
+                        value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

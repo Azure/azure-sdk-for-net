@@ -15,16 +15,30 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class SampleSnippets : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public void CreateDocumentTranslationClient()
         {
+            #region Snippet:CreateDocumentTranslationClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            #region Snippet:CreateDocumentTranslationClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            #endregion
+        }
+
+        [Test]
+        public void CreateDocumentTranslationClientTokenCredential()
+        {
+            #region Snippet:CreateDocumentTranslationClientTokenCredential
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+#endif
+            var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 
@@ -32,17 +46,18 @@ namespace Azure.AI.Translation.Document.Samples
         [Ignore("Samples not working yet")]
         public void BadRequestSnippet()
         {
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
             string endpoint = TestEnvironment.Endpoint;
+#endif
             string apiKey = TestEnvironment.ApiKey;
 
             var credentials = new AzureKeyCredential(apiKey);
             var client = new DocumentTranslationClient(new Uri(endpoint), credentials);
 
-            var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
-
             #region Snippet:BadRequest
-
-            //@@ var invalidInput = new DocumentTranslationInput(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+            var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
 
             try
             {
@@ -59,26 +74,18 @@ namespace Azure.AI.Translation.Document.Samples
         [Ignore("Samples not working yet")]
         public void DocumentTranslationInput()
         {
+            #region Snippet:DocumentTranslationSingleInput
             Uri sourceSasUri = new Uri("<source SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
-            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
-            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
-
-            #region Snippet:DocumentTranslationSingleInput
-            //@@ Uri sourceSasUri = <source SAS URI>;
-            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
 
             var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
             #endregion
 
+            #region Snippet:DocumentTranslationMultipleInputs
+            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
-
-            #region Snippet:DocumentTranslationMultipleInputs
-            //@@ Uri source1SasUri = <source1 SAS URI>;
-            //@@ Uri source2SasUri = <source2 SAS URI>;
-            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
-            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
 
             var inputs = new List<DocumentTranslationInput>
             {
@@ -88,7 +95,7 @@ namespace Azure.AI.Translation.Document.Samples
                     targets: new List<TranslationTarget>
                     {
                         new TranslationTarget(frenchTargetSasUri, "fr"),
-                        new TranslationTarget(spanishTargetSasUri, "es")
+                        new TranslationTarget(arabicTargetSasUri, "ar")
                     }),
             };
             #endregion

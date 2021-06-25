@@ -14,15 +14,53 @@ Run `generate.ps1` in this directory to generate the code.
 
 > see <https://aka.ms/autorest>
 
-``` yaml
 # Change accessibility
+``` yaml
 directive:
   from: timeseriesinsights.json
-  where: $.definitions.UpdateModelSettingsRequest
+  where: $.definitions
   transform: >
-    $["x-accessibility"] = "internal"
+    for (var path in $)
+    {
+      if (path.includes("UpdateModelSettingsRequest") ||
+          path.includes("AvailabilityResponse") ||
+          path.includes("Availability") ||
+          path.includes("EventSchema") ||
+          path.includes("InstanceHit") ||
+          path.includes("InstancesSearchStringSuggestion") ||
+          path.includes("InstancesSortParameter") ||
+          path.includes("InstancesSuggestResponse") ||
+          path.includes("InstancesSuggestRequest") ||
+          path.includes("InstancesSortBy") ||
+          path.includes("HierarchyHit") ||
+          path.includes("SearchHierarchyNodesResponse") ||
+          path.includes("SearchInstancesHierarchiesParameters") ||
+          path.includes("SearchInstancesParameters") ||
+          path.includes("SearchInstancesRequest") ||
+          path.includes("SearchInstancesResponse") ||
+          path.includes("SearchInstancesResponsePage") ||
+          path.includes("HierarchiesSortBy") ||
+          path.includes("HierarchiesSortParameter") ||
+          path.includes("HierarchiesExpandParameter") ||
+          path.includes("HierarchiesSortParameter") ||
+          path.includes("QueryRequest") ||
+          path.includes("InstancesBatchRequest") ||
+          path.includes("GetHierarchiesPage") ||
+          path.includes("GetInstancesPage") ||
+          path.includes("GetTypesPage") ||
+          path.includes("HierarchiesBatchRequest") ||
+          path.includes("HierarchiesRequestBatchGetDelete") ||
+          path.includes("ModelSettingsResponse") ||
+          path.includes("TypesBatchRequest") ||
+          path.includes("TypesRequestBatchGetOrDelete") ||
+          path.includes("DateTimeRange") ||
+          path.includes("PagedResponse") ||
+          path.includes("QueryResultPage"))
+      {
+        $[path]["x-accessibility"] = "internal"
+      }
+    }
 ```
-
 
 ``` yaml
 # when generating from official source - The raw link must have a commit hash for C# generator

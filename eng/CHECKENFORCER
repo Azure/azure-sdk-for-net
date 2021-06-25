@@ -1,6 +1,6 @@
 format: v0.1-alpha
 minimumCheckRuns: 1
-timeout: 5
+timeout: 10
 message: >
   This pull request is protected by [Check Enforcer](https://aka.ms/azsdk/check-enforcer).
 

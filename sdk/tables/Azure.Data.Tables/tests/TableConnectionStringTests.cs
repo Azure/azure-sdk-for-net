@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Data.Tables;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -12,7 +11,8 @@ namespace Azure.Data.Tables.Tests
     {
         private const string AccountName = "accountname";
         private const string TableName = "mytable";
-        private const string SasToken = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig";
+        private const string SasToken = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig&tn=mytable";
+        private const string TableSasToken = "sp=raud&st=2021-04-20T14:45:20Z&se=2021-04-21T14:45:20Z&sv=2020-02-10&sig=mySig&tn=mytable";
         private const string Secret = "Kg==";
         private readonly TableSharedKeyCredential _expectedCred = new TableSharedKeyCredential(AccountName, Secret);
         private readonly TableSharedKeyCredential _expectedDevStoraageCred = new TableSharedKeyCredential(TableConstants.ConnectionStrings.DevStoreAccountName, TableConstants.ConnectionStrings.DevStoreAccountKey);
@@ -187,7 +187,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void GetSecondaryUriFromPrimaryStorage()
         {
-            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://{AccountName}.table.core.windows.net/"));
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://{AccountName}.table.core.windows.net/"), AccountName);
 
             Assert.That(secondaryEndpoint, Is.Not.Null.Or.Empty, "Secondary endpoint should not be null or empty");
             Assert.That(secondaryEndpoint.AbsoluteUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")));
@@ -196,10 +196,18 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void GetSecondaryUriFromPrimaryAzurite()
         {
-            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://127.0.0.1:10002/{AccountName}/"));
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://127.0.0.1:10002/{AccountName}/"), AccountName);
 
             Assert.That(secondaryEndpoint, Is.Not.Null.Or.Empty, "Secondary endpoint should not be null or empty");
             Assert.That(secondaryEndpoint.AbsoluteUri, Is.EqualTo(new Uri($"https://127.0.0.1:10002/{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}/")));
+        }
+
+        [Test]
+        public void ParseAzuriteConnString()
+        {
+            var uri = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
+
+            var result = TableConnectionString.Parse(uri);
         }
 
         public static IEnumerable<object[]> UriInputs()

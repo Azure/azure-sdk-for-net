@@ -13,12 +13,12 @@ using Azure.Storage.Sas;
 
 namespace Azure.AI.Translation.Document.Tests
 {
-    public class DocumentTranslationLiveTestBase : RecordedTestBase<DocumentTranslationTestEnvironment>
+    public abstract class DocumentTranslationLiveTestBase : RecordedTestBase<DocumentTranslationTestEnvironment>
     {
         protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 30);
 
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             Sanitizer = new DocumentTranslationRecordedTestSanitizer();
         }
@@ -36,7 +36,8 @@ namespace Azure.AI.Translation.Document.Tests
 
         public DocumentTranslationClient GetClient(
             AzureKeyCredential credential = default,
-            DocumentTranslationClientOptions options = default)
+            DocumentTranslationClientOptions options = default,
+            bool useTokenCredential = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             options ??= new DocumentTranslationClientOptions()
@@ -48,8 +49,15 @@ namespace Azure.AI.Translation.Document.Tests
                 }
             };
 
-            credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
-            return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
+            if (useTokenCredential)
+            {
+                return InstrumentClient(new DocumentTranslationClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
+            }
+            else
+            {
+                credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
+                return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
+            }
         }
 
         public BlobContainerClient GetBlobContainerClient(string containerName)

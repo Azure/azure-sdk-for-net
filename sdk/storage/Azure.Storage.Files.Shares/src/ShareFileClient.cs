@@ -6,10 +6,8 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -207,7 +205,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
             _fileRestClient = BuildFileRestClient(_uri);
         }
@@ -308,7 +306,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
@@ -334,16 +332,10 @@ namespace Azure.Storage.Files.Shares
 
         private FileRestClient BuildFileRestClient(Uri uri)
         {
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
-            {
-                ShareName = null,
-                DirectoryOrFilePath = null
-            };
             return new FileRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: $"{ShareName}/{Path.EscapePath()}",
+                uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -2003,6 +1995,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2012,6 +2008,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2030,6 +2027,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2039,6 +2040,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2066,6 +2068,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -2078,6 +2084,7 @@ namespace Azure.Storage.Files.Shares
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2104,6 +2111,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -2142,6 +2153,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -2154,6 +2169,7 @@ namespace Azure.Storage.Files.Shares
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2180,6 +2196,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -2210,6 +2230,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
         /// the download of the file.
         /// </param>
+        /// <param name="allowModifications">
+        /// Whether to allow modifications during the read.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2221,12 +2244,17 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// if the file is concurrently modified and allowModifications is false.
+        /// </remarks>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal async Task<Stream> OpenReadInteral(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             long position,
             int? bufferSize,
             ShareFileRequestConditions conditions,
+            bool allowModifications,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2240,9 +2268,10 @@ namespace Azure.Storage.Files.Shares
                 // This also makes sure that we fail fast if file doesn't exist.
                 ShareFileProperties properties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
+                var etag = properties.ETag;
+
+                return new LazyLoadingReadOnlyStream<ShareFileProperties>(
                     async (HttpRange range,
-                    ShareFileRequestConditions conditions,
                     bool rangeGetContentHash,
                     bool async,
                     CancellationToken cancellationToken) =>
@@ -2254,17 +2283,23 @@ namespace Azure.Storage.Files.Shares
                             async,
                             cancellationToken).ConfigureAwait(false);
 
+                        if (!allowModifications && etag != response.GetRawResponse().Headers.ETag)
+                        {
+                            throw new ShareFileModificationException(
+                                "File has been modified concurrently",
+                                Uri, etag, response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                        }
+
                         return Response.FromValue(
                             (IDownloadedContent)response.Value,
                             response.GetRawResponse());
                     },
-                    (ETag? eTag) => new ShareFileRequestConditions { },
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                    allowModifications,
                     properties.ContentLength,
                     position,
-                    bufferSize,
-                    conditions);
+                    bufferSize);
             }
             catch (Exception ex)
             {

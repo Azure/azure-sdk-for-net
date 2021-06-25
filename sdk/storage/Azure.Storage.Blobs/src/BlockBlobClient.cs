@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Cryptography;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -170,10 +171,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string containerName, string blobName)
             : base(connectionString, containerName, blobName)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(
-                connectionString,
-                containerName,
-                blobName);
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri);
         }
 
         /// <summary>
@@ -203,10 +201,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -357,7 +352,7 @@ namespace Azure.Storage.Blobs.Specialized
                 new BlobClientConfiguration(
                     pipeline,
                     null,
-                    new ClientDiagnostics(options),
+                    new StorageClientDiagnostics(options),
                     options.Version,
                     null,
                     null));
@@ -371,35 +366,12 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        private BlockBlobRestClient BuildBlockBlobRestClient(
-            string connectionString,
-            string blobContainerName,
-            string blobName)
+        private BlockBlobRestClient BuildBlockBlobRestClient(Uri blobUri)
         {
-            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return BuildBlockBlobRestClient(uriBuilder);
-        }
-
-        private BlockBlobRestClient BuildBlockBlobRestClient(Uri uri)
-            => BuildBlockBlobRestClient(new BlobUriBuilder(uri));
-
-        private BlockBlobRestClient BuildBlockBlobRestClient(BlobUriBuilder uriBuilder)
-        {
-            string containerName = uriBuilder.BlobContainerName;
-            string blobName = uriBuilder.BlobName;
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
             return new BlockBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
-                blob: blobName.EscapePath(),
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -451,6 +423,46 @@ namespace Azure.Storage.Blobs.Specialized
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
 
             return new BlockBlobClient(builder.ToUri(), ClientConfiguration);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="BlockBlobClient"/>.
+        /// </remarks>
+        public new BlockBlobClient WithCustomerProvidedKey(CustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new BlockBlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="encryptionScope"/>.
+        ///
+        /// </summary>
+        /// <param name="encryptionScope">The encryption scope.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the encryption scope in the returned <see cref="BlockBlobClient"/>.
+        /// </remarks>
+        public new BlockBlobClient WithEncryptionScope(string encryptionScope)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.EncryptionScope = encryptionScope;
+            return new BlockBlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration);
         }
 
         ///// <summary>
