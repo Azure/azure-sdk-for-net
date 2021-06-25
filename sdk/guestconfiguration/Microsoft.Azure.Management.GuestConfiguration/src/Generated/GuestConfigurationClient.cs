@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             GuestConfigurationAssignmentsVMSS = new GuestConfigurationAssignmentsVMSSOperations(this);
             GuestConfigurationAssignmentReportsVMSS = new GuestConfigurationAssignmentReportsVMSSOperations(this);
             Operations = new Operations(this);
-            BaseUri = new System.Uri("https://management.azure.com");
+            BaseUri = new System.Uri("https://centraluseuap.management.azure.com");
             ApiVersion = "2021-01-25";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
