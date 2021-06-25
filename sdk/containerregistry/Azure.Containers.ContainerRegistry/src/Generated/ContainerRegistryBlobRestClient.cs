@@ -495,7 +495,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(location, false);
+            uri.AppendRaw(location, false);
             uri.AppendQuery("digest", digest, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

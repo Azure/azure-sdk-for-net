@@ -478,7 +478,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="path"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> PushAsync(string path, CancellationToken cancellationToken)
+        public virtual async Task<Response> PushAsync(string path, CancellationToken cancellationToken = default)
         {
             // TODO: Race condition here, do proper validation
             if (!Directory.Exists(path))
@@ -491,16 +491,19 @@ namespace Azure.Containers.ContainerRegistry
 
             // Upload the config file
             // TODO: Race condition here, do proper validation
-            if (!File.Exists(configFilePath!))
+            if (!File.Exists(configFilePath))
             {
                 throw new FileNotFoundException($"File not found.", configFilePath);
             }
 
             using (var fs = File.OpenRead(configFilePath))
             {
-                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_fullyQualifiedReference, cancellationToken).ConfigureAwait(false);
+                string digest = ContentDescriptor.ComputeDigest(fs);
+
+                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
                 ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(ContentDescriptor.ComputeDigest(fs), startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
+
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location.Substring(1), null, cancellationToken).ConfigureAwait(false);
             }
 
             // Upload each layer.
