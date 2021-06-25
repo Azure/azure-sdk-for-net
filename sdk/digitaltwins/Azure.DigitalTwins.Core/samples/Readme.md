@@ -292,7 +292,7 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 
 ### Build ADT Queries
 
-Build an [ADT query](https://docs.microsoft.com/en-us/azure/digital-twins/concepts-query-language) using an `AdtQueryBuilder`. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
+Build an [ADT query](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) using an `AdtQueryBuilder`. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
