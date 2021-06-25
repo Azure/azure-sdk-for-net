@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -17,18 +13,8 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialTests : ClientTestBase
+    public class ClientCertificateCredentialTests : CredentialTestBase
     {
-        private const string Scope = "https://vault.azure.net/.default";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
-        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private string expectedToken;
-        private DateTimeOffset expiresOn;
-        private MockMsalConfidentialClient mockMsalClient;
-        private string expectedTenantId;
-        private TokenCredentialOptions options;
-
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
 
@@ -36,9 +22,7 @@ namespace Azure.Identity.Tests
         public void VerifyCtorParametersValidation()
         {
             var tenantId = Guid.NewGuid().ToString();
-
             var clientId = Guid.NewGuid().ToString();
-
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
@@ -169,41 +153,13 @@ namespace Azure.Identity.Tests
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockMsalClient)
-                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockMsalClient)
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockConfidentialMsalClient)
+                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
             );
 
             var token = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
-        }
-
-        public void TestSetup()
-        {
-            options = new TokenCredentialOptions();
-            expectedTenantId = null;
-            expectedToken = Guid.NewGuid().ToString();
-            expiresOn = DateTimeOffset.Now.AddHours(1);
-            var result = new AuthenticationResult(
-                expectedToken,
-                false,
-                null,
-                expiresOn,
-                expiresOn,
-                TenantId,
-                new MockAccount("username"),
-                null,
-                new[] { Scope },
-                Guid.NewGuid(),
-                null,
-                "Bearer");
-
-            mockMsalClient = new MockMsalConfidentialClient().WithClientFactory(
-                (_, _tenantId) =>
-                {
-                    Assert.AreEqual(expectedTenantId, _tenantId);
-                    return result;
-                });
         }
     }
 }

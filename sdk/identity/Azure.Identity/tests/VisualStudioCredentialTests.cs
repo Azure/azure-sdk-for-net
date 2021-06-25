@@ -13,13 +13,8 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
-    public class VisualStudioCredentialTests : ClientTestBase
+    public class VisualStudioCredentialTests : CredentialTestBase
     {
-        private string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
-        private const string Scope = "https://vault.azure.net/.default";
-        private string expectedTenantId;
-
         public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
