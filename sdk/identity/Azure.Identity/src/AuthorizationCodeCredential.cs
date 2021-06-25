@@ -12,7 +12,7 @@ namespace Azure.Identity
 {
     /// <summary>
     /// Authenticates by redeeming an authorization code previously obtained from Azure Active Directory. See
-    /// https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information
+    /// <seealso href="https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow" /> for more information
     /// about the autorization code authentication flow.
     /// </summary>
     public class AuthorizationCodeCredential : TokenCredential
