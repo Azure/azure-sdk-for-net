@@ -19,53 +19,21 @@ namespace Microsoft.Azure.Management.GuestConfiguration
     using System.Threading.Tasks;
 
     /// <summary>
-    /// GuestConfigurationAssignmentsOperations operations.
+    /// GuestConfigurationAssignmentsVMSSOperations operations.
     /// </summary>
-    public partial interface IGuestConfigurationAssignmentsOperations
+    public partial interface IGuestConfigurationAssignmentsVMSSOperations
     {
         /// <summary>
-        /// Creates an association between a VM and guest configuration
-        /// </summary>
-        /// <param name='guestConfigurationAssignmentName'>
-        /// Name of the guest configuration assignment.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the create or update guest configuration
-        /// assignment.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<GuestConfigurationAssignment>> CreateOrUpdateWithHttpMessagesAsync(string guestConfigurationAssignmentName, GuestConfigurationAssignment parameters, string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get information about a guest configuration assignment
+        /// Get information about a guest configuration assignment for VMSS
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
-        /// <param name='guestConfigurationAssignmentName'>
+        /// <param name='name'>
         /// The guest configuration assignment name.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
+        /// <param name='vmssName'>
+        /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -82,40 +50,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GuestConfigurationAssignment>> GetWithHttpMessagesAsync(string resourceGroupName, string guestConfigurationAssignmentName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GuestConfigurationAssignment>> GetWithHttpMessagesAsync(string resourceGroupName, string name, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a guest configuration assignment
+        /// Delete a guest configuration assignment for VMSS
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
-        /// <param name='guestConfigurationAssignmentName'>
-        /// Name of the guest configuration assignment
+        /// <param name='name'>
+        /// The guest configuration assignment name.
         /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string guestConfigurationAssignmentName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List all guest configuration assignments for a virtual machine.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='vmName'>
-        /// The name of the virtual machine.
+        /// <param name='vmssName'>
+        /// The name of the virtual machine scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -132,6 +78,31 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<GuestConfigurationAssignment>>> ListWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GuestConfigurationAssignment>> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all guest configuration assignments for VMSS.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='vmssName'>
+        /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<GuestConfigurationAssignment>>> ListWithHttpMessagesAsync(string resourceGroupName, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
