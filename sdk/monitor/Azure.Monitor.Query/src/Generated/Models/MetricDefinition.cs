@@ -26,18 +26,24 @@ namespace Azure.Monitor.Query.Models
         /// <param name="resourceId"> the resource identifier of the resource that emitted the metric. </param>
         /// <param name="namespace"> the namespace the metric belongs to. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is a localizable string. </param>
-        /// <param name="unit"> the unit of the metric. </param>
+        /// <param name="displayDescription"> Detailed description of this metric. </param>
+        /// <param name="category"> Custom category name for this metric. </param>
+        /// <param name="metricClass"> The class of the metric. </param>
+        /// <param name="unit"> The unit of the metric. </param>
         /// <param name="primaryAggregationType"> the primary aggregation type value defining how to use the values for display. </param>
         /// <param name="supportedAggregationTypes"> the collection of what aggregation types are supported. </param>
         /// <param name="metricAvailabilities"> the collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> the resource identifier of the metric definition. </param>
         /// <param name="localizedDimensions"> the name and the display name of the dimension, i.e. it is a localizable string. </param>
-        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions)
+        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
             Namespace = @namespace;
             LocalizedName = localizedName;
+            DisplayDescription = displayDescription;
+            Category = category;
+            MetricClass = metricClass;
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
             SupportedAggregationTypes = supportedAggregationTypes;
@@ -52,7 +58,13 @@ namespace Azure.Monitor.Query.Models
         public string ResourceId { get; }
         /// <summary> the namespace the metric belongs to. </summary>
         public string Namespace { get; }
-        /// <summary> the unit of the metric. </summary>
+        /// <summary> Detailed description of this metric. </summary>
+        public string DisplayDescription { get; }
+        /// <summary> Custom category name for this metric. </summary>
+        public string Category { get; }
+        /// <summary> The class of the metric. </summary>
+        public MetricClass? MetricClass { get; }
+        /// <summary> The unit of the metric. </summary>
         public MetricUnit? Unit { get; }
         /// <summary> the primary aggregation type value defining how to use the values for display. </summary>
         public MetricAggregationType? PrimaryAggregationType { get; }

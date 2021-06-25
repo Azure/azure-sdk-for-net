@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Contains the tables, columns &amp; rows resulting from the query or the error details if the query failed. </summary>
+    /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsBatchQueryResult : LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
@@ -28,9 +28,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
         /// <param name="Statistics"> Any object. </param>
-        /// <param name="Error"> Any object. </param>
         /// <param name="Visualization"> Any object. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, JsonElement Error, JsonElement Visualization) : base(tables, Statistics, Error, Visualization)
+        /// <param name="Error"> Any object. </param>
+        internal LogsBatchQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, JsonElement Visualization, JsonElement Error) : base(tables, Statistics, Visualization, Error)
         {
         }
     }

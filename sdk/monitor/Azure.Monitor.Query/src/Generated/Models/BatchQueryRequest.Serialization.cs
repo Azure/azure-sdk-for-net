@@ -10,16 +10,13 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class LogQueryRequest : IUtf8JsonSerializable
+    internal partial class BatchQueryRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers");
@@ -31,11 +28,8 @@ namespace Azure.Monitor.Query.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Body))
-            {
-                writer.WritePropertyName("body");
-                writer.WriteObjectValue(Body);
-            }
+            writer.WritePropertyName("body");
+            writer.WriteObjectValue(Body);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
@@ -46,11 +40,8 @@ namespace Azure.Monitor.Query.Models
                 writer.WritePropertyName("method");
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(Workspace))
-            {
-                writer.WritePropertyName("workspace");
-                writer.WriteStringValue(Workspace);
-            }
+            writer.WritePropertyName("workspace");
+            writer.WriteStringValue(Workspace);
             writer.WriteEndObject();
         }
     }

@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> The LogQueryResponse. </summary>
-    internal partial class LogQueryResponse
+    /// <summary> The BatchQueryResponse. </summary>
+    internal partial class BatchQueryResponse
     {
-        /// <summary> Initializes a new instance of LogQueryResponse. </summary>
-        internal LogQueryResponse()
+        /// <summary> Initializes a new instance of BatchQueryResponse. </summary>
+        internal BatchQueryResponse()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of LogQueryResponse. </summary>
+        /// <summary> Initializes a new instance of BatchQueryResponse. </summary>
         /// <param name="id"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="Body"> Contains the tables, columns &amp; rows resulting from the query or the error details if the query failed. </param>
+        /// <param name="Body"> Contains the tables, columns &amp; rows resulting from a query. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
-        internal LogQueryResponse(string id, int? status, LogsBatchQueryResult Body, IReadOnlyDictionary<string, string> headers)
+        internal BatchQueryResponse(string id, int? status, LogsBatchQueryResult Body, IReadOnlyDictionary<string, string> headers)
         {
             Id = id;
             Status = status;

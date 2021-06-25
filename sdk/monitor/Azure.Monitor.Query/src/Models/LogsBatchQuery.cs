@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core;
 using Azure.Monitor.Query.Models;
@@ -12,15 +13,14 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsBatchQuery
     {
-        internal BatchRequest Batch { get; }
         private int _counter;
+        internal List<BatchQueryRequest> Requests { get; } = new();
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsBatchQuery"/>.
         /// </summary>
         public LogsBatchQuery()
         {
-            Batch = new BatchRequest();
         }
 
         /// <summary>
@@ -35,17 +35,12 @@ namespace Azure.Monitor.Query
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
             _counter++;
-            var logQueryRequest = new LogQueryRequest()
-            {
-                Id = id,
-                Body = LogsQueryClient.CreateQueryBody(query, timeRange, options, out string prefer),
-                Workspace = workspace
-            };
+            var logQueryRequest = new BatchQueryRequest(id, LogsQueryClient.CreateQueryBody(query, timeRange, options, out string prefer), workspace);
             if (prefer != null)
             {
                 logQueryRequest.Headers.Add("prefer", prefer);
             }
-            Batch.Requests.Add(logQueryRequest);
+            Requests.Add(logQueryRequest);
             return id;
         }
     }

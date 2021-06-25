@@ -3,7 +3,7 @@
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class LogQueryRequest
+    internal partial class BatchQueryRequest
     {
     }
 }

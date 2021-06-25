@@ -172,7 +172,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                var response = _queryClient.Batch(batch.Batch, cancellationToken);
+                var response = _queryClient.Batch(new BatchRequest(batch.Requests), cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -196,7 +196,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                var response = await _queryClient.BatchAsync(batch.Batch, cancellationToken).ConfigureAwait(false);
+                var response = await _queryClient.BatchAsync(new BatchRequest(batch.Requests), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)

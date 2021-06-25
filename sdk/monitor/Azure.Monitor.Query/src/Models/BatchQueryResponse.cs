@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class LogQueryResponse
+    internal partial class BatchQueryResponse
     {
         /// <summary> Contains the tables, columns &amp; rows resulting from the query or the error details if the query failed. </summary>
         [CodeGenMember("Body")]
