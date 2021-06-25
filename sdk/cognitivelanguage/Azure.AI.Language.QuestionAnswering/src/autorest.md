@@ -10,10 +10,11 @@ license-header: MICROSOFT_MIT_NO_VERSION
 batch:
 - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/186cef39694c0b15c3ab3084656ac505ec512d38/specification/cognitiveservices/data-plane/Language/preview/2021-05-01-preview/questionanswering.json
   clear-output-folder: true
-  
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/186cef39694c0b15c3ab3084656ac505ec512d38/specification/cognitiveservices/data-plane/Language/preview/2021-05-01-preview/questionanswering-authoring.json
-  add-credentials: true
-  low-level-client: true
+
+# TODO: Uncomment when we ship authoring support and remove ./QuestionAnsweringClientOptions.cs.
+# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/186cef39694c0b15c3ab3084656ac505ec512d38/specification/cognitiveservices/data-plane/Language/preview/2021-05-01-preview/questionanswering-authoring.json
+#   add-credentials: true
+#   low-level-client: true
 
 modelerfour:
   lenient-model-deduplication: true
@@ -49,10 +50,6 @@ directive:
 
 ``` yaml
 directive:
-# - from: swagger-document
-#   where: $.definitions.*
-#   transform: $["x-accessibility"] = "internal"
-
 - from: swagger-document
   where: $.parameters.Endpoint
   transform: $["format"] = "url"
