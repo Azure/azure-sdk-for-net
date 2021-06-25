@@ -524,6 +524,38 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
+        public async Task DeleteAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(DataLakeRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                fileSystemClient.DeleteAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Delete does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task DeleteAsync_Error()
         {
             // Arrange
@@ -612,6 +644,38 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsFalse(response.Value);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
+        public async Task DeleteIfExistsAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(DataLakeRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                fileSystemClient.DeleteIfExistsAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Delete does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -764,6 +828,46 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(DataLakeRequestConditions.IfUnmodifiedSince))]
+        public async Task GetPropertiesAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(DataLakeRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(DataLakeRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                fileSystemClient.GetPropertiesAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"GetProperties does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -790,6 +894,44 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(DataLakeRequestConditions.IfUnmodifiedSince))]
+        [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
+        public async Task SetMetadataAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+
+            IDictionary<string, string> metadata = BuildMetadata();
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(DataLakeRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(DataLakeRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                fileSystemClient.SetMetadataAsync(
+                    metadata: metadata,
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SetMetadata does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1617,6 +1759,46 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(DataLakeRequestConditions.IfUnmodifiedSince))]
+        public async Task GetAccessPolicyAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(DataLakeRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfModifiedSince):
+                    conditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(DataLakeRequestConditions.IfUnmodifiedSince):
+                    conditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                fileSystemClient.GetAccessPolicyAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"GetAccessPolicy does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -1699,6 +1881,38 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+        }
+
+        [RecordedTest]
+        [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
+        [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
+        public async Task SetAccessPolicyAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(DataLakeRequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(DataLakeRequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                fileSystemClient.SetAccessPolicyAsync(
+                    conditions: conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"SetAccessPolicy does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
