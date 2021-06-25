@@ -1264,6 +1264,42 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(RequestConditions.IfMatch))]
+        [TestCase(nameof(RequestConditions.IfNoneMatch))]
+        public async Task AcquireLeaseAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            DataLakeLeaseClient leaseClient = InstrumentClient(fileSystemClient.GetDataLakeLeaseClient(id));
+
+            RequestConditions conditions = new RequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(RequestConditions.IfMatch):
+                    conditions.IfMatch = new ETag();
+                    break;
+                case nameof(RequestConditions.IfNoneMatch):
+                    conditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                leaseClient.AcquireAsync(
+                    duration,
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Acquire does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task AcquireLeaseAsync_Error()
         {
             // Arrange
