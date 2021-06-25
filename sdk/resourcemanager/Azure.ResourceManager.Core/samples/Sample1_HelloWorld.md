@@ -26,4 +26,4 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 ```
 
 ## Next stepts
-Take a look at the [Managing Resource Groups](ManagingResourceGroups.md) samples.
+Take a look at the [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/ManagingResourceGroups.md) samples.
