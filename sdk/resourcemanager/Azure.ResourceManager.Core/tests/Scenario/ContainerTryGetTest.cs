@@ -39,14 +39,5 @@ namespace Azure.ResourceManager.Core.Tests
             result = await _container.TryGetAsync("FakeName");
             Assert.IsNull(result);
         }
-
-        [TestCase]
-        [RecordedTest]
-        [SyncOnly]
-        public void DoesExistTest()
-        {
-            Assert.IsTrue(_container.DoesExist(_rgName));
-            Assert.IsFalse(_container.DoesExist("FakeName"));
-        }
     }
 }
