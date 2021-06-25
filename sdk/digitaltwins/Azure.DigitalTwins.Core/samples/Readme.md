@@ -261,7 +261,8 @@ In addition to passing strings as a query parameter, it is possible to pass in a
 AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(
     new AdtQueryBuilder()
     .Select("*")
-    .From(AdtCollection.DigitalTwins));
+    .From(AdtCollection.DigitalTwins)
+    .Build());
 ```
 
 The SDK also allows you to extract the `query-charge` header from the pageable response. Here's an example of how to query for digital twins and how to iterate over the pageable response to extract the `query-charge` header.
