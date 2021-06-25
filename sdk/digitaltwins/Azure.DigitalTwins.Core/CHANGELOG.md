@@ -1,7 +1,8 @@
 # Release History
 
 ## 1.3.0-beta.1 (Unreleased)
-
+### New Features
+- Added `AdtQueryBuilder` to allow for the creation of ADT queries using fluent-style syntax to abstract the ADT query language from users.
 
 ## 1.2.2 (2021-04-12)
 
