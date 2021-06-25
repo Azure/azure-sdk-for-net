@@ -285,12 +285,24 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 
 ### Build ADT Queries
 
-Build an ADT query using an `AdtQueryBuilder`:
+Build an ADT query using an `AdtQueryBuilder`. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
 AdtQueryBuilder selectAll = new AdtQueryBuilder()
     .Select("*")
+    .From(AdtCollection.DigitalTwins)
+    .Build();
+    
+// SELECT Temperature FROM DIGITALTWINS
+AdtQueryBuilder selectSingleProperty = new AdtQueryBuilder()
+    .Select("Temperature")
+    .From(AdtCollection.DigitalTwins)
+    .Build();
+    
+// SELECT Temperature, Humidity FROM DIGITALTWINS
+AdtQueryBuilder selectMultipleProperties = new AdtQueryBuilder()
+    .Select("Temperature", "Humidity")
     .From(AdtCollection.DigitalTwins)
     .Build();
 
@@ -304,6 +316,12 @@ AdtQueryBuilder selectTop = new AdtQueryBuilder()
 AdtQueryBuilder selectRelationships = new AdtQueryBuilder()
     .SelectCount()
     .From(AdtCollection.Relationships)
+    .Build();
+    
+// SELECT * FROM DIGITALTWINS
+AdtQueryBuilder fromCustomCollection = new AdtQueryBuilder()
+    .Select("*")
+    .From("DIGITALTWINS")
     .Build();
 
 // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1')
@@ -330,7 +348,8 @@ AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
     .IsOfType("Temperature", AdtDataType.AdtNumber)
     .Build();
 
-// SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) AND IS_PRIMATIVE(Temperature))
+// SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) 
+// OR (IS_NUMBER(Temperature) AND IS_PRIMATIVE(Temperature))
 AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
