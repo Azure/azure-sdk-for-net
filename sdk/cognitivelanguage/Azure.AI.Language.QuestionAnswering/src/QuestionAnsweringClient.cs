@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.AI.Language.QuestionAnswering.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -13,6 +16,9 @@ namespace Azure.AI.Language.QuestionAnswering
     public class QuestionAnsweringClient
     {
         internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+
+        private readonly QuestionAnsweringKnowledgebaseRestClient _knowledgebaseRestClient;
+        private readonly QuestionAnsweringTextRestClient _textRestClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QuestionAnsweringClient"/> class.
@@ -44,7 +50,8 @@ namespace Azure.AI.Language.QuestionAnswering
                 options,
                 new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
 
-            // TODO: The api-version is hard-coded into the path and needs to be parameterized.
+            _knowledgebaseRestClient = new(Diagnostics, Pipeline, Endpoint, options.Version);
+            _textRestClient = new(Diagnostics, Pipeline, Endpoint, options.Version);
         }
 
         /// <summary>
@@ -62,11 +69,101 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>
         /// Gets the <see cref="ClientDiagnostics"/> for this client.
         /// </summary>
-        internal virtual ClientDiagnostics Diagnostics { get; }
+        private protected virtual ClientDiagnostics Diagnostics { get; }
 
         /// <summary>
         /// Gets the <see cref="HttpPipeline"/> for this client.
         /// </summary>
-        internal virtual HttpPipeline Pipeline { get; }
+        private protected virtual HttpPipeline Pipeline { get; }
+
+        /// <summary>Answers the specified question using your knowledgebase.</summary>
+        /// <param name="projectName">The name of the project to use.</param>
+        /// <param name="options">The question to answer.</param>
+        /// <param name="deploymentName">The optional deployment name of the project to use. If not specified, the production knowledgebase will be queried.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual async Task<Response<KnowledgebaseAnswers>> QueryKnowledgebaseAsync(string projectName, KnowledgebaseQueryOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgebase)}");
+            scope.AddAttribute("project", projectName);
+            scope.Start();
+
+            try
+            {
+                return await _knowledgebaseRestClient.QueryAsync(projectName, options, deploymentName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Answers the specified question using your knowledgebase.</summary>
+        /// <param name="projectName">The name of the project to use.</param>
+        /// <param name="options">The question to answer.</param>
+        /// <param name="deploymentName">The optional deployment name of the project to use. If not specified, the production knowledgebase will be queried.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Response<KnowledgebaseAnswers> QueryKnowledgebase(string projectName, KnowledgebaseQueryOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgebase)}");
+            scope.AddAttribute("project", projectName);
+            scope.Start();
+
+            try
+            {
+                return _knowledgebaseRestClient.Query(projectName, options, deploymentName, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Answers the specified question using the provided text in the body.</summary>
+        /// <param name="options">The question to answer.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual async Task<Response<TextAnswers>> QueryTextAsync(TextQueryOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryTextAsync)}");
+            scope.Start();
+
+            try
+            {
+                return await _textRestClient.QueryAsync(options, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Answers the specified question using the provided text in the body.</summary>
+        /// <param name="options">The question to answer.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Response<TextAnswers> QueryText(TextQueryOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryTextAsync)}");
+            scope.Start();
+
+            try
+            {
+                return _textRestClient.Query(options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

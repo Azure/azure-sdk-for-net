@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> The question and text record parameters to answer. </summary>
-    public partial class TextQueryParameters
+    public partial class TextQueryOptions
     {
-        /// <summary> Initializes a new instance of TextQueryParameters. </summary>
+        /// <summary> Initializes a new instance of TextQueryOptions. </summary>
         /// <param name="question"> User question to query against the given text records. </param>
         /// <param name="records"> Text records to be searched for given question. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="question"/> or <paramref name="records"/> is null. </exception>
-        public TextQueryParameters(string question, IEnumerable<TextInput> records)
+        public TextQueryOptions(string question, IEnumerable<TextInput> records)
         {
             if (question == null)
             {

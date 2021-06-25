@@ -2,6 +2,9 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\test-resources.json" Link="test-resources.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" />

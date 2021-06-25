@@ -46,7 +46,7 @@ namespace Azure.AI.Language.QuestionAnswering
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryRequest(string projectName, KnowledgebaseQueryParameters knowledgebaseQueryParameters, string deploymentName)
+        internal HttpMessage CreateQueryRequest(string projectName, KnowledgebaseQueryOptions knowledgebaseQueryParameters, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgebaseQueryParameters"/> is null. </exception>
-        public async Task<Response<KnowledgebaseAnswers>> QueryAsync(string projectName, KnowledgebaseQueryParameters knowledgebaseQueryParameters, string deploymentName = null, CancellationToken cancellationToken = default)
+        public async Task<Response<KnowledgebaseAnswers>> QueryAsync(string projectName, KnowledgebaseQueryOptions knowledgebaseQueryParameters, string deploymentName = null, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgebaseQueryParameters"/> is null. </exception>
-        public Response<KnowledgebaseAnswers> Query(string projectName, KnowledgebaseQueryParameters knowledgebaseQueryParameters, string deploymentName = null, CancellationToken cancellationToken = default)
+        public Response<KnowledgebaseAnswers> Query(string projectName, KnowledgebaseQueryOptions knowledgebaseQueryParameters, string deploymentName = null, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {

@@ -46,7 +46,7 @@ namespace Azure.AI.Language.QuestionAnswering
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryRequest(TextQueryParameters textQueryParameters)
+        internal HttpMessage CreateQueryRequest(TextQueryOptions textQueryParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textQueryParameters"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryParameters"/> is null. </exception>
-        public async Task<Response<TextAnswers>> QueryAsync(TextQueryParameters textQueryParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TextAnswers>> QueryAsync(TextQueryOptions textQueryParameters, CancellationToken cancellationToken = default)
         {
             if (textQueryParameters == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textQueryParameters"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryParameters"/> is null. </exception>
-        public Response<TextAnswers> Query(TextQueryParameters textQueryParameters, CancellationToken cancellationToken = default)
+        public Response<TextAnswers> Query(TextQueryOptions textQueryParameters, CancellationToken cancellationToken = default)
         {
             if (textQueryParameters == null)
             {

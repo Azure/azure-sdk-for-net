@@ -8,10 +8,10 @@
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> The question parameters to answer using a knowledgebase. </summary>
-    public partial class KnowledgebaseQueryParameters
+    public partial class KnowledgebaseQueryOptions
     {
-        /// <summary> Initializes a new instance of KnowledgebaseQueryParameters. </summary>
-        public KnowledgebaseQueryParameters()
+        /// <summary> Initializes a new instance of KnowledgebaseQueryOptions. </summary>
+        public KnowledgebaseQueryOptions()
         {
         }
 
