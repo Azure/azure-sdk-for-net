@@ -11,7 +11,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Authenticates by redeeming and authorization code previously obtained from Azure Active Directory.  See
+    /// Authenticates by redeeming an authorization code previously obtained from Azure Active Directory.  See
     /// https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information
     /// about the autorization code authentication flow.
     /// </summary>
