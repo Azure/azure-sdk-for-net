@@ -336,18 +336,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     registration = cancellationToken.Register(async static state =>
                     {
-                        var (tcs, link, maxMessages) = ((TaskCompletionSource<IEnumerable<AmqpMessage>>, ReceivingAmqpLink, int)) state;
+                        var (tcs, link) = ((TaskCompletionSource<IEnumerable<AmqpMessage>>, ReceivingAmqpLink)) state;
 
                         // Since we are cancelling the receive, send a drain flow and wait for a small amount
                         // of time for any messages to be delivered. This is a workaround until the service
                         // adds support for respecting the DefaultOutcome on the link.
                         link.IssueCredit(
-                            credit: (uint) maxMessages,
+                            credit: link.LinkCredit,
                             drain: true,
                             txnId: s_emptyArraySegment);
                         await Task.Delay(100, CancellationToken.None).ConfigureAwait(false);
                         tcs.TrySetCanceled();
-                    }, (receiveMessagesCompletionSource, link, maxMessages), useSynchronizationContext: false);
+                    }, (receiveMessagesCompletionSource, link), useSynchronizationContext: false);
                 }
 
                 // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
