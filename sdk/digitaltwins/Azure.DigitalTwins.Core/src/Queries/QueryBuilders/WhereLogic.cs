@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-
 using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder

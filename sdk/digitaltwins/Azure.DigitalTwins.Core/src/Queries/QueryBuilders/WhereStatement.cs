@@ -39,7 +39,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             string whereLogicString = _upstreamWhereLogic.GetLogicText();
 
-            if (whereLogicString.Length > 0)
+            if (!string.IsNullOrEmpty(whereLogicString))
             {
                 return $"{QueryConstants.Where} {whereLogicString}";
             }
