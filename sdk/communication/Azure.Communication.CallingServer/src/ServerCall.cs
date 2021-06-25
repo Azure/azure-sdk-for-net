@@ -429,7 +429,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// resume recording of the call.
+        /// Resume recording of the call.
         /// </summary>
         /// <param name="recordingId">The recording id to resume.</param>
         /// <param name="cancellationToken">The cancellation token.</param>

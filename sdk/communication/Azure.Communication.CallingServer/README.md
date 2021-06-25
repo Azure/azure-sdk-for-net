@@ -89,6 +89,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [call_recording_overview]:https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/call-recording
 [call_automation_apis_quickstart]:https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/call-automation-api-sample?pivots=programming-language-csharp
 [call_recording_quickstart]:https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/call-recording-sample?pivots=programming-language-csharp
-[record_and_download_calls_with_event_grid]:https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/download-recording-file-sample?pivots=programming-language-csharp
+[record_and_download_calls_with_event_grid]:https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/download-recording-file-sample
 [nuget]: https://www.nuget.org/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/src
