@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class LogQueryResponse
+    internal partial class BatchQueryResponse
     {
-        internal static LogQueryResponse DeserializeLogQueryResponse(JsonElement element)
+        internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element)
         {
             Optional<string> id = default;
             Optional<int> status = default;
@@ -62,7 +62,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LogQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers));
+            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers));
         }
     }
 }
