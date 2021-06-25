@@ -176,6 +176,8 @@ namespace Azure.Monitor.Query.Models
     public partial class Metric
     {
         internal Metric() { }
+        public string DisplayDescription { get { throw null; } }
+        public Azure.Core.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.TimeSeriesElement> TimeSeries { get { throw null; } }
@@ -197,13 +199,37 @@ namespace Azure.Monitor.Query.Models
         public System.TimeSpan? Retention { get { throw null; } }
         public System.TimeSpan? TimeGrain { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetricClass : System.IEquatable<Azure.Monitor.Query.Models.MetricClass>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetricClass(string value) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricClass Availability { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricClass Errors { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricClass Latency { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricClass Saturation { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricClass Transactions { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.Models.MetricClass other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Models.MetricClass left, Azure.Monitor.Query.Models.MetricClass right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Models.MetricClass (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Models.MetricClass left, Azure.Monitor.Query.Models.MetricClass right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MetricDefinition
     {
         internal MetricDefinition() { }
+        public string Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Dimensions { get { throw null; } }
+        public string DisplayDescription { get { throw null; } }
         public string Id { get { throw null; } }
         public bool? IsDimensionRequired { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricAvailability> MetricAvailabilities { get { throw null; } }
+        public Azure.Monitor.Query.Models.MetricClass? MetricClass { get { throw null; } }
         public string Name { get { throw null; } }
         public string Namespace { get { throw null; } }
         public Azure.Monitor.Query.Models.MetricAggregationType? PrimaryAggregationType { get { throw null; } }
@@ -214,6 +240,7 @@ namespace Azure.Monitor.Query.Models
     public partial class MetricNamespace
     {
         internal MetricNamespace() { }
+        public Azure.Monitor.Query.Models.NamespaceClassification? Classification { get { throw null; } }
         public string FullyQualifiedName { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
@@ -267,6 +294,25 @@ namespace Azure.Monitor.Query.Models
         public double? Minimum { get { throw null; } }
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double? Total { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NamespaceClassification : System.IEquatable<Azure.Monitor.Query.Models.NamespaceClassification>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NamespaceClassification(string value) { throw null; }
+        public static Azure.Monitor.Query.Models.NamespaceClassification Custom { get { throw null; } }
+        public static Azure.Monitor.Query.Models.NamespaceClassification Platform { get { throw null; } }
+        public static Azure.Monitor.Query.Models.NamespaceClassification Qos { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.Models.NamespaceClassification other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Models.NamespaceClassification left, Azure.Monitor.Query.Models.NamespaceClassification right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Models.NamespaceClassification (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Models.NamespaceClassification left, Azure.Monitor.Query.Models.NamespaceClassification right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class TimeSeriesElement

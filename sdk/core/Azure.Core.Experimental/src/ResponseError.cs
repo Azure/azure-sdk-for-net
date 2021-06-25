@@ -14,7 +14,15 @@ namespace Azure.Core
     [JsonConverter(typeof(Converter))]
     public sealed class ResponseError
     {
-        internal ResponseError(string? code, string? message, ResponseInnerError? innerError, string? target, IReadOnlyList<ResponseError>? details)
+        /// <summary>
+        /// Initializes a new instance of <see cref="ResponseError"/>.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="innerError">The inner error.</param>
+        /// <param name="target">The error target.</param>
+        /// <param name="details">The error details.</param>
+        public ResponseError(string? code, string? message, ResponseInnerError? innerError, string? target, IReadOnlyList<ResponseError>? details)
         {
             Code = code;
             Message = message;

@@ -193,7 +193,7 @@ namespace Azure.Core
     }
     public sealed partial class ResponseError
     {
-        internal ResponseError() { }
+        public ResponseError(string? code, string? message, Azure.Core.ResponseInnerError? innerError, string? target, System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError>? details) { }
         public string? Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError> Details { get { throw null; } }
         public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }

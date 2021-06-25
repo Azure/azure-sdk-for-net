@@ -57,11 +57,11 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary> Initializes new instance of MetricQueryResult class. </summary>
-        /// <param name="cost"> The integer value representing the cost of the query, for data case. </param>
+        /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="Timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
+        /// <param name="namespace"> The namespace of the metrics being queried. </param>
+        /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>
         /// <returns> A new <see cref="Models.MetricQueryResult"/> instance for mocking. </returns>
         public static MetricQueryResult MetricQueryResult(int? cost = default, string Timespan = default, TimeSpan? interval = default, string @namespace = default, string resourceRegion = default, IReadOnlyList<Metric> metrics = default)
