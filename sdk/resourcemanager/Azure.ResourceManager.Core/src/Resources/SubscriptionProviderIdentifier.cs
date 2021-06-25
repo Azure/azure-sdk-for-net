@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Core
             Provider = providerNamespace;
             IsChild = true;
             ResourceType = ProviderOperations.ResourceType;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         internal SubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, string providerNamespace, string typeName, string resourceName)
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = parent.Provider;
             IsChild = true;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = parent.Provider;
             IsChild = true;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         /// <summary>

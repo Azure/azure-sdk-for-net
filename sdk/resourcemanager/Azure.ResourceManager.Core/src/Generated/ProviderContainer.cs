@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class ProviderContainer : ResourceContainerBase<TenantProviderIdentifier, Provider, ProviderData>
+    public class ProviderContainer : ResourceContainerBase<TenantResourceIdentifier, Provider, ProviderData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderContainer"/> class for mocking.
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="expand"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
             scope.Start();
 
             try
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="expand"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
             scope.Start();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Core
         {
             Page<Provider> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProvidersContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
                 scope.Start();
                 string subscriptionId = "";
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Core
             }
             Page<Provider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProvidersContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
                 scope.Start();
                 string subscriptionId = "";
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Core
         {
             async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProvidersContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
                 scope.Start();
                 string subscriptionId = "";
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Core
             }
             async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProvidersContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
                 scope.Start();
                 string subscriptionId = "";
 

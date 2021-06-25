@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The Providers service client. </summary>
-    public partial class ProviderOperations : ResourceOperationsBase<TenantProviderIdentifier, Provider>
+    public partial class ProviderOperations : ResourceOperationsBase<TenantResourceIdentifier, Provider>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderOperations"/> class for mocking.
@@ -70,13 +70,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> Unregisters a subscription from a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProviderData>> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Provider>> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Unregister");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Unregister");
             scope.Start();
             try
             {
-                return await RestClient.UnregisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                var result = await RestClient.UnregisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Provider(result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,13 +89,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> Unregisters a subscription from a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProviderData> Unregister(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public virtual Response<Provider> Unregister(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Unregister");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Unregister");
             scope.Start();
             try
             {
-                return RestClient.Unregister(resourceProviderNamespace, cancellationToken);
+                var result = RestClient.Unregister(resourceProviderNamespace, cancellationToken);
+                return Response.FromValue(new Provider(result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,13 +108,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProviderData>> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Provider>> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Register");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Register");
             scope.Start();
             try
             {
-                return await RestClient.RegisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                var result = await RestClient.RegisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Provider(result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,13 +127,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> Registers a subscription with a resource provider. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProviderData> Register(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public virtual Response<Provider> Register(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Register");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Register");
             scope.Start();
             try
             {
-                return RestClient.Register(resourceProviderNamespace, cancellationToken);
+                var result = RestClient.Register(resourceProviderNamespace, cancellationToken);
+                return Response.FromValue(new Provider(result), result.GetRawResponse());
             }
             catch (Exception e)
             {

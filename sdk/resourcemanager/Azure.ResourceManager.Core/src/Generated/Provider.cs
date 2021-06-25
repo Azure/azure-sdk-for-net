@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.Core
     public class Provider : ProviderOperations
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Provider"/> class for mocking.
+        /// </summary>
+        protected Provider()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Provider"/> class.
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
