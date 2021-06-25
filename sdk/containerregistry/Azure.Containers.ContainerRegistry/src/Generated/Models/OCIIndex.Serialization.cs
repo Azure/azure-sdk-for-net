@@ -11,43 +11,11 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class OciIndex : IUtf8JsonSerializable
+    internal partial class OciIndex
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Manifests))
-            {
-                writer.WritePropertyName("manifests");
-                writer.WriteStartArray();
-                foreach (var item in Manifests)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
-            writer.WritePropertyName("schemaVersion");
-            writer.WriteNumberValue(SchemaVersion);
-            writer.WritePropertyName("mediaType");
-            writer.WriteStringValue(MediaType);
-            writer.WriteEndObject();
-        }
-
         internal static OciIndex DeserializeOciIndex(JsonElement element)
         {
-            Optional<IList<ManifestListAttributes>> manifests = default;
+            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciManifestAnnotations> annotations = default;
             int schemaVersion = default;
             string mediaType = default;

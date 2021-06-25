@@ -10,24 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class DockerManifestV1Jwk : IUtf8JsonSerializable
+    internal partial class DockerManifestV1Jwk
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Jwk))
-            {
-                writer.WritePropertyName("jwk");
-                writer.WriteObjectValue(Jwk);
-            }
-            if (Optional.IsDefined(Alg))
-            {
-                writer.WritePropertyName("alg");
-                writer.WriteStringValue(Alg);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DockerManifestV1Jwk DeserializeDockerManifestV1Jwk(JsonElement element)
         {
             Optional<DockerManifestV1JwkHeader> jwk = default;

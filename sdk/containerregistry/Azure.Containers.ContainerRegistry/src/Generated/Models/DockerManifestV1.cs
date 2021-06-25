@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     {
         /// <summary> Initializes a new instance of DockerManifestV1. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        public DockerManifestV1(int schemaVersion) : base(schemaVersion)
+        internal DockerManifestV1(int schemaVersion) : base(schemaVersion)
         {
             FsLayers = new ChangeTrackingList<DockerManifestV1FsLayer>();
             History = new ChangeTrackingList<DockerManifestV1History>();

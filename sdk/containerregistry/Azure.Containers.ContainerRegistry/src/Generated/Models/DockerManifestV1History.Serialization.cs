@@ -10,19 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class DockerManifestV1History : IUtf8JsonSerializable
+    internal partial class DockerManifestV1History
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(V1Compatibility))
-            {
-                writer.WritePropertyName("v1Compatibility");
-                writer.WriteStringValue(V1Compatibility);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DockerManifestV1History DeserializeDockerManifestV1History(JsonElement element)
         {
             Optional<string> v1Compatibility = default;

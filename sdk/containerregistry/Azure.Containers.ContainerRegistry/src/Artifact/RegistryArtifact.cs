@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.ResumableStorage;
@@ -501,9 +500,8 @@ namespace Azure.Containers.ContainerRegistry
                 string digest = ContentDescriptor.ComputeDigest(fs);
 
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
-
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location.Substring(1), null, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, fs, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
             }
 
             // Upload each layer.
@@ -516,9 +514,11 @@ namespace Azure.Containers.ContainerRegistry
 
                 using (var fs = File.OpenRead(file))
                 {
-                    ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_fullyQualifiedReference, cancellationToken).ConfigureAwait(false);
-                    ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
-                    ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(ContentDescriptor.ComputeDigest(fs), startUploadResult.Headers.Location.Substring(1), fs, cancellationToken).ConfigureAwait(false);
+                    string digest = ContentDescriptor.ComputeDigest(fs);
+
+                    ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, fs, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
                 }
             }
 
@@ -529,15 +529,16 @@ namespace Azure.Containers.ContainerRegistry
                 throw new FileNotFoundException($"File not found.", manifestFilePath);
             }
 
-            DockerManifestV2 manifest = null;
+            ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = default;
             using (var fs = File.OpenRead(manifestFilePath))
             {
-                manifest = DockerManifestV2.FromStream(fs);
+                // TODO: should we validate that this matches _tagOrDigest?
+                string digest = ContentDescriptor.ComputeDigest(fs);
+                response = await _restClient.CreateManifestAsync(_repositoryName, digest, fs, cancellationToken).ConfigureAwait(false);
             }
 
-            return await _restClient.CreateManifestAsync(_repositoryName, _tagOrDigest, manifest, cancellationToken).ConfigureAwait(false);
-
             // TODO: What would make sense to return for response?
+            return response;
         }
 
         /// <summary>
@@ -573,12 +574,11 @@ namespace Azure.Containers.ContainerRegistry
             // and end up with a corrupted format.
             using (FileStream fs = File.Create(manifestFile))
             {
-                // TODO: an extra allocation to new this each time
-                JsonSerializerOptions options = new JsonSerializerOptions()
-                {
-                    WriteIndented = true
-                };
-                await JsonSerializer.SerializeAsync(fs, manifest.Value, manifest.Value.GetType(), options, cancellationToken).ConfigureAwait(false);
+                Stream stream = manifest.GetRawResponse().ContentStream;
+                long position = stream.Position;
+                stream.Position = 0;
+                await stream.CopyToAsync(fs).ConfigureAwait(false);
+                stream.Position = position;
             }
 
             // Download config
@@ -590,7 +590,7 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             // Write Layers
-            IList<ContentDescriptor> layerDescriptors = GetLayerDescriptors(manifest);
+            IReadOnlyList<ContentDescriptor> layerDescriptors = GetLayerDescriptors(manifest);
             if (layerDescriptors != null)
             {
                 for (int i = 0; i < layerDescriptors.Count; i++)
@@ -620,7 +620,7 @@ namespace Azure.Containers.ContainerRegistry
             return null;
         }
 
-        private static IList<ContentDescriptor> GetLayerDescriptors(ImageManifest manifest)
+        private static IReadOnlyList<ContentDescriptor> GetLayerDescriptors(ImageManifest manifest)
         {
             switch (manifest)
             {
@@ -657,11 +657,6 @@ namespace Azure.Containers.ContainerRegistry
 
             using (FileStream fs = File.Create(filename))
             {
-                JsonSerializerOptions options = new JsonSerializerOptions()
-                {
-                    WriteIndented = true
-                };
-
                 await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
             }
         }

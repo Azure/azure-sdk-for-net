@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     {
         /// <summary> Initializes a new instance of CombinedManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        public CombinedManifest(int schemaVersion) : base(schemaVersion)
+        internal CombinedManifest(int schemaVersion) : base(schemaVersion)
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             Layers = new ChangeTrackingList<ContentDescriptor>();
@@ -38,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal CombinedManifest(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, ContentDescriptor config, IList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IList<DockerManifestV1FsLayer> fsLayers, IList<DockerManifestV1History> history, IList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion, mediaType)
+        internal CombinedManifest(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<DockerManifestV1FsLayer> fsLayers, IReadOnlyList<DockerManifestV1History> history, IReadOnlyList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion, mediaType)
         {
             Manifests = manifests;
             Config = config;
@@ -54,24 +54,24 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         }
 
         /// <summary> (ManifestList, OCIIndex) List of V2 image layer information. </summary>
-        public IList<ManifestListAttributes> Manifests { get; }
+        public IReadOnlyList<ManifestListAttributes> Manifests { get; }
         /// <summary> (V2, OCI) Image config descriptor. </summary>
-        public ContentDescriptor Config { get; set; }
+        public ContentDescriptor Config { get; }
         /// <summary> (V2, OCI) List of V2 image layer information. </summary>
-        public IList<ContentDescriptor> Layers { get; }
+        public IReadOnlyList<ContentDescriptor> Layers { get; }
         /// <summary> (OCI, OCIIndex) Additional metadata. </summary>
-        public OciManifestAnnotations Annotations { get; set; }
+        public OciManifestAnnotations Annotations { get; }
         /// <summary> (V1) CPU architecture. </summary>
-        public string Architecture { get; set; }
+        public string Architecture { get; }
         /// <summary> (V1) Image name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> (V1) Image tag. </summary>
-        public string Tag { get; set; }
+        public string Tag { get; }
         /// <summary> (V1) List of layer information. </summary>
-        public IList<DockerManifestV1FsLayer> FsLayers { get; }
+        public IReadOnlyList<DockerManifestV1FsLayer> FsLayers { get; }
         /// <summary> (V1) Image history. </summary>
-        public IList<DockerManifestV1History> History { get; }
+        public IReadOnlyList<DockerManifestV1History> History { get; }
         /// <summary> (V1) Image signature. </summary>
-        public IList<DockerManifestV1ImageSignature> Signatures { get; }
+        public IReadOnlyList<DockerManifestV1ImageSignature> Signatures { get; }
     }
 }

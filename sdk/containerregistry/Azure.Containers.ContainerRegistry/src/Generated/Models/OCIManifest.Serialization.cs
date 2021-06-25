@@ -11,49 +11,12 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class OciManifest : IUtf8JsonSerializable
+    internal partial class OciManifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigDescriptor))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(ConfigDescriptor);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
-            writer.WritePropertyName("schemaVersion");
-            writer.WriteNumberValue(SchemaVersion);
-            writer.WritePropertyName("mediaType");
-            writer.WriteStringValue(MediaType);
-            writer.WriteEndObject();
-        }
-
         internal static OciManifest DeserializeOciManifest(JsonElement element)
         {
             Optional<ContentDescriptor> config = default;
-            Optional<IList<ContentDescriptor>> layers = default;
+            Optional<IReadOnlyList<ContentDescriptor>> layers = default;
             Optional<OciManifestAnnotations> annotations = default;
             int schemaVersion = default;
             string mediaType = default;

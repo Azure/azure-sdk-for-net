@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     {
         /// <summary> Initializes a new instance of ImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        public ImageManifest(int schemaVersion)
+        internal ImageManifest(int schemaVersion)
         {
             SchemaVersion = schemaVersion;
         }
@@ -27,6 +27,6 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         }
 
         /// <summary> Schema version. </summary>
-        public int SchemaVersion { get; set; }
+        public int SchemaVersion { get; }
     }
 }

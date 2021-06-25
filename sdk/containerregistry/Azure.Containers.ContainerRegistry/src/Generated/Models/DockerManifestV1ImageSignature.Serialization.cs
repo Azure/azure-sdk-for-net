@@ -10,29 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class DockerManifestV1ImageSignature : IUtf8JsonSerializable
+    internal partial class DockerManifestV1ImageSignature
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Header))
-            {
-                writer.WritePropertyName("header");
-                writer.WriteObjectValue(Header);
-            }
-            if (Optional.IsDefined(Signature))
-            {
-                writer.WritePropertyName("signature");
-                writer.WriteStringValue(Signature);
-            }
-            if (Optional.IsDefined(Protected))
-            {
-                writer.WritePropertyName("protected");
-                writer.WriteStringValue(Protected);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DockerManifestV1ImageSignature DeserializeDockerManifestV1ImageSignature(JsonElement element)
         {
             Optional<DockerManifestV1Jwk> header = default;

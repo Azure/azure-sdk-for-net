@@ -11,31 +11,11 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class DockerManifestList : IUtf8JsonSerializable
+    internal partial class DockerManifestList
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Manifests))
-            {
-                writer.WritePropertyName("manifests");
-                writer.WriteStartArray();
-                foreach (var item in Manifests)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("schemaVersion");
-            writer.WriteNumberValue(SchemaVersion);
-            writer.WritePropertyName("mediaType");
-            writer.WriteStringValue(MediaType);
-            writer.WriteEndObject();
-        }
-
         internal static DockerManifestList DeserializeDockerManifestList(JsonElement element)
         {
-            Optional<IList<ManifestListAttributes>> manifests = default;
+            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             int schemaVersion = default;
             string mediaType = default;
             foreach (var property in element.EnumerateObject())

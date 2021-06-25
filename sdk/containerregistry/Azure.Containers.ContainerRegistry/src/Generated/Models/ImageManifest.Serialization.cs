@@ -10,18 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class ImageManifest : IUtf8JsonSerializable
+    internal partial class ImageManifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("schemaVersion");
-            writer.WriteNumberValue(SchemaVersion);
-            writer.WritePropertyName("mediaType");
-            writer.WriteStringValue(MediaType);
-            writer.WriteEndObject();
-        }
-
         internal static ImageManifest DeserializeImageManifest(JsonElement element)
         {
             if (element.TryGetProperty("mediaType", out JsonElement discriminator))

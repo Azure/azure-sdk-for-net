@@ -2995,7 +2995,8 @@
       "in": "body",
       "required": true,
       "schema": {
-        "$ref": "#/definitions/Manifest"
+        "type": "string",
+        "format": "binary"
       },
       "x-ms-parameter-location": "method"
     },
@@ -3079,7 +3080,7 @@
     },
     "NextLink": {
       "name": "nextBlobUuidLink",
-      "x-ms-client-name": "location",
+      "x-ms-client-name": "nextLink",
       "type": "string",
       "description": "Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )",
       "in": "path",

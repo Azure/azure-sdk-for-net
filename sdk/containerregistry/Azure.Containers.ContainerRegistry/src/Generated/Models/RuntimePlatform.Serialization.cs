@@ -11,60 +11,14 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class RuntimePlatform : IUtf8JsonSerializable
+    internal partial class RuntimePlatform
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CpuArchitecture))
-            {
-                writer.WritePropertyName("architecture");
-                writer.WriteStringValue(CpuArchitecture);
-            }
-            if (Optional.IsDefined(OperatingSystem))
-            {
-                writer.WritePropertyName("os");
-                writer.WriteStringValue(OperatingSystem);
-            }
-            if (Optional.IsDefined(OsVersion))
-            {
-                writer.WritePropertyName("os.version");
-                writer.WriteStringValue(OsVersion);
-            }
-            if (Optional.IsCollectionDefined(OsFeatures))
-            {
-                writer.WritePropertyName("os.features");
-                writer.WriteStartArray();
-                foreach (var item in OsFeatures)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Variant))
-            {
-                writer.WritePropertyName("variant");
-                writer.WriteStringValue(Variant);
-            }
-            if (Optional.IsCollectionDefined(CpuFeatures))
-            {
-                writer.WritePropertyName("features");
-                writer.WriteStartArray();
-                foreach (var item in CpuFeatures)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static RuntimePlatform DeserializeRuntimePlatform(JsonElement element)
         {
             Optional<string> architecture = default;
             Optional<string> os = default;
             Optional<string> osVersion = default;
-            Optional<IList<string>> osFeatures = default;
+            Optional<IReadOnlyList<string>> osFeatures = default;
             Optional<string> variant = default;
             Optional<IList<string>> features = default;
             foreach (var property in element.EnumerateObject())

@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     internal partial class RuntimePlatform
     {
         /// <summary> Initializes a new instance of RuntimePlatform. </summary>
-        public RuntimePlatform()
+        internal RuntimePlatform()
         {
             OsFeatures = new ChangeTrackingList<string>();
             CpuFeatures = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         /// <param name="osFeatures"> The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows win32k. </param>
         /// <param name="variant"> The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the ARM CPU. </param>
         /// <param name="cpuFeatures"> The optional features field specifies an array of strings, each listing a required CPU feature (for example sse4 or aes. </param>
-        internal RuntimePlatform(string cpuArchitecture, string operatingSystem, string osVersion, IList<string> osFeatures, string variant, IList<string> cpuFeatures)
+        internal RuntimePlatform(string cpuArchitecture, string operatingSystem, string osVersion, IReadOnlyList<string> osFeatures, string variant, IList<string> cpuFeatures)
         {
             CpuArchitecture = cpuArchitecture;
             OperatingSystem = operatingSystem;
@@ -37,10 +37,10 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             CpuFeatures = cpuFeatures;
         }
         /// <summary> The optional os.version field specifies the operating system version, for example 10.0.10586. </summary>
-        public string OsVersion { get; set; }
+        public string OsVersion { get; }
         /// <summary> The optional os.features field specifies an array of strings, each listing a required OS feature (for example on Windows win32k. </summary>
-        public IList<string> OsFeatures { get; }
+        public IReadOnlyList<string> OsFeatures { get; }
         /// <summary> The optional variant field specifies a variant of the CPU, for example armv6l to specify a particular CPU variant of the ARM CPU. </summary>
-        public string Variant { get; set; }
+        public string Variant { get; }
     }
 }

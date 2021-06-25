@@ -13,20 +13,6 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     [CodeGenModel("V2Manifest")]
     internal partial class DockerManifestV2
     {
-        public static Task<DockerManifestV2> FromStreamAsync(Stream stream)
-        {
-            throw new NotImplementedException();
-
-            // TODO: Deserialize, and then additionally compute digest to cache for later
-        }
-
-        public static DockerManifestV2 FromStream(Stream stream)
-        {
-            throw new NotImplementedException();
-
-            // TODO: Deserialize, and then additionally compute digest to cache for later
-        }
-
         /// <summary> V2 image config descriptor. </summary>
         [CodeGenMember("Config")]
         public ContentDescriptor ConfigDescriptor { get; set; }

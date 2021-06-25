@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     {
         /// <summary> Initializes a new instance of OciIndex. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        public OciIndex(int schemaVersion) : base(schemaVersion)
+        internal OciIndex(int schemaVersion) : base(schemaVersion)
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             MediaType = "application/vnd.oci.image.index.v1+json";
@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> List of OCI image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciIndex(int schemaVersion, string mediaType, IList<ManifestListAttributes> manifests, OciManifestAnnotations annotations) : base(schemaVersion, mediaType)
+        internal OciIndex(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciManifestAnnotations annotations) : base(schemaVersion, mediaType)
         {
             Manifests = manifests;
             Annotations = annotations;
@@ -34,8 +34,8 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         }
 
         /// <summary> List of OCI image layer information. </summary>
-        public IList<ManifestListAttributes> Manifests { get; }
+        public IReadOnlyList<ManifestListAttributes> Manifests { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public OciManifestAnnotations Annotations { get; set; }
+        public OciManifestAnnotations Annotations { get; }
     }
 }

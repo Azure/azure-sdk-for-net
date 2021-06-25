@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
     internal partial class ContentDescriptor
     {
         /// <summary> Initializes a new instance of ContentDescriptor. </summary>
-        public ContentDescriptor()
+        internal ContentDescriptor()
         {
             Urls = new ChangeTrackingList<Uri>();
         }

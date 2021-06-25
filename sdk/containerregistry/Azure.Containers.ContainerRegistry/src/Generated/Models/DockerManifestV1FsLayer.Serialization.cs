@@ -10,19 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class DockerManifestV1FsLayer : IUtf8JsonSerializable
+    internal partial class DockerManifestV1FsLayer
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(BlobSum))
-            {
-                writer.WritePropertyName("blobSum");
-                writer.WriteStringValue(BlobSum);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static DockerManifestV1FsLayer DeserializeDockerManifestV1FsLayer(JsonElement element)
         {
             Optional<string> blobSum = default;

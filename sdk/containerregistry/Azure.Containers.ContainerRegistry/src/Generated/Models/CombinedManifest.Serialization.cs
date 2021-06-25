@@ -11,112 +11,20 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
 {
-    internal partial class CombinedManifest : IUtf8JsonSerializable
+    internal partial class CombinedManifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Manifests))
-            {
-                writer.WritePropertyName("manifests");
-                writer.WriteStartArray();
-                foreach (var item in Manifests)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
-            if (Optional.IsDefined(Architecture))
-            {
-                writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Tag))
-            {
-                writer.WritePropertyName("tag");
-                writer.WriteStringValue(Tag);
-            }
-            if (Optional.IsCollectionDefined(FsLayers))
-            {
-                writer.WritePropertyName("fsLayers");
-                writer.WriteStartArray();
-                foreach (var item in FsLayers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(History))
-            {
-                writer.WritePropertyName("history");
-                writer.WriteStartArray();
-                foreach (var item in History)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Signatures))
-            {
-                writer.WritePropertyName("signatures");
-                writer.WriteStartArray();
-                foreach (var item in Signatures)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("schemaVersion");
-            writer.WriteNumberValue(SchemaVersion);
-            writer.WritePropertyName("mediaType");
-            writer.WriteStringValue(MediaType);
-            writer.WriteEndObject();
-        }
-
         internal static CombinedManifest DeserializeCombinedManifest(JsonElement element)
         {
-            Optional<IList<ManifestListAttributes>> manifests = default;
+            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<ContentDescriptor> config = default;
-            Optional<IList<ContentDescriptor>> layers = default;
+            Optional<IReadOnlyList<ContentDescriptor>> layers = default;
             Optional<OciManifestAnnotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IList<DockerManifestV1FsLayer>> fsLayers = default;
-            Optional<IList<DockerManifestV1History>> history = default;
-            Optional<IList<DockerManifestV1ImageSignature>> signatures = default;
+            Optional<IReadOnlyList<DockerManifestV1FsLayer>> fsLayers = default;
+            Optional<IReadOnlyList<DockerManifestV1History>> history = default;
+            Optional<IReadOnlyList<DockerManifestV1ImageSignature>> signatures = default;
             int schemaVersion = default;
             string mediaType = default;
             foreach (var property in element.EnumerateObject())
