@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    [CodeGenModel("logQueryResult")]
+    [CodeGenModel("batchQueryResults")]
     public partial class LogsBatchQueryResult: LogsQueryResult
     {
         /// <summary>

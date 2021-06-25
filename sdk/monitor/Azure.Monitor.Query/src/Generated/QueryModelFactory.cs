@@ -18,13 +18,13 @@ namespace Azure.Monitor.Query
         /// <summary> Initializes new instance of LogsQueryResult class. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
         /// <param name="Statistics"> Any object. </param>
-        /// <param name="Error"> Any object. </param>
         /// <param name="Visualization"> Any object. </param>
+        /// <param name="Error"> Any object. </param>
         /// <returns> A new <see cref="Models.LogsQueryResult"/> instance for mocking. </returns>
-        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default, JsonElement Error = default, JsonElement Visualization = default)
+        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default, JsonElement Visualization = default, JsonElement Error = default)
         {
             tables ??= new List<LogsQueryResultTable>();
-            return new LogsQueryResult(tables, Statistics, Error, Visualization);
+            return new LogsQueryResult(tables, Statistics, Visualization, Error);
         }
 
         /// <summary> Initializes new instance of LogsQueryResultTable class. </summary>
@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <returns> A new <see cref="Models.LogsQueryResultColumn"/> instance for mocking. </returns>
-        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogColumnTypes type = default)
+        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogsColumnType type = default)
         {
             return new LogsQueryResultColumn(name, type);
         }

@@ -70,8 +70,8 @@ namespace Azure.Monitor.Query
     }
     public static partial class QueryModelFactory
     {
-        public static Azure.Monitor.Query.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> tables = null, System.Text.Json.JsonElement Statistics = default(System.Text.Json.JsonElement), System.Text.Json.JsonElement Error = default(System.Text.Json.JsonElement), System.Text.Json.JsonElement Visualization = default(System.Text.Json.JsonElement)) { throw null; }
-        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, Azure.Monitor.Query.Models.LogColumnTypes type = default(Azure.Monitor.Query.Models.LogColumnTypes)) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> tables = null, System.Text.Json.JsonElement Statistics = default(System.Text.Json.JsonElement), System.Text.Json.JsonElement Visualization = default(System.Text.Json.JsonElement), System.Text.Json.JsonElement Error = default(System.Text.Json.JsonElement)) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, Azure.Monitor.Query.Models.LogsColumnType type = default(Azure.Monitor.Query.Models.LogsColumnType)) { throw null; }
         public static Azure.Monitor.Query.Models.LogsQueryResultTable LogsQueryResultTable(string name = null, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultColumn> columns = null, System.Text.Json.JsonElement internalRows = default(System.Text.Json.JsonElement)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? timeGrain = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricQueryResult MetricQueryResult(int? cost = default(int?), string Timespan = null, System.TimeSpan? interval = default(System.TimeSpan?), string @namespace = null, string resourceRegion = null, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.Metric> metrics = null) { throw null; }
@@ -80,29 +80,6 @@ namespace Azure.Monitor.Query
 }
 namespace Azure.Monitor.Query.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LogColumnTypes : System.IEquatable<Azure.Monitor.Query.Models.LogColumnTypes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LogColumnTypes(string value) { throw null; }
-        public static Azure.Monitor.Query.Models.LogColumnTypes Bool { get { throw null; } }
-        public static Azure.Monitor.Query.Models.LogColumnTypes Datetime { get { throw null; } }
-        public static Azure.Monitor.Query.Models.LogColumnTypes Dynamic { get { throw null; } }
-        public static Azure.Monitor.Query.Models.LogColumnTypes Int { get { throw null; } }
-        public static Azure.Monitor.Query.Models.LogColumnTypes Long { get { throw null; } }
-        public static Azure.Monitor.Query.Models.LogColumnTypes Real { get { throw null; } }
-        public static Azure.Monitor.Query.Models.LogColumnTypes String { get { throw null; } }
-        public bool Equals(Azure.Monitor.Query.Models.LogColumnTypes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Monitor.Query.Models.LogColumnTypes left, Azure.Monitor.Query.Models.LogColumnTypes right) { throw null; }
-        public static implicit operator Azure.Monitor.Query.Models.LogColumnTypes (string value) { throw null; }
-        public static bool operator !=(Azure.Monitor.Query.Models.LogColumnTypes left, Azure.Monitor.Query.Models.LogColumnTypes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class LogsBatchQueryResult : Azure.Monitor.Query.Models.LogsQueryResult
     {
         internal LogsBatchQueryResult() { }
@@ -115,6 +92,32 @@ namespace Azure.Monitor.Query.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsBatchQueryResult> Results { get { throw null; } }
         public Azure.Monitor.Query.Models.LogsQueryResult GetResult(string queryId) { throw null; }
         public System.Collections.Generic.IReadOnlyList<T> GetResult<T>(string queryId) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogsColumnType : System.IEquatable<Azure.Monitor.Query.Models.LogsColumnType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogsColumnType(string value) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsColumnType Bool { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Datetime { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Decimal { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Dynamic { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Guid { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Int { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Long { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Real { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType String { get { throw null; } }
+        public static Azure.Monitor.Query.Models.LogsColumnType Timespan { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.Models.LogsColumnType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Models.LogsColumnType left, Azure.Monitor.Query.Models.LogsColumnType right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Models.LogsColumnType (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Models.LogsColumnType left, Azure.Monitor.Query.Models.LogsColumnType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class LogsQueryResult
     {
@@ -129,7 +132,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal LogsQueryResultColumn() { }
         public string Name { get { throw null; } }
-        public Azure.Monitor.Query.Models.LogColumnTypes Type { get { throw null; } }
+        public Azure.Monitor.Query.Models.LogsColumnType Type { get { throw null; } }
     }
     public partial class LogsQueryResultRow
     {

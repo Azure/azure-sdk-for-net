@@ -5,8 +5,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    [CodeGenModel("ColumnDataType")]
-    public partial struct LogColumnTypes
+    public partial struct LogsColumnType
     {
         // TODO: https://github.com/Azure/autorest.csharp/issues/1294
         internal const string DatetimeTypeValue = "datetime";
