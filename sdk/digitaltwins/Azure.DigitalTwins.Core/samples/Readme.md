@@ -242,10 +242,7 @@ Query the Azure Digital Twins instance for digital twins using the [Azure Digita
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
 // happens under the covers.
-AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(
-    new AdtQueryBuilder()
-    .Select("*")
-    .From(AdtCollection.DigitalTwins));
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 
 // Iterate over the twin instances in the pageable response.
 // The "await" keyword here is required because new pages will be fetched when necessary,
@@ -256,6 +253,17 @@ await foreach (BasicDigitalTwin twin in asyncPageableResponse)
 }
 ```
 
+In addition to passing strings as a query parameter, it is possible to pass in an `AdtQueryBuilder` (see following section) object instead of a query in string format. 
+
+```C# Snippet:DigitalTwinsSampleQueryTwinsAdtQueryBuilder
+// This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
+// fluent-style query construction that makes it easier to write queries.
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(
+    new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins));
+```
+
 The SDK also allows you to extract the `query-charge` header from the pageable response. Here's an example of how to query for digital twins and how to iterate over the pageable response to extract the `query-charge` header.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge
@@ -263,11 +271,7 @@ The SDK also allows you to extract the `query-charge` header from the pageable r
 // the query API. It iterates over the response pages first to access to the query-charge header,
 // and then the digital twin results within each page.
 
-AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>(
-    new AdtQueryBuilder()
-    .Select("*")
-    .From(AdtCollection.DigitalTwins));
-    
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
