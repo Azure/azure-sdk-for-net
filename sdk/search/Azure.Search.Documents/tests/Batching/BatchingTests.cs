@@ -994,7 +994,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
             BatchingSearchClient client = GetBatchingSearchClient(resources);
-            SimpleDocument[] data = SimpleDocument.GetDocuments(1);
+            SimpleDocument[] data = SimpleDocument.GetDocuments(2);
 
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
                 client.CreateIndexingBufferedSender(
