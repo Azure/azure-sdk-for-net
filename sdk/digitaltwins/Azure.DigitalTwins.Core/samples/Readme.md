@@ -260,7 +260,10 @@ The SDK also allows you to extract the `query-charge` header from the pageable r
 // the query API. It iterates over the response pages first to access to the query-charge header,
 // and then the digital twin results within each page.
 
-AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>(
+    new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins));
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
@@ -285,7 +288,7 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 
 ### Build ADT Queries
 
-Build an ADT query using an `AdtQueryBuilder`. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
+Build an [ADT query](https://docs.microsoft.com/en-us/azure/digital-twins/concepts-query-language) using an `AdtQueryBuilder`. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
@@ -348,8 +351,8 @@ AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
     .IsOfType("Temperature", AdtDataType.AdtNumber)
     .Build();
 
-// SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) 
-// OR (IS_NUMBER(Temperature) AND IS_PRIMATIVE(Temperature))
+// SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
+// OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
 AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
@@ -357,12 +360,40 @@ AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
     .IsTrue(q => q
         .IsOfType("Humidity", AdtDataType.AdtNumber)
         .Or()
-        .IsOfType("Humidity", AdtDataType.AdtPrimative))
+        .IsDefined("Humidity")
     .And()
     .IsTrue(q => q
-        .IsOfType("Temperature", AdtDataType.AdtNumber)
+        .IfOfModel("dtmi:example:hvac;1")
         .And()
-        .IsOfType("Temperature", AdtDataType.AdtPrimative))
+        .IsNull("Occupants")
+    .Build();
+```
+
+Using nested conditions is a workaround for subjective queries that could be interpreted in multiple ways:
+
+```C# Snippet:DigitalTwinsQueryBuilder_SubjectiveConditionsWorkaround
+// SELECT * FROM DIGITALTWINS WHERE (Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)) AND IS_NUMBER(Temperature)
+AdtQueryBuilder subjectiveLogicalOps = new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins)
+    .Where()
+    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+    .Or()
+    .IsOfModel("dtmi:example:room;1", true)
+    .And()
+    .IsOfType("Temperature", AdtDataType.AdtNumber)
+    .Build();
+    
+AdtQueryBuilder objectiveLogicalOps = new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins)
+    .Where()
+    .IsTrue(q => q
+        .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+        .Or()
+        .IsOfModel("dtmi:example:room;1", true))
+    .And()
+    .IsOfType("Temperature", AdtDataType.AdtNumber)
     .Build();
 ```
 
