@@ -62,6 +62,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="inboundIpRules">This can be used to restrict traffic
         /// from specific IPs instead of all IPs. Note: These are considered
         /// only if PublicNetworkAccess is enabled.</param>
+        /// <param name="disableLocalAuth">This boolean is used to enable or
+        /// disable local auth. Default value is false. When the property is
+        /// set to true, only AAD token will be used to authenticate if user is
+        /// allowed to publish to the topic.</param>
         /// <param name="sku">The Sku pricing tier for the topic.</param>
         /// <param name="identity">Identity information for the
         /// resource.</param>
@@ -69,7 +73,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// 'Azure', 'AzureArc'</param>
         /// <param name="extendedLocation">Extended location of the
         /// resource.</param>
-        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo), string kind = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        /// <param name="systemData">The system metadata relating to Topic
+        /// resource.</param>
+        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo), string kind = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -80,10 +86,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             MetricResourceId = metricResourceId;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
+            DisableLocalAuth = disableLocalAuth;
             Sku = sku;
             Identity = identity;
             Kind = kind;
             ExtendedLocation = extendedLocation;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -95,7 +103,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
-        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the topic. Possible values include:
@@ -155,6 +163,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public IList<InboundIpRule> InboundIpRules { get; set; }
 
         /// <summary>
+        /// Gets or sets this boolean is used to enable or disable local auth.
+        /// Default value is false. When the property is set to true, only AAD
+        /// token will be used to authenticate if user is allowed to publish to
+        /// the topic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
         /// Gets or sets the Sku pricing tier for the topic.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
@@ -178,6 +195,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to Topic resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.
