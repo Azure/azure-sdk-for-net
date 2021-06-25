@@ -39,13 +39,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="privateEndpointStateForSiteRecovery">Private endpoint
         /// state for site recovery. Possible values include: 'None',
         /// 'Enabled'</param>
-        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string))
+        /// <param name="encryption">Customer Managed Key details of the
+        /// resource.</param>
+        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string), VaultPropertiesEncryption encryption = default(VaultPropertiesEncryption))
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
             PrivateEndpointConnections = privateEndpointConnections;
             PrivateEndpointStateForBackup = privateEndpointStateForBackup;
             PrivateEndpointStateForSiteRecovery = privateEndpointStateForSiteRecovery;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "privateEndpointStateForSiteRecovery")]
         public string PrivateEndpointStateForSiteRecovery { get; private set; }
+
+        /// <summary>
+        /// Gets or sets customer Managed Key details of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryption")]
+        public VaultPropertiesEncryption Encryption { get; set; }
 
     }
 }

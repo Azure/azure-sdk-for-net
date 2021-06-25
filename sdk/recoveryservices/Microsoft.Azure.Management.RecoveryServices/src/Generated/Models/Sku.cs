@@ -32,9 +32,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         /// <param name="name">The Sku name. Possible values include:
         /// 'Standard', 'RS0'</param>
-        public Sku(string name)
+        /// <param name="tier">The Sku tier.</param>
+        public Sku(string name, string tier = default(string))
         {
             Name = name;
+            Tier = tier;
             CustomInit();
         }
 
@@ -49,6 +51,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "tier")]
+        public string Tier { get; set; }
 
         /// <summary>
         /// Validate the object.

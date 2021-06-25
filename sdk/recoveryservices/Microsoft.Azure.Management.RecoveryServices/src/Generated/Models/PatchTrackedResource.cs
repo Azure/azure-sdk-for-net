@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// resource.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        /// <param name="eTag">Optional ETag.</param>
+        /// <param name="etag">Optional ETag.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        public PatchTrackedResource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type, eTag)
+        public PatchTrackedResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, type, etag)
         {
             Location = location;
             Tags = tags;

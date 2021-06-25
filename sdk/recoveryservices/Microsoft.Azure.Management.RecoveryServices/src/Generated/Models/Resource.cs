@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// resource.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        /// <param name="eTag">Optional ETag.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string))
+        /// <param name="etag">Optional ETag.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
-            ETag = eTag;
+            Etag = etag;
             CustomInit();
         }
 
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <summary>
         /// Gets or sets optional ETag.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; set; }
 
     }
 }
