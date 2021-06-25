@@ -315,6 +315,38 @@ AdtQueryBuilder whereIsOfModel = new AdtQueryBuilder()
     .Build();
 ```
 
+For queries with multiple conditions, use logical operators or nested conditions.
+
+```C# Snippet:DigitalTwinsQueryBuilder_ComplexConditions
+// SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
+AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins)
+    .Where()
+    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+    .Or()
+    .IsOfModel("dtmi:example:room;1", true)
+    .Or()
+    .IsOfType("Temperature", AdtDataType.AdtNumber)
+    .Build();
+
+// SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) AND IS_PRIMATIVE(Temperature))
+AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins)
+    .Where()
+    .IsTrue(q => q
+        .IsOfType("Humidity", AdtDataType.AdtNumber)
+        .Or()
+        .IsOfType("Humidity", AdtDataType.AdtPrimative))
+    .And()
+    .IsTrue(q => q
+        .IsOfType("Temperature", AdtDataType.AdtNumber)
+        .And()
+        .IsOfType("Temperature", AdtDataType.AdtPrimative))
+    .Build();
+```
+
 Turn an `AdtQueryBuilder` to a string by calling `GetQueryText()` after `Build()`:
 
 ```C# Snippet:DigitalTwinsQueryBuilderToString

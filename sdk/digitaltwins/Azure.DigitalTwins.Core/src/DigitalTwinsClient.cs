@@ -2169,7 +2169,7 @@ namespace Azure.DigitalTwins.Core
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         public virtual AsyncPageable<T> QueryAsync<T>(AdtQueryBuilder builtQuery, CancellationToken cancellationToken = default)
         {
-            return QueryAsync<T>(builtQuery.Stringify(), cancellationToken);
+            return QueryAsync<T>(builtQuery.GetQueryText(), cancellationToken);
         }
 
         /// <summary>
@@ -2181,7 +2181,7 @@ namespace Azure.DigitalTwins.Core
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         public virtual Pageable<T> Query<T>(AdtQueryBuilder builtQuery, CancellationToken cancellationToken = default)
         {
-            return Query<T>(builtQuery.Stringify(), cancellationToken);
+            return Query<T>(builtQuery.GetQueryText(), cancellationToken);
         }
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
-                .Stringify();
+                .GetQueryText();
 
             #endregion Snippet:DigitalTwinsQueryBuilderToString
 
@@ -73,6 +73,55 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Where()
                 .IsOfModel("dtmi:example:room;1", true)
                 .Build();
+            
+            // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 AND IS_OF_MODEL("dtmi..", exact)
+            AdtQueryBuilder logicalOps_SingleAnd = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .And()
+                .IsOfModel("dtmi:example:room;1", true)
+                .Build();
+
+            // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)
+            AdtQueryBuilder logicalOps_SingleOr = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .Or()
+                .IsOfModel("dtmi:example:room;1", true)
+                .Build();
+
+            // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
+            AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .Or()
+                .IsOfModel("dtmi:example:room;1", true)
+                .Or()
+                .IsOfType("Temperature", AdtDataType.AdtNumber)
+                .Build();
+
+            // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity))
+            // AND (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))
+            AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
+               .Select("*")
+               .From(AdtCollection.DigitalTwins)
+               .Where()
+               .IsTrue(q => q
+                   .IsOfType("Humidity", AdtDataType.AdtNumber)
+                   .Or()
+                   .IsOfType("Humidity", AdtDataType.AdtPrimative))
+               .And()
+               .IsTrue(q => q
+                   .IsOfType("Temperature", AdtDataType.AdtNumber)
+                   .Or()
+                   .IsOfType("Temperature", AdtDataType.AdtPrimative))
+               .Build();
         }
     }
 }
