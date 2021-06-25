@@ -464,7 +464,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
         }
 
-       [Test]
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14612")]
         public async Task BearerTokenAuthenticationPolicy_TokenAlmostExpiredThenFailed()
         {
             var requestMre = new ManualResetEventSlim(true);

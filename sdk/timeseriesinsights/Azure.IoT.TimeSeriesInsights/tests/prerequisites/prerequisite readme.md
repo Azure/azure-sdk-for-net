@@ -19,7 +19,7 @@
 
 ### Generate the ARM template
 
-The ARM template [test-resources.json](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/test-resources.json) is generated from the [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/test-resources.bicep) file by running the following script
+The ARM template [test-resources.json](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/timeseriesinsights/test-resources.json) is generated from the [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/timeseriesinsights/test-resources.bicep) file by running the following script
 
 - `.\generateArmTemplate.ps1`
 

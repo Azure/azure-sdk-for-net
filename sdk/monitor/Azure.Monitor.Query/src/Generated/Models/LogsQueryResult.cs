@@ -32,11 +32,13 @@ namespace Azure.Monitor.Query.Models
         /// <param name="tables"> The list of tables, columns and rows. </param>
         /// <param name="Statistics"> Any object. </param>
         /// <param name="Visualization"> Any object. </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, JsonElement Visualization)
+        /// <param name="Error"> Any object. </param>
+        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, JsonElement Visualization, JsonElement Error)
         {
             Tables = tables;
             _statistics = Statistics;
             _visualization = Visualization;
+            _error = Error;
         }
 
         /// <summary> The list of tables, columns and rows. </summary>

@@ -19,11 +19,12 @@ namespace Azure.Monitor.Query
         /// <param name="tables"> The list of tables, columns and rows. </param>
         /// <param name="Statistics"> Any object. </param>
         /// <param name="Visualization"> Any object. </param>
+        /// <param name="Error"> Any object. </param>
         /// <returns> A new <see cref="Models.LogsQueryResult"/> instance for mocking. </returns>
-        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default, JsonElement Visualization = default)
+        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default, JsonElement Visualization = default, JsonElement Error = default)
         {
             tables ??= new List<LogsQueryResultTable>();
-            return new LogsQueryResult(tables, Statistics, Visualization);
+            return new LogsQueryResult(tables, Statistics, Visualization, Error);
         }
 
         /// <summary> Initializes new instance of LogsQueryResultTable class. </summary>
@@ -41,7 +42,7 @@ namespace Azure.Monitor.Query
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <returns> A new <see cref="Models.LogsQueryResultColumn"/> instance for mocking. </returns>
-        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogColumnTypes type = default)
+        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogsColumnType type = default)
         {
             return new LogsQueryResultColumn(name, type);
         }
@@ -56,11 +57,11 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary> Initializes new instance of MetricQueryResult class. </summary>
-        /// <param name="cost"> The integer value representing the cost of the query, for data case. </param>
+        /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="Timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
+        /// <param name="namespace"> The namespace of the metrics being queried. </param>
+        /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>
         /// <returns> A new <see cref="Models.MetricQueryResult"/> instance for mocking. </returns>
         public static MetricQueryResult MetricQueryResult(int? cost = default, string Timespan = default, TimeSpan? interval = default, string @namespace = default, string resourceRegion = default, IReadOnlyList<Metric> metrics = default)

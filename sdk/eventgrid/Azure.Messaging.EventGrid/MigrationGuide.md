@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to `Azure.Messaging.EventGrid` from `Microsoft.Azure.EventGrid`. It will focus on side-by-side comparisons for similar operations between the two packages.
 
-We assume that you are familiar with `Microsoft.Azure.EventGrid`. If not, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) for `Azure.Messaging.EventGrid` rather than this guide.
+We assume that you are familiar with `Microsoft.Azure.EventGrid`. If not, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/README.md) for `Azure.Messaging.EventGrid` rather than this guide.
 
 ## Table of contents
 - [Migration benefits](#migration-benefits)
@@ -207,4 +207,4 @@ foreach (EventGridEvent egEvent in egEvents)
 ## Additional samples
 
 More examples can be found at:
-- [Event Grid samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)
+- [Event Grid samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid/samples)

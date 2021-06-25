@@ -118,10 +118,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateSeriesKey(definition.SeriesKey);
 
-                Dictionary<string, string> dimensionColumns = definition.SeriesKey.AsDictionary();
+                DimensionKey seriesKey = definition.SeriesKey;
 
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
+                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("category", out string category));
 
                 Assert.That(cityFilter.Contains(city));
                 Assert.That(categoryFilter.Contains(category));
@@ -142,15 +142,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var seriesKey1 = new DimensionKey();
-            seriesKey1.AddDimensionColumn("city", "Delhi");
-            seriesKey1.AddDimensionColumn("category", "Handmade");
+            var columns = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var seriesKey1 = new DimensionKey(columns);
 
-            var seriesKey2 = new DimensionKey();
-            seriesKey2.AddDimensionColumn("city", "Koltaka");
-            seriesKey2.AddDimensionColumn("category", "__SUM__");
+            columns = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            var seriesKey2 = new DimensionKey(columns);
 
-            var returnedKeys = new List<DimensionKey>();
+            var returnedKey1 = false;
+            var returnedKey2 = false;
+            var seriesDataCount = 0;
 
             var options = new GetMetricSeriesDataOptions(SamplingStartTime, SamplingEndTime)
             {
@@ -160,12 +160,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
                 Assert.That(seriesData, Is.Not.Null);
-                Assert.That(seriesData.Definition, Is.Not.Null);
-                Assert.That(seriesData.Definition.SeriesKey, Is.Not.Null);
+                Assert.That(seriesData.SeriesKey, Is.Not.Null);
                 Assert.That(seriesData.Timestamps, Is.Not.Null);
                 Assert.That(seriesData.MetricValues, Is.Not.Null);
 
-                Assert.That(seriesData.Definition.MetricId, Is.EqualTo(MetricId));
+                Assert.That(seriesData.MetricId, Is.EqualTo(MetricId));
 
                 Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.MetricValues.Count));
 
@@ -174,12 +173,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 }
 
-                returnedKeys.Add(seriesData.Definition.SeriesKey);
+                var seriesKey = seriesData.SeriesKey;
+
+                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("category", out string category));
+
+                if (city == "Delhi" && category == "Handmade")
+                {
+                    returnedKey1 = true;
+                }
+                else if (city == "Kolkata" && category == "__SUM__")
+                {
+                    returnedKey2 = true;
+                }
+
+                seriesDataCount++;
             }
 
-            Assert.That(returnedKeys.Count, Is.EqualTo(2));
-            Assert.That(returnedKeys.Contains(seriesKey1));
-            Assert.That(returnedKeys.Contains(seriesKey2));
+            Assert.That(seriesDataCount, Is.EqualTo(2));
+            Assert.That(returnedKey1);
+            Assert.That(returnedKey2);
         }
 
         [RecordedTest]
