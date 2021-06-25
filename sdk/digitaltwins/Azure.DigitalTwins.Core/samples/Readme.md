@@ -242,7 +242,10 @@ Query the Azure Digital Twins instance for digital twins using the [Azure Digita
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
 // happens under the covers.
-AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(
+    new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins));
 
 // Iterate over the twin instances in the pageable response.
 // The "await" keyword here is required because new pages will be fetched when necessary,
@@ -264,6 +267,7 @@ AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAs
     new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins));
+    
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
