@@ -138,12 +138,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 linksJson.Append('[');
                 foreach (var link in links)
                 {
-                    var linkTraceId = link.Context.TraceId.ToHexString();
                     linksJson
                         .Append('{')
                         .Append("\"operation_Id\":")
                         .Append('\"')
-                        .Append(linkTraceId)
+                        .Append(link.Context.TraceId.ToHexString())
                         .Append('\"')
                         .Append(',');
                     linksJson
@@ -152,6 +151,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         .Append(link.Context.SpanId.ToHexString())
                         .Append('\"');
                     linksJson.Append("},");
+
+                    //TODO: Confirm if we need to capture other information like traceflags, tracestate, isRemote from the context.
                 }
 
                 if (linksJson.Length > 0)
