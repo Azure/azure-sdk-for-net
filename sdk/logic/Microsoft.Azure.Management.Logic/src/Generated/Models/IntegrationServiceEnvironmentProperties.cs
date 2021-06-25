@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// values include: 'NotSpecified', 'Accepted', 'Running', 'Ready',
         /// 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'</param>
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'</param>
         /// <param name="state">The integration service environment state.
         /// Possible values include: 'NotSpecified', 'Completed', 'Enabled',
         /// 'Disabled', 'Deleted', 'Suspended'</param>
@@ -45,13 +46,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// configuration.</param>
         /// <param name="networkConfiguration">The network
         /// configuration.</param>
-        public IntegrationServiceEnvironmentProperties(string provisioningState = default(string), string state = default(string), string integrationServiceEnvironmentId = default(string), FlowEndpointsConfiguration endpointsConfiguration = default(FlowEndpointsConfiguration), NetworkConfiguration networkConfiguration = default(NetworkConfiguration))
+        /// <param name="encryptionConfiguration">The encryption
+        /// configuration.</param>
+        public IntegrationServiceEnvironmentProperties(string provisioningState = default(string), string state = default(string), string integrationServiceEnvironmentId = default(string), FlowEndpointsConfiguration endpointsConfiguration = default(FlowEndpointsConfiguration), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration = default(IntegrationServiceEnvironmenEncryptionConfiguration))
         {
             ProvisioningState = provisioningState;
             State = state;
             IntegrationServiceEnvironmentId = integrationServiceEnvironmentId;
             EndpointsConfiguration = endpointsConfiguration;
             NetworkConfiguration = networkConfiguration;
+            EncryptionConfiguration = encryptionConfiguration;
             CustomInit();
         }
 
@@ -65,7 +69,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
         /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
@@ -95,6 +100,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkConfiguration")]
         public NetworkConfiguration NetworkConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionConfiguration")]
+        public IntegrationServiceEnvironmenEncryptionConfiguration EncryptionConfiguration { get; set; }
 
     }
 }

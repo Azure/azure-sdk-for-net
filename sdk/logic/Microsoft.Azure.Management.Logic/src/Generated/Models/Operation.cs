@@ -29,14 +29,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
+        /// <param name="origin">Operation: origin</param>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="properties">The properties.</param>
+        public Operation(string origin = default(string), string name = default(string), OperationDisplay display = default(OperationDisplay), object properties = default(object))
         {
+            Origin = origin;
             Name = name;
             Display = display;
+            Properties = properties;
             CustomInit();
         }
 
@@ -44,6 +48,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets operation: origin
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
 
         /// <summary>
         /// Gets or sets operation name: {provider}/{resource}/{operation}
@@ -56,6 +66,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets the properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
     }
 }
