@@ -15,7 +15,7 @@ It is possible to get an specific subscription as it's shown next:
 ``` csharp
 string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.GetSubscriptions().TryGetAsync(subscriptionId);
+Subscription subscription = armClient.GetSubscriptions().GetAsync(subscriptionId);
 Console.WriteLine(subscription.Id);
 ```
 

@@ -16,7 +16,7 @@ This is a scoped operations object, and any operations you perform will be done 
     ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
     ...
     string rgName = "myRgName";
-    ResourceGroup resourceGroup = rgContainer.Get(rgName);
+    ResourceGroup resourceGroup = await rgContainer.GetAsync(rgName);
 ```
 
 Using the container object we can perform collection level operations such as list all of the resource groups or create new ones under our subscription
@@ -53,7 +53,7 @@ Using the operation object we can perform entity-level operations, such as updat
 ```csharp
     ArmClient armClient = new ArmClient(new DefaultAzureCredential());
     Subscription subscription = armClient.DefaultSubscription;
-    ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(rgName);
+    ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
     resourceGroup = await rgOperation.StartAddTag("key", "value").WaitForCompletionAsync();
 ```
 
@@ -62,6 +62,6 @@ Using the operation object we can perform entity-level operations, such as updat
 ```csharp
     ArmClient armClient = new ArmClient(new DefaultAzureCredential());
     Subscription subscription = armClient.DefaultSubscription;
-    ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(rgName);
+    ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
     await resourceGroup.DeleteAsync();
 ```

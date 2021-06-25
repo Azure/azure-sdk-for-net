@@ -16,7 +16,7 @@ Install-Package Azure.ResourceManager.Core -Version 1.0.0-beta.1
 Set up a way to authenticate to Azure with Azure Identity.
 
 Some options are:
-- Trough the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
+- Through the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
 - Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
 - Setting [Environment Variables](docs/AuthUsingEnvironmentVariables.md).
 
@@ -24,9 +24,9 @@ More information and different authentication approaches using Azure Identity ca
 
 ### Authenticate the Client
 
-The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with Resources only one top-level  `AzureResourceManagerClient` has to be created.
+The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with Resources only one top-level  `ArmClient` has to be created.
 
-To authenticate to Azure and create an ARM client, do the following:
+To authenticate to Azure and create an ArmClient, do the following:
 
 ```csharp
     using Azure.Identity;
