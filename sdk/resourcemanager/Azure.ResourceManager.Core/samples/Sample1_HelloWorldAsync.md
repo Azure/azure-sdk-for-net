@@ -1,6 +1,6 @@
-# Example: Getting a susbcription
+# Example: Getting a subscription
 
->Note: Before getting started with the samples, make sure to go trought [prerequisites guide](./docs/Prerequistes.md).
+>Note: Before getting started with the samples, make sure to go trough [prerequisites guide](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/README.md#Prerequisites).
 
 The following code shows how to get the default subscription:
 
