@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Core
                 }
 
                 return new ProviderRestOperations(
-                    new Azure.Core.Pipeline.ClientDiagnostics(ClientOptions),
-                    ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions),
+                    Diagnostics,
+                    Pipeline,
                     subscription,
                     BaseUri);
             }
