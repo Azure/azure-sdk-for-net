@@ -44,11 +44,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of instance view of the Capacity Reservations
-        /// under the Capacity Reservation group.
+        /// Gets list of instance view of the Capacity Reservations under the
+        /// Capacity Reservation group.
         /// </summary>
         [JsonProperty(PropertyName = "capacityReservations")]
-        public IList<CapacityReservationInstanceViewWithName> CapacityReservations { get; set; }
+        public IList<CapacityReservationInstanceViewWithName> CapacityReservations { get; private set; }
 
     }
 }

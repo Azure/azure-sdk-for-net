@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The instance view of a dedicated host.
+    /// The instance view of a Capacity Reservation.
     /// </summary>
     public partial class CapacityReservationInstanceView
     {

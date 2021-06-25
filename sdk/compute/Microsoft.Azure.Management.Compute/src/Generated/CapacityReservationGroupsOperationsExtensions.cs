@@ -224,8 +224,11 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'virtualMachineScaleSetVMs/$ref', 'virtualMachines/$ref'
+            /// The expand expression to apply on the operation. Based on the Expand
+            /// param(s) specified we return Virtual Machine or Scaleset VM Instance or
+            /// both resource Ids which are associated to Capacity Reservation Group in the
+            /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
+            /// 'virtualMachines/$ref'
             /// </param>
             public static IPage<CapacityReservationGroup> ListByResourceGroup(this ICapacityReservationGroupsOperations operations, string resourceGroupName, ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?))
             {
@@ -244,8 +247,11 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'virtualMachineScaleSetVMs/$ref', 'virtualMachines/$ref'
+            /// The expand expression to apply on the operation. Based on the Expand
+            /// param(s) specified we return Virtual Machine or Scaleset VM Instance or
+            /// both resource Ids which are associated to Capacity Reservation Group in the
+            /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
+            /// 'virtualMachines/$ref'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -267,8 +273,11 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'virtualMachineScaleSetVMs/$ref', 'virtualMachines/$ref'
+            /// The expand expression to apply on the operation.Based on the Expand
+            /// param(s) specified we return Virtual Machine or Scaleset VM Instance or
+            /// both resource Ids which are associated to Capacity Reservation Group in the
+            /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
+            /// 'virtualMachines/$ref'
             /// </param>
             public static IPage<CapacityReservationGroup> ListBySubscription(this ICapacityReservationGroupsOperations operations, ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?))
             {
@@ -284,8 +293,11 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'virtualMachineScaleSetVMs/$ref', 'virtualMachines/$ref'
+            /// The expand expression to apply on the operation.Based on the Expand
+            /// param(s) specified we return Virtual Machine or Scaleset VM Instance or
+            /// both resource Ids which are associated to Capacity Reservation Group in the
+            /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
+            /// 'virtualMachines/$ref'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

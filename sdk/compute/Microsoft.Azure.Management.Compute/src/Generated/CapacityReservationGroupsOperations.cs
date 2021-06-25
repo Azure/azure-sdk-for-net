@@ -880,8 +880,11 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the resource group.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values include:
-        /// 'virtualMachineScaleSetVMs/$ref', 'virtualMachines/$ref'
+        /// The expand expression to apply on the operation. Based on the Expand
+        /// param(s) specified we return Virtual Machine or Scaleset VM Instance or
+        /// both resource Ids which are associated to Capacity Reservation Group in the
+        /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
+        /// 'virtualMachines/$ref'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1073,8 +1076,11 @@ namespace Microsoft.Azure.Management.Compute
         /// reservation groups.
         /// </summary>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values include:
-        /// 'virtualMachineScaleSetVMs/$ref', 'virtualMachines/$ref'
+        /// The expand expression to apply on the operation.Based on the Expand
+        /// param(s) specified we return Virtual Machine or Scaleset VM Instance or
+        /// both resource Ids which are associated to Capacity Reservation Group in the
+        /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
+        /// 'virtualMachines/$ref'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
