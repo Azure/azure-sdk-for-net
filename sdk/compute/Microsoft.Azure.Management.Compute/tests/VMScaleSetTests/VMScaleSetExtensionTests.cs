@@ -198,6 +198,7 @@ namespace Compute.Tests
             Assert.True(vmssExtension.Settings.ToString() == vmssExtensionOut.Settings.ToString());
             Assert.True(vmssExtension.ForceUpdateTag == vmssExtensionOut.ForceUpdateTag);
             Assert.True(vmssExtension.EnableAutomaticUpgrade == vmssExtensionOut.EnableAutomaticUpgrade);
+            Assert.True(vmssExtension.SuppressFailures == vmssExtensionOut.SuppressFailures);
 
             if (vmssExtension.ProvisionAfterExtensions != null)
             {

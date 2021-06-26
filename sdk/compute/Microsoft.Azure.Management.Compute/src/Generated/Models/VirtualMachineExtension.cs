@@ -56,6 +56,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="enableAutomaticUpgrade">Indicates whether the
         /// extension should be automatically upgraded by the platform if there
         /// is a newer version of the extension available.</param>
+        /// <param name="suppressFailures">Indicates whether failures stemming
+        /// from the extension will be suppressed (Operational failures such as
+        /// not connecting to the VM will not be suppressed regardless of this
+        /// value). The default is false.</param>
         /// <param name="settings">Json formatted public settings for the
         /// extension.</param>
         /// <param name="protectedSettings">The extension can contain either
@@ -65,7 +69,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="instanceView">The virtual machine extension instance
         /// view.</param>
-        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
+        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), bool? suppressFailures = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
             : base(location, id, name, type, tags)
         {
             ForceUpdateTag = forceUpdateTag;
@@ -74,6 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            SuppressFailures = suppressFailures;
             Settings = settings;
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
@@ -128,6 +133,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether failures stemming from the extension
+        /// will be suppressed (Operational failures such as not connecting to
+        /// the VM will not be suppressed regardless of this value). The
+        /// default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suppressFailures")]
+        public bool? SuppressFailures { get; set; }
 
         /// <summary>
         /// Gets or sets json formatted public settings for the extension.

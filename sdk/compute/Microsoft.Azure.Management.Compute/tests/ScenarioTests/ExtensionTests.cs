@@ -42,10 +42,11 @@ namespace Compute.Tests
                 Tags =
                     new Dictionary<string, string>
                     {
-                        {"extensionTag1", "1"},
-                        {"extensionTag2", "2"},
-                        {"extensionTag3", "3"}
-                    }
+                        { "extensionTag1", "1" },
+                        { "extensionTag2", "2" },
+                        { "extensionTag3", "3" }
+                    },
+                SuppressFailures = true
             };
 
             return vmExtensionUpdate;
@@ -98,6 +99,7 @@ namespace Compute.Tests
                     var vmExtensionUpdate = GetTestVMUpdateExtension();
                     m_CrpClient.VirtualMachineExtensions.Update(rgName, vm.Name, vmExtension.Name, vmExtensionUpdate);
                     vmExtension.Tags["extensionTag3"] = "3";
+                    vmExtension.SuppressFailures = true;
                     getVMExtResponse = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtension.Name);
                     ValidateVMExtension(vmExtension, getVMExtResponse);
 
@@ -133,6 +135,7 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.ForceUpdateTag == vmExtReturned.ForceUpdateTag);
             Assert.True(vmExtExpected.Tags.SequenceEqual(vmExtReturned.Tags));
             Assert.True(vmExtExpected.EnableAutomaticUpgrade == vmExtReturned.EnableAutomaticUpgrade);
+            Assert.True(vmExtExpected.SuppressFailures == vmExtReturned.SuppressFailures);
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)
