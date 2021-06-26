@@ -45,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering
             Endpoint = endpoint;
             options ??= new QuestionAnsweringClientOptions();
 
-            Diagnostics = new ClientDiagnostics(options);
+            Diagnostics = new QuestionAnsweringClientDiagnostics(options);
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
@@ -85,6 +85,9 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual async Task<Response<KnowledgebaseAnswers>> QueryKnowledgebaseAsync(string projectName, KnowledgebaseQueryOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgebase)}");
             scope.AddAttribute("project", projectName);
             scope.Start();
@@ -109,6 +112,9 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual Response<KnowledgebaseAnswers> QueryKnowledgebase(string projectName, KnowledgebaseQueryOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgebase)}");
             scope.AddAttribute("project", projectName);
             scope.Start();
@@ -131,7 +137,9 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual async Task<Response<TextAnswers>> QueryTextAsync(TextQueryOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryTextAsync)}");
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryText)}");
             scope.Start();
 
             try
@@ -152,7 +160,9 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual Response<TextAnswers> QueryText(TextQueryOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryTextAsync)}");
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryText)}");
             scope.Start();
 
             try

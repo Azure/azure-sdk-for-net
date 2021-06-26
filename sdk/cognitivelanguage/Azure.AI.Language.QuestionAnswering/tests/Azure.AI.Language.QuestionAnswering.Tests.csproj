@@ -2,9 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\..\test-resources.json" Link="test-resources.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
@@ -16,5 +13,9 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.Language.QuestionAnswering.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\test-resources.json" />
   </ItemGroup>
 </Project>

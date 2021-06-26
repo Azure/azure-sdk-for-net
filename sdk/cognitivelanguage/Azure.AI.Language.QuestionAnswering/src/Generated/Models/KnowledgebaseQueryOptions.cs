@@ -10,15 +10,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
     /// <summary> The question parameters to answer using a knowledgebase. </summary>
     public partial class KnowledgebaseQueryOptions
     {
-        /// <summary> Initializes a new instance of KnowledgebaseQueryOptions. </summary>
-        public KnowledgebaseQueryOptions()
-        {
-        }
-
-        /// <summary> Exact QnA ID to fetch from the knowledgebase, this field takes priority over question. </summary>
-        public int? QnaId { get; set; }
-        /// <summary> User question to query against the knowledge base. </summary>
-        public string Question { get; set; }
         /// <summary> Max number of answers to be returned for the question. </summary>
         public int? Top { get; set; }
         /// <summary> Unique identifier for the user. </summary>

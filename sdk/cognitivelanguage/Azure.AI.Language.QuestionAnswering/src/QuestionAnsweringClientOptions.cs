@@ -30,6 +30,8 @@ namespace Azure.AI.Language.QuestionAnswering
                 ServiceVersion.V2021_05_01_preview => "2021-05-01-preview",
                 _ => throw new NotSupportedException()
             };
+
+            this.ConfigureLogging();
         }
     }
 }

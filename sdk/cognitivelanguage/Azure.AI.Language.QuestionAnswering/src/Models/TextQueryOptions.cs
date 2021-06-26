@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    [CodeGenModel("KnowledgebaseQueryParameters")]
-    public partial class KnowledgebaseQueryOptions
+    [CodeGenModel("TextQueryParameters")]
+    public partial class TextQueryOptions
     {
     }
 }

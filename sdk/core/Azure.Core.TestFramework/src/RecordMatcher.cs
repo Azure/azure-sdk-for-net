@@ -242,6 +242,12 @@ namespace Azure.Core.TestFramework
                 var requestHeaderValues = header.Value;
                 var headerName = header.Key;
 
+                if (!_compareBodies && "Content-Length".Equals(headerName, StringComparison.OrdinalIgnoreCase))
+                {
+                    remaining.Remove(headerName);
+                    continue;
+                }
+
                 if (LegacyExcludedHeaders.Contains(headerName))
                 {
                     continue;
