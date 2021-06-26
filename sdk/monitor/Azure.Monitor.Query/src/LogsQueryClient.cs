@@ -83,14 +83,16 @@ namespace Azure.Monitor.Query
         ///
         /// Example of querying a model:
         /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
-        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(workspaceId,
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
+        ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     TimeSpan.FromDays(1));
         /// </code>
         ///
         /// Example of querying a primitive:
         /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
-        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(workspaceId,
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
+        ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
         ///     TimeSpan.FromDays(1));
         /// </code>
@@ -113,14 +115,16 @@ namespace Azure.Monitor.Query
         ///
         /// Example of querying a model:
         /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
-        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(workspaceId,
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
+        ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
         ///     TimeSpan.FromDays(1));
         /// </code>
         ///
         /// Example of querying a primitive:
         /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
-        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(workspaceId,
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
+        ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
         ///     TimeSpan.FromDays(1));
         /// </code>
@@ -198,8 +202,14 @@ namespace Azure.Monitor.Query
         /// // And total event count
         /// var batch = new LogsBatchQuery();
         ///
-        /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
-        /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));
+        /// string countQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | count&quot;,
+        ///     TimeSpan.FromDays(1));
+        /// string topQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     TimeSpan.FromDays(1));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -246,8 +256,14 @@ namespace Azure.Monitor.Query
         /// // And total event count
         /// var batch = new LogsBatchQuery();
         ///
-        /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
-        /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));
+        /// string countQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | count&quot;,
+        ///     TimeSpan.FromDays(1));
+        /// string topQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     TimeSpan.FromDays(1));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///

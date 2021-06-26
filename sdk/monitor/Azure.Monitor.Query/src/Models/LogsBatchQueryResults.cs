@@ -24,8 +24,14 @@ namespace Azure.Monitor.Query.Models
         /// Gets the result for the query that was a part of the batch.
         /// </summary>
         /// <code snippet="Snippet:BatchQueryAddAndGet" language="csharp">
-        /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
-        /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));
+        /// string countQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | count&quot;,
+        ///     TimeSpan.FromDays(1));
+        /// string topQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     TimeSpan.FromDays(1));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///
