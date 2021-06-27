@@ -24,8 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575
-        public const string DefaultSasVersion = "2020-06-12";
+        public const string DefaultSasVersion = "2020-08-04";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -104,6 +103,9 @@ namespace Azure.Storage
         public const string CodePropertyKey = "code";
 
         public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
+
+        public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
+        public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
 
         /// <summary>
         /// Storage Connection String constant values.
@@ -344,6 +346,8 @@ namespace Azure.Storage
             public const string FileSystemName = "FileSystem";
 
             public const string DeletionId = "deletionid";
+
+            public const string DirectoryResourceType = "directory";
         }
 
         /// <summary>
@@ -466,6 +470,7 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
+                public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
             }

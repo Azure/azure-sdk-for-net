@@ -26,12 +26,28 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
-        public async Task ImportImage(string repository, string tag)
+        public ContainerRegistryClient CreateClient(bool anonymousAccess = false, string authenticationScope = null)
         {
-            await ImportImage(repository, new List<string>() { tag });
+            return anonymousAccess ?
+
+                InstrumentClient(new ContainerRegistryClient(
+                    new Uri(TestEnvironment.AnonymousAccessEndpoint),
+                    InstrumentClientOptions(new ContainerRegistryClientOptions())
+                )) :
+
+                InstrumentClient(new ContainerRegistryClient(
+                    new Uri(TestEnvironment.Endpoint),
+                    TestEnvironment.Credential,
+                    InstrumentClientOptions(new ContainerRegistryClientOptions())
+                ));
         }
 
-        public async Task ImportImage(string repository, List<string> tags)
+        public async Task ImportImageAsync(string registry, string repository, string tag)
+        {
+            await ImportImageAsync(registry, repository, new List<string>() { tag });
+        }
+
+        public async Task ImportImageAsync(string registry, string repository, List<string> tags)
         {
             var credential = new AzureCredentials(
                 new ServicePrincipalLoginInformation
@@ -55,7 +71,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             await managementClient.Registries.ImportImageAsync(
                 resourceGroupName: TestEnvironment.ResourceGroup,
-                registryName: TestEnvironment.Registry,
+                registryName: registry,
                 parameters:
                     new ImportImageParameters
                     {

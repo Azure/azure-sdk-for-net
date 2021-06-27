@@ -406,14 +406,8 @@ namespace Microsoft.Azure.EventHubs.Processor
                     await this.RenewLeaseCoreAsync(lease).ConfigureAwait(false);
                 }
 
-                // Update owner in the metadata first since clients get ownership information by looking at metadata.
+                // Update owner in the metadata and upload the lease content.
                 lease.Blob.Metadata[MetaDataOwnerName] = lease.Owner;
-                await lease.Blob.SetMetadataAsync(
-                    AccessCondition.GenerateLeaseCondition(lease.Token),
-                    this.defaultRequestOptions,
-                    this.operationContext).ConfigureAwait(false);
-
-                // Then update deserialized lease content.
                 await leaseBlob.UploadTextAsync(
                     JsonConvert.SerializeObject(lease),
                     null,

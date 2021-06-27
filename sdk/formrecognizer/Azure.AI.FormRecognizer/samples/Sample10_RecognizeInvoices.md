@@ -209,6 +209,16 @@ if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
                     }
                 }
 
+                if (itemFields.TryGetValue("Quantity", out FormField itemQuantityField))
+                {
+                    if (itemQuantityField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float quantityAmount = itemQuantityField.Value.AsFloat();
+
+                        Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
+                    }
+                }
+
                 if (itemFields.TryGetValue("UnitPrice", out FormField itemUnitPriceField))
                 {
                     if (itemUnitPriceField.Value.ValueType == FieldValueType.Float)
@@ -219,13 +229,20 @@ if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
                     }
                 }
 
-                if (itemFields.TryGetValue("Quantity", out FormField itemQuantityField))
+                if (itemFields.TryGetValue("Tax", out FormField itemTaxPriceField))
                 {
-                    if (itemQuantityField.Value.ValueType == FieldValueType.Float)
+                    if (itemTaxPriceField.Value.ValueType == FieldValueType.Float)
                     {
-                        float quantityAmount = itemQuantityField.Value.AsFloat();
-
-                        Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
+                        try
+                        {
+                            float itemTax = itemTaxPriceField.Value.AsFloat();
+                            Console.WriteLine($"  Tax: '{itemTax}', with confidence {itemTaxPriceField.Confidence}");
+                        }
+                        catch
+                        {
+                            string itemTaxText = itemTaxPriceField.ValueData.Text;
+                            Console.WriteLine($"  Tax: '{itemTaxText}', with confidence {itemTaxPriceField.Confidence}");
+                        }
                     }
                 }
 
@@ -273,8 +290,8 @@ if (invoice.Fields.TryGetValue("InvoiceTotal", out FormField invoiceTotalField))
 
 To see the full example source files, see:
 
-* [Recognize invoices from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample13_RecognizeInvoicesFromUri.cs)
-* [Recognize invoices from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample13_RecognizeInvoicesFromFile.cs)
+* [Recognize invoices from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample13_RecognizeInvoicesFromUri.cs)
+* [Recognize invoices from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample13_RecognizeInvoicesFromFile.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
+[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md

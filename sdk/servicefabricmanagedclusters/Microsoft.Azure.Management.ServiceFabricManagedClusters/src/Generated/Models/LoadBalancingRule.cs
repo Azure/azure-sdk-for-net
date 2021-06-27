@@ -41,13 +41,16 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// <param name="probeProtocol">the reference to the load balancer
         /// probe used by the load balancing rule. Possible values include:
         /// 'tcp', 'http', 'https'</param>
+        /// <param name="probePort">The prob port used by the load balancing
+        /// rule. Acceptable values are between 1 and 65535.</param>
         /// <param name="probeRequestPath">The probe request path. Only
         /// supported for HTTP/HTTPS probes.</param>
-        public LoadBalancingRule(int frontendPort, int backendPort, string protocol, string probeProtocol, string probeRequestPath = default(string))
+        public LoadBalancingRule(int frontendPort, int backendPort, string protocol, string probeProtocol, int? probePort = default(int?), string probeRequestPath = default(string))
         {
             FrontendPort = frontendPort;
             BackendPort = backendPort;
             Protocol = protocol;
+            ProbePort = probePort;
             ProbeProtocol = probeProtocol;
             ProbeRequestPath = probeRequestPath;
             CustomInit();
@@ -79,6 +82,13 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
         public string Protocol { get; set; }
+
+        /// <summary>
+        /// Gets or sets the prob port used by the load balancing rule.
+        /// Acceptable values are between 1 and 65535.
+        /// </summary>
+        [JsonProperty(PropertyName = "probePort")]
+        public int? ProbePort { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to the load balancer probe used by the
@@ -126,6 +136,14 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
             if (BackendPort < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "BackendPort", 1);
+            }
+            if (ProbePort > 65534)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbePort", 65534);
+            }
+            if (ProbePort < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbePort", 1);
             }
         }
     }

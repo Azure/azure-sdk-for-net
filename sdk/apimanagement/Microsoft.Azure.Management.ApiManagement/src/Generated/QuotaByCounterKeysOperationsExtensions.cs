@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// The value of the quota counter to be applied to all quota counter periods.
             /// </param>
-            public static void Update(this IQuotaByCounterKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContract parameters)
+            public static QuotaCounterCollection Update(this IQuotaByCounterKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContract parameters)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, quotaCounterKey, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, quotaCounterKey, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -137,9 +137,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IQuotaByCounterKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContract parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<QuotaCounterCollection> UpdateAsync(this IQuotaByCounterKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, QuotaCounterValueUpdateContract parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, quotaCounterKey, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, quotaCounterKey, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

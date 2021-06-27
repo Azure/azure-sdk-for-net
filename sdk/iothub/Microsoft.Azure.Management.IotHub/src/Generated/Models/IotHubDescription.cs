@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// provided in the response body, it must also be provided as a header
         /// per the normal ETag convention.</param>
         /// <param name="properties">IotHub properties</param>
-        public IotHubDescription(string location, IotHubSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotHubProperties properties = default(IotHubProperties))
+        /// <param name="identity">The managed identities for the
+        /// IotHub.</param>
+        public IotHubDescription(string location, IotHubSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotHubProperties properties = default(IotHubProperties), ArmIdentity identity = default(ArmIdentity))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             Properties = properties;
             Sku = sku;
+            Identity = identity;
             CustomInit();
         }
 
@@ -75,6 +78,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public IotHubSkuInfo Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed identities for the IotHub.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ArmIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

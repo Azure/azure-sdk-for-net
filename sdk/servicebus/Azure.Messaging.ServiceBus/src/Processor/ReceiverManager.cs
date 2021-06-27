@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -41,6 +42,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ProcessorOptions.ReceiveMode,
                 PrefetchCount = ProcessorOptions.PrefetchCount,
+                // Pass None for subqueue since the subqueue has already
+                // been taken into account when computing the EntityPath of the processor.
+                SubQueue = SubQueue.None
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
             _plugins = plugins;
@@ -48,6 +52,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Processor.Connection,
                 entityPath: Processor.EntityPath,
                 isSessionEntity: false,
+                isProcessor: true,
                 plugins: _plugins,
                 options: _receiverOptions);
             _scopeFactory = scopeFactory;
@@ -77,12 +82,15 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 // loop within the context of this thread
-                while (!cancellationToken.IsCancellationRequested)
+                while (!cancellationToken.IsCancellationRequested && !Processor.Connection.IsClosed)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await Receiver.ReceiveMessageAsync(
-                        _maxReceiveWaitTime,
-                        cancellationToken).ConfigureAwait(false);
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
+                        maxMessages: 1,
+                        maxWaitTime: _maxReceiveWaitTime,
+                        isProcessor: true,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
                     if (message == null)
                     {
                         continue;
@@ -175,7 +183,7 @@ namespace Azure.Messaging.ServiceBus
                     // as we want in flight auto-completion to be able
                     // to finish
                     await Receiver.CompleteMessageAsync(
-                        message.LockToken,
+                        message.LockTokenGuid,
                         CancellationToken.None)
                         .ConfigureAwait(false);
                 }
@@ -212,7 +220,7 @@ namespace Azure.Messaging.ServiceBus
                         // as we want in flight abandon to be able
                         // to finish even if user stopped processing
                         await Receiver.AbandonMessageAsync(
-                            message.LockToken,
+                            message.LockTokenGuid,
                             cancellationToken: CancellationToken.None)
                             .ConfigureAwait(false);
                     }
@@ -256,7 +264,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(Processor.Identifier, 1, message.LockToken);
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(Processor.Identifier, 1, message.LockTokenGuid);
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
                     // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled

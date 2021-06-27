@@ -17,6 +17,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
     public class TelemetryPartATests
     {
         private const string ResourcePropertyName = "OTel.Resource";
+        private const string ActivitySourceName = "TelemetryPartATests";
+        private const string ActivityName = "TestActivity";
 
         static TelemetryPartATests()
         {
@@ -110,13 +112,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         [Fact]
         public void GeneratePartAEnvelope_DefaultActivity_DefaultResource()
         {
-            var activity = CreateTestActivity();
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: default,
+                startTime: DateTime.UtcNow);
+
             var resource = CreateTestResource();
 
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
-            Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
+            Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
             Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
@@ -127,13 +135,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         [Fact]
         public void GeneratePartAEnvelope_Activity_WithResource()
         {
-            var activity = CreateTestActivity();
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: default,
+                startTime: DateTime.UtcNow);
+
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
 
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
-            Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
+            Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
             Assert.Equal("my-service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal("my-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.Equal(activity.TraceId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);

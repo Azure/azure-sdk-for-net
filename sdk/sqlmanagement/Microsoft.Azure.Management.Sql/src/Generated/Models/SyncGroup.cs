@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="sku">The name and capacity of the SKU.</param>
         /// <param name="interval">Sync interval of the sync group.</param>
         /// <param name="lastSyncTime">Last sync time of the sync
         /// group.</param>
@@ -51,13 +52,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'NotReady', 'Error', 'Warning', 'Progressing',
         /// 'Good'</param>
         /// <param name="schema">Sync schema of the sync group.</param>
+        /// <param name="enableConflictLogging">If conflict logging is
+        /// enabled.</param>
+        /// <param name="conflictLoggingRetentionInDays">Conflict logging
+        /// retention period.</param>
         /// <param name="usePrivateLinkConnection">If use private link
         /// connection is enabled.</param>
         /// <param name="privateEndpointName">Private endpoint name of the sync
         /// group if use private link connection is enabled.</param>
-        public SyncGroup(string id = default(string), string name = default(string), string type = default(string), int? interval = default(int?), System.DateTime? lastSyncTime = default(System.DateTime?), string conflictResolutionPolicy = default(string), string syncDatabaseId = default(string), string hubDatabaseUserName = default(string), string hubDatabasePassword = default(string), string syncState = default(string), SyncGroupSchema schema = default(SyncGroupSchema), bool? usePrivateLinkConnection = default(bool?), string privateEndpointName = default(string))
+        public SyncGroup(string id = default(string), string name = default(string), string type = default(string), Sku sku = default(Sku), int? interval = default(int?), System.DateTime? lastSyncTime = default(System.DateTime?), string conflictResolutionPolicy = default(string), string syncDatabaseId = default(string), string hubDatabaseUserName = default(string), string hubDatabasePassword = default(string), string syncState = default(string), SyncGroupSchema schema = default(SyncGroupSchema), bool? enableConflictLogging = default(bool?), int? conflictLoggingRetentionInDays = default(int?), bool? usePrivateLinkConnection = default(bool?), string privateEndpointName = default(string))
             : base(id, name, type)
         {
+            Sku = sku;
             Interval = interval;
             LastSyncTime = lastSyncTime;
             ConflictResolutionPolicy = conflictResolutionPolicy;
@@ -66,6 +72,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             HubDatabasePassword = hubDatabasePassword;
             SyncState = syncState;
             Schema = schema;
+            EnableConflictLogging = enableConflictLogging;
+            ConflictLoggingRetentionInDays = conflictLoggingRetentionInDays;
             UsePrivateLinkConnection = usePrivateLinkConnection;
             PrivateEndpointName = privateEndpointName;
             CustomInit();
@@ -75,6 +83,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name and capacity of the SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets sync interval of the sync group.
@@ -128,6 +142,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         public SyncGroupSchema Schema { get; set; }
 
         /// <summary>
+        /// Gets or sets if conflict logging is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableConflictLogging")]
+        public bool? EnableConflictLogging { get; set; }
+
+        /// <summary>
+        /// Gets or sets conflict logging retention period.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.conflictLoggingRetentionInDays")]
+        public int? ConflictLoggingRetentionInDays { get; set; }
+
+        /// <summary>
         /// Gets or sets if use private link connection is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.usePrivateLinkConnection")]
@@ -140,5 +166,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         [JsonProperty(PropertyName = "properties.privateEndpointName")]
         public string PrivateEndpointName { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }

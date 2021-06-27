@@ -3,6 +3,7 @@
 
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -31,6 +32,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public partial class CertificateClientLiveTests : CertificatesTestBase
     {
+        // The service sends back a Retry-After header of 10s anyway.
+        private static readonly TimeSpan DefaultCertificateOperationPollingInterval = TimeSpan.FromSeconds(10);
+
         private static MethodInfo s_clearCacheMethod;
 
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
@@ -93,6 +97,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RegisterForCleanup(certName);
 
             CertificateOperation getOperation = await Client.GetCertificateOperationAsync(certName);
+            getOperation = InstrumentOperation(getOperation);
 
             Assert.IsNotNull(getOperation);
         }
@@ -108,25 +113,27 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
+            OperationCanceledException ex = null;
             try
             {
                 await operation.CancelAsync();
+                await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            }
+            catch (OperationCanceledException e)
+            {
+                ex = e;
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            if (operation.HasCompleted)
+            if (operation.HasCompleted && !operation.Properties.CancellationRequested)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                async () => await WaitForCompletion(operation),
-                $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
-
-            Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
+            Assert.AreEqual("The operation was canceled so no value is available.", ex?.Message);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -144,20 +151,29 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
+            OperationCanceledException ex = null;
             try
             {
                 // Calling through the CertificateClient directly won't affect the CertificateOperation, so subsequent status updates should throw.
                 await Client.CancelCertificateOperationAsync(certName);
+
+                await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            }
+            catch (OperationCanceledException e)
+            {
+                ex = e;
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                async () => await WaitForCompletion(operation),
-                $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
-            Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
+            if (operation.HasCompleted && !operation.Properties.CancellationRequested)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+
+            Assert.AreEqual("The operation was canceled so no value is available.", ex?.Message);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -178,7 +194,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.DeleteAsync();
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -208,7 +225,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -238,11 +256,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 certificatePolicy.IssuerName = issuerName;
 
                 operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+                operation = InstrumentOperation(operation);
 
                 RegisterForCleanup(certName);
 
                 using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
-                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
+                TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
 
                 while (!operation.HasCompleted)
                 {
@@ -304,7 +323,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            await WaitForCompletion(operation);
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             KeyVaultCertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
@@ -335,7 +354,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
             using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
+            TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
 
             await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
 
@@ -358,7 +377,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
             CertificateProperties originalProperties = original.Properties;
             Assert.IsTrue(originalProperties.Enabled);
             Assert.IsEmpty(originalProperties.Tags);
@@ -384,7 +403,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.NotNull(original);
 
@@ -447,7 +466,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 
             #region Snippet:CertificateClientLiveTests_VerifyImportCertificatePem
-            //@@byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#if SNIPPET
+            byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#endif
 
             ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)
             {
@@ -549,7 +570,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(csrInfo.Subject.ToString(), serverCertificate.Subject);
             Assert.AreEqual(serverCertificateName, mergedServerCertificate.Name);
 
-            KeyVaultCertificateWithPolicy completedServerCertificate = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy completedServerCertificate = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.AreEqual(mergedServerCertificate.Name, completedServerCertificate.Name);
             CollectionAssert.AreEqual(mergedServerCertificate.Cer, completedServerCertificate.Cer);
@@ -691,7 +712,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.NotNull(original);
 
@@ -714,7 +735,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.NotNull(original);
 
@@ -764,7 +785,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await WaitForCompletion(operation);
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
 
@@ -806,7 +827,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await WaitForCompletion(operation);
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
             string version = certificate.Properties.Version;
@@ -821,7 +842,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             policy.Exportable = false;
             operation = await Client.StartCreateCertificateAsync(name, policy);
 
-            await WaitForCompletion(operation);
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             certificate = await Client.GetCertificateAsync(name);
             Assert.AreNotEqual(version, certificate.Properties.Version);
@@ -859,7 +880,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await WaitForCompletion(operation);
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsFalse(x509certificate.HasPrivateKey);
@@ -890,7 +911,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             // Sign data remotely.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
@@ -942,7 +963,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             // Download the certificate and sign data locally.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));

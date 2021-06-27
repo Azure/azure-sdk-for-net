@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Replication group details. This will be used in case of San and Wvr.
+    /// Replication group details. This will be used in case of San.
     /// </summary>
     public partial class ReplicationGroupDetails : ConfigurationSettings
     {

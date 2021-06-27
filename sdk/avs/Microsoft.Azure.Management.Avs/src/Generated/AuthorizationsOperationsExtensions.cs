@@ -122,12 +122,9 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='authorizationName'>
             /// Name of the ExpressRoute Circuit Authorization in the private cloud
             /// </param>
-            /// <param name='authorization'>
-            /// An ExpressRoute Circuit Authorization
-            /// </param>
-            public static ExpressRouteAuthorization CreateOrUpdate(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, object authorization)
+            public static ExpressRouteAuthorization CreateOrUpdate(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, authorizationName, authorization).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, authorizationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,15 +142,12 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='authorizationName'>
             /// Name of the ExpressRoute Circuit Authorization in the private cloud
             /// </param>
-            /// <param name='authorization'>
-            /// An ExpressRoute Circuit Authorization
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteAuthorization> CreateOrUpdateAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, object authorization, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExpressRouteAuthorization> CreateOrUpdateAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, authorization, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -217,12 +211,9 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='authorizationName'>
             /// Name of the ExpressRoute Circuit Authorization in the private cloud
             /// </param>
-            /// <param name='authorization'>
-            /// An ExpressRoute Circuit Authorization
-            /// </param>
-            public static ExpressRouteAuthorization BeginCreateOrUpdate(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, object authorization)
+            public static ExpressRouteAuthorization BeginCreateOrUpdate(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, privateCloudName, authorizationName, authorization).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, privateCloudName, authorizationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -240,15 +231,12 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='authorizationName'>
             /// Name of the ExpressRoute Circuit Authorization in the private cloud
             /// </param>
-            /// <param name='authorization'>
-            /// An ExpressRoute Circuit Authorization
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteAuthorization> BeginCreateOrUpdateAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, object authorization, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExpressRouteAuthorization> BeginCreateOrUpdateAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, authorization, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

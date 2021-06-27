@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Search for available phone numbers to purchase. </summary>
     public partial class SearchAvailablePhoneNumbersOperation : Operation<PhoneNumberSearchResult>, IOperationSource<PhoneNumberSearchResult>
     {
-        private readonly ArmOperationHelpers<PhoneNumberSearchResult> _operation;
+        private readonly OperationInternals<PhoneNumberSearchResult> _operation;
 
         /// <summary> Initializes a new instance of SearchAvailablePhoneNumbersOperation for mocking. </summary>
         protected SearchAvailablePhoneNumbersOperation()

@@ -24,8 +24,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="OperationsLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public OperationsLiveTests(bool isAsync)
-            : base(isAsync)
+        public OperationsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
         {
         }
 
@@ -60,6 +60,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task RecognizeInvoicesOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
@@ -75,14 +76,15 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeIdDocumentsOperationCanPollFromNewObject()
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
+        public async Task RecognizeIdentityDocumentsOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
 
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
-            var operation = await client.StartRecognizeIdDocumentsFromUriAsync(uri);
+            var operation = await client.StartRecognizeIdentityDocumentsFromUriAsync(uri);
 
-            var sameOperation = InstrumentOperation(new RecognizeIdDocumentsOperation(operation.Id, nonInstrumentedClient));
+            var sameOperation = InstrumentOperation(new RecognizeIdentityDocumentsOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
@@ -126,6 +128,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CreateComposedModelOperationCanPollFromNewObject()
         {
             var client = CreateFormTrainingClient(out var nonInstrumentedClient);

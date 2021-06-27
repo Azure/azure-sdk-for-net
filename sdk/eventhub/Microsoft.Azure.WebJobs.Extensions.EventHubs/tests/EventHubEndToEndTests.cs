@@ -199,12 +199,39 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public void ThrowsIfBindingToASingleEvent()
+        public async Task CanSendAndReceive_BlobServiceUri_InConfiguration()
         {
-            Assert.Throws<NotSupportedException>(() =>
-                BuildHost<EventHubTestSingleDispatchJobWithConnection>(builder =>
-                    builder.ConfigureServices(services =>
-                        services.Configure<EventHubOptions>(options => options.IsSingleDispatchEnabled = false))));
+            await AssertCanSendReceiveMessage(host =>
+                host.ConfigureAppConfiguration(configurationBuilder =>
+                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        {"TestConnection:fullyQualifiedNamespace", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace},
+                        {"TestConnection:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"TestConnection:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"TestConnection:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                        {"AzureWebJobsStorage:blobServiceUri", GetServiceUri()},
+                        {"AzureWebJobsStorage:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                    })));
+        }
+
+        [Test]
+        public async Task CanSendAndReceive_AccountName_InConfiguration()
+        {
+            await AssertCanSendReceiveMessage(host =>
+                host.ConfigureAppConfiguration(configurationBuilder =>
+                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        {"TestConnection:fullyQualifiedNamespace", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace},
+                        {"TestConnection:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"TestConnection:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"TestConnection:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                        {"AzureWebJobsStorage:accountName", StorageTestEnvironment.Instance.StorageAccountName},
+                        {"AzureWebJobsStorage:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                    })));
         }
 
         private static string GetServiceUri()

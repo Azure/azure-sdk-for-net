@@ -17,6 +17,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private readonly ProcessMessageEventArgs _eventArgs;
         private readonly ProcessSessionMessageEventArgs _sessionEventArgs;
 
+        internal HashSet<ServiceBusReceivedMessage> SettledMessages { get; } = new();
+
         internal ServiceBusMessageActions(ProcessSessionMessageEventArgs sessionEventArgs)
         {
             _sessionEventArgs = sessionEventArgs;
@@ -50,6 +52,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 await _sessionEventArgs.AbandonMessageAsync(message, propertiesToModify, cancellationToken).ConfigureAwait(false);
             }
+
+            SettledMessages.Add(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.CompleteMessageAsync(ServiceBusReceivedMessage, CancellationToken)"/>
@@ -69,6 +73,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 await _sessionEventArgs.CompleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
+
+            SettledMessages.Add(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, string, string, CancellationToken)"/>
@@ -105,6 +111,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
+
+            SettledMessages.Add(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
@@ -137,6 +145,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
+
+            SettledMessages.Add(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
@@ -169,6 +179,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
+
+            SettledMessages.Add(message);
         }
     }
 }

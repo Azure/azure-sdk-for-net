@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics;
-
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntitiesTaskParameters. </summary>
@@ -18,6 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         public string ModelVersion { get; set; }
+        public bool? LoggingOptOut { get; set; }
         public StringIndexType? StringIndexType { get; set; }
     }
 }

@@ -7,7 +7,6 @@ using NUnit.Framework;
 using Azure.Data.Tables.Tests;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace Azure.Data.Tables.Samples
 {
@@ -52,7 +51,6 @@ namespace Azure.Data.Tables.Samples
             Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
 
             // Iterate the <see cref="Pageable"> to access all queried entities.
-
             foreach (TableEntity qEntity in queryResultsFilter)
             {
                 Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
@@ -61,11 +59,36 @@ namespace Azure.Data.Tables.Samples
             Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
             #endregion
 
-            #region Snippet:TablesSample4QueryEntitiesExpression
-            // Use the <see cref="TableClient"> to query the table using a filter expression.
+            #region Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
+            // The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
+#if SNIPPET
+            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
+#else
+            queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
+#endif
+            // Iterate the <see cref="Pageable"> to access all queried entities.
+            foreach (TableEntity qEntity in queryResultsFilter)
+            {
+                Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
+            }
 
+            Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
+
+            #endregion
+            #region Snippet:TablesSample4QueryEntitiesExpression
             double priceCutOff = 6.00;
             Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+            #endregion
+
+            #region Snippet:TablesMigrationQuery
+            // Execute the query.
+            Pageable<OfficeSupplyEntity> queryResults = tableClient.Query<OfficeSupplyEntity>(e => e.PartitionKey == partitionKey && e.RowKey == rowKey);
+
+            // Display the results
+            foreach (var item in queryResults.ToList())
+            {
+                Console.WriteLine($"{item.PartitionKey}, {item.RowKey}, {item.Product}, {item.Price}, {item.Quantity}");
+            }
             #endregion
 
             #region Snippet:TablesSample4QueryEntitiesSelect

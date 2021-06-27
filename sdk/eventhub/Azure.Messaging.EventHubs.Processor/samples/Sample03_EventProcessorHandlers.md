@@ -2,13 +2,13 @@
 
 Once started, the majority of work performed by the `EventProcessorClient` takes place in the background.  Interaction with the host application takes place using .NET [events](https://docs.microsoft.com/dotnet/standard/events/), allowing the processor to surface information and the application to influence processor behavior.  Unlike most .NET events, those used by the processor are asynchronous and allow only a single handler to be subscribed. 
 
-This sample details the means to receive information and interact with the `EventProcessorClient` as it is running and demonstrates how to configure the event handlers for some common scenarios.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
+This sample details the means to receive information and interact with the `EventProcessorClient` as it is running and demonstrates how to configure the event handlers for some common scenarios.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
 ## Process Event
 
 The processor will invoke the `ProcessEventAsync` handler when an event read from the Event Hubs service is available for processing or, if the [MaximumWaitTime](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions.maximumwaittime?view=azure-dotnet#Azure_Messaging_EventHubs_EventProcessorClientOptions_MaximumWaitTime) was specified, when that duration has elapsed without an event being available.  This handler will be invoked concurrently, limited to one active call per partition.  While the handler may be processing events from different partitions concurrently, the processor will ensure that the events from the same partition are processed one-at-a-time in the order that they were read from the partition. 
 
-Processing events are covered in more depth for different scenarios in [Sample04_ProcessingEvents](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_ProcessingEvents.md).
+Processing events are covered in more depth for different scenarios in [Sample04_ProcessingEvents](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_ProcessingEvents.md).
 
 ### Respecting cancellation
 

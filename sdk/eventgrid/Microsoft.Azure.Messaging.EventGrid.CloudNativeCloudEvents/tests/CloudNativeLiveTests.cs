@@ -34,15 +34,14 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
             for (int i = 0; i < 10; i++)
             {
                 eventsList.Add(
-                    new CloudEvent(
-                        "record",
-                        new Uri("http://localHost"),
-                        Recording.Random.NewGuid().ToString(),
-                        Recording.Now.DateTime)
+                    new CloudEvent
                     {
+                        Type = "record",
+                        Source = new Uri("http://localHost"),
+                        Id = Recording.Random.NewGuid().ToString(),
+                        Time = Recording.Now,
                         Data = new TestPayload("name", i)
-                    }
-                    );
+                    });
             }
 
             await client.SendCloudEventsAsync(eventsList);
@@ -59,12 +58,12 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
                     options));
 
             CloudEvent cloudEvent =
-                new CloudEvent(
-                    "record",
-                    new Uri("http://localHost"),
-                    Recording.Random.NewGuid().ToString(),
-                    Recording.Now.DateTime)
+                new CloudEvent
                 {
+                    Type = "record",
+                    Source = new Uri("http://localHost"),
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Time = Recording.Now,
                     Data = new TestPayload("name", 0)
                 };
 

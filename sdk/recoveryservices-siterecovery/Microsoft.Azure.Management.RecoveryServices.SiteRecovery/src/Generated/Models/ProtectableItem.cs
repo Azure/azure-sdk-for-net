@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Replication protected item
+    /// Replication protected item.
     /// </summary>
     public partial class ProtectableItem : Resource
     {

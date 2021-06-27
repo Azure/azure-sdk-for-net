@@ -48,7 +48,7 @@ namespace Azure.Identity.Tests.Mock
                 ? new MockManagedIdentityClient(Pipeline, clientId) { ManagedIdentitySourceFactory = ManagedIdentitySourceFactory }
                 : new ManagedIdentityClient(Pipeline, clientId);
 
-        public override TokenCredential CreateAzurePowerShellCredential(bool useLegacyPowerShell)
+        public override TokenCredential CreateAzurePowerShellCredential()
             => new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), Pipeline, _processService);
     }
 }

@@ -17,17 +17,16 @@ namespace Azure.AI.MetricsAdvisor
         /// </summary>
         public GetAllFeedbackOptions()
         {
-            Filter = new DimensionKey();
         }
 
         /// <summary> The dimension filter. </summary>
-        internal FeedbackDimensionFilter DimensionFilter => Filter.Dimension.Count == 0 ? null : new FeedbackDimensionFilter(Filter.Dimension);
+        internal FeedbackDimensionFilter DimensionFilter => Filter.Dimension == null ? null : new FeedbackDimensionFilter(Filter.Dimension);
 
         /// <summary>
         /// Filters the result by series. Only feedbacks for the series in the time series group specified will
         /// be returned.
         /// </summary>
-        public DimensionKey Filter { get; }
+        public DimensionKey Filter { get; set; }
 
         /// <summary>
         /// Filters the result by <see cref="MetricFeedback.Type"/>.
@@ -56,13 +55,13 @@ namespace Azure.AI.MetricsAdvisor
         /// If set, skips the first set of items returned. This property specifies the amount of items to
         /// be skipped.
         /// </summary>
-        public int? SkipCount { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
         /// unless the number of pages enumerated from the service is limited, the service will
         /// return an unlimited number of total items.
         /// </summary>
-        public int? TopCount { get; set; }
+        public int? MaxPageSize { get; set; }
     }
 }

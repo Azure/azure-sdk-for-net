@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Certificates`](https://www.nuget.org/packages/Azure.Security.KeyVault.Certificates) from version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
 
-Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those new to the Key Vault client library for .NET, please refer to the [`Azure.Security.KeyVault.Certificates` README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) and [`Azure.Security.KeyVault.Certificates` samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/samples) for the `Azure.Security.KeyVault.Certificates` library rather than this guide.
+Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those new to the Key Vault client library for .NET, please refer to the [`Azure.Security.KeyVault.Certificates` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) and [`Azure.Security.KeyVault.Certificates` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/samples) for the `Azure.Security.KeyVault.Certificates` library rather than this guide.
 
 ## Table of contents
 
@@ -68,7 +68,7 @@ CertificateClient client = new CertificateClient(
     new DefaultAzureCredential());
 ```
 
-[`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential) is optimized for both production and development environments without having to change your source code.
+[`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential) is optimized for both production and development environments without having to change your source code.
 
 #### Sharing an HttpClient
 
@@ -181,7 +181,6 @@ Previously in `Microsoft.Azure.KeyVault`, you could create a self-signed policy 
 
 ```C# Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
 CertificatePolicy policy = new CertificatePolicy
-policy = new CertificatePolicy
 {
     IssuerParameters = new IssuerParameters("Self"),
     X509CertificateProperties = new X509CertificateProperties("CN=DefaultPolicy")

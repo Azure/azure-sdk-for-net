@@ -1,7 +1,35 @@
 # Release History
 
-## 5.0.0-beta.5 (Unreleased)
+## 5.0.0-beta.7 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 5.0.0-beta.6 (2021-06-09)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Single dispatch now uses one thread per partition.
+
+## 5.0.0-beta.5 (2021-05-11)
+
+### Changes
+
+#### Key Bug Fixes
+
+- The web proxy specified in configuration is now respected.
+
+#### New Features
+
+- Added support for specifying `accountName` or `blobServiceUri` for the checkpoint connection.
 
 ## 5.0.0-beta.4 (2021-04-06)
 
