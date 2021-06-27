@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
             #endregion
 
-            indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
+            indexClient = new SearchIndexClient(endpoint, credential, GetSearchClientOptions());
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
             // Create the search index
@@ -104,6 +104,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient searchClient = indexClient.GetSearchClient(indexName);
             #endregion
 
+            indexClient = InstrumentClient(indexClient);
             searchClient = InstrumentClient(searchClient);
 
             return searchClient;
