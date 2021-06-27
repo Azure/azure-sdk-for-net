@@ -11,7 +11,7 @@ The Azure Key Vault secrets client library allows you to securely store and cont
 Install the Azure Key Vault secrets client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Security.KeyVault.Secrets --version 4.2.0-beta.4
+dotnet add package Azure.Security.KeyVault.Secrets
 ```
 
 ### Prerequisites

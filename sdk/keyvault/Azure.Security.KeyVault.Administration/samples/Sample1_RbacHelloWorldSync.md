@@ -46,7 +46,7 @@ az ad signed-in-user show --query objectId
 string definitionIdToAssign = "<roleDefinitionId>";
 string servicePrincipalObjectId = "<objectId>";
 
-KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectI);
+KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 ```
 
 ## Getting a Role Assignment

@@ -13,6 +13,7 @@
         "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3a91045fc3b28947c3bc6bb38d011636",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 07 Jun 2021 21:33:14 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -39,18 +40,19 @@
     {
       "RequestUri": "https://acstestbot3.communication.azure.com/calling/calls?api-version=2021-04-15-preview1",
       "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "394",
-        "Content-Type": "application/json",
-        "Date": "Mon, 07 Jun 2021 21:33:16 GMT",
-        "traceparent": "00-25fd9d696df13644ae8cea5f2afda2f3-f58afde3f311ad4c-00",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "16f888f3262fb3425888af43511f9865",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-return-client-request-id": "true"
-      },
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Content-Length": "394",
+            "Content-Type": "application/json",
+            "Date": "Mon, 07 Jun 2021 21:33:16 GMT",
+            "traceparent": "00-25fd9d696df13644ae8cea5f2afda2f3-f58afde3f311ad4c-00",
+            "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+            "x-ms-client-request-id": "16f888f3262fb3425888af43511f9865",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Mon, 07 Jun 2021 21:33:16 GMT",
+            "x-ms-return-client-request-id": "true"
+        },
       "RequestBody": {
         "sourceAlternateIdentity": {
           "value": "Sanitized"
@@ -103,6 +105,7 @@
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "d7a070c88562db1df7a3fef86f0a778d",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 07 Jun 2021 21:33:26 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -140,6 +143,7 @@
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "cd82999b133838b5c2dde129130437a3",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 07 Jun 2021 21:33:32 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -169,6 +173,7 @@
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210607.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "1deb06243e606ed36a1d1f8c2749434e",
         "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 07 Jun 2021 21:33:40 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,

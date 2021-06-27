@@ -26,11 +26,12 @@ int docsCancelled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatusesAsync())
+await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
 {
-    if (!translationStatus.HasCompleted)
+    if (translationStatus.Status != DocumentTranslationStatus.Failed &&
+          translationStatus.Status != DocumentTranslationStatus.Succeeded)
     {
-        DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+        DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
         await operation.WaitForCompletionAsync();
     }
 

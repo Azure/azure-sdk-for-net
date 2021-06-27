@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -2603,14 +2604,19 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync(Constants.KB);
-                var range = new HttpRange(0, Constants.KB);
+                HttpRange range = new HttpRange(0, Constants.KB);
+
+                PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                {
+                    SourceContentHash = MD5.Create().ComputeHash(data)
+                };
 
                 // Act
                 await destBlob.UploadPagesFromUriAsync(
                     sourceUri: sourceBlob.Uri,
                     sourceRange: range,
                     range: range,
-                    sourceContentHash: MD5.Create().ComputeHash(data));
+                    options: options);
             }
         }
 
@@ -2632,7 +2638,12 @@ namespace Azure.Storage.Blobs.Test
 
                 PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync(Constants.KB);
-                var range = new HttpRange(0, Constants.KB);
+                HttpRange range = new HttpRange(0, Constants.KB);
+
+                PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                {
+                    SourceContentHash = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))
+                };
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -2640,7 +2651,7 @@ namespace Azure.Storage.Blobs.Test
                         sourceUri: sourceBlob.Uri,
                         sourceRange: range,
                         range: range,
-                        sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garabage"))),
+                        options: options),
                     actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
                 );
             }
@@ -2696,15 +2707,20 @@ namespace Azure.Storage.Blobs.Test
                         sequenceNumbers: true);
                     PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                    var range = new HttpRange(0, Constants.KB);
+                    HttpRange range = new HttpRange(0, Constants.KB);
+
+                    PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                    {
+                        DestinationConditions = accessConditions,
+                        SourceConditions = sourceAccessConditions
+                    };
 
                     // Act
                     await destBlob.UploadPagesFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         sourceRange: range,
                         range: range,
-                        conditions: accessConditions,
-                        sourceConditions: sourceAccessConditions);
+                        options: options);
                 }
             }
         }
@@ -2786,7 +2802,13 @@ namespace Azure.Storage.Blobs.Test
                         sequenceNumbers: true);
                     PageBlobRequestConditions sourceAccessConditions = BuildSourceAccessConditions(parameters);
 
-                    var range = new HttpRange(0, Constants.KB);
+                    HttpRange range = new HttpRange(0, Constants.KB);
+
+                    PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+                    {
+                        DestinationConditions = accessConditions,
+                        SourceConditions = sourceAccessConditions
+                    };
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -2794,8 +2816,7 @@ namespace Azure.Storage.Blobs.Test
                             sourceUri: sourceBlob.Uri,
                             sourceRange: range,
                             range: range,
-                            conditions: accessConditions,
-                            sourceConditions: sourceAccessConditions),
+                            options: options),
                         actualException => Assert.IsTrue(true)
                     );
                 }
@@ -2833,14 +2854,19 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            var range = new HttpRange(0, Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                DestinationConditions = conditions
+            };
 
             // Act
             await destBlob.UploadPagesFromUriAsync(
                 sourceUri: sourceBlob.Uri,
                 sourceRange: range,
                 range: range,
-                conditions: conditions);
+                options: options);
         }
 
         [RecordedTest]
@@ -2868,7 +2894,12 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            var range = new HttpRange(0, Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                DestinationConditions = conditions
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -2876,8 +2907,88 @@ namespace Azure.Storage.Blobs.Test
                     sourceUri: sourceBlob.Uri,
                     sourceRange: range,
                     range: range,
-                    conditions: conditions),
+                    options: options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task UploadPagesFromUriAsync_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync(Constants.KB);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync(Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            string sourceBearerToken = await GetAuthToken();
+
+            HttpAuthorization sourceAuth = new HttpAuthorization(
+                "Bearer",
+                sourceBearerToken);
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await destBlob.UploadPagesFromUriAsync(
+                sourceUri: sourceBlob.Uri,
+                sourceRange: range,
+                range: range,
+                options: options);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task UploadPagesFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync(Constants.KB);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync(Constants.KB);
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            HttpAuthorization sourceAuth = new HttpAuthorization(
+                "Bearer",
+                "auth token");
+
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.UploadPagesFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceRange: range,
+                    range: range,
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

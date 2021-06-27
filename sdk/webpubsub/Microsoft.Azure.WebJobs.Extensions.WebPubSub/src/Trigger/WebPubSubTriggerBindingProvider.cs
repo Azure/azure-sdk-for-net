@@ -13,11 +13,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
         private readonly WebPubSubOptions _options;
+        private readonly Exception _webhookException;
 
-        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, WebPubSubOptions options)
+        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, WebPubSubOptions options, Exception webhookException)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _options = options ?? throw new ArgumentNullException(nameof(options));
+            _webhookException = webhookException;
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -32,6 +34,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (attribute == null)
             {
                 return Task.FromResult<ITriggerBinding>(null);
+            }
+
+            if (_webhookException != null)
+            {
+                throw new NotSupportedException($"WebPubSubTrigger is disabled due to 'AzureWebJobsStorage' connection string is not set or invalid. {_webhookException}");
             }
 
             return Task.FromResult<ITriggerBinding>(new WebPubSubTriggerBinding(parameterInfo, attribute, _options, _dispatcher));

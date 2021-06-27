@@ -134,13 +134,13 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.Storage)
+            if (_endpointType == TableEndpointType.CosmosTable)
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
             else
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
             }
         }
 
@@ -175,13 +175,13 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.Storage)
+            if (_endpointType == TableEndpointType.CosmosTable)
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
             else
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
             }
         }
 
@@ -547,6 +547,18 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(mergedEntity[mergepropertyName], Is.EqualTo(mergeUpdatedValue));
             Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
+        }
+
+        [RecordedTest]
+        public async Task DeleteEntityWithConnectionStringCtor()
+        {
+            var entity = new TableEntity("TestPartitionKey", "testRowKey")
+            {
+                { "Product", "Marker Set" }
+            };
+            await connectionStringClient.AddEntityAsync(entity);
+            entity = await connectionStringClient.GetEntityAsync<TableEntity>("TestPartitionKey", "testRowKey");
+            await connectionStringClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
         }
 
         /// <summary>

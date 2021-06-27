@@ -30,10 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string hookName = GetUniqueName();
 #endif
 
-            var emailHook = new EmailNotificationHook()
-            {
-                Name = hookName
-            };
+            var emailHook = new EmailNotificationHook(hookName);
 
             emailHook.EmailsToAlert.Add("email1@sample.com");
             emailHook.EmailsToAlert.Add("email2@sample.com");

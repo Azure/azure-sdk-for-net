@@ -1,5 +1,10 @@
 # Release History
 
+## 12.8.0-beta.1 (Unreleased)
+- Added support for service version 2020-10-02.
+- Added support for OAuth copy sources in ShareFileClient.UploadRangeFromUri()
+- Added support for including additional information in ShareDirectoryClient.GetFilesAndDirectories().
+
 ## 12.7.0 (2021-06-08)
 - Includes all features from 12.7.0-beta.4.
 - Fixed bug where specifying conditions in ShareFileClient.OpenRead could override allowModifications flag in ShareFileOpenReadOptions leading to inconsistent read.
