@@ -39,15 +39,11 @@ Param (
 
 function SetOutput($outputPath, $incomingPackageSpec) { 
   $outputObject = $incomingPackageSpec
-  
+
   if ($addDevVersion) {
     # Use the "Version" property which was provided by the incoming package spec
     # as the DevVersion. This may be overridden later.
-    Add-Member `
-      -InputObject $outputObject `
-      -NotePropertyName DevVersion `
-      -NotePropertyValue $incomingPackageSpec.Version `
-      -Force
+    $outputObject.DevVersion = $incomingPackageSpec.Version
 
     # If there is an exsiting package info json file read that and set the 
     # Version property from that JSON file.

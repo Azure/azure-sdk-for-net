@@ -96,7 +96,9 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     # If the package is of a dev version there may be language-specific needs to 
     # specify the appropriate version. For example, in the case of JS, the dev 
     # version is always 'dev' when interacting with NPM.
-    $packageInfo = &$GetDocsMsLanguageSpecificPackageInfo $packageInfo
+    if ($GetDocsMsLanguageSpecificPackageInfo -and (Test-Path "Function:$GetDocsMsLanguageSpecificPackageInfo")) { 
+      $packageInfo = &$GetDocsMsLanguageSpecificPackageInfo $packageInfo
+    }
   }
 
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name })
