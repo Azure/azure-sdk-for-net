@@ -12,17 +12,6 @@ namespace Azure.Data.Tables.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class TableModelFactory
     {
-        /// <summary> Initializes new instance of TableItem class. </summary>
-        /// <param name="name"> The name of the table. </param>
-        /// <param name="odataType"> The odata type of the table. </param>
-        /// <param name="odataId"> The id of the table. </param>
-        /// <param name="odataEditLink"> The edit link of the table. </param>
-        /// <returns> A new <see cref="Models.TableItem"/> instance for mocking. </returns>
-        public static TableItem TableItem(string name = default, string odataType = default, string odataId = default, string odataEditLink = default)
-        {
-            return new TableItem(name, odataType, odataId, odataEditLink);
-        }
-
         /// <summary> Initializes new instance of TableServiceStatistics class. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
         /// <returns> A new <see cref="Models.TableServiceStatistics"/> instance for mocking. </returns>
