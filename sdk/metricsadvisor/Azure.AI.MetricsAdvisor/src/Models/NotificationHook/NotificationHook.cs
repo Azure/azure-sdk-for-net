@@ -3,19 +3,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.
     /// </summary>
     [CodeGenModel("HookInfo")]
-    [CodeGenSuppress(nameof(NotificationHook), typeof(string))]
     public partial class NotificationHook
     {
-        internal NotificationHook()
+        internal NotificationHook(string name)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            Name = name;
             AdministratorsEmails = new ChangeTrackingList<string>();
         }
 

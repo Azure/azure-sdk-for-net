@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of DatasetZipDeflateCompression. </summary>
         /// <param name="type"> Type of dataset compression. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="level"> The ZipDeflate compression level. </param>
         internal DatasetZipDeflateCompression(string type, IDictionary<string, object> additionalProperties, object level) : base(type, additionalProperties)
         {

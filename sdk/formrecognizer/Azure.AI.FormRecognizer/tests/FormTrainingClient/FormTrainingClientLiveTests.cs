@@ -296,18 +296,14 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        public async Task StartTrainingError()
+        public void StartTrainingError()
         {
             var client = CreateFormTrainingClient();
 
             var containerUrl = new Uri("https://someUrl");
 
-            TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.AreEqual("2001", ex.ErrorCode);
-
-            Assert.False(operation.HasValue);
-            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartTrainingAsync(containerUrl, useTrainingLabels: false));
+            Assert.AreEqual("2011", ex.ErrorCode);
         }
 
         [RecordedTest]

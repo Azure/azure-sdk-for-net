@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seannseca.blob.core.windows.net/test-filesystem-d83bbe5f-2e27-5b47-d026-f57c8f1712bc?restype=container",
@@ -14,14 +14,14 @@
         "x-ms-client-request-id": "7cd92b87-abc2-bfc6-dbd4-dc81236a88a9",
         "x-ms-date": "Tue, 11 May 2021 23:58:32 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Tue, 11 May 2021 23:58:33 GMT",
-        "ETag": "\u00220x8D914D8AF47A66B\u0022",
+        "ETag": "\"0x8D914D8AF47A66B\"",
         "Last-Modified": "Tue, 11 May 2021 23:58:33 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "7cd92b87-abc2-bfc6-dbd4-dc81236a88a9",
         "x-ms-request-id": "e6d94636-f01e-0037-64c1-46ad1e000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "64f5f19a-953d-45fa-391f-51975c6f3830",
         "x-ms-date": "Tue, 11 May 2021 23:58:32 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -60,12 +60,12 @@
         ],
         "x-ms-client-request-id": "64f5f19a-953d-45fa-391f-51975c6f3830",
         "x-ms-request-id": "e6d9464f-f01e-0037-77c1-46ad1e000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannseca.blob.core.windows.net/?comp=list\u0026include=Deleted",
+      "RequestUri": "https://seannseca.blob.core.windows.net/?comp=list&include=Deleted",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "31e60872-2474-9b6b-42d0-d6f2d096ca5e",
         "x-ms-date": "Tue, 11 May 2021 23:58:32 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -92,12 +92,12 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "31e60872-2474-9b6b-42d0-d6f2d096ca5e",
         "x-ms-request-id": "e6d94667-f01e-0037-0cc1-46ad1e000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seannseca.blob.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-4bd1ea2c-a2d0-4c9f-8d65-d835c66c46ef\u003C/Name\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CVersion\u003E01D746C15F65E566\u003C/Version\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 11 May 2021 23:57:17 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D914D881DCD277\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eexpired\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003CDeletedTime\u003ETue, 11 May 2021 23:57:17 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E7\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-d83bbe5f-2e27-5b47-d026-f57c8f1712bc\u003C/Name\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CVersion\u003E01D746C18CD1174B\u003C/Version\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 11 May 2021 23:58:33 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D914D8AF47A66B\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Elocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eleased\u003C/LeaseState\u003E\u003CLeaseDuration\u003Efixed\u003C/LeaseDuration\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003CDeletedTime\u003ETue, 11 May 2021 23:58:33 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E7\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003CContainer\u003E\u003CName\u003Etest-filesystem-dfbcd665-a17b-4864-896b-05c1cb65e4f4\u003C/Name\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CVersion\u003E01D746C171A3A1D0\u003C/Version\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 11 May 2021 23:57:47 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D914D8941ABE36\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eexpired\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003CDeletedTime\u003ETue, 11 May 2021 23:57:48 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E7\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seannseca.blob.core.windows.net/\"><Containers><Container><Name>test-filesystem-4bd1ea2c-a2d0-4c9f-8d65-d835c66c46ef</Name><Deleted>true</Deleted><Version>01D746C15F65E566</Version><Properties><Last-Modified>Tue, 11 May 2021 23:57:17 GMT</Last-Modified><Etag>\"0x8D914D881DCD277\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>expired</LeaseState><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><HasImmutabilityPolicy>false</HasImmutabilityPolicy><HasLegalHold>false</HasLegalHold><DeletedTime>Tue, 11 May 2021 23:57:17 GMT</DeletedTime><RemainingRetentionDays>7</RemainingRetentionDays></Properties></Container><Container><Name>test-filesystem-d83bbe5f-2e27-5b47-d026-f57c8f1712bc</Name><Deleted>true</Deleted><Version>01D746C18CD1174B</Version><Properties><Last-Modified>Tue, 11 May 2021 23:58:33 GMT</Last-Modified><Etag>\"0x8D914D8AF47A66B\"</Etag><LeaseStatus>locked</LeaseStatus><LeaseState>leased</LeaseState><LeaseDuration>fixed</LeaseDuration><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><HasImmutabilityPolicy>false</HasImmutabilityPolicy><HasLegalHold>false</HasLegalHold><DeletedTime>Tue, 11 May 2021 23:58:33 GMT</DeletedTime><RemainingRetentionDays>7</RemainingRetentionDays></Properties></Container><Container><Name>test-filesystem-dfbcd665-a17b-4864-896b-05c1cb65e4f4</Name><Deleted>true</Deleted><Version>01D746C171A3A1D0</Version><Properties><Last-Modified>Tue, 11 May 2021 23:57:47 GMT</Last-Modified><Etag>\"0x8D914D8941ABE36\"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>expired</LeaseState><DefaultEncryptionScope>$account-encryption-key</DefaultEncryptionScope><DenyEncryptionScopeOverride>false</DenyEncryptionScopeOverride><HasImmutabilityPolicy>false</HasImmutabilityPolicy><HasLegalHold>false</HasLegalHold><DeletedTime>Tue, 11 May 2021 23:57:48 GMT</DeletedTime><RemainingRetentionDays>7</RemainingRetentionDays></Properties></Container></Containers><NextMarker /></EnumerationResults>"
     },
     {
-      "RequestUri": "https://seannseca.blob.core.windows.net/test-filesystem-d83bbe5f-2e27-5b47-d026-f57c8f1712bc?restype=container\u0026comp=undelete",
+      "RequestUri": "https://seannseca.blob.core.windows.net/test-filesystem-d83bbe5f-2e27-5b47-d026-f57c8f1712bc?restype=container&comp=undelete",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -112,7 +112,7 @@
         "x-ms-deleted-container-name": "test-filesystem-d83bbe5f-2e27-5b47-d026-f57c8f1712bc",
         "x-ms-deleted-container-version": "01D746C18CD1174B",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -125,7 +125,7 @@
         ],
         "x-ms-client-request-id": "5324d0f0-0688-0bbb-8820-7a14a5009667",
         "x-ms-request-id": "e6d96977-f01e-0037-3ac1-46ad1e000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -142,14 +142,14 @@
         "x-ms-client-request-id": "ff01f3f8-7671-a0d5-5134-137d29d978fe",
         "x-ms-date": "Tue, 11 May 2021 23:59:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Tue, 11 May 2021 23:59:03 GMT",
-        "ETag": "\u00220x8D914D8C16C420B\u0022",
+        "ETag": "\"0x8D914D8C16C420B\"",
         "Last-Modified": "Tue, 11 May 2021 23:59:04 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -163,7 +163,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "e6d96993-f01e-0037-52c1-46ad1e000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -180,7 +180,7 @@
         "x-ms-client-request-id": "b21c4f6b-96fe-72f5-7a9c-0fe28065a441",
         "x-ms-date": "Tue, 11 May 2021 23:59:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -193,13 +193,13 @@
         ],
         "x-ms-client-request-id": "b21c4f6b-96fe-72f5-7a9c-0fe28065a441",
         "x-ms-request-id": "e6d969aa-f01e-0037-64c1-46ad1e000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1899801681",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannseca\nU2FuaXRpemVk\nhttps://seannseca.blob.core.windows.net\nhttps://seannseca.file.core.windows.net\nhttps://seannseca.queue.core.windows.net\nhttps://seannseca.table.core.windows.net\n\n\n\n\nhttps://seannseca-secondary.blob.core.windows.net\nhttps://seannseca-secondary.file.core.windows.net\nhttps://seannseca-secondary.queue.core.windows.net\nhttps://seannseca-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannseca.blob.core.windows.net/;QueueEndpoint=https://seannseca.queue.core.windows.net/;FileEndpoint=https://seannseca.file.core.windows.net/;BlobSecondaryEndpoint=https://seannseca-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannseca-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannseca-secondary.file.core.windows.net/;AccountName=seannseca;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannseca\nU2FuaXRpemVk\nhttps://seannseca.blob.core.windows.net\nhttps://seannseca.file.core.windows.net\nhttps://seannseca.queue.core.windows.net\nhttps://seannseca.table.core.windows.net\n\n\n\n\nhttps://seannseca-secondary.blob.core.windows.net\nhttps://seannseca-secondary.file.core.windows.net\nhttps://seannseca-secondary.queue.core.windows.net\nhttps://seannseca-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannseca.blob.core.windows.net/;QueueEndpoint=https://seannseca.queue.core.windows.net/;FileEndpoint=https://seannseca.file.core.windows.net/;BlobSecondaryEndpoint=https://seannseca-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannseca-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannseca-secondary.file.core.windows.net/;AccountName=seannseca;AccountKey=Sanitized\n\n\n"
   }
 }

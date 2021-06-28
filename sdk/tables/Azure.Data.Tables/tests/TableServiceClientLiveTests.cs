@@ -315,12 +315,9 @@ namespace Azure.Data.Tables.Tests
         public async Task GetTableServiceStatsReturnsStats()
         {
             // Get statistics
-
             TableServiceStatistics stats = await service.GetStatisticsAsync().ConfigureAwait(false);
 
-            // Test that the secondary location is live
-
-            Assert.AreEqual(new TableGeoReplicationStatus("live"), stats.GeoReplication.Status);
+            Assert.That(stats.GeoReplication.Status, Is.AnyOf(new TableGeoReplicationStatus("live"), new TableGeoReplicationStatus("unavailable")));
         }
 
         private void CompareServiceProperties(TableServiceProperties expected, TableServiceProperties actual)

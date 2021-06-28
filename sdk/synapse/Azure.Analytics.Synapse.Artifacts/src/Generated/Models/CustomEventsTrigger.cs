@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="subjectBeginsWith"> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
         /// <param name="subjectEndsWith"> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>

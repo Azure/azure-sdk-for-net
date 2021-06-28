@@ -341,12 +341,12 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
-                        {
-                            throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(conditions.IfMatch),
-                                nameof(conditions.IfNoneMatch));
-                        }
+                        conditions.ValidateConditionsNotPresent(
+                            invalidConditions:
+                                BlobRequestConditionProperty.IfMatch
+                                | BlobRequestConditionProperty.IfNoneMatch,
+                            operationName: nameof(BlobLeaseClient.Acquire),
+                            parameterName: nameof(conditions));
 
                         ResponseWithHeaders<ContainerAcquireLeaseHeaders> containerClientResponse;
 
@@ -561,12 +561,12 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
-                        {
-                            throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(conditions.IfMatch),
-                                nameof(conditions.IfNoneMatch));
-                        }
+                        conditions.ValidateConditionsNotPresent(
+                            invalidConditions:
+                                BlobRequestConditionProperty.IfMatch
+                                | BlobRequestConditionProperty.IfNoneMatch,
+                            operationName: nameof(BlobLeaseClient.Release),
+                            parameterName: nameof(conditions));
 
                         ResponseWithHeaders<ContainerRenewLeaseHeaders> containerClientResponse;
 
@@ -784,12 +784,12 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
-                        {
-                            throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(RequestConditions.IfMatch),
-                                nameof(RequestConditions.IfNoneMatch));
-                        }
+                        conditions.ValidateConditionsNotPresent(
+                            invalidConditions:
+                                BlobRequestConditionProperty.IfMatch
+                                | BlobRequestConditionProperty.IfNoneMatch,
+                            operationName: nameof(BlobLeaseClient.Release),
+                            parameterName: nameof(conditions));
 
                         ResponseWithHeaders<ContainerReleaseLeaseHeaders> response;
 
@@ -1009,12 +1009,12 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
-                        {
-                            throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(conditions.IfMatch),
-                                nameof(conditions.IfNoneMatch));
-                        }
+                        conditions.ValidateConditionsNotPresent(
+                            invalidConditions:
+                                BlobRequestConditionProperty.IfMatch
+                                | BlobRequestConditionProperty.IfNoneMatch,
+                            operationName: nameof(BlobLeaseClient.Change),
+                            parameterName: nameof(conditions));
 
                         ResponseWithHeaders<ContainerChangeLeaseHeaders> containerClientResponse;
 
@@ -1293,12 +1293,12 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        if (conditions?.IfMatch != default || conditions?.IfNoneMatch != default)
-                        {
-                            throw BlobErrors.BlobConditionsMustBeDefault(
-                                nameof(conditions.IfMatch),
-                                nameof(conditions.IfNoneMatch));
-                        }
+                        conditions.ValidateConditionsNotPresent(
+                            invalidConditions:
+                                BlobRequestConditionProperty.IfMatch
+                                | BlobRequestConditionProperty.IfNoneMatch,
+                            operationName: nameof(BlobLeaseClient.Break),
+                            parameterName: nameof(conditions));
 
                         ResponseWithHeaders<ContainerBreakLeaseHeaders> response;
 

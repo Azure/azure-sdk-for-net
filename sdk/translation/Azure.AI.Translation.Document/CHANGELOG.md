@@ -1,6 +1,18 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
+### Breaking changes
+
+- Renamed property `DocumentId` to `Id`in `DocumentStatusResult`.
+- Renamed property `TranslationId` to `Id`in `TranslationStatusResult`
+- Renamed type `TranslationStatusResult` to `TranslationStatus`.
+- Renamed type `DocumentStatusResult` to `DocumentStatus`.
+- Renamed enum `TranslationStatus` to `DocumentTranslationStatus`.
+- Renamed method `GetDocumentFormats` to `GetSupportedDocumentFormats`.
+- Renamed method `GetGlossaryFormats` to `GetSupportedGlossaryFormats`.
+- Removed property `HasCompleted` from types `DocumentStatusResult` and `TranslationStatusResult`.
+
+## 1.0.0-beta.2 (2021-06-08)
 
 ### New Features
 

@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seannse.blob.core.windows.net/test-filesystem-bb2ae355-a331-2a49-912d-3fffc89f59ad?restype=container",
@@ -7,7 +7,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-b304a488b33f434286d09f36ba81ab33-3c916ef2d02a824f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1\u002Be1a21213d90ea675d38922959eb710860e944b7f",
+          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1+e1a21213d90ea675d38922959eb710860e944b7f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-blob-public-access": "container",
@@ -21,7 +21,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 31 Oct 2019 20:57:47 GMT",
-        "ETag": "\u00220x8D75E44FBF4875C\u0022",
+        "ETag": "\"0x8D75E44FBF4875C\"",
         "Last-Modified": "Thu, 31 Oct 2019 20:57:47 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -40,7 +40,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-33c46421a73d7a42a1a75589cd80c3d0-99297c160ad82c4c-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1\u002Be1a21213d90ea675d38922959eb710860e944b7f",
+          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1+e1a21213d90ea675d38922959eb710860e944b7f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f7de2b72-61a2-f502-3642-8a1399d0929d",
@@ -53,7 +53,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 31 Oct 2019 20:57:47 GMT",
-        "ETag": "\u00220x8D75E44FC122A60\u0022",
+        "ETag": "\"0x8D75E44FC122A60\"",
         "Last-Modified": "Thu, 31 Oct 2019 20:57:47 GMT",
         "Server": [
           "Windows-Azure-HDFS/1.0",
@@ -72,7 +72,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-7a55ad53962e3a45ace9f8aabdf81350-57f361d7b93a2549-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1\u002Be1a21213d90ea675d38922959eb710860e944b7f",
+          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1+e1a21213d90ea675d38922959eb710860e944b7f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f73592fc-e1d8-2da8-cefc-2f15b427960d",
@@ -85,7 +85,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 31 Oct 2019 20:57:47 GMT",
-        "ETag": "\u00220x8D75E44FC1B7546\u0022",
+        "ETag": "\"0x8D75E44FC1B7546\"",
         "Last-Modified": "Thu, 31 Oct 2019 20:57:47 GMT",
         "Server": [
           "Windows-Azure-HDFS/1.0",
@@ -104,7 +104,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-20b215758bf9e74492e837784ed8097d-fb934f3fd492c740-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1\u002Be1a21213d90ea675d38922959eb710860e944b7f",
+          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1+e1a21213d90ea675d38922959eb710860e944b7f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "cdde71ff-68f3-2567-d9d1-60ec1681fda7",
@@ -142,7 +142,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-74c043a566f67c4599b2643695fafe27-dffc24c74f106647-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1\u002Be1a21213d90ea675d38922959eb710860e944b7f",
+          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191031.1+e1a21213d90ea675d38922959eb710860e944b7f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "42158151-c848-7919-e2e6-3f0003c8cf2c",
@@ -168,6 +168,6 @@
   ],
   "Variables": {
     "RandomSeed": "833872366",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttp://seannse.blob.core.windows.net\nhttp://seannse.file.core.windows.net\nhttp://seannse.queue.core.windows.net\nhttp://seannse.table.core.windows.net\n\n\n\n\nhttp://seannse-secondary.blob.core.windows.net\nhttp://seannse-secondary.file.core.windows.net\nhttp://seannse-secondary.queue.core.windows.net\nhttp://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://seannse.blob.core.windows.net/;QueueEndpoint=http://seannse.queue.core.windows.net/;TableEndpoint=http://seannse.table.core.windows.net/;FileEndpoint=http://seannse.file.core.windows.net/;BlobSecondaryEndpoint=http://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seannse-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://seannse-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttp://seannse.blob.core.windows.net\nhttp://seannse.file.core.windows.net\nhttp://seannse.queue.core.windows.net\nhttp://seannse.table.core.windows.net\n\n\n\n\nhttp://seannse-secondary.blob.core.windows.net\nhttp://seannse-secondary.file.core.windows.net\nhttp://seannse-secondary.queue.core.windows.net\nhttp://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://seannse.blob.core.windows.net/;QueueEndpoint=http://seannse.queue.core.windows.net/;TableEndpoint=http://seannse.table.core.windows.net/;FileEndpoint=http://seannse.file.core.windows.net/;BlobSecondaryEndpoint=http://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seannse-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://seannse-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n\n"
   }
 }

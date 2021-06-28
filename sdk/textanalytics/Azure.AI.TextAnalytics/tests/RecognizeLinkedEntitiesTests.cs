@@ -158,26 +158,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeLinkedEntitiesBatchConvenienceWithRecognizeLinkedEntitiesOptionsStatisticsTest()
-        {
-            RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
-            TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedOutput },
-                { "1", s_document2ExpectedOutput },
-            };
-
-            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-        }
-
-        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -196,26 +176,6 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeLinkedEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
-            TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, options);
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "1", s_document1ExpectedOutput },
-                { "3", s_document1ExpectedOutput },
-            };
-
-            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-        }
-
-        [RecordedTest]
-        public async Task RecognizeLinkedEntitiesBatchWithRecognizeLinkedEntitiesOptionsStatisticsTest()
-        {
-            RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, options);
 

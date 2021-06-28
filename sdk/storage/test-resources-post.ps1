@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 # This script is used to generate the Test Configuration file for Storage live tests.
-# It is invoked by the https://github.com/Azure/azure-sdk-for-net/blob/master/eng/New-TestResources.ps1
+# It is invoked by the https://github.com/Azure/azure-sdk-for-net/blob/main/eng/New-TestResources.ps1
 # script after the ARM template, defined in https://github.com/Azure/azure-sdk-for-net/blob/arm-template-storage/sdk/storage/test-resources.json, 
 # is finished being deployed. The ARM template is responsible for creating the Storage accounts needed for live tests.
 
@@ -29,6 +29,9 @@ $SoftDeleteAccountKey = $DeploymentOutputs['SOFT_DELETE_ACCOUNT_KEY']
 $PremiumFileAccountName = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_NAME']
 $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
+$StorageTenantId = $DeploymentOutputs['STORAGE_TENANT_ID']
+$ResourceGroupName = $DeploymentOutputs['RESOURCE_GROUP_NAME']
+$SubscriptionId = $DeploymentOutputs['SUBSCRIPTION_ID']
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -95,17 +98,19 @@ $content =
       <AccountKey>$PrimaryAccountKey</AccountKey>
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>$AzureAuthorityHost</ActiveDirectoryAuthEndpoint>
-      <BlobServiceEndpoint>https://$PrimaryAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PrimaryAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PrimaryAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PrimaryAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;EndpointSuffix=$StorageEndpointSuffix</ConnectionString>
+      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
+      <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
+      <SubscriptionId>$SubscriptionId</SubscriptionId>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+      <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix;FileEndpoint=https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix;QueueEndpoint=https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix;TableEndpoint=https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>
@@ -114,16 +119,16 @@ $content =
       <AccountKey>$DataLakeAccountKey</AccountKey>
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>$AzureAuthorityHost</ActiveDirectoryAuthEndpoint>
-      <BlobServiceEndpoint>https://$DataLakeAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$DataLakeAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$DataLakeAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$DataLakeAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+      <BlobServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <FileServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountFileEndpointSuffix</FileServiceEndpoint>
+      <TableServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountTableEndpointSuffix</TableServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>SoftDeleteTenant</TenantName>
@@ -160,16 +165,31 @@ $content =
       <VaultEndpoint>$KeyVaultUri</VaultEndpoint>
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>$AzureAuthorityHost</ActiveDirectoryAuthEndpoint>
+      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
 </TestConfigurations>"
 
-# Construct the test configuration path to use based on the devops build variable for artifact staging directory
-$TestConfigurationPath = Join-Path -Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ChildPath 'TestConfiguration.xml'
+$storageTestConfigurationTemplateName = 'TestConfigurationsTemplate.xml'
+$storageTestConfigurationName = 'TestConfigurations.xml'
 
-Write-Verbose "Writing test configuration file to $TestConfigurationPath"
+if(-not (Test-Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ErrorAction Ignore) ) {
+  Write-Verbose "Checking for '$storageTestConfigurationTemplateName' files under '$PSScriptRoot'"
+
+  $foundFile = Get-ChildItem -Path $PSScriptRoot -Filter $storageTestConfigurationTemplateName -Recurse | Select-Object -First 1
+  $storageTemplateDirName = $foundFile.Directory.FullName
+  Write-Verbose "Found template dir '$storageTemplateDirName'"
+
+} else {
+  $storageTemplateDirName = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
+  Write-Verbose "Found environment variable BUILD_ARTIFACTSTAGINGDIRECTORY '$storageTemplateDirName'"
+}
+
+# Construct the test configuration path to use based on the devops build variable for artifact staging directory
+$TestConfigurationPath = Join-Path -Path $storageTemplateDirName -ChildPath $storageTestConfigurationName
+
+Write-Verbose "Writing test configuration file to '$TestConfigurationPath'"
 $content | Set-Content $TestConfigurationPath
 
 Write-Verbose "Setting AZ_STORAGE_CONFIG_PATH environment variable used by Storage Tests"

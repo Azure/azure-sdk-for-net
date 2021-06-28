@@ -27,13 +27,14 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 TimeSpan pollingInterval = new(1000);
 
-await foreach (DocumentStatusResult document in operation.GetAllDocumentStatusesAsync())
+await foreach (DocumentStatus document in operation.GetAllDocumentStatusesAsync())
 {
     Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-    Response<DocumentStatusResult> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
+    Response<DocumentStatus> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
 
-    while (!responseDocumentStatus.Value.HasCompleted)
+    while (responseDocumentStatus.Value.Status != DocumentTranslationStatus.Failed &&
+              responseDocumentStatus.Value.Status != DocumentTranslationStatus.Succeeded)
     {
         if (responseDocumentStatus.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
         {
@@ -41,10 +42,10 @@ await foreach (DocumentStatusResult document in operation.GetAllDocumentStatuses
         }
 
         await Task.Delay(pollingInterval);
-        responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
+        responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
     }
 
-    if (responseDocumentStatus.Value.Status == TranslationStatus.Succeeded)
+    if (responseDocumentStatus.Value.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
@@ -61,8 +62,8 @@ await foreach (DocumentStatusResult document in operation.GetAllDocumentStatuses
 
 To see the full example source files, see:
 
-* [Synchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocuments.cs)
-* [Asynchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocumentsAsync.cs)
+* [Synchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocuments.cs)
+* [Asynchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocumentsAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/README.md
