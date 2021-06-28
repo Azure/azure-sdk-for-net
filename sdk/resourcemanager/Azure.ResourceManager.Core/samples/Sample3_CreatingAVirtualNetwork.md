@@ -19,7 +19,7 @@ VirtualNetwork virtualNetwork = await vnetContainer
 ```
 
 Now that we have a virtual network, we must create at least one subnet in order to add any virtual machines.
-Following the hierarchy in Azure, subnets belong to a virtual network, so that's where we'll get our `SubnetContainer` instance.  After that, we'll again use the `Construct` helper method to create our subnet.
+Following the hierarchy in Azure, subnets belong to a virtual network, so that's where we'll get our `SubnetContainer` instance. After that, we'll again use the `Construct` helper method to create our subnet.
 
 ```csharp
 string subnetName = "mySubnetName";

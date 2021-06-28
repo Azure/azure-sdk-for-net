@@ -114,7 +114,7 @@ ResourceGroup resourceGroup = await rgContainer.CreateAsync(rgName);
 
 ### List all resource groups
 ```csharp
-// First we initialize the ArmClient and get the default subscription
+// First, initialize the ArmClient and get the default subscription
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 
@@ -133,7 +133,7 @@ For more detailed examples, take a look at [samples]<--(samples/)--> we have ava
 
 ## Troubleshooting
 
--   If you find a bug or have a suggestion, file an issue via [Github issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Preview" label to the issue.
+-   If you find a bug or have a suggestion, file an issue via [GitHub issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Preview" label to the issue.
 -   If you need help, check [previous
     questions](https://stackoverflow.com/questions/tagged/azure+.net)
     or ask new ones on StackOverflow using azure and .NET tags.
