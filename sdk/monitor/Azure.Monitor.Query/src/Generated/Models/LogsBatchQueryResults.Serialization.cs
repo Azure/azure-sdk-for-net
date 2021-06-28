@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsBatchQueryResults DeserializeLogsBatchQueryResults(JsonElement element)
         {
-            Optional<IReadOnlyList<LogQueryResponse>> responses = default;
+            Optional<IReadOnlyList<BatchQueryResponse>> responses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("responses"))
@@ -25,10 +25,10 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LogQueryResponse> array = new List<LogQueryResponse>();
+                    List<BatchQueryResponse> array = new List<BatchQueryResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogQueryResponse.DeserializeLogQueryResponse(item));
+                        array.Add(BatchQueryResponse.DeserializeBatchQueryResponse(item));
                     }
                     responses = array;
                     continue;

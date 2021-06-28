@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -111,7 +111,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         ///
         public async override Task RunAsync(CancellationToken cancellationToken)
         {
-            await FileClient.ReadToAsync(Stream.Null, cancellationToken:cancellationToken);
+            await FileClient.ReadToAsync(Stream.Null, cancellationToken: cancellationToken);
         }
     }
 }

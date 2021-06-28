@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// The type of the parent resource. This can be either \'topics\',
+            /// \'domains\', or \'partnerNamespaces\'.
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name or domain
-            /// name).
+            /// The name of the parent resource (namely, either, the topic name, domain
+            /// name, or partner namespace name).
             /// </param>
             /// <param name='privateLinkResourceName'>
             /// The name of private link resource.
@@ -62,12 +62,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// The type of the parent resource. This can be either \'topics\',
+            /// \'domains\', or \'partnerNamespaces\'.
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name or domain
-            /// name).
+            /// The name of the parent resource (namely, either, the topic name, domain
+            /// name, or partner namespace name).
             /// </param>
             /// <param name='privateLinkResourceName'>
             /// The name of private link resource.
@@ -84,10 +84,12 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List private link resources under specific topic or domain.
+            /// List private link resources under specific topic, domain, or partner
+            /// namespace.
             /// </summary>
             /// <remarks>
-            /// List all the private link resources under a topic or domain.
+            /// List all the private link resources under a topic, domain, or partner
+            /// namespace.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -96,12 +98,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// The type of the parent resource. This can be either \'topics\',
+            /// \'domains\', or \'partnerNamespaces\'.
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name or domain
-            /// name).
+            /// The name of the parent resource (namely, either, the topic name, domain
+            /// name, or partner namespace name).
             /// </param>
             /// <param name='filter'>
             /// The query used to filter the search results using OData syntax. Filtering
@@ -123,10 +125,12 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List private link resources under specific topic or domain.
+            /// List private link resources under specific topic, domain, or partner
+            /// namespace.
             /// </summary>
             /// <remarks>
-            /// List all the private link resources under a topic or domain.
+            /// List all the private link resources under a topic, domain, or partner
+            /// namespace.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,12 +139,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\' or
-            /// \'domains\'.
+            /// The type of the parent resource. This can be either \'topics\',
+            /// \'domains\', or \'partnerNamespaces\'.
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name or domain
-            /// name).
+            /// The name of the parent resource (namely, either, the topic name, domain
+            /// name, or partner namespace name).
             /// </param>
             /// <param name='filter'>
             /// The query used to filter the search results using OData syntax. Filtering
@@ -168,10 +172,12 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List private link resources under specific topic or domain.
+            /// List private link resources under specific topic, domain, or partner
+            /// namespace.
             /// </summary>
             /// <remarks>
-            /// List all the private link resources under a topic or domain.
+            /// List all the private link resources under a topic, domain, or partner
+            /// namespace.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,10 +191,12 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List private link resources under specific topic or domain.
+            /// List private link resources under specific topic, domain, or partner
+            /// namespace.
             /// </summary>
             /// <remarks>
-            /// List all the private link resources under a topic or domain.
+            /// List all the private link resources under a topic, domain, or partner
+            /// namespace.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

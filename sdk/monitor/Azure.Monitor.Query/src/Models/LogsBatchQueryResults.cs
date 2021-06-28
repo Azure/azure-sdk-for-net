@@ -8,12 +8,12 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    [CodeGenModel("BatchResponse")]
+    [CodeGenModel("batchResponse")]
     public partial class LogsBatchQueryResults
     {
         private LogsBatchQueryResult[] _results;
 
-        private IReadOnlyList<LogQueryResponse> Responses { get; }
+        private IReadOnlyList<BatchQueryResponse> Responses { get; }
 
         /// <summary>
         /// Gets the list of results for the batch query.
@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="RequestFailedException">When the query  <paramref name="queryId"/> failed.</exception>
         public LogsQueryResult GetResult(string queryId)
         {
-            LogQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
+            BatchQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
 
             if (result == null)
             {

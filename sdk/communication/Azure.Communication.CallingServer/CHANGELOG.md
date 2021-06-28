@@ -1,5 +1,16 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
 ## 1.0.0-beta.1 (2021-06-24)
 This is the first release of Azure Communication Service Calling Server. For more information, please see the [README][read_me].
 

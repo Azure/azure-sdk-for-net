@@ -89,8 +89,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerTopicName'>
         /// Name of the partner topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the partner topic.
+        /// <param name='partnerTopicUpdateParameters'>
+        /// PartnerTopic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerTopic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerTopic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, PartnerTopicUpdateParameters partnerTopicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List partner topics under an Azure subscription.
         /// </summary>

@@ -10,18 +10,18 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Response to a batch. </summary>
+    /// <summary> Response to a batch query. </summary>
     public partial class LogsBatchQueryResults
     {
         /// <summary> Initializes a new instance of LogsBatchQueryResults. </summary>
         internal LogsBatchQueryResults()
         {
-            Responses = new ChangeTrackingList<LogQueryResponse>();
+            Responses = new ChangeTrackingList<BatchQueryResponse>();
         }
 
         /// <summary> Initializes a new instance of LogsBatchQueryResults. </summary>
         /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
-        internal LogsBatchQueryResults(IReadOnlyList<LogQueryResponse> responses)
+        internal LogsBatchQueryResults(IReadOnlyList<BatchQueryResponse> responses)
         {
             Responses = responses;
         }
