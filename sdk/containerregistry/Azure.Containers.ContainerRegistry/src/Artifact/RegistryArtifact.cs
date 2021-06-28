@@ -557,7 +557,7 @@ namespace Azure.Containers.ContainerRegistry
         public virtual async Task<Response> PullToAsync(string path, CancellationToken cancellationToken = default)
         {
             // Get Manifest
-            Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, "application/vnd.oci.image.manifest.v1+json", cancellationToken).ConfigureAwait(false);
 
             // Write manifest to file
             Directory.CreateDirectory(path);

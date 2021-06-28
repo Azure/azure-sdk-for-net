@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             FsLayers = new ChangeTrackingList<DockerManifestV1FsLayer>();
             History = new ChangeTrackingList<DockerManifestV1History>();
             Signatures = new ChangeTrackingList<DockerManifestV1ImageSignature>();
-            MediaType = "application/vnd.oci.image.manifest.v1+json";
+            MediaType = "application/vnd.docker.distribution.manifest.v1+json";
         }
 
         /// <summary> Initializes a new instance of DockerManifestV1. </summary>
@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             FsLayers = fsLayers;
             History = history;
             Signatures = signatures;
-            MediaType = mediaType ?? "application/vnd.oci.image.manifest.v1+json";
+            MediaType = mediaType ?? "application/vnd.docker.distribution.manifest.v1+json";
         }
     }
 }

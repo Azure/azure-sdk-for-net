@@ -2691,7 +2691,7 @@
     },
     "V1Manifest": {
       "description": "Returns the requested V1 manifest file",
-      "x-ms-discriminator-value": "application/vnd.oci.image.manifest.v1+json",
+      "x-ms-discriminator-value": "application/vnd.docker.distribution.manifest.v1+json",
       "x-accessibility": "internal",
       "properties": {
         "architecture": {

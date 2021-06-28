@@ -20,9 +20,10 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                 {
                     case "ManifestWrapper": return CombinedManifest.DeserializeCombinedManifest(element);
                     case "application/vnd.docker.distribution.manifest.list.v2+json": return DockerManifestList.DeserializeDockerManifestList(element);
+                    case "application/vnd.docker.distribution.manifest.v1+json": return DockerManifestV1.DeserializeDockerManifestV1(element);
                     case "application/vnd.docker.distribution.manifest.v2+json": return DockerManifestV2.DeserializeDockerManifestV2(element);
                     case "application/vnd.oci.image.index.v1+json": return OciIndex.DeserializeOciIndex(element);
-                    case "application/vnd.oci.image.manifest.v1+json": return DockerManifestV1.DeserializeDockerManifestV1(element);
+                    case "application/vnd.oci.image.manifest.v1+json": return OciManifest.DeserializeOciManifest(element);
                 }
             }
             int schemaVersion = default;
