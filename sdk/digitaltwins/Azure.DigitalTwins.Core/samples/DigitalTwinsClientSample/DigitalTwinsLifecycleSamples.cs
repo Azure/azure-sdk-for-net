@@ -294,9 +294,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 // fluent-style query construction that makes it easier to write queries.
                 AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
                     new AdtQueryBuilder()
-                    .Select("*")
-                    .From(AdtCollection.DigitalTwins)
-                    .Build());
+                        .Select("*")
+                        .From(AdtCollection.DigitalTwins)
+                        .Build());
                 #endregion
 
                 Console.WriteLine("Making a twin query, with query-charge header extraction.");
