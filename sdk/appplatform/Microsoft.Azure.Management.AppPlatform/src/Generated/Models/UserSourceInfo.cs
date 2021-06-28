@@ -30,19 +30,21 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Initializes a new instance of the UserSourceInfo class.
         /// </summary>
         /// <param name="type">Type of the source uploaded. Possible values
-        /// include: 'Jar', 'NetCoreZip', 'Source'</param>
+        /// include: 'Jar', 'NetCoreZip', 'Source', 'Container'</param>
         /// <param name="relativePath">Relative path of the storage which
         /// stores the source</param>
         /// <param name="version">Version of the source</param>
         /// <param name="artifactSelector">Selector for the artifact to be used
         /// for the deployment for multi-module projects. This should be
         /// the relative path to the target module/project.</param>
-        public UserSourceInfo(string type = default(string), string relativePath = default(string), string version = default(string), string artifactSelector = default(string))
+        /// <param name="customContainer">Custom container payload</param>
+        public UserSourceInfo(string type = default(string), string relativePath = default(string), string version = default(string), string artifactSelector = default(string), CustomContainer customContainer = default(CustomContainer))
         {
             Type = type;
             RelativePath = relativePath;
             Version = version;
             ArtifactSelector = artifactSelector;
+            CustomContainer = customContainer;
             CustomInit();
         }
 
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 
         /// <summary>
         /// Gets or sets type of the source uploaded. Possible values include:
-        /// 'Jar', 'NetCoreZip', 'Source'
+        /// 'Jar', 'NetCoreZip', 'Source', 'Container'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
@@ -77,6 +79,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "artifactSelector")]
         public string ArtifactSelector { get; set; }
+
+        /// <summary>
+        /// Gets or sets custom container payload
+        /// </summary>
+        [JsonProperty(PropertyName = "customContainer")]
+        public CustomContainer CustomContainer { get; set; }
 
     }
 }

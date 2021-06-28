@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public const string Jar = "Jar";
         public const string NetCoreZip = "NetCoreZip";
         public const string Source = "Source";
+        public const string Container = "Container";
     }
 }

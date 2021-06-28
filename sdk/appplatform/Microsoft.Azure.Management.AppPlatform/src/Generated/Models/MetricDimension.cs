@@ -32,10 +32,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="name">Name of the dimension</param>
         /// <param name="displayName">Localized friendly display name of the
         /// dimension</param>
-        public MetricDimension(string name = default(string), string displayName = default(string))
+        /// <param name="toBeExportedForShoebox">Whether this dimension should
+        /// be included for the Shoebox export scenario</param>
+        public MetricDimension(string name = default(string), string displayName = default(string), bool? toBeExportedForShoebox = default(bool?))
         {
             Name = name;
             DisplayName = displayName;
+            ToBeExportedForShoebox = toBeExportedForShoebox;
             CustomInit();
         }
 
@@ -55,6 +58,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this dimension should be included for the
+        /// Shoebox export scenario
+        /// </summary>
+        [JsonProperty(PropertyName = "toBeExportedForShoebox")]
+        public bool? ToBeExportedForShoebox { get; set; }
 
     }
 }

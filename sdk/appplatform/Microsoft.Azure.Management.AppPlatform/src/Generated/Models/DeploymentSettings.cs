@@ -31,11 +31,19 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentSettings class.
         /// </summary>
-        /// <param name="cpu">Required CPU, basic tier should be 1, standard
-        /// tier should be in range (1, 4)</param>
-        /// <param name="memoryInGB">Required Memory size in GB, basic tier
-        /// should be in range (1, 2), standard tier should be in range (1,
-        /// 8)</param>
+        /// <param name="cpu">Required CPU. This should be 1 for Basic tier,
+        /// and in range [1, 4] for Standard tier. This is deprecated starting
+        /// from API version 2021-06-01-preview. Please use the
+        /// resourceRequests field to set the CPU size.</param>
+        /// <param name="memoryInGB">Required Memory size in GB. This should be
+        /// in range [1, 2] for Basic tier, and in range [1, 8] for Standard
+        /// tier. This is deprecated starting from API version
+        /// 2021-06-01-preview. Please use the resourceRequests field to set
+        /// the the memory size.</param>
+        /// <param name="resourceRequests">The requested resource quantity for
+        /// required CPU and Memory. It is recommended that using this field to
+        /// represent the required CPU and Memory, the old field cpu and
+        /// memoryInGB will be deprecated later.</param>
         /// <param name="jvmOptions">JVM parameter</param>
         /// <param name="netCoreMainEntryPath">The path to the .NET executable
         /// relative to zip root</param>
@@ -43,10 +51,11 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// variables</param>
         /// <param name="runtimeVersion">Runtime version. Possible values
         /// include: 'Java_8', 'Java_11', 'NetCore_31'</param>
-        public DeploymentSettings(int? cpu = default(int?), int? memoryInGB = default(int?), string jvmOptions = default(string), string netCoreMainEntryPath = default(string), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), string runtimeVersion = default(string))
+        public DeploymentSettings(int? cpu = default(int?), int? memoryInGB = default(int?), ResourceRequests resourceRequests = default(ResourceRequests), string jvmOptions = default(string), string netCoreMainEntryPath = default(string), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), string runtimeVersion = default(string))
         {
             Cpu = cpu;
             MemoryInGB = memoryInGB;
+            ResourceRequests = resourceRequests;
             JvmOptions = jvmOptions;
             NetCoreMainEntryPath = netCoreMainEntryPath;
             EnvironmentVariables = environmentVariables;
@@ -60,18 +69,31 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets required CPU, basic tier should be 1, standard tier
-        /// should be in range (1, 4)
+        /// Gets or sets required CPU. This should be 1 for Basic tier, and in
+        /// range [1, 4] for Standard tier. This is deprecated starting from
+        /// API version 2021-06-01-preview. Please use the resourceRequests
+        /// field to set the CPU size.
         /// </summary>
         [JsonProperty(PropertyName = "cpu")]
         public int? Cpu { get; set; }
 
         /// <summary>
-        /// Gets or sets required Memory size in GB, basic tier should be in
-        /// range (1, 2), standard tier should be in range (1, 8)
+        /// Gets or sets required Memory size in GB. This should be in range
+        /// [1, 2] for Basic tier, and in range [1, 8] for Standard tier. This
+        /// is deprecated starting from API version 2021-06-01-preview. Please
+        /// use the resourceRequests field to set the the memory size.
         /// </summary>
         [JsonProperty(PropertyName = "memoryInGB")]
         public int? MemoryInGB { get; set; }
+
+        /// <summary>
+        /// Gets or sets the requested resource quantity for required CPU and
+        /// Memory. It is recommended that using this field to represent the
+        /// required CPU and Memory, the old field cpu and memoryInGB will be
+        /// deprecated later.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceRequests")]
+        public ResourceRequests ResourceRequests { get; set; }
 
         /// <summary>
         /// Gets or sets JVM parameter
