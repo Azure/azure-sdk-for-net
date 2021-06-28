@@ -88,8 +88,6 @@ namespace Azure.Containers.ContainerRegistry
         public ArtifactArchitecture? Architecture { get; }
         /// <summary> Operating system. </summary>
         public ArtifactOperatingSystem? OperatingSystem { get; }
-        /// <summary> Media type. </summary>
-        public string MediaType { get; }
         /// <summary> List of artifacts that are referenced by this manifest list, with information about the platform each supports.  This list will be empty if this is a leaf manifest and not a manifest list. </summary>
         public IReadOnlyList<ArtifactManifestPlatform> RelatedArtifacts { get; }
         /// <summary> List of tags. </summary>

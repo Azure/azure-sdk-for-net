@@ -29,5 +29,7 @@ namespace Azure.Containers.ContainerRegistry
         internal string QuarantineState { get; }
         /// <summary> Quarantine details. </summary>
         internal string QuarantineDetails { get; }
+        /// <summary> Media type. </summary>
+        internal string MediaType { get; }
     }
 }
