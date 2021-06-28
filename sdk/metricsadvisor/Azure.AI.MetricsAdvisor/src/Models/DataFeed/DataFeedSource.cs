@@ -3,29 +3,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public abstract class DataFeedSource
     {
-        internal DataFeedSourceType Type { get; }
-
         internal DataFeedSource(DataFeedSourceType dataFeedSourceType)
         {
-            Type = dataFeedSourceType;
+            DataSourceType = dataFeedSourceType;
         }
+
+        /// <summary>
+        /// The type of this data source.
+        /// </summary>
+        public DataFeedSourceType DataSourceType { get; }
 
         internal static DataFeedSource GetDataFeedSource(DataFeedDetail dataFeedDetail) =>
             dataFeedDetail switch
             {
                 AzureApplicationInsightsDataFeed d => new AzureApplicationInsightsDataFeedSource(d.DataSourceParameter),
-                AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter),
+                AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter, d.AuthenticationType),
                 AzureCosmosDBDataFeed d => new AzureCosmosDbDataFeedSource(d.DataSourceParameter),
-                AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter),
-                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter),
+                AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
+                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
                 AzureEventHubsDataFeed d => new AzureEventHubsDataFeedSource(d.DataSourceParameter),
                 AzureLogAnalyticsDataFeed d => new LogAnalyticsDataFeedSource(d.DataSourceParameter),
                 AzureTableDataFeed d => new AzureTableDataFeedSource(d.DataSourceParameter),
@@ -33,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 MongoDBDataFeed d => new MongoDbDataFeedSource(d.DataSourceParameter),
                 MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
                 PostgreSqlDataFeed d => new PostgreSqlDataFeedSource(d.DataSourceParameter),
-                SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter),
+                SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
                 _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };
 

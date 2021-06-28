@@ -53,12 +53,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateAzureApplicationInsightsDataSource(createdDataFeed.DataSource as AzureApplicationInsightsDataFeedSource);
         }
 
@@ -73,12 +70,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateAzureApplicationInsightsDataSource(createdDataFeed.DataSource as AzureApplicationInsightsDataFeedSource);
         }
 
@@ -93,12 +87,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateAzureBlobDataSource(createdDataFeed.DataSource as AzureBlobDataFeedSource);
         }
 
@@ -113,14 +104,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
-
-            var createdDataSource = createdDataFeed.DataSource as AzureBlobDataFeedSource;
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateAzureBlobDataSource(createdDataFeed.DataSource as AzureBlobDataFeedSource);
         }
 
@@ -135,12 +121,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateAzureCosmosDbDataSource(createdDataFeed.DataSource as AzureCosmosDbDataFeedSource);
         }
 
@@ -155,12 +138,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateAzureCosmosDbDataSource(createdDataFeed.DataSource as AzureCosmosDbDataFeedSource);
         }
 
@@ -175,12 +155,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateAzureDataExplorerDataSource(createdDataFeed.DataSource as AzureDataExplorerDataFeedSource);
         }
 
@@ -195,12 +172,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateAzureDataExplorerDataSource(createdDataFeed.DataSource as AzureDataExplorerDataFeedSource);
         }
 
@@ -215,12 +189,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateAzureDataLakeStorageGen2DataSource(createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
         }
 
@@ -235,12 +206,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateAzureDataLakeStorageGen2DataSource(createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
         }
 
@@ -256,12 +224,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateAzureEventHubsDataSource(createdDataFeed.DataSource as AzureEventHubsDataFeedSource);
         }
 
@@ -277,12 +242,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateAzureEventHubsDataSource(createdDataFeed.DataSource as AzureEventHubsDataFeedSource);
         }
 
@@ -297,12 +259,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateAzureTableDataSource(createdDataFeed.DataSource as AzureTableDataFeedSource);
         }
 
@@ -317,12 +276,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateAzureTableDataSource(createdDataFeed.DataSource as AzureTableDataFeedSource);
         }
 
@@ -337,12 +293,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateInfluxDbDataSource(createdDataFeed.DataSource as InfluxDbDataFeedSource);
         }
 
@@ -357,12 +310,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateInfluxDbDataSource(createdDataFeed.DataSource as InfluxDbDataFeedSource);
         }
 
@@ -377,12 +327,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateLogAnalyticsDataSource(createdDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
 
@@ -397,12 +344,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateLogAnalyticsDataSource(createdDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
 
@@ -417,12 +361,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateMongoDbDataSource(createdDataFeed.DataSource as MongoDbDataFeedSource);
         }
 
@@ -437,12 +378,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateMongoDbDataSource(createdDataFeed.DataSource as MongoDbDataFeedSource);
         }
 
@@ -457,12 +395,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateMySqlDataSource(createdDataFeed.DataSource as MySqlDataFeedSource);
         }
 
@@ -477,12 +412,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateMySqlDataSource(createdDataFeed.DataSource as MySqlDataFeedSource);
         }
 
@@ -497,12 +429,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidatePostgreSqlDataSource(createdDataFeed.DataSource as PostgreSqlDataFeedSource);
         }
 
@@ -517,12 +446,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidatePostgreSqlDataSource(createdDataFeed.DataSource as PostgreSqlDataFeedSource);
         }
 
@@ -537,12 +463,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
-
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
             ValidateSqlServerDataSource(createdDataFeed.DataSource as SqlServerDataFeedSource);
         }
 
@@ -557,17 +480,186 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
-
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
-
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
             ValidateSqlServerDataSource(createdDataFeed.DataSource as SqlServerDataFeedSource);
         }
 
         [RecordedTest]
-        public async Task UpdateAzureApplicationInsightsDataFeedWithMinimumSetupAndGetInstance()
+        [TestCase(AzureBlobDataFeedSource.AuthenticationType.Basic)]
+        [TestCase(AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity)]
+        public async Task CreateAndGetAzureBlobDataFeedWithAuthentication(AzureBlobDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock")
+            {
+                Authentication = authentication
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+            AzureBlobDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureBlobDataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+        }
+
+        [RecordedTest]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.Basic)]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ManagedIdentity)]
+        public async Task CreateAndGetAzureDataExplorerDataFeedWithAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock")
+            {
+                Authentication = authentication
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+            AzureDataExplorerDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataExplorerDataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+        }
+
+        [RecordedTest]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        public async Task CreateAndGetAzureDataExplorerDataFeedWithCredentialAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
+            string credentialId = disposableCredential.Credential.Id;
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock")
+            {
+                Authentication = authentication,
+                DataSourceCredentialId = credentialId
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+            AzureDataExplorerDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataExplorerDataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+        }
+
+        [RecordedTest]
+        public async Task CreateAndGetAzureDataLakeStorageGen2DataFeedWithAuthentication()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock")
+            {
+                Authentication = AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+            AzureDataLakeStorageGen2DataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic));
+        }
+
+        [RecordedTest]
+        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.SharedKey)]
+        public async Task CreateAndGetAzureDataLakeStorageGen2DataFeedWithCredentialAuthentication(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
+            string credentialId = disposableCredential.Credential.Id;
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock")
+            {
+                Authentication = authentication,
+                DataSourceCredentialId = credentialId
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+            AzureDataLakeStorageGen2DataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+        }
+
+        [RecordedTest]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.Basic)]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.ManagedIdentity)]
+        public async Task CreateAndGetSqlServerDataFeedWithAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("mock", "mock")
+            {
+                Authentication = authentication
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+            SqlServerDataFeedSource createdDataSource = createdDataFeed.DataSource as SqlServerDataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+        }
+
+        [RecordedTest]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.SqlConnectionString)]
+        public async Task CreateAndGetSqlServerDataFeedWithCredentialAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
+            string credentialId = disposableCredential.Credential.Id;
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("mock", "mock")
+            {
+                Authentication = authentication,
+                DataSourceCredentialId = credentialId
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+            SqlServerDataFeedSource createdDataSource = createdDataFeed.DataSource as SqlServerDataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
+            Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureApplicationInsightsDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -578,45 +670,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateAzureApplicationInsightsDataSource(updatedDataFeed.DataSource as AzureApplicationInsightsDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureApplicationInsightsDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureApplicationInsightsDataFeedSource(DataSourceAppId, DataSourceKey, DataSourceCloud, DataSourceQuery);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
-
-            ValidateAzureApplicationInsightsDataSource(updatedDataFeed.DataSource as AzureApplicationInsightsDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureApplicationInsightsDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateAzureApplicationInsightsDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -627,49 +692,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
-
-            ValidateAzureApplicationInsightsDataSource(updatedDataFeed.DataSource as AzureApplicationInsightsDataFeedSource);
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureApplicationInsightsDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureApplicationInsightsDataFeedSource(DataSourceAppId, DataSourceKey, DataSourceCloud, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateAzureApplicationInsightsDataSource(updatedDataFeed.DataSource as AzureApplicationInsightsDataFeedSource);
         }
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task UpdateAzureBlobDataFeedWithMinimumSetupAndGetInstance(bool useTokenCredential)
+        public async Task UpdateAzureBlobDataFeedWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
@@ -680,45 +716,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateAzureBlobDataSource(updatedDataFeed.DataSource as AzureBlobDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureBlobDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureBlobDataFeedSource(DataSourceConnectionString, DataSourceContainer, DataSourceTemplate);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
-
-            ValidateAzureBlobDataSource(updatedDataFeed.DataSource as AzureBlobDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureBlobDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateAzureBlobDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -729,47 +738,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateAzureBlobDataSource(updatedDataFeed.DataSource as AzureBlobDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureBlobDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureBlobDataFeedSource(DataSourceConnectionString, DataSourceContainer, DataSourceTemplate);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
-
-            ValidateAzureBlobDataSource(updatedDataFeed.DataSource as AzureBlobDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureCosmosDbDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateAzureCosmosDbDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -780,45 +760,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateAzureCosmosDbDataSource(updatedDataFeed.DataSource as AzureCosmosDbDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureCosmosDbDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureCosmosDbDataFeedSource(DataSourceConnectionString, DataSourceQuery, DataSourceDatabase, DataSourceCollectionId);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
-
-            ValidateAzureCosmosDbDataSource(updatedDataFeed.DataSource as AzureCosmosDbDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureCosmosDbDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateAzureCosmosDbDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -829,47 +782,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateAzureCosmosDbDataSource(updatedDataFeed.DataSource as AzureCosmosDbDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureCosmosDbDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureCosmosDbDataFeedSource(DataSourceConnectionString, DataSourceQuery, DataSourceDatabase, DataSourceCollectionId);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
-
-            ValidateAzureCosmosDbDataSource(updatedDataFeed.DataSource as AzureCosmosDbDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureDataExplorerDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateAzureDataExplorerDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -880,45 +804,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateAzureDataExplorerDataSource(updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureDataExplorerDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataExplorerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
-
-            ValidateAzureDataExplorerDataSource(updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureDataExplorerDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateAzureDataExplorerDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -929,47 +826,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateAzureDataExplorerDataSource(updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureDataExplorerDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataExplorerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
-
-            ValidateAzureDataExplorerDataSource(updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -980,45 +848,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateAzureDataLakeStorageGen2DataSource(updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
-
-            ValidateAzureDataLakeStorageGen2DataSource(updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1029,48 +870,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
-
-            ValidateAzureDataLakeStorageGen2DataSource(updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateAzureDataLakeStorageGen2DataSource(updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
         }
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21623")]
-        public async Task UpdateAzureEventHubsDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateAzureEventHubsDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1081,22 +893,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateAzureEventHubsDataSource(updatedDataFeed.DataSource as AzureEventHubsDataFeedSource);
         }
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21623")]
-        public async Task UpdateAzureEventHubsDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateAzureEventHubsDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1107,21 +916,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateAzureEventHubsDataSource(updatedDataFeed.DataSource as AzureEventHubsDataFeedSource);
         }
 
         [RecordedTest]
-        public async Task UpdateAzureTableDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateAzureTableDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1132,45 +938,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateAzureTableDataSource(updatedDataFeed.DataSource as AzureTableDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureTableDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureTableDataFeedSource(DataSourceConnectionString, DataSourceTable, DataSourceQuery);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
-
-            ValidateAzureTableDataSource(updatedDataFeed.DataSource as AzureTableDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateAzureTableDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateAzureTableDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1181,47 +960,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateAzureTableDataSource(updatedDataFeed.DataSource as AzureTableDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateAzureTableDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureTableDataFeedSource(DataSourceConnectionString, DataSourceTable, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
-
-            ValidateAzureTableDataSource(updatedDataFeed.DataSource as AzureTableDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateInfluxDbDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateInfluxDbDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1232,45 +982,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateInfluxDbDataSource(updatedDataFeed.DataSource as InfluxDbDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateInfluxDbDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new InfluxDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceUsername, DataSourcePassword, DataSourceQuery);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
-
-            ValidateInfluxDbDataSource(updatedDataFeed.DataSource as InfluxDbDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateInfluxDbDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateInfluxDbDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1281,47 +1004,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateInfluxDbDataSource(updatedDataFeed.DataSource as InfluxDbDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateInfluxDbDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new InfluxDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceUsername, DataSourcePassword, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
-
-            ValidateInfluxDbDataSource(updatedDataFeed.DataSource as InfluxDbDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateLogAnalyticsDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateLogAnalyticsDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1332,21 +1026,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateLogAnalyticsDataSource(updatedDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
 
         [RecordedTest]
-        public async Task UpdateLogAnalyticsDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateLogAnalyticsDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1357,21 +1048,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateLogAnalyticsDataSource(updatedDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
 
         [RecordedTest]
-        public async Task UpdateMongoDbDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateMongoDbDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1382,45 +1070,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateMongoDbDataSource(updatedDataFeed.DataSource as MongoDbDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateMongoDbDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new MongoDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceCommand);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
-
-            ValidateMongoDbDataSource(updatedDataFeed.DataSource as MongoDbDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateMongoDbDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateMongoDbDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1431,47 +1092,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateMongoDbDataSource(updatedDataFeed.DataSource as MongoDbDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateMongoDbDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new MongoDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceCommand);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
-
-            ValidateMongoDbDataSource(updatedDataFeed.DataSource as MongoDbDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateMySqlDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateMySqlDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1482,45 +1114,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateMySqlDataSource(updatedDataFeed.DataSource as MySqlDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateMySqlDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new MySqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
-
-            ValidateMySqlDataSource(updatedDataFeed.DataSource as MySqlDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateMySqlDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateMySqlDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1531,47 +1136,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateMySqlDataSource(updatedDataFeed.DataSource as MySqlDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateMySqlDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new MySqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.MySql));
-
-            ValidateMySqlDataSource(updatedDataFeed.DataSource as MySqlDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdatePostgreSqlDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdatePostgreSqlDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1582,45 +1158,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidatePostgreSqlDataSource(updatedDataFeed.DataSource as PostgreSqlDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdatePostgreSqlDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new PostgreSqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
-
-            ValidatePostgreSqlDataSource(updatedDataFeed.DataSource as PostgreSqlDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdatePostgreSqlDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdatePostgreSqlDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1631,47 +1180,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidatePostgreSqlDataSource(updatedDataFeed.DataSource as PostgreSqlDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdatePostgreSqlDataFeedWithEveryMemberAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new PostgreSqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed();
-
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
-
-            ValidatePostgreSqlDataSource(updatedDataFeed.DataSource as PostgreSqlDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateSqlServerDataFeedWithMinimumSetupAndGetInstance()
+        public async Task UpdateSqlServerDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1682,45 +1202,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             dataFeedToUpdate.Description = description;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
-
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
             ValidateSqlServerDataSource(updatedDataFeed.DataSource as SqlServerDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateSqlServerDataFeedWithMinimumSetupAndNewInstance()
-        {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-
-            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new SqlServerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            const string description = "This data feed was created to test the .NET client.";
-            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
-
-            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
-
-            var dataFeedToUpdate = new DataFeed() { Description = description };
-
-            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-
-            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
-
-            ValidateSqlServerDataSource(updatedDataFeed.DataSource as SqlServerDataFeedSource);
-        }
-
-        [RecordedTest]
-        public async Task UpdateSqlServerDataFeedWithEveryMemberAndGetInstance()
+        public async Task UpdateSqlServerDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1731,43 +1224,200 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
-
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
-
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateSqlServerDataSource(updatedDataFeed.DataSource as SqlServerDataFeedSource);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateSqlServerDataFeedWithEveryMemberAndNewInstance()
+        [TestCase(AzureBlobDataFeedSource.AuthenticationType.Basic)]
+        [TestCase(AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity)]
+        public async Task UpdateAzureBlobDataFeedWithAuthentication(AzureBlobDataFeedSource.AuthenticationType authentication)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new SqlServerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
+            var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock");
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
-            var dataFeedToUpdate = new DataFeed();
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureBlobDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureBlobDataFeedSource;
 
-            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
+            dataSourceToUpdate.Authentication = authentication;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureBlobDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureBlobDataFeedSource;
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+        }
 
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
+        [RecordedTest]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.Basic)]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ManagedIdentity)]
+        public async Task UpdateAzureDataExplorerDataFeedWithAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            ValidateSqlServerDataSource(updatedDataFeed.DataSource as SqlServerDataFeedSource);
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock");
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureDataExplorerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataExplorerDataFeedSource;
+
+            dataSourceToUpdate.Authentication = authentication;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureDataExplorerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+        }
+
+        [RecordedTest]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        public async Task UpdateAzureDataExplorerDataFeedWithCredentialAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
+            string credentialId = disposableCredential.Credential.Id;
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock");
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureDataExplorerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataExplorerDataFeedSource;
+
+            dataSourceToUpdate.Authentication = authentication;
+            dataSourceToUpdate.DataSourceCredentialId = credentialId;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureDataExplorerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithAuthentication()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock");
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureDataLakeStorageGen2DataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            dataSourceToUpdate.Authentication = AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureDataLakeStorageGen2DataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic));
+        }
+
+        [RecordedTest]
+        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.SharedKey)]
+        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithCredentialAuthentication(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
+            string credentialId = disposableCredential.Credential.Id;
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock");
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureDataLakeStorageGen2DataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            dataSourceToUpdate.Authentication = authentication;
+            dataSourceToUpdate.DataSourceCredentialId = credentialId;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureDataLakeStorageGen2DataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+        }
+
+        [RecordedTest]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.Basic)]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.ManagedIdentity)]
+        public async Task UpdateSqlServerDataFeedWithAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("mock", "mock");
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            SqlServerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as SqlServerDataFeedSource;
+
+            dataSourceToUpdate.Authentication = authentication;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            SqlServerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+        }
+
+        [RecordedTest]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        [TestCase(SqlServerDataFeedSource.AuthenticationType.SqlConnectionString)]
+        public async Task UpdateSqlServerDataFeedWithCredentialAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
+            string credentialId = disposableCredential.Credential.Id;
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("mock", "mock");
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            SqlServerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as SqlServerDataFeedSource;
+
+            dataSourceToUpdate.Authentication = authentication;
+            dataSourceToUpdate.DataSourceCredentialId = credentialId;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            SqlServerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
         }
 
         [RecordedTest]
@@ -1852,7 +1502,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.Not.Null);
                 Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.Not.Null);
 
-                ValidateGenericDataSource(dataFeed.DataSource, dataFeed.SourceType, dataFeed.IsAdministrator.Value);
+                ValidateGenericDataSource(dataFeed.DataSource, dataFeed.IsAdministrator.Value);
 
                 if (++dataFeedCount >= MaximumSamplesCount)
                 {
@@ -1905,7 +1555,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema() { MetricColumns = { new("cost") } },
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = ingestionStartTime }
+                IngestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
             };
         }
 
@@ -1913,9 +1563,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
-            var ingestionSettings = new DataFeedIngestionSettings()
+            var ingestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
             {
-                IngestionStartTime = ingestionStartTime,
                 IngestionStartOffset = TimeSpan.FromMinutes(30),
                 IngestionRetryDelay = TimeSpan.FromSeconds(80),
                 StopRetryAfter = TimeSpan.FromMinutes(10),
@@ -1932,7 +1581,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Description = "This data feed was created to test the .NET client.",
                 AccessMode = DataFeedAccessMode.Public,
                 ActionLinkTemplate = "https://fakeurl.com/%metric/%datafeed",
-                MissingDataPointFillSettings = new() { FillType = DataFeedMissingDataPointFillType.CustomValue, CustomFillValue = 45.0 }
+                MissingDataPointFillSettings = new(DataFeedMissingDataPointFillType.CustomValue) { CustomFillValue = 45.0 }
             };
 
             dataFeed.AdministratorsEmails.Add("fake@admin.com");
@@ -1974,24 +1623,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
             dataFeed.Schema = new DataFeedSchema();
             dataFeed.Schema.TimestampColumn = "updatedTimestampColumn";
 
-            dataFeed.IngestionSettings = new DataFeedIngestionSettings();
-            dataFeed.IngestionSettings.IngestionStartTime = DateTimeOffset.Parse("2020-09-21T00:00:00Z");
+            dataFeed.IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.Parse("2020-09-21T00:00:00Z"));
             dataFeed.IngestionSettings.IngestionStartOffset = TimeSpan.FromMinutes(40);
             dataFeed.IngestionSettings.IngestionRetryDelay = TimeSpan.FromSeconds(90);
             dataFeed.IngestionSettings.StopRetryAfter = TimeSpan.FromMinutes(20);
             dataFeed.IngestionSettings.DataSourceRequestConcurrency = 6;
 
-            dataFeed.MissingDataPointFillSettings = new()
-            {
-                FillType = DataFeedMissingDataPointFillType.NoFilling
-            };
+            dataFeed.MissingDataPointFillSettings = new(DataFeedMissingDataPointFillType.NoFilling);
         }
 
-        private void ValidateDataFeedWithMinimumSetup(DataFeed dataFeed, string expectedId, string expectedName, string expectedDescription = "")
+        private void ValidateDataFeedWithMinimumSetup(DataFeed dataFeed, string expectedName, string expectedDescription = "", string expectedId = null)
         {
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
-            Assert.That(dataFeed.Id, Is.EqualTo(expectedId));
+            Assert.That(dataFeed, Is.Not.Null);
+            Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
             Assert.That(dataFeed.Description, Is.EqualTo(expectedDescription));
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
@@ -2002,6 +1648,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.AdministratorsEmails.Single(), Is.EqualTo(dataFeed.CreatorEmail));
             Assert.That(dataFeed.ViewersEmails, Is.Not.Null.And.Empty);
             Assert.That(dataFeed.IsAdministrator, Is.True);
+
+            if (expectedId != null)
+            {
+                Assert.That(dataFeed.Id, Is.EqualTo(expectedId));
+            }
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
             Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
@@ -2036,11 +1687,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(-1));
         }
 
-        private void ValidateDataFeedWithOptionalMembersSet(DataFeed dataFeed, string expectedId, string expectedName)
+        private void ValidateDataFeedWithOptionalMembersSet(DataFeed dataFeed, string expectedName)
         {
             var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
 
-            Assert.That(dataFeed.Id, Is.EqualTo(expectedId));
+            Assert.That(dataFeed, Is.Not.Null);
+            Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
             Assert.That(dataFeed.Description, Is.EqualTo("This data feed was created to test the .NET client."));
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
@@ -2172,6 +1824,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureApplicationInsightsDataSource(AzureApplicationInsightsDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
             Assert.That(dataSource.ApplicationId, Is.EqualTo(DataSourceAppId));
             Assert.That(dataSource.AzureCloud, Is.EqualTo(DataSourceCloud));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
@@ -2180,6 +1833,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureBlobDataSource(AzureBlobDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
             Assert.That(dataSource.Container, Is.EqualTo(DataSourceContainer));
             Assert.That(dataSource.BlobTemplate, Is.EqualTo(DataSourceTemplate));
         }
@@ -2187,6 +1841,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureCosmosDbDataSource(AzureCosmosDbDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
             Assert.That(dataSource.SqlQuery, Is.EqualTo(DataSourceQuery));
             Assert.That(dataSource.Database, Is.EqualTo(DataSourceDatabase));
             Assert.That(dataSource.CollectionId, Is.EqualTo(DataSourceCollectionId));
@@ -2195,12 +1850,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureDataExplorerDataSource(AzureDataExplorerDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
         private void ValidateAzureDataLakeStorageGen2DataSource(AzureDataLakeStorageGen2DataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
             Assert.That(dataSource.AccountName, Is.EqualTo(DataSourceAccount));
             Assert.That(dataSource.FileSystemName, Is.EqualTo(DataSourceFileSystem));
             Assert.That(dataSource.DirectoryTemplate, Is.EqualTo(DataSourceDirectory));
@@ -2209,12 +1866,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private void ValidateAzureEventHubsDataSource(AzureEventHubsDataFeedSource dataSource)
         {
+            Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
             Assert.That(dataSource.ConsumerGroup, Is.EqualTo(DataSourceConsumerGroup));
         }
 
         private void ValidateAzureTableDataSource(AzureTableDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
             Assert.That(dataSource.Table, Is.EqualTo(DataSourceTable));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
@@ -2222,6 +1882,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateInfluxDbDataSource(InfluxDbDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
             Assert.That(dataSource.Database, Is.EqualTo(DataSourceDatabase));
             Assert.That(dataSource.Username, Is.EqualTo(DataSourceUsername));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
@@ -2230,6 +1891,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateLogAnalyticsDataSource(LogAnalyticsDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
             Assert.That(dataSource.WorkspaceId, Is.EqualTo(DataSourceWorkspaceId));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
             Assert.That(dataSource.ClientId, Is.EqualTo(DataSourceClientId));
@@ -2239,6 +1901,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateMongoDbDataSource(MongoDbDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
             Assert.That(dataSource.Database, Is.EqualTo(DataSourceDatabase));
             Assert.That(dataSource.Command, Is.EqualTo(DataSourceCommand));
         }
@@ -2246,23 +1909,28 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateMySqlDataSource(MySqlDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.MySql));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
         private void ValidatePostgreSqlDataSource(PostgreSqlDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
         private void ValidateSqlServerDataSource(SqlServerDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
-        private void ValidateGenericDataSource(DataFeedSource dataSource, DataFeedSourceType? sourceType, bool isAdmin)
+        private void ValidateGenericDataSource(DataFeedSource dataSource, bool isAdmin)
         {
+            DataFeedSourceType sourceType = dataSource.DataSourceType;
+
             if (sourceType == DataFeedSourceType.AzureApplicationInsights)
             {
                 var specificDataSource = dataSource as AzureApplicationInsightsDataFeedSource;

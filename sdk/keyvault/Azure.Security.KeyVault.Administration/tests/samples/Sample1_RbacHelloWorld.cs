@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             client = Client;
 
             List<KeyVaultRoleDefinition> definitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
-            _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
+            _roleDefinitionId = definitions.First(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleAssignments.
             string definitionIdToAssign = _roleDefinitionId;
@@ -107,9 +107,10 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string definitionIdToAssign = "<roleDefinitionId>";
             string servicePrincipalObjectId = "<objectId>";
 
-            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectI);
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 #else
-            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
+            Guid roleAssignmentName = Recording.Random.NewGuid();
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, roleAssignmentName);
 #endif
             #endregion
 
@@ -118,7 +119,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
 
             #region Snippet:DeleteRoleAssignment
-            KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
+            client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
             #endregion
         }
 
@@ -130,7 +131,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             client = Client;
 
             List<KeyVaultRoleDefinition> definitions = await client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
+            _roleDefinitionId = definitions.First(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
             string definitionIdToAssign = _roleDefinitionId;
@@ -143,9 +144,10 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string definitionIdToAssign = "<roleDefinitionId>";
             string servicePrincipalObjectId = "<objectId>";
 
-            KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
+            KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 #else
-            KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId).ConfigureAwait(false);
+            Guid roleAssignmentName = Recording.Random.NewGuid();
+            KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, roleAssignmentName).ConfigureAwait(false);
 #endif
             #endregion
 
@@ -154,7 +156,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
 
             #region Snippet:DeleteRoleAssignmentAsync
-            KeyVaultRoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignment.Name);
+            await client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignment.Name);
             #endregion
         }
     }

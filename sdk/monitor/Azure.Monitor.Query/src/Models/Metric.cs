@@ -8,8 +8,15 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class Metric
     {
+        private const string SuccessErrorCode = "Success";
+
         [CodeGenMember("Name")]
         private LocalizableString LocalizedName { get; }
+
+        /// <summary> &apos;Success&apos; or the error details on query failures for this metric. </summary>
+        private string ErrorCode { get; }
+        /// <summary> Error message encountered querying this specific metric. </summary>
+        private string ErrorMessage { get; }
 
         /// <summary> The name of the metric. </summary>
         public string Name => LocalizedName.Value;
@@ -17,5 +24,10 @@ namespace Azure.Monitor.Query.Models
         /// <summary> the time series returned when a data query is performed. </summary>
         [CodeGenMember("Timeseries")]
         public IReadOnlyList<TimeSeriesElement> TimeSeries { get; }
+
+        /// <summary>
+        /// Gets the error that occured while querying the metric.
+        /// </summary>
+        public ResponseError Error => ErrorCode == SuccessErrorCode ? null : new ResponseError(ErrorCode, ErrorMessage, null, null, null);
     }
 }

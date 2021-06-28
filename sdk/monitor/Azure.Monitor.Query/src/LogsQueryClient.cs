@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,10 +19,28 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
+        private static readonly Uri _defaultEndpoint = new Uri("https://api.loganalytics.io");
+        private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly RowBinder _rowBinder;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        public LogsQueryClient(TokenCredential credential) : this(credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
+        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>.
@@ -45,9 +65,10 @@ namespace Azure.Monitor.Query
             options ??= new LogsQueryClientOptions();
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(
+                credential,
+                options.AuthenticationScope ?? "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
-            _rowBinder = new RowBinder();
         }
 
         /// <summary>
@@ -70,7 +91,7 @@ namespace Azure.Monitor.Query
         {
             Response<LogsQueryResult> response = Query(workspace, query, timeRange, options, cancellationToken);
 
-            return Response.FromValue(_rowBinder.BindResults<T>(response.Value.Tables), response.GetRawResponse());
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
         }
 
         /// <summary>
@@ -86,7 +107,7 @@ namespace Azure.Monitor.Query
         {
             Response<LogsQueryResult> response = await QueryAsync(workspace, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
-            return Response.FromValue(_rowBinder.BindResults<T>(response.Value.Tables), response.GetRawResponse());
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
         }
 
         /// <summary>
@@ -142,8 +163,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResult.GetResult"/> to get the result.</returns>
-        public virtual Response<LogsBatchQueryResult> QueryBatch(LogsBatchQuery batch, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="LogsBatchQueryResults"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResults.GetResult"/> to get the result.</returns>
+        public virtual Response<LogsBatchQueryResults> QueryBatch(LogsBatchQuery batch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
@@ -151,8 +172,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                var response = _queryClient.Batch(batch.Batch, cancellationToken);
-                response.Value.RowBinder = _rowBinder;
+                var response = _queryClient.Batch(new BatchRequest(batch.Requests), cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -167,8 +187,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> that allows retrieving query results.</returns>
-        public virtual async Task<Response<LogsBatchQueryResult>> QueryBatchAsync(LogsBatchQuery batch, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="LogsBatchQueryResults"/> that allows retrieving query results.</returns>
+        public virtual async Task<Response<LogsBatchQueryResults>> QueryBatchAsync(LogsBatchQuery batch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
@@ -176,8 +196,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                var response = await _queryClient.BatchAsync(batch.Batch, cancellationToken).ConfigureAwait(false);
-                response.Value.RowBinder = _rowBinder;
+                var response = await _queryClient.BatchAsync(new BatchRequest(batch.Requests), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -186,6 +205,110 @@ namespace Azure.Monitor.Query
                 throw;
             }
         }
+
+        /// <summary>
+        /// Create a Kusto query from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
+        /// </summary>
+        /// <param name="filter">An interpolated query string.</param>
+        /// <returns>A valid Kusto query.</returns>
+        public static string CreateQuery(FormattableString filter)
+        {
+            if (filter == null) { return null; }
+
+            string[] args = new string[filter.ArgumentCount];
+            for (int i = 0; i < filter.ArgumentCount; i++)
+            {
+                args[i] = filter.GetArgument(i) switch
+                {
+                    // Null
+                    null => throw new ArgumentException(
+                        $"Unable to convert argument {i} to an Kusto literal. " +
+                        $"Unable to format an untyped null value, please use typed-null expression " +
+                        $"(bool(null), datetime(null), dynamic(null), guid(null), int(null), long(null), real(null), double(null), time(null))"),
+
+                    // Boolean
+                    true => "true",
+                    false => "false",
+
+                    // Numeric
+                    sbyte x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    byte x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    short x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    ushort x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    int x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+                    uint x => $"int({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    float x => $"real({x.ToString(CultureInfo.InvariantCulture)})",
+                    double x => $"real({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    // Int64
+                    long x => $"long({x.ToString(CultureInfo.InvariantCulture)})",
+                    ulong x => $"long({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    decimal x => $"decimal({x.ToString(CultureInfo.InvariantCulture)})",
+
+                    // Guid
+                    Guid x => $"guid({x.ToString("D", CultureInfo.InvariantCulture)})",
+
+                    // Dates as 8601 with a time zone
+                    DateTimeOffset x => $"datetime({x.UtcDateTime.ToString("O", CultureInfo.InvariantCulture)})",
+                    DateTime x => $"datetime({x.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture)})",
+                    TimeSpan x => $"time({x.ToString("c", CultureInfo.InvariantCulture)})",
+
+                    // Text
+                    string x => EscapeStringValue(x),
+                    char x => EscapeStringValue(x),
+
+                    // Everything else
+                    object x => throw new ArgumentException(
+                        $"Unable to convert argument {i} from type {x.GetType()} to an Kusto literal.")
+                };
+            }
+
+            return string.Format(CultureInfo.InvariantCulture, filter.Format, args);
+        }
+
+        private static string EscapeStringValue(string s)
+        {
+            StringBuilder escaped = new();
+            escaped.Append('"');
+
+            foreach (char c in s)
+            {
+                switch (c)
+                {
+                    case '"':
+                        escaped.Append("\\\"");
+                        break;
+                    case '\\':
+                        escaped.Append("\\\\");
+                        break;
+                    case '\r':
+                        escaped.Append("\\r");
+                        break;
+                    case '\n':
+                        escaped.Append("\\n");
+                        break;
+                    case '\t':
+                        escaped.Append("\\t");
+                        break;
+                    default:
+                        escaped.Append(c);
+                        break;
+                }
+            }
+
+            escaped.Append('"');
+            return escaped.ToString();
+        }
+
+        private static string EscapeStringValue(char s) =>
+            s switch
+            {
+                _ when s == '"' => "'\"'",
+                _ => $"\"{s}\""
+            };
+
         internal static QueryBody CreateQueryBody(string query, DateTimeRange timeRange, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);
@@ -194,22 +317,51 @@ namespace Azure.Monitor.Query
                 queryBody.Timespan = timeRange.ToString();
             }
 
-            prefer = null;
-
-            if (options?.ServerTimeout is TimeSpan timeout)
-            {
-                prefer = "wait=" + (int) timeout.TotalSeconds;
-            }
-
-            if (options?.IncludeStatistics == true)
-            {
-                prefer += " include-statistics=true";
-            }
-
             if (options != null)
             {
                 queryBody.Workspaces = options.AdditionalWorkspaces;
             }
+
+            prefer = null;
+
+            StringBuilder preferBuilder = null;
+
+            if (options?.ServerTimeout is TimeSpan timeout)
+            {
+                preferBuilder ??= new();
+                preferBuilder.Append("wait=");
+                preferBuilder.Append((int) timeout.TotalSeconds);
+            }
+
+            if (options?.IncludeStatistics == true)
+            {
+                if (preferBuilder == null)
+                {
+                    preferBuilder = new();
+                }
+                else
+                {
+                    preferBuilder.Append(',');
+                }
+
+                preferBuilder.Append("include-statistics=true");
+            }
+
+            if (options?.IncludeVisualization == true)
+            {
+                if (preferBuilder == null)
+                {
+                    preferBuilder = new();
+                }
+                else
+                {
+                    preferBuilder.Append(',');
+                }
+
+                preferBuilder.Append("include-render=true");
+            }
+
+            prefer = preferBuilder?.ToString();
 
             return queryBody;
         }
@@ -226,7 +378,8 @@ namespace Azure.Monitor.Query
 
             if (options?.ServerTimeout != null)
             {
-                message.NetworkTimeout = options.ServerTimeout;
+                // Offset the service timeout a bit to make sure we have time to receive the response.
+                message.NetworkTimeout = options.ServerTimeout.Value.Add(_networkTimeoutOffset);
             }
 
             if (async)

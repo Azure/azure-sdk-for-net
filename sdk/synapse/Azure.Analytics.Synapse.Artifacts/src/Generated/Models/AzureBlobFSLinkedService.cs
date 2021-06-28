@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="url"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
         /// <param name="accountKey"> Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string). </param>

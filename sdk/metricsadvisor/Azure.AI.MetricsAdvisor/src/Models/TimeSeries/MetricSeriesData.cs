@@ -16,10 +16,16 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricSeriesData
     {
         /// <summary>
-        /// Uniquely defines a time series within a <see cref="DataFeed"/>.
+        /// The unique identifier of the <see cref="DataFeedMetric"/> associated with this
+        /// time series.
         /// </summary>
-        [CodeGenMember("Id")]
-        public MetricSeriesDefinition Definition { get; }
+        public string MetricId => Definition.MetricId;
+
+        /// <summary>
+        /// The key that, within a metric, uniquely identifies a time series. Every dimension
+        /// contained in the associated <see cref="DataFeed"/> has been assigned a value.
+        /// </summary>
+        public DimensionKey SeriesKey => Definition.SeriesKey;
 
         /// <summary>
         /// The timestamps, in UTC, of the data points present in this time series.
@@ -32,5 +38,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         [CodeGenMember("ValueList")]
         public IReadOnlyList<double> MetricValues { get; }
+
+        /// <summary>
+        /// Uniquely defines a time series within a <see cref="DataFeed"/>.
+        /// </summary>
+        [CodeGenMember("Id")]
+        internal MetricSeriesDefinition Definition { get; }
     }
 }

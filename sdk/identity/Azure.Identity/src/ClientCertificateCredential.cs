@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication of a service principal in to Azure Active Directory using a X509 certificate that is assigned to it's App Registration. More information
     /// on how to configure certificate authentication can be found here:
-    /// https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
+    /// https://docs.microsoft.com/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {
@@ -35,6 +35,7 @@ namespace Azure.Identity
         internal MsalConfidentialClient Client { get; }
 
         private readonly CredentialPipeline _pipeline;
+        private readonly bool _allowMultiTenantAuthentication;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -127,6 +128,7 @@ namespace Azure.Identity
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             ClientCertificateProvider = certificateProvider;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
@@ -147,7 +149,8 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, false, cancellationToken).EnsureCompleted();
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
+                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -169,7 +172,10 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, true, cancellationToken).ConfigureAwait(false);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
+                AuthenticationResult result = await Client
+                    .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
+                    .ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

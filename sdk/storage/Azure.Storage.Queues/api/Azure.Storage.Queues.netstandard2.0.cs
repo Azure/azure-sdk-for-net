@@ -71,6 +71,7 @@ namespace Azure.Storage.Queues
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
         public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_08_04) { }
+        public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
@@ -84,6 +85,7 @@ namespace Azure.Storage.Queues
             V2020_04_08 = 5,
             V2020_06_12 = 6,
             V2020_08_04 = 7,
+            V2020_10_02 = 8,
         }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs

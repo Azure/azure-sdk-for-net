@@ -18,10 +18,15 @@
   - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
 - Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
 - Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
+- Renamed type `Results` to `DocumentsResults` in `AnalyzeSentimentActionResult`, `ExtractKeyPhrasesActionResult`, `RecognizeEntitiesActionResult`, `RecognizeLinkedEntitiesActionResult`, and `RecognizePiiEntitiesActionResult`.
+- Renamed all types under `AnalyzeActionsResult` from `xxActionsResults` to ``xxResults`.
 - Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
 - Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
 - Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
 - Removed property `StringIndexType` from `TextAnalyticsRequestOptions`. This SDK will keep using `UTF-16` code unit as the default encoding.
+- Removed type `ExtractKeyPhrasesOptions` and respective exposure.
+- Removed type `RecognizeEntitiesOptions` and respective exposure.
+- Removed type `RecognizeLinkedEntitiesOptions` and respective exposure.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features
@@ -215,7 +220,7 @@ If you try to access a result attribute where the operation was unsuccesful, an 
 ## 1.0.0-preview.1 (2020-01-09)
 This is the first preview of the `Azure.AI.TextAnalytics` client library. It is not a direct replacement for `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`, as applications currently using that library would require code changes to use `Azure.AI.TextAnalytics`.
 
-This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md) and [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples) demonstrate the new API.
+This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md) and [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples) demonstrate the new API.
 
 
 ### Major changes from `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`

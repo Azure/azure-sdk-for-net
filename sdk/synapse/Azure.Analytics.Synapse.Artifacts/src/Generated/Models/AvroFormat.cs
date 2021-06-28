@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal AvroFormat(string type, object serializer, object deserializer, IDictionary<string, object> additionalProperties) : base(type, serializer, deserializer, additionalProperties)
         {
             Type = type ?? "AvroFormat";

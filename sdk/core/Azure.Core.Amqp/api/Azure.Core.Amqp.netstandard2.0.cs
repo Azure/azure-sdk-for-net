@@ -26,6 +26,7 @@ namespace Azure.Core.Amqp
         public Azure.Core.Amqp.AmqpMessageHeader Header { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } }
+        public bool HasSection(Azure.Core.Amqp.AmqpMessageSection section) { throw null; }
     }
     public partial class AmqpMessageBody
     {
@@ -86,5 +87,15 @@ namespace Azure.Core.Amqp
         public string? Subject { get { throw null; } set { } }
         public Azure.Core.Amqp.AmqpAddress? To { get { throw null; } set { } }
         public System.ReadOnlyMemory<byte>? UserId { get { throw null; } set { } }
+    }
+    public enum AmqpMessageSection
+    {
+        Header = 0,
+        DeliveryAnnotations = 1,
+        MessageAnnotations = 2,
+        Properties = 3,
+        ApplicationProperties = 4,
+        Body = 5,
+        Footer = 6,
     }
 }

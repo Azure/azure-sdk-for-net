@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of DatasetTarCompression. </summary>
         /// <param name="type"> Type of dataset compression. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetTarCompression(string type, IDictionary<string, object> additionalProperties) : base(type, additionalProperties)
         {
             Type = type ?? "Tar";

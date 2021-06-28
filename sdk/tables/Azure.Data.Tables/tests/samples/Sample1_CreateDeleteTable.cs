@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Samples
             string tableName = "OfficeSupplies1p1";
 
             #region Snippet:TablesSample1CreateClient
-            // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+            // Construct a new "TableServiceClient using a TableSharedKeyCredential.
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
@@ -29,12 +29,20 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             #region Snippet:TablesSample1CreateTable
-            // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+            // Create a new table. The TableItem class stores properties of the created table.
 #if SNIPPET
             string tableName = "OfficeSupplies1p1";
 #endif
-            TableItem table = serviceClient.CreateTable(tableName);
+            TableItem table = serviceClient.CreateTableIfNotExists(tableName);
             Console.WriteLine($"The created table's name is {table.Name}.");
+            #endregion
+
+            #region Snippet:TablesMigrationCreateTableWithClient
+            // Get a reference to the TableClient from the service client instance.
+            var tableClient = serviceClient.GetTableClient(tableName);
+
+            // Create the table if it doesn't exist.
+            tableClient.CreateIfNotExists();
             #endregion
 
             #region Snippet:TablesSample1DeleteTable
@@ -48,10 +56,11 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample1GetTableClient
 #if SNIPPET
             string tableName = "OfficeSupplies1p2";
+            var tableClient = serviceClient.GetTableClient(tableName);
 #else
             tableName = "OfficeSupplies1p2";
+            tableClient = serviceClient.GetTableClient(tableName);
 #endif
-            var tableClient = serviceClient.GetTableClient(tableName);
             #endregion
 
             #region Snippet:TablesSample1CreateTableClient
@@ -66,7 +75,7 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             #region Snippet:TablesSample1TableClientCreateTable
-            tableClient.Create();
+            tableClient.CreateIfNotExists();
             #endregion
 
             #region Snippet:TablesSample1TableClientDeleteTable
