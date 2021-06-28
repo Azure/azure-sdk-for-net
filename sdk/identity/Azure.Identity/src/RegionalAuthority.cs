@@ -382,7 +382,7 @@ namespace Azure.Identity
 
         internal static RegionalAuthority? FromEnvironment()
         {
-            return string.IsNullOrEmpty(EnvironmentVariables.AzureRegionalAuthorityName) ? null : new RegionalAuthority(EnvironmentVariables.AzureRegionalAuthorityName);
+            return string.IsNullOrEmpty(EnvironmentVariables.AzureRegionalAuthorityName) ? (RegionalAuthority?)null : new RegionalAuthority(EnvironmentVariables.AzureRegionalAuthorityName);
         }
     }
 }
