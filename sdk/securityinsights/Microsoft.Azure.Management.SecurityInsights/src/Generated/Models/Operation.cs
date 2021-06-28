@@ -31,10 +31,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="display">Properties of the operation</param>
         /// <param name="name">Name of the operation</param>
-        public Operation(OperationDisplay display = default(OperationDisplay), string name = default(string))
+        /// <param name="origin">The origin of the operation</param>
+        public Operation(OperationDisplay display = default(OperationDisplay), string name = default(string), string origin = default(string))
         {
             Display = display;
             Name = name;
+            Origin = origin;
             CustomInit();
         }
 
@@ -54,6 +56,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the origin of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
 
     }
 }
