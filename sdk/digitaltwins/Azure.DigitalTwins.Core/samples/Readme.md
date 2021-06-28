@@ -283,31 +283,40 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 }
 ```
 
+In addition to passing strings as a query parameter, it is possible to pass in an `AdtQueryBuilder` (see following section) object instead of a query in string format. 
+
+```C# Snippet:DigitalTwinsSampleQueryTwinsAdtQueryBuilder
+// This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
+// fluent-style query construction that makes it easier to write queries.
+AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
+    new AdtQueryBuilder()
+        .Select("*")
+        .From(AdtCollection.DigitalTwins)
+        .Build());
+```
+
 ### Build ADT Queries
 
-Build an ADT query using an `AdtQueryBuilder`:
+Build an [ADT query](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) using an `AdtQueryBuilder`. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
-AdtQueryBuilder selectAll = new AdtQueryBuilder()
-    .Select("*")
-    .From(AdtCollection.DigitalTwins)
-    .Build();
+AdtQueryBuilder simplestQuery = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
 
 // SELECT TOP(3) FROM DIGITALTWINS
-AdtQueryBuilder selectTop = new AdtQueryBuilder()
+AdtQueryBuilder queryWithSelectTop = new AdtQueryBuilder()
     .SelectTop(3)
     .From(AdtCollection.DigitalTwins)
     .Build();
 
 // SELECT COUNT() FROM RELATIONSHIPS
-AdtQueryBuilder selectRelationships = new AdtQueryBuilder()
+AdtQueryBuilder queryWithSelectRelationships = new AdtQueryBuilder()
     .SelectCount()
     .From(AdtCollection.Relationships)
     .Build();
 
-// SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1')
-AdtQueryBuilder whereIsOfModel = new AdtQueryBuilder()
+// SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
+AdtQueryBuilder queryWithIsOfModel = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
     .Where()
@@ -330,7 +339,8 @@ AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
     .IsOfType("Temperature", AdtDataType.AdtNumber)
     .Build();
 
-// SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) AND IS_PRIMATIVE(Temperature))
+// SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
+// OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
 AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
@@ -338,20 +348,47 @@ AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
     .IsTrue(q => q
         .IsOfType("Humidity", AdtDataType.AdtNumber)
         .Or()
-        .IsOfType("Humidity", AdtDataType.AdtPrimative))
+        .IsDefined("Humidity"))
     .And()
     .IsTrue(q => q
-        .IsOfType("Temperature", AdtDataType.AdtNumber)
+        .IsOfModel("dtmi:example:hvac;1")
         .And()
-        .IsOfType("Temperature", AdtDataType.AdtPrimative))
+        .IsNull("Occupants"))
+    .Build();
+```
+
+Using nested conditions is a workaround for subjective queries that could be interpreted in multiple ways:
+
+```C# Snippet:DigitalTwinsQueryBuilder_SubjectiveConditionsWorkaround
+// SELECT * FROM DIGITALTWINS WHERE (Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)) AND IS_NUMBER(Temperature)
+AdtQueryBuilder subjectiveLogicalOps = new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins)
+    .Where()
+    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+    .Or()
+    .IsOfModel("dtmi:example:room;1", true)
+    .And()
+    .IsOfType("Temperature", AdtDataType.AdtNumber)
+    .Build();
+
+AdtQueryBuilder objectiveLogicalOps = new AdtQueryBuilder()
+    .Select("*")
+    .From(AdtCollection.DigitalTwins)
+    .Where()
+    .IsTrue(q => q
+        .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+        .Or()
+        .IsOfModel("dtmi:example:room;1", true))
+    .And()
+    .IsOfType("Temperature", AdtDataType.AdtNumber)
     .Build();
 ```
 
 Turn an `AdtQueryBuilder` to a string by calling `GetQueryText()` after `Build()`:
 
 ```C# Snippet:DigitalTwinsQueryBuilderToString
-// SELECT * FROM DIGITALTWINS
-string selectAllToString = new AdtQueryBuilder()
+string basicQueryStringFormat = new AdtQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
     .Build()

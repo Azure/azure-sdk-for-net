@@ -94,6 +94,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .IsOfModel("dtmi:example:room;1", true)
                 .Build();
 
+            #region Snippet:DigitalTwinsQueryBuilder_ComplexConditions
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
             AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
                 .Select("*")
@@ -106,22 +107,50 @@ namespace Azure.DigitalTwins.Core.Samples
                 .IsOfType("Temperature", AdtDataType.AdtNumber)
                 .Build();
 
-            // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity))
-            // AND (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))
+            // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
+            // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
             AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
-               .Select("*")
-               .From(AdtCollection.DigitalTwins)
-               .Where()
-               .IsTrue(q => q
-                   .IsOfType("Humidity", AdtDataType.AdtNumber)
-                   .Or()
-                   .IsOfType("Humidity", AdtDataType.AdtPrimative))
-               .And()
-               .IsTrue(q => q
-                   .IsOfType("Temperature", AdtDataType.AdtNumber)
-                   .Or()
-                   .IsOfType("Temperature", AdtDataType.AdtPrimative))
-               .Build();
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .IsTrue(q => q
+                    .IsOfType("Humidity", AdtDataType.AdtNumber)
+                    .Or()
+                    .IsDefined("Humidity"))
+                .And()
+                .IsTrue(q => q
+                    .IsOfModel("dtmi:example:hvac;1")
+                    .And()
+                    .IsNull("Occupants"))
+                .Build();
+
+            #endregion
+
+            #region Snippet:DigitalTwinsQueryBuilder_SubjectiveConditionsWorkaround
+            // SELECT * FROM DIGITALTWINS WHERE (Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)) AND IS_NUMBER(Temperature)
+            AdtQueryBuilder subjectiveLogicalOps = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                .Or()
+                .IsOfModel("dtmi:example:room;1", true)
+                .And()
+                .IsOfType("Temperature", AdtDataType.AdtNumber)
+                .Build();
+
+            AdtQueryBuilder objectiveLogicalOps = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .IsTrue(q => q
+                    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                    .Or()
+                    .IsOfModel("dtmi:example:room;1", true))
+                .And()
+                .IsOfType("Temperature", AdtDataType.AdtNumber)
+                .Build();
+            #endregion
         }
     }
 }
