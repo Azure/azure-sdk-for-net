@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.LabServices.Models
         /// <summary>
         /// Initializes a new instance of the ListEnvironmentsResponse class.
         /// </summary>
-        /// <param name="environments">List of all the evironments</param>
+        /// <param name="environments">List of all the environments</param>
         public ListEnvironmentsResponse(IList<EnvironmentDetails> environments = default(IList<EnvironmentDetails>))
         {
             Environments = environments;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.LabServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of all the evironments
+        /// Gets or sets list of all the environments
         /// </summary>
         [JsonProperty(PropertyName = "environments")]
         public IList<EnvironmentDetails> Environments { get; set; }

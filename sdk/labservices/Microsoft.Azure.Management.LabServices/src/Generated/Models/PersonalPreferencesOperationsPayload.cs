@@ -17,20 +17,20 @@ namespace Microsoft.Azure.Management.LabServices.Models
     /// Represents payload for any Environment operations like get, start,
     /// stop, connect
     /// </summary>
-    public partial class PersonalPerferencesOperationsPayload
+    public partial class PersonalPreferencesOperationsPayload
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PersonalPerferencesOperationsPayload class.
+        /// PersonalPreferencesOperationsPayload class.
         /// </summary>
-        public PersonalPerferencesOperationsPayload()
+        public PersonalPreferencesOperationsPayload()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PersonalPerferencesOperationsPayload class.
+        /// PersonalPreferencesOperationsPayload class.
         /// </summary>
         /// <param name="labAccountResourceId">Resource Id of the lab
         /// account</param>
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.LabServices.Models
         /// 'Remove'</param>
         /// <param name="labResourceId">Resource Id of the lab to add/remove
         /// from the favorites list</param>
-        public PersonalPerferencesOperationsPayload(string labAccountResourceId = default(string), string addRemove = default(string), string labResourceId = default(string))
+        public PersonalPreferencesOperationsPayload(string labAccountResourceId = default(string), string addRemove = default(string), string labResourceId = default(string))
         {
             LabAccountResourceId = labAccountResourceId;
             AddRemove = addRemove;
