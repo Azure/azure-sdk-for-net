@@ -1,0 +1,35 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+
+namespace Azure.ResourceManager.Core
+{
+    /// <summary>
+    /// An attribute class indicating a reference type for code generation.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
+    public class PropertyReferenceTypeAttribute : Attribute
+    {
+        /// <summary>
+        /// Instatiate a new reference type attribute.
+        /// </summary>
+        /// <param name="skipType"> Type to skip for this reference type. </param>
+        public PropertyReferenceTypeAttribute(Type skipType)
+        {
+            SkipType = skipType;
+        }
+
+        /// <summary>
+        /// Instatiate a new reference type attribute.
+        /// </summary>
+        public PropertyReferenceTypeAttribute() : this(null)
+        {
+        }
+
+        /// <summary>
+        /// Get the skip type for this reference type.
+        /// </summary>
+        public Type SkipType { get; }
+    }
+}
