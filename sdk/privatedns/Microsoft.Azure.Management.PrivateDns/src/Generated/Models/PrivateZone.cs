@@ -71,7 +71,8 @@ namespace Microsoft.Azure.Management.PrivateDns.Models
         /// resource. This is a read-only property and any attempt to set this
         /// value will be ignored. Possible values include: 'Creating',
         /// 'Updating', 'Deleting', 'Succeeded', 'Failed', 'Canceled'</param>
-        public PrivateZone(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), long? maxNumberOfVirtualNetworkLinks = default(long?), long? numberOfVirtualNetworkLinks = default(long?), long? maxNumberOfVirtualNetworkLinksWithRegistration = default(long?), long? numberOfVirtualNetworkLinksWithRegistration = default(long?), string provisioningState = default(string))
+        /// <param name="internalId">Private zone internal Id</param>
+        public PrivateZone(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), long? maxNumberOfVirtualNetworkLinks = default(long?), long? numberOfVirtualNetworkLinks = default(long?), long? maxNumberOfVirtualNetworkLinksWithRegistration = default(long?), long? numberOfVirtualNetworkLinksWithRegistration = default(long?), string provisioningState = default(string), string internalId = default(string))
             : base(id, name, type, tags, location)
         {
             Etag = etag;
@@ -82,6 +83,7 @@ namespace Microsoft.Azure.Management.PrivateDns.Models
             MaxNumberOfVirtualNetworkLinksWithRegistration = maxNumberOfVirtualNetworkLinksWithRegistration;
             NumberOfVirtualNetworkLinksWithRegistration = numberOfVirtualNetworkLinksWithRegistration;
             ProvisioningState = provisioningState;
+            InternalId = internalId;
             CustomInit();
         }
 
@@ -153,6 +155,12 @@ namespace Microsoft.Azure.Management.PrivateDns.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets private zone internal Id
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.internalId")]
+        public string InternalId { get; private set; }
 
     }
 }
