@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// The properties that are associated with a function.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FunctionProperties")]
     [Rest.Serialization.JsonTransformation]
     public partial class FunctionProperties
     {

@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Describes an input data source that contains stream data.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("StreamInputDataSource")]
     public partial class StreamInputDataSource
     {
         /// <summary>

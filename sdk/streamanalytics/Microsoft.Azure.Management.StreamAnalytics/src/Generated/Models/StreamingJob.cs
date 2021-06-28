@@ -350,13 +350,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public JobStorageAccount JobStorageAccount { get; set; }
 
         /// <summary>
-        /// Gets valid values are JobStorageAccount and SystemAccount. If set
-        /// to JobStorageAccount, this requires the user to also specify
+        /// Gets or sets valid values are JobStorageAccount and SystemAccount.
+        /// If set to JobStorageAccount, this requires the user to also specify
         /// jobStorageAccount property. Possible values include:
         /// 'SystemAccount', 'JobStorageAccount'
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentStoragePolicy")]
-        public string ContentStoragePolicy { get; private set; }
+        public string ContentStoragePolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the storage account where the custom code artifacts
