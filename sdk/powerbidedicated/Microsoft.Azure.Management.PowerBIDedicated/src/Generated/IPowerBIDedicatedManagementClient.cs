@@ -82,5 +82,10 @@ namespace Microsoft.Azure.Management.PowerBIDedicated
         /// </summary>
         IOperations Operations { get; }
 
+        /// <summary>
+        /// Gets the IAutoScaleVCoresOperations.
+        /// </summary>
+        IAutoScaleVCoresOperations AutoScaleVCores { get; }
+
     }
 }

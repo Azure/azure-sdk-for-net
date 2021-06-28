@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for CapacityProvisioningState.
     /// </summary>
-    public static class ProvisioningState
+    public static class CapacityProvisioningState
     {
         public const string Deleting = "Deleting";
         public const string Succeeded = "Succeeded";

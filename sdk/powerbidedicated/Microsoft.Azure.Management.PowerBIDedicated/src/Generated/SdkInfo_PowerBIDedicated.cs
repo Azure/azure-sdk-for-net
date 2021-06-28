@@ -19,8 +19,9 @@ namespace Microsoft.Azure.Management.PowerBIDedicated
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("PowerBIDedicated", "Capacities", "2017-10-01"),
-                new Tuple<string, string, string>("PowerBIDedicated", "Operations", "2017-10-01"),
+                new Tuple<string, string, string>("PowerBIDedicated", "AutoScaleVCores", "2021-01-01"),
+                new Tuple<string, string, string>("PowerBIDedicated", "Capacities", "2021-01-01"),
+                new Tuple<string, string, string>("PowerBIDedicated", "Operations", "2021-01-01"),
               }.AsEnumerable();
           }
       }

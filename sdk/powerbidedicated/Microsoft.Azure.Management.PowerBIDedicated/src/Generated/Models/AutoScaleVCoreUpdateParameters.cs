@@ -18,38 +18,35 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
     using System.Linq;
 
     /// <summary>
-    /// Provision request specification
+    /// Update request specification
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DedicatedCapacityUpdateParameters
+    public partial class AutoScaleVCoreUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the DedicatedCapacityUpdateParameters
+        /// Initializes a new instance of the AutoScaleVCoreUpdateParameters
         /// class.
         /// </summary>
-        public DedicatedCapacityUpdateParameters()
+        public AutoScaleVCoreUpdateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DedicatedCapacityUpdateParameters
+        /// Initializes a new instance of the AutoScaleVCoreUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="sku">The SKU of the Dedicated capacity
+        /// <param name="sku">The SKU of the auto scale v-core
         /// resource.</param>
         /// <param name="tags">Key-value pairs of additional provisioning
         /// properties.</param>
-        /// <param name="administration">A collection of Dedicated capacity
-        /// administrators</param>
-        /// <param name="mode">The capacity mode. Possible values include:
-        /// 'Gen1', 'Gen2'</param>
-        public DedicatedCapacityUpdateParameters(CapacitySku sku = default(CapacitySku), IDictionary<string, string> tags = default(IDictionary<string, string>), DedicatedCapacityAdministrators administration = default(DedicatedCapacityAdministrators), string mode = default(string))
+        /// <param name="capacityLimit">The maximum capacity of an auto scale
+        /// v-core resource.</param>
+        public AutoScaleVCoreUpdateParameters(AutoScaleVCoreSku sku = default(AutoScaleVCoreSku), IDictionary<string, string> tags = default(IDictionary<string, string>), int? capacityLimit = default(int?))
         {
             Sku = sku;
             Tags = tags;
-            Administration = administration;
-            Mode = mode;
+            CapacityLimit = capacityLimit;
             CustomInit();
         }
 
@@ -59,10 +56,10 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the SKU of the Dedicated capacity resource.
+        /// Gets or sets the SKU of the auto scale v-core resource.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public CapacitySku Sku { get; set; }
+        public AutoScaleVCoreSku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets key-value pairs of additional provisioning properties.
@@ -71,17 +68,10 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets a collection of Dedicated capacity administrators
+        /// Gets or sets the maximum capacity of an auto scale v-core resource.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.administration")]
-        public DedicatedCapacityAdministrators Administration { get; set; }
-
-        /// <summary>
-        /// Gets or sets the capacity mode. Possible values include: 'Gen1',
-        /// 'Gen2'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.mode")]
-        public string Mode { get; set; }
+        [JsonProperty(PropertyName = "properties.capacityLimit")]
+        public int? CapacityLimit { get; set; }
 
         /// <summary>
         /// Validate the object.

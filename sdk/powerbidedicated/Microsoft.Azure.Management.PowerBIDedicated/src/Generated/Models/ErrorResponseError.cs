@@ -11,33 +11,31 @@
 namespace Microsoft.Azure.Management.PowerBIDedicated.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An object that represents enumerating SKUs for new resources
+    /// The error object
     /// </summary>
-    public partial class SkuEnumerationForNewResourceResult
+    public partial class ErrorResponseError
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SkuEnumerationForNewResourceResult class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
-        public SkuEnumerationForNewResourceResult()
+        public ErrorResponseError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SkuEnumerationForNewResourceResult class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
-        /// <param name="value">The collection of available SKUs for new
-        /// resources</param>
-        public SkuEnumerationForNewResourceResult(IList<CapacitySku> value = default(IList<CapacitySku>))
+        /// <param name="code">Error code</param>
+        /// <param name="message">Error message indicating why the operation
+        /// failed.</param>
+        public ErrorResponseError(string code = default(string), string message = default(string))
         {
-            Value = value;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -47,10 +45,16 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the collection of available SKUs for new resources
+        /// Gets or sets error code
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<CapacitySku> Value { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets error message indicating why the operation failed.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }

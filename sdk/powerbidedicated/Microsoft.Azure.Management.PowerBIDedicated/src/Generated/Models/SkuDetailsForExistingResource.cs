@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         /// </summary>
         /// <param name="sku">The SKU in SKU details for existing
         /// resources.</param>
-        public SkuDetailsForExistingResource(ResourceSku sku = default(ResourceSku))
+        public SkuDetailsForExistingResource(CapacitySku sku = default(CapacitySku))
         {
             Sku = sku;
             CustomInit();
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
         /// Gets or sets the SKU in SKU details for existing resources.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Sku { get; set; }
+        public CapacitySku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.

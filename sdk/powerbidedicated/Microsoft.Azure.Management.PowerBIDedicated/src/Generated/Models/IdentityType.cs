@@ -12,10 +12,13 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
 {
 
     /// <summary>
-    /// Defines values for SkuTier.
+    /// Defines values for IdentityType.
     /// </summary>
-    public static class SkuTier
+    public static class IdentityType
     {
-        public const string PBIEAzure = "PBIE_Azure";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

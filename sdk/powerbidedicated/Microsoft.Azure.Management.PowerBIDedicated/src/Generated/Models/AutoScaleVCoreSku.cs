@@ -15,29 +15,32 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the SKU name and Azure pricing tier for PowerBI Dedicated
+    /// Represents the SKU name and Azure pricing tier for auto scale v-core
     /// resource.
     /// </summary>
-    public partial class ResourceSku
+    public partial class AutoScaleVCoreSku
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceSku class.
+        /// Initializes a new instance of the AutoScaleVCoreSku class.
         /// </summary>
-        public ResourceSku()
+        public AutoScaleVCoreSku()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceSku class.
+        /// Initializes a new instance of the AutoScaleVCoreSku class.
         /// </summary>
         /// <param name="name">Name of the SKU level.</param>
         /// <param name="tier">The name of the Azure pricing tier to which the
-        /// SKU applies. Possible values include: 'PBIE_Azure'</param>
-        public ResourceSku(string name, string tier = default(string))
+        /// SKU applies. Possible values include: 'AutoScale'</param>
+        /// <param name="capacity">The capacity of an auto scale v-core
+        /// resource.</param>
+        public AutoScaleVCoreSku(string name, string tier = default(string), int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
+            Capacity = capacity;
             CustomInit();
         }
 
@@ -54,10 +57,16 @@ namespace Microsoft.Azure.Management.PowerBIDedicated.Models
 
         /// <summary>
         /// Gets or sets the name of the Azure pricing tier to which the SKU
-        /// applies. Possible values include: 'PBIE_Azure'
+        /// applies. Possible values include: 'AutoScale'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the capacity of an auto scale v-core resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "capacity")]
+        public int? Capacity { get; set; }
 
         /// <summary>
         /// Validate the object.
