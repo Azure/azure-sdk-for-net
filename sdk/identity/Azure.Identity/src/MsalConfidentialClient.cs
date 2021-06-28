@@ -52,6 +52,17 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
+            // DO NOT MERGE PATCH TO MAIN
+            // this is temporary to patch support for the AZURE_REGIONAL_AUTHORITY_NAME to Azure.Identity 1.4.* It SHOULD NOT be merged to back main
+            // or included in any 1.5.* or later releases which use the "RegionalAuthority" property and extensible enum instead.
+            string regionalAuthority = Environment.GetEnvironmentVariable("AZURE_REGIONAL_AUTHORITY_NAME");
+
+            if (!string.IsNullOrEmpty(regionalAuthority))
+            {
+                confClientBuilder.WithAzureRegion(regionalAuthority);
+            }
+            // END PATCH
+
             return confClientBuilder.Build();
         }
 
