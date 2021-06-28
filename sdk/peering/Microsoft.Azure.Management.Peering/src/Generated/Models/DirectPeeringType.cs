@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.Peering.Models
         public const string Internal = "Internal";
         public const string Ix = "Ix";
         public const string IxRs = "IxRs";
+        public const string Voice = "Voice";
     }
 }

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Peering.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,10 +39,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="serviceProviderName">The name of the service
         /// provider.</param>
-        public PeeringServiceProvider(string name = default(string), string id = default(string), string type = default(string), string serviceProviderName = default(string))
+        /// <param name="peeringLocations">The list of locations at which the
+        /// service provider peers with Microsoft.</param>
+        public PeeringServiceProvider(string name = default(string), string id = default(string), string type = default(string), string serviceProviderName = default(string), IList<string> peeringLocations = default(IList<string>))
             : base(name, id, type)
         {
             ServiceProviderName = serviceProviderName;
+            PeeringLocations = peeringLocations;
             CustomInit();
         }
 
@@ -54,6 +59,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceProviderName")]
         public string ServiceProviderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of locations at which the service provider
+        /// peers with Microsoft.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.peeringLocations")]
+        public IList<string> PeeringLocations { get; set; }
 
     }
 }

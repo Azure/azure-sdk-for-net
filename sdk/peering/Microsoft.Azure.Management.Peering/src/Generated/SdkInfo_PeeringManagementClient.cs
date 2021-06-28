@@ -19,21 +19,21 @@ namespace Microsoft.Azure.Management.Peering
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Peering", "CdnPeeringPrefixes", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "CheckServiceProviderAvailability", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "LegacyPeerings", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "Operations", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "PeerAsns", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "PeeringLocations", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "PeeringServiceCountries", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "PeeringServiceLocations", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "PeeringServiceProviders", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "PeeringServices", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "Peerings", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "Prefixes", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "ReceivedRoutes", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "RegisteredAsns", "2020-10-01"),
-                new Tuple<string, string, string>("Peering", "RegisteredPrefixes", "2020-10-01"),
+                new Tuple<string, string, string>("Peering", "CdnPeeringPrefixes", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "CheckServiceProviderAvailability", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "LegacyPeerings", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "Operations", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "PeerAsns", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "PeeringLocations", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServiceCountries", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServiceLocations", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServiceProviders", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServices", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "Peerings", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "Prefixes", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "ReceivedRoutes", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "RegisteredAsns", "2021-01-01"),
+                new Tuple<string, string, string>("Peering", "RegisteredPrefixes", "2021-01-01"),
               }.AsEnumerable();
           }
       }

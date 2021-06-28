@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <param name="peerAsn">The reference of the peer ASN.</param>
         /// <param name="directPeeringType">The type of direct peering.
         /// Possible values include: 'Edge', 'Transit', 'Cdn', 'Internal',
-        /// 'Ix', 'IxRs'</param>
+        /// 'Ix', 'IxRs', 'Voice'</param>
         public PeeringPropertiesDirect(IList<DirectConnection> connections = default(IList<DirectConnection>), bool? useForPeeringService = default(bool?), SubResource peerAsn = default(SubResource), string directPeeringType = default(string))
         {
             Connections = connections;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Peering.Models
 
         /// <summary>
         /// Gets or sets the type of direct peering. Possible values include:
-        /// 'Edge', 'Transit', 'Cdn', 'Internal', 'Ix', 'IxRs'
+        /// 'Edge', 'Transit', 'Cdn', 'Internal', 'Ix', 'IxRs', 'Voice'
         /// </summary>
         [JsonProperty(PropertyName = "directPeeringType")]
         public string DirectPeeringType { get; set; }

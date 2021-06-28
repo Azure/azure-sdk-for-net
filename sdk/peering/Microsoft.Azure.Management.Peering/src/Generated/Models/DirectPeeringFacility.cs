@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// facility.</param>
         /// <param name="directPeeringType">The type of the direct peering.
         /// Possible values include: 'Edge', 'Transit', 'Cdn', 'Internal',
-        /// 'Ix', 'IxRs'</param>
+        /// 'Ix', 'IxRs', 'Voice'</param>
         /// <param name="peeringDBFacilityId">The PeeringDB.com ID of the
         /// facility.</param>
         /// <param name="peeringDBFacilityLink">The PeeringDB.com URL of the
@@ -60,7 +60,8 @@ namespace Microsoft.Azure.Management.Peering.Models
 
         /// <summary>
         /// Gets or sets the type of the direct peering. Possible values
-        /// include: 'Edge', 'Transit', 'Cdn', 'Internal', 'Ix', 'IxRs'
+        /// include: 'Edge', 'Transit', 'Cdn', 'Internal', 'Ix', 'IxRs',
+        /// 'Voice'
         /// </summary>
         [JsonProperty(PropertyName = "directPeeringType")]
         public string DirectPeeringType { get; set; }
