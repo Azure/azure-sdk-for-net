@@ -65,10 +65,13 @@ namespace Azure
             var oldKey = Key;
             Key = key;
 
-            if (!string.Equals(oldKey, key, StringComparison.Ordinal))
+            var changed = KeyChanged;
+            if (changed != null)
             {
-                var changed = KeyChanged;
-                changed(this, Key);
+                if (!string.Equals(oldKey, key, StringComparison.Ordinal))
+                {
+                    changed(this, Key);
+                }
             }
         }
     }
