@@ -52,11 +52,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// client API version
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -75,6 +70,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IActionRulesOperations.
+        /// </summary>
+        public virtual IActionRulesOperations ActionRules { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public virtual ISmartGroupsOperations SmartGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IActionRulesOperations.
+        /// Gets the ISmartDetectorAlertRulesOperations.
         /// </summary>
-        public virtual IActionRulesOperations ActionRules { get; private set; }
+        public virtual ISmartDetectorAlertRulesOperations SmartDetectorAlertRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AlertsManagementClient class.
@@ -335,12 +335,12 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// </summary>
         private void Initialize()
         {
+            ActionRules = new ActionRulesOperations(this);
             Operations = new Operations(this);
             Alerts = new AlertsOperations(this);
             SmartGroups = new SmartGroupsOperations(this);
-            ActionRules = new ActionRulesOperations(this);
+            SmartDetectorAlertRules = new SmartDetectorAlertRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-05-05-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
