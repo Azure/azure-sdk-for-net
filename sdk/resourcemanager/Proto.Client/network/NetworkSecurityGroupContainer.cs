@@ -3,7 +3,6 @@
 
 using Azure;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System.Threading;
@@ -62,10 +61,8 @@ namespace Proto.Network
         /// <returns> A response with the <see cref="Response{NetworkSecurityGroup}"/> operation for this resource. </returns>
         public Response<NetworkSecurityGroup> CreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                n => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(n)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -77,10 +74,8 @@ namespace Proto.Network
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{NetworkSecurityGroup}"/> operation for this network security group. </returns>
         public async Task<Response<NetworkSecurityGroup>> CreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                n => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(n)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -238,48 +233,18 @@ namespace Proto.Network
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Filters the list of network security groups for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each network security group.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityGroup"/> that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkSecurityGroup> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, NetworkSecurityGroup>(results, s => new NetworkSecurityGroupOperations(s).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of network security groups for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each network security group.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityGroup"/> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkSecurityGroup> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, NetworkSecurityGroup>(results, s => new NetworkSecurityGroupOperations(s).Get().Value);
-        }
-
         /// <inheritdoc />
-        public override Response<NetworkSecurityGroup> Get(string networkSecurityGroup, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityGroup> Get(string networkSecurityGroup, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                Operations.Get(Id.ResourceGroupName, networkSecurityGroup, cancellationToken: cancellationToken),
-                g => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(g)));
+            var response = Operations.Get(Id.ResourceGroupName, networkSecurityGroup, cancellationToken: cancellationToken);
+            return Response.FromValue(new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<NetworkSecurityGroup>> GetAsync(string networkSecurityGroup, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityGroup>> GetAsync(string networkSecurityGroup, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                await Operations.GetAsync(Id.ResourceGroupName, networkSecurityGroup, null, cancellationToken),
-                    g => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(g)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, networkSecurityGroup, null, cancellationToken);
+            return Response.FromValue(new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
     }
 }

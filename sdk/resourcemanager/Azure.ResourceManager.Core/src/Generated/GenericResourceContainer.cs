@@ -57,8 +57,14 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
-        public override Response<GenericResource> Get(string resourceId, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets details for this resource from the service.
+        /// </summary>
+        /// <param name="resourceId"> The ID of the resource to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="Response{GenericResource}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> resourceId cannot be null or a whitespace. </exception>
+        public Response<GenericResource> Get(string resourceId, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.Get");
             scope.Start();
@@ -75,8 +81,14 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<Response<GenericResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets details for this resource from the service.
+        /// </summary>
+        /// <param name="resourceId"> The ID of the resource to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{GenericResource}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> resourceId cannot be null or a whitespace. </exception>
+        public virtual async Task<Response<GenericResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.Get");
             scope.Start();
@@ -263,18 +275,6 @@ namespace Azure.ResourceManager.Core
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <inheritdoc/>
-        public override bool DoesExist(string resourceId, CancellationToken cancellationToken = default)
-        {
-            return base.DoesExist(resourceId, cancellationToken);
-        }
-
-        /// <inheritdoc/>
-        public override async Task<bool> DoesExistAsync(string resourceId, CancellationToken cancellationToken = default)
-        {
-            return await base.DoesExistAsync(resourceId, cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary> Create a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdateById");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdateById");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdateById");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdateById");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceOperationsBase<TenantResourceIdentifier, GenericResource> GetOperation(string resourceId)
         {
-            return new GenericResourceOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), resourceId);
+            return new GenericResourceOperations(this, resourceId);
         }
 
         private string GetApiVersion(ResourceIdentifier resourceId, CancellationToken cancellationToken)

@@ -3,7 +3,6 @@
 
 using Azure;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System;
@@ -50,10 +49,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public Response<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -67,10 +64,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public async Task<Response<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -197,55 +192,23 @@ namespace Proto.Network
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
-        /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
-        /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
-        /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkInterface> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, NetworkInterface>(results, s => new NetworkInterfaceOperations(s).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
-        /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
-        /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
-        /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkInterface> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, NetworkInterface>(results, s => new NetworkInterfaceOperations(s).Get().Value);
-        }
-
         private Func<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface> convertor()
         {
             return s => new NetworkInterface(Parent, new NetworkInterfaceData(s));
         }
 
         /// <inheritdoc />
-        public override Response<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public Response<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken),
-                g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
+            var response = Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken);
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken),
-                    g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
     }
 }

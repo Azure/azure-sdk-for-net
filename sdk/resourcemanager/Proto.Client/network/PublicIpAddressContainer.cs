@@ -3,7 +3,6 @@
 
 using Azure;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System;
@@ -53,10 +52,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public Response<PublicIpAddress> CreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new PublicIpAddress(Parent, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -70,10 +67,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public async Task<Response<PublicIpAddress>> CreateOrUpdateAsync(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new PublicIpAddress(Parent, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -184,48 +179,22 @@ namespace Proto.Network
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Filters the list of public IP addresses for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each network security group.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="PublicIpAddress"/> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PublicIpAddress> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, PublicIpAddress>(results, s => new PublicIpAddressOperations(s).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of public IP addresses for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each network security group.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="PublicIpAddress"/> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PublicIpAddress> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, PublicIpAddress>(results, s => new PublicIpAddressOperations(s).Get().Value);
-        }
-
         private Func<PublicIPAddress, PublicIpAddress> Convertor()
         {
             return s => new PublicIpAddress(Parent, new PublicIPAddressData(s));
         }
                 /// <inheritdoc />
-        public override Response<PublicIpAddress> Get(string publicIpAddressesName, CancellationToken cancellationToken = default)
+        public Response<PublicIpAddress> Get(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
+            var response = Operations.Get(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken);
+            return Response.FromValue(new PublicIpAddress(Parent, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
+            var response = await Operations.GetAsync(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new PublicIpAddress(Parent, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
     }
 }

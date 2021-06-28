@@ -52,7 +52,7 @@ You will need to have a resource group to put your Azure Communication Services 
 group, create one by using the [Azure
 portal](https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal)
 or the [ARM Management
-SDK](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md).
+SDK](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md).
 
 ### Authenticate the client
 

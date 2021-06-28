@@ -14,6 +14,11 @@ namespace Azure.Storage.Cryptography
     internal class ClientSideDecryptor
     {
         /// <summary>
+        /// A cache for encryption key if high level API spans across multiple service calls.
+        /// </summary>
+        private static readonly AsyncLocal<ContentEncryptionKeyCache> s_contentEncryptionKeyCache = new();
+
+        /// <summary>
         /// Clients that can upload data have a key encryption key stored on them. Checking if
         /// a cached key exists and matches a given <see cref="EncryptionData"/> saves a call
         /// to the external key resolver implementation when available.
@@ -179,6 +184,11 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
+            if (s_contentEncryptionKeyCache.Value?.Key.HasValue ?? false)
+            {
+                return s_contentEncryptionKeyCache.Value.Key.Value;
+            }
+
             IKeyEncryptionKey key = default;
 
             // If we already have a local key and it is the correct one, use that.
@@ -201,7 +211,7 @@ namespace Azure.Storage.Cryptography
                 throw Errors.ClientSideEncryption.KeyNotFound(encryptionData.WrappedContentKey.KeyId);
             }
 
-            return async
+            var contentEncryptionKey = async
                 ? await key.UnwrapKeyAsync(
                     encryptionData.WrappedContentKey.Algorithm,
                     encryptionData.WrappedContentKey.EncryptedKey,
@@ -210,6 +220,13 @@ namespace Azure.Storage.Cryptography
                     encryptionData.WrappedContentKey.Algorithm,
                     encryptionData.WrappedContentKey.EncryptedKey,
                     cancellationToken);
+
+            if (s_contentEncryptionKeyCache.Value != default)
+            {
+                s_contentEncryptionKeyCache.Value.Key = contentEncryptionKey;
+            }
+
+            return contentEncryptionKey;
         }
 
         /// <summary>
@@ -240,11 +257,25 @@ namespace Azure.Storage.Cryptography
                         aesProvider.Padding = PaddingMode.None;
                     }
 
-                    return new CryptoStream(contentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read);
+                    // Buffer network stream. CryptoStream issues tiny (~16 byte) reads which can lead to resources churn.
+                    // By default buffer is 4KB.
+                    var bufferedContentStream = new BufferedStream(contentStream);
+
+                    return new CryptoStream(bufferedContentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read);
                 }
             }
 
             throw Errors.ClientSideEncryption.BadEncryptionAlgorithm(encryptionData.EncryptionAgent.EncryptionAlgorithm.ToString());
+        }
+
+        internal static void BeginContentEncryptionKeyCaching(ContentEncryptionKeyCache cache = default)
+        {
+            s_contentEncryptionKeyCache.Value = cache ?? new ContentEncryptionKeyCache();
+        }
+
+        internal class ContentEncryptionKeyCache
+        {
+            public Memory<byte>? Key { get; set; }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing the operations that can be performed over a specific VirtualMachineScaleSet.
     /// </summary>
-    public class VirtualMachineScaleSetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualMachineScaleSet>, ITaggableResource<ResourceGroupResourceIdentifier, VirtualMachineScaleSet>, IDeletableResource
+    public class VirtualMachineScaleSetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualMachineScaleSet>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineScaleSetOperations"/> class.
@@ -96,17 +96,15 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public override Response<VirtualMachineScaleSet> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public override async Task<Response<VirtualMachineScaleSet>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -142,9 +140,8 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(vm.Data.Tags);
             patchable.Tags[key] = value;
 
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -155,9 +152,8 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(vm.Data.Tags);
             patchable.Tags[key] = value;
 
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync();
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -192,9 +188,8 @@ namespace Proto.Compute
             var patchable = new VirtualMachineScaleSetUpdate();
             patchable.Tags.ReplaceWith(tags);
 
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -203,9 +198,8 @@ namespace Proto.Compute
             var patchable = new VirtualMachineScaleSetUpdate();
             patchable.Tags.ReplaceWith(tags);
 
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken);
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -238,9 +232,8 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(vm.Data.Tags);
             patchable.Tags.Remove(key);
 
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -251,9 +244,8 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(vm.Data.Tags);
             patchable.Tags.Remove(key);
 
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
-                v => new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken);
+            return Response.FromValue(new VirtualMachineScaleSet(this, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>

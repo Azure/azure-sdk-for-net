@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core
     /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase<TIdentifier>
+    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase
         where TIdentifier : ResourceIdentifier
         where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
         where TResource : class
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Core
             : base(parent)
         {
         }
+
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected new ResourceOperationsBase Parent { get {return base.Parent as ResourceOperationsBase;} }
 
         /// <summary>
         /// Verify that the input resource Id is a valid container for this type.
@@ -88,24 +93,6 @@ namespace Azure.ResourceManager.Core
 
             return _parentResource as TParent;
         }
-
-        /// <summary>
-        /// Gets details for this resource from the service.
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
-        public abstract Response<TOperations> Get(string resourceName, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Gets details for this resource from the service.
-        /// </summary>
-        /// <param name="resourceName"> The name of the resource to get. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
-        public abstract Task<Response<TOperations>> GetAsync(string resourceName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns the resource from Azure if it exists.

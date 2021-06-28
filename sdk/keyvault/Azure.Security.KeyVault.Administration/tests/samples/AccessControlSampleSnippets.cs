@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         {
             client = Client;
             Pageable<KeyVaultRoleDefinition> allDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
-            _roleDefinitionId = allDefinitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
+            _roleDefinitionId = allDefinitions.First(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
             string definitionIdToAssign = _roleDefinitionId;
@@ -90,9 +90,10 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Replace <objectId> with the service principal object id from the Create/Get credentials section above
             string servicePrincipalObjectId = "<objectId>";
 
-            RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 #else
-            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
+            Guid roleDefinitionName = Recording.Random.NewGuid();
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, roleDefinitionName);
 #endif
 
             Console.WriteLine(createdAssignment.Name);
@@ -105,12 +106,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             Console.WriteLine(fetchedAssignment.Properties.PrincipalId);
             Console.WriteLine(fetchedAssignment.Properties.RoleDefinitionId);
 
-            KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
-
-            Console.WriteLine(deletedAssignment.Name);
-            Console.WriteLine(deletedAssignment.Properties.PrincipalId);
-            Console.WriteLine(deletedAssignment.Properties.RoleDefinitionId);
-
+            client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
             #endregion
         }
 

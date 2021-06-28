@@ -1,0 +1,370 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/:join?api-version=2021-06-15-preview",
+            "RequestMethod": "POST",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "281",
+                "Content-Type": "application/json",
+                "Date": "Wed, 16 Jun 2021 06:14:39 GMT",
+                "traceparent": "00-616dfbbf36772a46864bf7c08755624d-bcc64f263cee0042-00",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "f49f5f0bf1da113c53240a529cfffbef",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:14:39 GMT"
+            },
+            "RequestBody": {
+                "source": {
+                    "communicationUser": {
+                        "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_e3560385-776f-41d1-bf04-07ef738f2f23"
+                    }
+                },
+                "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
+                "requestedMediaTypes": [
+                    "audio"
+                ],
+                "requestedCallEvents": [
+                    "participantsUpdated"
+                ]
+            },
+            "StatusCode": 202,
+            "ResponseHeaders": {
+                "Content-Length": "110",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Wed, 16 Jun 2021 06:14:40 GMT",
+                "X-Azure-Ref": "00JbJYAAAAABoXEnj\u002B/jNT6h9T9oEgjZlV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "63fffae3-74c2-4c76-bd52-d7e03c99814c",
+                "x-ms-client-request-id": "f49f5f0bf1da113c53240a529cfffbef"
+            },
+            "ResponseBody": {
+                "callLegId": "1f201300-bfb0-4767-9e79-78154c5f075d",
+                "callConnectionId": "1f201300-bfb0-4767-9e79-78154c5f075d"
+            }
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/:join?api-version=2021-06-15-preview",
+            "RequestMethod": "POST",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "281",
+                "Content-Type": "application/json",
+                "Date": "Wed, 16 Jun 2021 06:14:41 GMT",
+                "traceparent": "00-97b6c6b7e5d89e41a1954f50a2583670-b9ea8c9ae34aa643-00",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "37b43a95a006dde1b43b017473e2d7de",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:14:41 GMT"
+            },
+            "RequestBody": {
+                "source": {
+                    "communicationUser": {
+                        "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_e3560385-776f-41d1-bf04-07ef738f2fc1"
+                    }
+                },
+                "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
+                "requestedMediaTypes": [
+                    "audio"
+                ],
+                "requestedCallEvents": [
+                    "participantsUpdated"
+                ]
+            },
+            "StatusCode": 202,
+            "ResponseHeaders": {
+                "Content-Length": "110",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Wed, 16 Jun 2021 06:14:41 GMT",
+                "X-Azure-Ref": "00ZbJYAAAAAAWWBFl\u002BUa4Q4pAQfn83SdiV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "afd18997-36d8-4ea5-aaca-6fe5534394e0",
+                "x-ms-client-request-id": "37b43a95a006dde1b43b017473e2d7de"
+            },
+            "ResponseBody": {
+                "callLegId": "1f201300-c64b-4d56-8b13-d2d249d66e51",
+                "callConnectionId": "1f201300-c64b-4d56-8b13-d2d249d66e51"
+            }
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings?api-version=2021-06-15-preview",
+            "RequestMethod": "POST",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "97",
+                "Content-Type": "application/json",
+                "Date": "Wed, 16 Jun 2021 06:14:43 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "c9e4c88cc186738e15632a50b497a3fc",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:14:43 GMT"
+            },
+            "RequestBody": {
+                "recordingStateCallbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld"
+            },
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Length": "180",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Wed, 16 Jun 2021 06:14:47 GMT",
+                "X-Azure-Ref": "005bJYAAAAAA1himOYEmwRKGBxioDEEsFV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "36fe1b85-d99c-4558-8f2e-82ce686480bb",
+                "x-ms-client-request-id": "c9e4c88cc186738e15632a50b497a3fc"
+            },
+            "ResponseBody": {
+                "recordingId": "eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ"
+            }
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ?api-version=2021-06-15-preview",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:14:54 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "729d170df0726a9b7dc2409ff0c89e70",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:14:54 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Length": "27",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Wed, 16 Jun 2021 06:14:53 GMT",
+                "X-Azure-Ref": "03ZbJYAAAAAAgJG8VtzO1TrwwB9BOK5y1V1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "d10931d4-a019-450b-ba8c-7c12b69abfa5",
+                "x-ms-client-request-id": "729d170df0726a9b7dc2409ff0c89e70"
+            },
+            "ResponseBody": {
+                "recordingState": "active"
+            }
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ/:pause?api-version=2021-06-15-preview",
+            "RequestMethod": "POST",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:14:54 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "d3c52c4d311ad369ab4121a37691281d",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:14:54 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Length": "0",
+                "Date": "Wed, 16 Jun 2021 06:14:54 GMT",
+                "X-Azure-Ref": "03pbJYAAAAABp62/ClNLRSKXU67cpwhpTV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "4794c1cc-8455-40f9-9376-18b6fff4565e",
+                "x-ms-client-request-id": "d3c52c4d311ad369ab4121a37691281d"
+            },
+            "ResponseBody": []
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ?api-version=2021-06-15-preview",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:15:00 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "5b67059864459b6c2d794bc481ef834d",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:15:00 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Length": "29",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Wed, 16 Jun 2021 06:15:00 GMT",
+                "X-Azure-Ref": "05JbJYAAAAACM6rwId1HSQLYyd1v2JmBPV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "aa9d90af-19a5-4b68-b398-b4e1297babf6",
+                "x-ms-client-request-id": "5b67059864459b6c2d794bc481ef834d"
+            },
+            "ResponseBody": {
+                "recordingState": "inactive"
+            }
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ/:resume?api-version=2021-06-15-preview",
+            "RequestMethod": "POST",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:15:00 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "8803bac5d0d2dbe1aec9c730cff8f4eb",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:15:00 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Length": "0",
+                "Date": "Wed, 16 Jun 2021 06:15:00 GMT",
+                "X-Azure-Ref": "05JbJYAAAAABe2s0EGy9XRaajwOIaoIGIV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "70b8fd92-9762-4252-8113-5ab171bd0fa1",
+                "x-ms-client-request-id": "8803bac5d0d2dbe1aec9c730cff8f4eb"
+            },
+            "ResponseBody": []
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ?api-version=2021-06-15-preview",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:15:06 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "ea0623994260e82abf29a6a1e5a552bc",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:15:06 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Length": "27",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Wed, 16 Jun 2021 06:15:06 GMT",
+                "X-Azure-Ref": "06pbJYAAAAAAMilSk8NYKQI/3lphUmEdQV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "49208aef-1fdc-4dd2-aa6c-8673377f8e1d",
+                "x-ms-client-request-id": "ea0623994260e82abf29a6a1e5a552bc"
+            },
+            "ResponseBody": {
+                "recordingState": "active"
+            }
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ?api-version=2021-06-15-preview",
+            "RequestMethod": "DELETE",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:15:07 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "bbddd4be9f8ec84b238cad7c9d3bcc34",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:15:07 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Content-Length": "0",
+                "Date": "Wed, 16 Jun 2021 06:15:06 GMT",
+                "X-Azure-Ref": "06pbJYAAAAADt\u002Bvd3Ym54Tqz0ZriqLeKfV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "b07f60d0-be10-4c91-bd93-4a540be0d6a5",
+                "x-ms-client-request-id": "bbddd4be9f8ec84b238cad7c9d3bcc34"
+            },
+            "ResponseBody": []
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/serverCalls/3500789f-e11b-4ceb-85cb-bc8df2a01768/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiIxZjIwMTMwMC1kNDQ0LTRmODItOTNkNS1iMjFjMGI0N2Q0NGYiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3ODg1ZGNhYy0zOTU1LTRmNTEtODM1OC01MDNkZmYyZjZkZWIifQ?api-version=2021-06-15-preview",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:15:07 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "5e2a5f8598e882ec8f1ac9a82940f508",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:15:06 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 400,
+            "ResponseHeaders": {
+                "Content-Length": "93",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Wed, 16 Jun 2021 06:15:06 GMT",
+                "X-Azure-Ref": "065bJYAAAAAC5fPwjZF8zQJTaqoIJiI\u002BbV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "b91d8469-13ed-4220-bd56-745e7b1d5e87",
+                "x-ms-client-request-id": "5e2a5f8598e882ec8f1ac9a82940f508"
+            },
+            "ResponseBody": {
+                "error": {
+                    "code": "8501",
+                    "message": "Action is invalid when call is not in Established state"
+                }
+            }
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/1f201300-bfb0-4767-9e79-78154c5f075d/:hangup?api-version=2021-06-15-preview",
+            "RequestMethod": "POST",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:15:17 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "fb720b77381af95dd83ec7d495ae4a83",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:15:17 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 202,
+            "ResponseHeaders": {
+                "Content-Length": "0",
+                "Date": "Wed, 16 Jun 2021 06:15:17 GMT",
+                "X-Azure-Ref": "09ZbJYAAAAABvakfTfriAR41VW7CnhDyvV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "6d7fb8b8-f118-4157-b315-cb785079c3c2",
+                "x-ms-client-request-id": "fb720b77381af95dd83ec7d495ae4a83"
+            },
+            "ResponseBody": []
+        },
+        {
+            "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/1f201300-c64b-4d56-8b13-d2d249d66e51/:hangup?api-version=2021-06-15-preview",
+            "RequestMethod": "POST",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Date": "Wed, 16 Jun 2021 06:15:17 GMT",
+                "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20210615.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+                "x-ms-client-request-id": "851b715df47a25d3e75b2c73d6a29ee3",
+                "x-ms-content-sha256": "Sanitized",
+                "x-ms-return-client-request-id": "true",
+                "x-ms-date": "Wed, 16 Jun 2021 06:15:17 GMT"
+            },
+            "RequestBody": null,
+            "StatusCode": 202,
+            "ResponseHeaders": {
+                "Content-Length": "0",
+                "Date": "Wed, 16 Jun 2021 06:15:17 GMT",
+                "X-Azure-Ref": "09ZbJYAAAAADMPDfgdmFDRpl/2PhlOTFNV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+                "X-Cache": "CONFIG_NOCACHE",
+                "X-Microsoft-Skype-Chain-ID": "98c8b906-d978-4b79-9ef4-ca0537cdc539",
+                "x-ms-client-request-id": "851b715df47a25d3e75b2c73d6a29ee3"
+            },
+            "ResponseBody": []
+        }
+    ],
+    "Variables": {
+        "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acstestbot1.communication.azure.com/;accesskey=Kg==",
+        "RandomSeed": "502582709"
+    }
+}

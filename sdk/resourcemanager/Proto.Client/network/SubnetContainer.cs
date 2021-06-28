@@ -46,10 +46,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public Response<Subnet> CreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken);
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                s => new Subnet(Parent, new SubnetData(s)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new Subnet(Parent, new SubnetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -63,10 +61,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public async Task<Response<Subnet>> CreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                s => new Subnet(Parent, new SubnetData(s)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new Subnet(Parent, new SubnetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -158,17 +154,17 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override Response<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
+        public Response<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Name, subnetName, cancellationToken: cancellationToken),
-                n => new Subnet(Parent, new SubnetData(n)));
+            var response = Operations.Get(Id.ResourceGroupName, Id.Name, subnetName, cancellationToken: cancellationToken);
+            return Response.FromValue(new Subnet(Parent, new SubnetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
+        public async Task<Response<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, null, cancellationToken),
-                n => new Subnet(Parent, new SubnetData(n)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new Subnet(Parent, new SubnetData(response.Value)), response.GetRawResponse());
         }
     }
 }

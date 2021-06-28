@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.Core
     public class GenericResource : GenericResourceOperations
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GenericResource"/> class for mocking.
+        /// </summary>
+        protected GenericResource()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GenericResource"/> class.
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>

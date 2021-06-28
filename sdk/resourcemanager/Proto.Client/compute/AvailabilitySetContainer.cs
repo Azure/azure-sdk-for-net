@@ -1,7 +1,6 @@
 ﻿using Azure;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,9 +40,7 @@ namespace Proto.Compute
         public Response<AvailabilitySet> CreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.CreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model);
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                response,
-                a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
+            return Response.FromValue(new AvailabilitySet(Parent, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -59,9 +56,7 @@ namespace Proto.Compute
         {
             var containerId = Id as ResourceGroupResourceIdentifier;
             var response = await Operations.CreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                response,
-                a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
+            return Response.FromValue(new AvailabilitySet(Parent, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -149,34 +144,6 @@ namespace Proto.Compute
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Filters the list of availability set for this resource group.
-        /// Makes an additional network call to retrieve the full data model for each resource group.
-        /// </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of availability set that may take multiple service requests to iterate over. </returns>
-        public Pageable<AvailabilitySet> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, AvailabilitySet>(results, s => new AvailabilitySetOperations(s).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of availability set for this resource group.
-        /// Makes an additional network call to retrieve the full data model for each resource group.
-        /// </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An asyc collection of availability set that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<AvailabilitySet> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, AvailabilitySet>(results, s => new AvailabilitySetOperations(s).Get().Value);
-        }
-
         private AvailabilitySetsOperations Operations => new ComputeManagementClient(
             BaseUri,
             Id.SubscriptionId,
@@ -185,17 +152,17 @@ namespace Proto.Compute
 
 
         /// <inheritdoc />
-        public override Response<AvailabilitySet> Get(string availabilitySetName, CancellationToken cancellationToken = default)
+        public Response<AvailabilitySet> Get(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(Operations.Get(Id.ResourceGroupName, availabilitySetName),
-                g => new AvailabilitySet(Parent, new AvailabilitySetData(g)));
+            var response = Operations.Get(Id.ResourceGroupName, availabilitySetName);
+            return Response.FromValue(new AvailabilitySet(Parent, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<AvailabilitySet>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailabilitySet>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(await Operations.GetAsync(Id.ResourceGroupName, availabilitySetName, cancellationToken),
-                g => new AvailabilitySet(Parent, new AvailabilitySetData(g)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, availabilitySetName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new AvailabilitySet(Parent, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
     }
 }

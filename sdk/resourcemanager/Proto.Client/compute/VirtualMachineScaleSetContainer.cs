@@ -5,7 +5,6 @@ using Azure;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,10 +49,8 @@ namespace Proto.Compute
         /// <returns> A response with the <see cref="Response{VirtualMachineScaleSet}"/> operation for this resource. </returns>
         public Response<VirtualMachineScaleSet> CreateOrUpdate(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -65,24 +62,22 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{VirtualMachineScaleSet}"/> operation for this resource. </returns>
         public async Task<Response<VirtualMachineScaleSet>> CreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc />
-        public override Response<VirtualMachineScaleSet> Get(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSet> Get(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(Operations.Get(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = Operations.Get(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken);
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<VirtualMachineScaleSet>> GetAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSet>> GetAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -96,20 +91,6 @@ namespace Proto.Compute
             return new PhWrappingPageable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet, VirtualMachineScaleSet>(
                 result,
                 s => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(s)));
-        }
-
-        /// <summary>
-        /// Filters the list of virtual machines for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each virtual machine.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSet"/> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualMachineScaleSet> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, VirtualMachineScaleSet>(results, s => (new VirtualMachineScaleSetOperations(s)).Get().Value);
         }
 
         /// <summary>
@@ -151,20 +132,6 @@ namespace Proto.Compute
             return new PhWrappingAsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet, VirtualMachineScaleSet>(
                 result,
                 s => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(s)));
-        }
-
-        /// <summary>
-        /// Filters the list of virtual machines for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each virtual machine.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSet"/> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualMachineScaleSet> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, VirtualMachineScaleSet>(results, s => (new VirtualMachineScaleSetOperations(s)).Get().Value);
         }
 
         /// <summary>

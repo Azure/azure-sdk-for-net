@@ -113,25 +113,27 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
+            OperationCanceledException ex = null;
             try
             {
                 await operation.CancelAsync();
+                await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            }
+            catch (OperationCanceledException e)
+            {
+                ex = e;
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            if (operation.HasCompleted)
+            if (operation.HasCompleted && !operation.Properties.CancellationRequested)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default),
-                $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
-
-            Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
+            Assert.AreEqual("The operation was canceled so no value is available.", ex?.Message);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -149,20 +151,29 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
+            OperationCanceledException ex = null;
             try
             {
                 // Calling through the CertificateClient directly won't affect the CertificateOperation, so subsequent status updates should throw.
                 await Client.CancelCertificateOperationAsync(certName);
+
+                await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+            }
+            catch (OperationCanceledException e)
+            {
+                ex = e;
             }
             catch (RequestFailedException e) when (e.Status == 403)
             {
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default),
-                $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
-            Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
+            if (operation.HasCompleted && !operation.Properties.CancellationRequested)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+
+            Assert.AreEqual("The operation was canceled so no value is available.", ex?.Message);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);

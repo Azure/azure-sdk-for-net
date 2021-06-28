@@ -15,7 +15,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be performed over a specific NetworkSecurityGroup.
     /// </summary>
-    public class NetworkSecurityGroupOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkSecurityGroup>, ITaggableResource<ResourceGroupResourceIdentifier, NetworkSecurityGroup>, IDeletableResource
+    public class NetworkSecurityGroupOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkSecurityGroup>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NetworkSecurityGroupOperations"/> class.
@@ -103,17 +103,15 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override Response<NetworkSecurityGroup> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public override async Task<Response<NetworkSecurityGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -123,9 +121,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -135,9 +132,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -201,9 +197,8 @@ namespace Proto.Network
         {
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -211,9 +206,8 @@ namespace Proto.Network
         {
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -243,9 +237,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -255,9 +248,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new NetworkSecurityGroup(this, new NetworkSecurityGroupData(n)));
+            var response = await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkSecurityGroup(this, new NetworkSecurityGroupData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>

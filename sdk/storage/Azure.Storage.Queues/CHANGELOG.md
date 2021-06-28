@@ -1,7 +1,22 @@
 # Release History
 
-## 12.7.0-beta.5 (Unreleased)
+## 12.8.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 12.7.0 (2021-06-08)
+- Includes all features from 12.7.0-beta.4.
+- This release contains bug fixes to improve quality.
+
+## 12.6.2 (2021-05-20)
+- This release contains bug fixes to improve quality.
 
 ## 12.7.0-beta.4 (2021-05-12)
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a QueueSasBuilder parameter.

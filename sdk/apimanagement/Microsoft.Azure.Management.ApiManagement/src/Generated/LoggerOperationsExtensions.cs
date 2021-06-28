@@ -247,9 +247,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch)
+            public static LoggerContract Update(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -278,9 +278,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoggerContract> UpdateAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -303,12 +306,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            /// <param name='force'>
-            /// Force deletion even if diagnostic is attached.
-            /// </param>
-            public static void Delete(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, string ifMatch, bool? force = default(bool?))
+            public static void Delete(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, string ifMatch)
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, loggerId, ifMatch, force).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, loggerId, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -330,16 +330,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
             /// update.
-            /// </param>
-            /// <param name='force'>
-            /// Force deletion even if diagnostic is attached.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, string ifMatch, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, ifMatch, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

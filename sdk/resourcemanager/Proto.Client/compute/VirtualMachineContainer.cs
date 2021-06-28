@@ -2,7 +2,6 @@
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Resources;
 using Proto.Compute.Convenience;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,10 +47,8 @@ namespace Proto.Compute
         /// <returns> A response with the <see cref="Response{VirtualMachine}"/> operation for this resource. </returns>
         public Response<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -64,9 +61,8 @@ namespace Proto.Compute
         public async Task<Response<VirtualMachine>> CreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -198,46 +194,18 @@ namespace Proto.Compute
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Filters the list of virtual machines for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each virtual machine.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="VirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualMachine> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, VirtualMachine>(results, s => (new VirtualMachineOperations(s)).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of virtual machines for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each virtual machine.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="VirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualMachine> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, VirtualMachine>(results, s => (new VirtualMachineOperations(s)).Get().Value);
-        }
-
         /// <inheritdoc />
-        public override Response<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
+        public Response<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken);
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
     }
 }
