@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateLinkResourceListResult>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateLinkResourceListResultDescription>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PrivateLinkResourceListResult>();
+            var _result = new AzureOperationResponse<PrivateLinkResourceListResultDescription>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateLinkResourceListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateLinkResourceListResultDescription>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateLinkResource>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateLinkResourceDescription>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PrivateLinkResource>();
+            var _result = new AzureOperationResponse<PrivateLinkResourceDescription>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateLinkResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateLinkResourceDescription>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-30";
+            ApiVersion = "2021-01-11";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
