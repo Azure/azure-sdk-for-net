@@ -14,8 +14,7 @@ namespace Azure.AI.FormRecognizer
     public class FormRecognizerClientOptions : ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V2_1;
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public string AuthenticationScope { get; set; } = "https://management.azure.com/.default";
+        internal const ServiceScopeCloud AuthenticationScope = ServiceScopeCloud.AzurePublicCloud;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class which allows
@@ -25,6 +24,7 @@ namespace Azure.AI.FormRecognizer
         public FormRecognizerClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
+            CognitiveScope = AuthenticationScope;
             AddLoggedHeadersAndQueryParameters();
         }
 
@@ -47,9 +47,31 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
+        /// The scope in different clouds of the Text Analytics service.
+        /// </summary>
+        public enum ServiceScopeCloud
+        {
+            /// <summary>
+            /// AzurePublicCloud
+            /// </summary>
+            AzurePublicCloud = 1,
+
+            /// <summary>
+            /// AzureChinaCloud
+            /// </summary>
+            AzureChinaCloud = 2,
+
+            /// <summary>
+            /// AzureGovernmentCloud
+            /// </summary>
+            AzureGovernmentCloud = 3,
+        }
+
+        /// <summary>
         /// The service version.
         /// </summary>
         public ServiceVersion Version { get; }
+        internal ServiceScopeCloud CognitiveScope { get; }
 
         internal static string GetVersionString(ServiceVersion version)
         {
@@ -58,6 +80,18 @@ namespace Azure.AI.FormRecognizer
                 ServiceVersion.V2_0 => "v2.0",
                 ServiceVersion.V2_1 => "v2.1",
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
+            };
+        }
+
+        internal static string GetScopeValue(ServiceScopeCloud scope)
+        {
+            return scope switch
+            {
+                ServiceScopeCloud.AzurePublicCloud => "https://cognitiveservices.azure.com/.default",
+                ServiceScopeCloud.AzureChinaCloud => "https://cognitiveservices.azure.cn/.default",
+                ServiceScopeCloud.AzureGovernmentCloud => "https://cognitiveservices.azure.us/.default",
+
+                _ => throw new ArgumentException($"Scope {scope} not supported."),
             };
         }
 
