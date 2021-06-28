@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
@@ -24,6 +25,12 @@ namespace Azure
             get => Volatile.Read(ref _key);
             private set => Volatile.Write(ref _key, value);
         }
+
+        /// <summary>
+        /// The event is raised after the AzureKeyCredential.Update method updates the key.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public event EventHandler<string> KeyChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKeyCredential"/> class.
@@ -54,7 +61,15 @@ namespace Azure
         public void Update(string key)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            var oldKey = Key;
             Key = key;
+
+            if (!string.Equals(oldKey, key, StringComparison.Ordinal))
+            {
+                var changed = KeyChanged;
+                changed(this, Key);
+            }
         }
     }
 }
