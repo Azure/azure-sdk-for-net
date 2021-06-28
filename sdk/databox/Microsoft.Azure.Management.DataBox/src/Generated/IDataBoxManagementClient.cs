@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.DataBox
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// </summary>
@@ -82,6 +86,29 @@ namespace Microsoft.Azure.Management.DataBox
         /// Gets the IServiceOperations.
         /// </summary>
         IServiceOperations Service { get; }
+
+        /// <summary>
+        /// Request to mitigate for a given job
+        /// </summary>
+        /// <param name='jobName'>
+        /// The name of the job Resource within the specified resource group.
+        /// job names must be between 3 and 24 characters in length and use any
+        /// alphanumeric and underscore only
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The Resource Group Name
+        /// </param>
+        /// <param name='customerResolutionCode'>
+        /// Resolution code for the job. Possible values include: 'None',
+        /// 'MoveToCleanUpDevice', 'Resume'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> MitigateWithHttpMessagesAsync(string jobName, string resourceGroupName, CustomerResolutionCode customerResolutionCode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

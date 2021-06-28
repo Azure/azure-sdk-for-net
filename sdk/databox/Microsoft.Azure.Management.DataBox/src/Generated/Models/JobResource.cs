@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.DataBox.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -76,7 +75,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="name">Name of the object.</param>
         /// <param name="id">Id of the object.</param>
         /// <param name="type">Type of the object.</param>
-        public JobResource(string location, Sku sku, TransferType transferType, IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), bool? isCancellable = default(bool?), bool? isDeletable = default(bool?), bool? isShippingAddressEditable = default(bool?), bool? isPrepareToShipEnabled = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), CloudError error = default(CloudError), JobDetails details = default(JobDetails), string cancellationReason = default(string), JobDeliveryType? deliveryType = default(JobDeliveryType?), JobDeliveryInfo deliveryInfo = default(JobDeliveryInfo), bool? isCancellableWithoutFee = default(bool?), string name = default(string), string id = default(string), string type = default(string))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public JobResource(string location, Sku sku, TransferType transferType, IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), bool? isCancellable = default(bool?), bool? isDeletable = default(bool?), bool? isShippingAddressEditable = default(bool?), bool? isPrepareToShipEnabled = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), CloudError error = default(CloudError), JobDetails details = default(JobDetails), string cancellationReason = default(string), JobDeliveryType? deliveryType = default(JobDeliveryType?), JobDeliveryInfo deliveryInfo = default(JobDeliveryInfo), bool? isCancellableWithoutFee = default(bool?), string name = default(string), string id = default(string), string type = default(string), SystemData systemData = default(SystemData))
             : base(location, sku, tags, identity)
         {
             TransferType = transferType;
@@ -95,6 +96,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
             Name = name;
             Id = id;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -207,6 +209,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

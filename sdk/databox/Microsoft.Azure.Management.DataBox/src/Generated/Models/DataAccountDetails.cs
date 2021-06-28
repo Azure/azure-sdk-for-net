@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// <summary>
     /// Account details of the data to be transferred
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DataAccountDetails")]
     public partial class DataAccountDetails
     {
         /// <summary>
