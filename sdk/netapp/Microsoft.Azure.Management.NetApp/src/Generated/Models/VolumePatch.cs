@@ -151,27 +151,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (UsageThreshold != null)
+            if (UsageThreshold > 109951162777600)
             {
-                if (UsageThreshold > 109951162777600)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
-                }
-                if (UsageThreshold < 107374182400)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
             }
-            if (ThroughputMibps != null)
+            if (UsageThreshold < 107374182400)
             {
-                if (ThroughputMibps > 4500)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
-                }
-                if (ThroughputMibps < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
+            }
+            if (ThroughputMibps > 4500)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
+            }
+            if (ThroughputMibps < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 1);
             }
         }
     }

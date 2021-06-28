@@ -77,7 +77,19 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// values are: 'Microsoft.NetApp'</param>
         /// <param name="ldapEnabled">Specifies whether LDAP is enabled or not
         /// for a given NFS volume.</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?))
+        /// <param name="coolAccess">Specifies whether Cool Access(tiering) is
+        /// enabled for the volume.</param>
+        /// <param name="coolnessPeriod">Specifies the number of days after
+        /// which data that is not accessed by clients will be tiered.</param>
+        /// <param name="unixPermissions">UNIX permissions for NFS volume
+        /// accepted in octal 4 digit format. First digit selects the set user
+        /// ID(4), set group ID (2) and sticky (1) attributes. Second digit
+        /// selects permission for the owner of the file: read (4), write (2)
+        /// and execute (1). Third selects permissions for other users in the
+        /// same group. the fourth for other users not in the group. 0755 -
+        /// gives read/write/execute permissions to owner and read/execute to
+        /// group and other users.</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string))
         {
             Location = location;
             Id = id;
@@ -107,6 +119,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ThroughputMibps = throughputMibps;
             EncryptionKeySource = encryptionKeySource;
             LdapEnabled = ldapEnabled;
+            CoolAccess = coolAccess;
+            CoolnessPeriod = coolnessPeriod;
+            UnixPermissions = unixPermissions;
             CustomInit();
         }
 
@@ -333,6 +348,32 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? LdapEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies whether Cool Access(tiering) is enabled for
+        /// the volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolAccess")]
+        public bool? CoolAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the number of days after which data that is
+        /// not accessed by clients will be tiered.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolnessPeriod")]
+        public int? CoolnessPeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets UNIX permissions for NFS volume accepted in octal 4
+        /// digit format. First digit selects the set user ID(4), set group ID
+        /// (2) and sticky (1) attributes. Second digit selects permission for
+        /// the owner of the file: read (4), write (2) and execute (1). Third
+        /// selects permissions for other users in the same group. the fourth
+        /// for other users not in the group. 0755 - gives read/write/execute
+        /// permissions to owner and read/execute to group and other users.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unixPermissions")]
+        public string UnixPermissions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -434,15 +475,31 @@ namespace Microsoft.Azure.Management.NetApp.Models
             {
                 DataProtection.Validate();
             }
-            if (ThroughputMibps != null)
+            if (ThroughputMibps > 4500)
             {
-                if (ThroughputMibps > 4500)
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
+            }
+            if (ThroughputMibps < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 0);
+            }
+            if (CoolnessPeriod > 63)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "CoolnessPeriod", 63);
+            }
+            if (CoolnessPeriod < 7)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "CoolnessPeriod", 7);
+            }
+            if (UnixPermissions != null)
+            {
+                if (UnixPermissions.Length > 4)
                 {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
+                    throw new ValidationException(ValidationRules.MaxLength, "UnixPermissions", 4);
                 }
-                if (ThroughputMibps < 0)
+                if (UnixPermissions.Length < 4)
                 {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 0);
+                    throw new ValidationException(ValidationRules.MinLength, "UnixPermissions", 4);
                 }
             }
         }

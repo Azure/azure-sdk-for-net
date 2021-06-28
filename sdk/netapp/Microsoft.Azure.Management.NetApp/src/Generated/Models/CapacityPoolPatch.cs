@@ -116,16 +116,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Size != null)
+            if (Size > 549755813888000)
             {
-                if (Size > 549755813888000)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Size", 549755813888000);
-                }
-                if (Size < 4398046511104)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Size", 4398046511104);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Size", 549755813888000);
+            }
+            if (Size < 4398046511104)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Size", 4398046511104);
             }
         }
     }
