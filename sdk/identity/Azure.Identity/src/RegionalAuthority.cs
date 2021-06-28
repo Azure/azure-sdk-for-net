@@ -379,5 +379,10 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         public override string ToString() => _value;
+
+        internal static RegionalAuthority? FromEnvironment()
+        {
+            return string.IsNullOrEmpty(EnvironmentVariables.AzureRegionalAuthorityName) ? null : new RegionalAuthority(EnvironmentVariables.AzureRegionalAuthorityName);
+        }
     }
 }
