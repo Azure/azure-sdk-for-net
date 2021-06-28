@@ -854,7 +854,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await processor.StopProcessingAsync();
+                await processor.CloseAsync();
 
                 if (settleMethod == "" || settleMethod == "Abandon")
                 {
@@ -1291,14 +1291,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task CloseSessionHandler(ProcessSessionEventArgs arg)
                 {
-                    try
-                    {
-                        throw new TestException();
-                    }
-                    finally
-                    {
-                        tcs.TrySetResult(true);
-                    }
+                    throw new TestException();
                 }
 
                 async Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
@@ -1388,6 +1381,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             case ServiceBusErrorSource.Complete:
                                 await Task.Delay(delayDuration);
                                 break;
+                            case ServiceBusErrorSource.CloseSession:
+                                tcs.TrySetResult(true);
+                                break;
                         }
                     }
                     finally
@@ -1396,7 +1392,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 await tcs.Task;
-                await processor.StopProcessingAsync();
+                await processor.CloseAsync();
                 if (errorSource != ServiceBusErrorSource.AcceptSession)
                 {
                     Assert.AreEqual(1, messageCt);
@@ -1705,6 +1701,45 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // poll for the lock duration to make sure that messages are actually gone rather than just locked
                 var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
                 Assert.IsNull(msg);
+            }
+        }
+
+        [Test]
+        public async Task AutoLockRenewalContinuesUntilProcessingCompletes()
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 10
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
             }
         }
     }
