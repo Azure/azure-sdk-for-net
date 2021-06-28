@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 TagsRestClient.DeleteAtScope(Id, cancellationToken);
-                Tags newTags = new Tags();
+                TagsData newTags = new TagsData();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 await TagsRestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                Tags newTags = new Tags();
+                TagsData newTags = new TagsData();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);

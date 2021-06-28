@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.Core
         /// <summary> The operation type for the patch API. </summary>
         public TagsPatchResourceOperation? Operation { get; set; }
         /// <summary> The set of tags. </summary>
-        public Tags Properties { get; set; }
+        public TagsData Properties { get; set; }
     }
 }

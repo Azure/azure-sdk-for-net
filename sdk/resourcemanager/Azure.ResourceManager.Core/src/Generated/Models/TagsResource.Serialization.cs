@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Tags properties = default;
+            TagsData properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Core
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = Tags.DeserializeTags(property.Value);
+                    properties = TagsData.DeserializeTags(property.Value);
                     continue;
                 }
             }
