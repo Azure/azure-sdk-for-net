@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Text;
@@ -60,12 +60,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used to provide the entire SELECT clause as opposed to providing individual field (column) names.
         /// </summary>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsQueryByilderOverride" language="csharp">
+        /// <code snippet="Snippet:DigitalTwinsQueryBuilderOverride" language="csharp">
         /// // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
         /// new AdtQueryBuilder()
-        /// .SelectOverride("TOP(3) Room, Temperature")
+        /// .SelectOverride(&quot;TOP(3) Room, Temperature&quot;)
         /// .From(AdtCollection.DigitalTwins)
-        /// .Build()
+        /// .Build();
         /// </code>
         /// </example>
         /// <param name="literalQuery"> Query in string format. </param>

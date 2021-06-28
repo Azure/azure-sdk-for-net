@@ -126,6 +126,14 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #endregion
 
+            #region Snippet:DigitalTwinsQueryBuilderOverride
+            // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
+            new AdtQueryBuilder()
+            .SelectOverride("TOP(3) Room, Temperature")
+            .From(AdtCollection.DigitalTwins)
+            .Build();
+            #endregion
+
             #region Snippet:DigitalTwinsQueryBuilder_SubjectiveConditionsWorkaround
             // SELECT * FROM DIGITALTWINS WHERE (Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)) AND IS_NUMBER(Temperature)
             AdtQueryBuilder subjectiveLogicalOps = new AdtQueryBuilder()

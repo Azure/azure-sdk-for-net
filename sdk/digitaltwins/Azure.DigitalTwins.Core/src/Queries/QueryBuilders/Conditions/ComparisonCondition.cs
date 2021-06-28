@@ -34,7 +34,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             Value = value;
         }
 
-        public override string Stringify()
+        public override string GetConditionText()
         {
             var conditionString = new StringBuilder();
             conditionString.Append($"{Field} {QueryConstants.ComparisonOperatorMap[Operator]} ");

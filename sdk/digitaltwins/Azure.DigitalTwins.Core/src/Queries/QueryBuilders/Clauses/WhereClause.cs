@@ -21,7 +21,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="condition"> Condition argument for the WHERE clause. </param>
         internal WhereClause(ConditionBase condition)
         {
-            Condition = condition.Stringify();
+            Condition = condition.GetConditionText();
         }
 
         /// <summary>

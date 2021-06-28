@@ -324,6 +324,15 @@ AdtQueryBuilder queryWithIsOfModel = new AdtQueryBuilder()
     .Build();
 ```
 
+Clauses can also be manually overriden with strings:
+```C# Snippet:DigitalTwinsQueryBuilderOverride
+// SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
+new AdtQueryBuilder()
+.SelectOverride("TOP(3) Room, Temperature")
+.From(AdtCollection.DigitalTwins)
+.Build();
+```
+
 For queries with multiple conditions, use logical operators or nested conditions.
 
 ```C# Snippet:DigitalTwinsQueryBuilder_ComplexConditions

@@ -36,7 +36,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             Searched = searched;
         }
 
-        public override string Stringify()
+        public override string GetConditionText()
         {
             // turn the string array into the correct format ['property1', 'property2', 'etc']
             string searchedFormatted = $"['{string.Join("', '", Searched)}']";
