@@ -36,6 +36,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
+        /// Used to add a select clause and the all (*) argument to a query.
+        /// </summary>
+        /// <returns> Query that contains a select clause. </returns>
+        public FromQuery SelectAll()
+        {
+            _clause = new SelectClause(new string[]{ "*" });
+            return _upstreamFromQuery;
+        }
+
+        /// <summary>
         /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
         /// but inserts TOP() into the query structure as well.
         /// </summary>

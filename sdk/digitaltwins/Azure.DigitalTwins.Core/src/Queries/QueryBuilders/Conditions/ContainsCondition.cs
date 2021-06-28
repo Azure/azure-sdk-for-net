@@ -9,6 +9,19 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     internal class ContainsCondition : ConditionBase
     {
         /// <summary>
+        /// Constructor for ContainsCondition.
+        /// </summary>
+        /// <param name="value"> The value being searched for within some list of objects.  </param>
+        /// <param name="containOperator"> The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">contains operator</see> being invoked. </param>
+        /// <param name="searched"> The list of objects being searched for a value. </param>
+        public ContainsCondition(string value, QueryContainsOperator containOperator, string[] searched)
+        {
+            Value = value;
+            Operator = containOperator;
+            Searched = searched;
+        }
+
+        /// <summary>
         /// The value being searched for within some list of objects.
         /// </summary>
         public string Value { get; set; }
@@ -22,19 +35,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// The list of objects being searched for a value.
         /// </summary>
         public string[] Searched { get; set; }
-
-        /// <summary>
-        /// Constructor for ContainsCondition.
-        /// </summary>
-        /// <param name="value"> The value being searched for within some list of objects.  </param>
-        /// <param name="containOperator"> The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">contains operator</see> being invoked. </param>
-        /// <param name="searched"> The list of objects being searched for a value. </param>
-        public ContainsCondition(string value, QueryContainsOperator containOperator, string[] searched)
-        {
-            Value = value;
-            Operator = containOperator;
-            Searched = searched;
-        }
 
         public override string GetConditionText()
         {

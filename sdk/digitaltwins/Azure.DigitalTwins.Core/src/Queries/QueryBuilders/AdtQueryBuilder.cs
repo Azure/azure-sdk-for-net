@@ -37,6 +37,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
+        /// Specifies the list of all possible columns to return.
+        /// </summary>
+        /// <returns> Query that contains a select clause. </returns>
+        public FromQuery SelectAll()
+        {
+            return _selectQuery.SelectAll();
+        }
+
+        /// <summary>
         /// Used to return only a certain number of top items that meet the query requirements.
         /// </summary>
         /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
@@ -63,14 +72,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <code snippet="Snippet:DigitalTwinsQueryBuilderOverride" language="csharp">
         /// // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
         /// new AdtQueryBuilder()
-        /// .SelectOverride(&quot;TOP(3) Room, Temperature&quot;)
+        /// .SelectCustom(&quot;TOP(3) Room, Temperature&quot;)
         /// .From(AdtCollection.DigitalTwins)
         /// .Build();
         /// </code>
         /// </example>
         /// <param name="literalQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectOverride(string literalQuery)
+        public FromQuery SelectCustom(string literalQuery)
         {
             return _selectQuery.Select(literalQuery);
         }

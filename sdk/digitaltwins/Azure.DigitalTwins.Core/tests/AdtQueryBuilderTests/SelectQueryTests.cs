@@ -13,7 +13,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void SelectQuery_All()
         {
             var query = new SelectQuery(null, null);
-            query.Select("*");
+            query.SelectAll();
             query.GetQueryText()
                 .Should()
                 .Be("SELECT *");

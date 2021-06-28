@@ -113,12 +113,12 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Where()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                     .IsOfType("Humidity", AdtDataType.AdtNumber)
                     .Or()
                     .IsDefined("Humidity"))
                 .And()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                     .IsOfModel("dtmi:example:hvac;1")
                     .And()
                     .IsNull("Occupants"))
@@ -129,7 +129,7 @@ namespace Azure.DigitalTwins.Core.Samples
             #region Snippet:DigitalTwinsQueryBuilderOverride
             // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
             new AdtQueryBuilder()
-            .SelectOverride("TOP(3) Room, Temperature")
+            .SelectCustom("TOP(3) Room, Temperature")
             .From(AdtCollection.DigitalTwins)
             .Build();
             #endregion
@@ -151,7 +151,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
                 .Where()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                     .Compare("Temperature", QueryComparisonOperator.Equal, 50)
                     .Or()
                     .IsOfModel("dtmi:example:room;1", true))

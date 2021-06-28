@@ -13,7 +13,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_Select_AllSimple()
         {
             new AdtQueryBuilder()
-                .Select("*")
+                .SelectAll()
                 .From(AdtCollection.DigitalTwins)
                 .Where()
                 .BuildLogic()
@@ -85,7 +85,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_Select_Override()
         {
             new AdtQueryBuilder()
-                .SelectOverride("TOP(3) Room, Temperature")
+                .SelectCustom("TOP(3) Room, Temperature")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
                 .GetQueryText()
@@ -111,7 +111,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_Where_Contains()
         {
             new AdtQueryBuilder()
-                .Select("*")
+                .SelectAll()
                 .From(AdtCollection.DigitalTwins)
                 .Where()
                 .NotContains("Location", new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
@@ -125,7 +125,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_Where_Override()
         {
             new AdtQueryBuilder()
-                .Select("*")
+                .SelectAll()
                 .From(AdtCollection.DigitalTwins)
                 .Where()
                 .CustomClause("IS_OF_MODEL('dtmi:example:room;1', exact)")
@@ -139,7 +139,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_Where_IsOfModel()
         {
             new AdtQueryBuilder()
-                .Select("*")
+                .SelectAll()
                 .From(AdtCollection.DigitalTwins)
                 .Where()
                 .IsOfModel("dtmi:example:room;1", true)
@@ -153,7 +153,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_Where_IsBool()
         {
             new AdtQueryBuilder()
-                .Select("*")
+                .SelectAll()
                 .From(AdtCollection.Relationships)
                 .Where()
                 .IsOfType("isOccupied", AdtDataType.AdtBool)
@@ -183,15 +183,15 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_MultipleNested()
         {
             new AdtQueryBuilder()
-                .Select("*")
+                .SelectAll()
                 .From(AdtCollection.DigitalTwins)
                 .Where()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                     .IsOfType("Humidity", AdtDataType.AdtNumber)
                     .Or()
                     .IsOfType("Humidity", AdtDataType.AdtPrimative))
                 .Or()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                     .IsOfType("Temperature", AdtDataType.AdtNumber)
                     .Or()
                     .IsOfType("Temperature", AdtDataType.AdtPrimative))

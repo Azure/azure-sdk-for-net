@@ -127,7 +127,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_of_model">IS_OF_MODEL</see> function to the condition statement of the query.
         /// </summary>
-        /// <param name="model"> Model ID to check for. </param>
+        /// <param name="model"> Model Id to check for. </param>
         /// <param name="exact"> Whether or not an exact match is required. </param>
         /// <returns> Logical operator to combine different WHERE functions or conditions. </returns>
         public LogicalOperator IsOfModel(string model, bool exact = false)
@@ -164,7 +164,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="nested"> WhereLogic methods to perform within a set of parenthesis. </param>
         /// <returns> Logical operator to combine different WHERE functions or conditions. </returns>
-        public LogicalOperator IsTrue(Func<WhereLogic, LogicalOperator> nested)
+        public LogicalOperator Parenthetical(Func<WhereLogic, LogicalOperator> nested)
         {
             var nestedLogic = new WhereLogic(null);
             nested.Invoke(nestedLogic);

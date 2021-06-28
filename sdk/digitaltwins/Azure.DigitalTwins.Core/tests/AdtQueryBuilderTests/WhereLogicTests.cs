@@ -205,7 +205,7 @@ namespace Azure.DigitalTwins.Core.Tests
             var query = new WhereLogic(null);
             query.Compare("Temperature", QueryComparisonOperator.Equal, 50)
                 .And()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                    .IsOfType("Humidity", AdtDataType.AdtNumber)
                    .And()
                    .IsOfType("Humidity", AdtDataType.AdtPrimative));
@@ -220,10 +220,10 @@ namespace Azure.DigitalTwins.Core.Tests
             var query = new WhereLogic(null);
             query.Compare("Temperature", QueryComparisonOperator.Equal, 50)
                 .And()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                    .IsOfType("Humidity", AdtDataType.AdtNumber)
                    .And()
-                   .IsTrue(q => q
+                   .Parenthetical(q => q
                         .IsOfModel("dtmi:example:room;1", true)
                         .Or()
                         .IsOfType("isOccupied", AdtDataType.AdtBool)));
@@ -236,12 +236,12 @@ namespace Azure.DigitalTwins.Core.Tests
         public void WhereLogic_MultipleNestedQueries()
         {
             var query = new WhereLogic(null);
-            query.IsTrue(q => q
+            query.Parenthetical(q => q
                     .IsOfType("Humidity", AdtDataType.AdtNumber)
                     .Or()
                     .IsOfType("Humidity", AdtDataType.AdtPrimative))
                 .Or()
-                .IsTrue(q => q
+                .Parenthetical(q => q
                     .IsOfType("Temperature", AdtDataType.AdtNumber)
                     .Or()
                     .IsOfType("Temperature", AdtDataType.AdtPrimative));

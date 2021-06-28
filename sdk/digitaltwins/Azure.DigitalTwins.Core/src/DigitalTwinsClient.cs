@@ -2163,25 +2163,25 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Queries for digital twins by iterating through a collection asynchronously.
         /// </summary>
-        /// <param name="builtQuery"> Query object made with the ADT query builder. </param>
+        /// <param name="adtQueryBuilder"> Query object made with the ADT query builder. </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
-        public virtual AsyncPageable<T> QueryAsync<T>(AdtQueryBuilder builtQuery, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<T> QueryAsync<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
         {
-            return QueryAsync<T>(builtQuery.GetQueryText(), cancellationToken);
+            return QueryAsync<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
         }
 
         /// <summary>
         /// Queries for digital twins by iterating through a collection synchronously.
         /// </summary>
-        /// <param name="builtQuery"> Query object made with the ADT query builder. </param>
+        /// <param name="adtQueryBuilder"> Query object made with the ADT query builder. </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
-        public virtual Pageable<T> Query<T>(AdtQueryBuilder builtQuery, CancellationToken cancellationToken = default)
+        public virtual Pageable<T> Query<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
         {
-            return Query<T>(builtQuery.GetQueryText(), cancellationToken);
+            return Query<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
         }
 
         /// <summary>
