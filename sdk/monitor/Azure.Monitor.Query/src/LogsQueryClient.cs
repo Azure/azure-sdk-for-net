@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -81,7 +81,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
@@ -97,7 +97,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
@@ -113,7 +113,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
@@ -137,7 +137,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspace">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
@@ -159,7 +159,31 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Submits the batch query.
+        /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
+        /// <code snippet="Snippet:BatchQuery" language="csharp">
+        /// Uri endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
+        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
+        ///
+        /// LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+        ///
+        /// // Query TOP 10 resource groups by event count
+        /// // And total event count
+        /// LogsBatchQuery batch = new LogsBatchQuery();
+        ///
+        /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
+        /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));
+        ///
+        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        ///
+        /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
+        /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
+        ///
+        /// Console.WriteLine($&quot;AzureActivity has total {count} events&quot;);
+        /// foreach (var logEntryModel in topEntries)
+        /// {
+        ///     Console.WriteLine($&quot;{logEntryModel.ResourceGroup} had {logEntryModel.Count} events&quot;);
+        /// }
+        /// </code>
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -183,7 +207,31 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Submits the batch query.
+        /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
+        /// <code snippet="Snippet:BatchQuery" language="csharp">
+        /// Uri endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
+        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
+        ///
+        /// LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+        ///
+        /// // Query TOP 10 resource groups by event count
+        /// // And total event count
+        /// LogsBatchQuery batch = new LogsBatchQuery();
+        ///
+        /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
+        /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));
+        ///
+        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        ///
+        /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
+        /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
+        ///
+        /// Console.WriteLine($&quot;AzureActivity has total {count} events&quot;);
+        /// foreach (var logEntryModel in topEntries)
+        /// {
+        ///     Console.WriteLine($&quot;{logEntryModel.ResourceGroup} had {logEntryModel.Count} events&quot;);
+        /// }
+        /// </code>
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>

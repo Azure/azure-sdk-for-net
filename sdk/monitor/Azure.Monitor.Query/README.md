@@ -138,6 +138,7 @@ LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredentia
 // Query TOP 10 resource groups by event count
 // And total event count
 LogsBatchQuery batch = new LogsBatchQuery();
+
 string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
 string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 

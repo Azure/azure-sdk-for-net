@@ -2,6 +2,8 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.Monitor.Query</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <StartupObject>Azure.Monitor.Query.Tests.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

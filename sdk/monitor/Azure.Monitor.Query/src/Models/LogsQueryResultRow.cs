@@ -271,5 +271,11 @@ namespace Azure.Monitor.Query.Models
         public object this[string name] => GetObject(name);
 
         internal bool TryGetColumn(string name, out int column) => _columnMap.TryGetValue(name, out column);
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return _row.ToString();
+        }
     }
 }

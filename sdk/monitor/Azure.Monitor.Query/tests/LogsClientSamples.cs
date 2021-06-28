@@ -148,6 +148,8 @@ namespace Azure.Monitor.Query.Tests
             // Query TOP 10 resource groups by event count
             // And total event count
             LogsBatchQuery batch = new LogsBatchQuery();
+
+            #region Snippet:BatchQueryAddAndGet
             string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
             string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 
@@ -155,6 +157,7 @@ namespace Azure.Monitor.Query.Tests
 
             var count = response.Value.GetResult<int>(countQueryId).Single();
             var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
+            #endregion
 
             Console.WriteLine($"AzureActivity has total {count} events");
             foreach (var logEntryModel in topEntries)
