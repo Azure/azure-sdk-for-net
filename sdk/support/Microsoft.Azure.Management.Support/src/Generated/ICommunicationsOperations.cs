@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Support
         /// $filter parameter. The only type of communication supported today
         /// is _Web_. Output will be a paged result with _nextLink_, using
         /// which you can retrieve the next set of Communication results.
-        /// &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 12
-        /// months after ticket creation. If a ticket was created more than 12
+        /// &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18
+        /// months after ticket creation. If a ticket was created more than 18
         /// months ago, a request for data might cause an error.
         /// </summary>
         /// <param name='supportTicketName'>
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.Support
         /// $filter parameter. The only type of communication supported today
         /// is _Web_. Output will be a paged result with _nextLink_, using
         /// which you can retrieve the next set of Communication results.
-        /// &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 12
-        /// months after ticket creation. If a ticket was created more than 12
+        /// &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18
+        /// months after ticket creation. If a ticket was created more than 18
         /// months ago, a request for data might cause an error.
         /// </summary>
         /// <param name='nextPageLink'>

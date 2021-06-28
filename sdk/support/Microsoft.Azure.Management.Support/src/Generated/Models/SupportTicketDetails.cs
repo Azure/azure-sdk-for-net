@@ -42,8 +42,9 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <param name="severity">A value that indicates the urgency of the
         /// case, which in turn determines the response time according to the
         /// service level agreement of the technical support plan you have with
-        /// Azure. Note: 'Highest critical impact' severity is reserved only
-        /// for our Premium customers. Possible values include: 'minimal',
+        /// Azure. Note: 'Highest critical impact', also known as the
+        /// 'Emergency - Severe impact' level in the Azure portal is reserved
+        /// only for our Premium customers. Possible values include: 'minimal',
         /// 'moderate', 'critical', 'highestcriticalimpact'</param>
         /// <param name="contactDetails">Contact information of the user
         /// requesting to create a support ticket.</param>
@@ -162,7 +163,8 @@ namespace Microsoft.Azure.Management.Support.Models
         /// Gets or sets a value that indicates the urgency of the case, which
         /// in turn determines the response time according to the service level
         /// agreement of the technical support plan you have with Azure. Note:
-        /// 'Highest critical impact' severity is reserved only for our Premium
+        /// 'Highest critical impact', also known as the 'Emergency - Severe
+        /// impact' level in the Azure portal is reserved only for our Premium
         /// customers. Possible values include: 'minimal', 'moderate',
         /// 'critical', 'highestcriticalimpact'
         /// </summary>
