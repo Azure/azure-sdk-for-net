@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service instance
+            /// Name of the attestation provider.
             /// </param>
             public static AttestationProvider Get(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName)
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service instance
+            /// Name of the attestation provider.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Attestation
             }
 
             /// <summary>
-            /// Creates or updates the Attestation Provider.
+            /// Creates a new Attestation Provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation provider.
             /// </param>
             /// <param name='creationParams'>
             /// Client supplied parameters.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Attestation
             }
 
             /// <summary>
-            /// Creates or updates the Attestation Provider.
+            /// Creates a new Attestation Provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation provider.
             /// </param>
             /// <param name='creationParams'>
             /// Client supplied parameters.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation provider.
             /// </param>
             /// <param name='updateParams'>
             /// Client supplied parameters.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation provider.
             /// </param>
             /// <param name='updateParams'>
             /// Client supplied parameters.

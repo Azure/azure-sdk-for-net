@@ -29,6 +29,14 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// <summary>
         /// Initializes a new instance of the JSONWebKey class.
         /// </summary>
+        /// <param name="kty">The "kty" (key type) parameter identifies the
+        /// cryptographic algorithm
+        /// family used with the key, such as "RSA" or "EC". "kty" values
+        /// should
+        /// either be registered in the IANA "JSON Web Key Types" registry
+        /// established by [JWA] or be a value that contains a Collision-
+        /// Resistant Name.  The "kty" value is a case-sensitive
+        /// string.</param>
         /// <param name="alg">The "alg" (algorithm) parameter identifies the
         /// algorithm intended for
         /// use with the key.  The values used should either be registered in
@@ -36,6 +44,13 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// IANA "JSON Web Signature and Encryption Algorithms" registry
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.</param>
+        /// <param name="crv">The "crv" (curve) parameter identifies the curve
+        /// type</param>
+        /// <param name="d">RSA private exponent or ECC private key</param>
+        /// <param name="dp">RSA Private Key Parameter</param>
+        /// <param name="dq">RSA Private Key Parameter</param>
+        /// <param name="e">RSA public exponent, in Base64</param>
+        /// <param name="k">Symmetric key</param>
         /// <param name="kid">The "kid" (key ID) parameter is used to match a
         /// specific key.  This
         /// is used, for instance, to choose among a set of keys within a JWK
@@ -50,31 +65,16 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// be
         /// equivalent alternatives by the application using them.)  The "kid"
         /// value is a case-sensitive string.</param>
-        /// <param name="kty">The "kty" (key type) parameter identifies the
-        /// cryptographic algorithm
-        /// family used with the key, such as "RSA" or "EC". "kty" values
-        /// should
-        /// either be registered in the IANA "JSON Web Key Types" registry
-        /// established by [JWA] or be a value that contains a Collision-
-        /// Resistant Name.  The "kty" value is a case-sensitive
-        /// string.</param>
+        /// <param name="n">RSA modulus, in Base64</param>
+        /// <param name="p">RSA secret prime</param>
+        /// <param name="q">RSA secret prime, with p &lt; q</param>
+        /// <param name="qi">RSA Private Key Parameter</param>
         /// <param name="use">Use ("public key use") identifies the intended
         /// use of
         /// the public key. The "use" parameter is employed to indicate whether
         /// a public key is used for encrypting data or verifying the signature
         /// on data. Values are commonly "sig" (signature) or "enc"
         /// (encryption).</param>
-        /// <param name="crv">The "crv" (curve) parameter identifies the curve
-        /// type</param>
-        /// <param name="d">RSA private exponent or ECC private key</param>
-        /// <param name="dp">RSA Private Key Parameter</param>
-        /// <param name="dq">RSA Private Key Parameter</param>
-        /// <param name="e">RSA public exponent, in Base64</param>
-        /// <param name="k">Symmetric key</param>
-        /// <param name="n">RSA modulus, in Base64</param>
-        /// <param name="p">RSA secret prime</param>
-        /// <param name="q">RSA secret prime, with p &lt; q</param>
-        /// <param name="qi">RSA Private Key Parameter</param>
         /// <param name="x">X coordinate for the Elliptic Curve point</param>
         /// <param name="x5c">The "x5c" (X.509 certificate chain) parameter
         /// contains a chain of one
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// The PKIX certificate containing the key value MUST be the first
         /// certificate.</param>
         /// <param name="y">Y coordinate for the Elliptic Curve point</param>
-        public JSONWebKey(string alg, string kid, string kty, string use, string crv = default(string), string d = default(string), string dp = default(string), string dq = default(string), string e = default(string), string k = default(string), string n = default(string), string p = default(string), string q = default(string), string qi = default(string), string x = default(string), IList<string> x5c = default(IList<string>), string y = default(string))
+        public JSONWebKey(string kty, string alg = default(string), string crv = default(string), string d = default(string), string dp = default(string), string dq = default(string), string e = default(string), string k = default(string), string kid = default(string), string n = default(string), string p = default(string), string q = default(string), string qi = default(string), string use = default(string), string x = default(string), IList<string> x5c = default(IList<string>), string y = default(string))
         {
             Alg = alg;
             Crv = crv;
@@ -258,21 +258,9 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Alg == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Alg");
-            }
-            if (Kid == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Kid");
-            }
             if (Kty == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Kty");
-            }
-            if (Use == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Use");
             }
         }
     }

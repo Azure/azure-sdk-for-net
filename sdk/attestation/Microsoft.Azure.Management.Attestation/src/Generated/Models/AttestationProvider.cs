@@ -36,24 +36,30 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="status">Status of attestation service. Possible values
-        /// include: 'Ready', 'NotReady', 'Error'</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="trustModel">Trust model for the attestation service
-        /// instance.</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
+        /// <param name="trustModel">Trust model for the attestation
+        /// provider.</param>
+        /// <param name="status">Status of attestation service. Possible values
+        /// include: 'Ready', 'NotReady', 'Error'</param>
         /// <param name="attestUri">Gets the uri of attestation service</param>
-        public AttestationProvider(string location, string status, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string trustModel = default(string), string attestUri = default(string))
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections associated with the attestation provider.</param>
+        public AttestationProvider(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string trustModel = default(string), string status = default(string), string attestUri = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
             : base(location, id, name, type, tags)
         {
+            SystemData = systemData;
             TrustModel = trustModel;
             Status = status;
             AttestUri = attestUri;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -63,7 +69,13 @@ namespace Microsoft.Azure.Management.Attestation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets trust model for the attestation service instance.
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets trust model for the attestation provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.trustModel")]
         public string TrustModel { get; set; }
@@ -82,6 +94,13 @@ namespace Microsoft.Azure.Management.Attestation.Models
         public string AttestUri { get; set; }
 
         /// <summary>
+        /// Gets list of private endpoint connections associated with the
+        /// attestation provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -90,9 +109,15 @@ namespace Microsoft.Azure.Management.Attestation.Models
         public override void Validate()
         {
             base.Validate();
-            if (Status == null)
+            if (PrivateEndpointConnections != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Status");
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

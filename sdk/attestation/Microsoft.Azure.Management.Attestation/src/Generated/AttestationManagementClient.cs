@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Attestation
 
     /// <summary>
     /// Various APIs for managing resources in attestation service. This
-    /// primarily encompasses per-tenant instance management.
+    /// primarily encompasses per-provider management.
     /// </summary>
     public partial class AttestationManagementClient : ServiceClient<AttestationManagementClient>, IAttestationManagementClient, IAzureClient
     {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Attestation
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client API version.
+        /// Client API version. Current version is 2020-10-01
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -84,6 +84,11 @@ namespace Microsoft.Azure.Management.Attestation
         /// Gets the IAttestationProvidersOperations.
         /// </summary>
         public virtual IAttestationProvidersOperations AttestationProviders { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AttestationManagementClient class.
@@ -328,8 +333,9 @@ namespace Microsoft.Azure.Management.Attestation
         {
             Operations = new Operations(this);
             AttestationProviders = new AttestationProvidersOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-09-01-preview";
+            ApiVersion = "2020-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

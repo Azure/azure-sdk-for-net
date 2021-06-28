@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Attestation
 
     /// <summary>
     /// Various APIs for managing resources in attestation service. This
-    /// primarily encompasses per-tenant instance management.
+    /// primarily encompasses per-provider management.
     /// </summary>
     public partial interface IAttestationManagementClient : System.IDisposable
     {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Attestation
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client API version.
+        /// Client API version. Current version is 2020-10-01
         /// </summary>
         string ApiVersion { get; }
 
@@ -79,6 +79,11 @@ namespace Microsoft.Azure.Management.Attestation
         /// Gets the IAttestationProvidersOperations.
         /// </summary>
         IAttestationProvidersOperations AttestationProviders { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
     }
 }

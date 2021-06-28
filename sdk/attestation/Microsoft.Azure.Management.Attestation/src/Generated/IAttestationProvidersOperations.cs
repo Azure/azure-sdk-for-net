@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='providerName'>
-        /// Name of the attestation service instance
+        /// Name of the attestation provider.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Management.Attestation
         /// </exception>
         Task<AzureOperationResponse<AttestationProvider>> GetWithHttpMessagesAsync(string resourceGroupName, string providerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates the Attestation Provider.
+        /// Creates a new Attestation Provider.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='providerName'>
-        /// Name of the attestation service
+        /// Name of the attestation provider.
         /// </param>
         /// <param name='creationParams'>
         /// Client supplied parameters.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='providerName'>
-        /// Name of the attestation service
+        /// Name of the attestation provider.
         /// </param>
         /// <param name='updateParams'>
         /// Client supplied parameters.

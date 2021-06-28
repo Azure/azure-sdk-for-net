@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Attestation.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for creating an attestation service instance
+    /// Parameters for creating an attestation provider
     /// </summary>
     public partial class AttestationServiceCreationParams : IResource
     {
@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// class.
         /// </summary>
         /// <param name="location">The supported Azure location where the
-        /// attestation service instance should be created.</param>
-        /// <param name="properties">Properties of the attestation service
-        /// instance</param>
+        /// attestation provider should be created.</param>
+        /// <param name="properties">Properties of the attestation
+        /// provider</param>
         /// <param name="tags">The tags that will be assigned to the
-        /// attestation service instance.</param>
+        /// attestation provider.</param>
         public AttestationServiceCreationParams(string location, AttestationServiceCreationSpecificParams properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Location = location;
@@ -56,20 +56,20 @@ namespace Microsoft.Azure.Management.Attestation.Models
 
         /// <summary>
         /// Gets or sets the supported Azure location where the attestation
-        /// service instance should be created.
+        /// provider should be created.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the tags that will be assigned to the attestation
-        /// service instance.
+        /// provider.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of the attestation service instance
+        /// Gets or sets properties of the attestation provider
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public AttestationServiceCreationSpecificParams Properties { get; set; }

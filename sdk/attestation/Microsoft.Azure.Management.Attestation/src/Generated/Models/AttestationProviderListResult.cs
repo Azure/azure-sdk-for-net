@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// Initializes a new instance of the AttestationProviderListResult
         /// class.
         /// </summary>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
         /// <param name="value">Attestation Provider array.</param>
-        public AttestationProviderListResult(IList<AttestationProvider> value = default(IList<AttestationProvider>))
+        public AttestationProviderListResult(SystemData systemData = default(SystemData), IList<AttestationProvider> value = default(IList<AttestationProvider>))
         {
+            SystemData = systemData;
             Value = value;
             CustomInit();
         }
@@ -44,6 +47,12 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets attestation Provider array.

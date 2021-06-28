@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Management.Attestation.Models
     using System.Linq;
 
     /// <summary>
-    /// Client supplied parameters used to create a new attestation service
-    /// instance.
+    /// Client supplied parameters used to create a new attestation provider.
     /// </summary>
     public partial class AttestationServiceCreationSpecificParams
     {
@@ -32,14 +31,12 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// Initializes a new instance of the
         /// AttestationServiceCreationSpecificParams class.
         /// </summary>
-        /// <param name="attestationPolicy">Name of attestation policy.</param>
         /// <param name="policySigningCertificates">JSON Web Key Set defining a
         /// set of X.509 Certificates that will represent the parent
         /// certificate for the signing certificate used for policy
         /// operations</param>
-        public AttestationServiceCreationSpecificParams(string attestationPolicy = default(string), JSONWebKeySet policySigningCertificates = default(JSONWebKeySet))
+        public AttestationServiceCreationSpecificParams(JSONWebKeySet policySigningCertificates = default(JSONWebKeySet))
         {
-            AttestationPolicy = attestationPolicy;
             PolicySigningCertificates = policySigningCertificates;
             CustomInit();
         }
@@ -48,12 +45,6 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets name of attestation policy.
-        /// </summary>
-        [JsonProperty(PropertyName = "attestationPolicy")]
-        public string AttestationPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets JSON Web Key Set defining a set of X.509 Certificates

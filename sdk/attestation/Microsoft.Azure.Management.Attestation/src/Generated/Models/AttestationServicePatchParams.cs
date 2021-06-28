@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Attestation.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for patching an attestation service instance
+    /// Parameters for patching an attestation provider
     /// </summary>
     public partial class AttestationServicePatchParams : IResource
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// class.
         /// </summary>
         /// <param name="tags">The tags that will be assigned to the
-        /// attestation service instance.</param>
+        /// attestation provider.</param>
         public AttestationServicePatchParams(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Tags = tags;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Attestation.Models
 
         /// <summary>
         /// Gets or sets the tags that will be assigned to the attestation
-        /// service instance.
+        /// provider.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

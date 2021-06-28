@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// <summary>
         /// Initializes a new instance of the OperationList class.
         /// </summary>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
         /// <param name="value">List of supported operations.</param>
-        public OperationList(IList<OperationsDefinition> value = default(IList<OperationsDefinition>))
+        public OperationList(SystemData systemData = default(SystemData), IList<OperationsDefinition> value = default(IList<OperationsDefinition>))
         {
+            SystemData = systemData;
             Value = value;
             CustomInit();
         }
@@ -42,6 +45,12 @@ namespace Microsoft.Azure.Management.Attestation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets list of supported operations.
