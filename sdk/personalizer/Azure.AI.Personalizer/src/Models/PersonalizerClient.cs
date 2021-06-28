@@ -8,24 +8,64 @@ namespace Azure.AI.Personalizer
     public partial class PersonalizerClient
     {
         /// <summary> The PersonalizerV1Preview1 service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public PersonalizerV1Preview1Client PersonalizerV1Preview1;
         /// <summary> The MultiSlot service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public MultiSlotClient MultiSlot;
         /// <summary> The MultiSlotEvents service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public MultiSlotEventsClient MultiSlotEvents;
         /// <summary> The Model service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public ModelClient Model;
         /// <summary> The Log service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public LogClient Log;
         /// <summary> The Events service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public EventsClient Events;
         /// <summary> The Evaluation service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public EvaluationClient Evaluation;
         /// <summary> The Evaluations service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public EvaluationsClient Evaluations;
         /// <summary> The Policy service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public PolicyClient Policy;
         /// <summary> The ServiceConfiguration service client. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1051:Do not declare visible instance fields",
+            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
         public ServiceConfigurationClient ServiceConfiguration;
 
         /// <summary> Initializes a new instance of PersonalizerV1Preview1Client for mocking. </summary>

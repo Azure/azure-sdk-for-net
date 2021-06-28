@@ -12,6 +12,11 @@ using Azure.Core;
 namespace Azure.AI.Personalizer.Models
 {
     /// <summary> A Counterfactual Evaluation. </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Usage",
+        "AZC0012:Avoid single word type names",
+        Justification = "The name of this endpoint cannot be changed"
+        )]
     public partial class Evaluation
     {
         /// <summary> Initializes a new instance of Evaluation. </summary>
