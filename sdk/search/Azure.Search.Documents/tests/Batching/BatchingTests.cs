@@ -453,12 +453,15 @@ namespace Azure.Search.Documents.Tests
         public async Task KeyFieldAccessor_FieldBuilder()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-            SearchClient client = resources.GetSearchClient();
+
+            SearchIndexClient indexClient = new SearchIndexClient(resources.Endpoint, new AzureKeyCredential(resources.PrimaryApiKey), resources.TestFixture.GetSearchClientOptions());
+            SearchClient client = indexClient.GetSearchClient(resources.IndexName);
+
             LessSimpleDocument[] data = LessSimpleDocument.GetDocuments(10);
 
-            await using SearchIndexingBufferedSender<LessSimpleDocument> indexer =
-                new SearchIndexingBufferedSender<LessSimpleDocument>(client);
+            await using SearchIndexingBufferedSender<LessSimpleDocument> indexer = new(client);
             AssertNoFailures(indexer);
+
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
@@ -1151,7 +1154,6 @@ namespace Azure.Search.Documents.Tests
                         InitialBatchActionCount = numberOfDocuments + 1,
                     });
 
-            // Throw from every handler
             int sent = 0, completed = 0;
             indexer.ActionSent += e =>
             {
@@ -1161,7 +1163,7 @@ namespace Azure.Search.Documents.Tests
                 // So, 3 documents will be sent before any are submitted, but 3 submissions will be made before the last 2 are sent
                 Assert.AreEqual((sent <= 3) ? 0 : 3, completed);
 
-                throw new InvalidOperationException("ActionSentAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             indexer.ActionCompleted += e =>
@@ -1172,7 +1174,7 @@ namespace Azure.Search.Documents.Tests
                 // So, 3 documents will be submitted after 3 are sent, and the last 2 submissions will be made after all 5 are sent
                 Assert.AreEqual((completed <= 3) ? 3 : 5, sent);
 
-                throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             AssertNoFailures(indexer);
@@ -1211,7 +1213,6 @@ namespace Azure.Search.Documents.Tests
                         InitialBatchActionCount = numberOfDocuments + 1,
                     });
 
-            // Throw from every handler
             int sent = 0, completed = 0;
             indexer.ActionSent += e =>
             {
@@ -1220,7 +1221,7 @@ namespace Azure.Search.Documents.Tests
                 // Batch will not be split. So, no document will be submitted before all are sent.
                 Assert.AreEqual(0, completed);
 
-                throw new InvalidOperationException("ActionSentAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             indexer.ActionCompleted += e =>
@@ -1230,7 +1231,7 @@ namespace Azure.Search.Documents.Tests
                 // Batch will not be split. So, all documents will be sent before any are submitted.
                 Assert.AreEqual(5, sent);
 
-                throw new InvalidOperationException("ActionCompletedAsync: Should not be seen!");
+                return Task.CompletedTask;
             };
 
             AssertNoFailures(indexer);

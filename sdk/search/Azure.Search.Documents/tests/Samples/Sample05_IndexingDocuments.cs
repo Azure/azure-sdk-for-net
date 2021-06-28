@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
         #endregion
 
-        private async Task<SearchClient> CreateIndexAsync(SearchResources resources)
+        private async Task<SearchClient> CreateIndexAsync(SearchResources resources, bool instrumentClient = true)
         {
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
@@ -104,8 +104,11 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient searchClient = indexClient.GetSearchClient(indexName);
             #endregion
 
-            indexClient = InstrumentClient(indexClient);
-            searchClient = InstrumentClient(searchClient);
+            if (instrumentClient)
+            {
+                indexClient = InstrumentClient(indexClient);
+                searchClient = InstrumentClient(searchClient);
+            }
 
             return searchClient;
         }
@@ -164,7 +167,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient searchClient = null;
             try
             {
-                searchClient = await CreateIndexAsync(resources);
+                searchClient = await CreateIndexAsync(resources, instrumentClient: false);
 
                 // Simple
                 {
@@ -174,6 +177,8 @@ namespace Azure.Search.Documents.Tests.Samples
                     await indexer.UploadDocumentsAsync(GenerateCatalog(count: 100000));
                     #endregion
                 }
+
+                searchClient = InstrumentClient(searchClient);
 
                 await WaitForDocumentCountAsync(searchClient, 100000);
 
