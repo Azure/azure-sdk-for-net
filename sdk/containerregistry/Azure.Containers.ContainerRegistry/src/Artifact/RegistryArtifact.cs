@@ -479,29 +479,32 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns></returns>
         public virtual async Task<Response> PushAsync(string path, CancellationToken cancellationToken = default)
         {
-            // TODO: Race condition here, do proper validation
             if (!Directory.Exists(path))
             {
-                throw new Exception($"{path} not found");
+                throw new DirectoryNotFoundException($"{path} not found");
             }
 
             var configFilePath = Path.Combine(path, "config.json");
             var manifestFilePath = Path.Combine(path, "manifest.json");
 
             // Upload the config file
-            // TODO: Race condition here, do proper validation
             if (!File.Exists(configFilePath))
             {
-                throw new FileNotFoundException($"File not found.", configFilePath);
+                throw new FileNotFoundException($"Unable to find config file.", configFilePath);
             }
 
             using (var fs = File.OpenRead(configFilePath))
             {
                 string digest = ContentDescriptor.ComputeDigest(fs);
 
-                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
-                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, fs, cancellationToken).ConfigureAwait(false);
-                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
+                    await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
+
+                ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
+                    await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, fs, cancellationToken).ConfigureAwait(false);
+
+                ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
+                    await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
             }
 
             // Upload each layer.
@@ -516,28 +519,31 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string digest = ContentDescriptor.ComputeDigest(fs);
 
-                    ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult = await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
-                    ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult = await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, fs, cancellationToken).ConfigureAwait(false);
-                    ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult = await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
+                        await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
+
+                    ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
+                        await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, fs, cancellationToken).ConfigureAwait(false);
+
+                    ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
+                        await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
                 }
             }
 
             // Finally, upload the manifest.
-            // TODO: Race condition here, do proper validation
             if (!File.Exists(manifestFilePath))
             {
-                throw new FileNotFoundException($"File not found.", manifestFilePath);
+                throw new FileNotFoundException($"Unable to find manifest file.", manifestFilePath);
             }
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = default;
             using (var fs = File.OpenRead(manifestFilePath))
             {
-                // TODO: should we validate that this matches _tagOrDigest?
                 string digest = ContentDescriptor.ComputeDigest(fs);
                 response = await _restClient.CreateManifestAsync(_repositoryName, digest, fs, cancellationToken).ConfigureAwait(false);
             }
 
-            // TODO: What would make sense to return for response?
+            // TODO: Create return type to return
             return response;
         }
 
@@ -551,27 +557,11 @@ namespace Azure.Containers.ContainerRegistry
         public virtual async Task<Response> PullToAsync(string path, CancellationToken cancellationToken = default)
         {
             // Get Manifest
-            // TODO: should we expose the option to use the accept header string for this method?
-            // /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
             Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            // Get Attributes (need digest and mediaType)
-            // TODO: we could cache these ... or if we could get digest and media type from the manifest itself, we wouldn't need them from the attributes/properties
-            //ArtifactManifestProperties properties = await this.GetManifestPropertiesAsync(cancellationToken).ConfigureAwait(false);
-            //var manifest = GetManifestSubtype(baseManifest, properties.MediaType);
-
-            // TODO: is this the best way to do this?
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            // Download manifest
-            // TODO: Actually, we've already downloaded it, now we're just writing it to file
+            // Write manifest to file
+            Directory.CreateDirectory(path);
             string manifestFile = Path.Combine(path, "manifest.json");
-
-            // TODO: is Create the proper semantics here?  OpenWrite could write a shorter string to the file
-            // and end up with a corrupted format.
             using (FileStream fs = File.Create(manifestFile))
             {
                 Stream stream = manifest.GetRawResponse().ContentStream;
@@ -586,7 +576,12 @@ namespace Azure.Containers.ContainerRegistry
             ContentDescriptor configDescriptor = GetConfigDescriptor(manifest);
             if (configDescriptor != null)
             {
-                await DownloadLayerAsync(_repositoryName, configDescriptor.Digest, configFile, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, configDescriptor.Digest, cancellationToken).ConfigureAwait(false);
+
+                using (FileStream fs = File.Create(configFile))
+                {
+                    await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
+                }
             }
 
             // Write Layers
@@ -596,14 +591,21 @@ namespace Azure.Containers.ContainerRegistry
                 for (int i = 0; i < layerDescriptors.Count; i++)
                 {
                     ContentDescriptor layerDescriptor = layerDescriptors[i];
+
                     // Trim "sha256:" from the digest
                     var fileName = layerDescriptor.Annotations?.Title ?? TrimSha(layerDescriptor.Digest);
                     fileName = Path.Combine(path, fileName);
-                    await DownloadLayerAsync(_repositoryName, layerDescriptor.Digest, fileName, cancellationToken).ConfigureAwait(false);
+
+                    ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, layerDescriptor.Digest, cancellationToken).ConfigureAwait(false);
+
+                    using (FileStream fs = File.Create(fileName))
+                    {
+                        await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
+                    }
                 }
             }
 
-            // TODO: need to return an appropriate response
+            // TODO: Create return type to return
             return manifest.GetRawResponse();
         }
 
@@ -633,7 +635,6 @@ namespace Azure.Containers.ContainerRegistry
             return null;
         }
 
-        // TODO: Can we make this more performant?
         private static string TrimSha(string digest)
         {
             int index = digest.IndexOf(':');
@@ -643,22 +644,6 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             return digest;
-        }
-
-        private async Task DownloadLayerAsync(string repo, string digest, string filename, CancellationToken cancellationToken)
-        {
-            if (String.IsNullOrEmpty(filename))
-            {
-                throw new ArgumentNullException(nameof(filename));
-            }
-
-            // TODO: we'll need to dispose the stream properly
-            ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(repo, digest, cancellationToken).ConfigureAwait(false);
-
-            using (FileStream fs = File.Create(filename))
-            {
-                await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
-            }
         }
         #endregion
     }
