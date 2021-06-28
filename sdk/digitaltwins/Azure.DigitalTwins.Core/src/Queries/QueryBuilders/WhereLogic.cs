@@ -174,13 +174,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             return _logicalOperator;
         }
 
-        /// <inheritdoc/>
         internal AdtQueryBuilder BuildLogic()
         {
             return _parent;
         }
 
-        /// <inheritdoc/>
         internal string GetLogicText()
         {
             if (_conditions.Length > 0)
