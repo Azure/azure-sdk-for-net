@@ -1,7 +1,7 @@
 Authenticate to Azure using environment variables
 -------------
 
-You will need the following values to authenticate to Azure
+You'll need the following values to authenticate to Azure:
 
 -   **Subscription ID**
 -   **Client ID**
@@ -10,7 +10,7 @@ You will need the following values to authenticate to Azure
 
 ## Obtaining the values
 
-These values can be obtained from the [portal](https://portal.azure.com/), here's the instructions:
+These values can be obtained from the [portal](https://portal.azure.com/) with the following instructions:
 
 ### Get Subscription ID
 
@@ -40,14 +40,11 @@ To set the environment variables on your development system:
 
 _(Note: Administrator access is required)_
 
-1.  Open the Control Panel
-2.  Click System Security, then System
-3.  Click Advanced system settings on the left
-4.  Inside the System Properties window, click the Environment
-    Variables button.
-5.  Click on the property you would like to change, then click the Edit
-    button. If the property name is not listed, then click the New
-    button.
+1.  Open the **Control Panel**.
+2.  Select **System Security** > **System**.
+3.  Select **Advanced system settings** on the left.
+4.  Inside the **System Properties** window, select the **Environment Variables** button.
+5.  Select the property you'd like to change, then select the **Edit** button. If the property name isn't listed, select the **New** button.
 
 ### Linux-based OS:
 

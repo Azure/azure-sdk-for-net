@@ -5,16 +5,16 @@
 The following code shows how to get the default subscription:
 
 ```csharp
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 Console.WriteLine(subscription.Id);
 ```
 
-It is possible to get an specific subscription as it's shown next:
+It's possible to get a specific subscription as follows:
 
-``` csharp
+```csharp
 string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
 Console.WriteLine("Got subscription: " + subscription.Data.DisplayName);
 ```

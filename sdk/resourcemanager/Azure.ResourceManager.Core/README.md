@@ -1,6 +1,11 @@
 # Azure ResourceManager Core client library for .NET
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provides a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), which provide core capabilities that are shared amongst all Azure SDKs, including:
+
+- The intuitive Azure Identity library.
+- An HTTP pipeline with custom policies.
+- Error handling.
+- Distributed tracing.
 
 ## Getting started 
 
@@ -24,21 +29,21 @@ More information and different authentication approaches using Azure Identity ca
 
 ### Authenticate the Client
 
-The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with Resources only one top-level  `ArmClient` has to be created.
+The default option to create an authenticated client is to use `DefaultAzureCredential`. Since all management APIs go through the same endpoint, in order to interact with resources, only one top-level `ArmClient` has to be created.
 
-To authenticate to Azure and create an ArmClient, do the following:
+To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```csharp
-    using Azure.Identity;
-    using Azure.ResourceManager.Core;
-    using System;
+using Azure.Identity;
+using Azure.ResourceManager.Core;
+using System;
     
-    // code omitted for brevity
+// code omitted for brevity
     
-    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+var armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
-Additional documentation for the `Azure.Identity.DefaultAzureCredential` Class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
+Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 ### Understanding Azure Resource Hierarchy
@@ -48,8 +53,7 @@ To reduce both the number of clients needed to perform common tasks and the amou
 To accomplish this, we're introducing 4 standard types for all resources in Azure:
 
 #### **[Resource]Data**
-This represents the data that makes up a given resource. Typically, this is the response data from a service call such as GET and provides details about the underlying resource.
-Previously, this was represented by a **Model** class.
+This represents the data that makes up a given resource. Typically, this is the response data from a service call such as HTTP GET and provides details about the underlying resource. Previously, this was represented by a **Model** class.
 
 #### **[Resource]Operations**
 
@@ -68,11 +72,11 @@ to a specific resource in Azure.
 
 ## Examples
 ### Add a tag to a virtual machine
- Imagine that our company requires all virtual machines to be tagged with the owner and we are tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
+Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
  ```csharp
 // First we construct our armClient
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+var armClient = new ArmClient(new DefaultAzureCredential());
 
 // Next we get a resource group object
 // ResourceGroup is a [Resource] object from above
@@ -97,13 +101,13 @@ await foreach(VirtualMachine vm in vmContainer.ListAsync())
 
 ### Create a resource group
 ```csharp
-// First we initialize the ArmClient and get the default subscription
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// First, initialize the ArmClient and get the default subscription
+var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
-// With the container we can create a new resource group with an specifc name
+// With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await rgContainer.CreateAsync(rgName);
 ```
@@ -111,13 +115,13 @@ ResourceGroup resourceGroup = await rgContainer.CreateAsync(rgName);
 ### List all resource groups
 ```csharp
 // First we initialize the ArmClient and get the default subscription
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
-// With ListAsync() we can get a list of the resources in the container
+// With ListAsync(), we can get a list of the resources in the container
 AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
 await foreach (ResourceGroup rg in response)
 {
@@ -129,9 +133,7 @@ For more detailed examples, take a look at [samples]<--(samples/)--> we have ava
 
 ## Troubleshooting
 
--   If you find a bug or have a suggestion, file an issue via [Github
-    Issues](https://github.com/Azure/azure-sdk-for-net/issues) and
-    make sure you add the "Preview" label to the issue.
+-   If you find a bug or have a suggestion, file an issue via [Github issues](https://github.com/Azure/azure-sdk-for-net/issues) and make sure you add the "Preview" label to the issue.
 -   If you need help, check [previous
     questions](https://stackoverflow.com/questions/tagged/azure+.net)
     or ask new ones on StackOverflow using azure and .NET tags.
