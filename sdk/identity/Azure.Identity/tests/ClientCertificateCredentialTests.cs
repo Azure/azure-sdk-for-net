@@ -178,11 +178,15 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
         }
 
+        public void TestSetup()
         {
             options = new TokenCredentialOptions();
             expectedTenantId = null;
+            expectedToken = Guid.NewGuid().ToString();
             expiresOn = DateTimeOffset.Now.AddHours(1);
+            var result = new AuthenticationResult(
                 expectedToken,
+                false,
                 null,
                 expiresOn,
                 expiresOn,
@@ -200,7 +204,7 @@ namespace Azure.Identity.Tests
             };
             mockMsalClient = new MockMsalConfidentialClient(clientFactory);
         }
-		
+
         private static IEnumerable<TestCaseData> RegionalAuthorityTestData()
         {
             yield return new TestCaseData(null);

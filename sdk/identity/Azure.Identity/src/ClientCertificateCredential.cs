@@ -174,7 +174,7 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
                 AuthenticationResult result = await Client
-                    .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
+                    .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken)
                     .ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
