@@ -13,61 +13,58 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="Sku"/> class.
         /// </summary>
-        public Sku(string name)
+        public Sku()
         {
-            Name = name;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sku"/> class.
         /// </summary>
-        /// <param name="name"> SKU's name. </param>
-        /// <param name="tier"> SKU's tier. </param>
-        /// <param name="family"> SKU's family. </param>
-        /// <param name="size"> SKU's size. </param>
-        /// <param name="capacity"> SKU's capacity. </param>
-        internal Sku(string name, string tier, string family, string size, long? capacity = null)
+        /// <param name="name"> The SKU name. </param>
+        /// <param name="tier"> The SKU tier. </param>
+        /// <param name="family"> The SKU family. </param>
+        /// <param name="model"> The SKU faimily. </param>
+        /// <param name="size"> The SKU size. </param>
+        /// <param name="capacity"> The SKU capacity. </param>
+        internal Sku(string name, string tier, string size, string family, string model, long? capacity = null)
         {
             Name = name;
             Tier = tier;
             Family = family;
             Size = size;
             Capacity = capacity;
+            Model = model;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Sku"/> class.
+        /// Gets or sets the Name.
         /// </summary>
-        /// <param name="sku"> The sku to copy from. </param>
-        internal Sku(ResourceManager.Resources.Models.Sku sku)
-            : this(sku.Name, sku.Tier, sku.Family, sku.Size, sku.Capacity)
-        {
-        }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets the Name.
+        /// Gets or sets the model.
         /// </summary>
-        public string Name { get; private set; }
+        public string Model { get; set; }
 
         /// <summary>
-        /// Gets the Tier.
+        /// Gets or sets the Tier.
         /// </summary>
-        public string Tier { get; private set; }
+        public string Tier { get; set; }
 
         /// <summary>
-        /// Gets the Family.
+        /// Gets or sets the Family.
         /// </summary>
-        public string Family { get; private set; }
+        public string Family { get; set; }
 
         /// <summary>
-        /// Gets the Size.
+        /// Gets or sets the Size.
         /// </summary>
-        public string Size { get; private set; }
+        public string Size { get; set; }
 
         /// <summary>
-        /// Gets the Capacity.
+        /// Gets or sets the Capacity.
         /// </summary>
-        public long? Capacity { get; private set; }
+        public long? Capacity { get; set; }
 
         /// <summary>
         /// Compares this <see cref="Sku"/> with another instance.
@@ -85,6 +82,7 @@ namespace Azure.ResourceManager.Core
             int compareResult = 0;
             if ((compareResult = string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
                 (compareResult = string.Compare(Family, other.Family, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
+                (compareResult = string.Compare(Model, other.Model, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
                 (compareResult = string.Compare(Size, other.Size, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
                 (compareResult = string.Compare(Tier, other.Tier, StringComparison.InvariantCultureIgnoreCase)) == 0)
             {
@@ -109,6 +107,7 @@ namespace Azure.ResourceManager.Core
 
             return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Family, other.Family, StringComparison.InvariantCultureIgnoreCase) &&
+                string.Equals(Model, other.Model, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Size, other.Size, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Tier, other.Tier, StringComparison.InvariantCultureIgnoreCase) &&
                 long.Equals(Capacity, other.Capacity);
