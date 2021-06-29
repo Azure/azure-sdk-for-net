@@ -1,12 +1,12 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.IO;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer;
 using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.AI.Personalizer.Tests
+namespace Azure.AI.Personalizer.Tests
 {
     public class ModelTests : PersonalizerTestBase
     {

@@ -3,11 +3,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer;
 using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.AI.Personalizer.Tests
+namespace Azure.AI.Personalizer.Tests
 {
     public class MultiSlotRewardTests: PersonalizerTestBase
     {

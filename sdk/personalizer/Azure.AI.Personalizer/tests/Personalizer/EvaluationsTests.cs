@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Azure.AI.Personalizer;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.AI.Personalizer.Tests
+namespace Azure.AI.Personalizer.Tests
 {
     public class EvaluationsTests : PersonalizerTestBase
     {

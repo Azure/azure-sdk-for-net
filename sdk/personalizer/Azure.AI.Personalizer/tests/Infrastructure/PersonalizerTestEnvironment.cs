@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Azure.Core.TestFramework;
 
-namespace Microsoft.Azure.AI.Personalizer.Tests
+namespace Azure.AI.Personalizer.Tests
 {
     public class PersonalizerTestEnvironment: TestEnvironment
     {
