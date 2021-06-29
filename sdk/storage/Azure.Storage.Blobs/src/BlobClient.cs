@@ -319,7 +319,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -346,7 +346,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -373,7 +373,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -401,7 +401,7 @@ namespace Azure.Storage.Blobs
         /// existing block blob overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs
         /// existing block blob overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -456,7 +456,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -483,7 +483,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -519,7 +519,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -555,7 +555,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -591,7 +591,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -627,7 +627,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -663,7 +663,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -700,7 +700,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -744,7 +744,7 @@ namespace Azure.Storage.Blobs
         /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -785,7 +785,7 @@ namespace Azure.Storage.Blobs
         /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -829,7 +829,7 @@ namespace Azure.Storage.Blobs
         /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -873,7 +873,7 @@ namespace Azure.Storage.Blobs
         /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -917,7 +917,7 @@ namespace Azure.Storage.Blobs
         /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -965,7 +965,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1013,7 +1013,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1061,7 +1061,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1143,7 +1143,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1196,7 +1196,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1273,7 +1273,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
         /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
@@ -1283,7 +1283,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1331,7 +1331,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1379,7 +1379,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1461,7 +1461,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1514,7 +1514,7 @@ namespace Azure.Storage.Blobs
         /// to avoid overwriting existing data.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
