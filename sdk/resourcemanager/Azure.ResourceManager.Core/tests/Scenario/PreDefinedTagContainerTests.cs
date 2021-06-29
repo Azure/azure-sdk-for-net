@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core.Tests
         [OneTimeTearDown]
         protected async Task GlobalTagCleanupAsync()
         {
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             var operation = Client.GetPreDefinedTagsOperations();
             var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task Create()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             var result = await container.CreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Details.TagName.Equals(tagName));
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task StartCreate()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             var result = await container.StartCreateOrUpdateAsync(tagName);
             Assert.IsTrue(result.Value.Details.TagName.Equals(tagName));
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task List()
         {
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             var result = await container.ListAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(result.Count, 1, "List result less than 1");
             var expectTag = result.Where(x => x.Details.TagName.StartsWith("tagName")).FirstOrDefault();

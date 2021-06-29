@@ -11,12 +11,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class TagsRestOperationsTests : ResourceManagerTestBase
+    public class TagsOperationsTests : ResourceManagerTestBase
     {
         private ResourceGroup _rg;
         private string _rgPrefix = "rg";
 
-        public TagsRestOperationsTests(bool isAsync)
+        public TagsOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task GetTagsRestOperations(TagsPatchResourceOperation type, IDictionary<string, string> expect)
         {
-            var operation = Client.GetPreDefinedTagsOperations();
+            var operation = Client.DefaultSubscription.GetTagsOperations();
             var restOperations = new TagsRestOperations(operation.Diagnostics, operation.Pipeline, Client.DefaultSubscription.Id.SubscriptionId, operation.BaseUri);
             var tags = new Tags();
             tags.TagsValue.Add("key1", "newValue1");

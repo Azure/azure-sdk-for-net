@@ -8,11 +8,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    /// <summary> The Tags service client. </summary>
+    /// <summary> The predefined tag client. </summary>
     public class PreDefinedTagOperations : ResourceOperationsBase
     {
         /// <summary>
-        /// The resource type for Tags.
+        /// The resource type for predefined tag.
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/tagNames";
 

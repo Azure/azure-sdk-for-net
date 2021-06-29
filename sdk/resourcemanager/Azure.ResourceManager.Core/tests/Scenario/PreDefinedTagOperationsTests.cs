@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core.Tests
         [OneTimeTearDown]
         protected async Task GlobalTagCleanupAsync()
         {
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             var operation = Client.GetPreDefinedTagsOperations();
             var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var operation = Client.GetPreDefinedTagsOperations();
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             // Assert create tag value
             var createValue = await operation.CreateOrUpdateValueAsync(tagName, "testValue").ConfigureAwait(false);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var operation = Client.GetPreDefinedTagsOperations();
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.DeleteAsync(tagName).ConfigureAwait(false);
             var listResult = await container.ListAsync().ToEnumerableAsync();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var tagName = Recording.GenerateAssetName("tagName");
             var operation = Client.GetPreDefinedTagsOperations();
-            var container = Client.DefaultSubscription.GetPredefinedTags();
+            var container = Client.DefaultSubscription.GetPredefinedTag();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.StartDeleteAsync(tagName).ConfigureAwait(false);
             var listResult = await container.ListAsync().ToEnumerableAsync();

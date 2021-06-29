@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// TODO: Add summary.
+    /// The tag client.
     /// </summary>
     public class TagsOperations : OperationsBase
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
         public new ResourceIdentifier Id => base.Id as ResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
+        protected override ResourceType ValidResourceType => Id.ResourceType;
 
         /// <summary>
         /// Create or update tags with the resource.
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create or update tags with the resource
+        /// Create or update tags with the resource.
         /// </summary>
         /// <param name="parameters"> The tags to create or update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>

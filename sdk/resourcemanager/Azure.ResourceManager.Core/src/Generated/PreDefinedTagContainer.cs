@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A class representing collection of Tags and their operations.
+    /// A class representing collection of Tag and its operations.
     /// </summary>
     public class PreDefinedTagContainer : ContainerBase
     {
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="PreDefinedTagContainer"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="subscription"></param>
+        /// <param name="clientContext">Current client context. </param>
+        /// <param name="subscription">The parent subscription. </param>
         internal PreDefinedTagContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription)
             : base(clientContext, new SubscriptionResourceIdentifier(subscription))
         {
@@ -80,9 +80,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <summary>
-        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;.
-        /// </summary>
+        /// <summary>This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An <see cref="Operation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>

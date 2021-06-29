@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A class representing a Tags along with the instance operations that can be performed on it.
+    /// A class representing a TagsResource along with the instance operations that can be performed on it.
     /// </summary>
     public class TagsResource : TagsOperations
     {
@@ -19,23 +19,7 @@ namespace Azure.ResourceManager.Core
             Data = resource;
         }
 
-        /// <summary> Gets or sets the PolicyAssignmentData. </summary>
+        /// <summary> Gets or sets the TagsResourceData. </summary>
         public TagsResourceData Data { get; private set; }
-
-        /// <inheritdoc />
-#pragma warning disable CA1801 // 检查未使用的参数
-        protected TagsResource GetResource(CancellationToken cancellation = default)
-#pragma warning restore CA1801 // 检查未使用的参数
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-#pragma warning disable CA1801 // 检查未使用的参数
-        protected Task<TagsResource> GetResourceAsync(CancellationToken cancellation = default)
-#pragma warning restore CA1801 // 检查未使用的参数
-        {
-            return Task.FromResult(this);
-        }
     }
 }
