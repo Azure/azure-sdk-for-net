@@ -73,6 +73,8 @@ that you can [import into your own index from the Azure portal.](https://docs.mi
 These are just a few of the basics - please [check out our Samples][samples] for
 much more.
 
+## Troubleshooting
+
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
 deeper into the requests you're making against the service.
 
