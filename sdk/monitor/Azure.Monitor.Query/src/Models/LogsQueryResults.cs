@@ -11,6 +11,9 @@ namespace Azure.Monitor.Query.Models
     [CodeGenModel("queryResults")]
     public partial class LogsQueryResult
     {
+        [CodeGenMember("error")]
+        private readonly JsonElement _error;
+
         [CodeGenMember("Statistics")]
         private readonly JsonElement _statistics;
 
@@ -32,5 +35,10 @@ namespace Azure.Monitor.Query.Models
         /// Returns the query visualization if the <see cref="LogsQueryOptions.IncludeVisualization"/> is set to <c>true</c>. Null otherwise.
         /// </summary>
         public BinaryData Visualization => _visualization.ValueKind == JsonValueKind.Undefined ? null : new BinaryData(_visualization.ToString());
+
+        /// <summary>
+        /// Get's the error that occured during query processing. The value would be <c>null</c> if the query succeeds.
+        /// </summary>
+        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
     }
 }

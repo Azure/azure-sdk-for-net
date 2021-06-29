@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication Chat service.
-      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Chat/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Chat/CHANGELOG.md.
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Chat/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Chat/CHANGELOG.md.
       Microsoft Azure Communication Chat quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication Chat Service</AssemblyTitle>

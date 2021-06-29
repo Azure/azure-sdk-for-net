@@ -14,13 +14,14 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using a client secret that was generated for an App Registration. More information on how
     /// to configure a client secret can be found here:
-    /// https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
+    /// https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
     /// </summary>
     public class ClientSecretCredential : TokenCredential
     {
-        private readonly MsalConfidentialClient _client;
         private readonly CredentialPipeline _pipeline;
-        private readonly bool _allowMultiTenantAuthentication;
+		private readonly bool _allowMultiTenantAuthentication;
+
+        internal MsalConfidentialClient Client { get; }
 
         /// <summary>
         /// Gets the Azure Active Directory tenant (directory) Id of the service principal
@@ -89,7 +90,7 @@ namespace Azure.Identity
             ClientSecret = clientSecret;
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
+            Client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions, (options as ClientSecretCredentialOptions)?.RegionalAuthority);
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
-                AuthenticationResult result = await _client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -128,7 +129,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
-                AuthenticationResult result = _client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
+                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication Network Traversal service.
-      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.NetworkTraversal/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.NetworkTraversal/CHANGELOG.md.
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.NetworkTraversal/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.NetworkTraversal/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication Network Traversal Service</AssemblyTitle>
     <Version>1.0.0-beta.2</Version>
