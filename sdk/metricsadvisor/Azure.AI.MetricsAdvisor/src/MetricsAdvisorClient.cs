@@ -807,7 +807,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Gets a collection of items describing the anomalies detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
@@ -866,7 +866,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Gets a collection of items describing the anomalies detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
@@ -925,7 +925,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Gets a collection of items describing the incidents detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
@@ -985,7 +985,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Gets a collection of items describing the incidents detected by a given <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataPointAnomaly"/> instances.</returns>
@@ -1045,7 +1045,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Gets the suggestions for likely root causes of an incident.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="incidentId">The unique identifier of the <see cref="AnomalyIncident"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="IncidentRootCause"/>s.</returns>
@@ -1081,7 +1081,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Gets the suggestions for likely root causes of an incident.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="incidentId">The unique identifier of the <see cref="AnomalyIncident"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="IncidentRootCause"/>s.</returns>
@@ -1184,9 +1184,9 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary>
         /// Gets all the values a specified dimension has assumed for anomalous data points detected by a
-        /// <see cref="MetricAnomalyAlertConfiguration"/>.
+        /// <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="dimensionName">The name of the dimension.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1246,9 +1246,9 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary>
         /// Gets all the values a specified dimension has assumed for anomalous data points detected by a
-        /// <see cref="MetricAnomalyAlertConfiguration"/>.
+        /// <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="dimensionName">The name of the dimension.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1309,7 +1309,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Query series enriched by anomaly detection.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="seriesKeys">The detection series keys.</param>
         /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
@@ -1349,7 +1349,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Query series enriched by anomaly detection.
         /// </summary>
-        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
+        /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="seriesKeys">The detection series keys.</param>
         /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>

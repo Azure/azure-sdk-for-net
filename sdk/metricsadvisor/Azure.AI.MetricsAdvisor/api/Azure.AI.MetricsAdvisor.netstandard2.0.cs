@@ -552,7 +552,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IList<string> IdsOfHooksToAlert { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfiguration> MetricAlertConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricAlertConfiguration> MetricAlertConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
     public partial class AnomalyDetectionConfiguration
@@ -1068,20 +1068,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.IngestionStatusType left, Azure.AI.MetricsAdvisor.Models.IngestionStatusType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MetricAnomalyAlertConditions
+    public partial class MetricAlertConfiguration
     {
-        public MetricAnomalyAlertConditions() { }
-        public Azure.AI.MetricsAdvisor.Models.MetricBoundaryCondition MetricBoundaryCondition { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.SeverityCondition SeverityCondition { get { throw null; } set { } }
-    }
-    public partial class MetricAnomalyAlertConfiguration
-    {
-        public MetricAnomalyAlertConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScope alertScope) { }
+        public MetricAlertConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScope alertScope) { }
         public Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConditions AlertConditions { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScope AlertScope { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertSnoozeCondition AlertSnoozeCondition { get { throw null; } set { } }
         public string DetectionConfigurationId { get { throw null; } set { } }
         public bool? UseDetectionResultToFilterAnomalies { get { throw null; } set { } }
+    }
+    public partial class MetricAnomalyAlertConditions
+    {
+        public MetricAnomalyAlertConditions() { }
+        public Azure.AI.MetricsAdvisor.Models.MetricBoundaryCondition MetricBoundaryCondition { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.SeverityCondition SeverityCondition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetricAnomalyAlertConfigurationsOperator : System.IEquatable<Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertConfigurationsOperator>
