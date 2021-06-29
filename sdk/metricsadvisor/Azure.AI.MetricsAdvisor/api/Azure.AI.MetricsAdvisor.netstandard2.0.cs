@@ -694,6 +694,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BoundaryMeasureType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BoundaryMeasureType(string value) { throw null; }
+        public static Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType Mean { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType Value { get { throw null; } }
+        public bool Equals(Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType left, Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType right) { throw null; }
+        public static implicit operator Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType left, Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChangePointValue : System.IEquatable<Azure.AI.MetricsAdvisor.Models.ChangePointValue>
     {
         private readonly object _dummy;
@@ -1124,6 +1142,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string CompanionMetricId { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.BoundaryDirection Direction { get { throw null; } set { } }
         public double? LowerBound { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType? MeasureType { get { throw null; } set { } }
         public bool? ShouldAlertIfDataPointMissing { get { throw null; } set { } }
         public double? UpperBound { get { throw null; } set { } }
     }
