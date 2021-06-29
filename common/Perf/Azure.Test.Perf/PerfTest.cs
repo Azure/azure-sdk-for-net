@@ -4,8 +4,6 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -18,7 +16,7 @@ namespace Azure.Test.Perf
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 
-        private readonly HttpPipelineTransport _transport;
+        private readonly HttpPipelineTransport _insecureTransport;
         private readonly TestProxyPolicy _testProxyPolicy;
 
         private string _recordingId;
@@ -29,14 +27,14 @@ namespace Azure.Test.Perf
         {
             Options = options;
 
-            _transport = (new PerfClientOptions()).Transport;
-
-            if (Options.Insecure || Options.TestProxy != null)
+            if (Options.Insecure)
             {
+                var transport = (new PerfClientOptions()).Transport;
+
                 // Disable SSL validation
-                if (_transport is HttpClientTransport)
+                if (transport is HttpClientTransport)
                 {
-                    _transport = new HttpClientTransport(new HttpClient(new HttpClientHandler()
+                    _insecureTransport = new HttpClientTransport(new HttpClient(new HttpClientHandler()
                     {
                         ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
                     }));
@@ -45,20 +43,31 @@ namespace Azure.Test.Perf
                 {
                     // Assume _transport is HttpWebRequestTransport (currently internal class)
                     ServicePointManager.ServerCertificateValidationCallback = (message, cert, chain, errors) => true;
+
+                    _insecureTransport = transport;
                 }
             }
 
-            _testProxyPolicy = new TestProxyPolicy(Options.TestProxy);
+            if (Options.TestProxy != null)
+            {
+                _testProxyPolicy = new TestProxyPolicy(Options.TestProxy);
+            }
         }
 
-        protected TClientOptions ConfigureClientOptions<TClientOptions>(TClientOptions clientOptions) where TClientOptions: ClientOptions
+        protected TClientOptions ConfigureClientOptions<TClientOptions>(TClientOptions clientOptions) where TClientOptions : ClientOptions
         {
-            clientOptions.Transport = _transport;
+            if (Options.Insecure)
+            {
+                clientOptions.Transport = _insecureTransport;
+            }
 
-            // TestProxyPolicy should be per-retry to run as late as possible in the pipeline.  For example, some
-            // clients compute a request signature as a per-retry policy, and TestProxyPolicy should run after the
-            // signature is computed to avoid altering the signature.
-            clientOptions.AddPolicy(_testProxyPolicy, HttpPipelinePosition.PerRetry);
+            if (Options.TestProxy != null)
+            {
+                // TestProxyPolicy should be per-retry to run as late as possible in the pipeline.  For example, some
+                // clients compute a request signature as a per-retry policy, and TestProxyPolicy should run after the
+                // signature is computed to avoid altering the signature.
+                clientOptions.AddPolicy(_testProxyPolicy, HttpPipelinePosition.PerRetry);
+            }
 
             return clientOptions;
         }
