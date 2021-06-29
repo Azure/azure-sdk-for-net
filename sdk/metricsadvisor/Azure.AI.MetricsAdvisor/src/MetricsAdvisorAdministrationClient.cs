@@ -168,7 +168,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.GetDataFeedsFilter?.Name;
-            DataFeedSourceKind? sourceType = options?.GetDataFeedsFilter?.SourceType;
+            DataFeedSourceKind? sourceType = options?.GetDataFeedsFilter?.SourceKind;
             DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
             DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
             string creator = options?.GetDataFeedsFilter?.Creator;
@@ -222,7 +222,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.GetDataFeedsFilter?.Name;
-            DataFeedSourceKind? sourceType = options?.GetDataFeedsFilter?.SourceType;
+            DataFeedSourceKind? sourceType = options?.GetDataFeedsFilter?.SourceKind;
             DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
             DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
             string creator = options?.GetDataFeedsFilter?.Creator;

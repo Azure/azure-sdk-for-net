@@ -34,9 +34,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public DataFeedStatus? Status { get; set; }
 
         /// <summary>
-        /// Filters the result by the type of the <see cref="DataFeedSource"/>.
+        /// Filters the result by the kind of the <see cref="DataFeedSource"/>.
         /// </summary>
-        public DataFeedSourceKind? SourceType { get; set; }
+        public DataFeedSourceKind? SourceKind { get; set; }
 
         /// <summary>
         /// Filters the result by <see cref="DataFeedGranularity.GranularityType"/>.
