@@ -6,14 +6,14 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Used as part of a <see cref="MetricBoundaryCondition"/>. Specifies which measure should be
+    /// Used as part of a <see cref="MetricBoundaryCondition"/>. Specifies which measure type should be
     /// used when checking boundaries. Defaults to <see cref="BoundaryMeasureType.Value"/>.
     /// </summary>
     [CodeGenModel("ValueType")]
     public readonly partial struct BoundaryMeasureType
     {
         /// <summary>
-        /// The value of metric is used as it is.
+        /// The value of the metric is used as it is.
         /// </summary>
         public static BoundaryMeasureType Value { get; } = new BoundaryMeasureType(ValueValue);
 

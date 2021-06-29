@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public bool? ShouldAlertIfDataPointMissing { get; set; }
 
         /// <summary>
-        /// Specifies which measure should be used when checking boundaries. Defaults to
+        /// Specifies which measure type should be used when checking boundaries. Defaults to
         /// <see cref="BoundaryMeasureType.Value"/>.
         /// </summary>
         [CodeGenMember("Type")]
