@@ -33,8 +33,22 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(1, "${?/>._`", "")]
         public void CompareToFamily(int expected, string family1, string family2)
         {
-            Sku sku1 = new Sku(null, null, family1, null, null);
-            Sku sku2 = new Sku(null, null, family2, null, null);
+            Sku sku1 = new Sku(null, null, null, family1, null);
+            Sku sku2 = new Sku(null, null, null, family2, null);
+            Assert.AreEqual(expected, sku1.CompareTo(sku2));
+        }
+
+        [TestCase(0, "model", "model")]
+        [TestCase(0, "Model", "model")]
+        [TestCase(0, null, null)]
+        [TestCase(1, "model", null)]
+        [TestCase(-1, null, "model")]
+        [TestCase(0, "${?/>._`", "${?/>._`")]
+        [TestCase(1, "${?/>._`", "")]
+        public void CompareToModel(int expected, string model1, string model2)
+        {
+            Sku sku1 = new Sku(null, null, null, null, model1);
+            Sku sku2 = new Sku(null, null, null, null, model2);
             Assert.AreEqual(expected, sku1.CompareTo(sku2));
         }
 
@@ -47,8 +61,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(1, "${?/>._`", "")]
         public void CompareToSize(int expected, string size1, string size2)
         {
-            Sku sku1 = new Sku(null, null, null, null, size1);
-            Sku sku2 = new Sku(null, null, null, null, size2);
+            Sku sku1 = new Sku(null, null, size1, null, null);
+            Sku sku2 = new Sku(null, null, size2, null, null);
             Assert.AreEqual(expected, sku1.CompareTo(sku2));
         }
 
@@ -99,8 +113,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(-1, "namea", "Nameb", "Familyb", "familya")]
         public void CompareToMore(int expected, string name1, string name2, string family1, string family2)
         {
-            Sku sku1 = new Sku(name1, null, family1, null, null);
-            Sku sku2 = new Sku(name2, null, family2, null, null);
+            Sku sku1 = new Sku(name1, null, null, family1, null);
+            Sku sku2 = new Sku(name2, null, null, family2, null);
             Assert.AreEqual(expected, sku1.CompareTo(sku2));
         }
 
@@ -134,8 +148,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToFamily(bool expected, string family1, string family2)
         {
-            Sku sku1 = new Sku(null, null, family1, null, null);
-            Sku sku2 = new Sku(null, null, family2, null, null);
+            Sku sku1 = new Sku(null, null, null, family1, null);
+            Sku sku2 = new Sku(null, null, null, family2, null);
             if (expected)
             {
                 Assert.IsTrue(sku1.Equals(sku2));
@@ -155,8 +169,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToSize(bool expected, string size1, string size2)
         {
-            Sku sku1 = new Sku(null, null, null, null, size1);
-            Sku sku2 = new Sku(null, null, null, null, size2);
+            Sku sku1 = new Sku(null, null, size1, null, null);
+            Sku sku2 = new Sku(null, null, size2, null, null);
             if (expected)
             {
                 Assert.IsTrue(sku1.Equals(sku2));
@@ -178,6 +192,27 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Sku sku1 = new Sku(null, tier1, null, null, null, null);
             Sku sku2 = new Sku(null, tier2, null, null, null, null);
+            if (expected)
+            {
+                Assert.IsTrue(sku1.Equals(sku2));
+            }
+            else
+            {
+                Assert.IsFalse(sku1.Equals(sku2));
+            }
+        }
+
+        [TestCase(true, "model", "model")]
+        [TestCase(true, "Model", "model")]
+        [TestCase(true, null, null)]
+        [TestCase(false, "model", null)]
+        [TestCase(false, null, "model")]
+        [TestCase(true, "${?/>._`", "${?/>._`")]
+        [TestCase(false, "${?/>._`", "")]
+        public void EqualsToModel(bool expected, string model1, string model2)
+        {
+            Sku sku1 = new Sku(null, null, null, null, model1, null);
+            Sku sku2 = new Sku(null, null, null, null, model2, null);
             if (expected)
             {
                 Assert.IsTrue(sku1.Equals(sku2));
@@ -234,10 +269,10 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void SerializationTest()
         {
-            string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}}";
-            Sku sku = new("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", "ModelForSku", 123456789);
+            string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"model\":\"ModelForSku\",\"capacity\":123456789}}";
+            Sku sku = new("NameForSku", "TierForSku", "SizeForSku", "FamilyForSku", "ModelForSku", 123456789);
             var json = JsonHelper.SerializePropertiesToString(sku);
-            Assert.IsTrue(expected.Equals(json));
+            Assert.AreEqual(expected, json);
         }
 
         [Test]
