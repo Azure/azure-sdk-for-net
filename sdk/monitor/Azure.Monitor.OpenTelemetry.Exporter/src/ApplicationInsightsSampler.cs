@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public override SamplingResult ShouldSample(in SamplingParameters samplingParameters)
         {
-            double sampleScore = DJB2SampleScore(samplingParameters.TraceId.ToHexString());
+            double sampleScore = DJB2SampleScore(samplingParameters.TraceId.ToHexString().ToLowerInvariant());
             return new SamplingResult(sampleScore < samplingRatio);
         }
 
