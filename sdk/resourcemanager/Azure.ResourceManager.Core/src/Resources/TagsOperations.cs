@@ -46,23 +46,22 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Create or update tags with the resource.
         /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
+        /// <param name="parameters"> The tags to create or update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<TagsData> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        /// <returns> The created or updated tags. </returns>
+        public virtual Response<TagsResource> CreateOrUpdateAtScope(TagsResourceData parameters, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            if (parameters is null)
+                throw new ArgumentException($"{nameof(parameters)} provided cannot be null.", nameof(parameters));
 
-            using var scope = Diagnostics.CreateScope("TagUtil.AddTag");
+            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdateAtScope");
             scope.Start();
 
             try
             {
-                var operation = StartAddTag(key, value, cancellationToken);
+                var operation = StartCreateOrUpdateAtScope(parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -73,23 +72,22 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Create or update tags with the resource
         /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
+        /// <param name="parameters"> The tags to create or update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual async Task<Response<TagsData>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        /// <returns> The created or updated tags. </returns>
+        public virtual async Task<Response<TagsResource>> CreateOrUpdateAtScopeAsync(TagsResourceData parameters, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            if (parameters is null)
+                throw new ArgumentException($"{nameof(parameters)} provided cannot be null.", nameof(parameters));
 
-            using var scope = Diagnostics.CreateScope("TagUtil.AddTag");
+            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdateAtScope");
             scope.Start();
 
             try
             {
-                var operation = await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAtScopeAsync(parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -100,88 +98,22 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Update tags with the resource.
         /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
+        /// <param name="parameters"> The tags to update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual TagCreateOrUpdateOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        /// <returns> The updated tags. </returns>
+        public virtual Response<TagsResource> UpdateAtScope(TagsPatchResource parameters, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            if (parameters is null)
+                throw new ArgumentNullException(nameof(parameters));
 
-            using var scope = Diagnostics.CreateScope("TagUtil.StartAddTag");
+            using var scope = Diagnostics.CreateScope("TagsOperations.UpdateAtScope");
             scope.Start();
 
             try
             {
-                var originalTags = RestClient.GetAtScope(Id, cancellationToken).Value;
-                originalTags.Properties.TagsValue[key] = value;
-                RestClient.CreateOrUpdateAtScope(Id, originalTags, cancellationToken);
-                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
-                return new TagCreateOrUpdateOperation(this, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<TagCreateOrUpdateOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.StartAddTag");
-            scope.Start();
-
-            try
-            {
-                var originalTags = await RestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Properties.TagsValue[key] = value;
-                await RestClient.CreateOrUpdateAtScopeAsync(Id, originalTags, cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<Tags> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-                throw new ArgumentNullException(nameof(tags));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.SetTags");
-            scope.Start();
-
-            try
-            {
-                var operation = StartSetTags(tags, cancellationToken);
+                var operation = StartUpdateAtScope(parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -192,22 +124,22 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Update tags with the resource.
         /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="parameters"> The tags to update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual async Task<Response<Tags>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        /// <returns> The updated tags. </returns>
+        public virtual async Task<Response<TagsResource>> UpdateAtScopeAsync(TagsPatchResource parameters, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-                throw new ArgumentNullException(nameof(tags));
+            if (parameters is null)
+                throw new ArgumentNullException(nameof(parameters));
 
-            using var scope = Diagnostics.CreateScope("TagUtil.SetTags");
+            using var scope = Diagnostics.CreateScope("TagsOperations.UpdateAtScope");
             scope.Start();
 
             try
             {
-                var operation = await StartSetTagsAsync(tags, cancellationToken).ConfigureAwait(false);
+                var operation = await StartUpdateAtScopeAsync(parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -218,94 +150,18 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Replace the tags on the resource with the given set.
+        /// Get tags with the resource.
         /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual TagCreateOrUpdateOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        /// <returns> The tags associate with resource. </returns>
+        public virtual Response<TagsResource> GetAtScope(CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-                throw new ArgumentNullException(nameof(tags));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.StartSetTags");
+            using var scope = Diagnostics.CreateScope("TagsOperations.GetAtScope");
             scope.Start();
 
             try
             {
-                RestClient.DeleteAtScope(Id, cancellationToken);
-                TagsData newTags = new TagsData();
-                foreach (var item in tags)
-                {
-                    newTags.TagsValue.Add(item);
-                }
-                TagsRestClient.CreateOrUpdateAtScope(Id, new TagsResource(newTags), cancellationToken);
-                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
-                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<TagCreateOrUpdateOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-                throw new ArgumentNullException(nameof(tags));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.StartSetTags");
-            scope.Start();
-
-            try
-            {
-                await TagsRestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                TagsData newTags = new TagsData();
-                foreach (var item in tags)
-                {
-                    newTags.TagsValue.Add(item);
-                }
-                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, new TagsResource(newTags), cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.RemoveTag");
-            scope.Start();
-
-            try
-            {
-                var operation = StartRemoveTag(key, cancellationToken);
+                var operation = StartGetAtScope(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -316,22 +172,18 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Get tags with the resource.
         /// </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual async Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        /// <returns> The tags associate with resource. </returns>
+        public virtual async Task<Response<TagsResource>> GetAtScopeAsync(CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.RemoveTag");
+            using var scope = Diagnostics.CreateScope("TagsOperations.GetAtScope");
             scope.Start();
 
             try
             {
-                var operation = await StartRemoveTagAsync(key, cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetAtScopeAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -342,29 +194,18 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Delete tags with the resource.
         /// </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual TagCreateOrUpdateOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        /// <returns> The delete response. </returns>
+        public virtual Response DeleteAtScope(CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.StartRemoveTag");
+            using var scope = Diagnostics.CreateScope("TagsOperations.DeleteAtScope");
             scope.Start();
 
             try
             {
-                var originalTags = TagsRestClient.GetAtScope(Id, cancellationToken).Value;
-                originalTags.Properties.TagsValue.Remove(key);
-                TagsRestClient.CreateOrUpdateAtScope(Id, originalTags, cancellationToken);
-                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
-                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
+                return StartDeleteAtScope(cancellationToken);
             }
             catch (Exception e)
             {
@@ -374,29 +215,212 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Removes a tag by key from the resource.
+        /// Delete tags with the resource.
         /// </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<TagCreateOrUpdateOperation> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        /// <returns> The delete response. </returns>
+        public virtual async Task<Response> DeleteAtScopeAsync(CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            using var scope = Diagnostics.CreateScope("TagUtil.StartRemoveTag");
+            using var scope = Diagnostics.CreateScope("TagsOperations.DeleteAtScope");
             scope.Start();
 
             try
             {
-                var originalTags = await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Properties.TagsValue.Remove(key);
-                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, originalTags, cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
+                return await StartDeleteAtScopeAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update tags with the resource.
+        /// </summary>
+        /// <param name="parameters"> The tags to create or update. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The created or updated tags. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual TagCreateOrUpdateOperation StartCreateOrUpdateAtScope(TagsResourceData parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartCreateOrUpdateAtScope");
+            scope.Start();
+            try
+            {
+                var response = RestClient.CreateOrUpdateAtScope(Id, parameters, cancellationToken);
+                return new TagCreateOrUpdateOperation(this, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update tags with the resource.
+        /// </summary>
+        /// <param name="parameters"> The tags to create or update. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The created or updated tags. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual async Task<TagCreateOrUpdateOperation> StartCreateOrUpdateAtScopeAsync(TagsResourceData parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartCreateOrUpdateAtScope");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.CreateOrUpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
+                return new TagCreateOrUpdateOperation(this, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update tags with the resource.
+        /// </summary>
+        /// <param name="parameters"> The tags to update. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated tags. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual TagCreateOrUpdateOperation StartUpdateAtScope(TagsPatchResource parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartUpdateAtScope");
+            scope.Start();
+            try
+            {
+                var response = RestClient.UpdateAtScope(Id, parameters, cancellationToken);
+                return new TagCreateOrUpdateOperation(this, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update tags with the resource.
+        /// </summary>
+        /// <param name="parameters"> The tags to update. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated tags. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual async Task<TagCreateOrUpdateOperation> StartUpdateAtScopeAsync(TagsPatchResource parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartUpdateAtScope");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.UpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
+                return new TagCreateOrUpdateOperation(this, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get tags with the resource.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The tags associate with resource. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual TagCreateOrUpdateOperation StartGetAtScope(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartGetAtScope");
+            scope.Start();
+            try
+            {
+                var response = RestClient.GetAtScope(Id, cancellationToken);
+                return new TagCreateOrUpdateOperation(this, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get tags with the resource.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The tags associate with resource. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual async Task<TagCreateOrUpdateOperation> StartGetAtScopeAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartGetAtScope");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                return new TagCreateOrUpdateOperation(this, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete tags with the resource.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The delete response. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual Response StartDeleteAtScope(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartDeleteAtScope");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteAtScope(Id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete tags with the resource.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The delete response. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public virtual async Task<Response> StartDeleteAtScopeAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("TagsOperations.StartDeleteAtScope");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

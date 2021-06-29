@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class TagsResource : IUtf8JsonSerializable
+    public partial class TagsResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Core
             writer.WriteEndObject();
         }
 
-        internal static TagsResource DeserializeTagsResource(JsonElement element)
+        internal static TagsResourceData DeserializeTagsResource(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            TagsData properties = default;
+            Tags properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Core
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = TagsData.DeserializeTags(property.Value);
+                    properties = Tags.DeserializeTags(property.Value);
                     continue;
                 }
             }
-            return new TagsResource(id.Value, name.Value, type.Value, properties);
+            return new TagsResourceData(id.Value, name.Value, type.Value, properties);
         }
     }
 }

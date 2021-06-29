@@ -1,46 +1,41 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Core
 {
-    /// <summary> Wrapper resource for tags API requests and responses. </summary>
-    public partial class TagsResource
+    /// <summary>
+    /// A class representing a Tags along with the instance operations that can be performed on it.
+    /// </summary>
+    public class TagsResource : TagsOperations
     {
-        /// <summary> Initializes a new instance of TagsResource. </summary>
-        /// <param name="properties"> The set of tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TagsResource(TagsData properties)
+        /// <summary> Initializes a new instance of the <see cref = "TagsResource"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="resource"> The resource that is the target of operations. </param>
+        internal TagsResource(OperationsBase options, TagsResourceData resource) : base(options, resource.Id)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            Properties = properties;
+            Data = resource;
         }
 
-        /// <summary> Initializes a new instance of TagsResource. </summary>
-        /// <param name="id"> The ID of the tags wrapper resource. </param>
-        /// <param name="name"> The name of the tags wrapper resource. </param>
-        /// <param name="type"> The type of the tags wrapper resource. </param>
-        /// <param name="properties"> The set of tags. </param>
-        internal TagsResource(string id, string name, string type, TagsData properties)
+        /// <summary> Gets or sets the PolicyAssignmentData. </summary>
+        public TagsResourceData Data { get; private set; }
+
+        /// <inheritdoc />
+#pragma warning disable CA1801 // 检查未使用的参数
+        protected TagsResource GetResource(CancellationToken cancellation = default)
+#pragma warning restore CA1801 // 检查未使用的参数
         {
-            Id = id;
-            Name = name;
-            Type = type;
-            Properties = properties;
+            return this;
         }
 
-        /// <summary> The ID of the tags wrapper resource. </summary>
-        public string Id { get; }
-        /// <summary> The name of the tags wrapper resource. </summary>
-        public string Name { get; }
-        /// <summary> The type of the tags wrapper resource. </summary>
-        public string Type { get; }
-        /// <summary> The set of tags. </summary>
-        public TagsData Properties { get; set; }
+        /// <inheritdoc />
+#pragma warning disable CA1801 // 检查未使用的参数
+        protected Task<TagsResource> GetResourceAsync(CancellationToken cancellation = default)
+#pragma warning restore CA1801 // 检查未使用的参数
+        {
+            return Task.FromResult(this);
+        }
     }
 }

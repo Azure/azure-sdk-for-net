@@ -227,50 +227,40 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public Response<VirtualMachine> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            var vm = GetResource();
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags[key] = value;
-
-            var response = Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            var response = StartAddTag(Id.ResourceGroupName, Id.Name, cancellationToken);
             return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public async Task<Response<VirtualMachine>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var vm = await GetResourceAsync(cancellationToken);
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags[key] = value;
-
-            var response = await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync();
+            var response =  await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public Operation<VirtualMachine> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            var vm = GetResource();
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags[key] = value;
+            var tagsOperations = this.GetTagsOperations();
+            var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
+            originalTags.Data.Properties.TagsValue[key] = value;
+            tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+                Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
         /// <inheritdoc/>
         public async Task<Operation<VirtualMachine>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var vm = await GetResourceAsync(cancellationToken);
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags[key] = value;
+            var tagsOperations = this.GetTagsOperations();
+            var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
+            originalTags.Data.Properties.TagsValue[key] = value;
+            tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 

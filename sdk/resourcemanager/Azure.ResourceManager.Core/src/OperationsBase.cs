@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        private TagsOperations _tagUtil;
+        private TagsOperations _tagOperations;
 
         /// <summary>
-        /// Gets the TagUtil.
+        /// Gets the TagsOperations.
         /// </summary>
-        protected internal TagsOperations GetTagUtil()
+        protected internal TagsOperations GetTagsOperations()
         {
-            return _tagUtil ??= new TagsOperations(ClientOptions, Credential, BaseUri, Pipeline);
+            return _tagOperations ??= new TagsOperations(this, Id);
         }
 
         /// <summary>

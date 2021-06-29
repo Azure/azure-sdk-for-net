@@ -14,25 +14,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Create or update a Tag. </summary>
-    public class TagCreateOrUpdateOperation : Operation<Tags>
+    public class TagCreateOrUpdateOperation : Operation<TagsResource>
     {
-        private readonly OperationOrResponseInternals<Tags> _operation;
+        private readonly OperationOrResponseInternals<TagsResource> _operation;
 
         /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
         protected TagCreateOrUpdateOperation()
         {
         }
 
-        internal TagCreateOrUpdateOperation(ResourceOperationsBase parentOperation, Response<TagsData> response)
+        internal TagCreateOrUpdateOperation(OperationsBase parentOperation, Response<TagsResourceData> response)
         {
-            _operation = new OperationOrResponseInternals<Tags>(Response.FromValue(new Tags(parentOperation, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<TagsResource>(Response.FromValue(new TagsResource(parentOperation, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => "";
 
         /// <inheritdoc />
-        public override Tags Value => _operation.Value;
+        public override TagsResource Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Core
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Tags>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<TagsResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Tags>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<TagsResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

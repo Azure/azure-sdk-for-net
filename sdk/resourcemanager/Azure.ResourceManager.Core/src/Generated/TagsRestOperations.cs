@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagsResource parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagsResourceData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> The TagsResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<TagsResource>> CreateOrUpdateAtScopeAsync(string scope, TagsResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsResourceData>> CreateOrUpdateAtScopeAsync(string scope, TagsResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -498,9 +498,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsResource value = default;
+                        TagsResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        value = TagsResourceData.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> The TagsResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<TagsResource> CreateOrUpdateAtScope(string scope, TagsResource parameters, CancellationToken cancellationToken = default)
+        public Response<TagsResourceData> CreateOrUpdateAtScope(string scope, TagsResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -530,9 +530,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsResource value = default;
+                        TagsResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        value = TagsResourceData.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> The TagsPatchResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<TagsResource>> UpdateAtScopeAsync(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsResourceData>> UpdateAtScopeAsync(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -582,9 +582,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsResource value = default;
+                        TagsResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        value = TagsResourceData.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> The TagsPatchResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<TagsResource> UpdateAtScope(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
+        public Response<TagsResourceData> UpdateAtScope(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -614,9 +614,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsResource value = default;
+                        TagsResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        value = TagsResourceData.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<TagsResource>> GetAtScopeAsync(string scope, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsResourceData>> GetAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -657,9 +657,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsResource value = default;
+                        TagsResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        value = TagsResourceData.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<TagsResource> GetAtScope(string scope, CancellationToken cancellationToken = default)
+        public Response<TagsResourceData> GetAtScope(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -684,9 +684,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        TagsResource value = default;
+                        TagsResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagsResource.DeserializeTagsResource(document.RootElement);
+                        value = TagsResourceData.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -1,41 +1,28 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    /// <summary>
-    /// A class representing a Tags along with the instance operations that can be performed on it.
-    /// </summary>
-    public class Tags : TagsOperations
+    /// <summary> A dictionary of name and value pairs. </summary>
+    public partial class Tags : Resource<TenantResourceIdentifier>
     {
-        /// <summary> Initializes a new instance of the <see cref = "Tags"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Tags(OperationsBase options, TagsData resource) : base(options, resource.Id)
+        /// <summary> Initializes a new instance of TagsData. </summary>
+        public Tags()
         {
-            Data = resource;
+            TagsValue = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Gets or sets the PolicyAssignmentData. </summary>
-        public TagsData Data { get; private set; }
-
-        /// <inheritdoc />
-#pragma warning disable CA1801 // 检查未使用的参数
-        protected Tags GetResource(CancellationToken cancellation = default)
-#pragma warning restore CA1801 // 检查未使用的参数
+        /// <summary> Initializes a new instance of Tags. </summary>
+        /// <param name="tagsValue"> Dictionary of &lt;string&gt;. </param>
+        internal Tags(IDictionary<string, string> tagsValue)
         {
-            return this;
+            TagsValue = tagsValue;
         }
 
-        /// <inheritdoc />
-#pragma warning disable CA1801 // 检查未使用的参数
-        protected Task<Tags> GetResourceAsync(CancellationToken cancellation = default)
-#pragma warning restore CA1801 // 检查未使用的参数
-        {
-            return Task.FromResult(this);
-        }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> TagsValue { get; }
     }
 }

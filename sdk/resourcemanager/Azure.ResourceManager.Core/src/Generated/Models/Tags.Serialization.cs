@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class TagsData : IUtf8JsonSerializable
+    public partial class Tags : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core
             writer.WriteEndObject();
         }
 
-        internal static TagsData DeserializeTags(JsonElement element)
+        internal static Tags DeserializeTags(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new TagsData(Optional.ToDictionary(tags));
+            return new Tags(Optional.ToDictionary(tags));
         }
     }
 }

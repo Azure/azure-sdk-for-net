@@ -551,12 +551,12 @@ namespace Azure.ResourceManager.Core
             try
             {
                 TagsRestClient.DeleteAtScope(Id, cancellationToken);
-                TagsData newTags = new TagsData();
+                Tags newTags = new Tags();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);
                 }
-                TagsRestClient.CreateOrUpdateAtScope(Id, new TagsResource(newTags), cancellationToken);
+                TagsRestClient.CreateOrUpdateAtScope(Id, new TagsResourceData(newTags), cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -587,12 +587,12 @@ namespace Azure.ResourceManager.Core
             try
             {
                 await TagsRestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                TagsData newTags = new TagsData();
+                Tags newTags = new Tags();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);
                 }
-                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, new TagsResource(newTags), cancellationToken).ConfigureAwait(false);
+                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, new TagsResourceData(newTags), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
