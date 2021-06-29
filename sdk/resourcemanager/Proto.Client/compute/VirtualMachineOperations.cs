@@ -228,20 +228,20 @@ namespace Proto.Compute
         public Response<VirtualMachine> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var response = StartAddTag(Id.ResourceGroupName, Id.Name, cancellationToken);
-            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
+            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value.Data)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public async Task<Response<VirtualMachine>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var response =  await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
+            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value.Data)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public Operation<VirtualMachine> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            var tagsOperations = this.GetTagsOperations();
+            var tagsOperations = GetTagsOperations();
             var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
             originalTags.Data.Properties.TagsValue[key] = value;
             tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
@@ -254,7 +254,7 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public async Task<Operation<VirtualMachine>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var tagsOperations = this.GetTagsOperations();
+            var tagsOperations = GetTagsOperations();
             var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
             originalTags.Data.Properties.TagsValue[key] = value;
             tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
@@ -267,92 +267,92 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public Response<VirtualMachine> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(tags);
+            var response = StartSetTags(tags, cancellationToken);
 
-            var response = Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
+            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value.Data)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public async Task<Response<VirtualMachine>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(tags);
+            var response = await StartSetTagsAsync(tags, cancellationToken).ConfigureAwait(false);
 
-            var response = await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken);
-            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
+            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value.Data)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public Operation<VirtualMachine> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(tags);
+            var tagsOperations = GetTagsOperations();
+            tagsOperations.DeleteAtScope(cancellationToken);
+            Tags newTags = new Tags();
+            foreach (var item in tags)
+            {
+                newTags.TagsValue.Add(item);
+            }
+            tagsOperations.CreateOrUpdateAtScope(new TagsResourceData(newTags), cancellationToken);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
+                Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
         /// <inheritdoc/>
         public async Task<Operation<VirtualMachine>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(tags);
+            var tagsOperations = GetTagsOperations();
+            await tagsOperations.DeleteAtScopeAsync(cancellationToken).ConfigureAwait(false);
+            Tags newTags = new Tags();
+            foreach (var item in tags)
+            {
+                newTags.TagsValue.Add(item);
+            }
+            await tagsOperations.CreateOrUpdateAtScopeAsync(new TagsResourceData(newTags), cancellationToken).ConfigureAwait(false);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
         /// <inheritdoc/>
         public Response<VirtualMachine> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            var vm = GetResource();
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags.Remove(key);
+            var response = StartRemoveTag(key);
 
-            var response = Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
+            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value.Data)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public async Task<Response<VirtualMachine>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var vm = await GetResourceAsync(cancellationToken);
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags.Remove(key);
+            var response = await StartRemoveTagAsync(key).ConfigureAwait(false);
 
-            var response = await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken);
-            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value)), response.GetRawResponse());
+            return Response.FromValue(new VirtualMachine(this, new VirtualMachineData(response.Value.Data)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public Operation<VirtualMachine> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            var vm = GetResource();
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags.Remove(key);
+            var tagsOperations = GetTagsOperations();
+            var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
+            originalTags.Data.Properties.TagsValue.Remove(key);
+            tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
+                Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
         /// <inheritdoc/>
         public async Task<Operation<VirtualMachine>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var vm = await GetResourceAsync(cancellationToken);
-            var patchable = new VirtualMachineUpdate();
-            patchable.Tags.ReplaceWith(vm.Data.Tags);
-            patchable.Tags.Remove(key);
+            var tagsOperations = GetTagsOperations();
+            var originalTags = await tagsOperations.GetAtScopeAsync(cancellationToken).ConfigureAwait(false);
+            originalTags.Value.Data.Properties.TagsValue.Remove(key);
+            await tagsOperations.CreateOrUpdateAtScopeAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 

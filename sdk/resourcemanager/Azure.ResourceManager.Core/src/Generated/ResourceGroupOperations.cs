@@ -75,12 +75,6 @@ namespace Azure.ResourceManager.Core
             Id.SubscriptionId,
             BaseUri);
 
-        private TagsRestOperations TagsRestClient => new TagsRestOperations(
-            Diagnostics,
-            Pipeline,
-            Id.SubscriptionId,
-            BaseUri);
-
         private ResourcesRestOperations GenericRestClient => new ResourcesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
         /// <summary>
@@ -373,9 +367,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var originalTags = TagsRestClient.GetAtScope(Id, cancellationToken).Value;
-                originalTags.Properties.TagsValue[key] = value;
-                TagsRestClient.CreateOrUpdateAtScope(Id, originalTags, cancellationToken);
+                var tagsOperations = GetTagsOperations();
+                var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
+                originalTags.Data.Properties.TagsValue[key] = value;
+                tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -406,9 +401,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var originalTags = await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Properties.TagsValue[key] = value;
-                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, originalTags, cancellationToken).ConfigureAwait(false);
+                var tagsOperations = GetTagsOperations();
+                var originalTags = await tagsOperations.GetAtScopeAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await tagsOperations.CreateOrUpdateAtScopeAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -550,13 +546,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                TagsRestClient.DeleteAtScope(Id, cancellationToken);
+                var tagsOperations = GetTagsOperations();
+                tagsOperations.DeleteAtScope(cancellationToken);
                 Tags newTags = new Tags();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);
                 }
-                TagsRestClient.CreateOrUpdateAtScope(Id, new TagsResourceData(newTags), cancellationToken);
+                tagsOperations.CreateOrUpdateAtScope(new TagsResourceData(newTags), cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -586,13 +583,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                await TagsRestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                var tagsOperations = GetTagsOperations();
+                await tagsOperations.DeleteAtScopeAsync(cancellationToken).ConfigureAwait(false);
                 Tags newTags = new Tags();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);
                 }
-                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, new TagsResourceData(newTags), cancellationToken).ConfigureAwait(false);
+                await tagsOperations.CreateOrUpdateAtScopeAsync(new TagsResourceData(newTags), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -674,9 +672,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var originalTags = TagsRestClient.GetAtScope(Id, cancellationToken).Value;
-                originalTags.Properties.TagsValue.Remove(key);
-                TagsRestClient.CreateOrUpdateAtScope(Id, originalTags, cancellationToken);
+                var tagsOperations = GetTagsOperations();
+                var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
+                originalTags.Data.Properties.TagsValue.Remove(key);
+                tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -706,9 +705,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var originalTags = await TagsRestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Properties.TagsValue.Remove(key);
-                await TagsRestClient.CreateOrUpdateAtScopeAsync(Id, originalTags, cancellationToken).ConfigureAwait(false);
+                var tagsOperations = GetTagsOperations();
+                var originalTags = await tagsOperations.GetAtScopeAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await tagsOperations.CreateOrUpdateAtScopeAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
