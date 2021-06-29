@@ -184,7 +184,7 @@ namespace Azure.Identity.Tests
                 tokenCache.SetAfterAccess(AfterAccessHandler);
             }
 
-            private void AfterAccessHandler(TokenCacheNotificationArgs args)
+            private void AfterAccessHandler(Microsoft.Identity.Client.TokenCacheNotificationArgs args)
             {
                 var data = args.TokenCache.SerializeMsalV3();
                 var serializedData = new UTF8Encoding().GetString(data);

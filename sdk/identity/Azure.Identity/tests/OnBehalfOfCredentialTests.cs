@@ -24,10 +24,12 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             TestSetup();
+            options = new OnBehalfOfCredentialOptions();
             options.AllowMultiTenantAuthentication = allowMultiTenantAuthentication;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
-            OnBehalfOfCredential client = InstrumentClient(new OnBehalfOfCredential(TenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
+            OnBehalfOfCredential client = InstrumentClient(
+                new OnBehalfOfCredential(TenantId, ClientId, "secret", options as OnBehalfOfCredentialOptions, null, mockConfidentialMsalClient));
 
             using (_ = new UserAssertionScope(expectedUserAssertion))
             {
@@ -41,7 +43,9 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             expectedTenantId = TenantId;
-            OnBehalfOfCredential client = InstrumentClient(new OnBehalfOfCredential(expectedTenantId, ClientId, "secret", options, null, mockConfidentialMsalClient));
+            options = new OnBehalfOfCredentialOptions();
+            OnBehalfOfCredential client = InstrumentClient(
+                new OnBehalfOfCredential(expectedTenantId, ClientId, "secret", options as OnBehalfOfCredentialOptions, null, mockConfidentialMsalClient));
 
             var evt = new ManualResetEventSlim(false);
             int count = 100;
@@ -78,6 +82,75 @@ namespace Azure.Identity.Tests
             await Task.WhenAll(tasks);
             Assert.AreEqual(count, tasks.Count, "Task count should be correct");
             Assert.AreEqual(count, getTokenCalledCount, "getTokenCalledCount should be correct");
+        }
+
+        [Test]
+        public async Task NonConcurrentUsersDoNotGrowTheCache()
+        {
+            TestSetup();
+            expectedTenantId = TenantId;
+            options = new OnBehalfOfCredentialOptions(new TestInMemoryTokenCacheOptions());
+            OnBehalfOfCredential client = InstrumentClient(
+                new OnBehalfOfCredential(expectedTenantId, ClientId, "secret", options as OnBehalfOfCredentialOptions, null, mockConfidentialMsalClient));
+
+            var evt = new ManualResetEventSlim(false);
+            int count = 100;
+            int getTokenCalledCount = 0;
+            List<Task> tasks = new(count);
+            List<string> expectedUserAssertions = Enumerable.Range(1, count).Select(_ => Guid.NewGuid().ToString()).ToList();
+            mockConfidentialMsalClient.WithOnBehalfOfFactory(
+                (scopes, _, userAssertion, _, _) =>
+                {
+                    Interlocked.Increment(ref getTokenCalledCount);
+                    int i = int.Parse(scopes[0]);
+                    Assert.AreEqual(expectedUserAssertions[i], userAssertion.Assertion);
+                    return new ValueTask<AuthenticationResult>(result);
+                });
+
+            for (int i = 0; i < count; i++)
+            {
+                tasks.Add(
+                    Task.Factory.StartNew(
+                        index =>
+                        {
+                            int ii = (int)index;
+                            evt.Wait();
+                            Task.Yield().GetAwaiter().GetResult();
+                            using (_ = new UserAssertionScope(expectedUserAssertions[ii]))
+                            {
+                                client.GetTokenAsync(new TokenRequestContext(new[] { ii.ToString() }), default).GetAwaiter().GetResult();
+                            }
+                        },
+                        i,
+                        CancellationToken.None));
+            }
+            evt.Set();
+            await Task.WhenAll(tasks);
+            Assert.AreEqual(count, tasks.Count, "Task count should be correct");
+            Assert.AreEqual(count, getTokenCalledCount, "getTokenCalledCount should be correct");
+        }
+
+        public class TestInMemoryTokenCacheOptions : UnsafeTokenCacheOptions
+        {
+            private readonly ReadOnlyMemory<byte> _bytes = ReadOnlyMemory<byte>.Empty;
+            private readonly Func<TokenCacheUpdatedArgs, Task> _updated;
+
+            public TestInMemoryTokenCacheOptions(Func<TokenCacheUpdatedArgs, Task> updated = null)
+            {
+                _updated = updated;
+            }
+
+            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync() { throw new NotImplementedException(); }
+
+            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync(TokenCacheNotificationArgs args)
+            {
+                return Task.FromResult(_bytes);
+            }
+
+            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            {
+                return _updated == null ? Task.CompletedTask : _updated(tokenCacheUpdatedArgs);
+            }
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.Identity
         /// <summary>
         /// A delegate that will be called before the cache is accessed. The data returned will be used to set the current state of the cache.
         /// </summary>
-        internal Func<Task<ReadOnlyMemory<byte>>> RefreshCacheFromOptionsAsync;
+        internal Func<TokenCacheNotificationArgs, Task<ReadOnlyMemory<byte>>> RefreshCacheFromOptionsAsync;
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
@@ -135,7 +135,7 @@ namespace Azure.Identity
             cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
         }
 
-        private async Task OnBeforeCacheAccessAsync(TokenCacheNotificationArgs args)
+        private async Task OnBeforeCacheAccessAsync(Microsoft.Identity.Client.TokenCacheNotificationArgs args)
         {
             await _lock.WaitAsync().ConfigureAwait(false);
 
@@ -143,7 +143,7 @@ namespace Azure.Identity
             {
                 if (RefreshCacheFromOptionsAsync != null)
                 {
-                    Data = (await RefreshCacheFromOptionsAsync().ConfigureAwait(false)).ToArray();
+                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheNotificationArgs(args)).ConfigureAwait(false)).ToArray();
                 }
                 args.TokenCache.DeserializeMsalV3(Data, true);
 
@@ -155,7 +155,7 @@ namespace Azure.Identity
             }
         }
 
-        private async Task OnAfterCacheAccessAsync(TokenCacheNotificationArgs args)
+        private async Task OnAfterCacheAccessAsync(Microsoft.Identity.Client.TokenCacheNotificationArgs args)
         {
             if (args.HasStateChanged)
             {

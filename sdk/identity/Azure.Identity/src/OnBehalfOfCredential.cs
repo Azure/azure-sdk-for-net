@@ -42,7 +42,7 @@ namespace Azure.Identity
             string tenantId,
             string clientId,
             string clientSecret,
-            TokenCredentialOptions options = null)
+            OnBehalfOfCredentialOptions options = null)
             : this(tenantId, clientId, clientSecret, options, null, null)
         { }
 
@@ -50,18 +50,18 @@ namespace Azure.Identity
             string tenantId,
             string clientId,
             string clientSecret,
-            TokenCredentialOptions options,
+            OnBehalfOfCredentialOptions options,
             CredentialPipeline pipeline,
             MsalConfidentialClient client)
         {
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(clientSecret, nameof(clientSecret));
 
-            options ??= new TokenCredentialOptions();
+            options ??= new OnBehalfOfCredentialOptions();
             _allowMultiTenantAuthentication = options.AllowMultiTenantAuthentication;
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options);
         }
 
         /// <inheritdoc />

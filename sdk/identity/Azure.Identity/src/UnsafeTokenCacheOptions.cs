@@ -22,5 +22,12 @@ namespace Azure.Identity
         /// </summary>
         /// <value></value>
         protected internal abstract Task<ReadOnlyMemory<byte>> RefreshCacheAsync();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        protected internal virtual Task<ReadOnlyMemory<byte>> RefreshCacheAsync(TokenCacheNotificationArgs args) => RefreshCacheAsync();
     }
 }

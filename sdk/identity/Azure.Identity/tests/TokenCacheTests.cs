@@ -27,16 +27,16 @@ namespace Azure.Identity.Tests
         public Mock<ITokenCacheSerializer> mockSerializer2;
         public Mock<ITokenCache> mockMSALCache;
         internal Mock<MsalCacheHelperWrapper> mockWrapper;
-        public static Random random = new Random();
-        public byte[] bytes = new byte[] { 1, 0 };
-        public byte[] updatedBytes = new byte[] { 0, 2 };
-        public byte[] mergedBytes = new byte[] { 1, 2 };
-        public Func<TokenCacheNotificationArgs, Task> main_OnBeforeCacheAccessAsync = null;
-        public Func<TokenCacheNotificationArgs, Task> main_OnAfterCacheAccessAsync = null;
+        public static Random random = new();
+        public byte[] bytes = { 1, 0 };
+        public byte[] updatedBytes = { 0, 2 };
+        public byte[] mergedBytes = { 1, 2 };
+        public Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task> main_OnBeforeCacheAccessAsync = null;
+        public Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task> main_OnAfterCacheAccessAsync = null;
         public TokenCacheCallback merge_OnBeforeCacheAccessAsync = null;
         public TokenCacheCallback merge_OnAfterCacheAccessAsync = null;
         private const int TestBufferSize = 512;
-        private static Random rand = new Random();
+        private static Random rand = new();
 
         [SetUp]
         public void Setup()
@@ -75,24 +75,24 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task NoPersistance_RegisterCacheInitializesEvents()
         {
-            cache = new TokenCache(new InMemoryTokenCacheOptions(bytes));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes));
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
-            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
-            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
         }
 
         [Test]
         public async Task NoPersistance_RegisterCacheInitializesEventsOnlyOnce()
         {
-            cache = new TokenCache(new InMemoryTokenCacheOptions(bytes));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes));
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
-            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
-            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
         }
 
         [Test]
@@ -151,8 +151,8 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void RegisterCacheInitializesCacheAndIsThreadSafe()
         {
-            ManualResetEventSlim resetEvent2 = new ManualResetEventSlim();
-            ManualResetEventSlim resetEvent1 = new ManualResetEventSlim();
+            ManualResetEventSlim resetEvent2 = new();
+            ManualResetEventSlim resetEvent1 = new();
 
             //The fist call to InitializeAsync will block. The second one will complete immediately.
             mockWrapper.SetupSequence(m => m.InitializeAsync(It.IsAny<StorageCreationProperties>(), null))
@@ -228,47 +228,47 @@ namespace Azure.Identity.Tests
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
-            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Never);
-            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Never);
+            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Never);
+            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Never);
         }
 
         [Test]
         public async Task InMemory_RegisterCacheInitializesEvents()
         {
-            cache = new TokenCache(new InMemoryTokenCacheOptions(bytes));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes));
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
-            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
-            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
         }
 
         [Test]
         public async Task InMemory_RegisterCacheInitializesEventsOnlyOnce()
         {
-            cache = new TokenCache(new InMemoryTokenCacheOptions(bytes));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes));
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
-            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
-            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
+            mockMSALCache.Verify(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()), Times.Once);
         }
 
         [Test]
         public async Task RegisteredEventsAreCalledOnFirstUpdate()
         {
-            cache = new TokenCache(new InMemoryTokenCacheOptions(bytes));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes));
 
-            TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
+            Microsoft.Identity.Client.TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
             bool updatedCalled = false;
 
             mockMSALCache
-                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
+                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
             mockMSALCache
-                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
+                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
 
             mockSerializer.Setup(m => m.SerializeMsalV3()).Returns(bytes);
 
@@ -293,15 +293,15 @@ namespace Azure.Identity.Tests
         {
             var mockPublicClient = new Mock<IPublicClientApplication>();
             var mergeMSALCache = new Mock<ITokenCache>();
-            TokenCacheNotificationArgs mockArgs1 = GetMockArgs(mockSerializer, true);
-            TokenCacheNotificationArgs mockArgs2 = GetMockArgs(mockSerializer2, true);
+            Microsoft.Identity.Client.TokenCacheNotificationArgs mockArgs1 = GetMockArgs(mockSerializer, true);
+            Microsoft.Identity.Client.TokenCacheNotificationArgs mockArgs2 = GetMockArgs(mockSerializer2, true);
 
             mockMSALCache
-                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
+                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
             mockMSALCache
-                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
+                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
             mergeMSALCache
                 .Setup(m => m.SetBeforeAccess(It.IsAny<TokenCacheCallback>()))
                 .Callback<TokenCacheCallback>(beforeAccess =>
@@ -331,7 +331,7 @@ namespace Azure.Identity.Tests
                         merge_OnAfterCacheAccessAsync(mockArgs1);
                 });
 
-            cache = new TokenCache(new InMemoryTokenCacheOptions(bytes), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
             await cache.RegisterCache(IsAsync, mergeMSALCache.Object, default);
@@ -362,18 +362,18 @@ namespace Azure.Identity.Tests
         {
             var evt = new ManualResetEventSlim();
             var mockPublicClient = new Mock<IPublicClientApplication>();
-            TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
+            Microsoft.Identity.Client.TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
             mockSerializer
                 .SetupSequence(m => m.SerializeMsalV3())
                 .Returns(updatedBytes);
             mockMSALCache
-                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
+                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
             mockMSALCache
-                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
+                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
 
-            var cache = new TokenCache(new InMemoryTokenCacheOptions(bytes, updateHandler), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
+            var cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes, updateHandler), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
@@ -398,26 +398,19 @@ namespace Azure.Identity.Tests
 
             var evt = new ManualResetEventSlim();
             var mockPublicClient = new Mock<IPublicClientApplication>();
-            TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
+            Microsoft.Identity.Client.TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
             mockSerializer
                 .SetupSequence(m => m.SerializeMsalV3())
                 .Returns(updatedBytes);
             mockMSALCache
-                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
+                .Setup(m => m.SetBeforeAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(beforeAccess => main_OnBeforeCacheAccessAsync = beforeAccess);
             mockMSALCache
-                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
-                .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
-            var mockUnsafeOptions = new Mock<UnsafeTokenCacheOptions>();
-            mockUnsafeOptions
-                .SetupSequence(m => m.RefreshCacheAsync())
-                .ReturnsAsync(bytes1)
-                .ReturnsAsync(bytes2)
-                .ReturnsAsync(bytes3);
-            mockUnsafeOptions
-                .Setup(m => m.TokenCacheUpdatedAsync(It.IsAny<TokenCacheUpdatedArgs>()));
+                .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>()))
+                .Callback<Func<Microsoft.Identity.Client.TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
+            var mockUnsafeOptions = new MockInMemoryTokenCacheOptions( new[]{bytes1, bytes2, bytes3});
 
-            var cache = new TokenCache(mockUnsafeOptions.Object, default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
+            var cache = new TokenCache(mockUnsafeOptions, default, () => mockPublicClient.Object);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
@@ -429,19 +422,38 @@ namespace Azure.Identity.Tests
             mockSerializer.Verify(m => m.DeserializeMsalV3(It.Is<byte[]>(b => b.SequenceEqual(bytes3.ToArray())), true));
         }
 
-        private static TokenCacheNotificationArgs GetMockArgs(Mock<ITokenCacheSerializer> mockSerializer, bool hasStateChanged)
+        private static Microsoft.Identity.Client.TokenCacheNotificationArgs GetMockArgs(Mock<ITokenCacheSerializer> mockSerializer, bool hasStateChanged)
         {
-            TokenCacheNotificationArgs mockArgs = (TokenCacheNotificationArgs)FormatterServices.GetUninitializedObject(typeof(TokenCacheNotificationArgs));
-            var ctor = typeof(TokenCacheNotificationArgs).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance);
-            mockArgs = (TokenCacheNotificationArgs)ctor[0].Invoke(new object[] { mockSerializer.Object, "foo", null, hasStateChanged, true, true, null });
+            Microsoft.Identity.Client.TokenCacheNotificationArgs mockArgs = (Microsoft.Identity.Client.TokenCacheNotificationArgs)FormatterServices.GetUninitializedObject(typeof(Microsoft.Identity.Client.TokenCacheNotificationArgs));
+            var ctor = typeof(Microsoft.Identity.Client.TokenCacheNotificationArgs).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance);
+            mockArgs = (Microsoft.Identity.Client.TokenCacheNotificationArgs)ctor[0].Invoke(new object[] { mockSerializer.Object, "foo", null, hasStateChanged, true, true, null });
             return mockArgs;
         }
 
-        public class InMemoryTokenCacheOptions : UnsafeTokenCacheOptions
+        public class MockInMemoryTokenCacheOptions : UnsafeTokenCacheOptions
+        {
+            private readonly ReadOnlyMemory<byte>[] _bytes;
+            private int callIndex;
+            public MockInMemoryTokenCacheOptions(ReadOnlyMemory<byte>[] bytes)
+            {
+                _bytes = bytes;
+            }
+            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            {
+                return Task.FromResult(_bytes[callIndex++]);
+            }
+
+            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            {
+                return Task.CompletedTask;
+            }
+        }
+
+        public class TestInMemoryTokenCacheOptions : UnsafeTokenCacheOptions
         {
             private readonly ReadOnlyMemory<byte> _bytes;
             private readonly Func<TokenCacheUpdatedArgs, Task> _updated;
-            public InMemoryTokenCacheOptions(byte[] bytes, Func<TokenCacheUpdatedArgs, Task> updated = null)
+            public TestInMemoryTokenCacheOptions(byte[] bytes, Func<TokenCacheUpdatedArgs, Task> updated = null)
             {
                 _bytes = bytes;
                 _updated = updated;
