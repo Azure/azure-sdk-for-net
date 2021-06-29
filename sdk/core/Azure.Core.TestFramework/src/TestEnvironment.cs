@@ -118,7 +118,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The name of the Azure Active Directory tenant that holds the service principal to use during Live tests. Recorded.
         /// </summary>
-        public string TenantId => GetRecordedVariable("tenantId");
+        public string TenantId => GetRecordedVariable("TENANT_ID");
 
         /// <summary>
         ///   The URL of the Azure Resource Manager to be used for management plane operations. Recorded.
