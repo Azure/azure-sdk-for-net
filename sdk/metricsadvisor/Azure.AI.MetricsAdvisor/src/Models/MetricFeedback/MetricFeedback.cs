@@ -20,6 +20,7 @@ namespace Azure.AI.MetricsAdvisor
     /// </list>
     /// </summary>
     [CodeGenModel("MetricFeedback")]
+    [CodeGenSuppress(nameof(MetricFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
     public abstract partial class MetricFeedback : IUtf8JsonSerializable
     {
         /// <summary>
