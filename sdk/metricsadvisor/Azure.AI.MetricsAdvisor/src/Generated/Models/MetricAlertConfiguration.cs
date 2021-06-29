@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricAlertingConfiguration. </summary>
-    public partial class MetricAnomalyAlertConfiguration
+    public partial class MetricAlertConfiguration
     {
     }
 }

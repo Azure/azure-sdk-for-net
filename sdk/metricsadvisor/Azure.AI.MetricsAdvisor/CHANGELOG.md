@@ -17,6 +17,7 @@
   - Renamed class `ServicePrincipalDatasourceCredential` to `DataSourceServicePrincipal`.
   - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `DataSourceServicePrincipalInKeyVault`.
   - Renamed class `SqlConnectionStringDatasourceCredential` to `DataSourceSqlConnectionString`.
+- Renamed class `MetricAnomalyAlertConfiguration` to `MetricAlertConfiguration`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.

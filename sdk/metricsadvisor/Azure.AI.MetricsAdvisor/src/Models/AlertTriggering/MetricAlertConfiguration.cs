@@ -11,17 +11,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// triggering an alert.
     /// </summary>
     [CodeGenModel("MetricAlertingConfiguration")]
-    [CodeGenSuppress(nameof(MetricAnomalyAlertConfiguration), typeof(string), typeof(MetricAnomalyAlertScopeType))]
-    public partial class MetricAnomalyAlertConfiguration
+    [CodeGenSuppress(nameof(MetricAlertConfiguration), typeof(string), typeof(MetricAnomalyAlertScopeType))]
+    public partial class MetricAlertConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricAnomalyAlertConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="MetricAlertConfiguration"/> class.
         /// </summary>
         /// <param name="detectionConfigurationId">The identifier of the anomaly detection configuration to which this configuration applies.</param>
         /// <param name="alertScope">Selects which set of time series should trigger alerts.</param>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="alertScope"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty.</exception>
-        public MetricAnomalyAlertConfiguration(string detectionConfigurationId, MetricAnomalyAlertScope alertScope)
+        public MetricAlertConfiguration(string detectionConfigurationId, MetricAnomalyAlertScope alertScope)
         {
             Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(alertScope, nameof(alertScope));
@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             AlertScope = alertScope;
         }
 
-        internal MetricAnomalyAlertConfiguration(string detectionConfigurationId, MetricAnomalyAlertScopeType anomalyScopeType, bool? useDetectionResultToFilterAnomalies, DimensionKey dimensionAnomalyScope, TopNGroupScope topNAnomalyScope, SeverityCondition severityFilter, MetricAnomalyAlertSnoozeCondition alertSnoozeCondition, MetricBoundaryCondition valueFilter)
+        internal MetricAlertConfiguration(string detectionConfigurationId, MetricAnomalyAlertScopeType anomalyScopeType, bool? useDetectionResultToFilterAnomalies, DimensionKey dimensionAnomalyScope, TopNGroupScope topNAnomalyScope, SeverityCondition severityFilter, MetricAnomalyAlertSnoozeCondition alertSnoozeCondition, MetricBoundaryCondition valueFilter)
         {
             DetectionConfigurationId = detectionConfigurationId;
             AlertScope = new MetricAnomalyAlertScope(anomalyScopeType, dimensionAnomalyScope, topNAnomalyScope);
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public MetricAnomalyAlertScope AlertScope { get; set; }
 
         /// <summary>
-        /// If defined, this <see cref="MetricAnomalyAlertConfiguration"/> won't trigger alerts by itself. It
+        /// If defined, this <see cref="MetricAlertConfiguration"/> won't trigger alerts by itself. It
         /// will only serve as a filter to its containing <see cref="AnomalyAlertConfiguration"/>, specifying
         /// which anomalies can trigger an alert. If <c>true</c>, anomalies need to satisfy the conditions
         /// set by this filter to trigger an alert. If <c>false</c>, anomalies must not satisfy those
