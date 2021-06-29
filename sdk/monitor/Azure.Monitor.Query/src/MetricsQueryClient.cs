@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsQueryClient"/>.
         /// </summary>
-        /// <param name="endpoint">The resource manager service endpoint to use. For example <c>https://management.azure.com/</c> for public cloud.</param>
+        /// <param name="endpoint">The resource manager service endpoint to use. For example, <c>https://management.azure.com/</c> for public cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public MetricsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
