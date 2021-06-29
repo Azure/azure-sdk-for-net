@@ -2,6 +2,9 @@
 
 ## 0.1.0-preview.14 (2021-07-06)
 
+### New Features
+- Added `ResponseError` type to represent the standard Azure error response.
+
 
 ## 0.1.0-preview.13 (2021-06-08)
 
