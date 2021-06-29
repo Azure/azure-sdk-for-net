@@ -15,7 +15,7 @@ namespace Azure.Core.TestFramework
         private volatile bool _disposed;
         private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
         private uint _maxEventCount;
-        private const uint DefaultMaxEventCount = 100;
+        private const uint DefaultMaxEventCount = 1000;
 
         public IEnumerable<EventWrittenEventArgs> EventData => _events;
 
@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework
             {
                 if (_events.Count >= _maxEventCount)
                 {
-                    _events.TryDequeue(out _);
+                    throw new Exception($"Number of events has exceeded {_maxEventCount}. Create {typeof(TestEventListener)} with a larger 'maxEventCount'.");
                 }
 
                 // Make sure we can format the event
