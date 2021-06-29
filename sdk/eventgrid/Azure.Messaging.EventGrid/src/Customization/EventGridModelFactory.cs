@@ -8,15 +8,6 @@ using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
 {
-    [CodeGenSuppress("ResourceWriteFailureEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceWriteSuccessEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceWriteCancelEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceDeleteFailureEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceDeleteSuccessEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceDeleteCancelEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceActionSuccessEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceActionFailureEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
-    [CodeGenSuppress("ResourceActionCancelEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
 #pragma warning disable CA1054 // URI-like parameters should not be strings
     public static partial class EventGridModelFactory
     {
