@@ -20,6 +20,23 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal AnalyzeSentimentActionResult(
+            AnalyzeSentimentResultCollection result,
+            DateTimeOffset completedOn) : base(completedOn)
+        {
+            _documentsResults = result;
+        }
+
+        /// <summary>
+        /// Intended for mocking purposes only.
+        /// </summary>
+        internal AnalyzeSentimentActionResult(TextAnalyticsErrorInternal error) : base(error)
+        {
+        }
+
+        /// <summary>
         /// Gets the result of the execution of an <see cref="AnalyzeSentimentAction"/> per each input document.
         /// </summary>
         public AnalyzeSentimentResultCollection DocumentsResults

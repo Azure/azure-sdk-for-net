@@ -94,6 +94,13 @@ namespace Azure.Monitor.Query.Models
         public Guid GetGuid(int index) => _row[index].GetGuid();
 
         /// <summary>
+        /// Gets the value of the column at the specified index as <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="index">The column index.</param>
+        /// <returns>The <see cref="BinaryData"/> value of the column.</returns>
+        public BinaryData GetDynamic(int index) => new BinaryData(_row[index].GetString());
+
+        /// <summary>
         /// Returns true if the value of the column at the specified index is null, otherwise false.
         /// </summary>
         /// <param name="index">The column index.</param>
@@ -164,6 +171,13 @@ namespace Azure.Monitor.Query.Models
         public Guid GetGuid(string name) => GetGuid(_columnMap[name]);
 
         /// <summary>
+        /// Gets the value of the column with the specified name as <see cref="Guid"/>.
+        /// </summary>
+        /// <param name="name">The column name.</param>
+        /// <returns>The <see cref="BinaryData"/> value of the column.</returns>
+        public BinaryData GetDynamic(string name) => GetDynamic(_columnMap[name]);
+
+        /// <summary>
         /// Returns true if the value of the column with the specified name is null, otherwise false.
         /// </summary>
         /// <param name="name">The column name.</param>
@@ -185,24 +199,26 @@ namespace Azure.Monitor.Query.Models
             var element = _row[index];
             switch (_columns[index].Type.ToString())
             {
-                case LogColumnTypes.DatetimeTypeValue:
+                case LogsColumnType.DatetimeTypeValue:
                     return GetDateTimeOffset(index);
-                case LogColumnTypes.BoolTypeValue:
+                case LogsColumnType.BoolTypeValue:
                     return GetBoolean(index);
-                case LogColumnTypes.GuidTypeValue:
+                case LogsColumnType.GuidTypeValue:
                     return GetGuid(index);
-                case LogColumnTypes.IntTypeValue:
+                case LogsColumnType.IntTypeValue:
                     return GetInt32(index);
-                case LogColumnTypes.LongTypeValue:
+                case LogsColumnType.LongTypeValue:
                     return GetInt64(index);
-                case LogColumnTypes.RealTypeValue:
+                case LogsColumnType.RealTypeValue:
                     return GetDouble(index);
-                case LogColumnTypes.StringTypeValue:
+                case LogsColumnType.StringTypeValue:
                     return GetString(index);
-                case LogColumnTypes.TimespanTypeValue:
+                case LogsColumnType.TimespanTypeValue:
                     return GetTimeSpan(index);
-                case LogColumnTypes.DecimalTypeValue:
+                case LogsColumnType.DecimalTypeValue:
                     return GetDecimal(index);
+                case LogsColumnType.DynamicValueTypeValue:
+                    return GetDynamic(index);
             }
 
             switch (element.ValueKind)

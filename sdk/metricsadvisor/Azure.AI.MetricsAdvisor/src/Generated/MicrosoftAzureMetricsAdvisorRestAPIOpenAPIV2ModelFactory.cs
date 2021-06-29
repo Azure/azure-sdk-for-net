@@ -29,11 +29,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
         /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
         /// <returns> A new <see cref="Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
-        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = default, string name = default, string description = default, MetricAnomalyAlertConfigurationsOperator? crossMetricsOperator = default, IList<string> splitAlertByDimensions = default, IList<string> idsOfHooksToAlert = default, IList<MetricAnomalyAlertConfiguration> metricAlertConfigurations = default)
+        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = default, string name = default, string description = default, MetricAnomalyAlertConfigurationsOperator? crossMetricsOperator = default, IList<string> splitAlertByDimensions = default, IList<string> idsOfHooksToAlert = default, IList<MetricAlertConfiguration> metricAlertConfigurations = default)
         {
             splitAlertByDimensions ??= new List<string>();
             idsOfHooksToAlert ??= new List<string>();
-            metricAlertConfigurations ??= new List<MetricAnomalyAlertConfiguration>();
+            metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
             return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, splitAlertByDimensions, idsOfHooksToAlert, metricAlertConfigurations);
         }
 

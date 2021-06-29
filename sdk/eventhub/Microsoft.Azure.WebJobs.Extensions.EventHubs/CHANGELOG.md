@@ -1,5 +1,16 @@
 # Release History
 
+## 5.0.0-beta.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
 ## 5.0.0-beta.6 (2021-06-09)
 
 ### Changes

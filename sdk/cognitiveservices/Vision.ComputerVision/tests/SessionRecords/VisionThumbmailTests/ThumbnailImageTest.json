@@ -4,7 +4,7 @@
       "RequestUri": "/vision/v3.2/generateThumbnail?width=64&height=64&smartCropping=false&model-version=latest",
       "EncodedRequestUri": "L3Zpc2lvbi92My4yL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNlJm1vZGVsLXZlcnNpb249bGF0ZXN0",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""

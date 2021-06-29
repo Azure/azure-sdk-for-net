@@ -26,11 +26,12 @@ int docsCancelled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatusesAsync())
+await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
 {
-    if (!translationStatus.HasCompleted)
+    if (translationStatus.Status != DocumentTranslationStatus.Failed &&
+          translationStatus.Status != DocumentTranslationStatus.Succeeded)
     {
-        DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+        DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
         await operation.WaitForCompletionAsync();
     }
 
@@ -50,8 +51,8 @@ Console.WriteLine($"Cancelled Documents: {docsCancelled}");
 
 To see the full example source files, see:
 
-* [Synchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistory.cs)
-* [Asynchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistoryAsync.cs)
+* [Synchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistory.cs)
+* [Asynchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistoryAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/README.md

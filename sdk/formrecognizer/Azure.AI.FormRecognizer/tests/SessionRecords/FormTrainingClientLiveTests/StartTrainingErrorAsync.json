@@ -8,8 +8,8 @@
         "Content-Length": "43",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-82e7770948f4744fb7e835bfb4727fdf-701aa28d548dfc4e-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-9587eb76e2a7cb4fa95f45746e7d9c79-4343ff71c70e6b4b-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.2.0-alpha.20210622.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "c64173451e2490779e31952f2e0db6a4",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,88 +17,21 @@
         "source": "Sanitized",
         "useLabelFile": false
       },
-      "StatusCode": 201,
+      "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "ea59da65-b1e4-4d53-9a9a-d3f2254481b3",
-        "Content-Length": "0",
-        "Date": "Mon, 10 May 2021 18:36:51 GMT",
-        "Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/custom/models/65156cc8-f739-45e6-b9fa-d29051c6fade",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "93"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/custom/models/65156cc8-f739-45e6-b9fa-d29051c6fade?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "3bb4329cdfe69426f8e12d527267761c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "250d9901-8e7a-456e-bdae-ec86feaf74ed",
-        "Content-Length": "170",
+        "apim-request-id": "d48c68d8-d562-449c-9a97-8a6f1591f597",
+        "Content-Length": "82",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 18:36:51 GMT",
+        "Date": "Tue, 22 Jun 2021 21:43:30 GMT",
+        "ms-azure-ai-errorcode": "UserResourceNotAvailable",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "17"
+        "x-envoy-upstream-service-time": "2188"
       },
       "ResponseBody": {
-        "modelInfo": {
-          "modelId": "65156cc8-f739-45e6-b9fa-d29051c6fade",
-          "status": "creating",
-          "createdDateTime": "2021-05-10T18:36:52Z",
-          "lastUpdatedDateTime": "2021-05-10T18:36:52Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/custom/models/65156cc8-f739-45e6-b9fa-d29051c6fade?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "e1f94413633b528136238c1a1a5f8ffd",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "7ede864e-57ba-4969-ae30-80706b4268c9",
-        "Content-Length": "284",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 18:36:52 GMT",
-        "ms-azure-ai-errorcode": "2001",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "65156cc8-f739-45e6-b9fa-d29051c6fade",
-          "status": "invalid",
-          "createdDateTime": "2021-05-10T18:36:52Z",
-          "lastUpdatedDateTime": "2021-05-10T18:36:52Z"
-        },
-        "keys": {
-          "clusters": {}
-        },
-        "trainResult": {
-          "trainingDocuments": [],
-          "errors": [
-            {
-              "code": "2001",
-              "message": "Invalid path."
-            }
-          ]
+        "error": {
+          "code": "2011",
+          "message": "Could not access Azure blob storage account."
         }
       }
     }

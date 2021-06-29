@@ -12,7 +12,7 @@ namespace Azure.Core.GeoJson
     /// </summary>
     /// <example>
     /// Creating a line:
-    /// <code snippet="Snippet:CreateLineString">
+    /// <code snippet="Snippet:CreateLineString" language="csharp">
     /// var line = new GeoLineString(new[]
     /// {
     ///     new GeoPosition(-122.108727, 47.649383),

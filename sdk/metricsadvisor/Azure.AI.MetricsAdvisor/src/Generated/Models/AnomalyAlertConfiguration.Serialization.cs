@@ -63,7 +63,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<MetricAnomalyAlertConfigurationsOperator> crossMetricsOperator = default;
             Optional<IList<string>> splitAlertByDimensions = default;
             IList<string> hookIds = default;
-            IList<MetricAnomalyAlertConfiguration> metricAlertingConfigurations = default;
+            IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyAlertingConfigurationId"))
@@ -118,10 +118,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("metricAlertingConfigurations"))
                 {
-                    List<MetricAnomalyAlertConfiguration> array = new List<MetricAnomalyAlertConfiguration>();
+                    List<MetricAlertConfiguration> array = new List<MetricAlertConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAnomalyAlertConfiguration.DeserializeMetricAnomalyAlertConfiguration(item));
+                        array.Add(MetricAlertConfiguration.DeserializeMetricAlertConfiguration(item));
                     }
                     metricAlertingConfigurations = array;
                     continue;
