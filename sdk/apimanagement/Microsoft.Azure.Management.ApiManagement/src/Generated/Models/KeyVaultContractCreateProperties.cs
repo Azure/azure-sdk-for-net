@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         /// <param name="secretIdentifier">Key vault secret identifier for
         /// fetching secret. Providing a versioned secret will prevent
-        /// auto-refresh. This requires Api Management service to be configured
+        /// auto-refresh. This requires API Management service to be configured
         /// with aka.ms/apimmsi</param>
         /// <param name="identityClientId">SystemAssignedIdentity or
         /// UserAssignedIdentity Client Id which will be used to access key
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets key vault secret identifier for fetching secret.
         /// Providing a versioned secret will prevent auto-refresh. This
-        /// requires Api Management service to be configured with
+        /// requires API Management service to be configured with
         /// aka.ms/apimmsi
         /// </summary>
         [JsonProperty(PropertyName = "secretIdentifier")]

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="description">Backend Description.</param>
         /// <param name="resourceId">Management Uri of the Resource in External
         /// System. This url can be the Arm Resource Id of Logic Apps, Function
-        /// Apps or Api Apps.</param>
+        /// Apps or API Apps.</param>
         /// <param name="properties">Backend Properties contract</param>
         /// <param name="credentials">Backend Credentials Contract
         /// Properties</param>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets management Uri of the Resource in External System.
         /// This url can be the Arm Resource Id of Logic Apps, Function Apps or
-        /// Api Apps.
+        /// API Apps.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }

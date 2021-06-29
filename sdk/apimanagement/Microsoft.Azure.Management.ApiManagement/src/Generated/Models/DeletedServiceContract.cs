@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Deleted Api Management Service information.
+    /// Deleted API Management Service information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DeletedServiceContract : Resource
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="deletionDate">UTC Timestamp when the service was
         /// soft-deleted. The date conforms to the following format:
         /// yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.</param>
-        /// <param name="location">Api Management Service Master
+        /// <param name="location">API Management Service Master
         /// Location.</param>
         public DeletedServiceContract(string id = default(string), string name = default(string), string type = default(string), string serviceId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), string location = default(string))
             : base(id, name, type)
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.DateTime? DeletionDate { get; set; }
 
         /// <summary>
-        /// Gets api Management Service Master Location.
+        /// Gets API Management Service Master Location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; private set; }

@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     {
         public const string Http = "http";
         public const string Soap = "soap";
+        public const string Websocket = "websocket";
     }
 }

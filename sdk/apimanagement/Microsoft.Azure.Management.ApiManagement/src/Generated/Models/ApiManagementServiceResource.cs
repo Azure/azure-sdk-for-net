@@ -80,6 +80,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// addresses of the API Management service in Primary region which is
         /// deployed in an Internal Virtual Network. Available only for Basic,
         /// Standard, Premium and Isolated SKU.</param>
+        /// <param name="publicIpAddressId">Public Standard SKU IP V4 based IP
+        /// address to be associated with Virtual Network deployed service in
+        /// the region. Supported only for Developer and Premium SKU being
+        /// deployed in Virtual Network.</param>
         /// <param name="virtualNetworkConfiguration">Virtual network
         /// configuration of the API Management service.</param>
         /// <param name="additionalLocations">Additional datacenter locations
@@ -151,7 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="etag">ETag of the resource.</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
-        public ApiManagementServiceResource(string publisherEmail, string publisherName, ApiManagementServiceSkuProperties sku, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), string developerPortalUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), bool? disableGateway = default(bool?), string virtualNetworkType = default(string), ApiVersionConstraint apiVersionConstraint = default(ApiVersionConstraint), bool? restore = default(bool?), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string), IList<string> zones = default(IList<string>))
+        public ApiManagementServiceResource(string publisherEmail, string publisherName, ApiManagementServiceSkuProperties sku, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), string developerPortalUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), string publicIpAddressId = default(string), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), bool? disableGateway = default(bool?), string virtualNetworkType = default(string), ApiVersionConstraint apiVersionConstraint = default(ApiVersionConstraint), bool? restore = default(bool?), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, tags)
         {
             NotificationSenderEmail = notificationSenderEmail;
@@ -167,6 +171,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             HostnameConfigurations = hostnameConfigurations;
             PublicIPAddresses = publicIPAddresses;
             PrivateIPAddresses = privateIPAddresses;
+            PublicIpAddressId = publicIpAddressId;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             AdditionalLocations = additionalLocations;
             CustomProperties = customProperties;
@@ -281,6 +286,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddresses")]
         public IList<string> PrivateIPAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets or sets public Standard SKU IP V4 based IP address to be
+        /// associated with Virtual Network deployed service in the region.
+        /// Supported only for Developer and Premium SKU being deployed in
+        /// Virtual Network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIpAddressId")]
+        public string PublicIpAddressId { get; set; }
 
         /// <summary>
         /// Gets or sets virtual network configuration of the API Management

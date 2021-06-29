@@ -46,23 +46,27 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="subscriptionKeyParameterNames">Protocols over which
         /// API is made available.</param>
         /// <param name="apiType">Type of API. Possible values include: 'http',
-        /// 'soap'</param>
-        /// <param name="apiRevision">Describes the Revision of the Api. If no
+        /// 'soap', 'websocket'</param>
+        /// <param name="apiRevision">Describes the revision of the API. If no
         /// value is provided, default revision 1 is created</param>
-        /// <param name="apiVersion">Indicates the Version identifier of the
+        /// <param name="apiVersion">Indicates the version identifier of the
         /// API if the API is versioned</param>
         /// <param name="isCurrent">Indicates if API revision is current api
         /// revision.</param>
         /// <param name="isOnline">Indicates if API revision is accessible via
         /// the gateway.</param>
-        /// <param name="apiRevisionDescription">Description of the Api
+        /// <param name="apiRevisionDescription">Description of the API
         /// Revision.</param>
-        /// <param name="apiVersionDescription">Description of the Api
+        /// <param name="apiVersionDescription">Description of the API
         /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
         /// <param name="subscriptionRequired">Specifies whether an API or
         /// Product subscription is required for accessing the API.</param>
+        /// <param name="termsOfServiceUrl"> A URL to the Terms of Service for
+        /// the API. MUST be in the format of a URL.</param>
+        /// <param name="contact">Contact information for the API.</param>
+        /// <param name="license">License information for the API.</param>
         /// <param name="sourceApiId">API identifier of the source API.</param>
         /// <param name="displayName">API name. Must be 1 to 300 characters
         /// long.</param>
@@ -80,11 +84,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// 'openapi+json-link'</param>
         /// <param name="wsdlSelector">Criteria to limit import of WSDL to a
         /// subset of the document.</param>
-        /// <param name="soapApiType">Type of Api to create.
-        /// * `http` creates a SOAP to REST API
-        /// * `soap` creates a SOAP pass-through API. Possible values include:
-        /// 'SoapToRest', 'SoapPassThrough'</param>
-        public ApiCreateOrUpdateParameter(string path, string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string sourceApiId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails), string value = default(string), string format = default(string), ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default(ApiCreateOrUpdatePropertiesWsdlSelector), string soapApiType = default(string))
+        /// <param name="soapApiType">Type of API to create.
+        /// * `http` creates a REST API
+        /// * `soap` creates a SOAP pass-through API
+        /// * `websocket` creates websocket API. Possible values include:
+        /// 'SoapToRest', 'SoapPassThrough', 'WebSocket'</param>
+        public ApiCreateOrUpdateParameter(string path, string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string termsOfServiceUrl = default(string), ApiContactInformation contact = default(ApiContactInformation), ApiLicenseInformation license = default(ApiLicenseInformation), string sourceApiId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<string> protocols = default(IList<string>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails), string value = default(string), string format = default(string), ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default(ApiCreateOrUpdatePropertiesWsdlSelector), string soapApiType = default(string))
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -98,6 +103,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
             SubscriptionRequired = subscriptionRequired;
+            TermsOfServiceUrl = termsOfServiceUrl;
+            Contact = contact;
+            License = license;
             SourceApiId = sourceApiId;
             DisplayName = displayName;
             ServiceUrl = serviceUrl;
@@ -137,20 +145,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
 
         /// <summary>
-        /// Gets or sets type of API. Possible values include: 'http', 'soap'
+        /// Gets or sets type of API. Possible values include: 'http', 'soap',
+        /// 'websocket'
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
         public string ApiType { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the Revision of the Api. If no value is
+        /// Gets or sets describes the revision of the API. If no value is
         /// provided, default revision 1 is created
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiRevision")]
         public string ApiRevision { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates the Version identifier of the API if the API
+        /// Gets or sets indicates the version identifier of the API if the API
         /// is versioned
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiVersion")]
@@ -169,13 +178,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public bool? IsOnline { get; private set; }
 
         /// <summary>
-        /// Gets or sets description of the Api Revision.
+        /// Gets or sets description of the API Revision.
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiRevisionDescription")]
         public string ApiRevisionDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets description of the Api Version.
+        /// Gets or sets description of the API Version.
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiVersionDescription")]
         public string ApiVersionDescription { get; set; }
@@ -192,6 +201,25 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionRequired")]
         public bool? SubscriptionRequired { get; set; }
+
+        /// <summary>
+        /// Gets or sets  A URL to the Terms of Service for the API. MUST be in
+        /// the format of a URL.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.termsOfServiceUrl")]
+        public string TermsOfServiceUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets contact information for the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.contact")]
+        public ApiContactInformation Contact { get; set; }
+
+        /// <summary>
+        /// Gets or sets license information for the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.license")]
+        public ApiLicenseInformation License { get; set; }
 
         /// <summary>
         /// Gets or sets API identifier of the source API.
@@ -226,7 +254,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// API can be invoked.
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocols")]
-        public IList<Protocol?> Protocols { get; set; }
+        public IList<string> Protocols { get; set; }
 
         /// <summary>
         /// Gets or sets version set details
@@ -257,10 +285,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get; set; }
 
         /// <summary>
-        /// Gets or sets type of Api to create.
-        /// * `http` creates a SOAP to REST API
-        /// * `soap` creates a SOAP pass-through API. Possible values include:
-        /// 'SoapToRest', 'SoapPassThrough'
+        /// Gets or sets type of API to create.
+        /// * `http` creates a REST API
+        /// * `soap` creates a SOAP pass-through API
+        /// * `websocket` creates websocket API. Possible values include:
+        /// 'SoapToRest', 'SoapPassThrough', 'WebSocket'
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiType")]
         public string SoapApiType { get; set; }

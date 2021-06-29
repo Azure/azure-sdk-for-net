@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters to update or create an Api Version Set Contract.
+    /// Parameters to update or create an API Version Set Contract.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApiVersionSetUpdateParameters

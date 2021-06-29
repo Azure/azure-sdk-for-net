@@ -46,17 +46,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
-        /// <param name="value">Json escaped string defining the document
-        /// representing the Schema. Used for schemas other than
-        /// Swagger/OpenAPI.</param>
-        /// <param name="definitions">Types definitions. Used for
-        /// Swagger/OpenAPI schemas only, null otherwise.</param>
-        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), string value = default(string), object definitions = default(object))
+        /// <param name="document">Create or update Properties of the Schema
+        /// Document.</param>
+        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), object document = default(object))
             : base(id, name, type)
         {
             ContentType = contentType;
-            Value = value;
-            Definitions = definitions;
+            Document = document;
             CustomInit();
         }
 
@@ -81,18 +77,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets json escaped string defining the document representing
-        /// the Schema. Used for schemas other than Swagger/OpenAPI.
+        /// Gets or sets create or update Properties of the Schema Document.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.document.value")]
-        public string Value { get; set; }
-
-        /// <summary>
-        /// Gets or sets types definitions. Used for Swagger/OpenAPI schemas
-        /// only, null otherwise.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.document.definitions")]
-        public object Definitions { get; set; }
+        [JsonProperty(PropertyName = "properties.document")]
+        public object Document { get; set; }
 
         /// <summary>
         /// Validate the object.

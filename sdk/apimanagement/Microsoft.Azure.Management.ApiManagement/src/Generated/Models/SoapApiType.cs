@@ -24,5 +24,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Imports the Soap API having a SOAP front end.
         /// </summary>
         public const string SoapPassThrough = "soap";
+        /// <summary>
+        /// Imports the Soap API having a Websocket front end.
+        /// </summary>
+        public const string WebSocket = "websocket";
     }
 }

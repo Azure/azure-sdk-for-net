@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Api Operation Update Contract details.
+    /// API Operation Update Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class OperationUpdateContract

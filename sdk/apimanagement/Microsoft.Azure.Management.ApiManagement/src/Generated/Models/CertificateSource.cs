@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 {
 
     /// <summary>
-    /// Defines values for Protocol.
+    /// Defines values for CertificateSource.
     /// </summary>
-    public static class Protocol
+    public static class CertificateSource
     {
-        public const string Http = "http";
-        public const string Https = "https";
-        public const string Ws = "ws";
-        public const string Wss = "wss";
+        public const string Managed = "Managed";
+        public const string KeyVault = "KeyVault";
+        public const string Custom = "Custom";
+        public const string BuiltIn = "BuiltIn";
     }
 }

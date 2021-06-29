@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 {
 
     /// <summary>
-    /// Defines values for Protocol.
+    /// Defines values for CertificateStatus.
     /// </summary>
-    public static class Protocol
+    public static class CertificateStatus
     {
-        public const string Http = "http";
-        public const string Https = "https";
-        public const string Ws = "ws";
-        public const string Wss = "wss";
+        public const string Completed = "Completed";
+        public const string Failed = "Failed";
+        public const string InProgress = "InProgress";
     }
 }

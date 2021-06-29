@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Api Version Set Contract details.
+    /// API Version Set Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApiVersionSetContract : Resource

@@ -17,19 +17,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     public static class PortalRevisionStatus
     {
         /// <summary>
-        /// Portal revision publishing is pending
+        /// Portal's revision has been queued.
         /// </summary>
         public const string Pending = "pending";
         /// <summary>
-        /// Portal revision is publishing
+        /// Portal's revision is being published.
         /// </summary>
         public const string Publishing = "publishing";
         /// <summary>
-        /// Portal revision publishing completed
+        /// Portal's revision publishing completed.
         /// </summary>
         public const string Completed = "completed";
         /// <summary>
-        /// Portal revision publishing failed
+        /// Portal's revision publishing failed.
         /// </summary>
         public const string Failed = "failed";
     }
