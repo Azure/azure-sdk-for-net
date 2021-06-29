@@ -95,5 +95,16 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentException("Not a valid tenant level resource", nameof(other));
             return id;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="providerId"></param>
+        /// <returns></returns>
+        public virtual bool TryGetProvider(out string providerId)
+        {
+            providerId = default(string);
+            return false;
+        }
     }
 }
