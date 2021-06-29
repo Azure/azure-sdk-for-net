@@ -85,6 +85,15 @@ namespace Azure.ResourceManager.Core
             return new LocationContainer(this);
         }
 
+        /// <summary>
+        /// Gets the provider container under this subscription.
+        /// </summary>
+        /// <returns> The provider container. </returns>
+        public virtual ProviderContainer GetProviders()
+        {
+            return new ProviderContainer(this);
+        }
+
         /// <inheritdoc/>
         public override Response<Subscription> Get(CancellationToken cancellationToken = default)
         {

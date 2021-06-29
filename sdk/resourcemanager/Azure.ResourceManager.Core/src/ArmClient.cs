@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Core
             Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
-            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
+            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, options ?? ClientOptions);
 
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);
-            ClientOptions.ApiVersions.SetProviderClient(credential, baseUri, defaultSubscriptionId ?? DefaultSubscription.Id.SubscriptionId);
+            ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
         /// <summary>
