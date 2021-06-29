@@ -18,6 +18,10 @@
   - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `DataSourceServicePrincipalInKeyVault`.
   - Renamed class `SqlConnectionStringDatasourceCredential` to `DataSourceSqlConnectionString`.
 - Renamed class `MetricAnomalyAlertConfiguration` to `MetricAlertConfiguration`.
+- Renamed class `MetricAnomalyAlertConfigurationsOperator` to `DetectionConditionOperator`. Similarly, `MetricAnomalyAlertConfiguration.CrossMetricsOperator` has been renamed to `ConditionOperator`.
+- Renamed class `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
+- Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` has been renamed to `Kind`.
+- Renamed class `PeriodType` to `MetricPeriodType`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
@@ -26,6 +30,10 @@
 - `WebNotificationHook` constructor now takes the required `name` and `endpoint` parameters.
 - `MetricSeriesGroupDetectionCondition` constructor now takes the required `seriesGroupKey` parameter.
 - `MetricSingleSeriesDetectionCondition` constructor now takes the required `seriesKey` parameter.
+- In `DataFeed`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ViewersEmails` to `ViewerEmails`.
+- In `NotificationHook`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ExternalLink` to `ExternalUri`.
+- In `MetricAnomalyFeedback`, renamed `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`, and `AnomalyDetectionConfigurationSnapshot` to `DetectionConfigurationSnapshot`.
+- In `ChangeThresholdCondition`, renamed `IsWithinRange` to `WithinRange`. Similarly, the constructor parameter `isWithinRange` has been renamed to `withinRange`.
 - In `MetricSeriesData`, removed the `Definition` property. Now, properties `MetricId` and `SeriesKey` can be accessed directly from `MetricSeriesData`.
 - In `DataPointAnomaly`, renamed property `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`.
 - In `DataFeedMetric`, renamed constructor parameter `metricName` to `name` only.
