@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
