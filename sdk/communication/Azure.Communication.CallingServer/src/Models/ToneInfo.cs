@@ -8,7 +8,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The tone info
     /// </summary>
-    [CodeGenModel("ToneInfo", Usage = new[] { "input", "output" }, Formats = new[] { "json" })]
+    [CodeGenModel("ToneInfo", Usage = new[] { "output" }, Formats = new[] { "json" })]
     public partial class ToneInfo
     {
     }

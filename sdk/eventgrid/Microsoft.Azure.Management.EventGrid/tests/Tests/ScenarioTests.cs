@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.EventGrid;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using EventGrid.Tests.TestHelper;
+using System;
 
 namespace EventGrid.Tests.ScenarioTests
 {
@@ -24,10 +25,18 @@ namespace EventGrid.Tests.ScenarioTests
             {
                 lock (m_lock)
                 {
-                    if (!m_initialized)
+                    try
                     {
-                        resourceManagementClient = EventGridManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        eventGridManagementClient = EventGridManagementHelper.GetEventGridManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        if (!m_initialized)
+                        {
+                            resourceManagementClient = EventGridManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                            eventGridManagementClient = EventGridManagementHelper.GetEventGridManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Write(ex);
+                        throw;
                     }
                 }
             }

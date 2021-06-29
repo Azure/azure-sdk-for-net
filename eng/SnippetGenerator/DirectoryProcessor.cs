@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,9 +38,8 @@ namespace SnippetGenerator
             _snippets = new Lazy<Task<List<Snippet>>>(DiscoverSnippetsAsync);
         }
 
-        public async Task ProcessAsync()
+        public async Task<IEnumerable<string>> ProcessAsync()
         {
-
             List<string> files = new List<string>();
             files.AddRange(Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories));
             files.AddRange(Directory.EnumerateFiles(_directory, "*.cs", SearchOption.AllDirectories));
@@ -61,8 +61,10 @@ namespace SnippetGenerator
                     }
 
                     var selectedSnippet = selectedSnippets.Single();
+                    selectedSnippet.IsUsed = true;
                     Console.WriteLine($"Replaced {selectedSnippet.Name} in {file}");
-                    return FormatSnippet(selectedSnippet.Text);
+                    var result = FormatSnippet(selectedSnippet.Text);
+                    return result;
                 }
 
                 var originalText = await File.ReadAllTextAsync(file);
@@ -86,13 +88,30 @@ namespace SnippetGenerator
                     await File.WriteAllTextAsync(file, text, _utf8EncodingWithoutBOM);
                 }
             }
+            var snippets = await _snippets.Value;
+            var unUsedSnippets = snippets
+                .Where(s => !s.IsUsed)
+                .Select(s => $"{GetServiceDirName(s.FilePath)}: {s.Name}");
+            return unUsedSnippets;
+
+        }
+
+        private string GetServiceDirName(string path)
+        {
+            string sdk = $"{Path.DirectorySeparatorChar}sdk{Path.DirectorySeparatorChar}";
+            int start = path.IndexOf(sdk) + sdk.Length;
+            int end = path.IndexOf(Path.DirectorySeparatorChar, start);
+            return path.Substring(start, end - start);
         }
 
         private async Task<List<Snippet>> DiscoverSnippetsAsync()
         {
             var snippets = await GetSnippetsInDirectoryAsync(_directory);
+            if (snippets.Count == 0)
+            {
+                return snippets;
+            }
             Console.WriteLine($"Discovered snippets:");
-
             foreach (var snippet in snippets)
             {
                 Console.WriteLine($" {snippet.Name} in {snippet.FilePath}");

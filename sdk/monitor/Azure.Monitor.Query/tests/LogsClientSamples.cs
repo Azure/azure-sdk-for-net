@@ -151,7 +151,7 @@ namespace Azure.Monitor.Query.Tests
             string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
             string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 
-            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
 
             var count = response.Value.GetResult<int>(countQueryId).Single();
             var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);

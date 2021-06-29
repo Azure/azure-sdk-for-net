@@ -1,6 +1,6 @@
 # Updating and Upserting Table Entities
 
-This sample demonstrates how to query a table for entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
+This sample demonstrates how to query a table for entities. You will need to have previously [created a table](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md) in the service in order to query entities from it. To get started, you'll need access to either a Storage or Cosmos DB account.
 
 ## Create a `TableClient`
 
@@ -21,7 +21,7 @@ var tableClient = new TableClient(
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
-If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
+If you are not familiar with creating tables, refer to the sample on [creating and deleting tables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md).
 
 ## Upsert an entity
 
@@ -67,5 +67,5 @@ Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}"
 
 ---
 To see the full example source files, see:
-- [Synchronous Update and Upsert Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample5_UpdateUpsertEntities.cs)
-- [Asynchronous Update and Upsert Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/tests/samples/Sample5_UpdateUpsertEntitiesAsync.cs)
+- [Synchronous Update and Upsert Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample5_UpdateUpsertEntities.cs)
+- [Asynchronous Update and Upsert Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample5_UpdateUpsertEntitiesAsync.cs)

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> the unit of the metric. </summary>
+    /// <summary> The unit of the metric. </summary>
     public readonly partial struct MetricUnit : IEquatable<MetricUnit>
     {
         private readonly string _value;

@@ -286,8 +286,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerTopicName'>
         /// Name of the partner topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the partner topic.
+        /// <param name='partnerTopicUpdateParameters'>
+        /// PartnerTopic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PartnerTopic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PartnerTopic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, PartnerTopicUpdateParameters partnerTopicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -324,14 +324,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicName");
             }
+            if (partnerTopicUpdateParameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicUpdateParameters");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            PartnerTopicUpdateParameters partnerTopicUpdateParameters = new PartnerTopicUpdateParameters();
-            if (tags != null)
-            {
-                partnerTopicUpdateParameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
