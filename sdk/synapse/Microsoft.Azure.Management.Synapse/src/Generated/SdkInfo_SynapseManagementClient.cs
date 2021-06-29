@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Synapse
 
   internal static partial class SdkInfo
   {
-      public static IEnumerable<Tuple<string, string, string>> ApiInfo_SynapseSqlVManagementClient
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_SynapseSqlManagementClient
       {
           get
           {

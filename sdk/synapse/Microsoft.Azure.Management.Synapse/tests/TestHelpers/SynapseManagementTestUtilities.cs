@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             return new SqlPoolV3
             {
                 Location = commonData.Location,
-                Sku = new Sku
+                Sku = new SkuV3
                 {
                     Name = commonData.PerformanceLevel
                 }
