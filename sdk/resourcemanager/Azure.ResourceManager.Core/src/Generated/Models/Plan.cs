@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the plan's Name.
+        /// Gets or sets the plan's Name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the plan's Publisher.
+        /// Gets or sets the plan's Publisher.
         /// </summary>
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets the plan's product.
+        /// Gets or sets the plan's product.
         /// </summary>
         public string Product { get; set; }
 
         /// <summary>
-        /// Gets the plan's Promotion Code.
+        /// Gets or sets the plan's Promotion Code.
         /// </summary>
         public string PromotionCode { get; set; }
 
         /// <summary>
-        /// Gets the plan's version.
+        /// Gets or sets the plan's version.
         /// </summary>
         public string Version { get; set; }
 
