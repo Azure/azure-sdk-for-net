@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid
         /// Gets or sets the serializer to use for the data portion of the <see cref="EventGridEvent"/>. If not specified,
         /// JsonObjectSerializer is used.
         /// </summary>
-        /// <inheritdoc cref="JsonConverter{CloudEvent}.Read(ref Utf8JsonReader, Type, JsonSerializerOptions)"/>
+        /// <inheritdoc cref="JsonConverter{EventGridEvent}.Read(ref Utf8JsonReader, Type, JsonSerializerOptions)"/>
         public override EventGridEvent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             JsonDocument requestDocument = JsonDocument.ParseValue(ref reader);
