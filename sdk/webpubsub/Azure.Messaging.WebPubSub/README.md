@@ -80,13 +80,13 @@ serviceClient.SendToAll("Hello World!");
 ```C# Snippet:WebPubSubSendJson
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-serviceClient.SendToAll("application/json",
-    RequestContent.Create(
+serviceClient.SendToAll(RequestContent.Create(
         new
         {
             Foo = "Hello World!",
             Bar = 42
-        }));
+        }),
+        ContentType.ApplicationJson);
 ```
 
 ### Broadcast a binary message to all clients
@@ -95,7 +95,7 @@ serviceClient.SendToAll("application/json",
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
 Stream stream = BinaryData.FromString("Hello World!").ToStream();
-serviceClient.SendToAll("application/octet-stream", RequestContent.Create(stream));
+serviceClient.SendToAll(RequestContent.Create(stream), ContentType.ApplicationOctetStream);
 ```
 
 ## Troubleshooting
