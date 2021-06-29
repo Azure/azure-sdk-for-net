@@ -79,7 +79,21 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Executes the logs query.
+        /// Executes the logs query. Deserialized the result into a strongly-typed model class or a primitive type if the query returns a single column.
+        ///
+        /// Example of querying a model:
+        /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     TimeSpan.FromDays(1));
+        /// </code>
+        ///
+        /// Example of querying a primitive:
+        /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
+        ///     TimeSpan.FromDays(1));
+        /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
@@ -95,7 +109,21 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Executes the logs query.
+        /// Executes the logs query. Deserialized the result into a strongly-typed model class or a primitive type if the query returns a single column.
+        ///
+        /// Example of querying a model:
+        /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     TimeSpan.FromDays(1));
+        /// </code>
+        ///
+        /// Example of querying a primitive:
+        /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
+        ///     TimeSpan.FromDays(1));
+        /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>

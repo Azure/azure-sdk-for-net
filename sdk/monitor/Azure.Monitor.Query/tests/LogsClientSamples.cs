@@ -93,9 +93,11 @@ namespace Azure.Monitor.Query.Tests
             LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
+            #region Snippet:QueryLogsAsPrimitiveCall
             Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
                 TimeSpan.FromDays(1));
+            #endregion
 
             foreach (var resourceGroup in response.Value)
             {
@@ -118,9 +120,11 @@ namespace Azure.Monitor.Query.Tests
 #endif
 
             // Query TOP 10 resource groups by event count
+            #region Snippet:QueryLogsAsModelCall
             Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
                 TimeSpan.FromDays(1));
+            #endregion
 
             foreach (var logEntryModel in response.Value)
             {
