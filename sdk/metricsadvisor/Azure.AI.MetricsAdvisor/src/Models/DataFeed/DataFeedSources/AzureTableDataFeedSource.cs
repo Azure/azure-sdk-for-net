@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="table"/>, or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="table"/>, or <paramref name="query"/> is empty.</exception>
         public AzureTableDataFeedSource(string connectionString, string table, string query)
-            : base(DataFeedSourceType.AzureTable)
+            : base(DataFeedSourceKind.AzureTable)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(table, nameof(table));
@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal AzureTableDataFeedSource(AzureTableParameter parameter)
-            : base(DataFeedSourceType.AzureTable)
+            : base(DataFeedSourceKind.AzureTable)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

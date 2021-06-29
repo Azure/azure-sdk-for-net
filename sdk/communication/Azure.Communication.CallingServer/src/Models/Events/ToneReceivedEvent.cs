@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The subscribe to tone event
     /// </summary>
-    [CodeGenModel("ToneReceivedEvent", Usage = new string[] { "model", "input, output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("ToneReceivedEvent", Usage = new string[] { "model", "output" }, Formats = new string[] { "json" })]
     public partial class ToneReceivedEvent : CallingServerEventBase
     {
         /// <summary>

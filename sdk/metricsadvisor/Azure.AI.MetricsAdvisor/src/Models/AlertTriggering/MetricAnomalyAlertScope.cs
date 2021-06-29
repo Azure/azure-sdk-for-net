@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Selects which set of time series should trigger alerts in a <see cref="MetricAnomalyAlertConfiguration"/>. It
+    /// Selects which set of time series should trigger alerts in a <see cref="MetricAlertConfiguration"/>. It
     /// must be instantiated by one of its static methods.
     /// </summary>
     public class MetricAnomalyAlertScope

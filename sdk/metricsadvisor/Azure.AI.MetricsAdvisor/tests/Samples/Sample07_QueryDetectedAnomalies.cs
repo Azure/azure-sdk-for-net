@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(detectionConfigurationId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(detectionConfigurationId, options))
             {
                 Console.WriteLine($"Anomaly value: {anomaly.Value}");
 
@@ -46,9 +46,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Severity: {anomaly.Severity}");
                 Console.WriteLine("Series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> dimensionColumn in anomaly.SeriesKey)
                 {
-                    Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
+                    Console.WriteLine($"  Dimension '{dimensionColumn.Key}': {dimensionColumn.Value}");
                 }
 
                 Console.WriteLine();
@@ -84,7 +84,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(alertConfigurationId, alertId, options))
             {
                 Console.WriteLine($"Anomaly detection configuration ID: {anomaly.DetectionConfigurationId}");
                 Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");
@@ -102,9 +102,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Severity: {anomaly.Severity}");
                 Console.WriteLine("Series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> dimensionColumn in anomaly.SeriesKey)
                 {
-                    Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
+                    Console.WriteLine($"  Dimension '{dimensionColumn.Key}': {dimensionColumn.Value}");
                 }
 
                 Console.WriteLine();

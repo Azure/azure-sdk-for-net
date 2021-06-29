@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
@@ -15,33 +13,11 @@ namespace Azure.Monitor.Query
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QueryModelFactory
     {
-        /// <summary> Initializes new instance of LogsQueryResult class. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="Statistics"> Any object. </param>
-        /// <param name="Visualization"> Any object. </param>
-        /// <returns> A new <see cref="Models.LogsQueryResult"/> instance for mocking. </returns>
-        public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables = default, JsonElement Statistics = default, JsonElement Visualization = default)
-        {
-            tables ??= new List<LogsQueryResultTable>();
-            return new LogsQueryResult(tables, Statistics, Visualization);
-        }
-
-        /// <summary> Initializes new instance of LogsQueryResultTable class. </summary>
-        /// <param name="name"> The name of the table. </param>
-        /// <param name="columns"> The list of columns in this table. </param>
-        /// <param name="internalRows"> The resulting rows from this query. </param>
-        /// <returns> A new <see cref="Models.LogsQueryResultTable"/> instance for mocking. </returns>
-        public static LogsQueryResultTable LogsQueryResultTable(string name = default, IReadOnlyList<LogsQueryResultColumn> columns = default, JsonElement internalRows = default)
-        {
-            columns ??= new List<LogsQueryResultColumn>();
-            return new LogsQueryResultTable(name, columns, internalRows);
-        }
-
         /// <summary> Initializes new instance of LogsQueryResultColumn class. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <returns> A new <see cref="Models.LogsQueryResultColumn"/> instance for mocking. </returns>
-        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogColumnTypes type = default)
+        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogsColumnType type = default)
         {
             return new LogsQueryResultColumn(name, type);
         }
@@ -53,20 +29,6 @@ namespace Azure.Monitor.Query
         public static MetricAvailability MetricAvailability(TimeSpan? timeGrain = default, TimeSpan? retention = default)
         {
             return new MetricAvailability(timeGrain, retention);
-        }
-
-        /// <summary> Initializes new instance of MetricQueryResult class. </summary>
-        /// <param name="cost"> The integer value representing the cost of the query, for data case. </param>
-        /// <param name="Timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
-        /// <param name="metrics"> the value of the collection. </param>
-        /// <returns> A new <see cref="Models.MetricQueryResult"/> instance for mocking. </returns>
-        public static MetricQueryResult MetricQueryResult(int? cost = default, string Timespan = default, TimeSpan? interval = default, string @namespace = default, string resourceRegion = default, IReadOnlyList<Metric> metrics = default)
-        {
-            metrics ??= new List<Metric>();
-            return new MetricQueryResult(cost, Timespan, interval, @namespace, resourceRegion, metrics);
         }
 
         /// <summary> Initializes new instance of MetricValue class. </summary>

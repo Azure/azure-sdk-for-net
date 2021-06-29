@@ -6,15 +6,14 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 15 Jun 2021 17:51:57 GMT",
-        "traceparent": "00-a992c19b9cbdaf4b896d228fc6539e09-bd66bbd003f05842-00",
+        "traceparent": "00-9060888c732cdd4b87a184fded172633-775275ab94380a4f-00",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "5e6be12d95d8bc963aa463aedf3c3741",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 17:51:57 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:21 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -22,13 +21,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 17:51:59 GMT",
-        "MS-CV": "1PX/SsEYDk6EdL9EbcCU\u002BQ.0",
+        "Date": "Tue, 22 Jun 2021 22:03:22 GMT",
+        "MS-CV": "1mFLkINK9UOeJg1byoCkmg.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0vejIYAAAAACMHrgQnAM1R5yCZPwAZG11WVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0KV7SYAAAAADfi6DZsmqaQLFguk495fnOWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "2065ms"
+        "X-Processing-Time": "1119ms"
       },
       "ResponseBody": {
         "id": "Sanitized",
@@ -36,7 +35,7 @@
         "countryCode": "US",
         "phoneNumberType": "tollFree",
         "capabilities": {
-          "calling": "inbound",
+          "calling": "outbound",
           "sms": "inbound\u002Boutbound"
         },
         "assignmentType": "application",

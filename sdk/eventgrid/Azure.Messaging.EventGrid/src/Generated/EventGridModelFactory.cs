@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
@@ -202,14 +201,6 @@ namespace Azure.Messaging.EventGrid
         public static SubscriptionValidationEventData SubscriptionValidationEventData(string validationCode = default, string validationUrl = default)
         {
             return new SubscriptionValidationEventData(validationCode, validationUrl);
-        }
-
-        /// <summary> Initializes new instance of SubscriptionValidationResponse class. </summary>
-        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
-        /// <returns> A new <see cref="SystemEvents.SubscriptionValidationResponse"/> instance for mocking. </returns>
-        public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
-        {
-            return new SubscriptionValidationResponse(validationResponse);
         }
 
         /// <summary> Initializes new instance of SubscriptionDeletedEventData class. </summary>

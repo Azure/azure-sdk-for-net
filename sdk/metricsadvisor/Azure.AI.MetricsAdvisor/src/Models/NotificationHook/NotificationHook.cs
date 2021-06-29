@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Name = name;
-            AdministratorsEmails = new ChangeTrackingList<string>();
+            AdministratorEmails = new ChangeTrackingList<string>();
         }
 
         internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
@@ -28,8 +28,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Id = id;
             Name = name;
             Description = description;
-            ExternalLink = string.IsNullOrEmpty(internalExternalLink) ? null : new Uri(internalExternalLink);
-            AdministratorsEmails = administrators;
+            ExternalUri = string.IsNullOrEmpty(internalExternalLink) ? null : new Uri(internalExternalLink);
+            AdministratorEmails = administrators;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// The list of user e-mails with administrative rights to manage this hook.
         /// </summary>
         [CodeGenMember("Admins")]
-        public IReadOnlyList<string> AdministratorsEmails { get; }
+        public IReadOnlyList<string> AdministratorEmails { get; }
 
         /// <summary> The hook type. </summary>
         internal HookType HookType { get; set; }
@@ -57,13 +57,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string Description { get; set; }
 
         /// <summary> Optional field which enables a customized redirect, such as for troubleshooting notes. </summary>
-        public Uri ExternalLink { get; set; }
+        public Uri ExternalUri { get; set; }
 
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
         [CodeGenMember("ExternalLink")]
-        internal string InternalExternalLink => ExternalLink?.AbsoluteUri;
+        internal string InternalExternalLink => ExternalUri?.AbsoluteUri;
 
         internal static HookInfoPatch GetPatchModel(NotificationHook hook)
         {
@@ -90,8 +90,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             patch.HookName = hook.Name;
             patch.Description = hook.Description;
-            patch.ExternalLink = hook.ExternalLink?.AbsoluteUri;
-            patch.Admins = hook.AdministratorsEmails;
+            patch.ExternalLink = hook.ExternalUri?.AbsoluteUri;
+            patch.Admins = hook.AdministratorEmails;
 
             return patch;
         }

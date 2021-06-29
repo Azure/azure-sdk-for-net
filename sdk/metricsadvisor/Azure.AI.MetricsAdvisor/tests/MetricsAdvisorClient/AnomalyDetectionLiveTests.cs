@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAnomaliesWithMinimumSetup(bool useTokenCredential)
+        public async Task GetAnomaliesForDetectionConfigurationWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Null);
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAnomaliesWithOptionalFilter()
+        public async Task GetAnomaliesForDetectionConfigurationWithOptionalFilter()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -62,19 +62,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Filter = new GetAnomaliesForDetectionConfigurationFilter(AnomalySeverity.Medium, AnomalySeverity.Medium)
             };
 
-            var groupKey1 = new DimensionKey();
-            groupKey1.AddDimensionColumn("city", "Delhi");
-            groupKey1.AddDimensionColumn("category", "Handmade");
+            var columns = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var groupKey1 = new DimensionKey(columns);
 
-            var groupKey2 = new DimensionKey();
-            groupKey2.AddDimensionColumn("city", "Kolkata");
+            columns = new Dictionary<string, string>() { { "city", "Kolkata" } };
+            var groupKey2 = new DimensionKey(columns);
 
             options.Filter.SeriesGroupKeys.Add(groupKey1);
             options.Filter.SeriesGroupKeys.Add(groupKey2);
 
             var anomalyCount = 0;
 
-            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
+            await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.DataFeedId, Is.Null);
@@ -89,10 +88,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateSeriesKey(anomaly.SeriesKey);
 
-                Dictionary<string, string> dimensionColumns = anomaly.SeriesKey.AsDictionary();
-
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
+                anomaly.SeriesKey.TryGetValue("city", out string city);
+                anomaly.SeriesKey.TryGetValue("category", out string category);
 
                 Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
 
@@ -108,7 +105,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetIncidentsWithMinimumSetup(bool useTokenCredential)
+        public async Task GetIncidentsForDetectionConfigurationWithMinimumSetup(bool useTokenCredential)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
@@ -116,7 +113,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var incidentCount = 0;
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
                 Assert.That(incident.DataFeedId, Is.Null);
@@ -141,25 +138,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetIncidentsWithOptionalDimensionFilter()
+        public async Task GetIncidentsForDetectionConfigurationWithOptionalDimensionFilter()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             var options = new GetIncidentsForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime);
 
-            var groupKey1 = new DimensionKey();
-            groupKey1.AddDimensionColumn("city", "Delhi");
-            groupKey1.AddDimensionColumn("category", "Handmade");
+            var columns = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var groupKey1 = new DimensionKey(columns);
 
-            var groupKey2 = new DimensionKey();
-            groupKey2.AddDimensionColumn("city", "Kolkata");
+            columns = new Dictionary<string, string>() { { "city", "Kolkata" } };
+            var groupKey2 = new DimensionKey(columns);
 
             options.DimensionsToFilter.Add(groupKey1);
             options.DimensionsToFilter.Add(groupKey2);
 
             var incidentCount = 0;
 
-            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
+            await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
                 Assert.That(incident.DataFeedId, Is.Null);
@@ -174,10 +170,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateSeriesKey(incident.RootDimensionKey);
 
-                Dictionary<string, string> dimensionColumns = incident.RootDimensionKey.AsDictionary();
-
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
+                incident.RootDimensionKey.TryGetValue("city", out string city);
+                incident.RootDimensionKey.TryGetValue("category", out string category);
 
                 Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
 
@@ -223,13 +217,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // We already know the the incident we want to get, so apply filters to make the
             // service call cheaper.
 
-            var groupKey = new DimensionKey();
-            groupKey.AddDimensionColumn("city", "__SUM__");
-            groupKey.AddDimensionColumn("category", "Grocery & Gourmet Food");
+            var columns = new Dictionary<string, string>() { { "city", "__SUM__" }, { "category", "Grocery & Gourmet Food" } };
+            var groupKey = new DimensionKey(columns);
 
             options.DimensionsToFilter.Add(groupKey);
 
-            await foreach (AnomalyIncident currentIncident in client.GetIncidentsAsync(DetectionConfigurationId, options))
+            await foreach (AnomalyIncident currentIncident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
                 if (currentIncident.Id == IncidentId)
                 {
@@ -264,7 +257,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyIncident incident = null;
 
-            await foreach (AnomalyIncident currentIncident in client.GetIncidentsAsync(AlertConfigurationId, AlertId))
+            await foreach (AnomalyIncident currentIncident in client.GetIncidentsForAlertAsync(AlertConfigurationId, AlertId))
             {
                 if (currentIncident.Id == incidentId)
                 {
@@ -328,9 +321,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetAnomalyDimensionValuesOptions(SamplingStartTime, SamplingEndTime);
-
-            options.DimensionToFilter.AddDimensionColumn("category", "Handmade");
+            var columns = new Dictionary<string, string>() { { "category", "Handmade" } };
+            var options = new GetAnomalyDimensionValuesOptions(SamplingStartTime, SamplingEndTime)
+            {
+                DimensionToFilter = new DimensionKey(columns)
+            };
 
             var valueCount = 0;
 
@@ -354,18 +349,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var seriesKey1 = new DimensionKey();
-            seriesKey1.AddDimensionColumn("city", "Delhi");
-            seriesKey1.AddDimensionColumn("category", "Handmade");
+            var columns = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var seriesKey1 = new DimensionKey(columns);
 
-            var seriesKey2 = new DimensionKey();
-            seriesKey2.AddDimensionColumn("city", "Koltaka");
-            seriesKey2.AddDimensionColumn("category", "__SUM__");
+            columns = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            var seriesKey2 = new DimensionKey(columns);
 
             var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
             var returnedKeys = new List<DimensionKey>();
 
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, DetectionConfigurationId, SamplingStartTime, SamplingEndTime))
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(DetectionConfigurationId, seriesKeys, SamplingStartTime, SamplingEndTime))
             {
                 Assert.That(seriesData, Is.Not.Null);
                 Assert.That(seriesData.SeriesKey, Is.Not.Null);
@@ -394,8 +387,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 returnedKeys.Add(seriesData.SeriesKey);
             }
 
-            IEnumerable<List<KeyValuePair<string, string>>> expectedKvps = seriesKeys.Select(key => key.AsDictionary().ToList());
-            IEnumerable<List<KeyValuePair<string, string>>> returnedKvps = returnedKeys.Select(key => key.AsDictionary().ToList());
+            IEnumerable<List<KeyValuePair<string, string>>> expectedKvps = seriesKeys.Select(key => key.ToList());
+            IEnumerable<List<KeyValuePair<string, string>>> returnedKvps = returnedKeys.Select(key => key.ToList());
 
             Assert.That(returnedKvps, Is.EquivalentTo(expectedKvps));
         }
