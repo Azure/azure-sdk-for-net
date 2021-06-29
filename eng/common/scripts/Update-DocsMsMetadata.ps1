@@ -65,8 +65,11 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $foundTitle = $matches["filetitle"]
   }
 
-  $replacementPattern = "`${1}$tag"
-  $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
+  # If this is not a daily dev package, perform link replacement
+  if (!$packageInfo.DevVersion) {
+    $replacementPattern = "`${1}$tag"
+    $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
+  }
   
   $header = @"
 ---
@@ -96,12 +99,16 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     # If the package is of a dev version there may be language-specific needs to 
     # specify the appropriate version. For example, in the case of JS, the dev 
     # version is always 'dev' when interacting with NPM.
-    if ($GetDocsMsLanguageSpecificPackageInfo -and (Test-Path "Function:$GetDocsMsLanguageSpecificPackageInfo")) { 
-      $packageInfo = &$GetDocsMsLanguageSpecificPackageInfo $packageInfo
+    if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) { 
+      $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo
+    } else {
+      # Default: use the dev version from package info as the version for
+      # downstream processes
+      $packageInfo.Version = $packageInfo.DevVersion
     }
   }
 
-  $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name })
+  $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.GroupId -eq $packageInfo.Group -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
   if ($packageMetadataArray.Count -eq 0) { 
     LogError "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV"
   } elseif ($packageMetadataArray.Count -gt 1) { 
@@ -116,8 +123,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   }
 
   $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
-  $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
-
   $readMePath = $docsMsMetadata.LatestReadMeLocation
   if ($originalVersion.IsPrerelease) { 
     $readMePath = $docsMsMetadata.PreviewReadMeLocation

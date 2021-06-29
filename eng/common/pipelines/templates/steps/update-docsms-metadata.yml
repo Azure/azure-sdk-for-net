@@ -1,5 +1,5 @@
 parameters:
-  - name: Artifacts
+  - name: PackageInfoLocations
     type: object
     default: []
   - name: RepoId
@@ -75,10 +75,10 @@ steps:
       DefaultBranchVariableName: TargetBranchName
 
 - pwsh: |
-    $artifactInfoJson = '${{ convertToJson(parameters.Artifacts) }}'.Trim('"')
-    $artifactInfo = ConvertFrom-Json $artifactInfoJson
+    $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"')
+    $packageInfoLocations = ConvertFrom-Json $packageInfoJson
     ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
-      -PackageInfoJsonLocations $artifactInfo `
+      -PackageInfoJsonLocations $packageInfoLocations `
       -DocRepoLocation "$(DocRepoLocation)" `
       -Language '${{parameters.Language}}' `
       -RepoId '${{ parameters.RepoId }}'
