@@ -9,6 +9,15 @@ namespace Azure.AI.TextAnalytics
     public class TextAnalyticsActions
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TextAnalyticsActions"/>
+        /// class which determines the set of actions that will get executed on the input documents.
+        /// For example, execute extract key phrases, recognize entities, and more.
+        /// </summary>
+        public TextAnalyticsActions()
+        {
+        }
+
+        /// <summary>
         /// Optional display name for the operation.
         /// </summary>
         public string DisplayName { get; set; }

@@ -199,25 +199,25 @@ namespace Azure.Monitor.Query.Models
             var element = _row[index];
             switch (_columns[index].Type.ToString())
             {
-                case LogColumnTypes.DatetimeTypeValue:
+                case LogsColumnType.DatetimeTypeValue:
                     return GetDateTimeOffset(index);
-                case LogColumnTypes.BoolTypeValue:
+                case LogsColumnType.BoolTypeValue:
                     return GetBoolean(index);
-                case LogColumnTypes.GuidTypeValue:
+                case LogsColumnType.GuidTypeValue:
                     return GetGuid(index);
-                case LogColumnTypes.IntTypeValue:
+                case LogsColumnType.IntTypeValue:
                     return GetInt32(index);
-                case LogColumnTypes.LongTypeValue:
+                case LogsColumnType.LongTypeValue:
                     return GetInt64(index);
-                case LogColumnTypes.RealTypeValue:
+                case LogsColumnType.RealTypeValue:
                     return GetDouble(index);
-                case LogColumnTypes.StringTypeValue:
+                case LogsColumnType.StringTypeValue:
                     return GetString(index);
-                case LogColumnTypes.TimespanTypeValue:
+                case LogsColumnType.TimespanTypeValue:
                     return GetTimeSpan(index);
-                case LogColumnTypes.DecimalTypeValue:
+                case LogsColumnType.DecimalTypeValue:
                     return GetDecimal(index);
-                case LogColumnTypes.DynamicValueTypeValue:
+                case LogsColumnType.DynamicValueTypeValue:
                     return GetDynamic(index);
             }
 
@@ -271,5 +271,11 @@ namespace Azure.Monitor.Query.Models
         public object this[string name] => GetObject(name);
 
         internal bool TryGetColumn(string name, out int column) => _columnMap.TryGetValue(name, out column);
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return _row.ToString();
+        }
     }
 }

@@ -4,6 +4,10 @@
 ### New features
 - Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
 - Added value `None` to enum `PiiEntityDomainType` to allow user to specify no domain.
+- Added property `ActionName` to all `xxActions` input types so user can specify a name per action. If not provided, service will generate a name.
+- Added property `ActionName` to all `xxActionResult` output types that displays the name of each action.
+- Added new overload methods to all `xxActions` types that take a `xxOptions` object to facilitate a transition from a singular method to an actions method.
+- The parameter `CategoriesFilter` in `RecognizePiiEntitiesActions` has been enabled for `StartAnalyzeActions` methods.
 
 ### Breaking changes
 - Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.

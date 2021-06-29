@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfig = new MetricAnomalyAlertConfiguration(detectionConfigId, scope);
+            var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope);
 
             string configName = Recording.GenerateAlphaNumericId("config");
 
@@ -47,11 +47,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+            Assert.That(createdConfig.ConditionOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
-            MetricAnomalyAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
+            MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
 
             Assert.That(createdMetricAlertConfig.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -76,12 +76,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            DimensionKey groupKey = new DimensionKey();
-            groupKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Delhi");
+            var columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" } };
+            DimensionKey groupKey = new DimensionKey(columns);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForSeriesGroup(groupKey);
-            var metricAlertConfig = new MetricAnomalyAlertConfiguration(detectionConfigId, scope);
+            var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope);
 
             string configName = Recording.GenerateAlphaNumericId("config");
 
@@ -98,11 +98,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+            Assert.That(createdConfig.ConditionOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
-            MetricAnomalyAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
+            MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
 
             Assert.That(createdMetricAlertConfig.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -131,7 +131,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var topNGroup = new TopNGroupScope(30, 20, 10);
             var scope = MetricAnomalyAlertScope.GetScopeForTopNGroup(topNGroup);
-            var metricAlertConfig = new MetricAnomalyAlertConfiguration(detectionConfigId, scope);
+            var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope);
 
             string configName = Recording.GenerateAlphaNumericId("config");
 
@@ -148,11 +148,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+            Assert.That(createdConfig.ConditionOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
-            MetricAnomalyAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
+            MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
 
             Assert.That(createdMetricAlertConfig.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -195,7 +195,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfig = new MetricAnomalyAlertConfiguration(detectionConfigId, scope)
+            var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(12, SnoozeScope.Series, true),
                 AlertConditions = new MetricAnomalyAlertConditions()
@@ -229,13 +229,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.EqualTo(description));
-            Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
+            Assert.That(createdConfig.ConditionOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert.Count, Is.EqualTo(2));
             Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook0.Hook.Id));
             Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook1.Hook.Id));
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
-            MetricAnomalyAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
+            MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
 
             Assert.That(createdMetricAlertConfig.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -271,11 +271,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            // Configure the Metric Anomaly Alert Configurations to be used.
+            // Configure the Metric Alert Configurations to be used.
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfig0 = new MetricAnomalyAlertConfiguration(detectionConfigId, scope)
+            var metricAlertConfig0 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertConditions = new MetricAnomalyAlertConditions()
                 {
@@ -283,7 +283,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 },
                 UseDetectionResultToFilterAnomalies = true
             };
-            var metricAlertConfig1 = new MetricAnomalyAlertConfiguration(detectionConfigId, scope)
+            var metricAlertConfig1 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertConditions = new MetricAnomalyAlertConditions()
                 {
@@ -299,7 +299,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 Name = configName,
                 MetricAlertConfigurations = { metricAlertConfig0, metricAlertConfig1 },
-                CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Xor
+                ConditionOperator = DetectionConditionOperator.Xor
             };
 
             await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
@@ -311,14 +311,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
-            Assert.That(createdConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.Xor));
+            Assert.That(createdConfig.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Xor));
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
             Assert.That(createdConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
 
-            // Validate the first Metric Anomaly Alert Configuration.
+            // Validate the first Metric Alert Configuration.
 
-            MetricAnomalyAlertConfiguration createdMetricAlertConfig0 = createdConfig.MetricAlertConfigurations[0];
+            MetricAlertConfiguration createdMetricAlertConfig0 = createdConfig.MetricAlertConfigurations[0];
 
             Assert.That(createdMetricAlertConfig0.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -339,9 +339,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
             Assert.That(createdMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.True);
 
-            // Validate the second Metric Anomaly Alert Configuration.
+            // Validate the second Metric Alert Configuration.
 
-            MetricAnomalyAlertConfiguration createdMetricAlertConfig1 = createdConfig.MetricAlertConfigurations[1];
+            MetricAlertConfiguration createdMetricAlertConfig1 = createdConfig.MetricAlertConfigurations[1];
 
             Assert.That(createdMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -373,7 +373,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            // Configure the Metric Anomaly Alert Configurations to be used.
+            // Configure the Metric Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
@@ -382,7 +382,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfig0 = new MetricAnomalyAlertConfiguration(detectionConfigId, scope)
+            var metricAlertConfig0 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(12, SnoozeScope.Series, true),
                 AlertConditions = new MetricAnomalyAlertConditions()
@@ -397,7 +397,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
             };
-            var metricAlertConfig1 = new MetricAnomalyAlertConfiguration(detectionConfigId, scope)
+            var metricAlertConfig1 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 UseDetectionResultToFilterAnomalies = true
             };
@@ -412,7 +412,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Name = configName,
                 IdsOfHooksToAlert = { disposableHook.Hook.Id },
                 MetricAlertConfigurations = { metricAlertConfig0, metricAlertConfig1 },
-                CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Xor
+                ConditionOperator = DetectionConditionOperator.Xor
             };
 
             await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
@@ -421,7 +421,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AnomalyAlertConfiguration configToUpdate = disposableConfig.Configuration;
 
-            configToUpdate.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Or;
+            configToUpdate.ConditionOperator = DetectionConditionOperator.Or;
 
             AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
@@ -430,14 +430,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.Empty);
-            Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.Or));
+            Assert.That(updatedConfig.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Or));
             Assert.That(updatedConfig.IdsOfHooksToAlert, Is.EqualTo(hookIds));
             Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
             Assert.That(updatedConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
 
-            // Validate the first Metric Anomaly Alert Configuration.
+            // Validate the first Metric Alert Configuration.
 
-            MetricAnomalyAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
+            MetricAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
 
             Assert.That(updatedMetricAlertConfig0.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -464,9 +464,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
 
-            // Validate the second Metric Anomaly Alert Configuration.
+            // Validate the second Metric Alert Configuration.
 
-            MetricAnomalyAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
+            MetricAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
 
             Assert.That(updatedMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -490,7 +490,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            // Configure the Metric Anomaly Alert Configurations to be used.
+            // Configure the Metric Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             var hookToCreate = new EmailNotificationHook(hookName) { EmailsToAlert = { "fake@email.com" } };
@@ -499,7 +499,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfig0 = new MetricAnomalyAlertConfiguration(detectionConfigId, scope)
+            var metricAlertConfig0 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(12, SnoozeScope.Series, true),
                 AlertConditions = new MetricAnomalyAlertConditions()
@@ -514,7 +514,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
             };
-            var metricAlertConfig1 = new MetricAnomalyAlertConfiguration(detectionConfigId, scope)
+            var metricAlertConfig1 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 UseDetectionResultToFilterAnomalies = true
             };
@@ -524,14 +524,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string configName = Recording.GenerateAlphaNumericId("config");
             var description = "This hook was created to test the .NET client.";
             var hookIds = new List<string>() { disposableHook.Hook.Id };
-            var metricAlertConfigs = new List<MetricAnomalyAlertConfiguration>() { metricAlertConfig0, metricAlertConfig1 };
+            var metricAlertConfigs = new List<MetricAlertConfiguration>() { metricAlertConfig0, metricAlertConfig1 };
 
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
                 IdsOfHooksToAlert = { disposableHook.Hook.Id },
                 MetricAlertConfigurations = { metricAlertConfig0, metricAlertConfig1 },
-                CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Xor
+                ConditionOperator = DetectionConditionOperator.Xor
             };
 
             await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
@@ -542,18 +542,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.Description = description;
             configToUpdate.IdsOfHooksToAlert.Clear();
-            configToUpdate.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.And;
+            configToUpdate.ConditionOperator = DetectionConditionOperator.And;
             configToUpdate.MetricAlertConfigurations.RemoveAt(1);
 
             var newScope = MetricAnomalyAlertScope.GetScopeForTopNGroup(new TopNGroupScope(50, 40, 30));
-            var newMetricAlertConfig = new MetricAnomalyAlertConfiguration(detectionConfigId, newScope)
+            var newMetricAlertConfig = new MetricAlertConfiguration(detectionConfigId, newScope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(4, SnoozeScope.Metric, true),
                 UseDetectionResultToFilterAnomalies = true
             };
             configToUpdate.MetricAlertConfigurations.Add(newMetricAlertConfig);
 
-            MetricAnomalyAlertConfiguration metricAlertConfigToUpdate = configToUpdate.MetricAlertConfigurations[0];
+            MetricAlertConfiguration metricAlertConfigToUpdate = configToUpdate.MetricAlertConfigurations[0];
 
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.UpperBound = 15.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.LowerBound = 5.0;
@@ -571,13 +571,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
-            Assert.That(updatedConfig.CrossMetricsOperator, Is.EqualTo(MetricAnomalyAlertConfigurationsOperator.And));
+            Assert.That(updatedConfig.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
             Assert.That(updatedConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
             Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
 
-            // Validate the first Metric Anomaly Alert Configuration.
+            // Validate the first Metric Alert Configuration.
 
-            MetricAnomalyAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
+            MetricAlertConfiguration updatedMetricAlertConfig0 = updatedConfig.MetricAlertConfigurations[0];
 
             Assert.That(updatedMetricAlertConfig0.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -600,9 +600,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
             Assert.That(updatedMetricAlertConfig0.UseDetectionResultToFilterAnomalies, Is.False);
 
-            // Validate the second Metric Anomaly Alert Configuration.
+            // Validate the second Metric Alert Configuration.
 
-            MetricAnomalyAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
+            MetricAlertConfiguration updatedMetricAlertConfig1 = updatedConfig.MetricAlertConfigurations[1];
 
             Assert.That(updatedMetricAlertConfig1.DetectionConfigurationId, Is.EqualTo(detectionConfigId));
 
@@ -629,7 +629,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
         public async Task GetAlertConfigurations(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
@@ -646,18 +645,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (config.MetricAlertConfigurations.Count == 1)
                 {
-                    Assert.That(config.CrossMetricsOperator, Is.Null);
+                    Assert.That(config.ConditionOperator, Is.Null);
                 }
                 else if (config.MetricAlertConfigurations.Count == 2)
                 {
-                    Assert.That(config.CrossMetricsOperator, Is.Not.Null);
-                    Assert.That(config.CrossMetricsOperator, Is.Not.EqualTo(default(MetricAnomalyAlertConfigurationsOperator)));
+                    Assert.That(config.ConditionOperator, Is.Not.Null);
+                    Assert.That(config.ConditionOperator, Is.Not.EqualTo(default(DetectionConditionOperator)));
                 }
                 else
                 {
-                    Assert.That(config.CrossMetricsOperator, Is.Not.Null);
-                    Assert.That(config.CrossMetricsOperator, Is.Not.EqualTo(default(MetricAnomalyAlertConfigurationsOperator)));
-                    Assert.That(config.CrossMetricsOperator, Is.Not.EqualTo(MetricAnomalyAlertConfigurationsOperator.Xor));
+                    Assert.That(config.ConditionOperator, Is.Not.Null);
+                    Assert.That(config.ConditionOperator, Is.Not.EqualTo(default(DetectionConditionOperator)));
+                    Assert.That(config.ConditionOperator, Is.Not.EqualTo(DetectionConditionOperator.Xor));
                 }
 
                 foreach (string hookId in config.IdsOfHooksToAlert)
@@ -665,9 +664,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(hookId, Is.Not.Null.And.Not.Empty);
                 }
 
-                foreach (MetricAnomalyAlertConfiguration metricConfig in config.MetricAlertConfigurations)
+                foreach (MetricAlertConfiguration metricConfig in config.MetricAlertConfigurations)
                 {
-                    ValidateMetricAnomalyAlertConfiguration(metricConfig);
+                    ValidateMetricAlertConfiguration(metricConfig);
                 }
 
                 if (++configCount >= MaximumSamplesCount)
@@ -719,7 +718,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
-        private void ValidateMetricAnomalyAlertConfiguration(MetricAnomalyAlertConfiguration configuration)
+        private void ValidateMetricAlertConfiguration(MetricAlertConfiguration configuration)
         {
             Assert.That(configuration.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
             Assert.That(configuration.AlertScope, Is.Not.Null);

@@ -17,6 +17,11 @@
   
 ## 1.5.0-beta.1 (2021-06-08)
 
+### New Features
+- Added regional STS support to client credential types
+  - Added `RegionalAuthority` extensible enum
+  - Added `RegionalAuthority` property to `ClientSecretCredentialOptions` and `ClientCertificateCredentialOptions`
+
 ### Fixes and improvements
 
 - Added `LoginHint` property to `InteractiveBrowserCredentialOptions` which allows a user name to be pre-selected for interactive logins. Setting this option skips the account selection prompt and immediately attempts to login with the specified account.

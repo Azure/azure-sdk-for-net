@@ -8,15 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "30",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 17:51:30 GMT",
-        "traceparent": "00-dcaca12395fa9d4d902f92111351bd12-3900e476b2e11b44-00",
+        "traceparent": "00-c54dab8c6f293241b7a92e67a88f837b-d7863e93bdb4af4d-00",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "263947100f3426b871f6d8688d2a572d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 17:51:30 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:53 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -26,18 +25,19 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 17:51:30 GMT",
-        "MS-CV": "rqB3TsPwvEm6hFh/Ygxl/w.0",
+        "Date": "Tue, 22 Jun 2021 22:03:53 GMT",
+        "MS-CV": "CsA0LGa87k2SluvgFB4cwg.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0oujIYAAAAAD149JhGURLSY9V9oSB\u002BsUmWVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0SV7SYAAAAAAe3lsW3tjlRa1s2mOSVFT1WVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1120ms"
+        "X-Processing-Time": "295ms"
       },
       "ResponseBody": {
         "error": {
-          "code": "SearchIdNotFound",
-          "message": "The specified search id Sanitized cannot be found."
+          "code": "NotFound",
+          "message": "Input searchId Sanitized cannot be found.",
+          "target": "searchid"
         }
       }
     }

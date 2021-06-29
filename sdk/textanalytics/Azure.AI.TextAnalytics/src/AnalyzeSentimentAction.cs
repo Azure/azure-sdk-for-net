@@ -21,6 +21,19 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeSentimentAction"/>
+        /// class based on the values of a <see cref="AnalyzeSentimentOptions"/>.
+        /// It sets the <see cref="ModelVersion"/>, the <see cref="DisableServiceLogs"/>,
+        /// and the <see cref="IncludeOpinionMining"/> properties.
+        /// </summary>
+        public AnalyzeSentimentAction(AnalyzeSentimentOptions options)
+        {
+            ModelVersion = options.ModelVersion;
+            DisableServiceLogs = options.DisableServiceLogs;
+            IncludeOpinionMining = options.IncludeOpinionMining;
+        }
+
+        /// <summary>
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:
@@ -34,7 +47,7 @@ namespace Azure.AI.TextAnalytics
         /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
 
@@ -46,8 +59,13 @@ namespace Azure.AI.TextAnalytics
         /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
         /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
+
+        /// <summary>
+        /// Gets or sets a name for this action. If not provided, the service will generate one.
+        /// </summary>
+        public string ActionName { get; set; }
     }
 }

@@ -222,7 +222,7 @@ Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
 Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in createdDataFeed.AdministratorsEmails)
+foreach (string admin in createdDataFeed.AdministratorEmails)
 {
     Console.WriteLine($" - {admin}");
 }
@@ -345,7 +345,7 @@ AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
 var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
+var metricAlertConfiguration = new MetricAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
 alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
@@ -415,9 +415,9 @@ await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(aler
     Console.WriteLine($"Severity: {anomaly.Severity}");
     Console.WriteLine("Series key:");
 
-    foreach (KeyValuePair<string, string> keyValuePair in anomaly.SeriesKey.AsDictionary())
+    foreach (KeyValuePair<string, string> dimensionColumn in anomaly.SeriesKey)
     {
-        Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
+        Console.WriteLine($"  Dimension '{dimensionColumn.Key}': {dimensionColumn.Value}");
     }
 
     Console.WriteLine();

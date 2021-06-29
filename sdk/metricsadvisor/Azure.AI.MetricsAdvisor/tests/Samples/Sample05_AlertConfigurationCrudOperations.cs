@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
+            var metricAlertConfiguration = new MetricAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
             alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
@@ -88,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine();
 
             Console.WriteLine("Metric anomaly alert configurations:");
-            foreach (MetricAnomalyAlertConfiguration metricAlertConfiguration in alertConfiguration.MetricAlertConfigurations)
+            foreach (MetricAlertConfiguration metricAlertConfiguration in alertConfiguration.MetricAlertConfigurations)
             {
                 Console.Write($"  Scope type: {metricAlertConfiguration.AlertScope.ScopeType}, ");
                 Console.WriteLine($"Anomaly detection configuration ID: {metricAlertConfiguration.DetectionConfigurationId}");

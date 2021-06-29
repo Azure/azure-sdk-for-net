@@ -27,12 +27,18 @@ namespace Azure.AI.MetricsAdvisor.Samples
             // Only incidents from time series that are part of one of the groups specified
             // will be returned.
 
-            var groupKey1 = new DimensionKey();
-            groupKey1.AddDimensionColumn("city", "Bengaluru");
+            var dimensionColumns = new Dictionary<string, string>()
+            {
+                { "city", "Bengaluru" }
+            };
+            var groupKey1 = new DimensionKey(dimensionColumns);
 
-            var groupKey2 = new DimensionKey();
-            groupKey2.AddDimensionColumn("city", "Hong Kong");
-            groupKey2.AddDimensionColumn("category", "Industrial & Scientific");
+            dimensionColumns = new Dictionary<string, string>()
+            {
+                { "city", "Hong Kong" },
+                { "category", "Industrial & Scientific" }
+            };
+            var groupKey2 = new DimensionKey(dimensionColumns);
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
@@ -59,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -110,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -153,7 +159,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in rootCause.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in rootCause.SeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }

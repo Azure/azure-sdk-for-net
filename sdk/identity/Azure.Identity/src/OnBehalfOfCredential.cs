@@ -83,8 +83,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
-                var options = new OnBehalfOfCredentialOptions();
-                UserAssertionScope.Current.Client = _client ?? new MsalConfidentialClient(_pipeline, tenantId, _clientId, _clientSecret, UserAssertionScope.Current.CacheOptions);
+                UserAssertionScope.Current.Client = _client ?? new MsalConfidentialClient(_pipeline, tenantId, _clientId, _clientSecret, UserAssertionScope.Current.CacheOptions, default);
 
                 AuthenticationResult result = await UserAssertionScope.Current.Client
                     .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, UserAssertionScope.Current.UserAssertion, async, cancellationToken)

@@ -15,18 +15,30 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
+        /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, taskName, status)
         {
+            if (taskName == null)
+            {
+                throw new ArgumentNullException(nameof(taskName));
+            }
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
+        /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, EntitiesResult results) : base(lastUpdateDateTime, name, status)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, EntitiesResult results) : base(lastUpdateDateTime, taskName, status)
         {
+            if (taskName == null)
+            {
+                throw new ArgumentNullException(nameof(taskName));
+            }
+
             Results = results;
         }
 

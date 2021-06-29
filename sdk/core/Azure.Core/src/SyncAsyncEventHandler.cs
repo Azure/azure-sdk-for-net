@@ -200,7 +200,7 @@ namespace Azure.Core
     /// in compute heavy handlers.
     /// </para>
     /// <para>
-    /// A <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing">
+    /// A <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing">
     /// distributed tracing span</see> is wrapped around your handlers using
     /// the event name so you can see how long your handlers took to run,
     /// whether they made other calls to Azure services, and details about any
