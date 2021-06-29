@@ -144,9 +144,19 @@ namespace Azure.ResourceManager.Core
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
         public Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionOperations(
-                    new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
-                    subscriptionGuid).Get(cancellationToken);
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            scope.Start();
+            try
+            {
+                return new SubscriptionOperations(
+                        new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
+                        subscriptionGuid).Get(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -158,9 +168,19 @@ namespace Azure.ResourceManager.Core
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
         public virtual Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionOperations(
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            scope.Start();
+            try
+            {
+                return new SubscriptionOperations(
                 new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
                 subscriptionGuid).GetAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
