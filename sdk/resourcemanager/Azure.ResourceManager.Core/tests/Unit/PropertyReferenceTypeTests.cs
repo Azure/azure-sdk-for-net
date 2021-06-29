@@ -17,8 +17,9 @@ namespace Azure.ResourceManager.Core.Tests
         public void ValidatePropertyReferenceTypeAttribute()
         {
             var type = typeof(PropertyReferenceTypeAttribute);
-            var fieldInfo = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "SkipType");
-            Assert.NotNull(fieldInfo, $"Field 'SkipType' is not found");
+            var fieldInfo = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "SkipTypes");
+            Assert.NotNull(fieldInfo, $"Field 'SkipTypes' is not found");
+            Assert.AreEqual(fieldInfo.PropertyType, typeof(Type[]));
             Assert.True(fieldInfo.CanRead);
             Assert.False(fieldInfo.CanWrite);
         }

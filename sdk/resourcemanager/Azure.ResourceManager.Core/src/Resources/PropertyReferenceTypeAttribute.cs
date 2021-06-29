@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Core
 {
@@ -14,10 +15,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Instatiate a new reference type attribute.
         /// </summary>
-        /// <param name="skipType"> Type to skip for this reference type. </param>
-        public PropertyReferenceTypeAttribute(Type skipType)
+        /// <param name="skipTypes"> An array of types to skip for this reference type. </param>
+        public PropertyReferenceTypeAttribute(Type[] skipTypes)
         {
-            SkipType = skipType;
+            SkipTypes = skipTypes;
         }
 
         /// <summary>
@@ -28,8 +29,8 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Get the skip type for this reference type.
+        /// Get an array of types to skip for this reference type.
         /// </summary>
-        public Type SkipType { get; }
+        public Type[] SkipTypes { get; }
     }
 }

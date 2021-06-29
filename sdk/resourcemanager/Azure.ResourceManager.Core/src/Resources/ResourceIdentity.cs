@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Represents a managed identity
     /// </summary>
-    [PropertyReferenceType(typeof(ResourceIdentityType))]
+    [PropertyReferenceType(new Type[] { typeof(ResourceIdentityType) })]
     public class ResourceIdentity : IEquatable<ResourceIdentity>
     {
         private const string SystemAssigned = "SystemAssigned";
