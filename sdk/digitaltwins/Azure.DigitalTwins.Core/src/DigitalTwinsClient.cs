@@ -2169,7 +2169,20 @@ namespace Azure.DigitalTwins.Core
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         public virtual AsyncPageable<T> QueryAsync<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
         {
-            return QueryAsync<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
+            scope.Start();
+
+            Argument.AssertNotNull(adtQueryBuilder, nameof(adtQueryBuilder));
+
+            try
+            {
+                return QueryAsync<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -2181,7 +2194,20 @@ namespace Azure.DigitalTwins.Core
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         public virtual Pageable<T> Query<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
         {
-            return Query<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
+            scope.Start();
+
+            Argument.AssertNotNull(adtQueryBuilder, nameof(adtQueryBuilder));
+
+            try
+            {
+                return Query<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
