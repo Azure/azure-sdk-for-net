@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             Optional<EntitiesResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            string taskName = default;
+            Optional<string> taskName = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityRecognitionTasksItem(lastUpdateDateTime, taskName, status, results.Value);
+            return new EntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
         }
     }
 }

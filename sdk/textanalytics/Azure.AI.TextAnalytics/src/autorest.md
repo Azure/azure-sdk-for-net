@@ -50,6 +50,16 @@ directive:
     $.properties.text["x-nullable"] = true;
 ```
 
+### Make taskName non-required
+This should be deleted in service v3.2 when service enables taskName again
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TaskState
+  transform: >
+    $["required"] = ["status", "lastUpdateDateTime"]
+```
+
 ### Add x-ms-paths section if not exists
 
 ```yaml

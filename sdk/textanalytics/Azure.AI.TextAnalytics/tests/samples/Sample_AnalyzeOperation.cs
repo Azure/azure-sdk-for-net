@@ -91,7 +91,6 @@ namespace Azure.AI.TextAnalytics.Samples
                 int docNumber = 1;
                 foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
                 {
-                    Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
                     foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
@@ -114,7 +113,6 @@ namespace Azure.AI.TextAnalytics.Samples
                 docNumber = 1;
                 foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
                 {
-                    Console.WriteLine($" Action name: {piiActionResults.ActionName}");
                     foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
@@ -137,7 +135,6 @@ namespace Azure.AI.TextAnalytics.Samples
                 docNumber = 1;
                 foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
                 {
-                    Console.WriteLine($" Action name: {keyPhrasesActionResult.ActionName}");
                     foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
@@ -155,7 +152,6 @@ namespace Azure.AI.TextAnalytics.Samples
                 docNumber = 1;
                 foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
                 {
-                    Console.WriteLine($" Action name: {linkedEntitiesActionResults.ActionName}");
                     foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");
@@ -187,7 +183,6 @@ namespace Azure.AI.TextAnalytics.Samples
                 docNumber = 1;
                 foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
                 {
-                    Console.WriteLine($" Action name: {analyzeSentimentActionsResult.ActionName}");
                     foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");

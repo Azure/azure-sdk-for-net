@@ -15,16 +15,19 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of TaskState. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
+        /// <param name="status"> . </param>
+        internal TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
+        {
+            LastUpdateDateTime = lastUpdateDateTime;
+            Status = status;
+        }
+
+        /// <summary> Initializes a new instance of TaskState. </summary>
+        /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         internal TaskState(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-
             LastUpdateDateTime = lastUpdateDateTime;
             TaskName = taskName;
             Status = status;
