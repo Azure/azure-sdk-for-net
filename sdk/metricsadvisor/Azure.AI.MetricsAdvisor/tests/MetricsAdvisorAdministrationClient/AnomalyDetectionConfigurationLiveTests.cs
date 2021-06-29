@@ -656,7 +656,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             Assert.That(condition, Is.Not.Null);
             Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
-            Assert.That(condition.IsWithinRange, Is.EqualTo(isWithinRange));
+            Assert.That(condition.WithinRange, Is.EqualTo(isWithinRange));
             Assert.That(condition.ChangePercentage, Is.EqualTo(changePercentage));
             Assert.That(condition.ShiftPoint, Is.EqualTo(shiftPoint));
             Assert.That(condition.SuppressCondition, Is.Not.Null);

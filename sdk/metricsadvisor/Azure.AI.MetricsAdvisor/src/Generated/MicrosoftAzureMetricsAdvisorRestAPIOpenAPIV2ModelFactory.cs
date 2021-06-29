@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="id"> anomaly alerting configuration unique id. </param>
         /// <param name="name"> anomaly alerting configuration name. </param>
         /// <param name="description"> anomaly alerting configuration description. </param>
-        /// <param name="crossMetricsOperator">
+        /// <param name="conditionOperator">
         /// cross metrics operator
         /// 
         /// 
@@ -29,12 +29,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
         /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
         /// <returns> A new <see cref="Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
-        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = default, string name = default, string description = default, MetricAnomalyAlertConfigurationsOperator? crossMetricsOperator = default, IList<string> splitAlertByDimensions = default, IList<string> idsOfHooksToAlert = default, IList<MetricAlertConfiguration> metricAlertConfigurations = default)
+        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = default, string name = default, string description = default, DetectionConditionOperator? conditionOperator = default, IList<string> splitAlertByDimensions = default, IList<string> idsOfHooksToAlert = default, IList<MetricAlertConfiguration> metricAlertConfigurations = default)
         {
             splitAlertByDimensions ??= new List<string>();
             idsOfHooksToAlert ??= new List<string>();
             metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
-            return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, splitAlertByDimensions, idsOfHooksToAlert, metricAlertConfigurations);
+            return new AnomalyAlertConfiguration(id, name, description, conditionOperator, splitAlertByDimensions, idsOfHooksToAlert, metricAlertConfigurations);
         }
 
         /// <summary> Initializes new instance of AnomalyAlert class. </summary>

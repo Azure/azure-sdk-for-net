@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Filters the result by the type of the <see cref="DataFeedSource"/>.
         /// </summary>
-        public DataFeedSourceType? SourceType { get; set; }
+        public DataFeedSourceKind? SourceType { get; set; }
 
         /// <summary>
         /// Filters the result by <see cref="DataFeedGranularity.GranularityType"/>.

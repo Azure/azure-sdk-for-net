@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <see cref="AnomalyAlertConfiguration"/> instance.
     /// </summary>
     [CodeGenModel("AnomalyAlertingConfigurationLogicType")]
-    public readonly partial struct MetricAnomalyAlertConfigurationsOperator
+    public readonly partial struct DetectionConditionOperator
     {
         /// <summary>
         /// The data point will trigger an alert if every <see cref="MetricAlertConfiguration"/> defined
@@ -19,14 +19,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// be triggered.
         /// </summary>
         [CodeGenMember("AND")]
-        public static MetricAnomalyAlertConfigurationsOperator And { get; } = new MetricAnomalyAlertConfigurationsOperator(AndValue);
+        public static DetectionConditionOperator And { get; } = new DetectionConditionOperator(AndValue);
 
         /// <summary>
         /// The data point will trigger an alert if at least one <see cref="MetricAlertConfiguration"/>
         /// defined in <see cref="AnomalyAlertConfiguration"/> is satisfied.
         /// </summary>
         [CodeGenMember("OR")]
-        public static MetricAnomalyAlertConfigurationsOperator Or { get; } = new MetricAnomalyAlertConfigurationsOperator(OrValue);
+        public static DetectionConditionOperator Or { get; } = new DetectionConditionOperator(OrValue);
 
         /// <summary>
         /// It can be used only when there are up to two <see cref="MetricAlertConfiguration"/>s defined
@@ -34,6 +34,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// configurations is satisfied.
         /// </summary>
         [CodeGenMember("XOR")]
-        public static MetricAnomalyAlertConfigurationsOperator Xor { get; } = new MetricAnomalyAlertConfigurationsOperator(XorValue);
+        public static DetectionConditionOperator Xor { get; } = new DetectionConditionOperator(XorValue);
     }
 }

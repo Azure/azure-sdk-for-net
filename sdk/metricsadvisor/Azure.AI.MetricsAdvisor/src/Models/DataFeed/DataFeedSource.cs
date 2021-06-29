@@ -12,15 +12,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// </summary>
     public abstract class DataFeedSource
     {
-        internal DataFeedSource(DataFeedSourceType dataFeedSourceType)
+        internal DataFeedSource(DataFeedSourceKind dataFeedSourceType)
         {
-            DataSourceType = dataFeedSourceType;
+            DataSourceKind = dataFeedSourceType;
         }
 
         /// <summary>
         /// The type of this data source.
         /// </summary>
-        public DataFeedSourceType DataSourceType { get; }
+        public DataFeedSourceKind DataSourceKind { get; }
 
         internal static DataFeedSource GetDataFeedSource(DataFeedDetail dataFeedDetail) =>
             dataFeedDetail switch
