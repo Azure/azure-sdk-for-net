@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Registration assignment.
+    /// The registration assignment.
     /// </summary>
     public partial class RegistrationAssignment : IResource
     {
@@ -31,12 +31,13 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <summary>
         /// Initializes a new instance of the RegistrationAssignment class.
         /// </summary>
-        /// <param name="properties">Properties of a registration
+        /// <param name="properties">The properties of a registration
         /// assignment.</param>
         /// <param name="id">The fully qualified path of the registration
         /// assignment.</param>
-        /// <param name="type">Type of the resource.</param>
-        /// <param name="name">Name of the registration assignment.</param>
+        /// <param name="type">The type of the Azure resource
+        /// (Microsoft.ManagedServices/registrationAssignments).</param>
+        /// <param name="name">The name of the registration assignment.</param>
         public RegistrationAssignment(RegistrationAssignmentProperties properties = default(RegistrationAssignmentProperties), string id = default(string), string type = default(string), string name = default(string))
         {
             Properties = properties;
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of a registration assignment.
+        /// Gets or sets the properties of a registration assignment.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public RegistrationAssignmentProperties Properties { get; set; }
@@ -64,13 +65,14 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource.
+        /// Gets the type of the Azure resource
+        /// (Microsoft.ManagedServices/registrationAssignments).
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets name of the registration assignment.
+        /// Gets the name of the registration assignment.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }

@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of registration definition inside registration assignment.
+    /// The properties of the registration definition associated with the
+    /// registration assignment.
     /// </summary>
     public partial class RegistrationAssignmentPropertiesRegistrationDefinitionProperties
     {
@@ -35,26 +36,36 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// RegistrationAssignmentPropertiesRegistrationDefinitionProperties
         /// class.
         /// </summary>
-        /// <param name="description">Description of the registration
+        /// <param name="description">The description of the registration
         /// definition.</param>
-        /// <param name="authorizations">Authorization tuple containing
-        /// principal id of the user/security group or service principal and id
-        /// of the build-in role.</param>
-        /// <param name="registrationDefinitionName">Name of the registration
-        /// definition.</param>
-        /// <param name="provisioningState">Current state of the registration
-        /// definition. Possible values include: 'NotSpecified', 'Accepted',
-        /// 'Running', 'Ready', 'Creating', 'Created', 'Deleting', 'Deleted',
-        /// 'Canceled', 'Failed', 'Succeeded', 'Updating'</param>
-        /// <param name="manageeTenantId">Id of the home tenant.</param>
-        /// <param name="manageeTenantName">Name of the home tenant.</param>
-        /// <param name="managedByTenantId">Id of the managedBy tenant.</param>
-        /// <param name="managedByTenantName">Name of the managedBy
+        /// <param name="authorizations">The collection of authorization
+        /// objects describing the access Azure Active Directory principals in
+        /// the managedBy tenant will receive on the delegated resource in the
+        /// managed tenant.</param>
+        /// <param name="eligibleAuthorizations">The collection of eligible
+        /// authorization objects describing the just-in-time access Azure
+        /// Active Directory principals in the managedBy tenant will receive on
+        /// the delegated resource in the managed tenant.</param>
+        /// <param name="registrationDefinitionName">The name of the
+        /// registration definition.</param>
+        /// <param name="provisioningState">The current provisioning state of
+        /// the registration definition. Possible values include:
+        /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
+        /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
+        /// 'Succeeded', 'Updating'</param>
+        /// <param name="manageeTenantId">The identifier of the managed
         /// tenant.</param>
-        public RegistrationAssignmentPropertiesRegistrationDefinitionProperties(string description = default(string), IList<Authorization> authorizations = default(IList<Authorization>), string registrationDefinitionName = default(string), string provisioningState = default(string), string manageeTenantId = default(string), string manageeTenantName = default(string), string managedByTenantId = default(string), string managedByTenantName = default(string))
+        /// <param name="manageeTenantName">The name of the managed
+        /// tenant.</param>
+        /// <param name="managedByTenantId">The identifier of the managedBy
+        /// tenant.</param>
+        /// <param name="managedByTenantName">The name of the managedBy
+        /// tenant.</param>
+        public RegistrationAssignmentPropertiesRegistrationDefinitionProperties(string description = default(string), IList<Authorization> authorizations = default(IList<Authorization>), IList<EligibleAuthorization> eligibleAuthorizations = default(IList<EligibleAuthorization>), string registrationDefinitionName = default(string), string provisioningState = default(string), string manageeTenantId = default(string), string manageeTenantName = default(string), string managedByTenantId = default(string), string managedByTenantName = default(string))
         {
             Description = description;
             Authorizations = authorizations;
+            EligibleAuthorizations = eligibleAuthorizations;
             RegistrationDefinitionName = registrationDefinitionName;
             ProvisioningState = provisioningState;
             ManageeTenantId = manageeTenantId;
@@ -70,54 +81,63 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets description of the registration definition.
+        /// Gets or sets the description of the registration definition.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets authorization tuple containing principal id of the
-        /// user/security group or service principal and id of the build-in
-        /// role.
+        /// Gets or sets the collection of authorization objects describing the
+        /// access Azure Active Directory principals in the managedBy tenant
+        /// will receive on the delegated resource in the managed tenant.
         /// </summary>
         [JsonProperty(PropertyName = "authorizations")]
         public IList<Authorization> Authorizations { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the registration definition.
+        /// Gets or sets the collection of eligible authorization objects
+        /// describing the just-in-time access Azure Active Directory
+        /// principals in the managedBy tenant will receive on the delegated
+        /// resource in the managed tenant.
+        /// </summary>
+        [JsonProperty(PropertyName = "eligibleAuthorizations")]
+        public IList<EligibleAuthorization> EligibleAuthorizations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the registration definition.
         /// </summary>
         [JsonProperty(PropertyName = "registrationDefinitionName")]
         public string RegistrationDefinitionName { get; set; }
 
         /// <summary>
-        /// Gets or sets current state of the registration definition. Possible
-        /// values include: 'NotSpecified', 'Accepted', 'Running', 'Ready',
-        /// 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
-        /// 'Succeeded', 'Updating'
+        /// Gets or sets the current provisioning state of the registration
+        /// definition. Possible values include: 'NotSpecified', 'Accepted',
+        /// 'Running', 'Ready', 'Creating', 'Created', 'Deleting', 'Deleted',
+        /// 'Canceled', 'Failed', 'Succeeded', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets id of the home tenant.
+        /// Gets or sets the identifier of the managed tenant.
         /// </summary>
         [JsonProperty(PropertyName = "manageeTenantId")]
         public string ManageeTenantId { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the home tenant.
+        /// Gets or sets the name of the managed tenant.
         /// </summary>
         [JsonProperty(PropertyName = "manageeTenantName")]
         public string ManageeTenantName { get; set; }
 
         /// <summary>
-        /// Gets or sets id of the managedBy tenant.
+        /// Gets or sets the identifier of the managedBy tenant.
         /// </summary>
         [JsonProperty(PropertyName = "managedByTenantId")]
         public string ManagedByTenantId { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the managedBy tenant.
+        /// Gets or sets the name of the managedBy tenant.
         /// </summary>
         [JsonProperty(PropertyName = "managedByTenantName")]
         public string ManagedByTenantName { get; set; }

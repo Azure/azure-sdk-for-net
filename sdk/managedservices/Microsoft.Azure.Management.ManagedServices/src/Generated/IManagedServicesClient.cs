@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ManagedServices
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Specification for ManagedServices.
+    /// The specification for ManagedServices.
     /// </summary>
     public partial interface IManagedServicesClient : System.IDisposable
     {
@@ -73,6 +73,16 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets the IRegistrationAssignmentsOperations.
         /// </summary>
         IRegistrationAssignmentsOperations RegistrationAssignments { get; }
+
+        /// <summary>
+        /// Gets the IMarketplaceRegistrationDefinitionsOperations.
+        /// </summary>
+        IMarketplaceRegistrationDefinitionsOperations MarketplaceRegistrationDefinitions { get; }
+
+        /// <summary>
+        /// Gets the IMarketplaceRegistrationDefinitionsWithoutScopeOperations.
+        /// </summary>
+        IMarketplaceRegistrationDefinitionsWithoutScopeOperations MarketplaceRegistrationDefinitionsWithoutScope { get; }
 
         /// <summary>
         /// Gets the IOperations.

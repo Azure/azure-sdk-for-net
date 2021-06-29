@@ -12,32 +12,36 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Error response indicates Azure Resource Manager is not able to process
-    /// the incoming request. The reason is provided in the error message.
+    /// The error response indicating why the incoming request wasn’t able to
+    /// be processed
     /// </summary>
-    public partial class ErrorResponseError
+    public partial class ErrorDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseError class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        public ErrorResponseError()
+        public ErrorDefinition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseError class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        /// <param name="code">Error code.</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorResponseError(string code, string message)
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message indicating why the
+        /// operation failed.</param>
+        /// <param name="details">The internal error details.</param>
+        public ErrorDefinition(string code, string message, IList<ErrorDefinition> details = default(IList<ErrorDefinition>))
         {
             Code = code;
             Message = message;
+            Details = details;
             CustomInit();
         }
 
@@ -47,16 +51,22 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code.
+        /// Gets or sets the error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
+        /// Gets or sets the error message indicating why the operation failed.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets the internal error details.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public IList<ErrorDefinition> Details { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -73,6 +83,16 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
             if (Message == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Message");
+            }
+            if (Details != null)
+            {
+                foreach (var element in Details)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

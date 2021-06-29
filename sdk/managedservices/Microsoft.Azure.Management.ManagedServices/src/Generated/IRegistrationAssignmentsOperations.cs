@@ -24,17 +24,17 @@ namespace Microsoft.Azure.Management.ManagedServices
     public partial interface IRegistrationAssignmentsOperations
     {
         /// <summary>
-        /// Gets the details of specified registration assignment.
+        /// Gets the details of the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='expandRegistrationDefinition'>
-        /// Tells whether to return registration definition details also along
-        /// with registration assignment details.
+        /// The flag indicating whether to return the registration definition
+        /// details along with the registration assignment details.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,10 +56,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Deletes the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,10 +78,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Creates or updates a registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='requestBody'>
         /// The parameters required to create new registration assignment.
@@ -106,11 +106,11 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets a list of the registration assignments.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='expandRegistrationDefinition'>
-        /// Tells whether to return registration definition details also along
-        /// with registration assignment details.
+        /// The flag indicating whether to return the registration definition
+        /// details along with the registration assignment details.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -132,10 +132,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Deletes the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -154,10 +154,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Creates or updates a registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationAssignmentId'>
-        /// Guid of the registration assignment.
+        /// The GUID of the registration assignment.
         /// </param>
         /// <param name='requestBody'>
         /// The parameters required to create new registration assignment.
