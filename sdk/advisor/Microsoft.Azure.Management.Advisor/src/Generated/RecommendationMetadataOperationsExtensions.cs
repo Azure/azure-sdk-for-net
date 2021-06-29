@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='name'>
             /// Name of metadata entity.
             /// </param>
-            public static object Get(this IRecommendationMetadataOperations operations, string name)
+            public static MetadataEntity Get(this IRecommendationMetadataOperations operations, string name)
             {
                 return operations.GetAsync(name).GetAwaiter().GetResult();
             }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAsync(this IRecommendationMetadataOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetadataEntity> GetAsync(this IRecommendationMetadataOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="category">The category of the recommendation. Possible
         /// values include: 'HighAvailability', 'Security', 'Performance',
-        /// 'Cost'</param>
+        /// 'Cost', 'OperationalExcellence'</param>
         /// <param name="impact">The business impact of the recommendation.
         /// Possible values include: 'High', 'Medium', 'Low'</param>
         /// <param name="impactedField">The resource type identified by
@@ -59,7 +59,23 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// <param name="suppressionIds">The list of snoozed and dismissed
         /// rules for the recommendation.</param>
         /// <param name="extendedProperties">Extended properties</param>
-        public ResourceRecommendationBase(string id = default(string), string name = default(string), string type = default(string), string category = default(string), string impact = default(string), string impactedField = default(string), string impactedValue = default(string), System.DateTime? lastUpdated = default(System.DateTime?), IDictionary<string, object> metadata = default(IDictionary<string, object>), string recommendationTypeId = default(string), string risk = default(string), ShortDescription shortDescription = default(ShortDescription), IList<System.Guid?> suppressionIds = default(IList<System.Guid?>), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>))
+        /// <param name="resourceMetadata">Metadata of resource that was
+        /// assessed</param>
+        /// <param name="description">The detailed description of
+        /// recommendation.</param>
+        /// <param name="label">The label of recommendation.</param>
+        /// <param name="learnMoreLink">The link to learn more about
+        /// recommendation and generation logic.</param>
+        /// <param name="potentialBenefits">The potential benefit of
+        /// implementing recommendation.</param>
+        /// <param name="actions">The list of recommended actions to implement
+        /// recommendation.</param>
+        /// <param name="remediation">The automated way to apply
+        /// recommendation.</param>
+        /// <param name="exposedMetadataProperties">The recommendation metadata
+        /// properties exposed to customer to provide additional
+        /// information.</param>
+        public ResourceRecommendationBase(string id = default(string), string name = default(string), string type = default(string), string category = default(string), string impact = default(string), string impactedField = default(string), string impactedValue = default(string), System.DateTime? lastUpdated = default(System.DateTime?), IDictionary<string, object> metadata = default(IDictionary<string, object>), string recommendationTypeId = default(string), string risk = default(string), ShortDescription shortDescription = default(ShortDescription), IList<System.Guid?> suppressionIds = default(IList<System.Guid?>), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), ResourceMetadata resourceMetadata = default(ResourceMetadata), string description = default(string), string label = default(string), string learnMoreLink = default(string), string potentialBenefits = default(string), IList<IDictionary<string, object>> actions = default(IList<IDictionary<string, object>>), IDictionary<string, object> remediation = default(IDictionary<string, object>), IDictionary<string, object> exposedMetadataProperties = default(IDictionary<string, object>))
             : base(id, name, type)
         {
             Category = category;
@@ -73,6 +89,14 @@ namespace Microsoft.Azure.Management.Advisor.Models
             ShortDescription = shortDescription;
             SuppressionIds = suppressionIds;
             ExtendedProperties = extendedProperties;
+            ResourceMetadata = resourceMetadata;
+            Description = description;
+            Label = label;
+            LearnMoreLink = learnMoreLink;
+            PotentialBenefits = potentialBenefits;
+            Actions = actions;
+            Remediation = remediation;
+            ExposedMetadataProperties = exposedMetadataProperties;
             CustomInit();
         }
 
@@ -83,7 +107,8 @@ namespace Microsoft.Azure.Management.Advisor.Models
 
         /// <summary>
         /// Gets or sets the category of the recommendation. Possible values
-        /// include: 'HighAvailability', 'Security', 'Performance', 'Cost'
+        /// include: 'HighAvailability', 'Security', 'Performance', 'Cost',
+        /// 'OperationalExcellence'
         /// </summary>
         [JsonProperty(PropertyName = "properties.category")]
         public string Category { get; set; }
@@ -151,6 +176,57 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.extendedProperties")]
         public IDictionary<string, string> ExtendedProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets metadata of resource that was assessed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceMetadata")]
+        public ResourceMetadata ResourceMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the detailed description of recommendation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the label of recommendation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.label")]
+        public string Label { get; set; }
+
+        /// <summary>
+        /// Gets or sets the link to learn more about recommendation and
+        /// generation logic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.learnMoreLink")]
+        public string LearnMoreLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets the potential benefit of implementing recommendation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.potentialBenefits")]
+        public string PotentialBenefits { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of recommended actions to implement
+        /// recommendation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.actions")]
+        public IList<IDictionary<string, object>> Actions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the automated way to apply recommendation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.remediation")]
+        public IDictionary<string, object> Remediation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recommendation metadata properties exposed to
+        /// customer to provide additional information.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.exposedMetadataProperties")]
+        public IDictionary<string, object> ExposedMetadataProperties { get; set; }
 
     }
 }

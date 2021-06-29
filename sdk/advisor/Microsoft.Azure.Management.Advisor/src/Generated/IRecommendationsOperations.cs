@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ArmErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ArmErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -70,7 +70,11 @@ namespace Microsoft.Azure.Management.Advisor
         /// generateRecommendations.
         /// </summary>
         /// <param name='filter'>
-        /// The filter to apply to the recommendations.
+        /// The filter to apply to the recommendations.&lt;br&gt;Filter can be
+        /// applied to properties ['ResourceId', 'ResourceGroup',
+        /// 'RecommendationTypeGuid', '[Category](#category)'] with operators
+        /// ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category
+        /// eq 'Cost' and ResourceGroup eq 'MyResourceGroup'
         /// </param>
         /// <param name='top'>
         /// The number of recommendations per page if a paged version of this
@@ -86,7 +90,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ArmErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -112,7 +116,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ArmErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -136,7 +140,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ArmErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
