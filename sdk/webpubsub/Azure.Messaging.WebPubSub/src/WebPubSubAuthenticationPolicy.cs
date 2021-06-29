@@ -14,7 +14,7 @@ namespace Azure.Messaging.WebPubSub
     internal partial class WebPubSubAuthenticationPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly AzureKeyCredential _credential;
-        private volatile KeyBytesCache _keyCache; // it's volatile so that the cache update below is not reordered
+        private volatile KeyBytesCache _keyCache = new KeyBytesCache(string.Empty); // it's volatile so that the cache update below is not reordered
 
         /// <summary>
         /// Creates an instance of the authentication policy
