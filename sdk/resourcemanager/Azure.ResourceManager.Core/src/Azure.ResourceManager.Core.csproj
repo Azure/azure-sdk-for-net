@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
