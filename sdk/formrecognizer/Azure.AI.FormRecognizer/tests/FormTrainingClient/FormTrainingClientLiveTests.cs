@@ -543,13 +543,13 @@ namespace Azure.AI.FormRecognizer.Tests
             var resourceId = TestEnvironment.TargetResourceId;
             var regionA = "regionA";
             var regionB = "regionB";
-            switch (TestEnvironment.TenantId)
+            switch (TestEnvironment.AuthorityHostUrl)
             {
-                case "72f988bf-86f1-41af-91ab-2d7cd011db47":
+                case "https://login.microsoftonline.com/":
                     regionA = "westcentralus";
                     regionB = "eastus2";
                     break;
-                case "63296244-ce2c-46d8-bc36-3e558792fbee":
+                case "https://login.microsoftonline.us/":
                     regionA = "usgovarizona";
                     regionB = "usgovvirginia";
                     break;
