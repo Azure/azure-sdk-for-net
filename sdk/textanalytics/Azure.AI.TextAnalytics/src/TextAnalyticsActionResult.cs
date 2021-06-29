@@ -11,32 +11,28 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class TextAnalyticsActionResult
     {
-        internal TextAnalyticsActionResult (DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        internal TextAnalyticsActionResult (DateTimeOffset completedOn, string actionName, TextAnalyticsErrorInternal error)
         {
             CompletedOn = completedOn;
+            ActionName = actionName;
             Error = error != null ? Transforms.ConvertToError(error) : default;
         }
 
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
-        internal TextAnalyticsActionResult(DateTimeOffset completedOn)
+        internal TextAnalyticsActionResult(DateTimeOffset completedOn, string actionName)
         {
             CompletedOn = completedOn;
-        }
-
-        /// <summary>
-        /// Intended for mocking purposes only.
-        /// </summary>
-        internal TextAnalyticsActionResult(TextAnalyticsErrorInternal error)
-        {
-            Error = Transforms.ConvertToError(error);
+            ActionName = actionName;
         }
 
         /// <summary>
         /// Indicates the time at which the action was last updated on.
         /// </summary>
         public DateTimeOffset CompletedOn { get; }
+
+        /// <summary>
+        /// Gets the name for this action.
+        /// </summary>
+        public string ActionName { get; }
 
         /// <summary>
         /// Determines the TextAnalyticsError object for an action result.

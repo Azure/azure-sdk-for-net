@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -37,6 +37,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21782")]
         public async Task AnalyzeOperationWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -215,6 +216,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(entitiesActionsResults);
             Assert.IsNotNull(piiActionsResults);
             Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
             Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
 
             // Keyphrases
@@ -407,7 +409,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20984")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21802")]
         public async Task AnalyzeOperationWithPHIDomain()
         {
             TextAnalyticsClient client = GetClient();
@@ -441,6 +443,42 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsFalse(piiDocumentsResults[0].HasError);
             Assert.AreEqual(2, piiDocumentsResults[0].Entities.Count);
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeOperationWithPiiCategories()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            var documents = new List<string>
+            {
+                "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft.",
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber } } },
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
+
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+
+            Assert.IsNotNull(piiActionsResults);
+
+            RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, piiDocumentsResults.Count);
+
+            Assert.IsNotEmpty(piiDocumentsResults[0].Entities.RedactedText);
+
+            Assert.IsFalse(piiDocumentsResults[0].HasError);
+            Assert.AreEqual(1, piiDocumentsResults[0].Entities.Count);
+            Assert.AreEqual(PiiEntityCategory.USSocialSecurityNumber, piiDocumentsResults[0].Entities.FirstOrDefault().Category);
         }
 
         [RecordedTest]
@@ -571,6 +609,73 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, analyzeSentimentDocumentsResults.Count);
 
             Assert.AreEqual(TextSentiment.Mixed, analyzeSentimentDocumentsResults[0].DocumentSentiment.Sentiment);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AnalyzeOperationWithActionName(bool useActionName)
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions;
+
+            if (useActionName)
+            {
+                batchActions = new TextAnalyticsActions()
+                {
+                    ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() { ActionName = "MyExtractKPAction"} },
+                    RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { ActionName = "MyRecognizeEntitiesAction" } },
+                    RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { ActionName = "MyRecognizePiiEntitiesAction" } },
+                    RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() { ActionName = "MyRecognizeLinkedEntitiesAction" } },
+                    AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() { ActionName = "MyAnalyzeSentimentAction" } },
+                    DisplayName = "AnalyzeOperationWithMultipleTasks"
+                };
+            }
+            else
+            {
+                batchActions = new TextAnalyticsActions()
+                {
+                    ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+                    RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+                    RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
+                    RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
+                    AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
+                    DisplayName = "AnalyzeOperationWithMultipleTasks"
+                };
+            }
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesResults;
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+
+            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.IsNotNull(entitiesActionsResults);
+            Assert.IsNotNull(piiActionsResults);
+            Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
+
+            if (useActionName)
+            {
+                Assert.AreEqual("MyExtractKPAction", keyPhrasesActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyRecognizeEntitiesAction", entitiesActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyRecognizePiiEntitiesAction", piiActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyRecognizeLinkedEntitiesAction", entityLinkingActionsResults.FirstOrDefault().ActionName);
+                Assert.AreEqual("MyAnalyzeSentimentAction", analyzeSentimentActionsResults.FirstOrDefault().ActionName);
+            }
+            else
+            {
+                Assert.IsNotEmpty(keyPhrasesActionsResults.FirstOrDefault().ActionName);
+            }
         }
     }
 }

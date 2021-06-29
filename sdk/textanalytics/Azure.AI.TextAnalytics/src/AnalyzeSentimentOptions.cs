@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics
         /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
         /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
     }
