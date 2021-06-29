@@ -487,7 +487,7 @@ namespace Azure.Monitor.Query.Tests
             var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
-            StringAssert.StartsWith("The request had some invalid properties", exception.Message);
+            StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
         }
 
         [RecordedTest]
@@ -520,12 +520,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(response.Value.Statistics);
+                using JsonDocument document = JsonDocument.Parse(response.Value.GetStatistics());
                 Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(default, response.Value.Statistics);
+                Assert.AreEqual(default, response.Value.GetStatistics());
             }
         }
 
@@ -543,12 +543,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(response.Value.Visualization);
+                using JsonDocument document = JsonDocument.Parse(response.Value.GetVisualization());
                 Assert.AreNotEqual(JsonValueKind.Undefined, document.RootElement.GetProperty("visualization").ValueKind);
             }
             else
             {
-                Assert.AreEqual(default, response.Value.Visualization);
+                Assert.AreEqual(default, response.Value.GetVisualization());
             }
         }
 
@@ -569,12 +569,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(result.Statistics);
+                using JsonDocument document = JsonDocument.Parse(result.GetStatistics());
                 Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(default, result.Statistics);
+                Assert.AreEqual(default, result.GetStatistics());
             }
         }
 

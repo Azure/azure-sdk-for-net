@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -118,6 +120,36 @@ namespace Azure.Core
             {
                 throw new NotImplementedException();
             }
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            builder.AppendFormat(CultureInfo.InvariantCulture, "{0}: {1}{2}", Code, Message, Environment.NewLine);
+
+            if (Target != null)
+            {
+                builder.AppendFormat(CultureInfo.InvariantCulture, "Target: {0}{1}", Target, Environment.NewLine);
+            }
+
+            if (InnerError != null)
+            {
+                builder.AppendLine("Inner Error:");
+                builder.Append(InnerError);
+            }
+
+            if (Details.Count > 0)
+            {
+                builder.AppendLine("Details:");
+                foreach (var detail in Details)
+                {
+                    builder.Append(detail);
+                }
+            }
+
+            return builder.ToString();
         }
     }
 }
