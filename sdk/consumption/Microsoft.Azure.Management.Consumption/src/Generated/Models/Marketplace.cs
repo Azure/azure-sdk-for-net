@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
     using System.Linq;
 
     /// <summary>
-    /// An marketplace resource.
+    /// A marketplace resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Marketplace : Resource
@@ -34,9 +34,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the Marketplace class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource name.</param>
+        /// <param name="id">The full qualified ARM ID of an event.</param>
+        /// <param name="name">The ID that uniquely identifies an event.
+        /// </param>
         /// <param name="type">Resource type.</param>
+        /// <param name="etag">The etag for the resource.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="billingPeriodId">The id of the billing period resource
         /// that the usage belongs to.</param>
@@ -47,6 +49,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="resourceRate">The marketplace resource rate.</param>
         /// <param name="offerName">The type of offer.</param>
         /// <param name="resourceGroup">The name of resource group.</param>
+        /// <param name="additionalInfo">Additional information.</param>
         /// <param name="orderNumber">The order number.</param>
         /// <param name="instanceName">The name of the resource instance that
         /// the usage is about.</param>
@@ -74,8 +77,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="planName">The name of plan.</param>
         /// <param name="isRecurringCharge">Flag indicating whether this is a
         /// recurring charge or not.</param>
-        public Marketplace(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingPeriodId = default(string), System.DateTime? usageStart = default(System.DateTime?), System.DateTime? usageEnd = default(System.DateTime?), decimal? resourceRate = default(decimal?), string offerName = default(string), string resourceGroup = default(string), string orderNumber = default(string), string instanceName = default(string), string instanceId = default(string), string currency = default(string), decimal? consumedQuantity = default(decimal?), string unitOfMeasure = default(string), decimal? pretaxCost = default(decimal?), bool? isEstimated = default(bool?), System.Guid? meterId = default(System.Guid?), System.Guid? subscriptionGuid = default(System.Guid?), string subscriptionName = default(string), string accountName = default(string), string departmentName = default(string), string consumedService = default(string), string costCenter = default(string), string additionalProperties = default(string), string publisherName = default(string), string planName = default(string), bool? isRecurringCharge = default(bool?))
-            : base(id, name, type, tags)
+        public Marketplace(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingPeriodId = default(string), System.DateTime? usageStart = default(System.DateTime?), System.DateTime? usageEnd = default(System.DateTime?), decimal? resourceRate = default(decimal?), string offerName = default(string), string resourceGroup = default(string), string additionalInfo = default(string), string orderNumber = default(string), string instanceName = default(string), string instanceId = default(string), string currency = default(string), decimal? consumedQuantity = default(decimal?), string unitOfMeasure = default(string), decimal? pretaxCost = default(decimal?), bool? isEstimated = default(bool?), System.Guid? meterId = default(System.Guid?), System.Guid? subscriptionGuid = default(System.Guid?), string subscriptionName = default(string), string accountName = default(string), string departmentName = default(string), string consumedService = default(string), string costCenter = default(string), string additionalProperties = default(string), string publisherName = default(string), string planName = default(string), bool? isRecurringCharge = default(bool?))
+            : base(id, name, type, etag, tags)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;
@@ -83,6 +86,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
             ResourceRate = resourceRate;
             OfferName = offerName;
             ResourceGroup = resourceGroup;
+            AdditionalInfo = additionalInfo;
             OrderNumber = orderNumber;
             InstanceName = instanceName;
             InstanceId = instanceId;
@@ -146,6 +150,12 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroup")]
         public string ResourceGroup { get; private set; }
+
+        /// <summary>
+        /// Gets additional information.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalInfo")]
+        public string AdditionalInfo { get; private set; }
 
         /// <summary>
         /// Gets the order number.

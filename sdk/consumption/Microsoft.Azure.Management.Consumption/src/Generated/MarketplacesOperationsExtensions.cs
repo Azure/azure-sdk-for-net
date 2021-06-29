@@ -33,8 +33,6 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='scope'>
             /// The scope associated with marketplace operations. This includes
             /// '/subscriptions/{subscriptionId}/' for subscription scope,
-            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
-            /// resourceGroup scope,
             /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
             /// Billing Account scope,
             /// '/providers/Microsoft.Billing/departments/{departmentId}' for Department
@@ -74,8 +72,6 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='scope'>
             /// The scope associated with marketplace operations. This includes
             /// '/subscriptions/{subscriptionId}/' for subscription scope,
-            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
-            /// resourceGroup scope,
             /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
             /// Billing Account scope,
             /// '/providers/Microsoft.Billing/departments/{departmentId}' for Department

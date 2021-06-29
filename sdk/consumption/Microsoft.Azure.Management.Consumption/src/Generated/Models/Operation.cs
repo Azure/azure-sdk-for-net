@@ -29,12 +29,14 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
+        /// <param name="id">Operation Id.</param>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}.</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        public Operation(string id = default(string), string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
+            Id = id;
             Name = name;
             Display = display;
             CustomInit();
@@ -44,6 +46,12 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets operation Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets operation name: {provider}/{resource}/{operation}.

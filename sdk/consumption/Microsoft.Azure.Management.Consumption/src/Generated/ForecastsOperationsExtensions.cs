@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.Consumption
     public static partial class ForecastsOperationsExtensions
     {
             /// <summary>
-            /// Lists the forecast charges by subscriptionId.
+            /// Lists the forecast charges for scope defined. Please note that this API is
+            /// no longer actively under development. We recommend using our new Forecast
+            /// API moving forward:
+            /// https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -40,7 +43,10 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
-            /// Lists the forecast charges by subscriptionId.
+            /// Lists the forecast charges for scope defined. Please note that this API is
+            /// no longer actively under development. We recommend using our new Forecast
+            /// API moving forward:
+            /// https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>

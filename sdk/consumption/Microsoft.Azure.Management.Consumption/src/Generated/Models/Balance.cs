@@ -34,9 +34,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the Balance class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource name.</param>
+        /// <param name="id">The full qualified ARM ID of an event.</param>
+        /// <param name="name">The ID that uniquely identifies an event.
+        /// </param>
         /// <param name="type">Resource type.</param>
+        /// <param name="etag">The etag for the resource.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="currency">The ISO currency in which the meter is
         /// charged, for example, USD.</param>
@@ -62,8 +64,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="newPurchasesDetails">List of new purchases.</param>
         /// <param name="adjustmentDetails">List of Adjustments (Promo credit,
         /// SIE credit etc.).</param>
-        public Balance(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string currency = default(string), decimal? beginningBalance = default(decimal?), decimal? endingBalance = default(decimal?), decimal? newPurchases = default(decimal?), decimal? adjustments = default(decimal?), decimal? utilized = default(decimal?), decimal? serviceOverage = default(decimal?), decimal? chargesBilledSeparately = default(decimal?), decimal? totalOverage = default(decimal?), decimal? totalUsage = default(decimal?), decimal? azureMarketplaceServiceCharges = default(decimal?), string billingFrequency = default(string), bool? priceHidden = default(bool?), IList<BalancePropertiesNewPurchasesDetailsItem> newPurchasesDetails = default(IList<BalancePropertiesNewPurchasesDetailsItem>), IList<BalancePropertiesAdjustmentDetailsItem> adjustmentDetails = default(IList<BalancePropertiesAdjustmentDetailsItem>))
-            : base(id, name, type, tags)
+        public Balance(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string currency = default(string), decimal? beginningBalance = default(decimal?), decimal? endingBalance = default(decimal?), decimal? newPurchases = default(decimal?), decimal? adjustments = default(decimal?), decimal? utilized = default(decimal?), decimal? serviceOverage = default(decimal?), decimal? chargesBilledSeparately = default(decimal?), decimal? totalOverage = default(decimal?), decimal? totalUsage = default(decimal?), decimal? azureMarketplaceServiceCharges = default(decimal?), string billingFrequency = default(string), bool? priceHidden = default(bool?), IList<BalancePropertiesNewPurchasesDetailsItem> newPurchasesDetails = default(IList<BalancePropertiesNewPurchasesDetailsItem>), IList<BalancePropertiesAdjustmentDetailsItem> adjustmentDetails = default(IList<BalancePropertiesAdjustmentDetailsItem>))
+            : base(id, name, type, etag, tags)
         {
             Currency = currency;
             BeginningBalance = beginningBalance;
