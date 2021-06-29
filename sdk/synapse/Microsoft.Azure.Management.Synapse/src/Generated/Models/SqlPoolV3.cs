@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// before automatically pausing the sql pool.</param>
         /// <param name="autoResume">Indicates whether the sql pool can
         /// automatically resume when connection attempts are made.</param>
-        public SqlPoolV3(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), SystemData systemData = default(SystemData), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string maxServiceObjectiveName = default(string), int? autoPauseTimer = default(int?), bool? autoResume = default(bool?))
+        public SqlPoolV3(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SkuV3 sku = default(SkuV3), string kind = default(string), SystemData systemData = default(SystemData), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string maxServiceObjectiveName = default(string), int? autoPauseTimer = default(int?), bool? autoResume = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// and support offer.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public SkuV3 Sku { get; set; }
 
         /// <summary>
         /// Gets kind of SqlPool.

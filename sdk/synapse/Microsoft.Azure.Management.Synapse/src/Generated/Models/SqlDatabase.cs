@@ -47,17 +47,14 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="collation">The collation of the database.</param>
         /// <param name="storageRedundancy">Storage redundancy of the database.
         /// Possible values include: 'Geo', 'GeoZone', 'Local', 'Zone'</param>
-        /// <param name="maxSizeBytes">The max size of the database expressed
-        /// in bytes.</param>
         /// <param name="databaseGuid">The Guid of the database.</param>
         /// <param name="status">Status of the database.</param>
-        public SqlDatabase(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string collation = default(string), string storageRedundancy = default(string), long? maxSizeBytes = default(long?), System.Guid? databaseGuid = default(System.Guid?), string status = default(string))
+        public SqlDatabase(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string collation = default(string), string storageRedundancy = default(string), System.Guid? databaseGuid = default(System.Guid?), string status = default(string))
             : base(location, id, name, type, tags)
         {
             SystemData = systemData;
             Collation = collation;
             StorageRedundancy = storageRedundancy;
-            MaxSizeBytes = maxSizeBytes;
             DatabaseGuid = databaseGuid;
             Status = status;
             CustomInit();
@@ -86,12 +83,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageRedundancy")]
         public string StorageRedundancy { get; set; }
-
-        /// <summary>
-        /// Gets or sets the max size of the database expressed in bytes.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.maxSizeBytes")]
-        public long? MaxSizeBytes { get; set; }
 
         /// <summary>
         /// Gets the Guid of the database.

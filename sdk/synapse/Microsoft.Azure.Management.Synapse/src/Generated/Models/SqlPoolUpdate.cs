@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="autoResume">Indicates whether the sql pool can
         /// automatically resume when connection attempts are made.</param>
         /// <param name="tags">Resource tags.</param>
-        public SqlPoolUpdate(Sku sku = default(Sku), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string maxServiceObjectiveName = default(string), int? autoPauseTimer = default(int?), bool? autoResume = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public SqlPoolUpdate(SkuV3 sku = default(SkuV3), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string maxServiceObjectiveName = default(string), int? autoPauseTimer = default(int?), bool? autoResume = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             Status = status;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Gets or sets the name and tier of the SKU.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public SkuV3 Sku { get; set; }
 
         /// <summary>
         /// Gets the status of the sql pool. Possible values include:
