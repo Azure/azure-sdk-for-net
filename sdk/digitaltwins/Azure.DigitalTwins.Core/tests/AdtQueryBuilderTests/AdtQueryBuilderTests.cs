@@ -50,7 +50,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         public void AdtQueryBuilder_Select_Aggregates_Top_All()
         {
             new AdtQueryBuilder()
-                .SelectTop(5)
+                .SelectTopAll(5)
                 .From(AdtCollection.DigitalTwins)
                 .Build()
                 .GetQueryText()

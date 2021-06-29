@@ -57,6 +57,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
+        /// Used to return only a certain number of top items that meet the query requirements.
+        /// </summary>
+        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
+        /// <returns> Query that contains a select clause. </returns>
+        public FromQuery SelectTopAll(int count)
+        {
+            return _selectQuery.SelectTopAll(count);
+        }
+
+        /// <summary>
         /// Used to return the number of items that meet the query requirements.
         /// </summary>
         /// <returns> Query that contains a select clause. </returns>

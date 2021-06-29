@@ -33,7 +33,17 @@ namespace Azure.DigitalTwins.Core.Tests
         public void SelectQuery_Top()
         {
             var query = new SelectQuery(null, null);
-            query.SelectTop(5);
+            query.SelectTop(5, "Temperature");
+            query.GetQueryText()
+                .Should()
+                .Be("SELECT TOP(5) Temperature");
+        }
+
+        [Test]
+        public void SelectQuery_TopAll()
+        {
+            var query = new SelectQuery(null, null);
+            query.SelectTopAll(5);
             query.GetQueryText()
                 .Should()
                 .Be("SELECT TOP(5)");

@@ -303,9 +303,21 @@ Build an [ADT query](https://docs.microsoft.com/azure/digital-twins/concepts-que
 // SELECT * FROM DIGITALTWINS
 AdtQueryBuilder simplestQuery = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
 
+// SELECT * FROM DIGITALTWINS
+// Note that the this is the same as the previous query, just with the prebuilt SelectAll() method that can be used
+// interchangeably with Select("*")
+AdtQueryBuilder simplestQuerySelectAll = new AdtQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins).Build();
+
 // SELECT TOP(3) FROM DIGITALTWINS
+// Note that if no property is specfied, the SelectTopAll() method can be used instead of SelectTop()
 AdtQueryBuilder queryWithSelectTop = new AdtQueryBuilder()
-    .SelectTop(3)
+    .SelectTopAll(3)
+    .From(AdtCollection.DigitalTwins)
+    .Build();
+
+// SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS
+AdtQueryBuilder queryWithSelectTopProperty = new AdtQueryBuilder()
+    .SelectTop(3, "Temperature", "Humidity")
     .From(AdtCollection.DigitalTwins)
     .Build();
 
@@ -328,7 +340,7 @@ Clauses can also be manually overriden with strings:
 ```C# Snippet:DigitalTwinsQueryBuilderOverride
 // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
 new AdtQueryBuilder()
-.SelectOverride("TOP(3) Room, Temperature")
+.SelectCustom("TOP(3) Room, Temperature")
 .From(AdtCollection.DigitalTwins)
 .Build();
 ```
@@ -338,7 +350,7 @@ For queries with multiple conditions, use logical operators or nested conditions
 ```C# Snippet:DigitalTwinsQueryBuilder_ComplexConditions
 // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
 AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
-    .Select("*")
+    .SelectAll()
     .From(AdtCollection.DigitalTwins)
     .Where()
     .Compare("Temperature", QueryComparisonOperator.Equal, 50)
@@ -351,15 +363,15 @@ AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
 // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
 // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
 AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
-    .Select("*")
+    .SelectAll()
     .From(AdtCollection.DigitalTwins)
     .Where()
-    .IsTrue(q => q
+    .Parenthetical(q => q
         .IsOfType("Humidity", AdtDataType.AdtNumber)
         .Or()
         .IsDefined("Humidity"))
     .And()
-    .IsTrue(q => q
+    .Parenthetical(q => q
         .IsOfModel("dtmi:example:hvac;1")
         .And()
         .IsNull("Occupants"))
@@ -371,7 +383,7 @@ Using nested conditions is a workaround for subjective queries that could be int
 ```C# Snippet:DigitalTwinsQueryBuilder_SubjectiveConditionsWorkaround
 // SELECT * FROM DIGITALTWINS WHERE (Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)) AND IS_NUMBER(Temperature)
 AdtQueryBuilder subjectiveLogicalOps = new AdtQueryBuilder()
-    .Select("*")
+    .SelectAll()
     .From(AdtCollection.DigitalTwins)
     .Where()
     .Compare("Temperature", QueryComparisonOperator.Equal, 50)
@@ -382,10 +394,10 @@ AdtQueryBuilder subjectiveLogicalOps = new AdtQueryBuilder()
     .Build();
 
 AdtQueryBuilder objectiveLogicalOps = new AdtQueryBuilder()
-    .Select("*")
+    .SelectAll()
     .From(AdtCollection.DigitalTwins)
     .Where()
-    .IsTrue(q => q
+    .Parenthetical(q => q
         .Compare("Temperature", QueryComparisonOperator.Equal, 50)
         .Or()
         .IsOfModel("dtmi:example:room;1", true))
@@ -398,7 +410,7 @@ Turn an `AdtQueryBuilder` to a string by calling `GetQueryText()` after `Build()
 
 ```C# Snippet:DigitalTwinsQueryBuilderToString
 string basicQueryStringFormat = new AdtQueryBuilder()
-    .Select("*")
+    .SelectAll()
     .From(AdtCollection.DigitalTwins)
     .Build()
     .GetQueryText();
