@@ -11,6 +11,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     public class RegistryArtifactLiveTests : ContainerRegistryRecordedTestBase
     {
         private readonly string _repositoryName = "library/hello-world";
+        //private readonly string _repositoryName = "hello-artifact";
 
         public RegistryArtifactLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
@@ -361,7 +362,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
         #endregion
 
-        #region Push/Pull Tests
+        #region Push/Pull Tests - for prototype usage only
 
         [RecordedTest, NonParallelizable]
         public async Task CanPushArtifact()
@@ -378,14 +379,170 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact()
+        public async Task CanPullArtifact_DockerManifestV2_ByTagName()
         {
             // Arrange
             var client = CreateClient();
-            var artifact = client.GetArtifact(_repositoryName, "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792");
+            var artifact = client.GetArtifact("library/hello-world", "latest");
 
             // Act
-            await artifact.PullToAsync(@"C:\temp\acr-pull");
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // This is V1 -- pulls just the manifest
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_DockerManifestV2_ByDigest()
+        {
+            // This is one of the child manifests for the hello-world image, with the arch/os pair "amd64"/"windows"
+            //
+            //{
+            //    "digest": "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0",
+            //    "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            //    "platform": {
+            //        "architecture": "amd64",
+            //        "os": "windows",
+            //        "os.version": "10.0.17763.1999"
+            //    },
+            //    "size": 1125
+            //}
+            // sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0
+
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("library/hello-world", "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // Assert
+            // -----------------------------------------------
+
+            //// Arrange
+            //var client = CreateClient();
+            //var artifact = client.GetArtifact("library/hello-world", "sha256:9f6ad537c5132bcce57f7a0a20e317228d382c3cd61edae14650eec68b2b345c");
+
+            //// Act
+            //await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            //// Assert
+            //// TODO
+
+            //// Note, this pulls the whole manifest list, but nothing else.
+            //// See: C:\Users\annelo\AppData\Local\Temp\CanPullArtifact_DockerManifestV2_ByDigest-637605637621836360.testlog
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_DockerManifestV1_ByTagName()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("library/hello-world", "latest");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // This is V1 -- pulls just the manifest. Doesn't pull the layers yet, dependent on Content-Type
+            //
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_DockerManifestV1_ByDigest()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_OciManifest_ByTagName()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("hello-artifact", "v1");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_OciManifest_ByDigest()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("hello-artifact", "sha256:4059e65a0e90b2562e550dea06d6942791329ab2880e0fff9405389ae1e803b9");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_DockerManifestListV2_ByTagName()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_DockerManifestListV2_ByDigest()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("library/node", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_OciIndex_ByTagName()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanPullArtifact_OciIndex_ByDigest()
+        {
+            // Arrange
+            var client = CreateClient();
+            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+            // Act
+            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
 
             // Assert
             // TODO
