@@ -14,6 +14,8 @@ namespace Azure.Core.TestFramework
     {
         private volatile bool _disposed;
         private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
+        private uint _maxEventCount;
+        private const uint DefaultMaxEventCount = 100;
 
         public IEnumerable<EventWrittenEventArgs> EventData => _events;
 
@@ -27,10 +29,23 @@ namespace Azure.Core.TestFramework
 
             if (!_disposed)
             {
+                if (_events.Count >= _maxEventCount)
+                {
+                    _events.TryDequeue(out _);
+                }
+
                 // Make sure we can format the event
                 EventSourceEventFormatting.Format(eventData);
                 _events.Enqueue(eventData);
             }
+        }
+
+        public TestEventListener() : this(DefaultMaxEventCount)
+        { }
+
+        public TestEventListener(uint maxEventCount)
+        {
+            _maxEventCount = maxEventCount;
         }
 
         public EventWrittenEventArgs SingleEventById(int id, Func<EventWrittenEventArgs, bool> filter = null)
