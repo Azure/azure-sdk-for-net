@@ -487,7 +487,7 @@ namespace Azure.Monitor.Query.Tests
             var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
-            StringAssert.StartsWith("The request had some invalid properties", exception.Message);
+            StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
         }
 
         [RecordedTest]
