@@ -294,7 +294,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 TimeMode = FeedbackQueryTimeMode.FeedbackCreatedTime,
                 StartTime = feedbackSamplingStartTime,
                 EndTime = feedbackSamplingEndTime,
-                FeedbackType = MetricFeedbackKind.Comment,
+                FeedbackKind = MetricFeedbackKind.Comment,
             };
 
             var feedbackCount = 0;

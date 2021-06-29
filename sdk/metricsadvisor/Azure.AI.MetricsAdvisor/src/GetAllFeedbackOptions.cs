@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Filters the result by <see cref="MetricFeedback.Kind"/>.
         /// </summary>
-        public MetricFeedbackKind? FeedbackType { get; set; }
+        public MetricFeedbackKind? FeedbackKind { get; set; }
 
         /// <summary>
         /// Filters the result under the chosen <see cref="TimeMode"/>. Only results from this point in time,
