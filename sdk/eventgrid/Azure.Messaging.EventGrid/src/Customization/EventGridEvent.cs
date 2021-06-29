@@ -144,11 +144,16 @@ namespace Azure.Messaging.EventGrid
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
                 egEvents = new EventGridEvent[1];
-                egEvents[0] = JsonSerializer.Deserialize<EventGridEvent>(json.ToMemory().Span);
+                egEvents[0] = (new EventGridEvent(EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement)));
             }
             else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
-                egEvents = JsonSerializer.Deserialize<EventGridEvent[]>(json.ToMemory().Span);
+                egEvents = new EventGridEvent[requestDocument.RootElement.GetArrayLength()];
+                int i = 0;
+                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
+                {
+                    egEvents[i++] = new EventGridEvent(EventGridEventInternal.DeserializeEventGridEventInternal(property));
+                }
             }
             return egEvents ?? Array.Empty<EventGridEvent>();
         }
