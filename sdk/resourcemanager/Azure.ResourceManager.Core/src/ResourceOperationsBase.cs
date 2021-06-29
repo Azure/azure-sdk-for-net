@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.ResourceManager.Core.Extensions;
 
 namespace Azure.ResourceManager.Core
@@ -112,24 +111,6 @@ namespace Azure.ResourceManager.Core
             return (await GetAsync(cancellationToken).ConfigureAwait(false)).Value;
         }
 
-        private ResourcesRestOperations RestClient
-        {
-            get
-            {
-                string subscription;
-                if (!Id.TryGetSubscriptionId(out subscription))
-                {
-                    subscription = Guid.Empty.ToString();
-                }
-
-                return new ResourcesRestOperations(
-                    new Azure.Core.Pipeline.ClientDiagnostics(ClientOptions),
-                    ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions),
-                    subscription,
-                    BaseUri);
-            }
-        }
-
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
@@ -138,7 +119,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected IEnumerable<LocationData> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            Response<ResourceListResult> pageableProvider = RestClient.List(expand: "metadata", cancellationToken: cancellationToken);
+            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata", cancellationToken: cancellationToken);
             var resourcePageableProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
