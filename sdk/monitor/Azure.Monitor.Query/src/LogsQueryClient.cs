@@ -79,7 +79,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Executes the logs query. Deserialized the result into a strongly-typed model class or a primitive type if the query returns a single column.
+        /// Executes the logs query. Deserializes the result into a strongly typed model class or a primitive type if the query returns a single column.
         ///
         /// Example of querying a model:
         /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
@@ -109,7 +109,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Executes the logs query. Deserialized the result into a strongly-typed model class or a primitive type if the query returns a single column.
+        /// Executes the logs query. Deserializes the result into a strongly typed model class or a primitive type if the query returns a single column.
         ///
         /// Example of querying a model:
         /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
@@ -189,14 +189,14 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
         /// <code snippet="Snippet:BatchQuery" language="csharp">
-        /// Uri endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
+        /// var endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
         /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
         ///
-        /// LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+        /// var client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
         ///
         /// // Query TOP 10 resource groups by event count
         /// // And total event count
-        /// LogsBatchQuery batch = new LogsBatchQuery();
+        /// var batch = new LogsBatchQuery();
         ///
         /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
         /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));
@@ -237,14 +237,14 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
         /// <code snippet="Snippet:BatchQuery" language="csharp">
-        /// Uri endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
+        /// var endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
         /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
         ///
-        /// LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+        /// var client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
         ///
         /// // Query TOP 10 resource groups by event count
         /// // And total event count
-        /// LogsBatchQuery batch = new LogsBatchQuery();
+        /// var batch = new LogsBatchQuery();
         ///
         /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
         /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));

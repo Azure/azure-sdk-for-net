@@ -60,7 +60,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Queries metrics for a resource.
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
-        /// Uri endpoint = new Uri(&quot;https://management.azure.com&quot;);
+        /// var endpoint = new Uri(&quot;https://management.azure.com&quot;);
         /// string resourceId =
         ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/Microsoft.OperationalInsights/workspaces/&lt;workspace_name&gt;&quot;;
         ///
@@ -119,7 +119,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Queries metrics for a resource.
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
-        /// Uri endpoint = new Uri(&quot;https://management.azure.com&quot;);
+        /// var endpoint = new Uri(&quot;https://management.azure.com&quot;);
         /// string resourceId =
         ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/Microsoft.OperationalInsights/workspaces/&lt;workspace_name&gt;&quot;;
         ///
