@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary> The dimension filter. </summary>
-        internal FeedbackDimensionFilter DimensionFilter => Filter.Dimension == null ? null : new FeedbackDimensionFilter(Filter.Dimension);
+        internal FeedbackDimensionFilter DimensionFilter => Filter?.Dimension == null ? null : new FeedbackDimensionFilter(Filter.Dimension);
 
         /// <summary>
         /// Filters the result by series. Only feedbacks for the series in the time series group specified will
