@@ -45,6 +45,39 @@ namespace Azure.ResourceManager.Core
             }
         }
 
+        /// <inheritdoc/>
+        public override bool DoesExist(string resourceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                return RestClient.CheckExistence(resourceName, cancellationToken).Value;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override async Task<bool> DoesExistAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.CheckExistenceAsync(resourceName, cancellationToken).ConfigureAwait(false);
+                return response.Value;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary>
         /// Constructs an object used to create a resource group.
         /// </summary>

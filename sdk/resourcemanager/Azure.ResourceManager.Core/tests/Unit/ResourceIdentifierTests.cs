@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(ResourceGroupResourceId)]
         [TestCase(LocationResourceId)]
         [TestCase(SubscriptionResourceId)]
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
         public void ImplicitConstructor(string resourceProviderID)
         {
             string x = resourceProviderID;
@@ -235,6 +236,13 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(resourceId, tenant.ToString());
         }
 
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack", Description = "No provider tagname")]
+        public void CanParseValidNoProviderResource(string resourceId)
+        {
+            SubscriptionResourceIdentifier subscription = resourceId;
+            Assert.AreEqual(resourceId, subscription.ToString());
+        }
+
         public ResourceIdentifier ConvertToResourceId(string resourceId)
         {
             ResourceIdentifier subject = resourceId;
@@ -317,6 +325,21 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(false, id1.TryGetLocation(out _));
             Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
             ResourceIdentifier expectedId = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101";
+            ResourceIdentifier parentId;
+            Assert.AreEqual(true, id1.TryGetParent(out parentId));
+            Assert.IsTrue(expectedId.Equals(parentId));
+        }
+
+        [Test]
+        public void TryGetPropertiesForSubscriptionProvider()
+        {
+            SubscriptionResourceIdentifier id1 = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute";
+            string subscription;
+            Assert.AreEqual(true, id1.TryGetSubscriptionId(out subscription));
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", subscription);
+            Assert.AreEqual(false, id1.TryGetLocation(out _));
+            Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
+            ResourceIdentifier expectedId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c";
             ResourceIdentifier parentId;
             Assert.AreEqual(true, id1.TryGetParent(out parentId));
             Assert.IsTrue(expectedId.Equals(parentId));
@@ -462,7 +485,6 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft/Authorization", "roleAssignments", "MyRoleAssignemnt")]
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleA/ssignments", "MyRoleAssignemnt")]
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleAssignments", "MyRole/Assignemnt")]
-
         public void TestAppendTenantProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
             TenantResourceIdentifier resource = resourceId;

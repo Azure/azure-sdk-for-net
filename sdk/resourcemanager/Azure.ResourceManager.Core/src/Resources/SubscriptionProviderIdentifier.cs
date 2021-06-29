@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = providerNamespace;
             IsChild = true;
+            ResourceType = ProviderOperations.ResourceType;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         internal SubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, string providerNamespace, string typeName, string resourceName)
@@ -23,6 +25,7 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = parent.Provider;
             IsChild = true;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         /// <summary>
@@ -39,6 +42,7 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = parent.Provider;
             IsChild = true;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         /// <summary>
@@ -58,6 +62,13 @@ namespace Azure.ResourceManager.Core
             if (other is null)
                 throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
             return id;
+        }
+
+        /// <inheritdoc/>
+        public override bool TryGetProvider(out string providerId)
+        {
+            providerId = Provider;
+            return true;
         }
     }
 }
