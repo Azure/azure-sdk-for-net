@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Object that describes a single Microsoft.ManagedServices operation.
+    /// The object that describes a single Microsoft.ManagedServices operation.
     /// </summary>
     public partial class Operation
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">Operation name:
+        /// <param name="name">The operation name with the format:
         /// {provider}/{resource}/{operation}</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets operation name: {provider}/{resource}/{operation}
+        /// Gets the operation name with the format:
+        /// {provider}/{resource}/{operation}
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }

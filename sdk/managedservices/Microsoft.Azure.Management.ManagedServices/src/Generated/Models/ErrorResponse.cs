@@ -29,10 +29,8 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">Error response indicates Azure Resource Manager
-        /// is not able to process the incoming request. The reason is provided
-        /// in the error message.</param>
-        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
+        /// <param name="error">The error details.</param>
+        public ErrorResponse(ErrorDefinition error = default(ErrorDefinition))
         {
             Error = error;
             CustomInit();
@@ -44,12 +42,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error response indicates Azure Resource Manager is not able to
-        /// process the incoming request. The reason is provided in the error
-        /// message.
+        /// Gets or sets the error details.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponseError Error { get; private set; }
+        public ErrorDefinition Error { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Registration definition.
+    /// The registration definition.
     /// </summary>
     public partial class RegistrationDefinition : IResource
     {
@@ -31,13 +31,15 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <summary>
         /// Initializes a new instance of the RegistrationDefinition class.
         /// </summary>
-        /// <param name="properties">Properties of a registration
+        /// <param name="properties">The properties of a registration
         /// definition.</param>
-        /// <param name="plan">Plan details for the managed services.</param>
-        /// <param name="id">Fully qualified path of the registration
+        /// <param name="plan">The details for the Managed Services offer’s
+        /// plan in Azure Marketplace.</param>
+        /// <param name="id">The fully qualified path of the registration
         /// definition.</param>
-        /// <param name="type">Type of the resource.</param>
-        /// <param name="name">Name of the registration definition.</param>
+        /// <param name="type">The type of the Azure resource
+        /// (Microsoft.ManagedServices/registrationDefinitions).</param>
+        /// <param name="name">The name of the registration definition.</param>
         public RegistrationDefinition(RegistrationDefinitionProperties properties = default(RegistrationDefinitionProperties), Plan plan = default(Plan), string id = default(string), string type = default(string), string name = default(string))
         {
             Properties = properties;
@@ -54,31 +56,33 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of a registration definition.
+        /// Gets or sets the properties of a registration definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public RegistrationDefinitionProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets plan details for the managed services.
+        /// Gets or sets the details for the Managed Services offer’s plan in
+        /// Azure Marketplace.
         /// </summary>
         [JsonProperty(PropertyName = "plan")]
         public Plan Plan { get; set; }
 
         /// <summary>
-        /// Gets fully qualified path of the registration definition.
+        /// Gets the fully qualified path of the registration definition.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource.
+        /// Gets the type of the Azure resource
+        /// (Microsoft.ManagedServices/registrationDefinitions).
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets name of the registration definition.
+        /// Gets the name of the registration definition.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }

@@ -27,10 +27,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets the registration definition details.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='registrationDefinitionId'>
-        /// Guid of the registration definition.
+        /// The GUID of the registration definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,10 +52,10 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Deletes the registration definition.
         /// </summary>
         /// <param name='registrationDefinitionId'>
-        /// Guid of the registration definition.
+        /// The GUID of the registration definition.
         /// </param>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,13 +74,13 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Creates or updates a registration definition.
         /// </summary>
         /// <param name='registrationDefinitionId'>
-        /// Guid of the registration definition.
+        /// The GUID of the registration definition.
         /// </param>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='requestBody'>
-        /// The parameters required to create new registration definition.
+        /// The parameters required to create a new registration definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets a list of the registration definitions.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -124,13 +124,13 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Creates or updates a registration definition.
         /// </summary>
         /// <param name='registrationDefinitionId'>
-        /// Guid of the registration definition.
+        /// The GUID of the registration definition.
         /// </param>
         /// <param name='scope'>
-        /// Scope of the resource.
+        /// The scope of the resource.
         /// </param>
         /// <param name='requestBody'>
-        /// The parameters required to create new registration definition.
+        /// The parameters required to create a new registration definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
