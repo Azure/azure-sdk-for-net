@@ -776,7 +776,7 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Recognize Entities][recognize_entities_sample]
 - [Recognize PII Entities][recognize_pii_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
-- [Recognize Healthcare Entities][recognize_healthcare_sample]
+- [Recognize Healthcare Entities][analyze_healthcare_sample]
 - [Run multiple actions][analyze_operation_sample]
 
 ### Advanced samples
@@ -806,7 +806,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
-[recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
+[analyze_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample7_AnalyzeHealthcareEntities.md
 [analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeActions.md
 [analyze_operation_howto]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=synchronous#using-the-api-asynchronously
 [healthcare]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner

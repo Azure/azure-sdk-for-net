@@ -21,6 +21,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenience
             // get input documents
             string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
@@ -60,6 +61,8 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
+
+            #endregion Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenience
 
             // view operation status
             Console.WriteLine($" Created On   : {healthOperation.CreatedOn}");
