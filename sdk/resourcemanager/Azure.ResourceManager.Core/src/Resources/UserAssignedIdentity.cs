@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets or sets the Client ID.
         /// </summary>
-        public Guid ClientId { get; set; }
+        public Guid ClientId { get; }
 
         /// <summary>
         /// Gets or sets the Principal ID.
         /// </summary>
-        public Guid PrincipalId { get; set; }
+        public Guid PrincipalId { get; }
 
         /// <summary>
         /// Converts a <see cref="JsonElement"/> into an <see cref="UserAssignedIdentity"/> object.
