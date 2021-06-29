@@ -11,11 +11,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     internal class WhereClause
     {
         /// <summary>
-        /// Condition object represented in string format that encodes the logical condition behind the WHERE clause.
-        /// </summary>
-        internal string Condition { get; set; }
-
-        /// <summary>
         /// Constructor for a WHERE clause.
         /// </summary>
         /// <param name="condition"> Condition argument for the WHERE clause. </param>
@@ -23,6 +18,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             Condition = condition.GetConditionText();
         }
+
+        /// <summary>
+        /// Condition object represented in string format that encodes the logical condition behind the WHERE clause.
+        /// </summary>
+        internal string Condition { get; set; }
 
         /// <summary>
         /// Constructor for a WHERE clause that allows for overridden conditional statements.

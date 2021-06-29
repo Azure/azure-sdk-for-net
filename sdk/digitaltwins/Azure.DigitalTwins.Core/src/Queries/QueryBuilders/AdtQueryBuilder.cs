@@ -87,11 +87,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// .Build();
         /// </code>
         /// </example>
-        /// <param name="literalQuery"> Query in string format. </param>
+        /// <param name="customQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectCustom(string literalQuery)
+        public FromQuery SelectCustom(string customQuery)
         {
-            return _selectQuery.Select(literalQuery);
+            return _selectQuery.Select(customQuery);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> String represenation of query. </returns>
         public string GetQueryText()
         {
-            StringBuilder finalQuery = new StringBuilder();
+            var finalQuery = new StringBuilder();
 
             // build the select string
             finalQuery.Append(_selectQuery.GetQueryText());

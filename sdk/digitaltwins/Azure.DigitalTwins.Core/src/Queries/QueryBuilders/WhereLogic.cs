@@ -181,12 +181,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         internal string GetLogicText()
         {
-            if (_conditions.Length > 0)
-            {
-                return _conditions.ToString();
-            }
-
-            return string.Empty;
+            bool notEmpty = _conditions.Length > 0;
+            return notEmpty ? _conditions.ToString() : string.Empty;
         }
     }
 }

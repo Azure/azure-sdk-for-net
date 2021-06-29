@@ -183,11 +183,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     }
     public enum AdtDataType
     {
-        AdtBool = 1,
-        AdtNumber = 2,
-        AdtString = 3,
-        AdtPrimative = 4,
-        AdtObject = 5,
+        AdtBool = 0,
+        AdtNumber = 1,
+        AdtString = 2,
+        AdtPrimative = 3,
+        AdtObject = 4,
     }
     public partial class AdtQueryBuilder
     {
@@ -196,7 +196,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(params string[] args) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectAll() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCount() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCustom(string literalQuery) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCustom(string customQuery) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTop(int count, params string[] args) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTopAll(int count) { throw null; }
     }
@@ -224,17 +224,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     }
     public enum QueryComparisonOperator
     {
-        Equal = 1,
-        NotEqual = 2,
-        GreaterThan = 3,
-        LessThan = 4,
-        GreaterOrEqual = 5,
-        LessOrEqual = 6,
+        Equal = 0,
+        NotEqual = 1,
+        GreaterThan = 2,
+        LessThan = 3,
+        GreaterOrEqual = 4,
+        LessOrEqual = 5,
     }
     public enum QueryContainsOperator
     {
-        In = 1,
-        NotIn = 2,
+        In = 0,
+        NotIn = 1,
     }
     public sealed partial class SelectQuery : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
     {

@@ -54,7 +54,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectTop(int count, params string[] args)
         {
-            StringBuilder topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
+            var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
 
             // append optional arguments separated by commas
             topArg.Append(string.Join(", ", args));
@@ -67,12 +67,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
         /// but inserts TOP() into the query structure as well.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), ie the number of instances to return. </param>
+        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectTopAll(int count)
         {
             // turn into correct format -- eg. SELECT TOP(3)
-            StringBuilder topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
+            var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
 
             _clause = new SelectClause(new string[] { topArg.ToString() });
             return _upstreamFromQuery;

@@ -22,7 +22,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds a WHERE statement to a query.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Query that already contains a SELECT and FROM clause. </returns>
         public WhereLogic Where()
         {
             return _upstreamWhereLogic;

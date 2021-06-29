@@ -11,11 +11,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// IN operator defined by the ADT query language.
         /// </summary>
-        In = 1,
+        In,
 
         /// <summary>
         /// NIN (not in) operator defined by the ADT query language
         /// </summary>
-        NotIn = 2
+        NotIn
     }
 }

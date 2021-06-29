@@ -11,31 +11,31 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Equality operator.
         /// </summary>
-        Equal = 1,
+        Equal,
 
         /// <summary>
         /// Inequality operator.
         /// </summary>
-        NotEqual = 2,
+        NotEqual,
 
         /// <summary>
         /// Greater than operator.
         /// </summary>
-        GreaterThan = 3,
+        GreaterThan,
 
         /// <summary>
         /// Less than operator.
         /// </summary>
-        LessThan = 4,
+        LessThan,
 
         /// <summary>
         /// Geater than or equal to operator.
         /// </summary>
-        GreaterOrEqual = 5,
+        GreaterOrEqual,
 
         /// <summary>
         /// Less than or equal to operator.
         /// </summary>
-        LessOrEqual = 6,
+        LessOrEqual,
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -11,16 +12,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     internal class ComparisonCondition<T> : ConditionBase
     {
-        /// <summary>
-        /// The field that we're checking against a certain value.
-        /// </summary>
-        public string Field { get; set; }
-
-        /// <summary>
-        /// The value we're checking against a field.
-        /// </summary>
-        public T Value { get; set; }
-
         /// <summary>
         /// Constructor for a comparison condition.
         /// </summary>
@@ -34,6 +25,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             Value = value;
         }
 
+        /// <summary>
+        /// The field that we're checking against a certain value.
+        /// </summary>
+        public string Field { get; set; }
+
+        /// <summary>
+        /// The value we're checking against a field.
+        /// </summary>
+        public T Value { get; set; }
+
         public override string GetConditionText()
         {
             var conditionString = new StringBuilder();
@@ -45,7 +46,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 // if string, surround value with single quotes to denote string type in SQL
                 conditionString.Append($"'{Value}'");
             }
-            else if (typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(float) || typeof(T) == typeof(double))
+            else if (s_numericTypes.Contains(typeof(T)))
             {
                 // if int, long, float, our double, insert raw value into query string (nothing needs to be done)
                 conditionString.Append(Value);
@@ -62,5 +63,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked.
         /// </summary>
         public QueryComparisonOperator Operator { private get; set; }
+
+        private static readonly Type[] s_numericTypes = new Type[] { typeof(int), typeof(long), typeof(float), typeof(double) };
     }
 }
