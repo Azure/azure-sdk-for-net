@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
 
     /// <summary>
-    /// Defines values for NamespaceClassification.
+    /// Defines values for MetricClass.
     /// </summary>
-    public static class NamespaceClassification
+    public static class MetricClass
     {
-        public const string Platform = "Platform";
-        public const string Custom = "Custom";
-        public const string Qos = "Qos";
+        public const string Availability = "Availability";
+        public const string Transactions = "Transactions";
+        public const string Errors = "Errors";
+        public const string Latency = "Latency";
+        public const string Saturation = "Saturation";
     }
 }

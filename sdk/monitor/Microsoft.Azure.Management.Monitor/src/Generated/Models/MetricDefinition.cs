@@ -43,7 +43,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// metric.</param>
         /// <param name="category">Custom category name for this
         /// metric.</param>
-        /// <param name="unit">the unit of the metric. Possible values include:
+        /// <param name="metricClass">The class of the metric. Possible values
+        /// include: 'Availability', 'Transactions', 'Errors', 'Latency',
+        /// 'Saturation'</param>
+        /// <param name="unit">The unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
         /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified', 'Cores',
         /// 'MilliCores', 'NanoCores', 'BitsPerSecond'</param>
@@ -59,7 +62,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// definition.</param>
         /// <param name="dimensions">the name and the display name of the
         /// dimension, i.e. it is a localizable string.</param>
-        public MetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = default(string), string namespaceProperty = default(string), LocalizableString name = default(LocalizableString), string displayDescription = default(string), string category = default(string), Unit? unit = default(Unit?), AggregationType? primaryAggregationType = default(AggregationType?), IList<AggregationType?> supportedAggregationTypes = default(IList<AggregationType?>), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string), IList<LocalizableString> dimensions = default(IList<LocalizableString>))
+        public MetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = default(string), string namespaceProperty = default(string), LocalizableString name = default(LocalizableString), string displayDescription = default(string), string category = default(string), string metricClass = default(string), string unit = default(string), AggregationType? primaryAggregationType = default(AggregationType?), IList<AggregationType?> supportedAggregationTypes = default(IList<AggregationType?>), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string), IList<LocalizableString> dimensions = default(IList<LocalizableString>))
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
@@ -67,6 +70,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             Name = name;
             DisplayDescription = displayDescription;
             Category = category;
+            MetricClass = metricClass;
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
             SupportedAggregationTypes = supportedAggregationTypes;
@@ -120,13 +124,20 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Category { get; set; }
 
         /// <summary>
+        /// Gets or sets the class of the metric. Possible values include:
+        /// 'Availability', 'Transactions', 'Errors', 'Latency', 'Saturation'
+        /// </summary>
+        [JsonProperty(PropertyName = "metricClass")]
+        public string MetricClass { get; set; }
+
+        /// <summary>
         /// Gets or sets the unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
         /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified', 'Cores',
         /// 'MilliCores', 'NanoCores', 'BitsPerSecond'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public Unit? Unit { get; set; }
+        public string Unit { get; set; }
 
         /// <summary>
         /// Gets or sets the primary aggregation type value defining how to use

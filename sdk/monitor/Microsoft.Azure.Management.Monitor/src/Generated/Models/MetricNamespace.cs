@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// include: 'Platform', 'Custom', 'Qos'</param>
         /// <param name="properties">Properties which include the fully
         /// qualified namespace name.</param>
-        public MetricNamespace(string id = default(string), string type = default(string), string name = default(string), NamespaceClassification? classification = default(NamespaceClassification?), MetricNamespaceName properties = default(MetricNamespaceName))
+        public MetricNamespace(string id = default(string), string type = default(string), string name = default(string), string classification = default(string), MetricNamespaceName properties = default(MetricNamespaceName))
         {
             Id = id;
             Type = type;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// 'Platform', 'Custom', 'Qos'
         /// </summary>
         [JsonProperty(PropertyName = "classification")]
-        public NamespaceClassification? Classification { get; set; }
+        public string Classification { get; set; }
 
         /// <summary>
         /// Gets or sets properties which include the fully qualified namespace

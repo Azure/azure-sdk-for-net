@@ -68,7 +68,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// The interval (i.e. timegrain) of the query.
         /// </param>
         /// <param name='metricnames'>
-        /// The names of the metrics (comma separated) to retrieve.
+        /// The names of the metrics (comma separated) to retrieve. Special case: If a
+        /// metricname itself has a comma in it then use %2 to indicate it. Eg:
+        /// 'Metric,Name1' should be **'Metric%2Name1'**
         /// </param>
         /// <param name='aggregation'>
         /// The list of aggregation types (comma separated) to retrieve.
@@ -149,7 +151,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/metrics").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/Microsoft.Insights/metrics").ToString();
             _url = _url.Replace("{resourceUri}", resourceUri);
             List<string> _queryParameters = new List<string>();
             if (odataQuery != null)
