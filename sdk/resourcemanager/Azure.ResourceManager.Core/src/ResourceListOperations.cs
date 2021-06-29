@@ -115,13 +115,14 @@ namespace Azure.ResourceManager.Core
             AsyncPageable<GenericResourceExpanded> result;
             if (scopeFilter == null)
             {
-                result = restClient.ListAsync(resourceFilters?.ToString(), top, cancellationToken);
+                result = restClient.ListAsync(resourceFilters?.ToString(), null, top, cancellationToken);
             }
             else
             {
                 result = restClient.ListByResourceGroupAsync(
                     scopeFilter,
                     resourceFilters?.ToString(),
+                    null,
                     top,
                     cancellationToken);
             }
@@ -140,13 +141,14 @@ namespace Azure.ResourceManager.Core
             Pageable<GenericResourceExpanded> result;
             if (scopeFilter == null)
             {
-                result = restClient.List(resourceFilters?.ToString(), top, cancellationToken);
+                result = restClient.List(resourceFilters?.ToString(), null, top, cancellationToken);
             }
             else
             {
                 result = restClient.ListByResourceGroup(
                     scopeFilter,
                     resourceFilters?.ToString(),
+                    null,
                     top,
                     cancellationToken);
             }
