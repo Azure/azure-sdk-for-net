@@ -14,18 +14,23 @@ namespace Azure.AI.MetricsAdvisor
     [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
     public partial class MetricPeriodFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new <see cref="MetricPeriodFeedback"/> instance. </summary>
-        /// <param name="metricId"> The metric unique id. </param>
-        /// <param name="dimensionFilter"> The <see cref="FeedbackDimensionFilter"/> to apply to the feedback. </param>
-        /// <param name="periodType"> The <see cref="MetricPeriodType"/>. </param>
-        /// <param name="periodValue"> The period value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimensionFilter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="metricId"/> is empty. </exception>
-        public MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, MetricPeriodType periodType, int periodValue) : base(metricId, dimensionFilter)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MetricPeriodFeedback"/> class.
+        /// </summary>
+        /// <param name="metricId">The identifier of the metric to which the <see cref="MetricPeriodFeedback"/> applies.</param>
+        /// <param name="dimensionKey">
+        /// A key that identifies a set of time series to which the <see cref="MetricPeriodFeedback"/> applies.
+        /// If all possible dimension columns are set, this key uniquely identifies a single time series
+        /// for the specified <paramref name="metricId"/>. If only a subset of dimension columns are set, this
+        /// key uniquely identifies a group of time series.
+        /// </param>
+        /// <param name="periodType">The <see cref="MetricPeriodType"/>.</param>
+        /// <param name="periodValue">The period value.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionKey"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty.</exception>
+        public MetricPeriodFeedback(string metricId, DimensionKey dimensionKey, MetricPeriodType periodType, int periodValue)
+            : base(metricId, dimensionKey)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
-
             ValueInternal = new PeriodFeedbackValue(periodType, periodValue);
             Kind = MetricFeedbackKind.Period;
         }
@@ -35,16 +40,9 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="dimensionFilter"> . </param>
         /// <param name="valueInternal"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricId"/>, <paramref name="dimensionFilter"/>, or <paramref name="valueInternal"/> is null. </exception>
-        internal MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, PeriodFeedbackValue valueInternal) : base(metricId, dimensionFilter)
+        internal MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, PeriodFeedbackValue valueInternal)
+            : base(metricId, dimensionFilter.DimensionFilter)
         {
-            if (metricId == null)
-            {
-                throw new ArgumentNullException(nameof(metricId));
-            }
-            if (dimensionFilter == null)
-            {
-                throw new ArgumentNullException(nameof(dimensionFilter));
-            }
             if (valueInternal == null)
             {
                 throw new ArgumentNullException(nameof(valueInternal));
@@ -57,12 +55,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// The <see cref="MetricPeriodType"/>.
         /// </summary>
-        public MetricPeriodType PeriodType { get => ValueInternal.PeriodType; }
+        public MetricPeriodType PeriodType => ValueInternal.PeriodType;
 
         /// <summary>
         /// The period value.
         /// </summary>
-        public int PeriodValue { get => ValueInternal.PeriodValue; }
+        public int PeriodValue => ValueInternal.PeriodValue;
 
         [CodeGenMember("Value")]
         internal PeriodFeedbackValue ValueInternal { get; }

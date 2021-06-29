@@ -13,20 +13,21 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> The MetricFeedback. </summary>
     public partial class MetricFeedback
     {
-
         /// <summary> Initializes a new instance of MetricFeedback. </summary>
-        /// <param name="kind"> feedback type. </param>
-        /// <param name="id"> feedback unique id. </param>
-        /// <param name="createdTime"> feedback created time. </param>
-        /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"> . </param>
-        internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdTime, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter)
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimensionFilter"/> is null. </exception>
+        public MetricFeedback(string metricId, FeedbackDimensionFilter dimensionFilter)
         {
-            Kind = kind;
-            Id = id;
-            CreatedTime = createdTime;
-            UserPrincipal = userPrincipal;
+            if (metricId == null)
+            {
+                throw new ArgumentNullException(nameof(metricId));
+            }
+            if (dimensionFilter == null)
+            {
+                throw new ArgumentNullException(nameof(dimensionFilter));
+            }
+
             MetricId = metricId;
             DimensionFilter = dimensionFilter;
         }
