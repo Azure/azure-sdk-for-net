@@ -652,11 +652,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
         }
 
-        private void ValidateChangeThresholdCondition(ChangeThresholdCondition condition, double changePercentage, int shiftPoint, bool isWithinRange, AnomalyDetectorDirection direction, int minimumNumber, double minimumRatio)
+        private void ValidateChangeThresholdCondition(ChangeThresholdCondition condition, double changePercentage, int shiftPoint, bool withinRange, AnomalyDetectorDirection direction, int minimumNumber, double minimumRatio)
         {
             Assert.That(condition, Is.Not.Null);
             Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
-            Assert.That(condition.WithinRange, Is.EqualTo(isWithinRange));
+            Assert.That(condition.WithinRange, Is.EqualTo(withinRange));
             Assert.That(condition.ChangePercentage, Is.EqualTo(changePercentage));
             Assert.That(condition.ShiftPoint, Is.EqualTo(shiftPoint));
             Assert.That(condition.SuppressCondition, Is.Not.Null);
