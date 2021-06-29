@@ -68,7 +68,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Hook description: {hook.Description}");
 
             Console.WriteLine($"Hook administrators emails:");
-            foreach (string admin in hook.AdministratorsEmails)
+            foreach (string admin in hook.AdministratorEmails)
             {
                 Console.WriteLine($" - {admin}");
             }

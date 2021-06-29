@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeed()
         {
-            AdministratorsEmails = new ChangeTrackingList<string>();
-            ViewersEmails = new ChangeTrackingList<string>();
+            AdministratorEmails = new ChangeTrackingList<string>();
+            ViewerEmails = new ChangeTrackingList<string>();
         }
 
         internal DataFeed(DataFeedDetail dataFeedDetail)
@@ -42,8 +42,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccessMode = dataFeedDetail.ViewMode;
             RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
             MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
-            AdministratorsEmails = dataFeedDetail.Admins;
-            ViewersEmails = dataFeedDetail.Viewers;
+            AdministratorEmails = dataFeedDetail.Admins;
+            ViewerEmails = dataFeedDetail.Viewers;
         }
 
         /// <summary>
@@ -138,13 +138,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// data feed, being allowed to update, delete or pause them. They also have access to the
         /// credentials used to authenticate to the data source.
         /// </summary>
-        public IList<string> AdministratorsEmails { get; }
+        public IList<string> AdministratorEmails { get; }
 
         /// <summary>
         /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
         /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
-        public IList<string> ViewersEmails { get; }
+        public IList<string> ViewerEmails { get; }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
@@ -184,12 +184,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            foreach (var admin in AdministratorsEmails)
+            foreach (var admin in AdministratorEmails)
             {
                 detail.Admins.Add(admin);
             }
 
-            foreach (var viewer in ViewersEmails)
+            foreach (var viewer in ViewerEmails)
             {
                 detail.Viewers.Add(viewer);
             }
@@ -242,8 +242,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            patch.Admins = AdministratorsEmails;
-            patch.Viewers = ViewersEmails;
+            patch.Admins = AdministratorEmails;
+            patch.Viewers = ViewerEmails;
 
             SetAuthenticationProperties(patch, DataSource);
 

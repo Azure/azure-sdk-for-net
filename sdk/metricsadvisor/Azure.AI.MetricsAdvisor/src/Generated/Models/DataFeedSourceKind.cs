@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> data source type. </summary>
-    public readonly partial struct DataFeedSourceType : IEquatable<DataFeedSourceType>
+    public readonly partial struct DataFeedSourceKind : IEquatable<DataFeedSourceKind>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DataFeedSourceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DataFeedSourceKind"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataFeedSourceType(string value)
+        public DataFeedSourceKind(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -35,18 +35,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string MySqlValue = "MySql";
         private const string PostgreSqlValue = "PostgreSql";
         private const string SqlServerValue = "SqlServer";
-        /// <summary> Determines if two <see cref="DataFeedSourceType"/> values are the same. </summary>
-        public static bool operator ==(DataFeedSourceType left, DataFeedSourceType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="DataFeedSourceType"/> values are not the same. </summary>
-        public static bool operator !=(DataFeedSourceType left, DataFeedSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFeedSourceType"/>. </summary>
-        public static implicit operator DataFeedSourceType(string value) => new DataFeedSourceType(value);
+        /// <summary> Determines if two <see cref="DataFeedSourceKind"/> values are the same. </summary>
+        public static bool operator ==(DataFeedSourceKind left, DataFeedSourceKind right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="DataFeedSourceKind"/> values are not the same. </summary>
+        public static bool operator !=(DataFeedSourceKind left, DataFeedSourceKind right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="DataFeedSourceKind"/>. </summary>
+        public static implicit operator DataFeedSourceKind(string value) => new DataFeedSourceKind(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataFeedSourceType other && Equals(other);
+        public override bool Equals(object obj) => obj is DataFeedSourceKind other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(DataFeedSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataFeedSourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

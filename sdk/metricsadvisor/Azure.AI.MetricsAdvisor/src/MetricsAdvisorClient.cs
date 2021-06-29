@@ -555,7 +555,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 DimensionFilter = options?.DimensionFilter,
                 EndTime = options?.EndTime,
-                FeedbackType = options?.FeedbackType,
+                FeedbackType = options?.FeedbackKind,
                 StartTime = options?.StartTime,
                 TimeMode = options?.TimeMode
             };
@@ -620,7 +620,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 DimensionFilter = options?.DimensionFilter,
                 EndTime = options?.EndTime,
-                FeedbackType = options?.FeedbackType,
+                FeedbackType = options?.FeedbackKind,
                 StartTime = options?.StartTime,
                 TimeMode = options?.TimeMode
             };

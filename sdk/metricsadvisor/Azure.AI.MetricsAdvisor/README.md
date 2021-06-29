@@ -222,7 +222,7 @@ Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
 Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in createdDataFeed.AdministratorsEmails)
+foreach (string admin in createdDataFeed.AdministratorEmails)
 {
     Console.WriteLine($" - {admin}");
 }
