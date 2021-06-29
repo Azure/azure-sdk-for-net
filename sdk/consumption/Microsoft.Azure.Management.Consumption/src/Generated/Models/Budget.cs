@@ -34,18 +34,18 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the Budget class.
         /// </summary>
-        /// <param name="category">The category of the budget, whether the
-        /// budget tracks cost or usage. Possible values include: 'Cost',
-        /// 'Usage'</param>
         /// <param name="amount">The total amount of cost to track with the
         /// budget</param>
         /// <param name="timeGrain">The time covered by a budget. Tracking of
-        /// the amount will be reset based on the time grain. Possible values
-        /// include: 'Monthly', 'Quarterly', 'Annually'</param>
+        /// the amount will be reset based on the time grain. BillingMonth,
+        /// BillingQuarter, and BillingAnnual are only supported by WD
+        /// customers. Possible values include: 'Monthly', 'Quarterly',
+        /// 'Annually', 'BillingMonth', 'BillingQuarter',
+        /// 'BillingAnnual'</param>
         /// <param name="timePeriod">Has start and end date of the budget. The
         /// start date must be first of the month and should be less than the
         /// end date. Budget start date must be on or after June 1, 2017.
-        /// Future start date should not be more than three months. Past start
+        /// Future start date should not be more than twelve months. Past start
         /// date should  be selected within the timegrain period. There are no
         /// restrictions on the end date.</param>
         /// <param name="id">Resource Id.</param>
@@ -54,36 +54,38 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="eTag">eTag of the resource. To handle concurrent
         /// update scenario, this field will be used to determine whether the
         /// user is updating the latest version or not.</param>
-        /// <param name="filters">May be used to filter budgets by resource
-        /// group, resource, or meter.</param>
+        /// <param name="filter">May be used to filter budgets by
+        /// user-specified dimensions and/or tags.</param>
         /// <param name="currentSpend">The current amount of cost which is
         /// being tracked for a budget.</param>
         /// <param name="notifications">Dictionary of notifications associated
         /// with the budget. Budget can have up to five notifications.</param>
-        public Budget(string category, decimal amount, string timeGrain, BudgetTimePeriod timePeriod, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), Filters filters = default(Filters), CurrentSpend currentSpend = default(CurrentSpend), IDictionary<string, Notification> notifications = default(IDictionary<string, Notification>))
+        /// <param name="forecastSpend">The forecasted cost which is being
+        /// tracked for a budget.</param>
+        public Budget(decimal amount, string timeGrain, BudgetTimePeriod timePeriod, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), BudgetFilter filter = default(BudgetFilter), CurrentSpend currentSpend = default(CurrentSpend), IDictionary<string, Notification> notifications = default(IDictionary<string, Notification>), ForecastSpend forecastSpend = default(ForecastSpend))
             : base(id, name, type, eTag)
         {
-            Category = category;
             Amount = amount;
             TimeGrain = timeGrain;
             TimePeriod = timePeriod;
-            Filters = filters;
+            Filter = filter;
             CurrentSpend = currentSpend;
             Notifications = notifications;
+            ForecastSpend = forecastSpend;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for Budget class.
+        /// </summary>
+        static Budget()
+        {
+            Category = "Cost";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the category of the budget, whether the budget tracks
-        /// cost or usage. Possible values include: 'Cost', 'Usage'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.category")]
-        public string Category { get; set; }
 
         /// <summary>
         /// Gets or sets the total amount of cost to track with the budget
@@ -93,8 +95,10 @@ namespace Microsoft.Azure.Management.Consumption.Models
 
         /// <summary>
         /// Gets or sets the time covered by a budget. Tracking of the amount
-        /// will be reset based on the time grain. Possible values include:
-        /// 'Monthly', 'Quarterly', 'Annually'
+        /// will be reset based on the time grain. BillingMonth,
+        /// BillingQuarter, and BillingAnnual are only supported by WD
+        /// customers. Possible values include: 'Monthly', 'Quarterly',
+        /// 'Annually', 'BillingMonth', 'BillingQuarter', 'BillingAnnual'
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeGrain")]
         public string TimeGrain { get; set; }
@@ -103,7 +107,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// Gets or sets has start and end date of the budget. The start date
         /// must be first of the month and should be less than the end date.
         /// Budget start date must be on or after June 1, 2017. Future start
-        /// date should not be more than three months. Past start date should
+        /// date should not be more than twelve months. Past start date should
         /// be selected within the timegrain period. There are no restrictions
         /// on the end date.
         /// </summary>
@@ -111,11 +115,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public BudgetTimePeriod TimePeriod { get; set; }
 
         /// <summary>
-        /// Gets or sets may be used to filter budgets by resource group,
-        /// resource, or meter.
+        /// Gets or sets may be used to filter budgets by user-specified
+        /// dimensions and/or tags.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.filters")]
-        public Filters Filters { get; set; }
+        [JsonProperty(PropertyName = "properties.filter")]
+        public BudgetFilter Filter { get; set; }
 
         /// <summary>
         /// Gets the current amount of cost which is being tracked for a
@@ -132,6 +136,19 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public IDictionary<string, Notification> Notifications { get; set; }
 
         /// <summary>
+        /// Gets the forecasted cost which is being tracked for a budget.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.forecastSpend")]
+        public ForecastSpend ForecastSpend { get; private set; }
+
+        /// <summary>
+        /// The category of the budget, whether the budget tracks cost or
+        /// usage.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.category")]
+        public static string Category { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -139,10 +156,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Category == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Category");
-            }
             if (TimeGrain == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "TimeGrain");
@@ -155,9 +168,9 @@ namespace Microsoft.Azure.Management.Consumption.Models
             {
                 TimePeriod.Validate();
             }
-            if (Filters != null)
+            if (Filter != null)
             {
-                Filters.Validate();
+                Filter.Validate();
             }
             if (Notifications != null)
             {

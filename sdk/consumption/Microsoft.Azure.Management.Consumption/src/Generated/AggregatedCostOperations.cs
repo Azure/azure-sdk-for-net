@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Consumption
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/Microsoft.Consumption/aggregatedcost").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/Microsoft.Consumption/aggregatedCost").ToString();
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             _url = _url.Replace("{billingPeriodName}", System.Uri.EscapeDataString(billingPeriodName));
             List<string> _queryParameters = new List<string>();

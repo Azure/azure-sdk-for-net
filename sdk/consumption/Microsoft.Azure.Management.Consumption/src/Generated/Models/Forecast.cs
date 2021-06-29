@@ -34,12 +34,17 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the Forecast class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource name.</param>
+        /// <param name="id">The full qualified ARM ID of an event.</param>
+        /// <param name="name">The ID that uniquely identifies an event.
+        /// </param>
         /// <param name="type">Resource type.</param>
+        /// <param name="etag">The etag for the resource.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="usageDate">The usage date of the forecast.</param>
-        /// <param name="grain">The granularity of forecast. Possible values
+        /// <param name="grain">The granularity of forecast. Please note that
+        /// Yearly is not currently supported in this API. The API will provide
+        /// responses in the Monthly grain if Yearly is selected. To get yearly
+        /// grain data, please use our newer Forecast API. Possible values
         /// include: 'Daily', 'Monthly', 'Yearly'</param>
         /// <param name="charge">The amount of charge</param>
         /// <param name="currency">The ISO currency in which the meter is
@@ -49,8 +54,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="confidenceLevels">The details about the forecast
         /// confidence levels. This is populated only when chargeType is
         /// Forecast.</param>
-        public Forecast(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string usageDate = default(string), string grain = default(string), decimal? charge = default(decimal?), string currency = default(string), string chargeType = default(string), IList<ForecastPropertiesConfidenceLevelsItem> confidenceLevels = default(IList<ForecastPropertiesConfidenceLevelsItem>))
-            : base(id, name, type, tags)
+        public Forecast(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string usageDate = default(string), string grain = default(string), decimal? charge = default(decimal?), string currency = default(string), string chargeType = default(string), IList<ForecastPropertiesConfidenceLevelsItem> confidenceLevels = default(IList<ForecastPropertiesConfidenceLevelsItem>))
+            : base(id, name, type, etag, tags)
         {
             UsageDate = usageDate;
             Grain = grain;
@@ -73,8 +78,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public string UsageDate { get; private set; }
 
         /// <summary>
-        /// Gets or sets the granularity of forecast. Possible values include:
-        /// 'Daily', 'Monthly', 'Yearly'
+        /// Gets or sets the granularity of forecast. Please note that Yearly
+        /// is not currently supported in this API. The API will provide
+        /// responses in the Monthly grain if Yearly is selected. To get yearly
+        /// grain data, please use our newer Forecast API. Possible values
+        /// include: 'Daily', 'Monthly', 'Yearly'
         /// </summary>
         [JsonProperty(PropertyName = "properties.grain")]
         public string Grain { get; set; }

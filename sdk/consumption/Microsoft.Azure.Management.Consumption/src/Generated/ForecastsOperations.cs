@@ -52,7 +52,10 @@ namespace Microsoft.Azure.Management.Consumption
         public ConsumptionManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the forecast charges by subscriptionId.
+        /// Lists the forecast charges for scope defined. Please note that this API is
+        /// no longer actively under development. We recommend using our new Forecast
+        /// API moving forward:
+        /// https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='odataQuery'>

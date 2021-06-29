@@ -54,9 +54,25 @@ namespace Microsoft.Azure.Management.Consumption
         /// List of recommendations for purchasing reserved instances.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='scope'>
+        /// The scope associated with reservation recommendations operations. This
+        /// includes '/subscriptions/{subscriptionId}/' for subscription scope,
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+        /// resource group scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+        /// BillingAccount scope, and
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+        /// for billingProfile scope
+        /// </param>
         /// <param name='filter'>
-        /// May be used to filter reservationRecommendations by properties/scope and
-        /// properties/lookBackPeriod.
+        /// May be used to filter reservationRecommendations by: properties/scope with
+        /// allowed values ['Single', 'Shared'] and default value 'Single';
+        /// properties/resourceType with allowed values ['VirtualMachines',
+        /// 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB',
+        /// 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService',
+        /// 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value
+        /// 'VirtualMachines'; and properties/lookBackPeriod with allowed values
+        /// ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -79,15 +95,15 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ReservationRecommendation>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReservationRecommendation>>> ListWithHttpMessagesAsync(string scope, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (Client.SubscriptionId == null)
+            if (scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -97,13 +113,14 @@ namespace Microsoft.Azure.Management.Consumption
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filter", filter);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Consumption/reservationRecommendations").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Consumption/reservationRecommendations").ToString();
+            _url = _url.Replace("{scope}", scope);
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -171,7 +188,7 @@ namespace Microsoft.Azure.Management.Consumption
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -340,7 +357,7 @@ namespace Microsoft.Azure.Management.Consumption
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
