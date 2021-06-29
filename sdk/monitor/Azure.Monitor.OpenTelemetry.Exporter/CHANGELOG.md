@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.3 (Unreleased)
-
+* [ApplicationInsightsSampler introduced for compatibility with Application Insights SDKs. Implements the same hash algorithm](https://github.com/Azure/azure-sdk-for-net/pull/22288).
 
 ## 1.0.0-beta.2 (2021-03-04)
 
