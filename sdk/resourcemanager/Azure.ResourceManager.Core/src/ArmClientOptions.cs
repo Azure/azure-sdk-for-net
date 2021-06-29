@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -60,8 +57,6 @@ namespace Azure.ResourceManager.Core
             var newOptions = new T();
             newOptions.Transport = Transport;
 
-            CopyPolicies(this, newOptions);
-
             return newOptions;
         }
 
@@ -80,30 +75,9 @@ namespace Azure.ResourceManager.Core
             return _overrides.GetOrAdd(typeof(T), objectConstructor());
         }
 
-        private static void CopyPolicies(ClientOptions source, ClientOptions dest)
-        {
-            var perCallPoliciesProperty = source.GetType().GetProperty("PerCallPolicies", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
-            var perCallPolicies = perCallPoliciesProperty.GetValue(source) as IList<HttpPipelinePolicy>;
-
-            foreach (var policy in perCallPolicies)
-            {
-                dest.AddPolicy(policy, HttpPipelinePosition.PerCall);
-            }
-
-            var perRetryPoliciesProperty = source.GetType().GetProperty("PerRetryPolicies", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
-            var perRetryPolicies = perRetryPoliciesProperty.GetValue(source) as IList<HttpPipelinePolicy>;
-
-            foreach (var policy in perRetryPolicies)
-            {
-                dest.AddPolicy(policy, HttpPipelinePosition.PerRetry);
-            }
-        }
-
         internal ArmClientOptions Clone()
         {
             ArmClientOptions copy = new ArmClientOptions(DefaultLocation);
-
-            CopyPolicies(this, copy);
 
             copy.ApiVersions = ApiVersions.Clone();
             copy.Transport = Transport;
