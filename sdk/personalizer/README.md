@@ -3,6 +3,17 @@
 [Azure Personalizer](https://docs.microsoft.com/azure/cognitive-services/personalizer/)
 is a cloud-based service that helps your applications choose the best content item to show your users. You can use the Personalizer service to determine what product to suggest to shoppers or to figure out the optimal position for an advertisement. After the content is shown to the user, your application monitors the user's reaction and reports a reward score back to the Personalizer service. This ensures continuous improvement of the machine learning model, and Personalizer's ability to select the best content item based on the contextual information it receives.
 
+## Getting started
+
+### Install the package
+
+Install the Azure Personalizer client library for .NET with [NuGet][nuget]:
+
+```Powershell
+dotnet add package Azure.AI.Personalizer --version 1.1.0-beta.1
+```
+
+## Key concepts
 Functionality is exposed through several client libraries:
 
 [comment]: <> (TODO https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/personalizer add the link once it is live and the link works)
