@@ -2,6 +2,9 @@
 
 ## 1.16.0 (2021-06-30)
 
+### Changed
+
+- Added `TenantId` to the properties on `TokenRequestContext` to enable multi-tenant support in Azure.Identity.
 
 ## 1.15.0 (2021-06-08)
 
