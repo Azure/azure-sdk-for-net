@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Flag to indicate whether it's an <see href="https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection">Abuse Protection</see> request.
         /// </summary>
-        public bool IsAbuseRequest { get; internal set; }
+        public bool IsPing { get; internal set; }
 
         /// <summary>
         /// Flag to reflect pre-check status of the upstream requests.

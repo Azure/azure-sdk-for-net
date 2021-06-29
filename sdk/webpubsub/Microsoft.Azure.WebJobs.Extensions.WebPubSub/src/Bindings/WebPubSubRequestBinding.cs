@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 var abuseRequest = new WebPubSubRequest(null, WebPubSubRequestStatus.RequestValid, abuseResponse)
                 {
-                    IsAbuseRequest = true
+                    IsPing = true
                 };
                 return new WebPubSubRequestValueProvider(abuseRequest, _userType);
             }

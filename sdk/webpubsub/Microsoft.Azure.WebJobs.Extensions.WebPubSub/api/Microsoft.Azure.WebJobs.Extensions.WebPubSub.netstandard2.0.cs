@@ -1,3 +1,31 @@
+namespace Azure.Messaging.WebPubSub
+{
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public sealed partial class ClientCertificateInfo
+    {
+        public ClientCertificateInfo(string thumbprint) { }
+        public string Thumbprint { get { throw null; } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public sealed partial class ConnectEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    {
+        public ConnectEventRequest() { }
+        public System.Collections.Generic.IDictionary<string, string[]> Claims { get { throw null; } }
+        public Azure.Messaging.WebPubSub.ClientCertificateInfo[] ClientCertificates { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string[]> Query { get { throw null; } }
+        public string[] Subprotocols { get { throw null; } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public sealed partial class DisconnectEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    {
+        public DisconnectEventRequest() { }
+        public string Reason { get { throw null; } }
+    }
+    public abstract partial class ServiceRequest
+    {
+        protected ServiceRequest() { }
+    }
+}
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
@@ -15,26 +43,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string UserId { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public sealed partial class ClientCertificateInfo
-    {
-        public ClientCertificateInfo(string thumbprint) { }
-        public string Thumbprint { get { throw null; } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class CloseClientConnection : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
     {
         public CloseClientConnection() { }
         public string ConnectionId { get { throw null; } set { } }
         public string Reason { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public sealed partial class ConnectEventRequest : Microsoft.Azure.WebJobs.Extensions.WebPubSub.ServiceRequest
-    {
-        public ConnectEventRequest() { }
-        public System.Collections.Generic.IDictionary<string, string[]> Claims { get { throw null; } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.ClientCertificateInfo[] ClientCertificates { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string[]> Query { get { throw null; } }
-        public string[] Subprotocols { get { throw null; } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class ConnectionContext
@@ -60,12 +73,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string Subprotocol { get { throw null; } set { } }
         [Newtonsoft.Json.JsonPropertyAttribute(Required=Newtonsoft.Json.Required.Default)]
         public string UserId { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public sealed partial class DisconnectEventRequest : Microsoft.Azure.WebJobs.Extensions.WebPubSub.ServiceRequest
-    {
-        public DisconnectEventRequest() { }
-        public string Reason { get { throw null; } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class ErrorResponse : Microsoft.Azure.WebJobs.Extensions.WebPubSub.ServiceResponse
@@ -97,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         Text = 2,
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public sealed partial class MessageEventRequest : Microsoft.Azure.WebJobs.Extensions.WebPubSub.ServiceRequest
+    public sealed partial class MessageEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
         public MessageEventRequest(System.BinaryData message, Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType dataType) { }
         public Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType DataType { get { throw null; } }
@@ -172,10 +179,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public System.BinaryData Message { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
-    public abstract partial class ServiceRequest
-    {
-        protected ServiceRequest() { }
-    }
     public abstract partial class ServiceResponse
     {
         protected ServiceResponse() { }
@@ -249,8 +252,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         internal WebPubSubRequest() { }
         public Microsoft.Azure.WebJobs.Extensions.WebPubSub.ConnectionContext ConnectionContext { get { throw null; } }
-        public bool IsAbuseRequest { get { throw null; } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.ServiceRequest Request { get { throw null; } }
+        public bool IsPing { get { throw null; } }
+        public Azure.Messaging.WebPubSub.ServiceRequest Request { get { throw null; } }
         public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubRequestStatus RequestStatus { get { throw null; } }
         public System.Net.Http.HttpResponseMessage Response { get { throw null; } }
     }
