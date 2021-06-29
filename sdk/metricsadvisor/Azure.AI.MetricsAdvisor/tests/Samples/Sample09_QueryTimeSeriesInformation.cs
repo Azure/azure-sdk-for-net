@@ -134,7 +134,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             {
                 Console.WriteLine("Time series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in definition.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in definition.SeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -167,23 +167,29 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             // Only the two time series with the keys specified below will be returned.
 
-            var seriesKey1 = new DimensionKey();
-            seriesKey1.AddDimensionColumn("city", "Belo Horizonte");
-            seriesKey1.AddDimensionColumn("category", "__SUM__");
+            var dimensionColumns = new Dictionary<string, string>()
+            {
+                { "city", "Belo Horizonte" },
+                { "category", "__SUM__" }
+            };
+            var seriesKey1 = new DimensionKey(dimensionColumns);
 
-            var seriesKey2 = new DimensionKey();
-            seriesKey2.AddDimensionColumn("city", "Hong Kong");
-            seriesKey2.AddDimensionColumn("category", "Industrial & Scientific");
+            dimensionColumns = new Dictionary<string, string>()
+            {
+                { "city", "Hong Kong" },
+                { "category", "Industrial & Scientific" }
+            };
+            var seriesKey2 = new DimensionKey(dimensionColumns);
 
             options.SeriesToFilter.Add(seriesKey1);
             options.SeriesToFilter.Add(seriesKey2);
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(metricId, options))
             {
-                Console.WriteLine($"Time series metric ID: {seriesData.Definition.MetricId}");
+                Console.WriteLine($"Time series metric ID: {seriesData.MetricId}");
                 Console.WriteLine("Time series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in seriesData.Definition.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in seriesData.SeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -216,24 +222,30 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             // Only the two time series with the keys specified below will be returned.
 
-            var seriesKey1 = new DimensionKey();
-            seriesKey1.AddDimensionColumn("city", "Belo Horizonte");
-            seriesKey1.AddDimensionColumn("category", "__SUM__");
+            var dimensionColumns = new Dictionary<string, string>()
+            {
+                { "city", "Belo Horizonte" },
+                { "category", "__SUM__" }
+            };
+            var seriesKey1 = new DimensionKey(dimensionColumns);
 
-            var seriesKey2 = new DimensionKey();
-            seriesKey2.AddDimensionColumn("city", "Hong Kong");
-            seriesKey2.AddDimensionColumn("category", "Industrial & Scientific");
+            dimensionColumns = new Dictionary<string, string>()
+            {
+                { "city", "Hong Kong" },
+                { "category", "Industrial & Scientific" }
+            };
+            var seriesKey2 = new DimensionKey(dimensionColumns);
 
             var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
 
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, detectionConfigurationId, startTime, endTime))
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(detectionConfigurationId, seriesKeys, startTime, endTime))
             {
                 Console.WriteLine("Time series key:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in seriesData.SeriesKey.AsDictionary())
+                foreach (KeyValuePair<string, string> keyValuePair in seriesData.SeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }

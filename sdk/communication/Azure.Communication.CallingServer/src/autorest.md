@@ -8,15 +8,12 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 3. Repeat 2 and 3 until the desided interface is reflected in the apiview.dev.
 
-## General settings
-> see https://aka.ms/autorest 
-
-## Configuration 
-The following are the settings for generating this API with AutoRest.
+### AutoRest Configuration
+> see https://aka.ms/autorest
 
 ```yaml
-tag: beta
-input-file: https://github.com/Azure/azure-rest-api-specs/raw/9550e58c98dc0af9474d896493335bf0543b2b4d/specification/communication/data-plane/CallingServer/preview/2021-04-15-preview1/communicationservicescallingserver.json
+require:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b4b5fa5ee23f8cce9e1ade4a82076b4c34b25651/specification/communication/data-plane/CallingServer/readme.md
 payload-flattening-threshold: 10
 clear-output-folder: true
 directive:

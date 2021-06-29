@@ -36,8 +36,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// 'ApplyAndMonitor', 'ApplyAndAutoCorrect'</param>
         /// <param name="allowModuleOverwrite">If true - new configurations
         /// downloaded from the pull service are allowed to overwrite the old
-        /// ones on the target node. Otherwise, false. Possible values include:
-        /// 'True', 'False'</param>
+        /// ones on the target node. Otherwise, false</param>
         /// <param name="actionAfterReboot">Specifies what happens after a
         /// reboot during the application of a configuration. The possible
         /// values are ContinueConfiguration and StopConfiguration. Possible
@@ -53,13 +52,12 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// any configuration that requires it. The default value is false. To
         /// use this setting when a reboot condition is enacted by something
         /// other than DSC (such as Windows Installer), combine this setting
-        /// with the xPendingReboot module. Possible values include: 'True',
-        /// 'False'</param>
+        /// with the xPendingReboot module.</param>
         /// <param name="configurationModeFrequencyMins">How often, in minutes,
         /// the current configuration is checked and applied. This property is
         /// ignored if the ConfigurationMode property is set to ApplyOnly. The
         /// default value is 15.</param>
-        public ConfigurationSetting(string configurationMode = default(string), string allowModuleOverwrite = default(string), string actionAfterReboot = default(string), double? refreshFrequencyMins = default(double?), string rebootIfNeeded = default(string), double? configurationModeFrequencyMins = default(double?))
+        public ConfigurationSetting(string configurationMode = default(string), bool? allowModuleOverwrite = default(bool?), string actionAfterReboot = default(string), double? refreshFrequencyMins = default(double?), bool? rebootIfNeeded = default(bool?), double? configurationModeFrequencyMins = default(double?))
         {
             ConfigurationMode = configurationMode;
             AllowModuleOverwrite = allowModuleOverwrite;
@@ -88,10 +86,10 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <summary>
         /// Gets or sets if true - new configurations downloaded from the pull
         /// service are allowed to overwrite the old ones on the target node.
-        /// Otherwise, false. Possible values include: 'True', 'False'
+        /// Otherwise, false
         /// </summary>
         [JsonProperty(PropertyName = "allowModuleOverwrite")]
-        public string AllowModuleOverwrite { get; set; }
+        public bool? AllowModuleOverwrite { get; set; }
 
         /// <summary>
         /// Gets or sets specifies what happens after a reboot during the
@@ -117,10 +115,10 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// that requires it. The default value is false. To use this setting
         /// when a reboot condition is enacted by something other than DSC
         /// (such as Windows Installer), combine this setting with the
-        /// xPendingReboot module. Possible values include: 'True', 'False'
+        /// xPendingReboot module.
         /// </summary>
         [JsonProperty(PropertyName = "rebootIfNeeded")]
-        public string RebootIfNeeded { get; set; }
+        public bool? RebootIfNeeded { get; set; }
 
         /// <summary>
         /// Gets or sets how often, in minutes, the current configuration is

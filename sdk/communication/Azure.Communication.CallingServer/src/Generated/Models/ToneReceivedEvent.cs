@@ -5,28 +5,38 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The subscribe to tone event. </summary>
     public partial class ToneReceivedEvent
     {
         /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
-        public ToneReceivedEvent()
+        /// <param name="toneInfo"> The tone info. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toneInfo"/> is null. </exception>
+        internal ToneReceivedEvent(ToneInfo toneInfo)
         {
+            if (toneInfo == null)
+            {
+                throw new ArgumentNullException(nameof(toneInfo));
+            }
+
+            ToneInfo = toneInfo;
         }
 
         /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
         /// <param name="toneInfo"> The tone info. </param>
-        /// <param name="callLegId"> The call leg.id. </param>
-        internal ToneReceivedEvent(ToneInfo toneInfo, string callLegId)
+        /// <param name="callConnectionId"> The call connection id. </param>
+        internal ToneReceivedEvent(ToneInfo toneInfo, string callConnectionId)
         {
             ToneInfo = toneInfo;
-            CallLegId = callLegId;
+            CallConnectionId = callConnectionId;
         }
 
         /// <summary> The tone info. </summary>
-        public ToneInfo ToneInfo { get; set; }
-        /// <summary> The call leg.id. </summary>
-        public string CallLegId { get; set; }
+        public ToneInfo ToneInfo { get; }
+        /// <summary> The call connection id. </summary>
+        public string CallConnectionId { get; }
     }
 }

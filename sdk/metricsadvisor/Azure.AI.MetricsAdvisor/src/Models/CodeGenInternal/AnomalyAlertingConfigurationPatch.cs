@@ -13,6 +13,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public IList<Guid> HookIds { get; internal set; }
 
         /// <summary> Anomaly alerting configurations. </summary>
-        public IList<MetricAnomalyAlertConfiguration> MetricAlertingConfigurations { get; internal set; }
+        public IList<MetricAlertConfiguration> MetricAlertingConfigurations { get; internal set; }
     }
 }
