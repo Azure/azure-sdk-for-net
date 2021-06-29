@@ -3,7 +3,7 @@ resources:
   - pipeline: net-core
     project: internal
     source: net - core
-    branch: master
+    branch: main
     tags: 
     - scheduled
 
@@ -12,7 +12,7 @@ trigger: none
 pr:
   branches:
     include:
-      - master
+      - main
   paths:
     include:
       - eng/pipelines/aggregate-reports.yml

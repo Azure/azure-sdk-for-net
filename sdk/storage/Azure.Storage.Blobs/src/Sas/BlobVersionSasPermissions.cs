@@ -23,6 +23,11 @@ namespace Azure.Storage.Sas
         Delete = 1,
 
         /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 2,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -47,6 +52,10 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobVersionSasPermissions.Delete) == BlobVersionSasPermissions.Delete)
             {
                 sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
+            if ((permissions & BlobVersionSasPermissions.SetImmutabilityPolicy) == BlobVersionSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

@@ -12,13 +12,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedMissingDataPointFillSettings"/> class.
         /// </summary>
-        public DataFeedMissingDataPointFillSettings()
+        /// <param name="fillType">The strategy used when filling a missing point.</param>
+        public DataFeedMissingDataPointFillSettings(DataFeedMissingDataPointFillType fillType)
         {
+            FillType = fillType;
         }
 
         internal DataFeedMissingDataPointFillSettings(DataFeedDetail dataFeedDetail)
         {
-            FillType = dataFeedDetail.FillMissingPointType;
+            FillType = dataFeedDetail.FillMissingPointType.Value;
             CustomFillValue = dataFeedDetail.FillMissingPointType == DataFeedMissingDataPointFillType.CustomValue
                 ? dataFeedDetail.FillMissingPointValue
                 : null;
@@ -27,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The strategy used when filling a missing point.
         /// </summary>
-        public DataFeedMissingDataPointFillType? FillType { get; set; }
+        public DataFeedMissingDataPointFillType FillType { get; set; }
 
         /// <summary>
         /// The custom fill value. This property must be set if <see cref="FillType"/> is

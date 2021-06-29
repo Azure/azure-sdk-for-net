@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
-        /// <see cref="DocumentTranslationClient.GetGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
+        /// <see cref="DocumentTranslationClient.GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
         public DocumentTranslationInput(Uri sourceUri, Uri targetUri, string targetLanguageCode, TranslationGlossary glossary = default)
         {
             Source = new TranslationSource(sourceUri);
@@ -43,7 +43,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="languageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
-        /// <see cref="DocumentTranslationClient.GetGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
+        /// <see cref="DocumentTranslationClient.GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
         public void AddTarget(Uri targetUri, string languageCode, TranslationGlossary glossary = default)
         {
             var target = new TranslationTarget(targetUri, languageCode);

@@ -31,7 +31,16 @@ namespace Azure.ResourceManager.Core.Tests
             var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             ResourceGroup rg = await rgOp.WaitForCompletionAsync();
             var deleteOp = await rg.StartDeleteAsync();
+            var response = deleteOp.GetRawResponse();
+            Assert.AreEqual(202, response.Status);
+            await deleteOp.UpdateStatusAsync();
             await deleteOp.WaitForCompletionResponseAsync();
+            await deleteOp.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2));
+
+            var rgOp2 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg2 = await rgOp.WaitForCompletionAsync();
+            rg2.Id.Name = null;
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg2.StartDeleteAsync());
         }
 
         [TestCase]
@@ -57,6 +66,9 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
             Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
+
+            rg1.Id.Name = null;
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.GetAsync());
         }
 
         [TestCase]
@@ -79,6 +91,9 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(null));
+
+            rg1.Id.Name = null;
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(parameters));
         }
 
         [TestCase]
@@ -96,6 +111,9 @@ namespace Azure.ResourceManager.Core.Tests
                 var expOp = await rg.StartExportTemplateAsync(null);
                 _ = await expOp.WaitForCompletionAsync();
             });
+
+            rg.Id.Name = null;
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.StartExportTemplateAsync(parameters));
         }
 
         [TestCase]

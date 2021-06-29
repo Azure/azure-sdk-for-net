@@ -94,6 +94,15 @@ namespace Azure.ResourceManager.Core
             return new PreDefinedTagContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
 
+        /// <summary>
+        /// Gets the provider container under this subscription.
+        /// </summary>
+        /// <returns> The provider container. </returns>
+        public virtual ProviderContainer GetProviders()
+        {
+            return new ProviderContainer(this);
+        }
+
         /// <inheritdoc/>
         public override Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
@@ -190,7 +199,7 @@ namespace Azure.ResourceManager.Core
         /// Gets a container representing all resources as generic objects in the current tenant.
         /// </summary>
         /// <returns> GenericResource container. </returns>
-        public GenericResourceContainer GetGenericResources()
+        public virtual GenericResourceContainer GetGenericResources()
         {
             return new GenericResourceContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }

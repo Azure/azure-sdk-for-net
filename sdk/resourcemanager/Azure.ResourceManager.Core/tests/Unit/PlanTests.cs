@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
@@ -239,14 +240,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string expected = "{\"properties\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}}";
             Plan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
-            var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteObjectValue(plan);
-            writer.WriteEndObject();
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.IsTrue(expected.Equals(json));
         }
 
@@ -254,14 +248,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void InvalidSerializationTest()
         {
             Plan plan = new(null, null, null, null, null);
-            var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteObjectValue(plan);
-            writer.WriteEndObject();
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.IsTrue(json.Equals("{\"properties\":{}}"));
         }
 
