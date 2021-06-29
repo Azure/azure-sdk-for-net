@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// The type of this data source.
+        /// The kind of this data source.
         /// </summary>
         public DataFeedSourceKind DataSourceKind { get; }
 

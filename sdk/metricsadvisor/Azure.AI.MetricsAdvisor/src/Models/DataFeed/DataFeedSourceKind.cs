@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The type of data source that ingests a <see cref="DataFeed"/> with data.
+    /// The kind of data source that ingests a <see cref="DataFeed"/> with data.
     /// </summary>
     [CodeGenModel("DataSourceType")]
     public readonly partial struct DataFeedSourceKind
