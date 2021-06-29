@@ -39,11 +39,14 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// <param name="suppressionId">The GUID of the suppression.</param>
         /// <param name="ttl">The duration for which the suppression is
         /// valid.</param>
-        public SuppressionContract(string id = default(string), string name = default(string), string type = default(string), string suppressionId = default(string), string ttl = default(string))
+        /// <param name="expirationTimeStamp">Gets or sets the expiration time
+        /// stamp.</param>
+        public SuppressionContract(string id = default(string), string name = default(string), string type = default(string), string suppressionId = default(string), string ttl = default(string), System.DateTime? expirationTimeStamp = default(System.DateTime?))
             : base(id, name, type)
         {
             SuppressionId = suppressionId;
             Ttl = ttl;
+            ExpirationTimeStamp = expirationTimeStamp;
             CustomInit();
         }
 
@@ -63,6 +66,12 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ttl")]
         public string Ttl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the expiration time stamp.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expirationTimeStamp")]
+        public System.DateTime? ExpirationTimeStamp { get; private set; }
 
     }
 }
