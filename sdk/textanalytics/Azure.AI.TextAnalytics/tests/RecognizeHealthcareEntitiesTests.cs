@@ -54,6 +54,25 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        public async Task RecognizeHealthcareEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
+
+            await operation.WaitForCompletionAsync();
+
+            ValidateOperationProperties(operation);
+
+            List<AnalyzeHealthcareEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            //Take the first page
+            var resultCollection = resultInPages.FirstOrDefault();
+            Assert.AreEqual(s_batchDocuments.Count, resultCollection.Count);
+        }
+
+        [RecordedTest]
         public async Task RecognizeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
