@@ -1,5 +1,5 @@
-# Recognizing Healthcare Entities from Documents
-This sample demonstrates how to recognize healthcare entities in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
+# Analyze Healthcare Entities from Documents
+This sample demonstrates how to analyze healthcare entities in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -14,9 +14,9 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 ```
 ## Analyze Documents
 
-To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
+To analyze healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
 
-```C# Snippet:TextAnalyticsSampleHealthcareConvenienceAnalyzeDocumentsAsync
+```C# Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsync
 // get input documents
 string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                     Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
@@ -34,19 +34,15 @@ string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 List<string> batchInput = new List<string>()
 {
     document1,
-    document2,
-    string.Empty
+    document2
 };
 
-var options = new AnalyzeHealthcareEntitiesOptions { };
-
 // start analysis process
-AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
-
+AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput);
 await healthOperation.WaitForCompletionAsync();
 ```
-The returned healthcare operation contains general information about the status of the operation. It can be requested while the operation is running or when it completed. For example:
 
+The returned healthcare operation contains general information about the status of the operation. It can be requested while the operation is running or when it completed. For example:
 
 ```C# Snippet:TextAnalyticsSampleHealthcareOperationStatus
 // view operation status
@@ -55,7 +51,9 @@ Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
 Console.WriteLine($"Status       : {healthOperation.Status}");
 Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 ```
+
 To view the final results of the long-running operation:
+
 ```C# Snippet:TextAnalyticsSampleHealthcareConvenienceAsyncViewResults
 // view operation results
 await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
@@ -70,58 +68,57 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
             foreach (var entity in entitiesInDoc.Entities)
             {
                 // view recognized healthcare entities
-                Console.WriteLine($"    Entity: {entity.Text}");
-                Console.WriteLine($"    Category: {entity.Category}");
-                Console.WriteLine($"    Offset: {entity.Offset}");
-                Console.WriteLine($"    Length: {entity.Length}");
-                Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
-                Console.WriteLine($"    Links:");
+                Console.WriteLine($"  Entity: {entity.Text}");
+                Console.WriteLine($"  Category: {entity.Category}");
+                Console.WriteLine($"  Offset: {entity.Offset}");
+                Console.WriteLine($"  Length: {entity.Length}");
+                Console.WriteLine($"  NormalizedText: {entity.NormalizedText}");
+                Console.WriteLine($"  Links:");
 
                 // view entity data sources
                 foreach (EntityDataSource entityDataSource in entity.DataSources)
                 {
-                    Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                    Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                    Console.WriteLine($"    Entity ID in Data Source: {entityDataSource.EntityId}");
+                    Console.WriteLine($"    DataSource: {entityDataSource.Name}");
                 }
 
                 // view assertion
                 if (entity.Assertion != null)
                 {
-                    Console.WriteLine($"    Assertions:");
+                    Console.WriteLine($"  Assertions:");
 
                     if (entity.Assertion?.Association != null)
                     {
-                        Console.WriteLine($"        Association: {entity.Assertion?.Association}");
+                        Console.WriteLine($"    Association: {entity.Assertion?.Association}");
                     }
 
                     if (entity.Assertion?.Certainty != null)
                     {
-                        Console.WriteLine($"        Certainty: {entity.Assertion?.Certainty}");
+                        Console.WriteLine($"    Certainty: {entity.Assertion?.Certainty}");
                     }
                     if (entity.Assertion?.Conditionality != null)
                     {
-                        Console.WriteLine($"        Conditionality: {entity.Assertion?.Conditionality}");
+                        Console.WriteLine($"    Conditionality: {entity.Assertion?.Conditionality}");
                     }
                 }
             }
 
-            Console.WriteLine($"    We found {entitiesInDoc.EntityRelations.Count} relations in the current document:");
+            Console.WriteLine($"  We found {entitiesInDoc.EntityRelations.Count} relations in the current document:");
             Console.WriteLine("");
 
             // view recognized healthcare relations
             foreach (HealthcareEntityRelation relations in entitiesInDoc.EntityRelations)
             {
-                Console.WriteLine($"        Relation: {relations.RelationType}");
-                Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
+                Console.WriteLine($"    Relation: {relations.RelationType}");
+                Console.WriteLine($"    For this relation there are {relations.Roles.Count} roles");
 
                 // view relation roles
                 foreach (HealthcareEntityRelationRole role in relations.Roles)
                 {
-                    Console.WriteLine($"            Role Name: {role.Name}");
+                    Console.WriteLine($"      Role Name: {role.Name}");
 
-                    Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
-                    Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
-
+                    Console.WriteLine($"      Associated Entity Text: {role.Entity.Text}");
+                    Console.WriteLine($"      Associated Entity Category: {role.Entity.Category}");
                     Console.WriteLine("");
                 }
 
@@ -144,10 +141,8 @@ To see the full example source files, see:
 
 * [Synchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities.cs)
 * [Asynchronous AnalyzeHealthcareEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync.cs)
-* [Automatic Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync_AutomaticPolling.cs)
-* [Manual Polling AnalyzeHealthcareEntities ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_ManualPolling.cs)
-* [Automatic Polling AnalyzeHealthcareEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_AutomaticPolling.cs)
-* [Manual Polling AnalyzeHealthcareEntities Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenience_ManualPolling.cs)
+* [Synchronous AnalyzeHealthcareEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenienceAsync.cs)
+* [Asynchronous AnalyzeHealthcareEntities Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesConvenience.cs)
 * [Synchronous AnalyzeHealthcareEntities Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntities_Cancellation.cs)
 * [Asynchronous AnalyzeHealthcareEntitiesAsync Cancellation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample7_AnalyzeHealthcareEntitiesAsync_Cancellation.cs)
 
