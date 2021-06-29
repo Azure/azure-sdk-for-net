@@ -19,6 +19,8 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly CredentialPipeline _pipeline;
         private readonly bool _allowMultiTenantAuthentication;
+        private readonly string _clientId;
+        private readonly string _clientSecret;
 
         /// <inheritdoc />
         public override bool SupportsCaching => true;
@@ -58,10 +60,12 @@ namespace Azure.Identity
             Argument.AssertNotNull(clientSecret, nameof(clientSecret));
 
             options ??= new OnBehalfOfCredentialOptions();
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _allowMultiTenantAuthentication = options.AllowMultiTenantAuthentication;
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options);
+            _clientId = clientId;
+            _clientSecret = clientSecret;
+            _client = client;
         }
 
         /// <inheritdoc />
@@ -79,8 +83,10 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+                var options = new OnBehalfOfCredentialOptions();
+                UserAssertionScope.Current.Client = _client ?? new MsalConfidentialClient(_pipeline, tenantId, _clientId, _clientSecret, UserAssertionScope.Current.CacheOptions);
 
-                AuthenticationResult result = await _client
+                AuthenticationResult result = await UserAssertionScope.Current.Client
                     .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, UserAssertionScope.Current.UserAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
 
