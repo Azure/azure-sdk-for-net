@@ -158,9 +158,9 @@ The following section provides several code snippets using the `client` [created
 
 ### Async examples
 * [Detect Language Asynchronously](#detect-language-asynchronously)
-* [Recognize Entities Asyncronously](#recognize-entities-asynchronously)
-* [Analyze Healthcare Entities Asyncronously](#analyze-healthcare-entities-asynchronously)
-* [Run multiple actions Asyncronously](#run-multiple-actions-asynchronously)
+* [Recognize Entities Asynchronously](#recognize-entities-asynchronously)
+* [Analyze Healthcare Entities Asynchronously](#analyze-healthcare-entities-asynchronously)
+* [Run multiple actions Asynchronously](#run-multiple-actions-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
