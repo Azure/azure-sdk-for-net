@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
+namespace Azure.Messaging.WebPubSub
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MessageDataType

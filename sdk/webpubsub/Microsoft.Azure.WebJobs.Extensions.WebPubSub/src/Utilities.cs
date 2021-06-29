@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 

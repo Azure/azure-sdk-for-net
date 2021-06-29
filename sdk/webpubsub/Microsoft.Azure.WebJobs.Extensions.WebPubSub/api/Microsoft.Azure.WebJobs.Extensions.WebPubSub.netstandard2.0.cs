@@ -21,6 +21,23 @@ namespace Azure.Messaging.WebPubSub
         public DisconnectEventRequest() { }
         public string Reason { get { throw null; } }
     }
+    [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum MessageDataType
+    {
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="binary")]
+        Binary = 0,
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="json")]
+        Json = 1,
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="text")]
+        Text = 2,
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public sealed partial class MessageEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    {
+        public MessageEventRequest(System.BinaryData message, Azure.Messaging.WebPubSub.MessageDataType dataType) { }
+        public Azure.Messaging.WebPubSub.MessageDataType DataType { get { throw null; } }
+        public System.BinaryData Message { get { throw null; } }
+    }
     public abstract partial class ServiceRequest
     {
         protected ServiceRequest() { }
@@ -93,28 +110,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public Azure.Messaging.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
         public string TargetName { get { throw null; } set { } }
     }
-    [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum MessageDataType
-    {
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="binary")]
-        Binary = 0,
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="json")]
-        Json = 1,
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="text")]
-        Text = 2,
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public sealed partial class MessageEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
-    {
-        public MessageEventRequest(System.BinaryData message, Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType dataType) { }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType DataType { get { throw null; } }
-        public System.BinaryData Message { get { throw null; } }
-    }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class MessageResponse : Microsoft.Azure.WebJobs.Extensions.WebPubSub.ServiceResponse
     {
         public MessageResponse() { }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
         [Newtonsoft.Json.JsonPropertyAttribute(Required=Newtonsoft.Json.Required.Always)]
         public System.BinaryData Message { get { throw null; } set { } }
     }
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class SendToAll : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
     {
         public SendToAll() { }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
         public string[] Excluded { get { throw null; } set { } }
         public System.BinaryData Message { get { throw null; } set { } }
     }
@@ -159,14 +159,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public SendToConnection() { }
         public string ConnectionId { get { throw null; } set { } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
         public System.BinaryData Message { get { throw null; } set { } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public partial class SendToGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
     {
         public SendToGroup() { }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
         public string[] Excluded { get { throw null; } set { } }
         public string Group { get { throw null; } set { } }
         public System.BinaryData Message { get { throw null; } set { } }
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class SendToUser : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
     {
         public SendToUser() { }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.MessageDataType DataType { get { throw null; } set { } }
         public System.BinaryData Message { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
