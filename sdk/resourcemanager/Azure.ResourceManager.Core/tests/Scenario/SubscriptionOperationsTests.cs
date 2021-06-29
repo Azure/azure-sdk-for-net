@@ -139,6 +139,13 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.NotNull(subscription.Value.Data.Id);
         }
 
+        [RecordedTest]
+        public async Task TestTryGet()
+        {
+            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
+            Assert.AreEqual($"/subscriptions/{TestEnvironment.SubscriptionId}", sub.Data.Id.ToString());
+        }
+
         private string GetLongString(int length)
         {
             StringBuilder builder = new StringBuilder();
