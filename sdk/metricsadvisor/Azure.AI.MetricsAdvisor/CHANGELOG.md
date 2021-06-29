@@ -24,6 +24,7 @@
 - Renamed class `PeriodType` to `MetricPeriodType`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
+- Removed the property `DimensionFilter` in `MetricFeedback`. It's now a property of type `DimensionKey` (named `DimensionKey` as well). Similarly, feedback constructors now require a `dimensionKey` parameter to be passed.
 - `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
 - `DataFeedMissingDataPointFillSettings` constructor now takes the required `fillType` parameter. For this reason, the property `FillType` is not nullable anymore.
 - `EmailNotificationHook` constructor now takes the required `name` parameter.
@@ -45,6 +46,7 @@
 - Optional properties `GetAllFeedbackOptions.Filter`, `GetAnomalyDimensionValuesOptions.DimensionToFilter`, and `FeedbackDimensionFilter.DimensionFilter` must now be manually added with setters to be used.
 - Moved property `DataFeed.SourceType` to `DataFeedSource.DataSourceType`.
 - In `MetricsAdvisorKeyCredential`, merged `UpdateSubscriptionKey` and `UpdateApiKey` into a single method, `Update`, to make it an atomic operation.
+- Removed setters from `StartTime` and `EndTime`, both in `MetricAnomalyFeedback` and in `MetricChangePointFeedback`.
 
 ## 1.0.0-beta.4 (2021-06-07)
 
