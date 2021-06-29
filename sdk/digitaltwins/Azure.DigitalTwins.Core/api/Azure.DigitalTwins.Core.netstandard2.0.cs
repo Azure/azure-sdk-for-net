@@ -100,9 +100,9 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishTelemetry(string digitalTwinId, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishTelemetryAsync(string digitalTwinId, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<T> QueryAsync<T>(Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder builtQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<T> QueryAsync<T>(Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder adtQueryBuilder, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<T> QueryAsync<T>(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<T> Query<T>(Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder builtQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<T> Query<T>(Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder adtQueryBuilder, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<T> Query<T>(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateComponent(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateComponentAsync(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -194,9 +194,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public AdtQueryBuilder() { }
         public string GetQueryText() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectAll() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCount() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectOverride(string literalQuery) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCustom(string literalQuery) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTop(int count, params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTopAll(int count) { throw null; }
     }
     public sealed partial class FromQuery : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
     {
@@ -241,8 +243,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override string GetQueryText() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(string literalQuery) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectAll() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCount() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTop(int count, params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTopAll(int count) { throw null; }
     }
     public sealed partial class WhereLogic
     {
@@ -255,8 +259,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsNull(string expression) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsOfModel(string model, bool exact = false) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsOfType(string expression, Azure.DigitalTwins.Core.QueryBuilder.AdtDataType type) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsTrue(System.Func<Azure.DigitalTwins.Core.QueryBuilder.WhereLogic, Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator> nested) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator NotContains(string value, string[] searched) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator Parenthetical(System.Func<Azure.DigitalTwins.Core.QueryBuilder.WhereLogic, Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator> nested) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator StartsWith(string stringToCheck, string beginningString) { throw null; }
     }
     public partial class WhereStatement : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
