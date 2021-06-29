@@ -3,12 +3,14 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
     /// <summary> Properties of an event published to an Event Grid topic using the EventGrid Schema. </summary>
+    [JsonConverter(typeof(EventGridEventConverter))]
     public class EventGridEvent
     {
         /// <summary> Initializes a new instance of <see cref="EventGridEvent"/>. </summary>
@@ -142,16 +144,11 @@ namespace Azure.Messaging.EventGrid
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)
             {
                 egEvents = new EventGridEvent[1];
-                egEvents[0] = (new EventGridEvent(EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement)));
+                egEvents[0] = JsonSerializer.Deserialize<EventGridEvent>(json.ToMemory().Span);
             }
             else if (requestDocument.RootElement.ValueKind == JsonValueKind.Array)
             {
-                egEvents = new EventGridEvent[requestDocument.RootElement.GetArrayLength()];
-                int i = 0;
-                foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
-                {
-                    egEvents[i++] = new EventGridEvent(EventGridEventInternal.DeserializeEventGridEventInternal(property));
-                }
+                egEvents = JsonSerializer.Deserialize<EventGridEvent[]>(json.ToMemory().Span);
             }
             return egEvents ?? Array.Empty<EventGridEvent>();
         }
