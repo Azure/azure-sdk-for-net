@@ -42,7 +42,7 @@ namespace Azure.Core
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request. </param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null)
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;

@@ -41,8 +41,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="DataFeed"/> in which this incident was detected. This
         /// property is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public string DataFeedId { get; }
@@ -57,8 +57,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="DataFeedMetric"/> of the time series in which this
         /// <see cref="AnomalyIncident"/> has been detected. This property is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public string MetricId { get; }

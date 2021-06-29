@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 # This script is used to generate the Test Configuration file for Storage live tests.
-# It is invoked by the https://github.com/Azure/azure-sdk-for-net/blob/master/eng/New-TestResources.ps1
+# It is invoked by the https://github.com/Azure/azure-sdk-for-net/blob/main/eng/New-TestResources.ps1
 # script after the ARM template, defined in https://github.com/Azure/azure-sdk-for-net/blob/arm-template-storage/sdk/storage/test-resources.json, 
 # is finished being deployed. The ARM template is responsible for creating the Storage accounts needed for live tests.
 
@@ -45,6 +45,7 @@ $PremiumFileAccountName = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_NAME'
 $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
 $PremiumFileAccountEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
+$StorageTenantId = $DeploymentOutputs['STORAGE_TENANT_ID']
 $ResourceGroupName = $DeploymentOutputs['RESOURCE_GROUP_NAME']
 $SubscriptionId = $DeploymentOutputs['SUBSCRIPTION_ID']
 
@@ -107,7 +108,7 @@ $content =
       <AccountKey>$PrimaryAccountKey</AccountKey>
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
       <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
       <SubscriptionId>$SubscriptionId</SubscriptionId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
@@ -128,7 +129,7 @@ $content =
       <AccountKey>$DataLakeAccountKey</AccountKey>
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       <BlobServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountBlobEndpointSuffix</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountQueueEndpointSuffix</QueueServiceEndpoint>
@@ -168,16 +169,31 @@ $content =
       <VaultEndpoint>$KeyVaultUri</VaultEndpoint>
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
 </TestConfigurations>"
 
-# Construct the test configuration path to use based on the devops build variable for artifact staging directory
-$TestConfigurationPath = Join-Path -Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ChildPath 'TestConfiguration.xml'
+$storageTestConfigurationTemplateName = 'TestConfigurationsTemplate.xml'
+$storageTestConfigurationName = 'TestConfigurations.xml'
 
-Write-Verbose "Writing test configuration file to $TestConfigurationPath"
+if(-not (Test-Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ErrorAction Ignore) ) {
+  Write-Verbose "Checking for '$storageTestConfigurationTemplateName' files under '$PSScriptRoot'"
+
+  $foundFile = Get-ChildItem -Path $PSScriptRoot -Filter $storageTestConfigurationTemplateName -Recurse | Select-Object -First 1
+  $storageTemplateDirName = $foundFile.Directory.FullName
+  Write-Verbose "Found template dir '$storageTemplateDirName'"
+
+} else {
+  $storageTemplateDirName = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
+  Write-Verbose "Found environment variable BUILD_ARTIFACTSTAGINGDIRECTORY '$storageTemplateDirName'"
+}
+
+# Construct the test configuration path to use based on the devops build variable for artifact staging directory
+$TestConfigurationPath = Join-Path -Path $storageTemplateDirName -ChildPath $storageTestConfigurationName
+
+Write-Verbose "Writing test configuration file to '$TestConfigurationPath'"
 $content | Set-Content $TestConfigurationPath
 
 Write-Verbose "Setting AZ_STORAGE_CONFIG_PATH environment variable used by Storage Tests"

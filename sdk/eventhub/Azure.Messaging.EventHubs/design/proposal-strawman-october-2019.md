@@ -1,4 +1,4 @@
-﻿# Event Hubs Client: October Strawman (Preview 5)
+# Event Hubs Client: October Strawman (Preview 5)
 
 This design is focused on the fifth preview of the track two Event Hubs client library, and limits the scope of discussion to those areas with active development for that preview. For wider context and more general discussion of the design goals for the track two Event Hubs client, please see:
 

@@ -35,7 +35,7 @@ This exporter sends traces to the configured Azure Monitor Resource using HTTPS.
 
 ## Examples
 
-Refer to [`DemoTrace.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing/DemoTrace.cs) for a complete demo.
+Refer to [`DemoTrace.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing/DemoTrace.cs) for a complete demo.
 
 ```csharp
 using Azure.Monitor.OpenTelemetry.Exporter;
@@ -59,7 +59,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md) for details on contribution process.
+See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on contribution process.
 
 ## Release Schedule
 

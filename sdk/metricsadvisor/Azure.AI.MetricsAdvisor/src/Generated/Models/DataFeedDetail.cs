@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="actionLinkTemplate"> action link for alert. </param>
         /// <param name="authenticationType"> authentication type for corresponding data source. </param>
         /// <param name="credentialId"> The credential entity id. </param>
-        internal DataFeedDetail(DataFeedSourceType dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<DataFeedDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate, AuthenticationTypeEnum? authenticationType, string credentialId)
+        internal DataFeedDetail(DataFeedSourceKind dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<DataFeedDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate, AuthenticationTypeEnum? authenticationType, string credentialId)
         {
             DataSourceType = dataSourceType;
             DataFeedId = dataFeedId;
@@ -82,7 +82,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> data source type. </summary>
-        internal DataFeedSourceType DataSourceType { get; set; }
+        internal DataFeedSourceKind DataSourceType { get; set; }
         /// <summary> data feed name. </summary>
         public string DataFeedName { get; set; }
         /// <summary> data feed description. </summary>

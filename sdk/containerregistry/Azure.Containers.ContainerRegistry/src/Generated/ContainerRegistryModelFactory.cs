@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -56,31 +55,6 @@ namespace Azure.Containers.ContainerRegistry
         public static ArtifactManifestPlatform ArtifactManifestPlatform(string digest = default, ArtifactArchitecture? architecture = default, ArtifactOperatingSystem? operatingSystem = default)
         {
             return new ArtifactManifestPlatform(digest, architecture, operatingSystem);
-        }
-
-        /// <summary> Initializes new instance of ArtifactManifestProperties class. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
-        /// <param name="repositoryName"> Repository name. </param>
-        /// <param name="digest"> Manifest. </param>
-        /// <param name="size"> Image size. </param>
-        /// <param name="createdOn"> Created time. </param>
-        /// <param name="lastUpdatedOn"> Last update time. </param>
-        /// <param name="architecture"> CPU architecture. </param>
-        /// <param name="operatingSystem"> Operating system. </param>
-        /// <param name="relatedArtifacts"> List of artifacts that are referenced by this manifest list, with information about the platform each supports.  This list will be empty if this is a leaf manifest and not a manifest list. </param>
-        /// <param name="tags"> List of tags. </param>
-        /// <param name="canDelete"> Delete enabled. </param>
-        /// <param name="canWrite"> Write enabled. </param>
-        /// <param name="canList"> List enabled. </param>
-        /// <param name="canRead"> Read enabled. </param>
-        /// <param name="quarantineState"> Quarantine state. </param>
-        /// <param name="quarantineDetails"> Quarantine details. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ArtifactManifestProperties"/> instance for mocking. </returns>
-        public static ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer = default, string repositoryName = default, string digest = default, long? size = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ArtifactArchitecture? architecture = default, ArtifactOperatingSystem? operatingSystem = default, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts = default, IReadOnlyList<string> tags = default, bool? canDelete = default, bool? canWrite = default, bool? canList = default, bool? canRead = default, string quarantineState = default, string quarantineDetails = default)
-        {
-            relatedArtifacts ??= new List<ArtifactManifestPlatform>();
-            tags ??= new List<string>();
-            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, size, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts, tags, canDelete, canWrite, canList, canRead, quarantineState, quarantineDetails);
         }
     }
 }

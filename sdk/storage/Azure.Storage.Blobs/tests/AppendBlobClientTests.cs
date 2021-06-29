@@ -260,7 +260,11 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 appendBlobClient.CreateAsync(
                     options),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Create does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]
@@ -1034,7 +1038,11 @@ namespace Azure.Storage.Blobs.Test
                 appendBlobClient.AppendBlockFromUriAsync(
                     uri,
                     options),
-                e => Assert.AreEqual($"{invalidSourceCondition} is not applicable to this API.", e.Message));
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"AppendBlockFromUri does not support the {invalidSourceCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                });
         }
 
         [RecordedTest]
@@ -1573,7 +1581,11 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 appendBlobClient.SealAsync(
                     conditions),
-                e => Assert.AreEqual($"{invalidCondition} is not applicable to this API.", e.Message));
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Seal does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
         }
 
         [RecordedTest]

@@ -1375,7 +1375,11 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ValidateConditionsNotPresent
-        internal static void ValidateConditionsNotPresent(this BlobLeaseRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
         {
             if (AppContextSwitchHelper.GetConfigValue(
                 Constants.DisableRequestConditionsValidationSwitchName,
@@ -1384,6 +1388,235 @@ namespace Azure.Storage.Blobs
                 return;
             }
 
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions,
+                ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions,
+                ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobLeaseRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+            requestConditions.ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this AppendBlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+
+            // Validate BlobRequestConditions
+            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate AppendBlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.IfAppendPositionEqual) == BlobRequestConditionProperty.IfAppendPositionEqual
+                && requestConditions.IfAppendPositionEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(AppendBlobRequestConditions.IfAppendPositionEqual));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual) == BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
+                && requestConditions.IfMaxSizeLessThanOrEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual));
+            }
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this PageBlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            string operationName,
+            string parameterName)
+        {
+            if (AppContextSwitchHelper.GetConfigValue(
+                Constants.DisableRequestConditionsValidationSwitchName,
+                Constants.DisableRequestConditionsValidationEnvVar))
+            {
+                return;
+            }
+
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            List<string> invalidList = null;
+
+            // Validate BlobRequestConditions
+            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
+            // Validate PageBlobRequestConditions specific conditions.
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThan) == BlobRequestConditionProperty.IfSequenceNumberLessThan
+                && requestConditions.IfSequenceNumberLessThan != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual) == BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                && requestConditions.IfSequenceNumberLessThanOrEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberEqual) == BlobRequestConditionProperty.IfSequenceNumberEqual
+                && requestConditions.IfSequenceNumberEqual != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(PageBlobRequestConditions.IfSequenceNumberEqual));
+            }
+
+            if (invalidList?.Count > 0)
+            {
+                string unsupportedString = string.Join(", ", invalidList);
+                throw new ArgumentException(
+                    $"{operationName} does not support the {unsupportedString} condition(s).",
+                    parameterName);
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this RequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
+            if (requestConditions == null)
+            {
+                return;
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfModifiedSince) == BlobRequestConditionProperty.IfModifiedSince
+                && requestConditions.IfModifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfModifiedSince));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfUnmodifiedSince) == BlobRequestConditionProperty.IfUnmodifiedSince
+                && requestConditions.IfUnmodifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfUnmodifiedSince));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfMatch) == BlobRequestConditionProperty.IfMatch
+                && requestConditions.IfMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfMatch));
+            }
+
+            if ((invalidConditions & BlobRequestConditionProperty.IfNoneMatch) == BlobRequestConditionProperty.IfNoneMatch
+                && requestConditions.IfNoneMatch != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.IfNoneMatch));
+            }
+        }
+
+        internal static void ValidateConditionsNotPresent(
+            this BlobLeaseRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
+        {
             if (requestConditions == null)
             {
                 return;
@@ -1392,124 +1625,35 @@ namespace Azure.Storage.Blobs
             if ((invalidConditions & BlobRequestConditionProperty.TagConditions) == BlobRequestConditionProperty.TagConditions
                 && requestConditions.TagConditions != null)
             {
-                throw new ArgumentException($"{nameof(BlobRequestConditions.TagConditions)} is not applicable to this API.");
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfModifiedSince) == BlobRequestConditionProperty.IfModifiedSince
-                && requestConditions.IfModifiedSince != null)
-            {
-                throw new ArgumentException($"{nameof(BlobRequestConditions.IfModifiedSince)} is not applicable to this API.");
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfUnmodifiedSince) == BlobRequestConditionProperty.IfUnmodifiedSince
-                && requestConditions.IfUnmodifiedSince != null)
-            {
-                throw new ArgumentException($"{nameof(BlobRequestConditions.IfUnmodifiedSince)} is not applicable to this API.");
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfMatch) == BlobRequestConditionProperty.IfMatch
-                && requestConditions.IfMatch != null)
-            {
-                throw new ArgumentException($"{nameof(BlobRequestConditions.IfMatch)} is not applicable to this API.");
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfNoneMatch) == BlobRequestConditionProperty.IfNoneMatch
-                && requestConditions.IfNoneMatch != null)
-            {
-                throw new ArgumentException($"{nameof(BlobRequestConditions.IfNoneMatch)} is not applicable to this API.");
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(requestConditions.TagConditions));
             }
         }
 
-        internal static void ValidateConditionsNotPresent(this BlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
+        internal static void ValidateConditionsNotPresent(
+            this BlobRequestConditions requestConditions,
+            BlobRequestConditionProperty invalidConditions,
+            ref List<string> invalidList)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
-            {
-                return;
-            }
-
             if (requestConditions == null)
             {
                 return;
             }
 
+            // Validate BlobRequestConditions
+            ((RequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
+
             // Validate BlobLeaseRequestConditions conditions.
-            ((BlobLeaseRequestConditions)requestConditions).ValidateConditionsNotPresent(invalidConditions);
+            ((BlobLeaseRequestConditions)requestConditions).ValidateConditionsNotPresent(
+                invalidConditions, ref invalidList);
 
             // Validate BlobRequestConditions specific conditions.
             if ((invalidConditions & BlobRequestConditionProperty.LeaseId) == BlobRequestConditionProperty.LeaseId
                 && requestConditions.LeaseId != null)
             {
-                throw new ArgumentException($"{nameof(BlobRequestConditions.LeaseId)} is not applicable to this API.");
-            }
-        }
-
-        internal static void ValidateConditionsNotPresent(this AppendBlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
-        {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
-            {
-                return;
-            }
-
-            if (requestConditions == null)
-            {
-                return;
-            }
-
-            // Validate BlobRequestConditions
-            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(invalidConditions);
-
-            // Validate AppendBlobRequestConditions specific conditions.
-            if ((invalidConditions & BlobRequestConditionProperty.IfAppendPositionEqual) == BlobRequestConditionProperty.IfAppendPositionEqual
-                && requestConditions.IfAppendPositionEqual != null)
-            {
-                throw new ArgumentException($"{nameof(AppendBlobRequestConditions.IfAppendPositionEqual)} is not applicable to this API.");
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual) == BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
-                && requestConditions.IfMaxSizeLessThanOrEqual != null)
-            {
-                throw new ArgumentException($"{nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual)} is not applicable to this API.");
-            }
-        }
-
-        internal static void ValidateConditionsNotPresent(this PageBlobRequestConditions requestConditions, BlobRequestConditionProperty invalidConditions)
-        {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
-            {
-                return;
-            }
-
-            if (requestConditions == null)
-            {
-                return;
-            }
-
-            // Validate BlobRequestConditions
-            ((BlobRequestConditions)requestConditions).ValidateConditionsNotPresent(invalidConditions);
-
-            // Validate PageBlobRequestConditions specific conditions.
-            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThan) == BlobRequestConditionProperty.IfSequenceNumberLessThan
-                && requestConditions.IfSequenceNumberLessThan != null)
-            {
-                throw new ArgumentException($"{nameof(PageBlobRequestConditions.IfSequenceNumberLessThan)} is not applicable to this API.");
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual) == BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
-                && requestConditions.IfSequenceNumberLessThanOrEqual != null)
-            {
-                throw new ArgumentException($"{nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual)} is not applicable to this API.");
-            }
-
-            if ((invalidConditions & BlobRequestConditionProperty.IfSequenceNumberEqual) == BlobRequestConditionProperty.IfSequenceNumberEqual
-                && requestConditions.IfSequenceNumberEqual != null)
-            {
-                throw new ArgumentException($"{nameof(PageBlobRequestConditions.IfSequenceNumberEqual)} is not applicable to this API.");
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.LeaseId));
             }
         }
         #endregion
