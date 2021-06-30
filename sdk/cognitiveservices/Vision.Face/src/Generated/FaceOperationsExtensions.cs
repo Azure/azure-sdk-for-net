@@ -134,7 +134,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             /// <summary>
             /// 1-to-many identification to find the closest matches of the specific query
-            /// person face from a person group or large person group.
+            /// person face from a person group, large person group, person directory
+            /// dynamic person group or person directory personIds array.
             /// &lt;br/&gt; For each face in the faceIds array, Face Identify will compute
             /// similarities between the query face and all the faces in the person group
             /// (given by personGroupId) or large person group (given by
@@ -176,12 +177,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             /// <param name='personGroupId'>
             /// PersonGroupId of the target person group, created by PersonGroup - Create.
-            /// Parameter personGroupId and largePersonGroupId should not be provided at
-            /// the same time.
+            /// Parameter personGroupId, largePersonGroupId, dynamicPersonGroupId, or
+            /// personIds should not be provided at the same time.
             /// </param>
             /// <param name='largePersonGroupId'>
             /// LargePersonGroupId of the target large person group, created by
-            /// LargePersonGroup - Create. Parameter personGroupId and largePersonGroupId
+            /// LargePersonGroup - Create. Parameter personGroupId, largePersonGroupId,
+            /// dynamicPersonGroupId, or personIds should not be provided at the same time.
+            /// </param>
+            /// <param name='dynamicPersonGroupId'>
+            /// DynamicPersonGroupId of the target PersonDirectory dynamic person group to
+            /// match against. Parameter personGroupId, largePersonGroupId,
+            /// dynamicPersonGroupId, or personIds should not be provided at the same time.
+            /// </param>
+            /// <param name='personIds'>
+            /// Array of personIds created in PersonDirectory - PersonCreate. The valid
+            /// number of personIds is between [1,30]. Providing a single '*' in the array
+            /// identifies against all persons inside the PersonDirectory. Parameter
+            /// personGroupId, largePersonGroupId, dynamicPersonGroupId, or personIds
             /// should not be provided at the same time.
             /// </param>
             /// <param name='maxNumOfCandidatesReturned'>
@@ -195,9 +208,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<IdentifyResult>> IdentifyAsync(this IFaceOperations operations, IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IdentifyResult>> IdentifyAsync(this IFaceOperations operations, IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), string dynamicPersonGroupId = default(string), IList<string> personIds = default(IList<string>), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.IdentifyWithHttpMessagesAsync(faceIds, personGroupId, largePersonGroupId, maxNumOfCandidatesReturned, confidenceThreshold, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.IdentifyWithHttpMessagesAsync(faceIds, personGroupId, largePersonGroupId, dynamicPersonGroupId, personIds, maxNumOfCandidatesReturned, confidenceThreshold, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -354,9 +367,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// FaceId of the face, comes from Face - Detect
             /// </param>
             /// <param name='personId'>
-            /// Specify a certain person in a person group or a large person group.
-            /// personId is created in PersonGroup Person - Create or LargePersonGroup
-            /// Person - Create.
+            /// Specify a certain person in a person group, a large person group, or person
+            /// directory (if personGroupId and largePersonGroupId are omitted). personId
+            /// is created in PersonGroup Person - Create or LargePersonGroup Person -
+            /// Create or PersonDirectory - Create.
             /// </param>
             /// <param name='personGroupId'>
             /// Using existing personGroupId and personId for fast loading a specified

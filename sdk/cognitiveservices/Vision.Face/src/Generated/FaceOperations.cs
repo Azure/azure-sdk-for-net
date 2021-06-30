@@ -493,7 +493,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
         /// <summary>
         /// 1-to-many identification to find the closest matches of the specific query
-        /// person face from a person group or large person group.
+        /// person face from a person group, large person group, person directory
+        /// dynamic person group or person directory personIds array.
         /// &lt;br/&gt; For each face in the faceIds array, Face Identify will compute
         /// similarities between the query face and all the faces in the person group
         /// (given by personGroupId) or large person group (given by
@@ -532,12 +533,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </param>
         /// <param name='personGroupId'>
         /// PersonGroupId of the target person group, created by PersonGroup - Create.
-        /// Parameter personGroupId and largePersonGroupId should not be provided at
-        /// the same time.
+        /// Parameter personGroupId, largePersonGroupId, dynamicPersonGroupId, or
+        /// personIds should not be provided at the same time.
         /// </param>
         /// <param name='largePersonGroupId'>
         /// LargePersonGroupId of the target large person group, created by
-        /// LargePersonGroup - Create. Parameter personGroupId and largePersonGroupId
+        /// LargePersonGroup - Create. Parameter personGroupId, largePersonGroupId,
+        /// dynamicPersonGroupId, or personIds should not be provided at the same time.
+        /// </param>
+        /// <param name='dynamicPersonGroupId'>
+        /// DynamicPersonGroupId of the target PersonDirectory dynamic person group to
+        /// match against. Parameter personGroupId, largePersonGroupId,
+        /// dynamicPersonGroupId, or personIds should not be provided at the same time.
+        /// </param>
+        /// <param name='personIds'>
+        /// Array of personIds created in PersonDirectory - PersonCreate. The valid
+        /// number of personIds is between [1,30]. Providing a single '*' in the array
+        /// identifies against all persons inside the PersonDirectory. Parameter
+        /// personGroupId, largePersonGroupId, dynamicPersonGroupId, or personIds
         /// should not be provided at the same time.
         /// </param>
         /// <param name='maxNumOfCandidatesReturned'>
@@ -569,7 +582,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<IdentifyResult>>> IdentifyWithHttpMessagesAsync(IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<IdentifyResult>>> IdentifyWithHttpMessagesAsync(IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), string dynamicPersonGroupId = default(string), IList<string> personIds = default(IList<string>), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -608,6 +621,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
+            if (dynamicPersonGroupId != null)
+            {
+                if (dynamicPersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "dynamicPersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dynamicPersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "dynamicPersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (personIds != null)
+            {
+                if (personIds.Count > 30)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "personIds", 30);
+                }
+            }
             if (maxNumOfCandidatesReturned > 5)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "maxNumOfCandidatesReturned", 5);
@@ -617,11 +648,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "maxNumOfCandidatesReturned", 1);
             }
             IdentifyRequest body = new IdentifyRequest();
-            if (faceIds != null || personGroupId != null || largePersonGroupId != null || maxNumOfCandidatesReturned != null || confidenceThreshold != null)
+            if (faceIds != null || personGroupId != null || largePersonGroupId != null || dynamicPersonGroupId != null || personIds != null || maxNumOfCandidatesReturned != null || confidenceThreshold != null)
             {
                 body.FaceIds = faceIds;
                 body.PersonGroupId = personGroupId;
                 body.LargePersonGroupId = largePersonGroupId;
+                body.DynamicPersonGroupId = dynamicPersonGroupId;
+                body.PersonIds = personIds;
                 body.MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
                 body.ConfidenceThreshold = confidenceThreshold;
             }
@@ -1222,9 +1255,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// FaceId of the face, comes from Face - Detect
         /// </param>
         /// <param name='personId'>
-        /// Specify a certain person in a person group or a large person group.
-        /// personId is created in PersonGroup Person - Create or LargePersonGroup
-        /// Person - Create.
+        /// Specify a certain person in a person group, a large person group, or person
+        /// directory (if personGroupId and largePersonGroupId are omitted). personId
+        /// is created in PersonGroup Person - Create or LargePersonGroup Person -
+        /// Create or PersonDirectory - Create.
         /// </param>
         /// <param name='personGroupId'>
         /// Using existing personGroupId and personId for fast loading a specified

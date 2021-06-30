@@ -86,5 +86,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </summary>
         ISnapshotOperations Snapshot { get; }
 
+        /// <summary>
+        /// Gets the IPersonDirectory.
+        /// </summary>
+        IPersonDirectory PersonDirectory { get; }
+
     }
 }
