@@ -4,16 +4,16 @@
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Wrapper resource for tags patch API request only. </summary>
-    public partial class TagsPatchResource
+    public partial class TagPatchResource
     {
         /// <summary> Initializes a new instance of TagsPatchResource. </summary>
-        public TagsPatchResource()
+        public TagPatchResource()
         {
         }
 
         /// <summary> The operation type for the patch API. </summary>
-        public TagsPatchResourceOperation? Operation { get; set; }
+        public TagPatchResourceOperation? Operation { get; set; }
         /// <summary> The set of tags. </summary>
-        public Tags Properties { get; set; }
+        public Tag Properties { get; set; }
     }
 }

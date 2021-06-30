@@ -91,31 +91,14 @@ namespace Azure.ResourceManager.Core
         /// <returns> A valid Azure resource type. </returns>
         protected abstract ResourceType ValidResourceType { get; }
 
-        /// <summary>
-        /// Gets the resource client.
-        /// </summary>
-        protected ResourcesManagementClient ResourcesClient
-        {
-            get
-            {
-                string subscription;
-                if (!Id.TryGetSubscriptionId(out subscription))
-                {
-                    subscription = Guid.Empty.ToString();
-                }
-
-                return new ResourcesManagementClient(BaseUri, subscription, Credential, ClientOptions.Convert<ResourcesManagementClientOptions>());
-            }
-        }
-
-        private TagsOperations _tagOperations;
+        private TagOperations _tagOperations;
 
         /// <summary>
-        /// Gets the TagsOperations.
+        /// Gets the TagOperations.
         /// </summary>
-        protected internal TagsOperations GetTagsOperations()
+        protected internal TagOperations GetTagOperations()
         {
-            return _tagOperations ??= new TagsOperations(this, Id);
+            return _tagOperations ??= new TagOperations(this, Id);
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class TagsPatchResource : IUtf8JsonSerializable
+    public partial class TagPatchResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

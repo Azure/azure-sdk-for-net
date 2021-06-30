@@ -7,17 +7,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> A dictionary of name and value pairs. </summary>
-    public partial class Tags : Resource<TenantResourceIdentifier>
+    public partial class Tag : Resource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of TagsData. </summary>
-        public Tags()
+        public Tag()
         {
             TagsValue = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Tags. </summary>
         /// <param name="tagsValue"> Dictionary of &lt;string&gt;. </param>
-        internal Tags(IDictionary<string, string> tagsValue)
+        internal Tag(IDictionary<string, string> tagsValue)
         {
             TagsValue = tagsValue;
         }

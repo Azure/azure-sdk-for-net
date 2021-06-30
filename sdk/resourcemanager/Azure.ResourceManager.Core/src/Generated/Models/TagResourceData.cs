@@ -6,12 +6,12 @@ using System;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Wrapper resource for tags API requests and responses. </summary>
-    public partial class TagsResourceData
+    public partial class TagResourceData
     {
         /// <summary> Initializes a new instance of TagsResourceData. </summary>
         /// <param name="properties"> The set of tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TagsResourceData(Tags properties)
+        public TagResourceData(Tag properties)
         {
             if (properties == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The name of the tags wrapper resource. </param>
         /// <param name="type"> The type of the tags wrapper resource. </param>
         /// <param name="properties"> The set of tags. </param>
-        internal TagsResourceData(string id, string name, string type, Tags properties)
+        internal TagResourceData(string id, string name, string type, Tag properties)
         {
             Id = id;
             Name = name;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Core
         /// <summary> The type of the tags wrapper resource. </summary>
         public string Type { get; }
         /// <summary> The set of tags. </summary>
-        public Tags Properties { get; set; }
+        public Tag Properties { get; set; }
     }
 }

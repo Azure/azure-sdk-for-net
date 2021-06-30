@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var container = Client.DefaultSubscription.GetPredefinedTag();
             var operation = Client.GetPreDefinedTagsOperations();
-            var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Details.TagName.StartsWith("tagName"));
+            var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
-                await item.DeleteAsync(item.Details.TagName).ConfigureAwait(false);
+                await item.DeleteAsync(item.Data.TagName).ConfigureAwait(false);
             };
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Core.Tests
             var tagName = Recording.GenerateAssetName("tagName");
             var container = Client.DefaultSubscription.GetPredefinedTag();
             var result = await container.CreateOrUpdateAsync(tagName);
-            Assert.IsTrue(result.Value.Details.TagName.Equals(tagName));
+            Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
 
         [Test, Order(1)]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core.Tests
             var tagName = Recording.GenerateAssetName("tagName");
             var container = Client.DefaultSubscription.GetPredefinedTag();
             var result = await container.StartCreateOrUpdateAsync(tagName);
-            Assert.IsTrue(result.Value.Details.TagName.Equals(tagName));
+            Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
 
         [Test, Order(2)]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Core.Tests
             var container = Client.DefaultSubscription.GetPredefinedTag();
             var result = await container.ListAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(result.Count, 1, "List result less than 1");
-            var expectTag = result.Where(x => x.Details.TagName.StartsWith("tagName")).FirstOrDefault();
+            var expectTag = result.Where(x => x.Data.TagName.StartsWith("tagName")).FirstOrDefault();
             Assert.NotNull(expectTag);
         }
     }

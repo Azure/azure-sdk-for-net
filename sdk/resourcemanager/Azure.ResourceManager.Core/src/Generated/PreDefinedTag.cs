@@ -19,17 +19,16 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="PreDefinedTag"/> class.
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
-        /// <param name="tagDetails
-        /// "> The data model representing the generic azure resource. </param>
-        internal PreDefinedTag(OperationsBase operations, PreDefinedTagData tagDetails)
+        /// <param name="data"> The data model representing the generic azure resource. </param>
+        internal PreDefinedTag(OperationsBase operations, PreDefinedTagData data)
             : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), operations.Id)
         {
-            Details = tagDetails;
+            Data = data;
         }
 
         /// <summary>
         /// Gets the Tags data model.
         /// </summary>
-        public virtual PreDefinedTagData Details { get; }
+        public virtual PreDefinedTagData Data { get; }
     }
 }

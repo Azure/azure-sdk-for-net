@@ -77,6 +77,8 @@ namespace Azure.ResourceManager.Core
 
         private ResourcesRestOperations GenericRestClient => new ResourcesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
+        private TagContainer _tagContainer => new TagContainer(this);
+
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
@@ -367,10 +369,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var tagsOperations = GetTagsOperations();
-                var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
+                var tagOperations = GetTagOperations();
+                var originalTags = tagOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
-                tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
+                _tagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -401,10 +403,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var tagsOperations = GetTagsOperations();
-                var originalTags = await tagsOperations.GetAtScopeAsync(cancellationToken).ConfigureAwait(false);
+                var tagOperations = GetTagOperations();
+                var originalTags = await tagOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await tagsOperations.CreateOrUpdateAtScopeAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                await _tagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -546,14 +548,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var tagsOperations = GetTagsOperations();
-                tagsOperations.DeleteAtScope(cancellationToken);
-                Tags newTags = new Tags();
+                var tagOperations = GetTagOperations();
+                tagOperations.Delete(cancellationToken);
+                Tag newTags = new Tag();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);
                 }
-                tagsOperations.CreateOrUpdateAtScope(new TagsResourceData(newTags), cancellationToken);
+                _tagContainer.CreateOrUpdate(new TagResourceData(newTags), cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -583,14 +585,14 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var tagsOperations = GetTagsOperations();
-                await tagsOperations.DeleteAtScopeAsync(cancellationToken).ConfigureAwait(false);
-                Tags newTags = new Tags();
+                var tagOperations = GetTagOperations();
+                await tagOperations.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                Tag newTags = new Tag();
                 foreach (var item in tags)
                 {
                     newTags.TagsValue.Add(item);
                 }
-                await tagsOperations.CreateOrUpdateAtScopeAsync(new TagsResourceData(newTags), cancellationToken).ConfigureAwait(false);
+                await _tagContainer.CreateOrUpdateAsync(new TagResourceData(newTags), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -672,10 +674,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var tagsOperations = GetTagsOperations();
-                var originalTags = tagsOperations.GetAtScope(cancellationToken).Value;
+                var tagOperations = GetTagOperations();
+                var originalTags = tagOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
-                tagsOperations.CreateOrUpdateAtScope(originalTags.Data, cancellationToken);
+                _tagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -705,10 +707,10 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var tagsOperations = GetTagsOperations();
-                var originalTags = await tagsOperations.GetAtScopeAsync(cancellationToken).ConfigureAwait(false);
+                var tagOperations = GetTagOperations();
+                var originalTags = await tagOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await tagsOperations.CreateOrUpdateAtScopeAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                await _tagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }

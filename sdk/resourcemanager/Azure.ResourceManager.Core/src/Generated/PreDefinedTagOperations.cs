@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private TagsRestOperations RestClient => new TagsRestOperations(Diagnostics, Pipeline, ((SubscriptionResourceIdentifier)Id).SubscriptionId, BaseUri);
+        private TagRestOperations RestClient => new TagRestOperations(Diagnostics, Pipeline, ((SubscriptionResourceIdentifier)Id).SubscriptionId, BaseUri);
 
         /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
         /// <param name="tagName"> The name of the tag. </param>

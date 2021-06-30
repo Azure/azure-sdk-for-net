@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Core
         internal PreDefinedTagContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription)
             : base(clientContext, new SubscriptionResourceIdentifier(subscription))
         {
-            RestClient = new TagsRestOperations(Diagnostics, Pipeline, subscription.SubscriptionId, BaseUri);
+            RestClient = new TagRestOperations(Diagnostics, Pipeline, subscription.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the operations that can be performed on the container.
         /// </summary>
-        private TagsRestOperations RestClient;
+        private TagRestOperations RestClient;
 
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response =  await StartCreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return await response.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response = StartCreateOrUpdate(tagName, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return response.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
