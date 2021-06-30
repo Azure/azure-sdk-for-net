@@ -15,23 +15,23 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Personalizer
 {
-    /// <summary> The PersonalizerV1Preview1 service client. </summary>
-    public partial class PersonalizerV1Preview1Client
+    /// <summary> The PersonalizerBase service client. </summary>
+    public partial class PersonalizerBaseClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal PersonalizerV1Preview1RestClient RestClient { get; }
+        internal PersonalizerBaseRestClient RestClient { get; }
 
-        /// <summary> Initializes a new instance of PersonalizerV1Preview1Client for mocking. </summary>
-        protected PersonalizerV1Preview1Client()
+        /// <summary> Initializes a new instance of PersonalizerBaseClient for mocking. </summary>
+        protected PersonalizerBaseClient()
         {
         }
 
-        /// <summary> Initializes a new instance of PersonalizerV1Preview1Client. </summary>
+        /// <summary> Initializes a new instance of PersonalizerBaseClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerV1Preview1Client(string endpoint, TokenCredential credential, PersonalizerV1Preview1ClientOptions options = null)
+        public PersonalizerBaseClient(string endpoint, TokenCredential credential, PersonalizerBaseClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -42,18 +42,18 @@ namespace Azure.AI.Personalizer
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PersonalizerV1Preview1ClientOptions();
+            options ??= new PersonalizerBaseClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new PersonalizerV1Preview1RestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new PersonalizerBaseRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 
-        /// <summary> Initializes a new instance of PersonalizerV1Preview1Client. </summary>
+        /// <summary> Initializes a new instance of PersonalizerBaseClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerV1Preview1Client(string endpoint, AzureKeyCredential credential, PersonalizerV1Preview1ClientOptions options = null)
+        public PersonalizerBaseClient(string endpoint, AzureKeyCredential credential, PersonalizerBaseClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -64,19 +64,19 @@ namespace Azure.AI.Personalizer
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PersonalizerV1Preview1ClientOptions();
+            options ??= new PersonalizerBaseClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
-            RestClient = new PersonalizerV1Preview1RestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new PersonalizerBaseRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 
-        /// <summary> Initializes a new instance of PersonalizerV1Preview1Client. </summary>
+        /// <summary> Initializes a new instance of PersonalizerBaseClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
-        internal PersonalizerV1Preview1Client(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        internal PersonalizerBaseClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            RestClient = new PersonalizerV1Preview1RestClient(clientDiagnostics, pipeline, endpoint);
+            RestClient = new PersonalizerBaseRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -86,7 +86,7 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RankResponse>> RankAsync(RankRequest rankRequest, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerV1Preview1Client.Rank");
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerBaseClient.Rank");
             scope.Start();
             try
             {
@@ -104,7 +104,7 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RankResponse> Rank(RankRequest rankRequest, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerV1Preview1Client.Rank");
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerBaseClient.Rank");
             scope.Start();
             try
             {

@@ -27,7 +27,7 @@ namespace Azure.AI.Personalizer.Tests
             ));
             var request = new RankRequest(actions);
             // Action
-            RankResponse response = await client.PersonalizerV1Preview1.RankAsync(request);
+            RankResponse response = await client.PersonalizerBase.RankAsync(request);
             // Assert
             Assert.AreEqual(actions.Count, response.Ranking.Count);
             for (int i = 0; i < response.Ranking.Count; i++)
@@ -61,7 +61,7 @@ namespace Azure.AI.Personalizer.Tests
             string eventId = "123456789";
             var request = new RankRequest(actions, contextFeatures, excludeActions, eventId);
             // Action
-            RankResponse response = await client.PersonalizerV1Preview1.RankAsync(request);
+            RankResponse response = await client.PersonalizerBase.RankAsync(request);
             // Assert
             Assert.AreEqual(eventId, response.EventId);
             Assert.AreEqual(actions.Count, response.Ranking.Count);

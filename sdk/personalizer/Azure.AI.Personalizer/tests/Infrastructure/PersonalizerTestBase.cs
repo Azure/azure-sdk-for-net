@@ -17,9 +17,9 @@ namespace Azure.AI.Personalizer.Tests
         protected PersonalizerClient GetPersonalizerClient()
         {
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            var options = InstrumentClientOptions(new PersonalizerV1Preview1ClientOptions());
+            var options = InstrumentClientOptions(new PersonalizerBaseClientOptions());
             PersonalizerClient client = new PersonalizerClient(TestEnvironment.Endpoint, credential, options);
-            client.PersonalizerV1Preview1 = InstrumentClient(client.PersonalizerV1Preview1);
+            client.PersonalizerBase = InstrumentClient(client.PersonalizerBase);
             client.MultiSlot = InstrumentClient(client.MultiSlot);
             client.MultiSlotEvents = InstrumentClient(client.MultiSlotEvents);
             client.Model = InstrumentClient(client.Model);

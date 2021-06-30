@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer
 {
-    /// <summary> Client options for PersonalizerV1Preview1Client. </summary>
-    public partial class PersonalizerV1Preview1ClientOptions : ClientOptions
+    /// <summary> Client options for PersonalizerBaseClient. </summary>
+    public partial class PersonalizerBaseClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.Vv1_1_preview_1;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.Personalizer
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of PersonalizerV1Preview1ClientOptions. </summary>
-        public PersonalizerV1Preview1ClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of PersonalizerBaseClientOptions. </summary>
+        public PersonalizerBaseClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

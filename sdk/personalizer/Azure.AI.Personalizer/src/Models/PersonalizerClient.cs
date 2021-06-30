@@ -7,68 +7,28 @@ namespace Azure.AI.Personalizer
     /// <summary> The Personalizer service client. </summary>
     public partial class PersonalizerClient
     {
-        /// <summary> The PersonalizerV1Preview1 service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public PersonalizerV1Preview1Client PersonalizerV1Preview1;
+        /// <summary> The PersonalizerBase service client. </summary>
+        public PersonalizerBaseClient PersonalizerBase { get; set; }
         /// <summary> The MultiSlot service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public MultiSlotClient MultiSlot;
+        public MultiSlotClient MultiSlot { get; set; }
         /// <summary> The MultiSlotEvents service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public MultiSlotEventsClient MultiSlotEvents;
+        public MultiSlotEventsClient MultiSlotEvents { get; set; }
         /// <summary> The Model service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public ModelClient Model;
+        public ModelClient Model { get; set; }
         /// <summary> The Log service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public LogClient Log;
+        public LogClient Log { get; set; }
         /// <summary> The Events service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public EventsClient Events;
+        public EventsClient Events { get; set; }
         /// <summary> The Evaluation service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public EvaluationClient Evaluation;
+        public EvaluationClient Evaluation { get; set; }
         /// <summary> The Evaluations service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public EvaluationsClient Evaluations;
+        public EvaluationsClient Evaluations { get; set; }
         /// <summary> The Policy service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public PolicyClient Policy;
+        public PolicyClient Policy { get; set; }
         /// <summary> The ServiceConfiguration service client. </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1051:Do not declare visible instance fields",
-            Justification = "Client field in wrapper client should be visible so that its methods are accessible")]
-        public ServiceConfigurationClient ServiceConfiguration;
+        public ServiceConfigurationClient ServiceConfiguration { get; set; }
 
-        /// <summary> Initializes a new instance of PersonalizerV1Preview1Client for mocking. </summary>
+        /// <summary> Initializes a new instance of PersonalizerBaseClient for mocking. </summary>
         protected PersonalizerClient()
         {
         }
@@ -77,9 +37,9 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerClient(string endpoint, TokenCredential credential, PersonalizerV1Preview1ClientOptions options = null)
+        public PersonalizerClient(string endpoint, TokenCredential credential, PersonalizerBaseClientOptions options = null)
         {
-            PersonalizerV1Preview1 = new PersonalizerV1Preview1Client(endpoint, credential, options);
+            PersonalizerBase = new PersonalizerBaseClient(endpoint, credential, options);
             MultiSlot = new MultiSlotClient(endpoint, credential, options);
             MultiSlotEvents = new MultiSlotEventsClient(endpoint, credential, options);
             Model = new ModelClient(endpoint, credential, options);
@@ -95,9 +55,9 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerClient(string endpoint, AzureKeyCredential credential, PersonalizerV1Preview1ClientOptions options = null)
+        public PersonalizerClient(string endpoint, AzureKeyCredential credential, PersonalizerBaseClientOptions options = null)
         {
-            PersonalizerV1Preview1 = new PersonalizerV1Preview1Client(endpoint, credential, options);
+            PersonalizerBase = new PersonalizerBaseClient(endpoint, credential, options);
             MultiSlot = new MultiSlotClient(endpoint, credential, options);
             MultiSlotEvents = new MultiSlotEventsClient(endpoint, credential, options);
             Model = new ModelClient(endpoint, credential, options);

@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Personalizer
 {
-    internal partial class PersonalizerV1Preview1RestClient
+    internal partial class PersonalizerBaseRestClient
     {
         private string endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of PersonalizerV1Preview1RestClient. </summary>
+        /// <summary> Initializes a new instance of PersonalizerBaseRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public PersonalizerV1Preview1RestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        public PersonalizerBaseRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
             {

@@ -31,7 +31,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MultiSlotClient(string endpoint, TokenCredential credential, PersonalizerV1Preview1ClientOptions options = null)
+        public MultiSlotClient(string endpoint, TokenCredential credential, PersonalizerBaseClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.AI.Personalizer
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PersonalizerV1Preview1ClientOptions();
+            options ??= new PersonalizerBaseClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
@@ -53,7 +53,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public MultiSlotClient(string endpoint, AzureKeyCredential credential, PersonalizerV1Preview1ClientOptions options = null)
+        public MultiSlotClient(string endpoint, AzureKeyCredential credential, PersonalizerBaseClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.Personalizer
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PersonalizerV1Preview1ClientOptions();
+            options ??= new PersonalizerBaseClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
             RestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, endpoint);

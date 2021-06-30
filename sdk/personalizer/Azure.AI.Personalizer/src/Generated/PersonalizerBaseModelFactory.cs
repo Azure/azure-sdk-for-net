@@ -13,7 +13,7 @@ using Azure.AI.Personalizer.Models;
 namespace Azure.AI.Personalizer
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class PersonalizerV1Preview1ModelFactory
+    public static partial class PersonalizerBaseModelFactory
     {
         /// <summary> Initializes a new instance of Evaluation. </summary>
         /// <param name="id"> The ID of the evaluation. </param>
