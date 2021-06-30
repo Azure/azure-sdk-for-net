@@ -25,7 +25,22 @@ namespace Azure.Messaging.WebPubSub
         /// <inheritdoc/>
         public override void OnSendingRequest(HttpMessage message)
         {
-            string audience = message.Request.Uri.ToUri().AbsoluteUri;
+            string audience;
+
+            // this is to support API Management Server
+            if (message.TryGetProperty("JWT_AUDIENCE", out var jwtAudience))
+            {
+                var uri = jwtAudience as Uri;
+                if (uri != null)
+                    audience = uri.AbsoluteUri;
+                else
+                    throw new InvalidOperationException("JWT_AUDIENCE is not an Uri.");
+            }
+            else
+            {
+                audience = message.Request.Uri.ToUri().AbsoluteUri;
+            }
+
             var now = DateTimeOffset.UtcNow;
             var expiresAt = now + TimeSpan.FromMinutes(5);
 
