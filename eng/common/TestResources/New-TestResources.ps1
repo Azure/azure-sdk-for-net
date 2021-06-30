@@ -140,15 +140,18 @@ try {
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
-    $templateFileName = 'test-resources.json'
     $templateFiles = @()
 
-    Write-Verbose "Checking for '$templateFileName' files under '$root'"
-    Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
-        $templateFile = $_.FullName
-
-        Write-Verbose "Found template '$templateFile'"
-        $templateFiles += $templateFile
+    'test-resources.json', 'test-resources.bicep' | ForEach-Object {
+        Write-Verbose "Checking for '$_' files under '$root'"
+        Get-ChildItem -Path $root -Filter "$_" -Recurse | ForEach-Object {
+            Write-Verbose "Found template '$($_.FullName)'"
+            if ($_.Extension -eq '.bicep' -and !(Get-Command bicep)) {
+                Write-Error "A bicep file was found at '$($_.FullName)' but the Azure Bicep CLI is not installed"
+                throw
+            }
+            $templateFiles += $_
+        }
     }
 
     if (!$templateFiles) {
@@ -432,7 +435,20 @@ try {
     }
 
     # Deploy the templates
-    foreach ($templateFile in $templateFiles) {
+    foreach ($templateFileObject in $templateFiles) {
+        if ($templateFileObject.Extension -eq '.bicep') {
+            $templateFile = $templateFileObject.DirectoryName + '/test-resources.compiled.json'
+            # Az can deploy bicep files natively, but by compiling here it becomes easier to parse the
+            # outputted json for mismatched parameter declarations.
+            bicep build $templateFileObject.FullName --outfile $templateFile
+            if ($LASTEXITCODE) {
+                Write-Error "Failure building bicep file '$($templateFileObject.FullName)'"
+                throw
+            }
+        } else {
+            $templateFile = $templateFileObject.FullName
+        }
+
         # Deployment fails if we pass in more parameters than are defined.
         Write-Verbose "Removing unnecessary parameters from template '$templateFile'"
         $templateJson = Get-Content -LiteralPath $templateFile | ConvertFrom-Json
