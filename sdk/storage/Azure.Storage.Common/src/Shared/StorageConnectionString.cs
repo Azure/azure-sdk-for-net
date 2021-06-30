@@ -860,7 +860,7 @@ namespace Azure.Storage
 
             if (string.IsNullOrEmpty(endpointSuffix))
             {
-                endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+                endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
             return ConstructUris(scheme, accountName, Constants.ConnectionStrings.DefaultBlobHostnamePrefix, endpointSuffix, sasToken);
@@ -899,7 +899,7 @@ namespace Azure.Storage
 
             if (string.IsNullOrEmpty(endpointSuffix))
             {
-                endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+                endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
             return ConstructUris(scheme, accountName, Constants.ConnectionStrings.DefaultFileHostnamePrefix, endpointSuffix, sasToken);
@@ -938,7 +938,7 @@ namespace Azure.Storage
 
             if (string.IsNullOrEmpty(endpointSuffix))
             {
-                endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+                endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
             return ConstructUris(scheme, accountName, Constants.ConnectionStrings.DefaultQueueHostnamePrefix, endpointSuffix, sasToken);
@@ -977,7 +977,7 @@ namespace Azure.Storage
 
             if (string.IsNullOrEmpty(endpointSuffix))
             {
-                endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+                endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
             }
 
             return ConstructUris(scheme, accountName, Constants.ConnectionStrings.DefaultTableHostnamePrefix, endpointSuffix, sasToken);
