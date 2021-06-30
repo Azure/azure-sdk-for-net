@@ -21,8 +21,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OperationStatusType
     {
-        [EnumMember(Value = "notstarted")]
-        Notstarted,
+        [EnumMember(Value = "notStarted")]
+        NotStarted,
         [EnumMember(Value = "running")]
         Running,
         [EnumMember(Value = "succeeded")]
@@ -41,8 +41,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         {
             switch( value )
             {
-                case OperationStatusType.Notstarted:
-                    return "notstarted";
+                case OperationStatusType.NotStarted:
+                    return "notStarted";
                 case OperationStatusType.Running:
                     return "running";
                 case OperationStatusType.Succeeded:
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         {
             switch( value )
             {
-                case "notstarted":
-                    return OperationStatusType.Notstarted;
+                case "notStarted":
+                    return OperationStatusType.NotStarted;
                 case "running":
                     return OperationStatusType.Running;
                 case "succeeded":

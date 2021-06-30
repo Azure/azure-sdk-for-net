@@ -32,9 +32,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         /// <param name="faceId">FaceId of the face, comes from Face -
         /// Detect</param>
-        /// <param name="personId">Specify a certain person in a person group
-        /// or a large person group. personId is created in PersonGroup Person
-        /// - Create or LargePersonGroup Person - Create.</param>
+        /// <param name="personId">Specify a certain person in a person group,
+        /// a large person group, or person directory (if personGroupId and
+        /// largePersonGroupId are omitted). personId is created in PersonGroup
+        /// Person - Create or LargePersonGroup Person - Create or
+        /// PersonDirectory - Create.</param>
         /// <param name="personGroupId">Using existing personGroupId and
         /// personId for fast loading a specified person. personGroupId is
         /// created in PersonGroup - Create. Parameter personGroupId and
@@ -83,9 +85,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public string LargePersonGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets specify a certain person in a person group or a large
-        /// person group. personId is created in PersonGroup Person - Create or
-        /// LargePersonGroup Person - Create.
+        /// Gets or sets specify a certain person in a person group, a large
+        /// person group, or person directory (if personGroupId and
+        /// largePersonGroupId are omitted). personId is created in PersonGroup
+        /// Person - Create or LargePersonGroup Person - Create or
+        /// PersonDirectory - Create.
         /// </summary>
         [JsonProperty(PropertyName = "personId")]
         public System.Guid PersonId { get; set; }

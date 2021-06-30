@@ -91,6 +91,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         public virtual ISnapshotOperations Snapshot { get; private set; }
 
         /// <summary>
+        /// Gets the IPersonDirectory.
+        /// </summary>
+        public virtual IPersonDirectory PersonDirectory { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the FaceClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -225,7 +230,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             LargePersonGroup = new LargePersonGroupOperations(this);
             LargeFaceList = new LargeFaceListOperations(this);
             Snapshot = new SnapshotOperations(this);
-            BaseUri = "{Endpoint}/face/v1.0";
+            PersonDirectory = new PersonDirectory(this);
+            BaseUri = "{Endpoint}/face/v1.0-preview";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
