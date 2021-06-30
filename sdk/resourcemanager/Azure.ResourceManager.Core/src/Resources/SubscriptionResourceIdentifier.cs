@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class
         /// for resources in a different namespace than their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionResourceIdentifier"/> class.
         /// </summary>
-        /// <param name="resourceIdOrSubscriptionId"> The string representation of the subscription id.  This can be in the form of a GUID, 
+        /// <param name="resourceIdOrSubscriptionId"> The string representation of the subscription id.  This can be in the form of a GUID,
         /// or a full resource id like '/subscriptions/xxxxx-yyyy-zzzz-wwwwww'. </param>
         public SubscriptionResourceIdentifier(string resourceIdOrSubscriptionId)
         {

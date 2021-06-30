@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="WritableSubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public WritableSubResource() 
+        public WritableSubResource()
         {
         }
 
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="WritableSubResource{TIdentifier}"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public WritableSubResource() 
-        { 
+        public WritableSubResource()
+        {
         }
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource{TIdentifier}"/>. </summary>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TenantProviderIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="TenantProviderIdentifier"/> class
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>

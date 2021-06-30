@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="left"> The sku on the left side of the operator. </param>
         /// <param name="right"> The sku on the right side of the operator. </param>
-        /// <returns> True if they are equals, otherwise false. </returns>
+        /// <returns> True if they are equal, otherwise false. </returns>
         public static bool operator ==(Sku left, Sku right)
         {
             if (ReferenceEquals(left, null))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="left"> The sku on the left side of the operator. </param>
         /// <param name="right"> The sku on the right side of the operator. </param>
-        /// <returns> True if they are not equals, otherwise false. </returns>
+        /// <returns> True if they are not equal, otherwise false. </returns>
         public static bool operator !=(Sku left, Sku right)
         {
             return !(left == right);

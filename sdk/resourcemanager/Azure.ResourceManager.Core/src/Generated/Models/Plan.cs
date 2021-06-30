@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core
         public Plan()
         {
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Plan"/> class.
         /// </summary>
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// 
+        /// Compares this <see cref="Plan"/> instance with another object and determines if they are equals.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if they are equal, otherwise false. </returns>
         public static bool operator ==(Plan left, Plan right)
         {
             if (ReferenceEquals(left, null))
@@ -152,55 +152,55 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// 
+        /// Compares this <see cref="Plan"/> instance with another object and determines if they are equals.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if they are not equal, otherwise false. </returns>
         public static bool operator !=(Plan left, Plan right)
         {
             return !(left == right);
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="Plan"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than the right. </returns>
         public static bool operator <(Plan left, Plan right)
         {
             return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="Plan"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than or equal to the right. </returns>
         public static bool operator <=(Plan left, Plan right)
         {
             return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="Plan"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than the right. </returns>
         public static bool operator >(Plan left, Plan right)
         {
             return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="Plan"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than or equal to the right. </returns>
         public static bool operator >=(Plan left, Plan right)
         {
             return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;

@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than the right. </returns>
         public static bool operator <(ApiVersionsBase left, ApiVersionsBase right)
         {
             return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than the right. </returns>
         public static bool operator >(ApiVersionsBase left, ApiVersionsBase right)
         {
             return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
@@ -191,22 +191,22 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than or equal to the right. </returns>
         public static bool operator <=(ApiVersionsBase left, ApiVersionsBase right)
         {
             return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than or equal to the right. </returns>
         public static bool operator >=(ApiVersionsBase left, ApiVersionsBase right)
         {
             return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
