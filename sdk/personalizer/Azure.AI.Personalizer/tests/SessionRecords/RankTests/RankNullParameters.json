@@ -8,11 +8,8 @@
         "Content-Length": "139",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-af9617903e8d7f42bf36c0ce399af6c8-771ca68b001dc14a-00",
-        "User-Agent": [
-          "azsdk-net-AI.Personalizer/1.1.0-alpha.20210629.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
-        ],
+        "traceparent": "00-a0813996c60a144dbc38bdeb5ed04f8e-244596c471d2e242-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/1.1.0-alpha.20210630.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "70423fa0626aa76f86d1c53de65af8fe",
         "x-ms-return-client-request-id": "true"
       },
@@ -35,17 +32,21 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "ce7296d7-6b5e-47cb-9d7b-7cf3ac288113",
-        "Cache-Control": "no-store, must-revalidate, no-cache",
+        "apim-request-id": "2d8f2b63-b3e9-4bc4-bcc7-4627bb9a9497",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
         "Content-Length": "124",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Jun 2021 16:59:44 GMT",
+        "Date": "Wed, 30 Jun 2021 18:43:09 GMT",
         "Expires": "0",
-        "Pragma": "no-cache",
+        "pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "timing-allow-origin": "*",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "2"
       },
       "ResponseBody": {
         "ranking": [
@@ -54,7 +55,7 @@
             "probability": 1.0
           }
         ],
-        "eventId": "a9608be501974cfa86e5fcbd10c9d36a-85D2g",
+        "eventId": "836bf0629e324d67b07bbc302e0c9097-85EEm",
         "rewardActionId": "Person"
       }
     }

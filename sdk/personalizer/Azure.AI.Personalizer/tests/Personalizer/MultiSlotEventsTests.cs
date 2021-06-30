@@ -26,9 +26,6 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task Activate()
         {
-            System.Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
-            System.Environment.SetEnvironmentVariable("PERSONALIZER_ENDPOINT", "https://sdktestrecorder.cognitiveservices.azure.com/");
-            System.Environment.SetEnvironmentVariable("PERSONALIZER_API_KEY", "c35296bcca76406893b9674f23912052");
             PersonalizerClient client = GetPersonalizerClient();
             await client.MultiSlotEvents.ActivateAsync("123456789");
         }
