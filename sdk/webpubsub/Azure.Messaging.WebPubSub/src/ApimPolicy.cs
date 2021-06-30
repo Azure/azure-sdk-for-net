@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -22,7 +21,7 @@ namespace Azure.Messaging.WebPubSub
         {
             var originalUri = message.Request.Uri.ToUri();
             message.Request.Uri.Reset(_apimEndpoint);
-            message.SetProperty("JWT_AUDIENCE", originalUri);
+            WebPubSubAuthenticationPolicy.SetAudience(message, originalUri);
         }
     }
 }

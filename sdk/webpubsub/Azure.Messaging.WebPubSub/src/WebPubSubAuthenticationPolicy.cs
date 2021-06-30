@@ -26,18 +26,7 @@ namespace Azure.Messaging.WebPubSub
         public override void OnSendingRequest(HttpMessage message)
         {
             string audience;
-
-            // this is to support API Management Server
-            if (message.TryGetProperty("JWT_AUDIENCE", out var jwtAudience))
-            {
-                var uri = jwtAudience as Uri;
-                if (uri != null)
-                    audience = uri.AbsoluteUri;
-                else
-                    throw new InvalidOperationException("JWT_AUDIENCE is not an Uri.");
-            }
-            else
-            {
+            if (!TryGetAudience(message, out audience)) {
                 audience = message.Request.Uri.ToUri().AbsoluteUri;
             }
 
@@ -68,6 +57,27 @@ namespace Azure.Messaging.WebPubSub
             });
 
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+        }
+
+        private const string AUDIENCE_SETTING = nameof(WebPubSubAuthenticationPolicy) + ".Audience";
+        public static void SetAudience(HttpMessage message, Uri audience)
+        {
+            message.SetProperty(AUDIENCE_SETTING, audience.AbsoluteUri);
+        }
+        private static bool TryGetAudience(HttpMessage message, out string audience)
+        {
+            // this is to support API Management Server
+            if (message.TryGetProperty(AUDIENCE_SETTING, out var jwtAudience))
+            {
+                var uri = jwtAudience as string;
+                if (uri != null)
+                {
+                    audience = uri;
+                    return true;
+                }
+            }
+            audience = default;
+            return false;
         }
 
         private sealed class KeyBytesCache
