@@ -64,6 +64,10 @@ function SetOutput($outputPath, $incomingPackageSpec) {
 }
 
 function GetRelativePath($path) {
+  # If the path is empty return an empty string
+  if (!$path) {
+    return ''
+  }
   $relativeTo = Resolve-Path $PSScriptRoot/../../../
   # Replace "\" with "/" so the path is valid across other platforms and tools
   $relativePath = [IO.Path]::GetRelativePath($relativeTo, $path) -replace "\\", '/'
