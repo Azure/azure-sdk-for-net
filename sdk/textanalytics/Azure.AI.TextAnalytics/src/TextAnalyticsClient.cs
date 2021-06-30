@@ -2126,6 +2126,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
@@ -2151,6 +2154,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
@@ -2183,6 +2189,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -2208,6 +2217,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
