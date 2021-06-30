@@ -20,17 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Request body.
         /// </summary>
-        public ServiceRequest Request { get; internal set; }
-
-        /// <summary>
-        /// Flag to indicate whether it's an <see href="https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection">Abuse Protection</see> request.
-        /// </summary>
-        public bool IsPing { get; internal set; }
-
-        /// <summary>
-        /// Flag to reflect pre-check status of the upstream requests.
-        /// </summary>
-        public WebPubSubRequestStatus RequestStatus { get; }
+        public ServiceRequest Request { get; }
 
         /// <summary>
         /// System build response for easy return, works for AbuseProtection and Errors.
@@ -38,10 +28,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         [JsonConverter(typeof(HttpResponseMessageJsonConverter))]
         public HttpResponseMessage Response { get; }
 
-        internal WebPubSubRequest(ConnectionContext context, WebPubSubRequestStatus status, HttpStatusCode httpStatus, string message = null)
+        internal WebPubSubRequest(ConnectionContext context, ServiceRequest request, HttpStatusCode httpStatus, string message = null)
         {
             ConnectionContext = context;
-            RequestStatus = status;
+            Request = request;
             Response = new HttpResponseMessage(httpStatus);
             if (!string.IsNullOrEmpty(message))
             {
@@ -49,10 +39,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
         }
 
-        internal WebPubSubRequest(ConnectionContext context, WebPubSubRequestStatus status, HttpResponseMessage response = null)
+        internal WebPubSubRequest(ConnectionContext context, ServiceRequest request, HttpResponseMessage response = null)
         {
             ConnectionContext = context;
-            RequestStatus = status;
+            Request = request;
             Response = response ?? new HttpResponseMessage();
         }
     }

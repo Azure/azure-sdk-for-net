@@ -12,8 +12,10 @@ namespace Azure.Messaging.WebPubSub
     {
         public BinaryData Message { get; }
         public MessageDataType DataType { get; }
+        public override string Name => nameof(MessageEventRequest);
 
         public MessageEventRequest(BinaryData message, MessageDataType dataType)
+            : base(false, true)
         {
             Message = message;
             DataType = dataType;

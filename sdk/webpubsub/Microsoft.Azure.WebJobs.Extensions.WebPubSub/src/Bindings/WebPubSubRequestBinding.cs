@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             BindingProviderContext context,
             IConfiguration configuration,
             INameResolver nameResolver,
-            WebPubSubOptions options) : base (context, configuration, nameResolver)
+            WebPubSubOptions options) : base(context, configuration, nameResolver)
         {
             _userType = context.Parameter.ParameterType;
             _options = options;
@@ -46,16 +46,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (httpContext == null)
             {
-                return new WebPubSubRequestValueProvider(new WebPubSubRequest(null, WebPubSubRequestStatus.Unknown, HttpStatusCode.BadRequest), _userType);
+                return new WebPubSubRequestValueProvider(new WebPubSubRequest(null, new InvalidRequest(HttpStatusCode.BadRequest), HttpStatusCode.BadRequest), _userType);
             }
 
             // Build abuse response
             if (Utilities.RespondToServiceAbuseCheck(httpContext.Request, _options.AllowedHosts, out var abuseResponse))
             {
-                var abuseRequest = new WebPubSubRequest(null, WebPubSubRequestStatus.RequestValid, abuseResponse)
-                {
-                    IsPing = true
-                };
+                var abuseRequest = new WebPubSubRequest(null, new PreflightRequest(abuseResponse.StatusCode == HttpStatusCode.OK), abuseResponse);
                 return new WebPubSubRequestValueProvider(abuseRequest, _userType);
             }
 
@@ -63,50 +60,52 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (!TryParseRequest(request, out var connectionContext))
             {
                 // Not valid WebPubSubRequest
-                return new WebPubSubRequestValueProvider(new WebPubSubRequest(connectionContext, WebPubSubRequestStatus.Unknown, HttpStatusCode.BadRequest), _userType);
+                return new WebPubSubRequestValueProvider(new WebPubSubRequest(connectionContext, new InvalidRequest(HttpStatusCode.BadRequest, Constants.ErrorMessages.NotValidWebPubSubRequest), HttpStatusCode.BadRequest), _userType);
             }
 
             // Signature check
             if (!Utilities.ValidateSignature(connectionContext.ConnectionId, connectionContext.Signature, _options.AccessKeys))
             {
-                return new WebPubSubRequestValueProvider(new WebPubSubRequest(connectionContext, WebPubSubRequestStatus.SignatureInvalid, HttpStatusCode.Unauthorized), _userType);
+                return new WebPubSubRequestValueProvider(new WebPubSubRequest(connectionContext, new InvalidRequest(HttpStatusCode.Unauthorized, Constants.ErrorMessages.SignatureValidationFailed), HttpStatusCode.Unauthorized), _userType);
             }
 
-            var wpsRequest = new WebPubSubRequest(connectionContext, WebPubSubRequestStatus.RequestValid);
+            WebPubSubRequest wpsRequest;
             var requestType = Utilities.GetRequestType(connectionContext.EventType, connectionContext.EventName);
-
-            // Build request body and reset head to avoid break normal HttpRequest.
-            var streamContent = new MemoryStream();
-            await request.Body.CopyToAsync(streamContent).ConfigureAwait(false);
-            request.Body.Position = 0;
 
             switch (requestType)
             {
                 case RequestType.Connect:
-                    using (var sr = new StreamReader(streamContent))
                     {
-                        var content = await sr.ReadToEndAsync().ConfigureAwait(false);
-                        wpsRequest.Request = JsonConvert.DeserializeObject<ConnectEventRequest>(content);
+                        var content = await ReadString(request.Body).ConfigureAwait(false);
+                        var eventRequest = JsonConvert.DeserializeObject<ConnectEventRequest>(content);
+                        wpsRequest = new WebPubSubRequest(connectionContext, eventRequest);
                     }
                     break;
                 case RequestType.Disconnect:
-                    using (var sr = new StreamReader(streamContent))
                     {
-                        var content = await sr.ReadToEndAsync().ConfigureAwait(false);
-                        wpsRequest.Request = JsonConvert.DeserializeObject<DisconnectEventRequest>(content);
+                        var content = await ReadString(request.Body).ConfigureAwait(false);
+                        var eventRequest = JsonConvert.DeserializeObject<DisconnectEventRequest>(content);
+                        wpsRequest = new WebPubSubRequest(connectionContext, eventRequest);
                     }
                     break;
                 case RequestType.User:
-                    var contentType = MediaTypeHeaderValue.Parse(request.ContentType);
-                    if (!Utilities.ValidateMediaType(contentType.MediaType, out var dataType))
                     {
-                        return new WebPubSubRequestValueProvider(new WebPubSubRequest(connectionContext, WebPubSubRequestStatus.ContentTypeInvalid, HttpStatusCode.BadRequest), _userType);
+                        var contentType = MediaTypeHeaderValue.Parse(request.ContentType);
+                        if (!Utilities.ValidateMediaType(contentType.MediaType, out var dataType))
+                        {
+                            var invalidRequest = new InvalidRequest(HttpStatusCode.BadRequest, $"{Constants.ErrorMessages.NotSupportedDataType}{request.ContentType}");
+                            return new WebPubSubRequestValueProvider(new WebPubSubRequest(connectionContext, invalidRequest, HttpStatusCode.BadRequest), _userType);
+                        }
+                        var payload = ReadBytes(request.Body);
+                        var eventRequest = new MessageEventRequest(BinaryData.FromBytes(payload), dataType);
+                        wpsRequest = new WebPubSubRequest(connectionContext, eventRequest);
                     }
-                    wpsRequest.Request = new MessageEventRequest(BinaryData.FromBytes(streamContent.ToArray()), dataType);
                     break;
                 default:
+                    wpsRequest = new WebPubSubRequest(connectionContext, new InvalidRequest(HttpStatusCode.NotFound, "Unknown request"));
                     break;
             }
+
             return new WebPubSubRequestValueProvider(wpsRequest, _userType);
         }
 
@@ -142,6 +141,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
 
             return true;
+        }
+
+        private static async Task<string> ReadString(Stream body)
+        {
+            string payload;
+            using var ms = new MemoryStream();
+            await body.CopyToAsync(ms).ConfigureAwait(false);
+            ms.Position = 0;
+            body.Position = 0;
+            using var reader = new StreamReader(ms);
+            payload = await reader.ReadToEndAsync().ConfigureAwait(false);
+            return payload;
+        }
+
+        private static byte[] ReadBytes(Stream body)
+        {
+            using var ms = new MemoryStream();
+            body.CopyTo(ms);
+            return ms.ToArray();
         }
 
         private static string GetHeaderValueOrDefault(IHeaderDictionary header, string key)

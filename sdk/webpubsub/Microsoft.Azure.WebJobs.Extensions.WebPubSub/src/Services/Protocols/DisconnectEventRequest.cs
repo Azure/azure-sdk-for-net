@@ -10,5 +10,13 @@ namespace Azure.Messaging.WebPubSub
     public sealed class DisconnectEventRequest : ServiceRequest
     {
         public string Reason { get; }
+
+        public override string Name => nameof(DisconnectEventRequest);
+
+        public DisconnectEventRequest(string reason)
+            : base(false, true)
+        {
+            Reason = reason;
+        }
     }
 }

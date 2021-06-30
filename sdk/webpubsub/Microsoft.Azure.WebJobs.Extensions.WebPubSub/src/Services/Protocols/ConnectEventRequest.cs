@@ -17,5 +17,16 @@ namespace Azure.Messaging.WebPubSub
         public string[] Subprotocols { get; }
 
         public ClientCertificateInfo[] ClientCertificates { get; }
+
+        public override string Name => nameof(ConnectEventRequest);
+
+        public ConnectEventRequest(IDictionary<string, string[]> claims, IDictionary<string, string[]> query, string[] subprotocols, ClientCertificateInfo[] clientCertificateInfos)
+            : base(false, true)
+        {
+            Claims = claims;
+            Query = query;
+            Subprotocols = subprotocols;
+            ClientCertificates = clientCertificateInfos;
+        }
     }
 }

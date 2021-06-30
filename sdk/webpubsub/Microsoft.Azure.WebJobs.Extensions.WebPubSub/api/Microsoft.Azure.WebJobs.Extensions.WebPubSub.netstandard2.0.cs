@@ -9,17 +9,24 @@ namespace Azure.Messaging.WebPubSub
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public sealed partial class ConnectEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
-        public ConnectEventRequest() { }
+        public ConnectEventRequest(System.Collections.Generic.IDictionary<string, string[]> claims, System.Collections.Generic.IDictionary<string, string[]> query, string[] subprotocols, Azure.Messaging.WebPubSub.ClientCertificateInfo[] clientCertificateInfos) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
         public System.Collections.Generic.IDictionary<string, string[]> Claims { get { throw null; } }
         public Azure.Messaging.WebPubSub.ClientCertificateInfo[] ClientCertificates { get { throw null; } }
+        public override string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string[]> Query { get { throw null; } }
         public string[] Subprotocols { get { throw null; } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public sealed partial class DisconnectEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
-        public DisconnectEventRequest() { }
+        public DisconnectEventRequest(string reason) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
+        public override string Name { get { throw null; } }
         public string Reason { get { throw null; } }
+    }
+    public partial class InvalidRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    {
+        public InvalidRequest(System.Net.HttpStatusCode statusCode, string message = null) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
+        public override string Name { get { throw null; } }
     }
     [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum MessageDataType
@@ -34,13 +41,26 @@ namespace Azure.Messaging.WebPubSub
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public sealed partial class MessageEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
-        public MessageEventRequest(System.BinaryData message, Azure.Messaging.WebPubSub.MessageDataType dataType) { }
+        public MessageEventRequest(System.BinaryData message, Azure.Messaging.WebPubSub.MessageDataType dataType) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
         public Azure.Messaging.WebPubSub.MessageDataType DataType { get { throw null; } }
         public System.BinaryData Message { get { throw null; } }
+        public override string Name { get { throw null; } }
     }
+    public partial class PreflightRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    {
+        public PreflightRequest(bool valid) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
+        public override string Name { get { throw null; } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public abstract partial class ServiceRequest
     {
-        protected ServiceRequest() { }
+        public ServiceRequest(bool isPreflight, bool valid, bool unauthorized, bool badRequest, string error = null) { }
+        public bool BadRequest { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public bool IsPreflight { get { throw null; } }
+        public abstract string Name { get; }
+        public bool Unauthorized { get { throw null; } }
+        public bool Valid { get { throw null; } }
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -252,9 +272,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         internal WebPubSubRequest() { }
         public Microsoft.Azure.WebJobs.Extensions.WebPubSub.ConnectionContext ConnectionContext { get { throw null; } }
-        public bool IsPing { get { throw null; } }
         public Azure.Messaging.WebPubSub.ServiceRequest Request { get { throw null; } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubRequestStatus RequestStatus { get { throw null; } }
         public System.Net.Http.HttpResponseMessage Response { get { throw null; } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
@@ -262,13 +280,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public partial class WebPubSubRequestAttribute : System.Attribute
     {
         public WebPubSubRequestAttribute() { }
-    }
-    public enum WebPubSubRequestStatus
-    {
-        RequestValid = 0,
-        SignatureInvalid = 1,
-        ContentTypeInvalid = 2,
-        Unknown = 3,
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
