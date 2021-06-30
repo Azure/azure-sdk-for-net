@@ -56,7 +56,7 @@
             "virtualNetworkRules": [],
             "ipRules": [],
             "defaultAction": "Allow"
-        } 
+        }
     },
     "resources": [
         {
@@ -308,9 +308,9 @@
             "properties": {
                 "sku": {
                     "family": "A",
-                    "name": "[parameters('keyVaultSku')]"
+                    "name": "premium"
                 },
-                "tenantId": "premium",
+                "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
                     {
                         "tenantId": "[parameters('tenantId')]",
