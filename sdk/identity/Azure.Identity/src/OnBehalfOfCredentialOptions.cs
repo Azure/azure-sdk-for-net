@@ -9,21 +9,8 @@ namespace Azure.Identity
     public class OnBehalfOfCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
-        ///
+        /// The <see cref="TokenCachePersistenceOptions"/>.
         /// </summary>
-        public OnBehalfOfCredentialOptions()
-        { }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="cacheOptions"></param>
-        public OnBehalfOfCredentialOptions(TokenCachePersistenceOptions cacheOptions)
-        {
-            TokenCachePersistenceOptions = cacheOptions;
-        }
-
-        /// <inheritdoc />
-        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
 }

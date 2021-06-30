@@ -84,52 +84,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(count, getTokenCalledCount, "getTokenCalledCount should be correct");
         }
 
-        [Test]
-        public async Task NonConcurrentUsersDoNotGrowTheCache()
-        {
-            TestSetup();
-            expectedTenantId = TenantId;
-            options = new OnBehalfOfCredentialOptions(new TestInMemoryTokenCacheOptions());
-            OnBehalfOfCredential client = InstrumentClient(
-                new OnBehalfOfCredential(expectedTenantId, ClientId, "secret", options as OnBehalfOfCredentialOptions, null, mockConfidentialMsalClient));
-
-            var evt = new ManualResetEventSlim(false);
-            int count = 100;
-            int getTokenCalledCount = 0;
-            List<Task> tasks = new(count);
-            List<string> expectedUserAssertions = Enumerable.Range(1, count).Select(_ => Guid.NewGuid().ToString()).ToList();
-            mockConfidentialMsalClient.WithOnBehalfOfFactory(
-                (scopes, _, userAssertion, _, _) =>
-                {
-                    Interlocked.Increment(ref getTokenCalledCount);
-                    int i = int.Parse(scopes[0]);
-                    Assert.AreEqual(expectedUserAssertions[i], userAssertion.Assertion);
-                    return new ValueTask<AuthenticationResult>(result);
-                });
-
-            for (int i = 0; i < count; i++)
-            {
-                tasks.Add(
-                    Task.Factory.StartNew(
-                        index =>
-                        {
-                            int ii = (int)index;
-                            evt.Wait();
-                            Task.Yield().GetAwaiter().GetResult();
-                            using (_ = new UserAssertionScope(expectedUserAssertions[ii]))
-                            {
-                                client.GetTokenAsync(new TokenRequestContext(new[] { ii.ToString() }), default).GetAwaiter().GetResult();
-                            }
-                        },
-                        i,
-                        CancellationToken.None));
-            }
-            evt.Set();
-            await Task.WhenAll(tasks);
-            Assert.AreEqual(count, tasks.Count, "Task count should be correct");
-            Assert.AreEqual(count, getTokenCalledCount, "getTokenCalledCount should be correct");
-        }
-
         public class TestInMemoryTokenCacheOptions : UnsafeTokenCacheOptions
         {
             private readonly ReadOnlyMemory<byte> _bytes = ReadOnlyMemory<byte>.Empty;
