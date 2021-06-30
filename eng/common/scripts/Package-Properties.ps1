@@ -52,7 +52,7 @@ class PackageProps
             $this.ChangeLogPath = Join-Path $directoryPath "CHANGELOG.md"
             # Get release date for current version and set in package property
             $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $this.ChangeLogPath -VersionString $this.Version
-            if ($changeLogEntry -and !$changeLogEntry.ReleaseStatus)
+            if ($changeLogEntry -and $changeLogEntry.ReleaseStatus)
             {
               $this.ReleaseStatus = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
             } 
