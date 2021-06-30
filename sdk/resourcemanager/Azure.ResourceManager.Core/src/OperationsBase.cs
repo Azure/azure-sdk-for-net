@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -13,6 +12,8 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class OperationsBase
     {
+        private ProviderContainer _providerContainer;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationsBase"/> class for mocking.
         /// </summary>
@@ -45,6 +46,16 @@ namespace Azure.ResourceManager.Core
             Diagnostics = new ClientDiagnostics(ClientOptions);
 
             Validate(id);
+        }
+
+        /// <summary>
+        /// Gets the provider operations.
+        /// </summary>
+        protected ProviderContainer ProviderContainer => _providerContainer ??= GetProviderContainer();
+
+        private ProviderContainer GetProviderContainer()
+        {
+            return new ProviderContainer(this);
         }
 
         internal ClientDiagnostics Diagnostics { get; }

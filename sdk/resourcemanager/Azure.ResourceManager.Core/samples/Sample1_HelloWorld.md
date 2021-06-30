@@ -1,6 +1,6 @@
 # Example: Getting a subscription
 
->Note: Before getting started with the samples, make sure to go trough the [prerequisites]<--(./README.md#Prerequisites)-->.
+>Note: Before getting started with the samples, make sure to go trough the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core#prerequisites).
 
 The following code shows how to get the default subscription:
 
@@ -26,4 +26,4 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 ```
 
 ## Next stepts
-Take a look at the [Managing Resource Groups]<--(Sample2_ManagingResourceGroups.md)--> samples.
+Take a look at the [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample2_ManagingResourceGroups.md) samples.

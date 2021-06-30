@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core.Tests
             string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType1.json"));
             ResourceGroupResourceIdentifier id = Id;
             Plan plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
-            Sku sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 15464547);
+            Sku sku = new Sku("NameForSku", "TierForSku", "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null);
 
             var json = JsonHelper.SerializePropertiesToString(data, indented: true) + Environment.NewLine;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Core.Tests
             var plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             var kind = "KindForResource";
             var managedBy = "ManagedByForResource";
-            var sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 15464547);
+            var sku = new Sku("NameForSku", "TierForSku", "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
             GenericResourceData genericResource = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, plan, null, kind, managedBy, sku, null);
             genericResource.Tags.Add("key1", "value1");
             genericResource.Tags.Add("key2", "value2");
