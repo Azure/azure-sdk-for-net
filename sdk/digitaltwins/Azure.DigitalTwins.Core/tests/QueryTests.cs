@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
+using Azure.DigitalTwins.Core.QueryBuilder;
 
 namespace Azure.DigitalTwins.Core.Tests
 {
@@ -67,6 +69,79 @@ namespace Azure.DigitalTwins.Core.Tests
                     if (!digitalTwinFound)
                     {
                         throw new Exception($"Digital twin based on model Id {roomModelId} not found");
+                    }
+
+                    return null;
+                }, s_retryCount, s_retryDelay);
+
+                digitalTwinFound.Should().BeTrue();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
+            finally
+            {
+                // clean up
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task Query_QueryBuilder_Valid_Success()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+
+                // Create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+
+                // Create a room twin, with property "IsOccupied": true
+                string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                // Build query using AdtQueryBuilder helper object
+                AdtQueryBuilder builtQuery = new AdtQueryBuilder()
+                    .Select("*")
+                    .From(AdtCollection.DigitalTwins)
+                    .Build();
+
+                // act
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(builtQuery);
+
+                // assert
+
+                // It takes a few seconds for the service to be able to fetch digital twins through queries after being created. Hence, adding the retry logic
+                var digitalTwinFound = false;
+                await TestRetryHelper.RetryAsync<AsyncPageable<BasicDigitalTwin>>(async () =>
+                {
+                    await foreach (BasicDigitalTwin response in asyncPageableResponse)
+                    {
+                        digitalTwinFound = true;
+                        break;
+                    }
+
+                    if (!digitalTwinFound)
+                    {
+                        throw new Exception($"Digital twin not found.");
                     }
 
                     return null;
