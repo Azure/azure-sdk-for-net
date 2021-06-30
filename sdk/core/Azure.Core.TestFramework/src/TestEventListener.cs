@@ -40,9 +40,17 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        /// <summary>
+        /// Creates an instance of <see cref="TestEventListener"/>.
+        /// </summary>
         public TestEventListener() : this(DefaultMaxEventCount)
         { }
 
+        /// <summary>
+        /// Creates an instance of <see cref="TestEventListener"/>.
+        /// </summary>
+        /// <param name="maxEventCount">Maximum number of events that the listener can store in <see cref="EventData"/>.
+        /// <para>If the number of events exceeds the value, an <see cref="Exception"/> is thrown.</para></param>
         public TestEventListener(uint maxEventCount)
         {
             _maxEventCount = maxEventCount;
