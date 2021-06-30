@@ -157,8 +157,8 @@ namespace Azure.Data.Tables.Tests
             TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
             string token = sas.Sign(credential);
 
-            // Build SAS Uri.
-            UriBuilder sasUri = new UriBuilder(ServiceUri) { Query = token };
+            // Build SAS Uri. Add the table name to the ServiceUri to validate it will be handled properly.
+            UriBuilder sasUri = new UriBuilder(ServiceUri + "/" + tableName) { Query = token };
 
             // Create the TableServiceClient using the SAS URI.
             // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
