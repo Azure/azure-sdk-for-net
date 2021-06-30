@@ -202,8 +202,7 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             options ??= TableClientOptions.DefaultOptions;
-            _endpoint = connString.TableStorageUri.PrimaryUri;
-            SetEndpointStringWithoutTableName(_endpoint, tableName, out string endpointString, out _endpoint);
+            _endpoint = GetEndpointWithoutTableName(connString.TableStorageUri.PrimaryUri, tableName);
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
             {
@@ -216,7 +215,7 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.ToString(), _version);
             Name = tableName;
         }
 
@@ -248,8 +247,7 @@ namespace Azure.Data.Tables
 
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
-            _endpoint = endpoint;
-            SetEndpointStringWithoutTableName(_endpoint, tableName, out string endpointString, out _endpoint);
+            _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
@@ -287,8 +285,7 @@ namespace Azure.Data.Tables
 
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
-            _endpoint = endpoint;
-            SetEndpointStringWithoutTableName(_endpoint, tableName, out string endpointString, out _endpoint);
+            _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
@@ -1598,17 +1595,16 @@ namespace Azure.Data.Tables
             _changesetGuid = changesetGuid;
         }
 
-        private static void SetEndpointStringWithoutTableName(Uri endpoint, string tableName, out string endpointString, out Uri newEndpoint)
+        private static Uri GetEndpointWithoutTableName(Uri endpoint, string tableName)
         {
-            endpointString = endpoint.AbsoluteUri;
-            newEndpoint = endpoint;
+            var endpointString = endpoint.AbsoluteUri;
             var indexOfTableName = endpointString.IndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
             if (indexOfTableName <= 0)
             {
-                return;
+                return endpoint;
             }
             endpointString = endpointString.Remove(indexOfTableName, tableName.Length + 1);
-            newEndpoint = new Uri(endpointString);
+            return new Uri(endpointString);
         }
     }
 }
