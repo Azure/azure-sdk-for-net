@@ -39,8 +39,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
 
-            // BUGBUG: Documentation says range is from 0 to 1 but responses appear to be from 0 to 100.
-            IList<KnowledgebaseAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 90.0).ToList();
+            IList<KnowledgebaseAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.9).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
             Assert.That(answers, Has.All.Matches<KnowledgebaseAnswer>(answer => answer.Id == 27 && answer.Source == "surface-pro-4-user-guide-EN.pdf"));
         }
@@ -69,10 +68,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Response<KnowledgebaseAnswers> response = await Client.QueryKnowledgebaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
+            Assert.That(response.Value.Answers.Count, Is.EqualTo(2));
 
-            // BUGBUG: Documentation says range is from 0 to 1 but responses appear to be from 0 to 100.
-            IList<KnowledgebaseAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 60.0).ToList();
+            IList<KnowledgebaseAnswer> answers = response.Value.Answers.Where(answer => answer.ConfidenceScore > 0.6).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
             Assert.That(answers, Has.All.Matches<KnowledgebaseAnswer>(answer => answer.Id == 23 && answer.AnswerSpan.Text == "two to four hours"));
         }

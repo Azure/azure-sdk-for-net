@@ -8,9 +8,9 @@
         "Content-Length": "640",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-58f661f4e533064aa399d1be10214066-fe773cb470c62644-00",
+        "traceparent": "00-5536317733dd1947bc9dbd1df0c376d3-f5c4b06164288b4c-00",
         "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210625.1",
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210630.1",
           "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "24dbcb91ecad9dc56891ae6ab949ba67",
@@ -31,13 +31,13 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "03b0a876-8302-466b-b2ad-1bf569365bd8",
-        "Content-Length": "1479",
+        "apim-request-id": "f7768bcd-9af3-4175-9f95-689a5e5c8ac8",
+        "Content-Length": "1481",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Jun 2021 01:23:07 GMT",
+        "Date": "Wed, 30 Jun 2021 18:12:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "256"
+        "x-envoy-upstream-service-time": "654"
       },
       "ResponseBody": [
         "{\n",
@@ -57,7 +57,7 @@
         "    },\n",
         "    {\n",
         "      \u0022answer\u0022: \u0022It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9254359602928162,\n",
+        "      \u0022confidenceScore\u0022: 0.9254360198974609,\n",
         "      \u0022id\u0022: \u00221\u0022,\n",
         "      \u0022answerSpan\u0022: {\n",
         "        \u0022text\u0022: \u0022two to four hours\u0022,\n",
@@ -70,11 +70,11 @@
         "    },\n",
         "    {\n",
         "      \u0022answer\u0022: \u0022It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.05503518134355545,\n",
+        "      \u0022confidenceScore\u0022: 0.05503516271710396,\n",
         "      \u0022id\u0022: \u00221\u0022,\n",
         "      \u0022answerSpan\u0022: {\n",
         "        \u0022text\u0022: \u0022longer\u0022,\n",
-        "        \u0022confidenceScore\u0022: 0.624118,\n",
+        "        \u0022confidenceScore\u0022: 0.62411773,\n",
         "        \u0022offset\u0022: 11,\n",
         "        \u0022length\u0022: 7\n",
         "      },\n",

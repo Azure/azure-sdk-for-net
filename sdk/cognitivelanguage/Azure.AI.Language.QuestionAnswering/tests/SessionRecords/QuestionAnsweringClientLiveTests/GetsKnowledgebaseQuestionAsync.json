@@ -8,9 +8,9 @@
         "Content-Length": "12",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-10b01354ebf84d4987ac9c24d6b4253c-a5ebb6ec7dc70f4e-00",
+        "traceparent": "00-75701752f8e6854ba75b247d32c65b27-36b21b77d55e4349-00",
         "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210625.1",
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210630.1",
           "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "f347cb56d22a45f7a622db442ef3e84b",
@@ -21,13 +21,13 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b61fbfc7-fb1f-48b9-9a06-6ff99ca74353",
-        "Content-Length": "486",
+        "apim-request-id": "67cfc16b-d65e-4abb-a3fb-0d19d5579e6b",
+        "Content-Length": "484",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Jun 2021 01:23:07 GMT",
+        "Date": "Wed, 30 Jun 2021 18:12:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "135"
+        "x-envoy-upstream-service-time": "145"
       },
       "ResponseBody": [
         "{\n",
@@ -37,7 +37,7 @@
         "        \u0022Check the battery level\u0022\n",
         "      ],\n",
         "      \u0022answer\u0022: \u0022**Check the battery level**\\n\\nYou can check the battery level from the lock screen or the desktop:\u0022,\n",
-        "      \u0022confidenceScore\u0022: 100.0,\n",
+        "      \u0022confidenceScore\u0022: 1.0,\n",
         "      \u0022id\u0022: 24,\n",
         "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
         "      \u0022metadata\u0022: {\n",

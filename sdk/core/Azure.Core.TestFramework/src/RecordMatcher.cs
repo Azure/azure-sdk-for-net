@@ -25,6 +25,11 @@ namespace Azure.Core.TestFramework
         public RecordMatcher(bool compareBodies = true)
         {
             _compareBodies = compareBodies;
+
+            if (!compareBodies)
+            {
+                IgnoredHeaders.Add("Content-Length");
+            }
         }
 
         /// <summary>
@@ -241,12 +246,6 @@ namespace Azure.Core.TestFramework
             {
                 var requestHeaderValues = header.Value;
                 var headerName = header.Key;
-
-                if (!_compareBodies && "Content-Length".Equals(headerName, StringComparison.OrdinalIgnoreCase))
-                {
-                    remaining.Remove(headerName);
-                    continue;
-                }
 
                 if (LegacyExcludedHeaders.Contains(headerName))
                 {
