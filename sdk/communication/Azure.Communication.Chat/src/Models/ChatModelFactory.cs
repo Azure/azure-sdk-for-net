@@ -11,7 +11,6 @@ namespace Azure.Communication.Chat
     /// <summary>
     /// Model factory that enables mocking for the Chat library.
     /// </summary>
-    [CodeGenType("Azure.Communication.Chat.AzureCommunicationServicesModelFactory")]
     public static partial class ChatModelFactory
     {
         /// <summary>
