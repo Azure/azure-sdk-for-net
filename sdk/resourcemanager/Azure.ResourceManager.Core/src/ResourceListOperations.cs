@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> ListAtContext(
+        public static Pageable<GenericResourceExpanded> ListAtContext(
             ResourceGroupOperations resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             int? top = null,
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> ListAtContextAsync(
+        public static AsyncPageable<GenericResourceExpanded> ListAtContextAsync(
             ResourceGroupOperations resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             int? top = null,
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> ListAtContext(
+        public static Pageable<GenericResourceExpanded> ListAtContext(
             SubscriptionOperations subscription,
             ResourceFilterCollection resourceFilters = null,
             int? top = null,
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> ListAtContextAsync(
+        public static AsyncPageable<GenericResourceExpanded> ListAtContextAsync(
             SubscriptionOperations subscription,
             ResourceFilterCollection resourceFilters = null,
             int? top = null,
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Core
             return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), subscription);
         }
 
-        private static AsyncPageable<GenericResource> ListAtContextInternalAsync(
+        private static AsyncPageable<GenericResourceExpanded> ListAtContextInternalAsync(
             ResourceOperationsBase resourceOperations,
             string scopeFilter,
             ResourceFilterCollection resourceFilters = null,
@@ -112,16 +112,17 @@ namespace Azure.ResourceManager.Core
             CancellationToken cancellationToken = default)
         {
             var restClient = GetGenericResourceContainer(resourceOperations);
-            AsyncPageable<GenericResource> result;
+            AsyncPageable<GenericResourceExpanded> result;
             if (scopeFilter == null)
             {
-                result = restClient.ListAsync(resourceFilters?.ToString(), top, cancellationToken);
+                result = restClient.ListAsync(resourceFilters?.ToString(), null, top, cancellationToken);
             }
             else
             {
                 result = restClient.ListByResourceGroupAsync(
                     scopeFilter,
                     resourceFilters?.ToString(),
+                    null,
                     top,
                     cancellationToken);
             }
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Core
             return result;
         }
 
-        private static Pageable<GenericResource> ListAtContextInternal(
+        private static Pageable<GenericResourceExpanded> ListAtContextInternal(
             ResourceOperationsBase resourceOperations,
             string scopeFilter = null,
             ResourceFilterCollection resourceFilters = null,
@@ -137,16 +138,17 @@ namespace Azure.ResourceManager.Core
             CancellationToken cancellationToken = default)
         {
             var restClient = GetGenericResourceContainer(resourceOperations);
-            Pageable<GenericResource> result;
+            Pageable<GenericResourceExpanded> result;
             if (scopeFilter == null)
             {
-                result = restClient.List(resourceFilters?.ToString(), top, cancellationToken);
+                result = restClient.List(resourceFilters?.ToString(), null, top, cancellationToken);
             }
             else
             {
                 result = restClient.ListByResourceGroup(
                     scopeFilter,
                     resourceFilters?.ToString(),
+                    null,
                     top,
                     cancellationToken);
             }
