@@ -55,10 +55,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            TenantProviderIdentifier id = ResourceIdentifier.Create(other) as TenantProviderIdentifier;
-            if (other is null)
-                throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as TenantProviderIdentifier;
         }
 
         /// <inheritdoc/>

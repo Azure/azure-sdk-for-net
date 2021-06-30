@@ -90,10 +90,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            TenantResourceIdentifier id = ResourceIdentifier.Create(other) as TenantResourceIdentifier;
-            if (id is null)
-                throw new ArgumentException("Not a valid tenant level resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as TenantResourceIdentifier;
         }
 
         /// <summary>

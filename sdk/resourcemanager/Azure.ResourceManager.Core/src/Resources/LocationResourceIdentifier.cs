@@ -92,10 +92,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            LocationResourceIdentifier id = ResourceIdentifier.Create(other) as LocationResourceIdentifier;
-            if (id is null)
-                throw new ArgumentException("Not a valid location level resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as LocationResourceIdentifier;
         }
     }
 }

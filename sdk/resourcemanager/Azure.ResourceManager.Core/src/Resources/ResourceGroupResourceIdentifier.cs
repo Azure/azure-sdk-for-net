@@ -88,10 +88,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            ResourceGroupResourceIdentifier id = ResourceIdentifier.Create(other) as ResourceGroupResourceIdentifier;
-            if (id is null)
-                throw new ArgumentException("Not a valid resource group level resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as ResourceGroupResourceIdentifier;
         }
     }
 }

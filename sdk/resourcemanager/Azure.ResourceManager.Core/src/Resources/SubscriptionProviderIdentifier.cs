@@ -58,10 +58,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            SubscriptionProviderIdentifier id = ResourceIdentifier.Create(other) as SubscriptionProviderIdentifier;
-            if (other is null)
-                throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as SubscriptionProviderIdentifier;
         }
 
         /// <inheritdoc/>

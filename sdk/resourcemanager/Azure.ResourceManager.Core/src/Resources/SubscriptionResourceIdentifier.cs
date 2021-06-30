@@ -123,10 +123,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            SubscriptionResourceIdentifier id = ResourceIdentifier.Create(other) as SubscriptionResourceIdentifier;
-            if (id is null)
-                throw new ArgumentException("Not a valid subscription level resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as SubscriptionResourceIdentifier;
         }
 
         internal override string ToResourceString()
