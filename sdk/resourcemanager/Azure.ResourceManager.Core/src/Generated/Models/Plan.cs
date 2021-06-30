@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -14,7 +16,7 @@ namespace Azure.ResourceManager.Core
         public Plan()
         {
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Plan"/> class.
         /// </summary>
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> -1 for less than, 0 for equals, 1 for greater than. </returns>
         public int CompareTo(Plan other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
                 return 1;
 
             if (ReferenceEquals(this, other))
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> True if they are equals, otherwise false. </returns>
         public bool Equals(Plan other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
                 return false;
 
             if (ReferenceEquals(this, other))
@@ -101,6 +103,107 @@ namespace Azure.ResourceManager.Core
                 string.Equals(PromotionCode, other.PromotionCode, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Publisher, other.Publisher, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Version, other.Version, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            if (obj is not Plan other)
+                return false;
+
+            return Equals(other);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCodeBuilder.Combine(
+                Name?.ToLower(CultureInfo.InvariantCulture),
+                Publisher?.ToLower(CultureInfo.InvariantCulture),
+                Product?.ToLower(CultureInfo.InvariantCulture),
+                PromotionCode?.ToLower(CultureInfo.InvariantCulture),
+                Version?.ToLower(CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>
+        /// Compares this <see cref="Plan"/> instance with another object and determines if they are equals.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if they are equal, otherwise false. </returns>
+        public static bool operator ==(Plan left, Plan right)
+        {
+            if (ReferenceEquals(left, null))
+            {
+                return ReferenceEquals(right, null);
+            }
+
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares this <see cref="Plan"/> instance with another object and determines if they are equals.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if they are not equal, otherwise false. </returns>
+        public static bool operator !=(Plan left, Plan right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Plan"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than the right. </returns>
+        public static bool operator <(Plan left, Plan right)
+        {
+            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Plan"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than or equal to the right. </returns>
+        public static bool operator <=(Plan left, Plan right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Plan"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than the right. </returns>
+        public static bool operator >(Plan left, Plan right)
+        {
+            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Plan"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than or equal to the right. </returns>
+        public static bool operator >=(Plan left, Plan right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }

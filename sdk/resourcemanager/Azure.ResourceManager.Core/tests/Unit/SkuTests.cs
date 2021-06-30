@@ -118,6 +118,82 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(expected, sku1.CompareTo(sku2));
         }
 
+        [Test]
+        public void LessThanNull()
+        {
+            Sku sku = new Sku("SkuName", null, null, "SkuFamily", null);
+            Assert.IsTrue(null < sku);
+            Assert.IsFalse(sku < null);
+        }
+
+        [Test]
+        public void LessThanOrEqualNull()
+        {
+            Sku sku = new Sku("SkuName", null, null, "SkuFamily", null);
+            Assert.IsTrue(null <= sku);
+            Assert.IsFalse(sku <= null);
+        }
+
+        [Test]
+        public void GreaterThanNull()
+        {
+            Sku sku = new Sku("SkuName", null, null, "SkuFamily", null);
+            Assert.IsFalse(null > sku);
+            Assert.IsTrue(sku > null);
+        }
+
+        [Test]
+        public void GreaterThanOrEqualNull()
+        {
+            Sku sku = new Sku("SkuName", null, null, "SkuFamily", null);
+            Assert.IsFalse(null >= sku);
+            Assert.IsTrue(sku >= null);
+        }
+
+        [TestCase(false, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(false, "Nameb", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "Nameb", "Familyb", "familya")]
+        public void LessThanOperator(bool expected, string name1, string name2, string family1, string family2)
+        {
+            Sku sku1 = new Sku(name1, null, null, family1, null);
+            Sku sku2 = new Sku(name2, null, null, family2, null);
+            Assert.AreEqual(expected, sku1 < sku2);
+        }
+
+        [TestCase(false, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(false, "Nameb", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "Nameb", "Familyb", "familya")]
+        public void LessThanOrEqualOperator(bool expected, string name1, string name2, string family1, string family2)
+        {
+            Sku sku1 = new Sku(name1, null, null, family1, null);
+            Sku sku2 = new Sku(name2, null, null, family2, null);
+            Assert.AreEqual(expected, sku1 <= sku2);
+        }
+
+        [TestCase(true, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(true, "Nameb", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "Nameb", "Familyb", "familya")]
+        public void GreaterThanOperator(bool expected, string name1, string name2, string family1, string family2)
+        {
+            Sku sku1 = new Sku(name1, null, null, family1, null);
+            Sku sku2 = new Sku(name2, null, null, family2, null);
+            Assert.AreEqual(expected, sku1 > sku2);
+        }
+
+        [TestCase(true, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(true, "Nameb", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "Nameb", "Familyb", "familya")]
+        public void GreaterThanOrEqualOperator(bool expected, string name1, string name2, string family1, string family2)
+        {
+            Sku sku1 = new Sku(name1, null, null, family1, null);
+            Sku sku2 = new Sku(name2, null, null, family2, null);
+            Assert.AreEqual(expected, sku1 >= sku2);
+        }
+
         [TestCase(true, "name", "name")]
         [TestCase(true, "Name", "name")]
         [TestCase(true, null, null)]
@@ -129,14 +205,40 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Sku sku1 = new Sku(name1, null, null, null, null);
             Sku sku2 = new Sku(name2, null, null, null, null);
-            if (expected)
-            {
-                Assert.IsTrue(sku1.Equals(sku2));
-            }
-            else
-            {
-                Assert.IsFalse(sku1.Equals(sku2));
-            }
+            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
+            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
+        }
+
+        [TestCase(true, "name", "name", "family", "family")]
+        [TestCase(true, "Name", "name", "Family", "family")]
+        [TestCase(false, "name", "name1", "family", "family")]
+        [TestCase(false, "Name", "name", "Family", "family1")]
+        [TestCase(true, null, null, null, null)]
+        [TestCase(false, "name", null, "family", null)]
+        [TestCase(false, null, "name", null, "family")]
+        [TestCase(true, "${?/>._`", "${?/>._`", "${?/>._`", "${?/>._`")]
+        [TestCase(false, "${?/>._`", "", "${?/>._`", "")]
+        public void EqualsToOperator(bool expected, string name1, string name2, string family1, string family2)
+        {
+            Sku sku1 = new Sku(name1, family1, null, null, null);
+            Sku sku2 = new Sku(name2, family2, null, null, null);
+            Assert.AreEqual(expected, sku1 == sku2);
+        }
+
+        [TestCase(false, "name", "name", "family", "family")]
+        [TestCase(false, "Name", "name", "Family", "family")]
+        [TestCase(true, "name", "name1", "family", "family")]
+        [TestCase(true, "Name", "name", "Family", "family1")]
+        [TestCase(false, null, null, null, null)]
+        [TestCase(true, "name", null, "family", null)]
+        [TestCase(true, null, "name", null, "family")]
+        [TestCase(false, "${?/>._`", "${?/>._`", "${?/>._`", "${?/>._`")]
+        [TestCase(true, "${?/>._`", "", "${?/>._`", "")]
+        public void NotEqualsToOperator(bool expected, string name1, string name2, string family1, string family2)
+        {
+            Sku sku1 = new Sku(name1, family1, null, null, null);
+            Sku sku2 = new Sku(name2, family2, null, null, null);
+            Assert.AreEqual(expected, sku1 != sku2);
         }
 
         [TestCase(true, "family", "family")]
@@ -150,14 +252,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Sku sku1 = new Sku(null, null, null, family1, null);
             Sku sku2 = new Sku(null, null, null, family2, null);
-            if (expected)
-            {
-                Assert.IsTrue(sku1.Equals(sku2));
-            }
-            else
-            {
-                Assert.IsFalse(sku1.Equals(sku2));
-            }
+            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
+            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, "size", "size")]
@@ -171,14 +267,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Sku sku1 = new Sku(null, null, size1, null, null);
             Sku sku2 = new Sku(null, null, size2, null, null);
-            if (expected)
-            {
-                Assert.IsTrue(sku1.Equals(sku2));
-            }
-            else
-            {
-                Assert.IsFalse(sku1.Equals(sku2));
-            }
+            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
+            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, "tier", "tier")]
@@ -192,14 +282,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Sku sku1 = new Sku(null, tier1, null, null, null, null);
             Sku sku2 = new Sku(null, tier2, null, null, null, null);
-            if (expected)
-            {
-                Assert.IsTrue(sku1.Equals(sku2));
-            }
-            else
-            {
-                Assert.IsFalse(sku1.Equals(sku2));
-            }
+            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
+            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, "model", "model")]
@@ -213,14 +297,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Sku sku1 = new Sku(null, null, null, null, model1, null);
             Sku sku2 = new Sku(null, null, null, null, model2, null);
-            if (expected)
-            {
-                Assert.IsTrue(sku1.Equals(sku2));
-            }
-            else
-            {
-                Assert.IsFalse(sku1.Equals(sku2));
-            }
+            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
+            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, 1, 1)]
@@ -232,14 +310,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Sku sku1 = capacity1 == null ? new Sku(null, null, null, null, null) : new Sku(null, null, null, null, null, capacity1);
             Sku sku2 = capacity2 == null ? new Sku(null, null, null, null, null) : new Sku(null, null, null, null, null, capacity2);
-            if (expected)
-            {
-                Assert.IsTrue(sku1.Equals(sku2));
-            }
-            else
-            {
-                Assert.IsFalse(sku1.Equals(sku2));
-            }
+            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
+            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [Test]
@@ -254,7 +326,16 @@ namespace Azure.ResourceManager.Core.Tests
         public void EqualsToObject()
         {
             Sku sku1 = new Sku(null, null, null, null, null);
-            object sku2 = "random";
+            object sku2 = new Sku("SkuName", null, null, null, null);
+            object stringSku = "random";
+            Assert.IsFalse(sku1.Equals(stringSku));
+
+            object nullSku = null;
+            Assert.IsFalse(sku1.Equals(nullSku));
+
+            object sameSku = sku1;
+            Assert.IsTrue(sku1.Equals(sameSku));
+
             Assert.IsFalse(sku1.Equals(sku2));
         }
 
