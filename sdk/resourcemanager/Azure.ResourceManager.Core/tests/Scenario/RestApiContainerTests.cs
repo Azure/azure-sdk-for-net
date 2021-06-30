@@ -1,0 +1,48 @@
+﻿using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.Core.Tests
+{
+    public class RestApiContainerTests : ResourceManagerTestBase
+    {
+        public RestApiContainerTests(bool isAsync)
+        : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ListComputeTest()
+        {
+            bool foundVirtualMachine = false;
+            var restApiContainer = Client.GetRestApis("Microsoft.Compute");
+            await foreach (var restApi in restApiContainer.ListAsync())
+            {
+                if (restApi.Resource == "Virtual Machines")
+                {
+                    foundVirtualMachine = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(foundVirtualMachine);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ListNetworkTest()
+        {
+            bool foundVirtualMachine = false;
+            var restApiContainer = Client.GetRestApis("Microsoft.Network");
+            await foreach (var restApi in restApiContainer.ListAsync())
+            {
+                if (restApi.Resource == "Private Endpoint")
+                {
+                    foundVirtualMachine = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(foundVirtualMachine);
+        }
+    }
+}
