@@ -285,7 +285,8 @@ namespace NetApp.Tests.ResourceTests
                 Assert.True(response.IsAvailable);
 
                 // now check file path availability
-                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                //response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, ResourceUtils.subnetId);
                 Assert.True(response.IsAvailable);
 
                 // create the volume
@@ -298,7 +299,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.False(response.IsAvailable);
 
                 // now check file path availability again
-                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, ResourceUtils.subnetId);
                 Assert.False(response.IsAvailable);
 
                 // clean up

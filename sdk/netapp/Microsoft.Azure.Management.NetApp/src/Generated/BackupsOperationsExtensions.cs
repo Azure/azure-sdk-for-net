@@ -82,6 +82,64 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
+            /// Get volume's restore status
+            /// </summary>
+            /// <remarks>
+            /// Get the status of the restore for a volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            public static RestoreStatus GetVolumeRestoreStatus(this IBackupsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            {
+                return operations.GetVolumeRestoreStatusAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get volume's restore status
+            /// </summary>
+            /// <remarks>
+            /// Get the status of the restore for a volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RestoreStatus> GetVolumeRestoreStatusAsync(this IBackupsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetVolumeRestoreStatusWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List Backups
             /// </summary>
             /// <remarks>
