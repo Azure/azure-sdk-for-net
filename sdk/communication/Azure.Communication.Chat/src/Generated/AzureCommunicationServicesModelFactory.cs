@@ -7,41 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AzureCommunicationServicesModelFactory
     {
-        /// <summary> Initializes new instance of ChatError class. </summary>
+        /// <summary> Initializes a new instance of ChatError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
         /// <param name="innerError"> The inner error if any. </param>
         /// <returns> A new <see cref="Chat.ChatError"/> instance for mocking. </returns>
-        public static ChatError ChatError(string code = default, string message = default, string target = default, IReadOnlyList<ChatError> details = default, ChatError innerError = default)
+        public static ChatError ChatError(string code = null, string message = null, string target = null, IEnumerable<ChatError> details = null, ChatError innerError = null)
         {
             details ??= new List<ChatError>();
-            return new ChatError(code, message, target, details, innerError);
+
+            return new ChatError(code, message, target, details?.ToList(), innerError);
         }
 
-        /// <summary> Initializes new instance of AddChatParticipantsResult class. </summary>
+        /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
         /// <returns> A new <see cref="Chat.AddChatParticipantsResult"/> instance for mocking. </returns>
-        public static AddChatParticipantsResult AddChatParticipantsResult(IReadOnlyList<ChatError> invalidParticipants = default)
+        public static AddChatParticipantsResult AddChatParticipantsResult(IEnumerable<ChatError> invalidParticipants = null)
         {
             invalidParticipants ??= new List<ChatError>();
-            return new AddChatParticipantsResult(invalidParticipants);
+
+            return new AddChatParticipantsResult(invalidParticipants?.ToList());
         }
 
-        /// <summary> Initializes new instance of ChatThreadItem class. </summary>
+        /// <summary> Initializes a new instance of ChatThreadItem. </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <returns> A new <see cref="Chat.ChatThreadItem"/> instance for mocking. </returns>
-        public static ChatThreadItem ChatThreadItem(string id = default, string topic = default, DateTimeOffset? deletedOn = default, DateTimeOffset? lastMessageReceivedOn = default)
+        public static ChatThreadItem ChatThreadItem(string id = null, string topic = null, DateTimeOffset? deletedOn = null, DateTimeOffset? lastMessageReceivedOn = null)
         {
             return new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
         }
