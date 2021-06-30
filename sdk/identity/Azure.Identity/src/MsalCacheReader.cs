@@ -30,7 +30,7 @@ namespace Azure.Identity
             cache.SetBeforeAccessAsync(OnBeforeAccessAsync);
         }
 
-        private async Task OnBeforeAccessAsync(Microsoft.Identity.Client.TokenCacheNotificationArgs args)
+        private async Task OnBeforeAccessAsync(TokenCacheNotificationArgs args)
         {
             try
             {

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 
@@ -88,7 +87,7 @@ namespace Azure.Identity
         /// <summary>
         /// A delegate that will be called before the cache is accessed. The data returned will be used to set the current state of the cache.
         /// </summary>
-        internal Func<TokenCacheNotificationArgs, Task<ReadOnlyMemory<byte>>> RefreshCacheFromOptionsAsync;
+        internal Func<TokenCacheNotificationDetails, Task<UserAssertionCacheDetails>> RefreshCacheFromOptionsAsync;
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
@@ -135,7 +134,7 @@ namespace Azure.Identity
             cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
         }
 
-        private async Task OnBeforeCacheAccessAsync(Microsoft.Identity.Client.TokenCacheNotificationArgs args)
+        private async Task OnBeforeCacheAccessAsync(TokenCacheNotificationArgs args)
         {
             await _lock.WaitAsync().ConfigureAwait(false);
 
@@ -143,7 +142,8 @@ namespace Azure.Identity
             {
                 if (RefreshCacheFromOptionsAsync != null)
                 {
-                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheNotificationArgs(args)).ConfigureAwait(false)).ToArray();
+                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheNotificationDetails(args)).ConfigureAwait(false))
+                        .CacheBytes.ToArray();
                 }
                 args.TokenCache.DeserializeMsalV3(Data, true);
 
@@ -155,7 +155,7 @@ namespace Azure.Identity
             }
         }
 
-        private async Task OnAfterCacheAccessAsync(Microsoft.Identity.Client.TokenCacheNotificationArgs args)
+        private async Task OnAfterCacheAccessAsync(TokenCacheNotificationArgs args)
         {
             if (args.HasStateChanged)
             {

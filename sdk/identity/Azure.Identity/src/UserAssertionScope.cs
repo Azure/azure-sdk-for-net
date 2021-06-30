@@ -28,13 +28,12 @@ namespace Azure.Identity
         /// Initializes a new instance of <see cref="UserAssertionScope"/> using the supplied access token.
         /// </summary>
         /// <param name="accessToken">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
-        /// <param name="hydrateCache"> The delegate to be called which retrieves the cache from persistence for this user assertion partition. </param>
-        /// <param name="persistCache"> The delegate to be called with the current state of the token cache on each time it is updated for this <see cref="UserAssertionScope"/> instance. </param>
-        public UserAssertionScope(string accessToken, Func<Task<ReadOnlyMemory<byte>>> hydrateCache = null, Func<ReadOnlyMemory<byte>, Task> persistCache = null)
+        /// <param name="options"> The <see cref="UserAssertionScopeOptions"/> to configure this instance.</param>
+        public UserAssertionScope(string accessToken,UserAssertionScopeOptions options = null)
         {
             UserAssertion = new UserAssertion(accessToken);
             _currentAsyncLocal.Value = this;
-            CacheOptions = new UserAssertionCacheOptions(hydrateCache, persistCache);
+            CacheOptions = new UserAssertionCacheOptions(options);
         }
 
         /// <summary>
@@ -48,25 +47,25 @@ namespace Azure.Identity
 
         internal class UserAssertionCacheOptions : UnsafeTokenCacheOptions, ITokenCacheOptions
         {
-            private Func<Task<ReadOnlyMemory<byte>>> _hydrateCache;
-            internal Func<ReadOnlyMemory<byte>, Task> _persistCache;
+            private Func<Task<UserAssertionCacheDetails>> _hydrateCache;
+            internal Func<UserAssertionCacheDetails, Task> _persistCache;
 
-            public UserAssertionCacheOptions(Func<Task<ReadOnlyMemory<byte>>> hydrateCache, Func<ReadOnlyMemory<byte>, Task> persistCache)
+            public UserAssertionCacheOptions(UserAssertionScopeOptions options)
             {
-                _hydrateCache = hydrateCache ?? (() => Task.FromResult(ReadOnlyMemory<byte>.Empty));
-                _persistCache = persistCache ?? (_ => Task.CompletedTask);
+                _hydrateCache = options?.HydrateCache ?? (() => Task.FromResult(new UserAssertionCacheDetails { CacheBytes = ReadOnlyMemory<byte>.Empty }));
+                _persistCache = options?.PersistCache ?? (_ => Task.CompletedTask);
             }
 
             protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync() { throw new NotImplementedException(); }
 
-            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync(TokenCacheNotificationArgs args)
+            protected internal override Task<UserAssertionCacheDetails> RefreshCacheAsync(TokenCacheNotificationDetails details)
             {
                 return _hydrateCache();
             }
 
             protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
             {
-                return _persistCache(tokenCacheUpdatedArgs.UnsafeCacheData);
+                return _persistCache(new UserAssertionCacheDetails { CacheBytes = tokenCacheUpdatedArgs.UnsafeCacheData });
             }
 
             public TokenCachePersistenceOptions TokenCachePersistenceOptions => this;

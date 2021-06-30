@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Identity.Client;
+
 namespace Azure.Identity
 {
     /// <summary>
     /// Args setnt to TokenCache OnBefore and OnAfter events.
     /// </summary>
-    public class TokenCacheNotificationArgs
+    public class TokenCacheNotificationDetails
     {
         /// <summary>
         /// A suggested token cache key, which can be used with general purpose storage mechanisms that allow
@@ -24,7 +26,7 @@ namespace Azure.Identity
         /// </summary>
         public string SuggestedCacheKey { get; }
 
-        internal TokenCacheNotificationArgs(Microsoft.Identity.Client.TokenCacheNotificationArgs args)
+        internal TokenCacheNotificationDetails(TokenCacheNotificationArgs args)
         {
             SuggestedCacheKey = args.SuggestedCacheKey;
         }

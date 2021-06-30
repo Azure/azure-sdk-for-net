@@ -142,9 +142,9 @@ namespace Azure.Identity.Tests
 
             protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync() { throw new NotImplementedException(); }
 
-            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync(TokenCacheNotificationArgs args)
+            protected internal override Task<UserAssertionCacheDetails> RefreshCacheAsync(TokenCacheNotificationDetails details)
             {
-                return Task.FromResult(_bytes);
+                return Task.FromResult(new UserAssertionCacheDetails { CacheBytes = _bytes });
             }
 
             protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
