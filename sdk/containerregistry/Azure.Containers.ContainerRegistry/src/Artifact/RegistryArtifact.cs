@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.ResumableStorage;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -547,67 +548,67 @@ namespace Azure.Containers.ContainerRegistry
             return response;
         }
 
-        /// <summary>
-        /// Pull this artifact to the specified directory.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        // TODO: provide another overload instead of setting cancellationToken default
-        public virtual async Task<Response> PullToAsync(string path, CancellationToken cancellationToken = default)
-        {
-            // Get Manifest
-            Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, "application/vnd.oci.image.manifest.v1+json", cancellationToken).ConfigureAwait(false);
+        ///// <summary>
+        ///// Pull this artifact to the specified directory.
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //// TODO: provide another overload instead of setting cancellationToken default
+        //public virtual async Task<Response> PullToAsync(string path, CancellationToken cancellationToken = default)
+        //{
+        //    // Get Manifest
+        //    Response<ImageManifest> manifest = await _restClient.GetManifestAsync(_repositoryName, _tagOrDigest, "application/vnd.oci.image.manifest.v1+json", cancellationToken).ConfigureAwait(false);
 
-            // Write manifest to file
-            Directory.CreateDirectory(path);
-            string manifestFile = Path.Combine(path, "manifest.json");
-            using (FileStream fs = File.Create(manifestFile))
-            {
-                Stream stream = manifest.GetRawResponse().ContentStream;
-                long position = stream.Position;
-                stream.Position = 0;
-                await stream.CopyToAsync(fs).ConfigureAwait(false);
-                stream.Position = position;
-            }
+        //    // Write manifest to file
+        //    Directory.CreateDirectory(path);
+        //    string manifestFile = Path.Combine(path, "manifest.json");
+        //    using (FileStream fs = File.Create(manifestFile))
+        //    {
+        //        Stream stream = manifest.GetRawResponse().ContentStream;
+        //        long position = stream.Position;
+        //        stream.Position = 0;
+        //        await stream.CopyToAsync(fs).ConfigureAwait(false);
+        //        stream.Position = position;
+        //    }
 
-            // Download config
-            string configFile = Path.Combine(path, "config.json");
-            ContentDescriptor configDescriptor = GetConfigDescriptor(manifest);
-            if (configDescriptor != null)
-            {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, configDescriptor.Digest, cancellationToken).ConfigureAwait(false);
+        //    // Download config
+        //    string configFile = Path.Combine(path, "config.json");
+        //    ContentDescriptor configDescriptor = GetConfigDescriptor(manifest);
+        //    if (configDescriptor != null)
+        //    {
+        //        ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, configDescriptor.Digest, cancellationToken).ConfigureAwait(false);
 
-                using (FileStream fs = File.Create(configFile))
-                {
-                    await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
-                }
-            }
+        //        using (FileStream fs = File.Create(configFile))
+        //        {
+        //            await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
+        //        }
+        //    }
 
-            // Write Layers
-            IReadOnlyList<ContentDescriptor> layerDescriptors = GetLayerDescriptors(manifest);
-            if (layerDescriptors != null)
-            {
-                for (int i = 0; i < layerDescriptors.Count; i++)
-                {
-                    ContentDescriptor layerDescriptor = layerDescriptors[i];
+        //    // Write Layers
+        //    IReadOnlyList<ContentDescriptor> layerDescriptors = GetLayerDescriptors(manifest);
+        //    if (layerDescriptors != null)
+        //    {
+        //        for (int i = 0; i < layerDescriptors.Count; i++)
+        //        {
+        //            ContentDescriptor layerDescriptor = layerDescriptors[i];
 
-                    // Trim "sha256:" from the digest
-                    var fileName = layerDescriptor.Annotations?.Title ?? TrimSha(layerDescriptor.Digest);
-                    fileName = Path.Combine(path, fileName);
+        //            // Trim "sha256:" from the digest
+        //            var fileName = layerDescriptor.Annotations?.Title ?? TrimSha(layerDescriptor.Digest);
+        //            fileName = Path.Combine(path, fileName);
 
-                    ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, layerDescriptor.Digest, cancellationToken).ConfigureAwait(false);
+        //            ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, layerDescriptor.Digest, cancellationToken).ConfigureAwait(false);
 
-                    using (FileStream fs = File.Create(fileName))
-                    {
-                        await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
-                    }
-                }
-            }
+        //            using (FileStream fs = File.Create(fileName))
+        //            {
+        //                await blobResult.Value.CopyToAsync(fs).ConfigureAwait(false);
+        //            }
+        //        }
+        //    }
 
-            // TODO: Create return type to return
-            return manifest.GetRawResponse();
-        }
+        //    // TODO: Create return type to return
+        //    return manifest.GetRawResponse();
+        //}
 
         private static ContentDescriptor GetConfigDescriptor(ImageManifest manifest)
         {
@@ -645,6 +646,87 @@ namespace Azure.Containers.ContainerRegistry
 
             return digest;
         }
+        #endregion
+
+        #region File Upload/Download
+
+        /// <summary>
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<Response<ManifestUploadResult>> UploadManifestAsync(Stream stream, /*ManifestUploadOptions options,*/ CancellationToken cancellationToken = default)
+        {
+            string digest = ContentDescriptor.ComputeDigest(stream);
+            ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, digest, stream, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(new ManifestUploadResult(), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<Response<LayerUploadResult>> UploadLayerAsync(Stream stream, /*LayerUploadOptions options,*/ CancellationToken cancellationToken = default)
+        {
+            string digest = ContentDescriptor.ComputeDigest(stream);
+
+            ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
+                await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
+
+            ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> uploadChunkResult =
+                await _blobRestClient.UploadChunkAsync(startUploadResult.Headers.Location, stream, cancellationToken).ConfigureAwait(false);
+
+            ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
+                await _blobRestClient.CompleteUploadAsync(digest, uploadChunkResult.Headers.Location, null, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(new LayerUploadResult(), completeUploadResult.GetRawResponse());
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<Response<ManifestDownloadResult>> DownloadManifestAsync(string digest, /*ManifestDownloadOptions options,*/ CancellationToken cancellationToken = default)
+        {
+            // TODO: Options could expose platform: arch/os to select for manifest list
+
+            Response<ArtifactManifestProperties> properties = await _restClient.GetManifestPropertiesAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+            Response<ManifestWrapper> manifestWrapper = await _restClient.GetManifestAsync(_repositoryName, digest, properties.Value.MediaType, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(new ManifestDownloadResult(manifestWrapper.GetRawResponse().ContentStream, GetLayers(properties.Value.MediaType, digest, manifestWrapper.Value)), manifestWrapper.GetRawResponse());
+        }
+
+        private IReadOnlyList<ArtifactLayerProperties> GetLayers(string mediaType, string digest, ManifestWrapper value)
+        {
+            List<ArtifactLayerProperties> layers = new List<ArtifactLayerProperties>();
+
+            // TODO: Implement for each of the manifest schemas
+            // DO we always have media type, or will we need to get this from Content-Type header?
+            if (mediaType == "application/vnd.docker.distribution.manifest.v2+json")
+            {
+                foreach (var layer in value.Layers)
+                {
+                    layers.Add(new ArtifactLayerProperties(_repositoryName, digest));
+                }
+            }
+
+            return layers;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<Response<LayerDownloadResult>> DownloadLayerAsync(string digest, /*LayerDownloadOptions options,*/ CancellationToken cancellationToken = default)
+        {
+            ResponseWithHeaders<Stream, ContainerRegistryBlobGetBlobHeaders> blobResult = await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new LayerDownloadResult(digest, blobResult.Value), blobResult.GetRawResponse());
+        }
+
         #endregion
     }
 }

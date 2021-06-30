@@ -6,16 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Containers.ContainerRegistry.ResumableStorage;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested manifest file. </summary>
-    internal partial class CombinedManifest : ImageManifest
+    internal partial class ManifestWrapper : ImageManifest
     {
-        /// <summary> Initializes a new instance of CombinedManifest. </summary>
+        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal CombinedManifest(int schemaVersion) : base(schemaVersion)
+        internal ManifestWrapper(int schemaVersion) : base(schemaVersion)
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
             Layers = new ChangeTrackingList<ContentDescriptor>();
@@ -25,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             MediaType = "ManifestWrapper";
         }
 
-        /// <summary> Initializes a new instance of CombinedManifest. </summary>
+        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> (ManifestList, OCIIndex) List of V2 image layer information. </param>
@@ -38,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal CombinedManifest(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<DockerManifestV1FsLayer> fsLayers, IReadOnlyList<DockerManifestV1History> history, IReadOnlyList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion, mediaType)
+        internal ManifestWrapper(int schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, ContentDescriptor config, IReadOnlyList<ContentDescriptor> layers, OciManifestAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<DockerManifestV1FsLayer> fsLayers, IReadOnlyList<DockerManifestV1History> history, IReadOnlyList<DockerManifestV1ImageSignature> signatures) : base(schemaVersion, mediaType)
         {
             Manifests = manifests;
             Config = config;

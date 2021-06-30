@@ -104,7 +104,7 @@
           "200": {
             "description": "Returns the requested manifest file in a larger combined group",
             "schema": {
-              "$ref": "#/definitions/Manifest"
+              "$ref": "#/definitions/ManifestWrapper"
             }
           },
           "default": {

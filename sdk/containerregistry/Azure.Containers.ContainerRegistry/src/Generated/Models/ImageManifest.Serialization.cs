@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.ResumableStorage
@@ -18,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
             {
                 switch (discriminator.GetString())
                 {
-                    case "ManifestWrapper": return CombinedManifest.DeserializeCombinedManifest(element);
+                    case "ManifestWrapper": return ManifestWrapper.DeserializeManifestWrapper(element);
                     case "application/vnd.docker.distribution.manifest.list.v2+json": return DockerManifestList.DeserializeDockerManifestList(element);
                     case "application/vnd.docker.distribution.manifest.v1+json": return DockerManifestV1.DeserializeDockerManifestV1(element);
                     case "application/vnd.docker.distribution.manifest.v2+json": return DockerManifestV2.DeserializeDockerManifestV2(element);

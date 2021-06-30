@@ -7,13 +7,14 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.ResumableStorage;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.ResumableStorage
+namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class CombinedManifest
+    internal partial class ManifestWrapper
     {
-        internal static CombinedManifest DeserializeCombinedManifest(JsonElement element)
+        internal static ManifestWrapper DeserializeManifestWrapper(JsonElement element)
         {
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<ContentDescriptor> config = default;
@@ -150,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry.ResumableStorage
                     continue;
                 }
             }
-            return new CombinedManifest(schemaVersion, mediaType, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new ManifestWrapper(schemaVersion, mediaType, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }
