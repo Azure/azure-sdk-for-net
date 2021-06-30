@@ -31,19 +31,40 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public bool Equals(string other)
         {
-            throw new NotImplementedException();
+            return ResourceType.Equals(other);
         }
 
         /// <inheritdoc/>
         public bool Equals(ResourceTypeFilter other)
         {
-            throw new NotImplementedException();
+            return ResourceType.Equals(other);
         }
 
         /// <inheritdoc/>
         public override string GetFilterString()
         {
             return $"resourceType EQ '{ResourceType}'";
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            if (ReferenceEquals(null, obj))
+                return false;
+
+            if (obj is string other)
+                return Equals(other);
+
+            return Equals(obj as ResourceTypeFilter);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return ResourceType.GetHashCode();
         }
     }
 }
