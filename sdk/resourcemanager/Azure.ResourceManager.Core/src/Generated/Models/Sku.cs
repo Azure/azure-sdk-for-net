@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.Core
             if (other == null)
                 return 1;
 
-            if (object.ReferenceEquals(this, other))
+            if (ReferenceEquals(this, other))
                 return 0;
 
             int compareResult = 0;
@@ -111,6 +113,108 @@ namespace Azure.ResourceManager.Core
                 string.Equals(Size, other.Size, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Tier, other.Tier, StringComparison.InvariantCultureIgnoreCase) &&
                 long.Equals(Capacity, other.Capacity);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            if (obj is not Sku other)
+                return false;
+
+            return Equals(other);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCodeBuilder.Combine(
+                Name?.ToLower(CultureInfo.InvariantCulture),
+                Model?.ToLower(CultureInfo.InvariantCulture),
+                Family?.ToLower(CultureInfo.InvariantCulture),
+                Size?.ToLower(CultureInfo.InvariantCulture),
+                Tier?.ToLower(CultureInfo.InvariantCulture),
+                Capacity);
+        }
+
+        /// <summary>
+        /// Compares this <see cref="Sku"/> instance with another object and determines if they are equals.
+        /// </summary>
+        /// <param name="left"> The sku on the left side of the operator. </param>
+        /// <param name="right"> The sku on the right side of the operator. </param>
+        /// <returns> True if they are equals, otherwise false. </returns>
+        public static bool operator ==(Sku left, Sku right)
+        {
+            if (ReferenceEquals(left, null))
+            {
+                return ReferenceEquals(right, null);
+            }
+
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares this <see cref="Sku"/> instance with another object and determines if they are not equal.
+        /// </summary>
+        /// <param name="left"> The sku on the left side of the operator. </param>
+        /// <param name="right"> The sku on the right side of the operator. </param>
+        /// <returns> True if they are not equals, otherwise false. </returns>
+        public static bool operator !=(Sku left, Sku right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Sku"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The sku on the left side of the operator. </param>
+        /// <param name="right"> The sku on the right side of the operator. </param>
+        /// <returns> True if the left Sku is less than the right. </returns>
+        public static bool operator <(Sku left, Sku right)
+        {
+            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Sku"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The sku on the left side of the operator. </param>
+        /// <param name="right"> The sku on the right side of the operator. </param>
+        /// <returns> True if the left Sku is less than or equal to the right. </returns>
+        public static bool operator <=(Sku left, Sku right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Sku"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The sku on the left side of the operator. </param>
+        /// <param name="right"> The sku on the right side of the operator. </param>
+        /// <returns> True if the left Sku is greater than the right. </returns>
+        public static bool operator >(Sku left, Sku right)
+        {
+            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="Sku"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The sku on the left side of the operator. </param>
+        /// <param name="right"> The sku on the right side of the operator. </param>
+        /// <returns> True if the left Sku is greater than or equal to the right. </returns>
+        public static bool operator >=(Sku left, Sku right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }

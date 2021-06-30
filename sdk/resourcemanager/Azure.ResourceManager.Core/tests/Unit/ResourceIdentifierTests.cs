@@ -731,5 +731,77 @@ namespace Azure.ResourceManager.Core.Tests
                 Assert.AreEqual(expected, a != resourceProviderID2);
             }
         }
+
+        [TestCase(false, TrackedResourceId, TrackedResourceId)]
+        [TestCase(true, TrackedResourceId, ChildResourceId)]
+        [TestCase(false, ChildResourceId, TrackedResourceId)]
+        public void LessThanOperator(bool expected, string string1, string string2)
+        {
+            ResourceIdentifier id1 = string1;
+            ResourceIdentifier id2 = string2;
+            Assert.AreEqual(expected, id1 < id2);
+        }
+
+        [TestCase(true, TrackedResourceId, TrackedResourceId)]
+        [TestCase(true, TrackedResourceId, ChildResourceId)]
+        [TestCase(false, ChildResourceId, TrackedResourceId)]
+        public void LessThanOrEqualOperator(bool expected, string string1, string string2)
+        {
+            ResourceIdentifier id1 = string1;
+            ResourceIdentifier id2 = string2;
+            Assert.AreEqual(expected, id1 <= id2);
+        }
+
+        [TestCase(false, TrackedResourceId, TrackedResourceId)]
+        [TestCase(false, TrackedResourceId, ChildResourceId)]
+        [TestCase(true, ChildResourceId, TrackedResourceId)]
+        public void GreaterThanOperator(bool expected, string string1, string string2)
+        {
+            ResourceIdentifier id1 = string1;
+            ResourceIdentifier id2 = string2;
+            Assert.AreEqual(expected, id1 > id2);
+        }
+
+        [TestCase(true, TrackedResourceId, TrackedResourceId)]
+        [TestCase(false, TrackedResourceId, ChildResourceId)]
+        [TestCase(true, ChildResourceId, TrackedResourceId)]
+        public void GreaterThanOrEqualOperator(bool expected, string string1, string string2)
+        {
+            ResourceIdentifier id1 = string1;
+            ResourceIdentifier id2 = string2;
+            Assert.AreEqual(expected, id1 >= id2);
+        }
+
+        [Test]
+        public void LessThanNull()
+        {
+            ResourceIdentifier id = TrackedResourceId;
+            Assert.IsTrue(null < id);
+            Assert.IsFalse(id < null);
+        }
+
+        [Test]
+        public void LessThanOrEqualNull()
+        {
+            ResourceIdentifier id = TrackedResourceId;
+            Assert.IsTrue(null <= id);
+            Assert.IsFalse(id <= null);
+        }
+
+        [Test]
+        public void GreaterThanNull()
+        {
+            ResourceIdentifier id = TrackedResourceId;
+            Assert.IsFalse(null > id);
+            Assert.IsTrue(id > null);
+        }
+
+        [Test]
+        public void GreaterThanOrEqualNull()
+        {
+            ResourceIdentifier id = TrackedResourceId;
+            Assert.IsFalse(null >= id);
+            Assert.IsTrue(id >= null);
+        }
     }
 }
