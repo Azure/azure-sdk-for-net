@@ -14,6 +14,7 @@
     6) Aligned with latest Face API, multiple recognition model feature was added.
     ]]>
     </PackageReleaseNotes>
+    <GenerateAPIListing>true</GenerateAPIListing>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -23,5 +24,7 @@
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Face</AssemblyName>
+    <RootNamespace>Microsoft.Azure.CognitiveServices.Vision.Face</RootNamespace>
   </PropertyGroup>
 </Project>
