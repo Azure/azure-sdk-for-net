@@ -99,6 +99,12 @@
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.0.1"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    
+          <!--
+    Remove later after deciding type of Queue to Implement
+    -->
+    <PackageReference Update="Microsoft.VisualStudio.Threading" Version="16.10.56"/>
+    <PackageReference Update="System.Threading.Tasks.Dataflow" Version="5.0.0"/>
   </ItemGroup>
 
   <!--

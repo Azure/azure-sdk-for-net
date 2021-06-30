@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement;
 using NUnit.Framework;
 using System.Reflection;
 using System.Security.Principal;

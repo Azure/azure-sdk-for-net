@@ -1,8 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -32,22 +29,26 @@ namespace Azure.Storage.DataMovement
 
         internal BlobUploadOptions _uploadOptions;
 
+        public readonly CopyMethod _copyMethod;
+
         // Should only be used for upload options. Felt redudant
         // to create a whole other class that inherited this just
         // for uploads. Is it worth it to make a whole other class
         // for each operation type.
         public BlobUploadOptions options => _uploadOptions;
-        
-        Queue<string> localTransferItems;
-        Queue<Uri> sourceTransferItems;
-        
+
+        // this is if we decide to prescan everything instead of
+        // scanning right before upload/downloading
+        internal Queue<string> localTransferItems;
+        internal Queue<Uri> sourceTransferItems;
+
         // Creates Upload Transfer Job
         public BlobDirectoryTransferJob(
             string sourceLocalPath,
             BlobDirectoryClient destinationClient,
             StorageTransferOptions transferOptions,
             BlobUploadOptions uploadOptions,
-            IProgressTracker<StorageTransferResults> progressTracker,
+            IProgress<StorageTransferStatus> progressTracker,
             CancellationToken cancellationToken)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
@@ -56,6 +57,7 @@ namespace Azure.Storage.DataMovement
             _transferOptions = transferOptions;
             _uploadOptions = uploadOptions;
             TransferType = StorageTransferType.Upload;
+            ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
         }
 
@@ -64,6 +66,7 @@ namespace Azure.Storage.DataMovement
             BlobDirectoryClient sourceClient,
             string destinationPath,
             StorageTransferOptions transferOptions,
+            IProgress<StorageTransferStatus> progressTracker,
             CancellationToken cancellationToken)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
@@ -71,16 +74,34 @@ namespace Azure.Storage.DataMovement
             _sourceBlobClient = sourceClient.CloneClient();
             _transferOptions = transferOptions;
             TransferType = StorageTransferType.Download;
+            ProgressTracker = progressTracker;
+            CancellationToken = cancellationToken;
         }
 
         // Creates Copy Transfer Job
-        public BlobDirectoryClientJob(
+        public BlobDirectoryTransferJob(
             BlobDirectoryClient sourceClient,
             BlobDirectoryClient destinationClient,
             CopyMethod copyMethod,
-            StorageTransferOptions transferOptions)
+            StorageTransferOptions transferOptions,
+            CancellationToken cancellationToken)
         {
-
+            _sourceBlobClient = sourceClient;
+            _destinationBlobClient = destinationClient;
+            switch (copyMethod)
+            {
+                case CopyMethod.SyncCopy:
+                    TransferType = StorageTransferType.SyncCopy;
+                    break;
+                case CopyMethod.ServiceSideSyncCopy:
+                    TransferType = StorageTransferType.ServiceSideSyncCopy;
+                    break;
+                default: //CopyMethod.ServiceSideAsyncCopy
+                    TransferType = StorageTransferType.ServiceSideAyncCopy;
+                    break;
+            }
+            _transferOptions = transferOptions;
+            CancellationToken = cancellationToken;
         }
     }
 }

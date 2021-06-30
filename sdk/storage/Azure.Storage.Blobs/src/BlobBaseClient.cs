@@ -426,21 +426,6 @@ namespace Azure.Storage.Blobs.Specialized
                 url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
-
-        /// <summary>
-        /// Intended to create a backing blob client for data movement.
-        /// Looking to remove this if it's unnecessary to do this.
-        ///
-        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <returns>
-        /// New instanc of the <see cref="BlobServiceClient"/> class.
-        /// </returns>
-        public BlobBaseClient CloneClient()
-        {
-            return new BlobBaseClient(Uri, ClientConfiguration, ClientSideEncryption);
-        }
         #endregion ctors
 
         /// <summary>

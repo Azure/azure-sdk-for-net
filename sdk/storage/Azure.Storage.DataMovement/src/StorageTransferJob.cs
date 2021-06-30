@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -46,6 +47,19 @@ namespace Azure.Storage.DataMovement
         /// Progress Tracker
         /// </summary>
         public IProgress<StorageTransferStatus> ProgressTracker;
+
+        /// <summary>
+        /// Create next TransferItem/Task to be processed
+        /// </summary>
+        /// <returns></returns>
+        /// <summary>
+        /// Create next TransferItem/Task to be processed
+        /// </summary>
+        /// <returns></returns>
+        public virtual Task CreateTransferTaskAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         /// <summary>
         /// Create Storage Transfer Job

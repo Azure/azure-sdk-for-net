@@ -4,6 +4,8 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
@@ -15,17 +17,18 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class BlobTransferJob : StorageTransferJob
     {
-        internal string _sourceLocalPath;
+        internal string _localPath;
 
-        public string sourceLocalPath => _sourceLocalPath;
+        public string localPath => _localPath;
 
-        internal BlobBaseClient _destinationBlobClient;
+        // Might have to change BlobBaseClient to other client, when we do page blob and append blob
+        internal BlobClient _destinationBlobClient;
 
-        public BlobBaseClient destinationBlobClient => _destinationBlobClient;
+        public BlobClient destinationBlobClient => _destinationBlobClient;
 
-        private BlobBaseClient _sourceBlobClient;
+        private BlobClient _sourceBlobClient;
 
-        public BlobBaseClient sourceBlobClient => _sourceBlobClient;
+        public BlobClient sourceBlobClient => _sourceBlobClient;
 
         internal BlobUploadOptions _uploadOptions;
 
@@ -34,19 +37,17 @@ namespace Azure.Storage.DataMovement
         // for uploads
         public BlobUploadOptions UploadOptions => _uploadOptions;
 
-        public IProgress<StorageTransferStatus> ProgressTracker;
-
         public BlobTransferJob(
             string localpath,
-            BlobBaseClient client,
+            BlobClient client,
             StorageTransferOptions transferOptions,
             BlobUploadOptions uploadOptions,
             IProgress<StorageTransferStatus> progressTracker,
             CancellationToken cancellationToken)
         {
-            _sourceLocalPath = localpath;
+            _localPath = localpath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
-            _sourceBlobClient = client.CloneClient();
+            _sourceBlobClient = client;
             _transferOptions = transferOptions;
             _uploadOptions = uploadOptions;
             TransferType = StorageTransferType.Upload;
@@ -55,18 +56,36 @@ namespace Azure.Storage.DataMovement
         }
 
         public BlobTransferJob(
-            BlobBaseClient sourceClient,
+            BlobClient sourceClient,
             string destinationPath,
             StorageTransferOptions transferOptions,
             IProgress<StorageTransferStatus> progressTracker,
             CancellationToken cancellationToken)
         {
-            _sourceLocalPath = destinationPath;
-            _sourceBlobClient = sourceClient.CloneClient();
+            _localPath = destinationPath;
+            _sourceBlobClient = sourceClient;
             _transferOptions = transferOptions;
             TransferType = StorageTransferType.Download;
             ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
+        }
+
+        /// <summary>
+        /// Create next TransferItem/Task to be processed
+        /// </summary>
+        /// <returns></returns>
+        public override Task CreateTransferTaskAsync()
+        {
+            // Stub to create Task
+            if (TransferType == StorageTransferType.Upload)
+            {
+                // Do only blockblobs for now
+                return destinationBlobClient.UploadAsync(_localPath);
+            }
+            else // (TransferType == StorageTransferType.Download)
+            {
+                return sourceBlobClient.DownloadToAsync(_localPath);
+            }
         }
     }
 }
