@@ -45,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering
             Endpoint = endpoint;
             options ??= new QuestionAnsweringClientOptions();
 
-            Diagnostics = new QuestionAnsweringClientDiagnostics(options);
+            Diagnostics = new ClientDiagnostics(options);
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 new AzureKeyCredentialPolicy(credential, AuthorizationHeader));

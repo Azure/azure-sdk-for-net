@@ -87,10 +87,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 await Client.QueryKnowledgebaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
             });
 
-            // TODO: Determine if we should expose error details instead.
             Assert.That(ex.Status, Is.EqualTo(400));
-            Assert.That(ex.ErrorCode, Is.EqualTo("ValidationFailure"));
-            Assert.That(ex.Data, Contains.Key("Target").WithValue("Question"));
+            Assert.That(ex.ErrorCode, Is.EqualTo("BadArgument"));
        }
 
         [RecordedTest]

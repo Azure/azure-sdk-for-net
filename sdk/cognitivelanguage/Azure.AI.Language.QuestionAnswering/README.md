@@ -1,107 +1,131 @@
-# README.md template
+# Azure Cognitive Language Services Question Answering client library for .NET
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [Azure.Template/README.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md) for an example following this template.
+Question Answering is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer users’ questions with the best answers from the QnAs in your knowledge base—automatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
 
-**Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
-
-* All headings, including the H1, should use **sentence-style capitalization**. Refer to the [Microsoft Style Guide][style-guide-msft] and [Microsoft Cloud Style Guide][style-guide-cloud] for more information.
-* Example: `# Azure Batch client library for Python`
-
-# Azure Template client library for .NET
-
-**Introduction**: The introduction appears directly under the title (H1) of your README.
-
-* **DO NOT** use an "Introduction" or "Overview" heading (H2) for this section.
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-* Include this single line of links targeting your product's content at the bottom of the introduction, making any adjustments as necessary (for example, NuGet instead of PyPi):
-
-  [Source code](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/batch/azure-batch) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
+[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Product documentation][questionanswering_docs] | [Samples][questionanswering_samples]
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+Install the Azure Key Vault secrets client library for .NET with [NuGet][nuget]:
+
+```powershell
+dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
+```
 
 ### Prerequisites
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+* An [Azure subscription][azure_subscription]
+* An existing Question Answering resource
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+> Note: the new unified Cognitive Language Services are not currently available.
 
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+In order to interact with the Question Answering service, you'll need to create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class. You will need an **endpoint**, and an **API key** instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+#### Get an API key
+
+You can get the **endpoint** and an **API key** from the Cognitive Services resource or Question Answering resource in the [Azure Portal][azure_portal].
+
+Alternatively, use the [Azure CLI][azure_cli] command shown below to get the API key from the Question Answering resource.
+
+```powershell
+az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
+```
+
+#### Create a QuestionAnsweringClient
+
+Once you've determined your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
+
+```C# Snippet:QuestionAnsweringClient_Create
+Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+
+QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
+```
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### QuestionAnsweringClient
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+The [`QuestionAnsweringClient`][questionanswering_client_class] is the primary interface for asking questions using a knowledge base with your own information, or text input using pre-trained models. It provides both synchronous and asynchronous APIs to ask questions.
 
 ### Thread safety
+
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
+
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
-
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
-
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
-
-* [Create the thing](#create-the-thing)
-* [Get the thing](#get-the-thing)
-* [List the things](#list-the-things)
-
-### Create the thing
-
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
-
-```Python
-thing = client.create_thing(id, name)
-thing.save()
-```
-
-### Get the thing
-
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
-
-```C# Snippet:GetSecret
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
-
-SecretBundle secret = client.GetSecret("TestSecret");
-
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
-```
+TODO
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+### General
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+When you interact with the Cognitive Language Services Question Answering client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][questionanswering_rest_docs] requests.
 
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+For example, if you submit a question to a non-existant knowledge base, a `400` error is returned indicating "Bad Request".
+
+```C# Snippet:QuestionAnsweringClient_BadRequest
+try
+{
+    Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("invalid-knowledgebase", options);
+}
+catch (RequestFailedException ex)
+{
+    Console.WriteLine(ex.ToString());
+}
+```
+
+You will notice that additional information is logged, like the client request ID of the operation.
+
+```text
+Azure.RequestFailedException: Please verify azure search service is up, restart the WebApp and try again
+Status: 400 (Bad Request)
+ErrorCode: BadArgument
+
+Content:
+{
+    "error": {
+    "code": "BadArgument",
+    "message": "Please verify azure search service is up, restart the WebApp and try again"
+    }
+}
+
+Headers:
+x-envoy-upstream-service-time: 23
+apim-request-id: 76a83876-22d1-4977-a0b1-559a674f3605
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+Date: Wed, 30 Jun 2021 00:32:07 GMT
+Content-Length: 139
+Content-Type: application/json; charset=utf-8
+```
+
+### Setting up console logging
+
+The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console use the `AzureEventSourceListener.CreateConsoleLogger` method.
+
+```C#
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [here][core_logging].
 
 ## Next steps
 
@@ -111,10 +135,32 @@ If the package or a related package supports it, include tips for logging or ena
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[azure_cli]: https://docs.microsoft.com/cli/azure/
+[azure_portal]: https://portal.azure.com/
+[azure_subscription]: https://azure.microsoft.com/free/
+[cla]: https://cla.microsoft.com
+[coc_contact]: mailto:opencode@microsoft.com
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
+[core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[nuget]: https://www.nuget.org/
+[questionanswering_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/QuestionAnsweringClient.cs
+[questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
+[questionanswering_docs]: https://azure.microsoft.com/services/cognitive-services/qna-maker/
+[questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering/
+[questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
+[questionanswering_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
+[questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/treemain/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitivelanguage%2FAzure.AI.Language.QuestionAnswering%2FREADME.png)

@@ -93,13 +93,14 @@ namespace Azure.AI.Language.QuestionAnswering.Models
     }
     public partial class KnowledgebaseQueryOptions
     {
-        public KnowledgebaseQueryOptions() { }
+        public KnowledgebaseQueryOptions(int qnaId) { }
+        public KnowledgebaseQueryOptions(string question) { }
         public Azure.AI.Language.QuestionAnswering.Models.AnswerSpanRequest AnswerSpanRequest { get { throw null; } set { } }
         public double? ConfidenceScoreThreshold { get { throw null; } set { } }
         public Azure.AI.Language.QuestionAnswering.Models.KnowledgebaseAnswerRequestContext Context { get { throw null; } set { } }
         public bool? IncludeUnstructuredSources { get { throw null; } set { } }
-        public int? QnaId { get { throw null; } set { } }
-        public string Question { get { throw null; } set { } }
+        public int? QnaId { get { throw null; } }
+        public string Question { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Models.RankerType? RankerType { get { throw null; } set { } }
         public Azure.AI.Language.QuestionAnswering.Models.StrictFilters StrictFilters { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
