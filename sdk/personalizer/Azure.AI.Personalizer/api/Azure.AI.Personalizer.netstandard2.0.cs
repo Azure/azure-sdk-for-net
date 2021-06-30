@@ -3,16 +3,16 @@ namespace Azure.AI.Personalizer
     public partial class EvaluationClient
     {
         protected EvaluationClient() { }
-        public EvaluationClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public EvaluationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public EvaluationClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public EvaluationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response Apply(Azure.AI.Personalizer.Models.PolicyReferenceContract body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ApplyAsync(Azure.AI.Personalizer.Models.PolicyReferenceContract body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EvaluationsClient
     {
         protected EvaluationsClient() { }
-        public EvaluationsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public EvaluationsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public EvaluationsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public EvaluationsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.Evaluation> Create(Azure.AI.Personalizer.Models.EvaluationContract evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.Evaluation>> CreateAsync(Azure.AI.Personalizer.Models.EvaluationContract evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string evaluationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -25,8 +25,8 @@ namespace Azure.AI.Personalizer
     public partial class EventsClient
     {
         protected EventsClient() { }
-        public EventsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public EventsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public EventsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public EventsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response Activate(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Reward(string eventId, Azure.AI.Personalizer.Models.RewardRequest reward, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -35,8 +35,8 @@ namespace Azure.AI.Personalizer
     public partial class LogClient
     {
         protected LogClient() { }
-        public LogClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public LogClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public LogClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public LogClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.LogsProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -45,8 +45,8 @@ namespace Azure.AI.Personalizer
     public partial class ModelClient
     {
         protected ModelClient() { }
-        public ModelClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public ModelClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public ModelClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public ModelClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response<System.IO.Stream> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.ModelProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -57,71 +57,71 @@ namespace Azure.AI.Personalizer
     public partial class MultiSlotClient
     {
         protected MultiSlotClient() { }
-        public MultiSlotClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public MultiSlotClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public MultiSlotClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public MultiSlotClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.MultiSlotRankResponse> Rank(Azure.AI.Personalizer.Models.MultiSlotRankRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.MultiSlotRankResponse>> RankAsync(Azure.AI.Personalizer.Models.MultiSlotRankRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MultiSlotEventsClient
     {
         protected MultiSlotEventsClient() { }
-        public MultiSlotEventsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public MultiSlotEventsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public MultiSlotEventsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public MultiSlotEventsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response Activate(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Reward(string eventId, Azure.AI.Personalizer.Models.MultiSlotRewardRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RewardAsync(string eventId, Azure.AI.Personalizer.Models.MultiSlotRewardRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PersonalizerClient
+    public partial class PersonalizerBaseClient
     {
-        public Azure.AI.Personalizer.EvaluationClient Evaluation;
-        public Azure.AI.Personalizer.EvaluationsClient Evaluations;
-        public Azure.AI.Personalizer.EventsClient Events;
-        public Azure.AI.Personalizer.LogClient Log;
-        public Azure.AI.Personalizer.ModelClient Model;
-        public Azure.AI.Personalizer.MultiSlotClient MultiSlot;
-        public Azure.AI.Personalizer.MultiSlotEventsClient MultiSlotEvents;
-        public Azure.AI.Personalizer.PersonalizerV1Preview1Client PersonalizerV1Preview1;
-        public Azure.AI.Personalizer.PolicyClient Policy;
-        public Azure.AI.Personalizer.ServiceConfigurationClient ServiceConfiguration;
-        protected PersonalizerClient() { }
-        public PersonalizerClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public PersonalizerClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-    }
-    public partial class PersonalizerV1Preview1Client
-    {
-        protected PersonalizerV1Preview1Client() { }
-        public PersonalizerV1Preview1Client(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public PersonalizerV1Preview1Client(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        protected PersonalizerBaseClient() { }
+        public PersonalizerBaseClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public PersonalizerBaseClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.RankResponse> Rank(Azure.AI.Personalizer.Models.RankRequest rankRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.RankResponse>> RankAsync(Azure.AI.Personalizer.Models.RankRequest rankRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PersonalizerV1Preview1ClientOptions : Azure.Core.ClientOptions
+    public partial class PersonalizerBaseClientOptions : Azure.Core.ClientOptions
     {
-        public PersonalizerV1Preview1ClientOptions(Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions.ServiceVersion.Vv1_1_preview_1) { }
+        public PersonalizerBaseClientOptions(Azure.AI.Personalizer.PersonalizerBaseClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerBaseClientOptions.ServiceVersion.Vv1_1_preview_1) { }
         public enum ServiceVersion
         {
             Vv1_1_preview_1 = 1,
         }
     }
-    public static partial class PersonalizerV1Preview1ModelFactory
+    public static partial class PersonalizerBaseModelFactory
     {
         public static Azure.AI.Personalizer.Models.DateRange DateRange(System.DateTimeOffset? from = default(System.DateTimeOffset?), System.DateTimeOffset? to = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.AI.Personalizer.Models.Evaluation Evaluation(string id = null, string name = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string jobId = null, Azure.AI.Personalizer.Models.EvaluationJobStatus? status = default(Azure.AI.Personalizer.Models.EvaluationJobStatus?), System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.Models.PolicyResult> policyResults = null, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> featureImportance = null, Azure.AI.Personalizer.Models.EvaluationType? evaluationType = default(Azure.AI.Personalizer.Models.EvaluationType?), string optimalPolicy = null, System.DateTimeOffset? creationTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Personalizer.Models.Evaluation Evaluation(string id = null, string name = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string jobId = null, Azure.AI.Personalizer.Models.EvaluationJobStatus? status = default(Azure.AI.Personalizer.Models.EvaluationJobStatus?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PolicyResult> policyResults = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> featureImportance = null, Azure.AI.Personalizer.Models.EvaluationType? evaluationType = default(Azure.AI.Personalizer.Models.EvaluationType?), string optimalPolicy = null, System.DateTimeOffset? creationTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Personalizer.Models.LogsProperties LogsProperties(Azure.AI.Personalizer.Models.LogsPropertiesDateRange dateRange = null) { throw null; }
         public static Azure.AI.Personalizer.Models.ModelProperties ModelProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTime = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.AI.Personalizer.Models.MultiSlotRankResponse MultiSlotRankResponse(System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.Models.SlotResponse> slots = null, string eventId = null) { throw null; }
-        public static Azure.AI.Personalizer.Models.PolicyResult PolicyResult(string name = null, string arguments = null, Azure.AI.Personalizer.Models.PolicySource? policySource = default(Azure.AI.Personalizer.Models.PolicySource?), System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.Models.PolicyResultSummary> summary = null, Azure.AI.Personalizer.Models.PolicyResultTotalSummary totalSummary = null) { throw null; }
+        public static Azure.AI.Personalizer.Models.MultiSlotRankResponse MultiSlotRankResponse(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.SlotResponse> slots = null, string eventId = null) { throw null; }
+        public static Azure.AI.Personalizer.Models.PolicyResult PolicyResult(string name = null, string arguments = null, Azure.AI.Personalizer.Models.PolicySource? policySource = default(Azure.AI.Personalizer.Models.PolicySource?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PolicyResultSummary> summary = null, Azure.AI.Personalizer.Models.PolicyResultTotalSummary totalSummary = null) { throw null; }
         public static Azure.AI.Personalizer.Models.PolicyResultSummary PolicyResultSummary(System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), float? ipsEstimatorNumerator = default(float?), float? ipsEstimatorDenominator = default(float?), float? snipsEstimatorDenominator = default(float?), System.TimeSpan? aggregateTimeWindow = default(System.TimeSpan?), float? nonZeroProbability = default(float?), float? sumOfSquares = default(float?), float? confidenceInterval = default(float?), float? averageReward = default(float?)) { throw null; }
         public static Azure.AI.Personalizer.Models.RankedAction RankedAction(string id = null, float? probability = default(float?)) { throw null; }
-        public static Azure.AI.Personalizer.Models.RankResponse RankResponse(System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.Models.RankedAction> ranking = null, string eventId = null, string rewardActionId = null) { throw null; }
+        public static Azure.AI.Personalizer.Models.RankResponse RankResponse(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.RankedAction> ranking = null, string eventId = null, string rewardActionId = null) { throw null; }
         public static Azure.AI.Personalizer.Models.SlotResponse SlotResponse(string id = null, string rewardActionId = null) { throw null; }
+    }
+    public partial class PersonalizerClient
+    {
+        protected PersonalizerClient() { }
+        public PersonalizerClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public PersonalizerClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public Azure.AI.Personalizer.EvaluationClient Evaluation { get { throw null; } set { } }
+        public Azure.AI.Personalizer.EvaluationsClient Evaluations { get { throw null; } set { } }
+        public Azure.AI.Personalizer.EventsClient Events { get { throw null; } set { } }
+        public Azure.AI.Personalizer.LogClient Log { get { throw null; } set { } }
+        public Azure.AI.Personalizer.ModelClient Model { get { throw null; } set { } }
+        public Azure.AI.Personalizer.MultiSlotClient MultiSlot { get { throw null; } set { } }
+        public Azure.AI.Personalizer.MultiSlotEventsClient MultiSlotEvents { get { throw null; } set { } }
+        public Azure.AI.Personalizer.PersonalizerBaseClient PersonalizerBase { get { throw null; } set { } }
+        public Azure.AI.Personalizer.PolicyClient Policy { get { throw null; } set { } }
+        public Azure.AI.Personalizer.ServiceConfigurationClient ServiceConfiguration { get { throw null; } set { } }
     }
     public partial class PolicyClient
     {
         protected PolicyClient() { }
-        public PolicyClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public PolicyClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public PolicyClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public PolicyClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.PolicyContract> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PolicyContract>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.PolicyContract> Reset(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -132,8 +132,8 @@ namespace Azure.AI.Personalizer
     public partial class ServiceConfigurationClient
     {
         protected ServiceConfigurationClient() { }
-        public ServiceConfigurationClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
-        public ServiceConfigurationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerV1Preview1ClientOptions options = null) { }
+        public ServiceConfigurationClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
+        public ServiceConfigurationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.ServiceConfiguration> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.ServiceConfiguration>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.ServiceConfiguration> Update(Azure.AI.Personalizer.Models.ServiceConfiguration config, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -142,25 +142,6 @@ namespace Azure.AI.Personalizer
 }
 namespace Azure.AI.Personalizer.Models
 {
-    public partial class ApprenticeLearningMetrics
-    {
-        public ApprenticeLearningMetrics(long numberOfEvents, float sumOfRewards, long numberOfImitatedEvents, float sumOfImitatedRewards) { }
-        public long NumberOfEvents { get { throw null; } set { } }
-        public long NumberOfImitatedEvents { get { throw null; } set { } }
-        public float SumOfImitatedRewards { get { throw null; } set { } }
-        public float SumOfRewards { get { throw null; } set { } }
-    }
-    public partial class ApprenticeModeMetrics
-    {
-        public ApprenticeModeMetrics(System.DateTimeOffset startTime, System.DateTimeOffset lastProcessedEventTime, long numberOfEvents, float sumOfRewards, long numberOfImitatedEvents, float sumOfImitatedRewards) { }
-        public Azure.AI.Personalizer.Models.ApprenticeLearningMetrics LastBatchMetrics { get { throw null; } set { } }
-        public System.DateTimeOffset LastProcessedEventTime { get { throw null; } set { } }
-        public long NumberOfEvents { get { throw null; } set { } }
-        public long NumberOfImitatedEvents { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
-        public float SumOfImitatedRewards { get { throw null; } set { } }
-        public float SumOfRewards { get { throw null; } set { } }
-    }
     public partial class DateRange
     {
         internal DateRange() { }
@@ -391,7 +372,6 @@ namespace Azure.AI.Personalizer.Models
         public float ExplorationPercentage { get { throw null; } set { } }
         public bool? IsAutoOptimizationEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastConfigurationEditDate { get { throw null; } set { } }
-        public Azure.AI.Personalizer.Models.ApprenticeModeMetrics LatestApprenticeModeMetrics { get { throw null; } set { } }
         public Azure.AI.Personalizer.Models.LearningMode? LearningMode { get { throw null; } set { } }
         public bool? LogMirrorEnabled { get { throw null; } set { } }
         public string LogMirrorSasUri { get { throw null; } set { } }
