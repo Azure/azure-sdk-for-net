@@ -11,10 +11,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// Provides different ways of authenticating to a <see cref="DataFeedSource"/> for data ingestion when the
     /// default authentication method does not suffice. The supported credentials are:
     /// <list type="bullet">
-    ///   <item><see cref="DataSourceDataLakeGen2SharedKey"/></item>
-    ///   <item><see cref="DataSourceServicePrincipal"/></item>
-    ///   <item><see cref="DataSourceServicePrincipalInKeyVault"/></item>
-    ///   <item><see cref="DataSourceSqlConnectionString"/></item>
+    ///   <item><see cref="DataLakeSharedKeyCredentialEntity"/></item>
+    ///   <item><see cref="ServicePrincipalCredentialEntity"/></item>
+    ///   <item><see cref="ServicePrincipalInKeyVaultCredentialEntity"/></item>
+    ///   <item><see cref="SqlConnectionStringCredentialEntity"/></item>
     /// </list>
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
@@ -52,15 +52,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             DataSourceCredentialPatch patch = this switch
             {
-                DataSourceDataLakeGen2SharedKey c => new DataLakeGen2SharedKeyCredentialPatch()
+                DataLakeSharedKeyCredentialEntity c => new DataLakeGen2SharedKeyCredentialPatch()
                 {
                     Parameters = new() { AccountKey = c.AccountKey }
                 },
-                DataSourceServicePrincipal c => new ServicePrincipalCredentialPatch()
+                ServicePrincipalCredentialEntity c => new ServicePrincipalCredentialPatch()
                 {
                     Parameters = new() { ClientId = c.ClientId, ClientSecret = c.ClientSecret, TenantId = c.TenantId }
                 },
-                DataSourceServicePrincipalInKeyVault c => new ServicePrincipalInKVCredentialPatch()
+                ServicePrincipalInKeyVaultCredentialEntity c => new ServicePrincipalInKVCredentialPatch()
                 {
                     Parameters = new()
                     {
@@ -72,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                         ServicePrincipalSecretNameInKV = c.SecretNameForClientSecret
                     }
                 },
-                DataSourceSqlConnectionString c => new AzureSQLConnectionStringCredentialPatch()
+                SqlConnectionStringCredentialEntity c => new AzureSQLConnectionStringCredentialPatch()
                 {
                     Parameters = new() { ConnectionString = c.ConnectionString }
                 },
