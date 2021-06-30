@@ -147,7 +147,7 @@ try {
         Get-ChildItem -Path $root -Filter "$_" -Recurse | ForEach-Object {
             Write-Verbose "Found template '$($_.FullName)'"
             if ($_.Extension -eq '.bicep' -and !(Get-Command bicep)) {
-                Write-Error "A bicep file was found at '$($_.FullName)' but the Azure Bicep CLI is not installed"
+                Write-Error "A bicep file was found at '$($_.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
                 throw
             }
             $templateFiles += $_
