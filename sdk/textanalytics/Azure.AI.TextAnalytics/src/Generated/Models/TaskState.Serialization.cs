@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static TaskState DeserializeTaskState(JsonElement element)
         {
             DateTimeOffset lastUpdateDateTime = default;
-            string taskName = default;
+            Optional<string> taskName = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TaskState(lastUpdateDateTime, taskName, status);
+            return new TaskState(lastUpdateDateTime, taskName.Value, status);
         }
     }
 }
