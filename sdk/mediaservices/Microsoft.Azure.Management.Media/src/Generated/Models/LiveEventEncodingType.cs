@@ -48,6 +48,16 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         public static readonly LiveEventEncodingType Premium1080p = "Premium1080p";
 
+        /// <summary>
+        /// Pending update...
+        /// </summary>
+        public static readonly LiveEventEncodingType PassthroughBasic = "PassthroughBasic";
+
+        /// <summary>
+        /// Pending update...
+        /// </summary>
+        public static readonly LiveEventEncodingType PassthroughStandard = "PassthroughStandard";
+
 
         /// <summary>
         /// Underlying value of enum LiveEventEncodingType

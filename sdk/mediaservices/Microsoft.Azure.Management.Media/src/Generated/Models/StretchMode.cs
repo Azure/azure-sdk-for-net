@@ -28,8 +28,9 @@ namespace Microsoft.Azure.Management.Media.Models
         }
 
         /// <summary>
-        /// Strictly respect the output resolution without considering the
-        /// pixel aspect ratio or display aspect ratio of the input video.
+        /// Strictly respects the output resolution specified in the encoding
+        /// preset without considering the pixel aspect ratio or display aspect
+        /// ratio of the input video.
         /// </summary>
         public static readonly StretchMode None = "None";
 

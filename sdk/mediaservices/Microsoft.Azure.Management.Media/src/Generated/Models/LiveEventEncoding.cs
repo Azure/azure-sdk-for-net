@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
         /// information. This property cannot be modified after the live event
         /// is created. Possible values include: 'None', 'Standard',
-        /// 'Premium1080p'</param>
+        /// 'Premium1080p', 'PassthroughBasic', 'PassthroughStandard'</param>
         /// <param name="presetName">The optional encoding preset name, used
         /// when encodingType is not None. This value is specified at creation
         /// time and cannot be updated. If the encodingType is set to Standard,
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
         /// information. This property cannot be modified after the live event
         /// is created. Possible values include: 'None', 'Standard',
-        /// 'Premium1080p'
+        /// 'Premium1080p', 'PassthroughBasic', 'PassthroughStandard'
         /// </summary>
         [JsonProperty(PropertyName = "encodingType")]
         public LiveEventEncodingType? EncodingType { get; set; }

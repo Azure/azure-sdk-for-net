@@ -49,6 +49,11 @@ namespace Microsoft.Azure.Management.Media
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The version of the API to be used with the client request.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -65,11 +70,6 @@ namespace Microsoft.Azure.Management.Media
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IAccountFiltersOperations.
-        /// </summary>
-        public virtual IAccountFiltersOperations AccountFilters { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.Media
         public virtual ILocationsOperations Locations { get; private set; }
 
         /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        public virtual IAccountFiltersOperations AccountFilters { get; private set; }
+
+        /// <summary>
         /// Gets the IAssetsOperations.
         /// </summary>
         public virtual IAssetsOperations Assets { get; private set; }
@@ -110,16 +115,6 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the IContentKeyPoliciesOperations.
         /// </summary>
         public virtual IContentKeyPoliciesOperations ContentKeyPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the ITransformsOperations.
-        /// </summary>
-        public virtual ITransformsOperations Transforms { get; private set; }
-
-        /// <summary>
-        /// Gets the IJobsOperations.
-        /// </summary>
-        public virtual IJobsOperations Jobs { get; private set; }
 
         /// <summary>
         /// Gets the IStreamingPoliciesOperations.
@@ -387,23 +382,22 @@ namespace Microsoft.Azure.Management.Media
         /// </summary>
         private void Initialize()
         {
-            AccountFilters = new AccountFiltersOperations(this);
             Operations = new Operations(this);
             Mediaservices = new MediaservicesOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Locations = new LocationsOperations(this);
+            AccountFilters = new AccountFiltersOperations(this);
             Assets = new AssetsOperations(this);
             AssetFilters = new AssetFiltersOperations(this);
             ContentKeyPolicies = new ContentKeyPoliciesOperations(this);
-            Transforms = new TransformsOperations(this);
-            Jobs = new JobsOperations(this);
             StreamingPolicies = new StreamingPoliciesOperations(this);
             StreamingLocators = new StreamingLocatorsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
             LiveOutputs = new LiveOutputsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -441,26 +435,6 @@ namespace Microsoft.Azure.Management.Media
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ContentKeyPolicyConfiguration>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ContentKeyPolicyRestrictionTokenKey>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ContentKeyPolicyRestrictionTokenKey>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Preset>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Preset>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Codec>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Codec>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Layer>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Layer>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TrackDescriptor>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TrackDescriptor>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputDefinition>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputDefinition>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Overlay>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Overlay>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Format>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Format>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobInput>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobInput>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ClipTime>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ClipTime>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobOutput>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobOutput>("@odata.type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
