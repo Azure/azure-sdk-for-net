@@ -5,6 +5,7 @@ class PackageProps
 {
     [string]$Name
     [string]$Version
+    [string]$DevVersion
     [string]$DirectoryPath
     [string]$ServiceDirectory
     [string]$ReadMePath
