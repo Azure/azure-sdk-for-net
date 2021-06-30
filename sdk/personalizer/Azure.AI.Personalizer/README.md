@@ -9,3 +9,6 @@ is a cloud-based service that helps your applications choose the best content it
 
 [Personalizer multi-slot-quickstart](https://docs.microsoft.com/azure/cognitive-services/personalizer/how-to-multi-slot?pivots=programming-language-csharp)
 
+# REST API Reference 
+[Personazlier REST API Reference](https://docs.microsoft.com/rest/api/personalizer/)
+
