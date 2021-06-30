@@ -5,7 +5,7 @@ namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
     /// </summary>
-    public class ManifestDownloadOptions
+    public class UploadBlobOptions
     {
     }
 }

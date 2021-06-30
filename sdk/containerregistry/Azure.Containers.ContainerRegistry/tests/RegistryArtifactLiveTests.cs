@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -362,39 +363,229 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
         #endregion
 
-        #region Push/Pull Tests - for prototype usage only
+        //#region Push/Pull Tests - for prototype usage only
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPushArtifact()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact(_repositoryName, "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792");
+
+        //    // Act
+        //    await artifact.PushAsync(@"C:\temp\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_DockerManifestV2_ByTagName()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("library/hello-world", "latest");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // This is V1 -- pulls just the manifest
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_DockerManifestV2_ByDigest()
+        //{
+        //    // This is one of the child manifests for the hello-world image, with the arch/os pair "amd64"/"windows"
+        //    //
+        //    //{
+        //    //    "digest": "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0",
+        //    //    "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+        //    //    "platform": {
+        //    //        "architecture": "amd64",
+        //    //        "os": "windows",
+        //    //        "os.version": "10.0.17763.1999"
+        //    //    },
+        //    //    "size": 1125
+        //    //}
+        //    // sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0
+
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("library/hello-world", "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // -----------------------------------------------
+
+        //    //// Arrange
+        //    //var client = CreateClient();
+        //    //var artifact = client.GetArtifact("library/hello-world", "sha256:9f6ad537c5132bcce57f7a0a20e317228d382c3cd61edae14650eec68b2b345c");
+
+        //    //// Act
+        //    //await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    //// Assert
+        //    //// TODO
+
+        //    //// Note, this pulls the whole manifest list, but nothing else.
+        //    //// See: C:\Users\annelo\AppData\Local\Temp\CanPullArtifact_DockerManifestV2_ByDigest-637605637621836360.testlog
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_DockerManifestV1_ByTagName()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("library/hello-world", "latest");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // This is V1 -- pulls just the manifest. Doesn't pull the layers yet, dependent on Content-Type
+        //    //
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_DockerManifestV1_ByDigest()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_OciManifest_ByTagName()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("hello-artifact", "v1");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_OciManifest_ByDigest()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("hello-artifact", "sha256:4059e65a0e90b2562e550dea06d6942791329ab2880e0fff9405389ae1e803b9");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_DockerManifestListV2_ByTagName()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_DockerManifestListV2_ByDigest()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("library/node", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_OciIndex_ByTagName()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanPullArtifact_OciIndex_ByDigest()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
+
+        //    // Act
+        //    await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+
+        //    // Assert
+        //    // TODO
+        //}
+
+        //#endregion
+
+        #region samples/tests for lower-level endpoints
 
         [RecordedTest, NonParallelizable]
-        public async Task CanPushArtifact()
+        public async Task PushArtifactSample_DockerManifestV2_ByDigest()
         {
             // Arrange
+            var repository = "library/hello-world";
+            var digest = "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792";
+            string path = @"C:\temp\acr\test-pull";
             var client = CreateClient();
-            var artifact = client.GetArtifact(_repositoryName, "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792");
+            var artifact = client.GetArtifact(repository, digest);
 
             // Act
-            await artifact.PushAsync(@"C:\temp\acr-pull");
+            var manifestFilePath = Path.Combine(path, "manifest.json");
+            foreach (var file in Directory.GetFiles(path))
+            {
+                using (var fs = File.OpenRead(file))
+                {
+                    if (file == manifestFilePath)
+                    {
+                        await artifact.UploadManifestAsync(fs);
+                    }
+                    else
+                    {
+                        await artifact.UploadBlobAsync(fs);
+                    }
+                }
+            }
 
             // Assert
             // TODO
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_DockerManifestV2_ByTagName()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("library/hello-world", "latest");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // This is V1 -- pulls just the manifest
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_DockerManifestV2_ByDigest()
+        public async Task PullArtifactSample_DockerManifestV2_ByDigest()
         {
             // This is one of the child manifests for the hello-world image, with the arch/os pair "amd64"/"windows"
             //
@@ -411,141 +602,56 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0
 
             // Arrange
+            var repository = "library/hello-world";
+
+            // This digest is pulling invalid blobs right now
+            //var digest = "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0";
+            var digest = "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792";
             var client = CreateClient();
-            var artifact = client.GetArtifact("library/hello-world", "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0");
+            var artifact = client.GetArtifact(repository, digest);
+            string path = @"C:\temp\acr\test-pull";
 
             // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
 
-            // Assert
-            // -----------------------------------------------
+            // Get Manifest
 
-            //// Arrange
-            //var client = CreateClient();
-            //var artifact = client.GetArtifact("library/hello-world", "sha256:9f6ad537c5132bcce57f7a0a20e317228d382c3cd61edae14650eec68b2b345c");
+            // TODO: do we need digest in this method if artifact was instantiated with it?
+            // TODO: How should we handle/communicate the difference in semantics between download
+            // with digest and download with tag?
+            var manifestResult = await artifact.DownloadManifestAsync(digest);
 
-            //// Act
-            //await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
+            // Write manifest to file
+            Directory.CreateDirectory(path);
+            string manifestFile = Path.Combine(path, "manifest.json");
+            using (FileStream fs = File.Create(manifestFile))
+            {
+                Stream stream = manifestResult.Value.Content;
+                await stream.CopyToAsync(fs).ConfigureAwait(false);
+            }
 
-            //// Assert
-            //// TODO
+            // Write Config and Layers
+            foreach (var artifactFile in manifestResult.Value.ArtifactFiles)
+            {
+                string fileName = Path.Combine(path, artifactFile.FileName ?? TrimSha(artifactFile.Digest));
 
-            //// Note, this pulls the whole manifest list, but nothing else.
-            //// See: C:\Users\annelo\AppData\Local\Temp\CanPullArtifact_DockerManifestV2_ByDigest-637605637621836360.testlog
+                using (FileStream fs = File.Create(fileName))
+                {
+                    var layerResult = await artifact.DownloadBlobAsync(artifactFile.Digest);
+                    Stream stream = layerResult.Value.Content;
+                    await stream.CopyToAsync(fs).ConfigureAwait(false);
+                }
+            }
         }
 
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_DockerManifestV1_ByTagName()
+        private static string TrimSha(string digest)
         {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("library/hello-world", "latest");
+            int index = digest.IndexOf(':');
+            if (index > -1)
+            {
+                return digest.Substring(index + 1);
+            }
 
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // This is V1 -- pulls just the manifest. Doesn't pull the layers yet, dependent on Content-Type
-            //
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_DockerManifestV1_ByDigest()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_OciManifest_ByTagName()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("hello-artifact", "v1");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_OciManifest_ByDigest()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("hello-artifact", "sha256:4059e65a0e90b2562e550dea06d6942791329ab2880e0fff9405389ae1e803b9");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_DockerManifestListV2_ByTagName()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_DockerManifestListV2_ByDigest()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("library/node", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_OciIndex_ByTagName()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // Assert
-            // TODO
-        }
-
-        [RecordedTest, NonParallelizable]
-        public async Task CanPullArtifact_OciIndex_ByDigest()
-        {
-            // Arrange
-            var client = CreateClient();
-            var artifact = client.GetArtifact("", "sha256:71ecb6edb78c9623d0dd6a2793ec2cae43943f2f335f4fe5c606ffa83bf1fc11");
-
-            // Act
-            await artifact.PullToAsync(@"C:\temp\manifest-list\acr-pull");
-
-            // Assert
-            // TODO
+            return digest;
         }
 
         #endregion

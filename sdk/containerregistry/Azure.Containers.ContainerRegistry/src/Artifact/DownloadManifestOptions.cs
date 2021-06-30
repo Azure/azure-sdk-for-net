@@ -3,7 +3,9 @@
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public class LayerUploadResult
+    /// <summary>
+    /// </summary>
+    public class DownloadManifestOptions
     {
     }
 }

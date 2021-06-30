@@ -1,27 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.IO;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
     /// </summary>
-    public class ManifestDownloadResult
+    public class DownloadBlobResult
     {
-        internal ManifestDownloadResult(Stream content, IReadOnlyList<ArtifactLayerProperties> layers)
+        /// <summary>
+        /// </summary>
+        /// <param name="digest"></param>
+        /// <param name="content"></param>
+        public DownloadBlobResult(string digest, Stream content)
         {
+            Digest = digest;
             Content = content;
-            Layers = layers;
         }
 
         /// <summary>
         /// </summary>
-        public Stream Content { get; }
+        public string Digest { get; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<ArtifactLayerProperties> Layers { get; }
+        public Stream Content { get; }
     }
 }

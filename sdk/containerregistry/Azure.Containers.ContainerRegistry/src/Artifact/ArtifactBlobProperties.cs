@@ -5,9 +5,9 @@ namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
     /// </summary>
-    public class ArtifactLayerProperties
+    public class ArtifactBlobProperties
     {
-        internal ArtifactLayerProperties(string repositoryName, string digest, string fileName = default)
+        internal ArtifactBlobProperties(string repositoryName, string digest, string fileName = default)
         {
             RepositoryName = repositoryName;
             Digest = digest;
@@ -23,6 +23,7 @@ namespace Azure.Containers.ContainerRegistry
         public string RepositoryName { get;  }
 
         /// <summary>
+        /// Optional property - use Digest if FileName is null.
         /// </summary>
         public string FileName { get; }
     }
