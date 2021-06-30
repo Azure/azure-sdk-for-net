@@ -225,6 +225,20 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
+    {
+        protected OnBehalfOfCredential() { }
+        public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
+        public override bool SupportsCaching { get { throw null; } }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class OnBehalfOfCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public OnBehalfOfCredentialOptions() { }
+        public OnBehalfOfCredentialOptions(Azure.Identity.TokenCachePersistenceOptions cacheOptions) { }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RegionalAuthority : System.IEquatable<Azure.Identity.RegionalAuthority>
     {
@@ -294,14 +308,6 @@ namespace Azure.Identity
         public static bool operator !=(Azure.Identity.RegionalAuthority left, Azure.Identity.RegionalAuthority right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
-    {
-        protected OnBehalfOfCredential() { }
-        public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.TokenCredentialOptions options = null) { }
-        public override bool SupportsCaching { get { throw null; } }
-        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
         public SharedTokenCacheCredential() { }
@@ -321,6 +327,11 @@ namespace Azure.Identity
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } }
         public string Username { get { throw null; } set { } }
+    }
+    public partial class TokenCacheNotificationArgs
+    {
+        internal TokenCacheNotificationArgs() { }
+        public string SuggestedCacheKey { get { throw null; } }
     }
     public partial class TokenCachePersistenceOptions
     {
@@ -343,12 +354,12 @@ namespace Azure.Identity
     {
         protected UnsafeTokenCacheOptions() { }
         protected internal abstract System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>> RefreshCacheAsync();
+        protected internal virtual System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>> RefreshCacheAsync(Azure.Identity.TokenCacheNotificationArgs args) { throw null; }
         protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
     }
     public partial class UserAssertionScope : System.IDisposable
     {
-        public UserAssertionScope(Azure.Core.AccessToken accessToken) { }
-        public UserAssertionScope(string accessToken) { }
+        public UserAssertionScope(string accessToken, System.Func<System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>>> hydrateCache = null, System.Func<System.ReadOnlyMemory<byte>, System.Threading.Tasks.Task> persistCache = null) { }
         public void Dispose() { }
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
