@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -93,9 +90,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
-            string expectedSubstring = $"\"{secretPropertyName}\":\"secret\"";
 
-            Assert.That(content, Contains.Substring(expectedSubstring));
+            Assert.That(content, ContainsJsonString(secretPropertyName, "secret"));
         }
 
         [Test]
@@ -125,7 +121,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
 
-            Assert.That(content, Contains.Substring($"\"{secretPropertyName}\":\"new_secret\""));
+            Assert.That(content, ContainsJsonString(secretPropertyName, "new_secret"));
         }
 
         private void UpdateSecret(DataFeedSource dataSource, string secretPropertyName)
@@ -175,14 +171,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 default:
                     throw new ArgumentOutOfRangeException($"Unknown data source type: {dataSource.GetType()}");
             };
-        }
-
-        private string ReadContent(Request request)
-        {
-            using MemoryStream stream = new MemoryStream();
-            request.Content.WriteTo(stream, CancellationToken.None);
-
-            return Encoding.UTF8.GetString(stream.ToArray());
         }
     }
 }

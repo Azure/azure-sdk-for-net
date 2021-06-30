@@ -46,6 +46,7 @@
 - Optional properties `GetAllFeedbackOptions.Filter`, `GetAnomalyDimensionValuesOptions.DimensionToFilter`, and `FeedbackDimensionFilter.DimensionFilter` must now be manually added with setters to be used.
 - Moved property `DataFeed.SourceType` to `DataFeedSource.DataSourceType`.
 - In `MetricsAdvisorKeyCredential`, merged `UpdateSubscriptionKey` and `UpdateApiKey` into a single method, `Update`, to make it an atomic operation.
+- The class `NotificationHook` is now abstract.
 
 ## 1.0.0-beta.4 (2021-06-07)
 
