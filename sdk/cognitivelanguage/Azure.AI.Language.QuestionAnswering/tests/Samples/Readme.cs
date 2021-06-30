@@ -7,13 +7,8 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
-    public class Readme : QuestionAnsweringTestBase<QuestionAnsweringClient>
+    public partial class QuestionAnsweringClientSamples : QuestionAnsweringTestBase<QuestionAnsweringClient>
     {
-        public Readme(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
-        {
-        }
-
         public void CreateQuestionAnsweringClient()
         {
             #region Snippet:QuestionAnsweringClient_Create

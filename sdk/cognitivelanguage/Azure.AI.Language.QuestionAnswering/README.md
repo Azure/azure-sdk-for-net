@@ -19,7 +19,7 @@ dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
 * An [Azure subscription][azure_subscription]
 * An existing Question Answering resource
 
-> Note: the new unified Cognitive Language Services are not currently available.
+> Note: the new unified Cognitive Language Services are not currently available for deployment.
 
 ### Authenticate the client
 
@@ -35,7 +35,7 @@ Alternatively, use the [Azure CLI][azure_cli] command shown below to get the API
 az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
 ```
 
-#### Create a QuestionAnsweringClient
+#### Create QuestionAnsweringClient
 
 Once you've determined your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
 
@@ -70,7 +70,51 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-TODO
+The Azure.AI.Language.QuestionAnswering client library provides both synchronous and asynchronous APIs.
+
+The following examples show common scenarios using the `client` [created above](#create-questionansweringclient).
+
+### Ask a question
+
+The only input required to a ask a question using a knowledgebase is just the question itself:
+
+```C# Snippet:QuestionAnsweringClient_QueryKnowledgebase
+KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
+
+Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+
+foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+{
+    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+    Console.WriteLine($"Source: {answer.Source}");
+    Console.WriteLine();
+}
+```
+
+You can set additional properties on `QuestionAnsweringClientOptions` to limit the number of answers, specify a minimum confidence score, and more.
+
+### Ask a follow-up question
+
+If your knowledgebase is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
+
+```C# Snippet:QuestionAnsweringClient_Chat
+KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
+{
+    Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
+    {
+        PreviousUserQuery = "How long should my Surface battery last?"
+    }
+};
+
+Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+
+foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+{
+    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+    Console.WriteLine($"Source: {answer.Source}");
+    Console.WriteLine();
+}
+```
 
 ## Troubleshooting
 
@@ -129,9 +173,9 @@ To learn more about other logging mechanisms see [here][core_logging].
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+* View our [samples][questionanswering_samples].
+* Read about the different [features][questionanswering_docs_features] of the Question Answering service.
+* Try our service [demos][questionanswering_docs_demos].
 
 ## Contributing
 
@@ -158,6 +202,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/QuestionAnsweringClient.cs
 [questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
 [questionanswering_docs]: https://azure.microsoft.com/services/cognitive-services/qna-maker/
+[questionanswering_docs_chat]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base
+[questionanswering_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
+[questionanswering_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
 [questionanswering_nuget_package]: https://nuget.org/
 [questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/
 [questionanswering_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
