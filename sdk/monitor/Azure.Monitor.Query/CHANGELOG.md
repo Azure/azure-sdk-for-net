@@ -5,7 +5,7 @@
 ### New Features
 
 - Added support for including rendering information using the `IncludeVisualization` property.
-- Added `LogsQueryClient` constructor that use the default log analytics endpoint.
+- Added a `LogsQueryClient` constructor that uses the default Log Analytics endpoint.
 - Added error information in `LogsQueryResult` and `Metric`.
 - Added `dynamic` column type support.
 
