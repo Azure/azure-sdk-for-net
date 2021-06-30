@@ -550,12 +550,9 @@ namespace Azure.ResourceManager.Core
             {
                 var tagOperations = GetTagOperations();
                 tagOperations.Delete(cancellationToken);
-                Tag newTags = new Tag();
-                foreach (var item in tags)
-                {
-                    newTags.TagsValue.Add(item);
-                }
-                _tagContainer.CreateOrUpdate(new TagResourceData(newTags), cancellationToken);
+                var newTags = tagOperations.Get(cancellationToken);
+                newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                _tagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
@@ -587,12 +584,9 @@ namespace Azure.ResourceManager.Core
             {
                 var tagOperations = GetTagOperations();
                 await tagOperations.DeleteAsync(cancellationToken).ConfigureAwait(false);
-                Tag newTags = new Tag();
-                foreach (var item in tags)
-                {
-                    newTags.TagsValue.Add(item);
-                }
-                await _tagContainer.CreateOrUpdateAsync(new TagResourceData(newTags), cancellationToken).ConfigureAwait(false);
+                var newTags = await tagOperations.GetAsync(cancellationToken).ConfigureAwait(false);
+                newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await _tagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
