@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task ListNetworkTest()
         {
-            bool foundVirtualMachine = false;
+            bool foundPrivateEndpoint = false;
             var restApiContainer = Client.GetRestApis("Microsoft.Network");
             await foreach (var restApi in restApiContainer.ListAsync())
             {
                 if (restApi.Resource == "Private Endpoint")
                 {
-                    foundVirtualMachine = true;
+                    foundPrivateEndpoint = true;
                     break;
                 }
             }
-            Assert.IsTrue(foundVirtualMachine);
+            Assert.IsTrue(foundPrivateEndpoint);
         }
     }
 }
