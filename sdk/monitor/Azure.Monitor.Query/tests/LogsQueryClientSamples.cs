@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
+    public class LogsQueryClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
     {
         [Test]
         public async Task QueryLogsAsTable()
@@ -26,7 +26,10 @@ namespace Azure.Monitor.Query.Tests
 #endif
 
             var client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
-            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
+            Response<LogsQueryResult> response = await client.QueryAsync(
+                workspaceId,
+                "AzureActivity | top 10 by TimeGenerated",
+                TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -52,7 +55,10 @@ namespace Azure.Monitor.Query.Tests
 #endif
 
             var client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
-            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
+            Response<LogsQueryResult> response = await client.QueryAsync(
+                workspaceId,
+                "AzureActivity | top 10 by TimeGenerated",
+                TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -94,7 +100,8 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             #region Snippet:QueryLogsAsPrimitiveCall
-            Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
+            Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(
+                workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
                 TimeSpan.FromDays(1));
             #endregion
@@ -121,7 +128,8 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             #region Snippet:QueryLogsAsModelCall
-            Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(workspaceId,
+            Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(
+                workspaceId,
                 "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
                 TimeSpan.FromDays(1));
             #endregion
@@ -154,8 +162,14 @@ namespace Azure.Monitor.Query.Tests
             var batch = new LogsBatchQuery();
 
             #region Snippet:BatchQueryAddAndGet
-            string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
-            string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
+            string countQueryId = batch.AddQuery(
+                workspaceId,
+                "AzureActivity | count",
+                TimeSpan.FromDays(1));
+            string topQueryId = batch.AddQuery(
+                workspaceId,
+                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
+                TimeSpan.FromDays(1));
 
             Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
 
@@ -187,10 +201,11 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(workspaceId,
+            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+                workspaceId,
                 "AzureActivity | summarize count()",
                 TimeSpan.FromDays(1),
-                options: new LogsQueryOptions()
+                options: new LogsQueryOptions
                 {
                     ServerTimeout = TimeSpan.FromMinutes(10)
                 });
@@ -219,7 +234,8 @@ namespace Azure.Monitor.Query.Tests
 
             try
             {
-                await client.QueryAsync(workspaceId, "My Not So Valid Query", TimeSpan.FromDays(1));
+                await client.QueryAsync(
+                    workspaceId, "My Not So Valid Query", TimeSpan.FromDays(1));
             }
             catch (Exception e)
             {
