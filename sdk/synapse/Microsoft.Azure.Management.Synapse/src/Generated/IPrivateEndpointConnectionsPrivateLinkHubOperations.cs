@@ -49,6 +49,34 @@ namespace Microsoft.Azure.Management.Synapse
         /// </exception>
         Task<AzureOperationResponse<IPage<PrivateEndpointConnectionForPrivateLinkHub>>> ListWithHttpMessagesAsync(string resourceGroupName, string privateLinkHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get all PrivateEndpointConnection in the PrivateLinkHub by name
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='privateLinkHubName'>
+        /// Name of the privateLinkHub
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// Name of the privateEndpointConnection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnectionForPrivateLinkHub>> GetWithHttpMessagesAsync(string resourceGroupName, string privateLinkHubName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get all PrivateEndpointConnections in the PrivateLinkHub
         /// </summary>
         /// <param name='nextPageLink'>
