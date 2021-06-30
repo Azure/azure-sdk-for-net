@@ -50,12 +50,6 @@ namespace Azure.AI.FormRecognizer
     {
         public FormRecognizerClientOptions(Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion.V2_1) { }
         public Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion Version { get { throw null; } }
-        public enum ServiceScopeCloud
-        {
-            AzurePublicCloud = 1,
-            AzureChinaCloud = 2,
-            AzureGovernmentCloud = 3,
-        }
         public enum ServiceVersion
         {
             V2_0 = 1,
