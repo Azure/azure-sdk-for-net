@@ -134,6 +134,36 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateRequestOptions(contentString, true);
         }
 
+        [Test]
+        public void AnalyzeOperationKeyPhrasesWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
+                {
+                    new ExtractKeyPhrasesAction(),
+                    new ExtractKeyPhrasesAction()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+
         #endregion Key phrases
 
         #region entities
@@ -234,6 +264,36 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateRequestOptions(contentString, true);
         }
 
+        [Test]
+        public void AnalyzeOperationRecognizeEntitiesWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>()
+                {
+                    new RecognizeEntitiesAction(),
+                    new RecognizeEntitiesAction()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+
         #endregion entities
 
         #region linked entities
@@ -332,6 +392,36 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             ValidateRequestOptions(contentString, true);
+        }
+
+        [Test]
+        public void AnalyzeOperationRecognizeLinkedEntitiesWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>()
+                {
+                    new RecognizeLinkedEntitiesAction(),
+                    new RecognizeLinkedEntitiesAction()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
         }
 
         #endregion linked entities
@@ -448,6 +538,36 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(expectedPiiCategoriesContent, piiCategories);
         }
 
+        [Test]
+        public void AnalyzeOperationRecognizePiiEntitiesWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>()
+                {
+                    new RecognizePiiEntitiesAction(),
+                    new RecognizePiiEntitiesAction()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+
         #endregion Pii entities
 
         #region Analyze sentiment
@@ -553,6 +673,36 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOpinionMiningContent = "opinionMining\":true";
             Assert.AreEqual(expectedOpinionMiningContent, opinionMining);
+        }
+
+        [Test]
+        public void AnalyzeOperationAnalyzeSentimentWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>()
+                {
+                    new AnalyzeSentimentAction(),
+                    new AnalyzeSentimentAction()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
         }
 
         #endregion Analyze sentiment
