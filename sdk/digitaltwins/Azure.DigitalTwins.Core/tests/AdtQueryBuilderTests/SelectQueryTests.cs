@@ -53,7 +53,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void SelectQuery_Override()
         {
             var query = new SelectQuery(null, null);
-            query.Select("Room, Temperature");
+            query.SelectCustom("Room, Temperature");
             query.GetQueryText()
                 .Should()
                 .Be("SELECT Room, Temperature");
