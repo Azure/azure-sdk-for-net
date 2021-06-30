@@ -25,6 +25,7 @@ namespace Azure.AI.Personalizer.Tests
             client.Model = InstrumentClient(client.Model);
             client.Log = InstrumentClient(client.Log);
             client.Events = InstrumentClient(client.Events);
+            client.Evaluations = InstrumentClient(client.Evaluations);
             client.Evaluation = InstrumentClient(client.Evaluation);
             client.Policy = InstrumentClient(client.Policy);
             client.ServiceConfiguration = InstrumentClient(client.ServiceConfiguration);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.AI.Personalizer.Models;
 
 namespace Azure.AI.Personalizer
@@ -14,7 +15,7 @@ namespace Azure.AI.Personalizer
     /// <summary> Model factory for read-only models. </summary>
     public static partial class PersonalizerV1Preview1ModelFactory
     {
-        /// <summary> Initializes new instance of Evaluation class. </summary>
+        /// <summary> Initializes a new instance of Evaluation. </summary>
         /// <param name="id"> The ID of the evaluation. </param>
         /// <param name="name"> The name of the evaluation. </param>
         /// <param name="startTime"> The start time of the evaluation. </param>
@@ -27,27 +28,29 @@ namespace Azure.AI.Personalizer
         /// <param name="optimalPolicy"> Thr optimal policy. </param>
         /// <param name="creationTime"> Craetion time. </param>
         /// <returns> A new <see cref="Models.Evaluation"/> instance for mocking. </returns>
-        public static Evaluation Evaluation(string id = default, string name = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string jobId = default, EvaluationJobStatus? status = default, IReadOnlyList<PolicyResult> policyResults = default, IReadOnlyList<IList<string>> featureImportance = default, EvaluationType? evaluationType = default, string optimalPolicy = default, DateTimeOffset? creationTime = default)
+        public static Evaluation Evaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, EvaluationJobStatus? status = null, IEnumerable<PolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, EvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)
         {
             policyResults ??= new List<PolicyResult>();
             featureImportance ??= new List<IList<string>>();
-            return new Evaluation(id, name, startTime, endTime, jobId, status, policyResults, featureImportance, evaluationType, optimalPolicy, creationTime);
+
+            return new Evaluation(id, name, startTime, endTime, jobId, status, policyResults?.ToList(), featureImportance?.ToList(), evaluationType, optimalPolicy, creationTime);
         }
 
-        /// <summary> Initializes new instance of PolicyResult class. </summary>
+        /// <summary> Initializes a new instance of PolicyResult. </summary>
         /// <param name="name"> The name of the Learning Settings. </param>
         /// <param name="arguments"> The arguments of the Learning Settings. </param>
         /// <param name="policySource"> The source of the Learning Settings. </param>
         /// <param name="summary"> The aggregate results of the Offline Evaluation. </param>
         /// <param name="totalSummary"> The aggregate total of the Offline Evaluation. </param>
         /// <returns> A new <see cref="Models.PolicyResult"/> instance for mocking. </returns>
-        public static PolicyResult PolicyResult(string name = default, string arguments = default, PolicySource? policySource = default, IReadOnlyList<PolicyResultSummary> summary = default, PolicyResultTotalSummary totalSummary = default)
+        public static PolicyResult PolicyResult(string name = null, string arguments = null, PolicySource? policySource = null, IEnumerable<PolicyResultSummary> summary = null, PolicyResultTotalSummary totalSummary = null)
         {
             summary ??= new List<PolicyResultSummary>();
-            return new PolicyResult(name, arguments, policySource, summary, totalSummary);
+
+            return new PolicyResult(name, arguments, policySource, summary?.ToList(), totalSummary);
         }
 
-        /// <summary> Initializes new instance of PolicyResultSummary class. </summary>
+        /// <summary> Initializes a new instance of PolicyResultSummary. </summary>
         /// <param name="timeStamp"> Timestamp of the aggregation. </param>
         /// <param name="ipsEstimatorNumerator"> Numerator for IPS estimator. </param>
         /// <param name="ipsEstimatorDenominator"> Denominator for IPS estimator. </param>
@@ -64,57 +67,58 @@ namespace Azure.AI.Personalizer
         /// <param name="confidenceInterval"> Gaussian confidence interval for the Policy evaluation. </param>
         /// <param name="averageReward"> Average reward. </param>
         /// <returns> A new <see cref="Models.PolicyResultSummary"/> instance for mocking. </returns>
-        public static PolicyResultSummary PolicyResultSummary(DateTimeOffset? timeStamp = default, float? ipsEstimatorNumerator = default, float? ipsEstimatorDenominator = default, float? snipsEstimatorDenominator = default, TimeSpan? aggregateTimeWindow = default, float? nonZeroProbability = default, float? sumOfSquares = default, float? confidenceInterval = default, float? averageReward = default)
+        public static PolicyResultSummary PolicyResultSummary(DateTimeOffset? timeStamp = null, float? ipsEstimatorNumerator = null, float? ipsEstimatorDenominator = null, float? snipsEstimatorDenominator = null, TimeSpan? aggregateTimeWindow = null, float? nonZeroProbability = null, float? sumOfSquares = null, float? confidenceInterval = null, float? averageReward = null)
         {
             return new PolicyResultSummary(timeStamp, ipsEstimatorNumerator, ipsEstimatorDenominator, snipsEstimatorDenominator, aggregateTimeWindow, nonZeroProbability, sumOfSquares, confidenceInterval, averageReward);
         }
 
-        /// <summary> Initializes new instance of LogsProperties class. </summary>
+        /// <summary> Initializes a new instance of LogsProperties. </summary>
         /// <param name="dateRange"> Date range. </param>
         /// <returns> A new <see cref="Models.LogsProperties"/> instance for mocking. </returns>
-        public static LogsProperties LogsProperties(LogsPropertiesDateRange dateRange = default)
+        public static LogsProperties LogsProperties(LogsPropertiesDateRange dateRange = null)
         {
             return new LogsProperties(dateRange);
         }
 
-        /// <summary> Initializes new instance of DateRange class. </summary>
+        /// <summary> Initializes a new instance of DateRange. </summary>
         /// <param name="from"> Start date for the range. </param>
         /// <param name="to"> End date for the range. </param>
         /// <returns> A new <see cref="Models.DateRange"/> instance for mocking. </returns>
-        public static DateRange DateRange(DateTimeOffset? @from = default, DateTimeOffset? to = default)
+        public static DateRange DateRange(DateTimeOffset? @from = null, DateTimeOffset? to = null)
         {
             return new DateRange(@from, to);
         }
 
-        /// <summary> Initializes new instance of ModelProperties class. </summary>
+        /// <summary> Initializes a new instance of ModelProperties. </summary>
         /// <param name="creationTime"> Creation time of the model. </param>
         /// <param name="lastModifiedTime"> Last time the model was modified. </param>
         /// <returns> A new <see cref="Models.ModelProperties"/> instance for mocking. </returns>
-        public static ModelProperties ModelProperties(DateTimeOffset? creationTime = default, DateTimeOffset? lastModifiedTime = default)
+        public static ModelProperties ModelProperties(DateTimeOffset? creationTime = null, DateTimeOffset? lastModifiedTime = null)
         {
             return new ModelProperties(creationTime, lastModifiedTime);
         }
 
-        /// <summary> Initializes new instance of MultiSlotRankResponse class. </summary>
+        /// <summary> Initializes a new instance of MultiSlotRankResponse. </summary>
         /// <param name="slots"> Each slot has a corresponding rewardActionID which is the action ID recommended by Personalizer. </param>
         /// <param name="eventId"> The eventId for the round trip from request to response. </param>
         /// <returns> A new <see cref="Models.MultiSlotRankResponse"/> instance for mocking. </returns>
-        public static MultiSlotRankResponse MultiSlotRankResponse(IReadOnlyList<SlotResponse> slots = default, string eventId = default)
+        public static MultiSlotRankResponse MultiSlotRankResponse(IEnumerable<SlotResponse> slots = null, string eventId = null)
         {
             slots ??= new List<SlotResponse>();
-            return new MultiSlotRankResponse(slots, eventId);
+
+            return new MultiSlotRankResponse(slots?.ToList(), eventId);
         }
 
-        /// <summary> Initializes new instance of SlotResponse class. </summary>
+        /// <summary> Initializes a new instance of SlotResponse. </summary>
         /// <param name="id"> Id is the slot ID. </param>
         /// <param name="rewardActionId"> RewardActionID is the action ID recommended by Personalizer. </param>
         /// <returns> A new <see cref="Models.SlotResponse"/> instance for mocking. </returns>
-        public static SlotResponse SlotResponse(string id = default, string rewardActionId = default)
+        public static SlotResponse SlotResponse(string id = null, string rewardActionId = null)
         {
             return new SlotResponse(id, rewardActionId);
         }
 
-        /// <summary> Initializes new instance of RankResponse class. </summary>
+        /// <summary> Initializes a new instance of RankResponse. </summary>
         /// <param name="ranking"> The calculated ranking for the current request. </param>
         /// <param name="eventId"> The eventId for the round trip from request to response. </param>
         /// <param name="rewardActionId">
@@ -125,17 +129,18 @@ namespace Azure.AI.Personalizer
         /// This might not be the first found in &apos;ranking&apos;.
         /// </param>
         /// <returns> A new <see cref="Models.RankResponse"/> instance for mocking. </returns>
-        public static RankResponse RankResponse(IReadOnlyList<RankedAction> ranking = default, string eventId = default, string rewardActionId = default)
+        public static RankResponse RankResponse(IEnumerable<RankedAction> ranking = null, string eventId = null, string rewardActionId = null)
         {
             ranking ??= new List<RankedAction>();
-            return new RankResponse(ranking, eventId, rewardActionId);
+
+            return new RankResponse(ranking?.ToList(), eventId, rewardActionId);
         }
 
-        /// <summary> Initializes new instance of RankedAction class. </summary>
+        /// <summary> Initializes a new instance of RankedAction. </summary>
         /// <param name="id"> Id of the action. </param>
         /// <param name="probability"> Probability of the action. </param>
         /// <returns> A new <see cref="Models.RankedAction"/> instance for mocking. </returns>
-        public static RankedAction RankedAction(string id = default, float? probability = default)
+        public static RankedAction RankedAction(string id = null, float? probability = null)
         {
             return new RankedAction(id, probability);
         }

@@ -7,9 +7,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests
 {
-    public class RewardTest : PersonalizerTestBase
+    public class EventsTests : PersonalizerTestBase
     {
-        public RewardTest(bool isAsync) : base(isAsync)
+        public EventsTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -18,6 +18,13 @@ namespace Azure.AI.Personalizer.Tests
         {
             PersonalizerClient client = GetPersonalizerClient();
             await client.Events.RewardAsync("123456789", new RewardRequest((float)0.5));
+        }
+
+        [Test]
+        public async Task Activate()
+        {
+            PersonalizerClient client = GetPersonalizerClient();
+            await client.Events.ActivateAsync("123456789");
         }
     }
 }

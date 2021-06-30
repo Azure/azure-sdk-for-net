@@ -48,11 +48,6 @@ namespace Azure.AI.Personalizer.Models
                 writer.WritePropertyName("learningMode");
                 writer.WriteStringValue(LearningMode.Value.ToString());
             }
-            if (Optional.IsDefined(LatestApprenticeModeMetrics))
-            {
-                writer.WritePropertyName("latestApprenticeModeMetrics");
-                writer.WriteObjectValue(LatestApprenticeModeMetrics);
-            }
             if (Optional.IsDefined(IsAutoOptimizationEnabled))
             {
                 writer.WritePropertyName("isAutoOptimizationEnabled");
@@ -83,7 +78,6 @@ namespace Azure.AI.Personalizer.Models
             int logRetentionDays = default;
             Optional<DateTimeOffset> lastConfigurationEditDate = default;
             Optional<LearningMode> learningMode = default;
-            Optional<ApprenticeModeMetrics> latestApprenticeModeMetrics = default;
             Optional<bool> isAutoOptimizationEnabled = default;
             Optional<TimeSpan> autoOptimizationFrequency = default;
             Optional<DateTimeOffset> autoOptimizationStartDate = default;
@@ -154,16 +148,6 @@ namespace Azure.AI.Personalizer.Models
                     learningMode = new LearningMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("latestApprenticeModeMetrics"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    latestApprenticeModeMetrics = ApprenticeModeMetrics.DeserializeApprenticeModeMetrics(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("isAutoOptimizationEnabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -195,7 +179,7 @@ namespace Azure.AI.Personalizer.Models
                     continue;
                 }
             }
-            return new ServiceConfiguration(rewardWaitTime, defaultReward, rewardAggregation, explorationPercentage, modelExportFrequency, Optional.ToNullable(logMirrorEnabled), logMirrorSasUri.Value, logRetentionDays, Optional.ToNullable(lastConfigurationEditDate), Optional.ToNullable(learningMode), latestApprenticeModeMetrics.Value, Optional.ToNullable(isAutoOptimizationEnabled), Optional.ToNullable(autoOptimizationFrequency), Optional.ToNullable(autoOptimizationStartDate));
+            return new ServiceConfiguration(rewardWaitTime, defaultReward, rewardAggregation, explorationPercentage, modelExportFrequency, Optional.ToNullable(logMirrorEnabled), logMirrorSasUri.Value, logRetentionDays, Optional.ToNullable(lastConfigurationEditDate), Optional.ToNullable(learningMode), Optional.ToNullable(isAutoOptimizationEnabled), Optional.ToNullable(autoOptimizationFrequency), Optional.ToNullable(autoOptimizationStartDate));
         }
     }
 }

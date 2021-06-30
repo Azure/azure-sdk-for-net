@@ -8,8 +8,8 @@
         "Content-Length": "511",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a1b23bb1bdfce149ae697e2e824bb55c-4fe71255c4d8b04f-00",
-        "User-Agent": "azsdk-net-AI.Personalizer/1.0.0-alpha.20210622.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-4570d4bdc3725b478464f938dcef0c5c-003d338676a7144c-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/1.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "47d71a92921f1a3bca7c29a96ee94953",
         "x-ms-return-client-request-id": "true"
       },
@@ -72,7 +72,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "10327bf9-d566-472c-a560-ee782215b77c",
+        "apim-request-id": "b38e1c0d-5f4e-46f8-9d1f-04c090abf89c",
         "Cache-Control": [
           "no-cache",
           "no-store",
@@ -80,13 +80,13 @@
         ],
         "Content-Length": "166",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 23 Jun 2021 00:44:59 GMT",
+        "Date": "Wed, 30 Jun 2021 14:10:23 GMT",
         "Expires": "0",
         "pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "timing-allow-origin": "*",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "471"
+        "x-envoy-upstream-service-time": "4"
       },
       "ResponseBody": {
         "slots": [
@@ -99,7 +99,7 @@
             "rewardActionId": "SportsArticle"
           }
         ],
-        "eventId": "1b45d0575ad14f7093acaf7dce24a3a6-82Qu7"
+        "eventId": "54f13405ec9e46e9bcbd1583da139021-85Aoo"
       }
     }
   ],
