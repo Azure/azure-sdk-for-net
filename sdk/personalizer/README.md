@@ -16,26 +16,7 @@ dotnet add package Azure.AI.Personalizer --version 1.1.0-beta.1
 ## Key concepts
 Functionality is exposed through several client libraries:
 
-[comment]: <> (TODO https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/personalizer add the link once it is live and the link works)
-- Azure.AI.Personalizer is the latest .NET client library for building applications with Azure Personalizer.  It is built on top of [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md) and the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+[comment]: <> (TODO https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/personalizer is the latest .NET client library for building applications with Azure Personalizer. add the link once it is live and the link works)
+- Azure.AI.Personalizer is built on top of [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md) and the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 - [Microsoft.Azure.Personalizer](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Personalizer) is the previous .NET client library for Personalizer.
-
-## Contributing
-
-See the Azure.AI.Personalizer [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/CONTRIBUTING.md) for details on
-building, testing, and contributing to these libraries.
-
-This project welcomes contributions and suggestions.  Most contributions
-require you to agree to a Contributor License Agreement (CLA) declaring that
-you have the right to, and actually do, grant us the rights to use your
-contribution. For details, visit [cla.microsoft.com](https://cla.microsoft.com).
-
-This project has adopted the
-[Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the
-[Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
-or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any
-additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FREADME.png)
