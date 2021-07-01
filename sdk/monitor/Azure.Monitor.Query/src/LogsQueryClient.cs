@@ -99,7 +99,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
@@ -131,7 +131,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
@@ -147,7 +147,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
@@ -171,7 +171,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
@@ -299,7 +299,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Create a Kusto query from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
+        /// Create a Kusto query from an interpolated string. The interpolated values will be quoted and escaped as necessary.
         /// </summary>
         /// <param name="filter">An interpolated query string.</param>
         /// <returns>A valid Kusto query.</returns>
@@ -314,8 +314,8 @@ namespace Azure.Monitor.Query
                 {
                     // Null
                     null => throw new ArgumentException(
-                        $"Unable to convert argument {i} to an Kusto literal. " +
-                        $"Unable to format an untyped null value, please use typed-null expression " +
+                        $"Unable to convert argument {i} to a Kusto literal. " +
+                        $"Unable to format an untyped null value. Please use typed-null expression " +
                         $"(bool(null), datetime(null), dynamic(null), guid(null), int(null), long(null), real(null), double(null), time(null))"),
 
                     // Boolean
@@ -353,7 +353,7 @@ namespace Azure.Monitor.Query
 
                     // Everything else
                     object x => throw new ArgumentException(
-                        $"Unable to convert argument {i} from type {x.GetType()} to an Kusto literal.")
+                        $"Unable to convert argument {i} from type {x.GetType()} to a Kusto literal.")
                 };
             }
 
