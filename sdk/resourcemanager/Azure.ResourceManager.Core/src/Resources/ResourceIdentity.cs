@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> True if they are equal, otherwise False. </returns>
         public bool Equals(ResourceIdentity other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
                 return false;
 
             if (UserAssignedIdentities.Count == other.UserAssignedIdentities.Count)
@@ -100,6 +100,21 @@ namespace Azure.ResourceManager.Core
             }
 
             return SystemAssignedIdentity.Equals(SystemAssignedIdentity, other.SystemAssignedIdentity);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            return Equals(obj as ResourceIdentity);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCodeBuilder.Combine(SystemAssignedIdentity, UserAssignedIdentities);
         }
     }
 }

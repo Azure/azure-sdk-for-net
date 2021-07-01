@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing an Identity assigned by the user.
     /// </summary>
-    public sealed partial class UserAssignedIdentity
+    public sealed class UserAssignedIdentity : IEquatable<UserAssignedIdentity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAssignedIdentity"/> class.
@@ -76,6 +76,21 @@ namespace Azure.ResourceManager.Core
                 return false;
 
             return ClientId.Equals(other.ClientId) && PrincipalId.Equals(other.PrincipalId);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            return Equals(obj as UserAssignedIdentity);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCodeBuilder.Combine(ClientId, PrincipalId);
         }
     }
 }
