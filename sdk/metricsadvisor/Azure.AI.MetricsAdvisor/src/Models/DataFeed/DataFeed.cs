@@ -169,7 +169,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (RollupSettings != null)
             {
-                detail.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                detail.AllUpIdentification = RollupSettings.RollupIdentificationValue;
                 detail.NeedRollup = RollupSettings.RollupType;
                 detail.RollUpMethod = RollupSettings.AutoRollupMethod;
                 foreach (string columnName in RollupSettings.AutoRollupGroupByColumnNames)
@@ -230,7 +230,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (RollupSettings != null)
             {
-                patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                patch.AllUpIdentification = RollupSettings.RollupIdentificationValue;
                 patch.NeedRollup = RollupSettings.RollupType;
                 patch.RollUpMethod = RollupSettings.AutoRollupMethod;
                 patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
