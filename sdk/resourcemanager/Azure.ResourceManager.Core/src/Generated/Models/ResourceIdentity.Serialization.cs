@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Core
                 writer.WriteEndObject();
             }
             else if (Optional.IsDefined(SystemAssignedIdentity))
-                {
+            {
                 writer.WriteObjectValue(SystemAssignedIdentity);
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(SystemAssigned);
