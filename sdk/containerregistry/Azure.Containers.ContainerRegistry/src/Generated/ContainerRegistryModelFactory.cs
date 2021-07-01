@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
-        /// <summary> Initializes new instance of ContainerRepositoryProperties class. </summary>
+        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
         /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -25,12 +25,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canRead"> Read enabled. </param>
         /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRepositoryProperties"/> instance for mocking. </returns>
-        public static ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = default, string name = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = default, bool? canWrite = default, bool? canList = default, bool? canRead = default, bool? teleportEnabled = default)
+        public static ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null, bool? teleportEnabled = null)
         {
             return new ContainerRepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead, teleportEnabled);
         }
 
-        /// <summary> Initializes new instance of ArtifactTagProperties class. </summary>
+        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
         /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
@@ -42,17 +42,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
         /// <returns> A new <see cref="ContainerRegistry.ArtifactTagProperties"/> instance for mocking. </returns>
-        public static ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = default, string repositoryName = default, string name = default, string digest = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, bool? canDelete = default, bool? canWrite = default, bool? canList = default, bool? canRead = default)
+        public static ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
             return new ArtifactTagProperties(registryLoginServer, repositoryName, name, digest, createdOn, lastUpdatedOn, canDelete, canWrite, canList, canRead);
         }
 
-        /// <summary> Initializes new instance of ArtifactManifestPlatform class. </summary>
+        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
         /// <returns> A new <see cref="ContainerRegistry.ArtifactManifestPlatform"/> instance for mocking. </returns>
-        public static ArtifactManifestPlatform ArtifactManifestPlatform(string digest = default, ArtifactArchitecture? architecture = default, ArtifactOperatingSystem? operatingSystem = default)
+        public static ArtifactManifestPlatform ArtifactManifestPlatform(string digest = null, ArtifactArchitecture? architecture = null, ArtifactOperatingSystem? operatingSystem = null)
         {
             return new ArtifactManifestPlatform(digest, architecture, operatingSystem);
         }
