@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeed()
         {
-            AdministratorEmails = new ChangeTrackingList<string>();
-            ViewerEmails = new ChangeTrackingList<string>();
+            Administrators = new ChangeTrackingList<string>();
+            Viewers = new ChangeTrackingList<string>();
         }
 
         internal DataFeed(DataFeedDetail dataFeedDetail)
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
             CreatedOn = dataFeedDetail.CreatedTime;
-            CreatorEmail = dataFeedDetail.Creator;
+            Creator = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
             MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.Name, metric => metric.Id);
             Name = dataFeedDetail.DataFeedName;
@@ -42,8 +42,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccessMode = dataFeedDetail.ViewMode;
             RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
             MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
-            AdministratorEmails = dataFeedDetail.Admins;
-            ViewerEmails = dataFeedDetail.Viewers;
+            Administrators = dataFeedDetail.Admins;
+            Viewers = dataFeedDetail.Viewers;
         }
 
         /// <summary>
@@ -62,9 +62,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
-        /// The e-mail address of creator of this <see cref="DataFeed"/>.
+        /// The user who created this <see cref="DataFeed"/>. If <see cref="MetricsAdvisorKeyCredential"/>
+        /// authentication was used when creating the data feed, this property contains the email address of the
+        /// creator. If AAD authentication was used instead, the value of this property uniquely identifies the
+        /// creator's user principal, but its value depends on the type of credential used. For instance, if a
+        /// <c>ClientSecretCredential</c> is used, it will contain the client ID.
         /// </summary>
-        public string CreatorEmail { get; }
+        public string Creator { get; }
 
         /// <summary>
         /// Whether or not the user who queried the information about this <see cref="DataFeed"/>
@@ -134,17 +138,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
 
         /// <summary>
-        /// The emails of this data feed's administrators. Administrators have total control over a
-        /// data feed, being allowed to update, delete or pause them. They also have access to the
-        /// credentials used to authenticate to the data source.
+        /// The administrators of this <see cref="DataFeed"/>. Administrators have total control over a data feed, being allowed
+        /// to update, delete, or pause them. Each element in this list represents a user with administrator access, but the value
+        /// of each <c>string</c> element depends on the type of authentication to be used by this administrator when communicating
+        /// with the service. If <see cref="MetricsAdvisorKeyCredential"/> authentication will be used, the <c>string</c> must be the
+        /// user's email address. If AAD authentication will be used instead, the <c>string</c> must uniquely identify the user's
+        /// principal. For instance, for a <c>ClientSecretCredential</c>, the <c>string</c> must be the client ID.
         /// </summary>
-        public IList<string> AdministratorEmails { get; }
+        public IList<string> Administrators { get; }
 
         /// <summary>
-        /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
-        /// do not have access to the credentials used to authenticate to the data source.
+        /// The viewers of this <see cref="DataFeed"/>. Viewers have read-only access to a data feed. Each element in this list
+        /// represents a user with viewer access, but the value of each <c>string</c> element depends on the type of authentication
+        /// to be used by this viewer when communicating with the service. If <see cref="MetricsAdvisorKeyCredential"/> authentication
+        /// will be used, the <c>string</c> must be the user's email address. If AAD authentication will be used instead, the
+        /// <c>string</c> must uniquely identify the user's principal. For instance, for a <c>ClientSecretCredential</c>, the
+        /// <c>string</c> must be the client ID.
         /// </summary>
-        public IList<string> ViewerEmails { get; }
+        public IList<string> Viewers { get; }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
@@ -184,12 +195,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            foreach (var admin in AdministratorEmails)
+            foreach (var admin in Administrators)
             {
                 detail.Admins.Add(admin);
             }
 
-            foreach (var viewer in ViewerEmails)
+            foreach (var viewer in Viewers)
             {
                 detail.Viewers.Add(viewer);
             }
@@ -242,8 +253,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            patch.Admins = AdministratorEmails;
-            patch.Viewers = ViewerEmails;
+            patch.Admins = Administrators;
+            patch.Viewers = Viewers;
 
             SetAuthenticationProperties(patch, DataSource);
 
