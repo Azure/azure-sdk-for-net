@@ -33,7 +33,7 @@
 - `MetricSeriesGroupDetectionCondition` constructor now takes the required `seriesGroupKey` parameter.
 - `MetricSingleSeriesDetectionCondition` constructor now takes the required `seriesKey` parameter.
 - Renamed all occurrences of `CreatedTime` to `CreatedOn` and `ModifiedTime` to `LastModified`.
-- Renamed `AnomalyIncident.LastTime` to `LastDetectedOn`.
+- Renamed `AnomalyIncident.StartTime` to `StartedOn` and `AnomalyIncident.LastTime` to `LastDetectedOn`.
 - Renamed `AlertQueryTimeMode.AnomalyTime` to `AnomalyDetectedOn`, and `FeedbackQueryTimeMode.FeedbackCreatedTime` to `FeedbackCreatedOn`.
 - Renamed `DataFeedRollupSettings.AlreadyRollupIdentificationValue` to `RollupIdentificationValue`.
 - In `DataFeedRollupType`, renamed `AlreadyRollup` to `AlreadyRolledUp`, `NeedRollup` to `RollupNeeded`, and `NoRollup` to `NoRollupNeeded`.
