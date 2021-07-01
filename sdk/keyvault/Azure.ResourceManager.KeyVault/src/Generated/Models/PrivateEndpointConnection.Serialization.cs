@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WritePropertyName("etag");
+                writer.WriteStringValue(Etag);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
@@ -28,12 +33,18 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState");
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static PrivateEndpointConnection DeserializePrivateEndpointConnection(JsonElement element)
         {
+            Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
@@ -44,6 +55,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -122,7 +138,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

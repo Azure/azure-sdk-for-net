@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<SystemData> systemData = default;
             VaultProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,13 +59,23 @@ namespace Azure.ResourceManager.KeyVault.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     properties = VaultProperties.DeserializeVaultProperties(property.Value);
                     continue;
                 }
             }
-            return new Vault(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), properties);
+            return new Vault(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), systemData.Value, properties);
         }
     }
 }

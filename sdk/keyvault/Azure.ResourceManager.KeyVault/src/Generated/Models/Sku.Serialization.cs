@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new Sku(family, name);
+            return new Sku(name, family);
         }
     }
 }

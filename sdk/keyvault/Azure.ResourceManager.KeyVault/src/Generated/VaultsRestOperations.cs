@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VaultsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-09-01")
+        public VaultsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-04-01-preview")
         {
             if (subscriptionId == null)
             {
@@ -253,6 +253,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(vaultName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -277,6 +278,7 @@ namespace Azure.ResourceManager.KeyVault
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -304,6 +306,7 @@ namespace Azure.ResourceManager.KeyVault
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -791,6 +794,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/purge", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -865,7 +869,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", "2015-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

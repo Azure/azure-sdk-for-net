@@ -1,0 +1,12 @@
+{
+  "OutputFolder": ".",
+  "Namespace": null,
+  "LibraryName": null,
+  "SharedSourceFolders": [
+    "..\\Generator.Shared",
+    "..\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true
+}

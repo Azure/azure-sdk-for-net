@@ -19,12 +19,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
         /// <param name="display"> Display metadata associated with the operation. </param>
         /// <param name="origin"> The origin of operations. </param>
+        /// <param name="isDataAction"> Property to specify whether the action is a data action. </param>
         /// <param name="serviceSpecification"> One property of operation, include metric specifications. </param>
-        internal Operation(string name, OperationDisplay display, string origin, ServiceSpecification serviceSpecification)
+        internal Operation(string name, OperationDisplay display, string origin, bool? isDataAction, ServiceSpecification serviceSpecification)
         {
             Name = name;
             Display = display;
             Origin = origin;
+            IsDataAction = isDataAction;
             ServiceSpecification = serviceSpecification;
         }
 
@@ -34,6 +36,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         public OperationDisplay Display { get; }
         /// <summary> The origin of operations. </summary>
         public string Origin { get; }
+        /// <summary> Property to specify whether the action is a data action. </summary>
+        public bool? IsDataAction { get; }
         /// <summary> One property of operation, include metric specifications. </summary>
         public ServiceSpecification ServiceSpecification { get; }
     }

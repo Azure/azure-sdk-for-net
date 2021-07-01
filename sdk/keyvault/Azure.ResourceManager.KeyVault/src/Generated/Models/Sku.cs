@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of Sku. </summary>
         /// <param name="family"> SKU family name. </param>
         /// <param name="name"> SKU name to specify whether the key vault is a standard vault or a premium vault. </param>
-        public Sku(SkuFamily family, SkuName name)
+        public Sku(SkuName name, SkuFamily? family = null)
         {
-            Family = family;
+            Family = family ?? SkuFamily.A;
             Name = name;
         }
 

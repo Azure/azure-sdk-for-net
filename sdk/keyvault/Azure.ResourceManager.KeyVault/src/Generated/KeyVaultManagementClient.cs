@@ -62,6 +62,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
         public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
+        /// <summary> Returns an instance of ManagedHsmsOperations. </summary>
+        public virtual ManagedHsmsOperations ManagedHsms => new ManagedHsmsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of MhsmPrivateEndpointConnectionsOperations. </summary>
+        public virtual MhsmPrivateEndpointConnectionsOperations MhsmPrivateEndpointConnections => new MhsmPrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of MhsmPrivateLinkResourcesOperations. </summary>
+        public virtual MhsmPrivateLinkResourcesOperations MhsmPrivateLinkResources => new MhsmPrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
         /// <summary> Returns an instance of Operations. </summary>
         public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
     }

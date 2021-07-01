@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> name = default;
             Optional<OperationDisplay> display = default;
             Optional<string> origin = default;
+            Optional<bool> isDataAction = default;
             Optional<ServiceSpecification> serviceSpecification = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,6 +39,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                 if (property.NameEquals("origin"))
                 {
                     origin = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isDataAction"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isDataAction = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -63,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new Operation(name.Value, display.Value, origin.Value, serviceSpecification.Value);
+            return new Operation(name.Value, display.Value, origin.Value, Optional.ToNullable(isDataAction), serviceSpecification.Value);
         }
     }
 }

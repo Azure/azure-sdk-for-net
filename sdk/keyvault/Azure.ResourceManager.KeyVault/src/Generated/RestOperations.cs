@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public RestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2019-09-01")
+        public RestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2021-04-01-preview")
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (apiVersion == null)

@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.KeyVault.Models;
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal PrivateEndpointConnectionsOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-09-01")
+        internal PrivateEndpointConnectionsOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-04-01-preview")
         {
             RestClient = new PrivateEndpointConnectionsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -119,6 +120,104 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
+        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
+        public virtual AsyncPageable<PrivateEndpointConnection> ListByResourceAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+
+            async Task<Page<PrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.ListByResource");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByResourceAsync(resourceGroupName, vaultName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<PrivateEndpointConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.ListByResource");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByResourceNextPageAsync(nextLink, resourceGroupName, vaultName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
+        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
+        public virtual Pageable<PrivateEndpointConnection> ListByResource(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+
+            Page<PrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.ListByResource");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByResource(resourceGroupName, vaultName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<PrivateEndpointConnection> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionsOperations.ListByResource");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByResourceNextPage(nextLink, resourceGroupName, vaultName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the key vault. </summary>
