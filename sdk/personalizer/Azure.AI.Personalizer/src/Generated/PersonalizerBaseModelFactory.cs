@@ -25,7 +25,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="featureImportance"> Feature Importance. </param>
         /// <param name="evaluationType"> Evaluation type (manual or through Automatic Optimization). </param>
         /// <param name="optimalPolicy"> The optimal policy. </param>
-        /// <param name="creationTime"> Craetion time. </param>
+        /// <param name="creationTime"> Creation time. </param>
         /// <returns> A new <see cref="Models.Evaluation"/> instance for mocking. </returns>
         public static Evaluation Evaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, EvaluationJobStatus? status = null, IEnumerable<PolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, EvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)
         {
@@ -56,9 +56,9 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="snipsEstimatorDenominator"> Denominator for SNIPS estimator. </param>
         /// <param name="aggregateTimeWindow">
         /// Time window for aggregation.
-        /// 
+        ///
         /// For example, PT5M (5 mins). For information about the time format,
-        /// 
+        ///
         /// see http://en.wikipedia.org/wiki/ISO_8601#Durations.
         /// </param>
         /// <param name="nonZeroProbability"> Probability of non-zero values for the Policy evaluation. </param>
@@ -122,9 +122,9 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="eventId"> The eventId for the round trip from request to response. </param>
         /// <param name="rewardActionId">
         /// The action chosen by the Personalizer service.
-        /// 
+        ///
         /// This is the action your application should display, and for which to report the reward.
-        /// 
+        ///
         /// This might not be the first found in &apos;ranking&apos;.
         /// </param>
         /// <returns> A new <see cref="Models.RankResponse"/> instance for mocking. </returns>
