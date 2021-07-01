@@ -471,7 +471,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string Query { get { throw null; } set { } }
         public void UpdateConnectionString(string connectionString) { }
     }
-    public partial class NotificationHook
+    public abstract partial class NotificationHook
     {
         internal NotificationHook() { }
         public System.Collections.Generic.IReadOnlyList<string> AdministratorEmails { get { throw null; } }
