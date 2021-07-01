@@ -546,28 +546,7 @@ sasBlobToken = blob.GetSharedAccessSignature(null, policyName);
 
 v12
 
-The modern SDK uses a builder pattern for constructing a SAS token. Clients are not involved in the process.
-
-```C# Snippet:SampleSnippetsBlobMigration_SasBuilder
-// Create BlobSasBuilder and specify parameters
-BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
-{
-    // with no url in a client to read from, container and blob name must be provided if applicable
-    BlobContainerName = containerName,
-    BlobName = blobName
-};
-
-// Create full, self-authenticating URI to the resource
-BlobUriBuilder uriBuilder = new BlobUriBuilder(StorageAccountBlobUri)
-{
-    BlobContainerName = containerName,
-    BlobName = blobName,
-    Sas = sasBuilder.ToSasQueryParameters(sharedKeyCredential)
-};
-Uri sasUri = uriBuilder.ToUri();
-```
-
-You can also create a SAS from the client object.
+The modern SDK uses a builder pattern for constructing a SAS token. Similar to the pattern to create a SAS in v11, you can generate a SAS URI from the client. This is the preferred method in order to prevent passing the key to more than one place. It also is more convenient to generate from the client in the case of authenticating with a connection string, as you would not have to parse the connection string to grab the storage account name and key.
 
 ```C# Snippet:SampleSnippetsBlobMigration_GenerateSas
 // Create a BlobClient with a shared key credential
@@ -590,6 +569,27 @@ if (blobClient.CanGenerateSasUri)
     // Use newly made as SAS URI to download the blob
     await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
 }
+```
+
+You can also create a SAS from the SasBuilder.
+
+```C# Snippet:SampleSnippetsBlobMigration_SasBuilder
+// Create BlobSasBuilder and specify parameters
+BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+{
+    // with no url in a client to read from, container and blob name must be provided if applicable
+    BlobContainerName = containerName,
+    BlobName = blobName
+};
+
+// Create full, self-authenticating URI to the resource
+BlobUriBuilder uriBuilder = new BlobUriBuilder(StorageAccountBlobUri)
+{
+    BlobContainerName = containerName,
+    BlobName = blobName,
+    Sas = sasBuilder.ToSasQueryParameters(sharedKeyCredential)
+};
+Uri sasUri = uriBuilder.ToUri();
 ```
 
 If using a stored access policy, construct your `BlobSasBuilder` from the example above as follows:
