@@ -219,7 +219,7 @@ DataFeed createdDataFeed = response.Value;
 
 Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
 Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
-Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
+Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedOn.Value}");
 
 Console.WriteLine($"Data feed administrators:");
 foreach (string admin in createdDataFeed.AdministratorEmails)
@@ -247,9 +247,9 @@ Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 ```C# Snippet:GetDataFeedIngestionStatusesAsync
 string dataFeedId = "<dataFeedId>";
 
-var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
-var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
+var startOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endOn = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
+var options = new GetDataFeedIngestionStatusesOptions(startOn, endOn)
 {
     MaxPageSize = 5
 };
@@ -344,7 +344,7 @@ AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 
 alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
-var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
 var metricAlertConfiguration = new MetricAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
 alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
@@ -363,9 +363,9 @@ Look through the [alerts](#anomaly-alert) created by a given anomaly alert confi
 ```C# Snippet:GetAlertsAsync
 string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
-var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var endTime = DateTimeOffset.UtcNow;
-var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
+var startOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endOn = DateTimeOffset.UtcNow;
+var options = new GetAlertsOptions(startOn, endOn, AlertQueryTimeMode.AnomalyDetectedOn)
 {
     MaxPageSize = 5
 };
@@ -374,7 +374,7 @@ int alertCount = 0;
 
 await foreach (AnomalyAlert alert in client.GetAlertsAsync(anomalyAlertConfigurationId, options))
 {
-    Console.WriteLine($"Alert created at: {alert.CreatedTime}");
+    Console.WriteLine($"Alert created at: {alert.CreatedOn}");
     Console.WriteLine($"Alert at timestamp: {alert.Timestamp}");
     Console.WriteLine($"Id: {alert.Id}");
     Console.WriteLine();
@@ -410,7 +410,7 @@ await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(aler
     }
 
     Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
-    Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
+    Console.WriteLine($"Anomaly detected at: {anomaly.CreatedOn}");
     Console.WriteLine($"Status: {anomaly.Status}");
     Console.WriteLine($"Severity: {anomaly.Severity}");
     Console.WriteLine("Series key:");
