@@ -203,5 +203,14 @@ namespace Azure.ResourceManager.Core
         {
             return new GenericResourceContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
+
+        /// <summary>
+        /// Gets the predefined tag operations under this subscription.
+        /// </summary>
+        /// <returns> The predefined tags operations. </returns>
+        public virtual PreDefinedTagOperations GetPreDefinedTagsOperations()
+        {
+            return new PreDefinedTagOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+        }
     }
 }

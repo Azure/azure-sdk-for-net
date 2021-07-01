@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a TagsResource along with the instance operations that can be performed on it.
     /// </summary>
-    public class TagResource : TagOperations
+    public class TagResource : TagResourceOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "TagResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>

@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected OperationsBase Parent { get; }
 
-        private TagContainer _tagContainer;
+        private TagResourceContainer _tagContainer;
 
         /// <summary>
         /// Gets the TagsOperations.
         /// </summary>
-        protected internal TagContainer GetTagContainer()
+        protected internal TagResourceContainer GetTagContainer()
         {
-            return _tagContainer ??= new TagContainer(ClientOptions, Credential, BaseUri, Pipeline);
+            return _tagContainer ??= new TagResourceContainer(ClientOptions, Credential, BaseUri, Pipeline);
         }
     }
 }

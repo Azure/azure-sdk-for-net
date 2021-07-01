@@ -6,7 +6,7 @@ using System;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Wrapper resource for tags API requests and responses. </summary>
-    public partial class TagResourceData
+    public partial class TagResourceData : Resource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of TagsResourceData. </summary>
         /// <param name="properties"> The set of tags. </param>
@@ -26,20 +26,11 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The name of the tags wrapper resource. </param>
         /// <param name="type"> The type of the tags wrapper resource. </param>
         /// <param name="properties"> The set of tags. </param>
-        internal TagResourceData(string id, string name, string type, Tag properties)
+        internal TagResourceData(string id, string name, string type, Tag properties): base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             Properties = properties;
         }
 
-        /// <summary> The ID of the tags wrapper resource. </summary>
-        public string Id { get; }
-        /// <summary> The name of the tags wrapper resource. </summary>
-        public string Name { get; }
-        /// <summary> The type of the tags wrapper resource. </summary>
-        public string Type { get; }
         /// <summary> The set of tags. </summary>
         public Tag Properties { get; set; }
     }

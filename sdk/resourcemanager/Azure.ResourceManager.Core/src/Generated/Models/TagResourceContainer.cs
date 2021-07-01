@@ -10,19 +10,19 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> A class representing collection of tag and their operations over a scope. </summary>
-    public class TagContainer : ContainerBase
+    public class TagResourceContainer : ContainerBase
     {
-        /// <summary> Initializes a new instance of the <see cref="TagContainer"/> class for mocking. </summary>
-        protected TagContainer()
+        /// <summary> Initializes a new instance of the <see cref="TagResourceContainer"/> class for mocking. </summary>
+        protected TagResourceContainer()
         {
         }
 
-        internal TagContainer(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline) : base(options, credential, baseUri, pipeline)
+        internal TagResourceContainer(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline) : base(options, credential, baseUri, pipeline)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
 
-        internal TagContainer(OperationsBase parent) : base(parent)
+        internal TagResourceContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

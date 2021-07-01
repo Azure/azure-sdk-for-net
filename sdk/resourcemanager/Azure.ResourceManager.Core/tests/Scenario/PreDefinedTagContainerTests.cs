@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Core.Tests
         protected async Task GlobalTagCleanupAsync()
         {
             var container = Client.DefaultSubscription.GetPredefinedTag();
-            var operation = Client.GetPreDefinedTagsOperations();
+            var operation = Client.DefaultSubscription.GetPreDefinedTagsOperations();
             var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {

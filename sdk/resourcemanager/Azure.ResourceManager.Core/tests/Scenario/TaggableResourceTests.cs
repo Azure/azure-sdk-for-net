@@ -52,27 +52,6 @@ namespace Azure.ResourceManager.Core.Tests
             }
         }
 
-        [TestCaseSource(nameof(TagAddSource))]
-        [RecordedTest]
-        public async Task TestStartAddTags(string key, string value, IDictionary<string, string> tags)
-        {
-            if (key is null)
-            {
-                var ex = Assert.ThrowsAsync<ArgumentException>(async () => await (await _rg.StartAddTagAsync(key, value)).WaitForCompletionAsync());
-                Assert.That(ex.Message, Is.EqualTo("key provided cannot be null or a whitespace.\r\nParameter name: key"));
-            }
-            else if (value is null)
-            {
-                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await (await _rg.StartAddTagAsync(key, value)).WaitForCompletionAsync());
-                Assert.That(ex.Message.Contains("Invalid tag value. The following tags 'nullKey' have a null value. Tag value cannot be null."));
-            }
-            else
-            {
-                var result = await (await _rg.StartAddTagAsync(key, value)).WaitForCompletionAsync();
-                Assert.AreEqual(result.Value.Data.Tags, tags);
-            }
-        }
-
         [Test]
         [RecordedTest]
         public async Task TestSetTags()
@@ -81,27 +60,11 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(result.Value.Data.Tags, UpdateTags);
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task TestStartSetTags()
-        {
-            var result = await (await _rg.StartSetTagsAsync(UpdateTags)).WaitForCompletionAsync();
-            Assert.AreEqual(result.Value.Data.Tags, UpdateTags);
-        }
-
         [TestCaseSource(nameof(TagRemoveSource))]
         [RecordedTest]
         public async Task TestRemoveTag(string key, IDictionary<string, string> tags)
         {
             var result = await _rg.RemoveTagAsync(key);
-            Assert.AreEqual(result.Value.Data.Tags, tags);
-        }
-
-        [TestCaseSource(nameof(TagRemoveSource))]
-        [RecordedTest]
-        public async Task TestStartRemoveTag(string key, IDictionary<string, string> tags)
-        {
-            var result = await (await _rg.StartRemoveTagAsync(key)).WaitForCompletionAsync();
             Assert.AreEqual(result.Value.Data.Tags, tags);
         }
 

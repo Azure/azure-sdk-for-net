@@ -91,15 +91,13 @@ namespace Azure.ResourceManager.Core
         /// <returns> A valid Azure resource type. </returns>
         protected abstract ResourceType ValidResourceType { get; }
 
-        private TagOperations _tagOperations;
+        private TagResourceOperations _tagResourceOperations;
 
         /// <summary>
-        /// Gets the TagOperations.
+        /// Gets the TagResourceOperations.
         /// </summary>
-        protected internal TagOperations GetTagOperations()
-        {
-            return _tagOperations ??= new TagOperations(this, Id);
-        }
+        /// <returns> A TagResourceOperations. </returns>
+        protected internal TagResourceOperations TagResourceOperations => _tagResourceOperations ??= new TagResourceOperations(this, Id);
 
         /// <summary>
         /// Validate the resource identifier against current operations.
