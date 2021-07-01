@@ -135,23 +135,23 @@ namespace Azure.AI.MetricsAdvisor
     }
     public partial class MetricAnomalyFeedback : Azure.AI.MetricsAdvisor.MetricFeedback
     {
-        public MetricAnomalyFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.Models.AnomalyValue value) { }
+        public MetricAnomalyFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.DimensionKey dimensionKey, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.Models.AnomalyValue value) { }
         public Azure.AI.MetricsAdvisor.Models.AnomalyValue AnomalyValue { get { throw null; } }
         public string DetectionConfigurationId { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration DetectionConfigurationSnapshot { get { throw null; } }
-        public System.DateTimeOffset EndTime { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
     public partial class MetricChangePointFeedback : Azure.AI.MetricsAdvisor.MetricFeedback
     {
-        public MetricChangePointFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.Models.ChangePointValue value) { }
+        public MetricChangePointFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.DimensionKey dimensionKey, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.Models.ChangePointValue value) { }
         public Azure.AI.MetricsAdvisor.Models.ChangePointValue ChangePointValue { get { throw null; } }
-        public System.DateTimeOffset EndTime { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
     public partial class MetricCommentFeedback : Azure.AI.MetricsAdvisor.MetricFeedback
     {
-        public MetricCommentFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, string comment) { }
+        public MetricCommentFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.DimensionKey dimensionKey, string comment) { }
         public string Comment { get { throw null; } }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
@@ -160,7 +160,7 @@ namespace Azure.AI.MetricsAdvisor
     {
         internal MetricFeedback() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter DimensionFilter { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionKey { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind Kind { get { throw null; } }
         public string MetricId { get { throw null; } }
@@ -168,7 +168,7 @@ namespace Azure.AI.MetricsAdvisor
     }
     public partial class MetricPeriodFeedback : Azure.AI.MetricsAdvisor.MetricFeedback
     {
-        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.FeedbackDimensionFilter dimensionFilter, Azure.AI.MetricsAdvisor.Models.MetricPeriodType periodType, int periodValue) { }
+        public MetricPeriodFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.DimensionKey dimensionKey, Azure.AI.MetricsAdvisor.Models.MetricPeriodType periodType, int periodValue) { }
         public Azure.AI.MetricsAdvisor.Models.MetricPeriodType PeriodType { get { throw null; } }
         public int PeriodValue { get { throw null; } }
     }

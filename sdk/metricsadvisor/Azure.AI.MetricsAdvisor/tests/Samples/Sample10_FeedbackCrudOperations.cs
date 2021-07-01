@@ -28,10 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             {
                 { "city", "Belo Horizonte" }
             };
-            FeedbackDimensionFilter filter = new FeedbackDimensionFilter()
-            {
-                DimensionFilter = new DimensionKey(dimensionColumns)
-            };
+            var dimensionKey = new DimensionKey(dimensionColumns);
 
             var startTime = DateTimeOffset.Parse("2020-02-01T00:00:00Z");
             var endTime = DateTimeOffset.Parse("2020-02-03T00:00:00Z");
@@ -39,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             // Other types of feedback, such as MetricCommentFeedback, MetricChangePointFeedback,
             // and MetricPeriodFeedback are supported as well.
 
-            var anomalyFeedback = new MetricAnomalyFeedback(metricId, filter, startTime, endTime, AnomalyValue.NotAnomaly);
+            var anomalyFeedback = new MetricAnomalyFeedback(metricId, dimensionKey, startTime, endTime, AnomalyValue.NotAnomaly);
 
             Response<MetricFeedback> response = await client.AddFeedbackAsync(anomalyFeedback);
 
