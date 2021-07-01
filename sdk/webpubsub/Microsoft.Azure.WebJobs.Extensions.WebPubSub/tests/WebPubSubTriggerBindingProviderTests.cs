@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var attribute = new WebPubSubTriggerAttribute("%nullhub%", WebPubSubEventType.System, "testevent");
             Assert.Throws<ArgumentException>(() => _provider.GetResolvedAttribute(attribute),
-                "Failed to resolve substitute confingure: %nullhub%, please add.");
+                "Failed to resolve substitute configure: %nullhub%, please add.");
         }
 
         [TestCase]

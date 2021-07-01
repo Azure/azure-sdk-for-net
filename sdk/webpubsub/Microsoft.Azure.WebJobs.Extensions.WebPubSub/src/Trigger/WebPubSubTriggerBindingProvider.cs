@@ -51,11 +51,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // Try resolve and throw exception if not able to find one.
             if (!_nameResolver.TryResolveWholeString(attribute.Hub, out var hub))
             {
-                throw new ArgumentException($"Failed to resolve substitute confingure: {attribute.Hub}, please add.");
+                throw new ArgumentException($"Failed to resolve substitute configure: {attribute.Hub}, please add.");
             }
             if (!_nameResolver.TryResolveWholeString(attribute.EventName, out var eventName))
             {
-                throw new ArgumentException($"Failed to resolve substitute confingure: {attribute.EventName}, please add.");
+                throw new ArgumentException($"Failed to resolve substitute configure: {attribute.EventName}, please add.");
             }
 
             return new WebPubSubTriggerAttribute(
