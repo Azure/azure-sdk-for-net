@@ -44,37 +44,37 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Initializes a new instance of a data source specific DataFeedDetail.
         /// </summary>
-        internal DataFeedDetail InstantiateDataFeedDetail(string name, DataFeedGranularityType granularityType, IList<DataFeedMetric> metricColumns, DateTimeOffset ingestionStartTime)
+        internal DataFeedDetail InstantiateDataFeedDetail(string name, DataFeedGranularityType granularityType, IList<DataFeedMetric> metricColumns, DateTimeOffset ingestionStartOn)
         {
-            ingestionStartTime = ClientCommon.NormalizeDateTimeOffset(ingestionStartTime);
+            ingestionStartOn = ClientCommon.NormalizeDateTimeOffset(ingestionStartOn);
 
             return this switch
             {
-                AzureApplicationInsightsDataFeedSource d => new AzureApplicationInsightsDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureApplicationInsightsDataFeedSource d => new AzureApplicationInsightsDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new AzureApplicationInsightsParameter(d.Query) { ApiKey = d.ApiKey, ApplicationId = d.ApplicationId, AzureCloud = d.AzureCloud }),
-                AzureBlobDataFeedSource d => new AzureBlobDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureBlobDataFeedSource d => new AzureBlobDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new AzureBlobParameter(d.Container, d.BlobTemplate) { ConnectionString = d.ConnectionString }),
-                AzureCosmosDbDataFeedSource d => new AzureCosmosDBDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureCosmosDbDataFeedSource d => new AzureCosmosDBDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new AzureCosmosDBParameter(d.SqlQuery, d.Database, d.CollectionId) { ConnectionString = d.ConnectionString }),
-                AzureDataExplorerDataFeedSource d => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureDataExplorerDataFeedSource d => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new AzureDataLakeStorageGen2Parameter(d.FileSystemName, d.DirectoryTemplate, d.FileTemplate) { AccountKey = d.AccountKey, AccountName = d.AccountName }),
-                AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new AzureEventHubsParameter(d.ConsumerGroup) { ConnectionString = d.ConnectionString }),
-                AzureTableDataFeedSource d => new AzureTableDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureTableDataFeedSource d => new AzureTableDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new AzureTableParameter(d.Table, d.Query) { ConnectionString = d.ConnectionString }),
-                InfluxDbDataFeedSource d => new InfluxDBDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                InfluxDbDataFeedSource d => new InfluxDBDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new InfluxDBParameter(d.Query) { UserName = d.Username, Password = d.Password, Database = d.Database, ConnectionString = d.ConnectionString }),
-                LogAnalyticsDataFeedSource d => new AzureLogAnalyticsDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                LogAnalyticsDataFeedSource d => new AzureLogAnalyticsDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new AzureLogAnalyticsParameter(d.WorkspaceId, d.Query) { ClientId = d.ClientId, ClientSecret = d.ClientSecret, TenantId = d.TenantId }),
-                MongoDbDataFeedSource d => new MongoDBDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                MongoDbDataFeedSource d => new MongoDBDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new MongoDBParameter(d.Command) { Database = d.Database, ConnectionString = d.ConnectionString }),
-                MySqlDataFeedSource d => new MySqlDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                MySqlDataFeedSource d => new MySqlDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                PostgreSqlDataFeedSource d => new PostgreSqlDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                PostgreSqlDataFeedSource d => new PostgreSqlDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                SqlServerDataFeedSource d => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                SqlServerDataFeedSource d => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartOn,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
                 _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };
