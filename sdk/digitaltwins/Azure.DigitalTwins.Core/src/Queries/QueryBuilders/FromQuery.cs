@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> The name of the collection. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public WhereStatement From(string collection)
+        public WhereStatement FromCustom(string collection)
         {
             _clause = new FromClause(collection);
             return _upsteamWhereStatement;

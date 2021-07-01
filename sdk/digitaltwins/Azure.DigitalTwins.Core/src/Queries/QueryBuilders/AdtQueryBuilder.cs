@@ -91,7 +91,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectCustom(string customQuery)
         {
-            return _selectQuery.Select(customQuery);
+            return _selectQuery.SelectCustom(customQuery);
         }
 
         /// <summary>

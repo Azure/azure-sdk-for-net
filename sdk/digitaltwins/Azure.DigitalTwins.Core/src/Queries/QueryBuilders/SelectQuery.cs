@@ -93,11 +93,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used when overriding the query builder with the literal query string.
         /// </summary>
-        /// <param name="literalQuery"> Query in string format. </param>
+        /// <param name="customQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery Select(string literalQuery)
+        public FromQuery SelectCustom(string customQuery)
         {
-            _clause = new SelectClause(new string[] { literalQuery });
+            _clause = new SelectClause(new string[] { customQuery });
             return _upstreamFromQuery;
         }
 
