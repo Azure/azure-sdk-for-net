@@ -446,7 +446,7 @@ v12
 
 v12 has explicit methods for listing by hierarchy.
 ```C# Snippet:SampleSnippetsBlobMigration_ListHierarchy
-IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix);
+IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
 await foreach (BlobHierarchyItem item in results)
 {
     MyConsumeBlobItemFunc(item);
@@ -596,7 +596,7 @@ If using a stored access policy, construct your `BlobSasBuilder` from the exampl
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilderIdentifier
 // Create BlobSasBuilder and specify parameters
-BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+BlobSasBuilder sasBuilder = new BlobSasBuilder
 {
     Identifier = "mysignedidentifier"
 };
