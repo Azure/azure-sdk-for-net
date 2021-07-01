@@ -268,6 +268,14 @@ namespace Azure.Messaging.ServiceBus
                 // loop within the context of this thread
                 while (!linkedTokenSource.Token.IsCancellationRequested)
                 {
+                    if (!CanReceive())
+                    {
+                        // receiver isn't currently clear to process a message so wait a
+                        // bit and check again
+                        await Task.Delay(1000, processorCancellationToken).ConfigureAwait(false);
+                        continue;
+                    }
+
                     errorSource = ServiceBusErrorSource.Receive;
                     IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
                         maxMessages: 1,

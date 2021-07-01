@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 using Microsoft.Extensions.Azure;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Host.Scale;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
         private readonly IConverterManager _converterManager;
         private readonly ServiceBusClientFactory _clientFactory;
         private readonly ILogger<ServiceBusTriggerAttributeBindingProvider> _logger;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         public ServiceBusTriggerAttributeBindingProvider(
             INameResolver nameResolver,
@@ -33,7 +35,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             MessagingProvider messagingProvider,
             ILoggerFactory loggerFactory,
             IConverterManager converterManager,
-            ServiceBusClientFactory clientFactory)
+            ServiceBusClientFactory clientFactory,
+            ConcurrencyManager concurrencyManager)
         {
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -42,6 +45,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             _converterManager = converterManager;
             _clientFactory = clientFactory;
             _logger = _loggerFactory.CreateLogger<ServiceBusTriggerAttributeBindingProvider>();
+            _concurrencyManager = concurrencyManager;
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -80,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             (factoryContext, singleDispatch) =>
             {
                 var autoCompleteMessagesOptionEvaluatedValue = GetAutoCompleteMessagesOptionToUse(attribute, factoryContext.Descriptor.ShortName);
-                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, serviceBusEntityType, entityPath, attribute.IsSessionsEnabled, autoCompleteMessagesOptionEvaluatedValue, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory);
+                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, serviceBusEntityType, entityPath, attribute.IsSessionsEnabled, autoCompleteMessagesOptionEvaluatedValue, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory, _concurrencyManager);
 
                 return Task.FromResult(listener);
             };

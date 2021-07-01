@@ -14,7 +14,6 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,5 +25,9 @@
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\EntityNameFormatter.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Resources.Designer.cs" LinkBase="Shared" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 </Project>

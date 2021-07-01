@@ -53,6 +53,11 @@ namespace Azure.Messaging.ServiceBus
         public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets the <see cref="ServiceBusProcessorStrategy"/>.
+        /// </summary>
+        public ServiceBusProcessorStrategy Strategy { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
@@ -168,7 +173,8 @@ namespace Azure.Messaging.ServiceBus
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
                 MaxConcurrentCalls = MaxConcurrentCalls,
-                SubQueue = SubQueue
+                SubQueue = SubQueue,
+                Strategy = Strategy
             };
         }
     }

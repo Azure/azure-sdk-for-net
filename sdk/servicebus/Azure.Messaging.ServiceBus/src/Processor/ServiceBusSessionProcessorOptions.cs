@@ -148,6 +148,11 @@ namespace Azure.Messaging.ServiceBus
         public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
+        /// Gets or sets the <see cref="ServiceBusProcessorStrategy"/>.
+        /// </summary>
+        public ServiceBusProcessorStrategy Strategy { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -181,6 +186,7 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = SessionIdleTimeout,
+                Strategy = Strategy
             };
     }
 }

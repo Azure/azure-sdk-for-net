@@ -108,8 +108,8 @@
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.27" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.19" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.30-11868" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30-11868" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>

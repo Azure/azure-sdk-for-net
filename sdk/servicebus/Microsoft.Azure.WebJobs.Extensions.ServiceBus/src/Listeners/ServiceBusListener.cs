@@ -33,11 +33,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<ServiceBusClient> _client;
         private readonly Lazy<SessionMessageProcessor> _sessionMessageProcessor;
         private readonly Lazy<ServiceBusScaleMonitor> _scaleMonitor;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         private volatile bool _disposed;
         private volatile bool _started;
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
+        private readonly string _functionId;
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
 
@@ -53,7 +55,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             MessagingProvider messagingProvider,
             ILoggerFactory loggerFactory,
             bool singleDispatch,
-            ServiceBusClientFactory clientFactory)
+            ServiceBusClientFactory clientFactory,
+            ConcurrencyManager concurrencyManager)
         {
             _entityPath = entityPath;
             _isSessionsEnabled = isSessionsEnabled;
@@ -61,6 +64,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _triggerExecutor = triggerExecutor;
             _cancellationTokenSource = new CancellationTokenSource();
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
+            _concurrencyManager = concurrencyManager;
+            _functionId = functionId;
+
+            ServiceBusProcessorStrategy processorStrategy = null;
+            if (_concurrencyManager.Enabled)
+            {
+                processorStrategy = new DynamicServiceBusProcessorStrategy(_concurrencyManager, functionId);
+            }
 
             _client = new Lazy<ServiceBusClient>(
                 () =>
@@ -76,13 +87,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 () => messagingProvider.CreateMessageProcessor(
                     _client.Value,
                     _entityPath,
-                    options.ToProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue)));
+                    options.ToProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue, strategy: processorStrategy)));
 
             _sessionMessageProcessor = new Lazy<SessionMessageProcessor>(
                 () => messagingProvider.CreateSessionMessageProcessor(
                     _client.Value,
                     _entityPath,
-                    options.ToSessionProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue)));
+                    options.ToSessionProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue, strategy: processorStrategy)));
 
             _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(
                 () => new ServiceBusScaleMonitor(
@@ -277,6 +288,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         return;
                     }
 
+                    if (_concurrencyManager.Enabled)
+                    {
+                        // Dynamic concurrency is enabled so consult ConcurrencyManager to see if we're safe to start new invocations.
+                        // Because we're only executing functions below one at a time serially, we only need to check here whether throttles
+                        // are enabled.
+                        var concurrencyStatus = _concurrencyManager.GetStatus(_functionId);
+                        if (concurrencyStatus.ThrottleStatus.State == ThrottleState.Enabled)
+                        {
+                            await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
+                            continue;
+                        }
+                    }
+
                     if (_isSessionsEnabled && (receiver == null || receiver.IsClosed))
                     {
                         try
@@ -409,6 +433,117 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         public IScaleMonitor GetMonitor()
         {
             return _scaleMonitor.Value;
+        }
+
+        /// <summary>
+        /// Dynamic strategy that adjusts the concurrency level over time.
+        /// </summary>
+        private class DynamicServiceBusProcessorStrategy : ServiceBusProcessorStrategy
+        {
+            private readonly ConcurrencyManager _concurrencyManager;
+            private readonly string _functionId;
+            private readonly object _syncLock = new object();
+            private readonly List<ReceiverInfo> _activeReceiveTasks = new List<ReceiverInfo>();
+
+            public DynamicServiceBusProcessorStrategy(ConcurrencyManager concurrencyManager, string functionId)
+            {
+                _concurrencyManager = concurrencyManager;
+                _functionId = functionId;
+            }
+
+            public override async Task AdjustReceiverCountAsync(Func<CancellationToken, Task> createReceiver, CancellationToken cancellationToken)
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    lock (_syncLock)
+                    {
+                        // periodic cleanup of completed tasks
+                        var completedReceiveTasks = _activeReceiveTasks.Where(p => p.Task.IsCompleted).ToArray();
+                        foreach (var currReceiveTask in completedReceiveTasks)
+                        {
+                            _activeReceiveTasks.Remove(currReceiveTask);
+                        }
+                    }
+
+                    var concurrencyStatus = _concurrencyManager.GetStatus(_functionId);
+
+                    int activeReceiverCount = _activeReceiveTasks.Count;
+                    if (activeReceiverCount > concurrencyStatus.CurrentConcurrency)
+                    {
+                        lock (_syncLock)
+                        {
+                            // we're over the limit of receivers, so we need to cancel one
+                            var receiverToCancel = _activeReceiveTasks.First();
+                            _activeReceiveTasks.Remove(receiverToCancel);
+                            receiverToCancel.TokenSource.Cancel();
+                        }
+                    }
+                    else if (activeReceiverCount < concurrencyStatus.CurrentConcurrency)
+                    {
+                        // our current receive count is under limit so we're clear to start another
+                        lock (_syncLock)
+                        {
+                            var tokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                            ReceiverInfo info = new ReceiverInfo
+                            {
+                                Task = createReceiver(tokenSource.Token),
+                                TokenSource = tokenSource
+                            };
+                            _activeReceiveTasks.Add(info);
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        // we're at our current receiver limit so no adjustment to be made
+                        // we want to wait for a bit before checking again
+                        await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken).ConfigureAwait(false);
+                    }
+                }
+            }
+
+            public override ReceiverStatus GetReceiverStatus()
+            {
+                // This dynamic receiver strategy ensures that the receiver count stays less than or equal
+                // to the current concurrency level. So below, it suffices to check whether throttles are enabled.
+                // If throttles are currently enabled, the receive loop will continue without receiving a message.
+                var concurrencyStatus = _concurrencyManager.GetStatus(_functionId);
+
+                return new ReceiverStatus
+                {
+                    CanReceive = concurrencyStatus.ThrottleStatus.State != ThrottleState.Enabled
+                };
+            }
+
+            public override Task StopReceiverAsync(Task receiveTask, CancellationToken cancellationToken)
+            {
+                lock (_syncLock)
+                {
+                    var taskToRemove = _activeReceiveTasks.FirstOrDefault(p => p.Task == receiveTask);
+                    if (taskToRemove != null)
+                    {
+                        // TODO: should we remove this immediately here?
+                        _activeReceiveTasks.Remove(taskToRemove);
+                    }
+                }
+
+                return Task.CompletedTask;
+            }
+
+            public override async Task CompleteAsync()
+            {
+                // hold onto all the tasks that we are starting so that when cancellation is requested,
+                // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
+                // other than TaskCanceledExceptions
+                var receiveTasks = _activeReceiveTasks.Select(p => p.Task).ToArray();
+                await Task.WhenAll(receiveTasks).ConfigureAwait(false);
+            }
+
+            private class ReceiverInfo
+            {
+                public Task Task { get; set; }
+                public CancellationTokenSource TokenSource { get; set; }
+            }
         }
     }
 }

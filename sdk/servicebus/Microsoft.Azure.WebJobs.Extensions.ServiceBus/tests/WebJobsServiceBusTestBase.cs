@@ -114,11 +114,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [TearDown]
         public async Task FixtureTearDown()
         {
-            await _firstQueueScope.DisposeAsync();
-            await _secondQueueScope.DisposeAsync();
-            await _thirdQueueScope.DisposeAsync();
-            await _secondaryNamespaceQueueScope.DisposeAsync();
-            await _topicScope.DisposeAsync();
+            await CleanupTestScope(_firstQueueScope);
+            await CleanupTestScope(_secondQueueScope);
+            await CleanupTestScope(_thirdQueueScope);
+            await CleanupTestScope(_secondaryNamespaceQueueScope);
+            await CleanupTestScope(_topicScope);
+        }
+
+        private async Task CleanupTestScope(IAsyncDisposable disposable)
+        {
+            if (disposable != null)
+            {
+                await disposable.DisposeAsync();
+            }
         }
 
         protected IHost BuildHost<TJobClass>(

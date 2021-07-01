@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -36,10 +37,6 @@ namespace Azure.Messaging.ServiceBus
         internal Func<ProcessSessionEventArgs, Task> _sessionInitializingAsync;
 
         internal Func<ProcessSessionEventArgs, Task> _sessionClosingAsync;
-
-        private readonly SemaphoreSlim _messageHandlerSemaphore;
-
-        private readonly int _maxConcurrentCalls;
 
         /// <summary>
         /// The primitive for ensuring that the service is not overloaded with
@@ -164,6 +161,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly IList<ServiceBusPlugin> _plugins;
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
+        private readonly ServiceBusProcessorStrategy _strategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -209,16 +207,14 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
 
-            _maxConcurrentCalls = isSessionEntity ?
+            int maxConcurrentCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?
                     Math.Min(_sessionIds.Length, MaxConcurrentSessions) :
                     MaxConcurrentSessions) * MaxConcurrentCallsPerSession :
                 MaxConcurrentCalls;
 
-            _messageHandlerSemaphore = new SemaphoreSlim(
-                _maxConcurrentCalls,
-                _maxConcurrentCalls);
-            var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
+            // TODO: How should this sessions semaphore be handled?
+            var maxAcceptSessions = Math.Min(maxConcurrentCalls, 2 * Environment.ProcessorCount);
             MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
                 maxAcceptSessions,
                 maxAcceptSessions);
@@ -228,6 +224,7 @@ namespace Azure.Messaging.ServiceBus
             IsSessionProcessor = isSessionEntity;
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             _plugins = plugins;
+            _strategy = Options.Strategy ?? new DefaultServiceBusProcessorStrategy(maxConcurrentCalls);
         }
 
         /// <summary>
@@ -669,27 +666,13 @@ namespace Azure.Messaging.ServiceBus
         private async Task RunReceiveTaskAsync(
             CancellationToken cancellationToken)
         {
-            List<Task> tasks = new List<Task>(_maxConcurrentCalls + _receiverManagers.Count);
             try
             {
                 while (!cancellationToken.IsCancellationRequested && !Connection.IsClosed)
                 {
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
-                        // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
-                        if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
-                        {
-                            await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-                        }
-                        // hold onto all the tasks that we are starting so that when cancellation is requested,
-                        // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
-                        // other than TaskCanceledExceptions
-                        tasks.Add(ReceiveAndProcessMessagesAsync(receiverManager, cancellationToken));
-                    }
-
-                    if (tasks.Count > _maxConcurrentCalls)
-                    {
-                        tasks.RemoveAll(t => t.IsCompleted);
+                        await _strategy.AdjustReceiverCountAsync(t => ReceiveAndProcessMessagesAsync(receiverManager, t), cancellationToken).ConfigureAwait(false);
                     }
                 }
 
@@ -731,7 +714,7 @@ namespace Azure.Messaging.ServiceBus
             }
             finally
             {
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                await _strategy.CompleteAsync().ConfigureAwait(false);
             }
         }
 
@@ -739,13 +722,15 @@ namespace Azure.Messaging.ServiceBus
             ReceiverManager receiverManager,
             CancellationToken cancellationToken)
         {
+            Task receiveTask = null;
             try
             {
-                await receiverManager.ReceiveAndProcessMessagesAsync(cancellationToken).ConfigureAwait(false);
+                receiveTask = receiverManager.ReceiveAndProcessMessagesAsync(cancellationToken);
+                await receiveTask.ConfigureAwait(false);
             }
             finally
             {
-                _messageHandlerSemaphore.Release();
+                await _strategy.StopReceiverAsync(receiveTask, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -814,6 +799,86 @@ namespace Azure.Messaging.ServiceBus
         {
             await CloseAsync().ConfigureAwait(false);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Default implementation is based on a fixed number of allowed concurrent calls.
+        /// </summary>
+        private class DefaultServiceBusProcessorStrategy : ServiceBusProcessorStrategy, IDisposable
+        {
+            private readonly SemaphoreSlim _messageHandlerSemaphore;
+            private readonly object _syncLock = new object();
+            private readonly List<Task> _activeReceiveTasks = new List<Task>();
+            private readonly ReceiverStatus _receiverConcurrencyStatus = new ReceiverStatus();
+            private bool _disposedValue;
+
+            public DefaultServiceBusProcessorStrategy(int maxConcurrentCalls)
+            {
+                _messageHandlerSemaphore = new SemaphoreSlim(maxConcurrentCalls, maxConcurrentCalls);
+            }
+
+            public override async Task AdjustReceiverCountAsync(Func<CancellationToken, Task> createReceiveTask, CancellationToken cancellationToken)
+            {
+                // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
+                if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
+                {
+                    await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                var receiveTask = createReceiveTask(cancellationToken);
+
+                lock (_syncLock)
+                {
+                    _activeReceiveTasks.Add(receiveTask);
+
+                    // periodic cleanup of completed tasks
+                    var completedReceiveTasks = _activeReceiveTasks.Where(p => p.IsCompleted).ToArray();
+                    foreach (var currReceiveTask in completedReceiveTasks)
+                    {
+                        _activeReceiveTasks.Remove(currReceiveTask);
+                    }
+                }
+            }
+
+            public override Task StopReceiverAsync(Task receiveTask, CancellationToken cancellationToken)
+            {
+                _messageHandlerSemaphore.Release();
+
+                return Task.CompletedTask;
+            }
+
+            public override async Task CompleteAsync()
+            {
+                // hold onto all the tasks that we are starting so that when cancellation is requested,
+                // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
+                // other than TaskCanceledExceptions
+                var receiveTasks = _activeReceiveTasks.ToArray();
+                await Task.WhenAll(receiveTasks).ConfigureAwait(false);
+            }
+
+            public override ReceiverStatus GetReceiverStatus()
+            {
+                return _receiverConcurrencyStatus;
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (!_disposedValue)
+                {
+                    if (disposing)
+                    {
+                        _messageHandlerSemaphore.Dispose();
+                    }
+                    _disposedValue = true;
+                }
+            }
+
+            public void Dispose()
+            {
+                // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+                Dispose(disposing: true);
+                GC.SuppressFinalize(this);
+            }
         }
     }
 }

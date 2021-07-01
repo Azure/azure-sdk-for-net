@@ -28,6 +28,7 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         protected readonly EntityScopeFactory _scopeFactory;
         protected readonly IList<ServiceBusPlugin> _plugins;
+        protected readonly ServiceBusProcessorStrategy _strategy;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
@@ -56,6 +57,8 @@ namespace Azure.Messaging.ServiceBus
                 plugins: _plugins,
                 options: _receiverOptions);
             _scopeFactory = scopeFactory;
+
+            _strategy = ProcessorOptions.Strategy;
         }
 
         public virtual async Task CloseReceiverIfNeeded(
@@ -84,6 +87,14 @@ namespace Azure.Messaging.ServiceBus
                 // loop within the context of this thread
                 while (!cancellationToken.IsCancellationRequested && !Processor.Connection.IsClosed)
                 {
+                    if (!CanReceive())
+                    {
+                        // receiver isn't currently clear to process a message so wait a
+                        // bit and check again
+                        await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
+                        continue;
+                    }
+
                     errorSource = ServiceBusErrorSource.Receive;
                     IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
                         maxMessages: 1,
@@ -119,6 +130,17 @@ namespace Azure.Messaging.ServiceBus
                         cancellationToken))
                     .ConfigureAwait(false);
             }
+        }
+
+        protected bool CanReceive()
+        {
+            if (_strategy != null)
+            {
+                var receiverStatus = _strategy.GetReceiverStatus();
+                return receiverStatus.CanReceive;
+            }
+
+            return true;
         }
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
