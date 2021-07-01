@@ -41,7 +41,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllTypes">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllTypes" language="csharp">
         /// // Get all Time Series types in the environment
         /// AsyncPageable&lt;TimeSeriesType&gt; getAllTypesResponse = typesClient.GetTypesAsync();
         ///
@@ -286,7 +286,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetTypeById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetTypeById" language="csharp">
         /// // Code snippet below shows getting a default Type using Id
         /// // The default type Id can be obtained programmatically by using the ModelSettings client.
         ///
@@ -414,7 +414,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType" language="csharp">
         /// TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
         ///
         /// // Create a type with an aggregate variable
@@ -649,7 +649,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteTypeById">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteTypeById" language="csharp">
         /// // Delete Time Series types with Ids
         ///
         /// var typesIdsToDelete = new List&lt;string&gt; { &quot;Type1Id&quot;, &quot; Type2Id&quot; };

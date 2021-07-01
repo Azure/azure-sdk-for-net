@@ -89,11 +89,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeedSource DataSource { get; set; }
 
         /// <summary>
-        /// The type of data source that ingests this <see cref="DataFeed"/> with data.
-        /// </summary>
-        public DataFeedSourceType? SourceType => DataSource?.Type;
-
-        /// <summary>
         /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
         /// in terms of metrics and dimensions.
         /// </summary>

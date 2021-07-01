@@ -36,7 +36,7 @@ namespace Azure.Identity
     /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using the DefaultAzureCredential,
     /// deployed to an Azure resource with a user assigned managed identity configured.
     /// </para>
-    /// <code snippet="Snippet:UserAssignedManagedIdentity">
+    /// <code snippet="Snippet:UserAssignedManagedIdentity" language="csharp">
     /// // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
     ///
     /// string userAssignedClientId = &quot;&lt;your managed identity client Id&gt;&quot;;

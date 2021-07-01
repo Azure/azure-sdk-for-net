@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
             #region Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+            // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
             var schemaRegistryClient = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
             #endregion
 

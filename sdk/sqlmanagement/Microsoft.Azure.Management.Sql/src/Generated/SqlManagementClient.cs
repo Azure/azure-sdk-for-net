@@ -148,11 +148,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
 
         /// <summary>
-        /// Gets the IBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
-
-        /// <summary>
         /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
         /// </summary>
         public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
@@ -628,6 +623,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IWorkloadGroupsOperations WorkloadGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IDatabaseExtensionsOperations.
         /// </summary>
         public virtual IDatabaseExtensionsOperations DatabaseExtensions { get; private set; }
@@ -928,7 +928,6 @@ namespace Microsoft.Azure.Management.Sql
             TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
-            BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
             ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
             ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
@@ -1024,6 +1023,7 @@ namespace Microsoft.Azure.Management.Sql
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             WorkloadClassifiers = new WorkloadClassifiersOperations(this);
             WorkloadGroups = new WorkloadGroupsOperations(this);
+            BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             DatabaseExtensions = new DatabaseExtensionsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
             DatabaseUsages = new DatabaseUsagesOperations(this);

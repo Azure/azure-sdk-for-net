@@ -55,22 +55,22 @@ For the event processor client to make use of Azure Storage blobs for checkpoint
 
 ## Common samples
 
-- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample01_HelloWorld.md)  
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample01_HelloWorld.md)  
   An introduction to the Event Processor client, illustrating how to create the client and perform basic operations.  
   
-- [Event Processor Configuration](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample02_EventProcessorConfiguration.md)  
+- [Event Processor Configuration](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample02_EventProcessorConfiguration.md)  
   A demonstration of the options for customizing the Event Processor client configuration, such as specifying a proxy. 
   
-- [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md)  
+- [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md)  
   A discussion of using event handlers for interacting with the Event Processor client as it is running, illustrating the available events and common usage scenarios like processing events, detecting errors, and specifying a position to begin reading events if a checkpoint does not exist.
   
-- [Processing Events](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_ProcessingEvents.md)  
+- [Processing Events](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_ProcessingEvents.md)  
   A deep dive into processing events, handling errors, and creating checkpoints using the Event Processor client. 
   
-- [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample05_IdentityAndSharedAccessCredentials.md)  
+- [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample05_IdentityAndSharedAccessCredentials.md)  
   A discussion of the different types of authorization supported, focusing on identity-based credentials for Azure Active Directory and use the of shared access signatures and keys.
   
-- [Requesting Azure Storage Service Versions](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample06_RequestingStorageServiceVersions.md)  
+- [Requesting Azure Storage Service Versions](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample06_RequestingStorageServiceVersions.md)  
   An illustration of configuring the Blob Storage client to use a specific version of the service, rather than the default (latest).  This is useful when the Azure host environment that you are targeting supports a different version of Blob Storage service than is available in the Azure public cloud, such as Azure Stack Hub 2002.
 
 ## Contributing  
@@ -81,6 +81,6 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
+Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.Processor/samples/%2FREADME.png)

@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 
@@ -18,11 +17,12 @@ namespace Azure.Identity
     /// </summary>
     public class AuthorizationCodeCredential : TokenCredential
     {
-        private readonly MsalConfidentialClient _client;
         private readonly string _authCode;
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
+        private readonly bool _allowMultiTenantAuthentication;
+        private readonly MsalConfidentialClient _client;
         private readonly string _redirectUri;
         private readonly string _tenantId;
 
@@ -85,8 +85,8 @@ namespace Azure.Identity
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
             _authCode = authorizationCode ;
-            options ??= new TokenCredentialOptions();
-            _pipeline = CredentialPipeline.GetInstance(options);
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
+            _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
                 AuthorizationCodeCredentialOptions o => o.RedirectUri?.ToString(),
@@ -97,7 +97,8 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by
+        /// Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -108,7 +109,8 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by
+        /// Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -125,11 +127,12 @@ namespace Azure.Identity
             try
             {
                 AccessToken token;
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
 
                 if (_record is null)
                 {
                     AuthenticationResult result = await _client
-                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, _tenantId, _redirectUri, async, cancellationToken)
+                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, async, cancellationToken)
                         .ConfigureAwait(false);
                     _record = new AuthenticationRecord(result, _clientId);
 
@@ -138,7 +141,7 @@ namespace Azure.Identity
                 else
                 {
                     AuthenticationResult result = await _client
-                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, _tenantId, _redirectUri, async, cancellationToken)
+                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, async, cancellationToken)
                         .ConfigureAwait(false);
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }

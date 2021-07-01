@@ -7,7 +7,7 @@ Most client methods return one of the following types:
  - `Response<T>` -  a value and HTTP response
  - `Pageable<T>` -  a collection of values retrieved in pages
  - `AsyncPageable<T>` - a collection of values asynchronously retrieved in pages
- - `*Operation<T>` - a long-running operation see [long running operation samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/LongRunningOperations.md)
+ - `*Operation<T>` - a long-running operation see [long running operation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md)
 
 ## Accessing HTTP response propreties
 

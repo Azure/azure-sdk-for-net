@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to the `Azure.Messaging.EventHubs` family of packages from the legacy `Microsoft.Azure.EventHubs` family of packages.  It will focus on side-by-side comparisons for similar operations between the to versions, covering the [`Azure.Messaging.EventHubs`](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) and [`Azure.Messaging.EventHubs.Processor`](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) packages and their legacy equivalents, [`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) and [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/).
 
-Familiarity with the `Microsoft.Azure.EventHubs` family of packages is assumed.  For those new to the Event Hubs client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md), [Event Hubs samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples), and the [Event Processor samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) rather than this guide.
+Familiarity with the `Microsoft.Azure.EventHubs` family of packages is assumed.  For those new to the Event Hubs client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/README.md), [Event Hubs samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples), and the [Event Processor samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) rather than this guide.
 
 ## Table of contents
 
@@ -70,11 +70,11 @@ In order to allow for a single focus and clear responsibility, the core function
 
 #### Specialized
 
-- The [PartitionReceiver](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.partitionreceiver?view=azure-dotnet) is responsible for reading events from a specific partition of an Event Hub, with a greater level of control over communication with the Event Hubs service than is offered by other event consumers.  More detail on the design and philosophy for the `PartitionReceiver` can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-partition-receiver.md).
+- The [PartitionReceiver](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.partitionreceiver?view=azure-dotnet) is responsible for reading events from a specific partition of an Event Hub, with a greater level of control over communication with the Event Hubs service than is offered by other event consumers.  More detail on the design and philosophy for the `PartitionReceiver` can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-partition-receiver.md).
 
 - The [EventProcessor&lt;TPartition&gt;](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.eventprocessor-1?view=azure-dotnet) provides a base for creating a custom processor for reading and processing events for all partitions of an Event Hub. The `EventProcessor<TPartition>` fills a similar role as the EventProcessorClient, with cooperative load balancing and resiliency as its core features.  However, it also offers native batch processing, the ability to customize checkpoint storage, a greater level of control over communication with the Event Hubs service, and a less opinionated API.  The caveat is that this comes with additional complexity and exists as of an abstract base, which needs to be extended and the core "handler" activities implemented via override. 
 
-  Generally speaking, the `EventProcessorClient` was designed to provide a familiar API to that of the `EventHubConsumerClient` and offer an intuitive "step-up" experience for developers exploring Event Hubs as they advance to production scenarios.  For a large portion of our library users, that covers their needs well.  There's definitely a point, however, where an application requires more control to handle higher throughput or unique needs - that's where the `EventProcessor<TPartition>` is intended to help.  More on the design and philosophy behind this type can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
+  Generally speaking, the `EventProcessorClient` was designed to provide a familiar API to that of the `EventHubConsumerClient` and offer an intuitive "step-up" experience for developers exploring Event Hubs as they advance to production scenarios.  For a large portion of our library users, that covers their needs well.  There's definitely a point, however, where an application requires more control to handle higher throughput or unique needs - that's where the `EventProcessor<TPartition>` is intended to help.  More on the design and philosophy behind this type can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
 
 ### Client constructors
 
@@ -132,7 +132,7 @@ EventHubClient client = EventHubClient.CreateWithManagedIdentity(
 
 In the `Azure.Messaging.EventHubs` library, there is no longer a higher-level client that serves as a factory.  Instead, the producers and consumers are created directly using the `EventHubProducerClient` or `EventHubConsumerClient` for standard cases.  A full description of the client types available can be found above in the [Client hierarchy](#client-hierarchy) section.
 
-Each of the client types supports connection strings as well as Azure Active Directory and other forms of identity.  One key change in `Azure.Messaging.EventHubs` is that when using identity credentials, the [`Azure.Identity`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md) library is used to offer a consistent and uniform approach to authentication across the client libraries for different Azure services.  For more information on using identity credentials with Event Hubs, please see the [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_IdentityAndSharedAccessCredentials.md) sample.
+Each of the client types supports connection strings as well as Azure Active Directory and other forms of identity.  One key change in `Azure.Messaging.EventHubs` is that when using identity credentials, the [`Azure.Identity`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) library is used to offer a consistent and uniform approach to authentication across the client libraries for different Azure services.  For more information on using identity credentials with Event Hubs, please see the [Identity and Shared Access Credentials](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_IdentityAndSharedAccessCredentials.md) sample.
 
 Using a connection string:
 
@@ -162,7 +162,7 @@ var consumer = new EventHubConsumerClient(consumerGroup, fullyQualifiedNamespace
 
 In the `Microsoft.Azure.EventHubs` library, publishing events can be performed by several types, each targeted at a different set of scenarios but with some overlap between them.  Generally, the `EventHubClient` is used when publishing events that are not intended for a specific partition and the `PartitionSender` is used for publishing events to a single partition.
 
-In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used for all event publishing scenarios.  It's goal is to provide a consistent experience for publishing with a set of options used to control behavior.  For a detailed discussion of common scenarios and options, please see the [Publishing Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md) sample.
+In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used for all event publishing scenarios.  It's goal is to provide a consistent experience for publishing with a set of options used to control behavior.  For a detailed discussion of common scenarios and options, please see the [Publishing Events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md) sample.
 
 This section will provide a high-level comparison of the most common publishing scenarios.
 
@@ -390,7 +390,7 @@ finally
 
 In the `Microsoft.Azure.EventHubs` library, reading events can be performed by either the `EventProcessorHost` or the `PartitionReceiver`, depending on whether you would like to read from all partitions of an Event Hub or a single partition.  Generally, using the `EventProcessorHost` is the preferred approach for most production scenarios.  
 
-The `Azure.Messaging.EventHubs` library also provides multiple types for reading events, with the `EventProcessorClient` focused on reading from all partitions, and the `EventHubConsumerClient` and `PartitionReceiver` focused on reading from a single partition. The `EventProcessorClient` is the preferred approach for most production scenarios.  For a detailed discussion of common scenarios and options, please see the [Event Processor Client](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) and [Reading Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md) samples.
+The `Azure.Messaging.EventHubs` library also provides multiple types for reading events, with the `EventProcessorClient` focused on reading from all partitions, and the `EventHubConsumerClient` and `PartitionReceiver` focused on reading from a single partition. The `EventProcessorClient` is the preferred approach for most production scenarios.  For a detailed discussion of common scenarios and options, please see the [Event Processor Client](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) and [Reading Events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md) samples.
 
 #### Reading events from all partitions
 
@@ -871,6 +871,6 @@ private async Task<List<MigrationCheckpoint>> ReadLegacyCheckpoints(
 ## Additional samples
 
 More examples can be found at:
-- [Event Hubs samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples)
-- [Event Hubs Processor samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples)
+- [Event Hubs samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples)
+- [Event Hubs Processor samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples)
 - [Building a custom Event Hubs Event Processor with .NET](https://devblogs.microsoft.com/azure-sdk/custom-event-processor/) _(blog article)_

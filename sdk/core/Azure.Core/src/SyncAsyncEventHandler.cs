@@ -31,7 +31,7 @@ namespace Azure.Core
     /// of your handler returns a <see cref="Task"/>, you should write regular
     /// sync code that blocks and return <see cref="Task.CompletedTask"/> when
     /// finished.
-    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_SyncHandler">
+    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_SyncHandler" language="csharp">
     /// var client = new AlarmClient();
     /// client.Ring += (SyncAsyncEventArgs e) =&gt;
     /// {
@@ -58,7 +58,7 @@ namespace Azure.Core
     /// If you're using the asynchronous, non-blocking methods of a client
     /// (i.e., methods with an Async suffix), they will raise events that
     /// expect handlers to execute asynchronously.
-    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_AsyncHandler">
+    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_AsyncHandler" language="csharp">
     /// var client = new AlarmClient();
     /// client.Ring += async (SyncAsyncEventArgs e) =&gt;
     /// {
@@ -78,7 +78,7 @@ namespace Azure.Core
     /// property to check how the event is being raised and implement your
     /// handler accordingly.  Here's an example handler that's safe to invoke
     /// from both sync and async code paths.
-    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_CombinedHandler">
+    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_CombinedHandler" language="csharp">
     /// var client = new AlarmClient();
     /// client.Ring += async (SyncAsyncEventArgs e) =&gt;
     /// {
@@ -110,7 +110,7 @@ namespace Azure.Core
     /// <see cref="AggregateException.Flatten"/> and
     /// <see cref="AggregateException.Handle(Func{Exception, bool})"/> to make
     /// complex failures easier to work with.
-    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_Exceptions">
+    /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_Exceptions" language="csharp">
     /// var client = new AlarmClient();
     /// client.Ring += (SyncAsyncEventArgs e) =&gt;
     ///     throw new InvalidOperationException(&quot;Alarm unplugged.&quot;);

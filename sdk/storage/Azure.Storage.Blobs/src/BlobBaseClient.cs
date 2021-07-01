@@ -312,7 +312,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options, null)
+            : this(blobUri, credential.AsPolicy(options), options, null)
         {
             _blobRestClient = BuildBlobRestClient(blobUri);
             Errors.VerifyHttpsTokenAuth(blobUri);
@@ -1787,6 +1787,10 @@ namespace Azure.Storage.Blobs.Specialized
         {
             PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
 
+            if (UsingClientSideEncryption)
+            {
+                ClientSideDecryptor.BeginContentEncryptionKeyCaching();
+            }
             if (async)
             {
                 return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
@@ -2077,12 +2081,22 @@ namespace Azure.Storage.Blobs.Specialized
                         readConditions = readConditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
                     }
 
+                    ClientSideDecryptor.ContentEncryptionKeyCache contentEncryptionKeyCache = default;
+                    if (UsingClientSideEncryption && !allowModifications)
+                    {
+                        contentEncryptionKeyCache = new();
+                    }
+
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
                         bool rangeGetContentHash,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
+                            if (UsingClientSideEncryption)
+                            {
+                                ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
+                            }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
                                 readConditions,
@@ -5004,11 +5018,14 @@ namespace Azure.Storage.Blobs.Specialized
                 }
 
                 conditions.ValidateConditionsNotPresent(
-                    BlobRequestConditionProperty.IfMatch
-                    | BlobRequestConditionProperty.IfNoneMatch
-                    | BlobRequestConditionProperty.IfModifiedSince
-                    | BlobRequestConditionProperty.LeaseId
-                    | BlobRequestConditionProperty.TagConditions);
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.LeaseId
+                        | BlobRequestConditionProperty.TagConditions,
+                    operationName: nameof(BlobBaseClient.SetImmutabilityPolicy),
+                    parameterName: nameof(conditions));
 
                 try
                 {
