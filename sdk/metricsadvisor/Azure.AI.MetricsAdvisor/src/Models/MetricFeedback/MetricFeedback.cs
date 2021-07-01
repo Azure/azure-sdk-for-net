@@ -72,7 +72,10 @@ namespace Azure.AI.MetricsAdvisor
         public DateTimeOffset? CreatedTime { get; }
 
         /// <summary>
-        /// The user who created the <see cref="MetricFeedback"/>.
+        /// The user who created the <see cref="MetricFeedback"/>. If <see cref="MetricsAdvisorKeyCredential"/>
+        /// authentication was used when creating the feedback, this property contains the email address of the
+        /// creator. If AAD authentication was used instead, it contains the client ID of the service principal
+        /// used.
         /// </summary>
         public string UserPrincipal { get; }
 
