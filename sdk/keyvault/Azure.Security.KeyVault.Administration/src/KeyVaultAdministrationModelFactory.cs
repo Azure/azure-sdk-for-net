@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Security.KeyVault.Administration.Models;
 
@@ -24,6 +25,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
         /// <returns> A new <see cref="Administration.KeyVaultRoleDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static KeyVaultRoleDefinition KeyVaultRoleDefinition(string id = default, string name = default, KeyVaultRoleDefinitionType? type = default, string roleName = default, string description = default, KeyVaultRoleType? roleType = default, IList<KeyVaultPermission> permissions = default, IList<KeyVaultRoleScope> assignableScopes = default)
         {
             return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);

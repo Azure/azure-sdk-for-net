@@ -19,6 +19,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="retry"> Indicates that it may be possible to retry the Job. If retry is unsuccessful, please contact Azure support via Azure Portal. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobError"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MediaJobError MediaJobError(MediaJobErrorCode? code = default, string message = default, MediaJobErrorCategory? category = default, MediaJobRetry? retry = default, IReadOnlyList<MediaJobErrorDetail> details = default)
         {
             details ??= new List<MediaJobErrorDetail>();
@@ -31,6 +32,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <param name="outputs"> Gets the Job outputs. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobFinishedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState? previousState = default, MediaJobState? state = default, IReadOnlyDictionary<string, string> correlationData = default, IReadOnlyList<MediaJobOutput> outputs = default)
         {
             correlationData ??= new Dictionary<string, string>();
@@ -44,6 +46,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <param name="outputs"> Gets the Job outputs. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobCanceledEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState? previousState = default, MediaJobState? state = default, IReadOnlyDictionary<string, string> correlationData = default, IReadOnlyList<MediaJobOutput> outputs = default)
         {
             correlationData ??= new Dictionary<string, string>();
@@ -57,6 +60,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <param name="outputs"> Gets the Job outputs. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobErroredEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState? previousState = default, MediaJobState? state = default, IReadOnlyDictionary<string, string> correlationData = default, IReadOnlyList<MediaJobOutput> outputs = default)
         {
             correlationData ??= new Dictionary<string, string>();
@@ -70,6 +74,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
         /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
         /// <returns> A new <see cref="SystemEvents.MapsGeofenceEventProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MapsGeofenceEventProperties MapsGeofenceEventProperties(IReadOnlyList<string> expiredGeofenceGeometryId = default, IReadOnlyList<MapsGeofenceGeometry> geometries = default, IReadOnlyList<string> invalidPeriodGeofenceGeometryId = default, bool? isEventPublished = default)
         {
             expiredGeofenceGeometryId ??= new List<string>();
@@ -88,6 +93,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> The thread properties. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyList<AcsChatThreadParticipantProperties> participants = default)
         {
             properties ??= new Dictionary<string, object>();
@@ -104,6 +110,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> The thread properties. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyList<AcsChatThreadParticipantProperties> participants = default)
         {
             properties ??= new Dictionary<string, object>();
