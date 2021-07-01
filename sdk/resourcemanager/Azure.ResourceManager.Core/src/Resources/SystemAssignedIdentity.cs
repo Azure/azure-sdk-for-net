@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing an Identity assigned by the system.
     /// </summary>
-    public sealed class SystemAssignedIdentity
+    public sealed class SystemAssignedIdentity : IEquatable<SystemAssignedIdentity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SystemAssignedIdentity"/> class with Null properties.
@@ -157,6 +157,21 @@ namespace Azure.ResourceManager.Core
                 return false;
 
             return TenantId.Equals(other.TenantId) && PrincipalId.Equals(other.PrincipalId);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            return Equals(obj as SystemAssignedIdentity);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCodeBuilder.Combine(TenantId, PrincipalId);
         }
     }
 }
