@@ -6,46 +6,26 @@ $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory)
+function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
-  $projDirPath = (Join-Path $pkgPath "src")
+  $allPackageProps = @()
+  $msbuildOutput = dotnet msbuild /nologo /t:GetPackageInfo $EngDir/service.proj /p:ServiceDirectory=$serviceDirectory
 
-  if (!(Test-Path $projDirPath))
+  foreach ($projectOutput in $msbuildOutput)
   {
-    return $null
-  }
+    if (!$projectOutput) { continue }
 
-  $projectPaths = @(Resolve-Path (Join-Path $projDirPath "*.csproj"))
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
 
-  if ($projectpaths.Count -ge 1) {
-    $projectPath = $projectPaths[0].path
-    if ($projectPaths.Count -gt 1) {
-      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
-    }
-  }
-  else {
-    return $null
-  }
-
-  if ($projectPath -and (Test-Path $projectPath))
-  {
-    $pkgName = Split-Path -Path $projectPath -LeafBase
-    $projectData = New-Object -TypeName XML
-    $projectData.load($projectPath)
-    $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    $sdkType = "client"
-    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
-    {
-      $sdkType = "mgmt"
-    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
-    $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
-    return $pkgProp
+
+    $allPackageProps += $pkgProp
   }
 
-  return $null
+  return $allPackageProps
 }
 
 # Returns the nuget publish status of a package id and version.
