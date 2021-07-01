@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         private const string MetricTimestampValue = "MetricTimestamp";
-        private const string FeedbackCreatedTimeValue = "FeedbackCreatedTime";
+        private const string FeedbackCreatedOnValue = "FeedbackCreatedTime";
         /// <summary> Determines if two <see cref="FeedbackQueryTimeMode"/> values are the same. </summary>
         public static bool operator ==(FeedbackQueryTimeMode left, FeedbackQueryTimeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FeedbackQueryTimeMode"/> values are not the same. </summary>

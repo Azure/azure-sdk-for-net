@@ -52,8 +52,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(detectionConfigurationId, options))
             {
                 Console.WriteLine($"Incident ID: {incident.Id}");
-                Console.WriteLine($"First associated anomaly occurred at: {incident.StartTime}");
-                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
+                Console.WriteLine($"First associated anomaly occurred at: {incident.StartedOn}");
+                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastDetectedOn}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
                 Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");
@@ -103,8 +103,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Data feed ID: {incident.DataFeedId}");
                 Console.WriteLine($"Metric ID: {incident.MetricId}");
                 Console.WriteLine($"Detection configuration ID: {incident.DetectionConfigurationId}");
-                Console.WriteLine($"First associated anomaly occurred at: {incident.StartTime}");
-                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
+                Console.WriteLine($"First associated anomaly occurred at: {incident.StartedOn}");
+                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastDetectedOn}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
                 Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");

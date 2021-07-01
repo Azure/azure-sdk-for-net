@@ -17,15 +17,15 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Initializes a new instance of MetricFeedback. </summary>
         /// <param name="kind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
-        /// <param name="createdTime"> feedback created time. </param>
+        /// <param name="createdOn"> feedback created time. </param>
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"> . </param>
-        internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdTime, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter)
+        internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter)
         {
             Kind = kind;
             Id = id;
-            CreatedTime = createdTime;
+            CreatedOn = createdOn;
             UserPrincipal = userPrincipal;
             MetricId = metricId;
             DimensionFilter = dimensionFilter;

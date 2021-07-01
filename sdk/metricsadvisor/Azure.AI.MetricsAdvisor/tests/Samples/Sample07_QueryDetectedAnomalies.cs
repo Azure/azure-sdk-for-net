@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 }
 
                 Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
-                Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
+                Console.WriteLine($"Anomaly detected at: {anomaly.CreatedOn}");
                 Console.WriteLine($"Status: {anomaly.Status}");
                 Console.WriteLine($"Severity: {anomaly.Severity}");
                 Console.WriteLine("Series key:");
