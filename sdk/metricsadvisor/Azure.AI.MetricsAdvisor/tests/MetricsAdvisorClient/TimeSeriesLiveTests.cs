@@ -160,12 +160,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
                 Assert.That(seriesData, Is.Not.Null);
-                Assert.That(seriesData.Definition, Is.Not.Null);
-                Assert.That(seriesData.Definition.SeriesKey, Is.Not.Null);
+                Assert.That(seriesData.SeriesKey, Is.Not.Null);
                 Assert.That(seriesData.Timestamps, Is.Not.Null);
                 Assert.That(seriesData.MetricValues, Is.Not.Null);
 
-                Assert.That(seriesData.Definition.MetricId, Is.EqualTo(MetricId));
+                Assert.That(seriesData.MetricId, Is.EqualTo(MetricId));
 
                 Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.MetricValues.Count));
 
@@ -174,7 +173,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 }
 
-                returnedKeys.Add(seriesData.Definition.SeriesKey);
+                returnedKeys.Add(seriesData.SeriesKey);
             }
 
             Assert.That(returnedKeys.Count, Is.EqualTo(2));

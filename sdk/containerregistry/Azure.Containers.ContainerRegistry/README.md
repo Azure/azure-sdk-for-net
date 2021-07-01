@@ -13,6 +13,8 @@ Use the client library for Azure Container Registry to:
 
 ## Getting started
 
+To develop .NET application code that can connect to an Azure Container Registry instance, you will need the `Azure.Containers.ContainerRegistry` library.
+
 ### Install the package
 
 Install the Azure Container Registry client library for .NET with [NuGet][nuget]:
@@ -23,49 +25,29 @@ dotnet add package Azure.Containers.ContainerRegistry --prerelease
 
 ### Prerequisites
 
-You need an [Azure subscription][azure_sub] and a [Container Registry account][container_registry_docs] to use this package.
+You will need an [Azure subscription][azure_sub] and a [Container Registry service instance][container_registry_docs] for your application to connect to.
 
 To create a new Container Registry, you can use the [Azure Portal][container_registry_create_portal],
 [Azure PowerShell][container_registry_create_ps], or the [Azure CLI][container_registry_create_cli].
-Here's an example using the Azure CLI:
+Here'a an example of creating a new registry using the Azure CLI:
 
 ```Powershell
-az acr create --name MyContainerRegistry --resource-group MyResourceGroup --location westus --sku Basic
+az acr create --name myregistry --resource-group myresourcegroup --location westus --sku Basic
 ```
 
 ### Authenticate the client
 
-The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.  You can [authenticate with the Azure CLI](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#authenticating-via-the-azure-cli) when developing and debugging locally.  Please see the [Azure Identity README][identity] for more approaches to authenticating with `DefaultAzureCredential`.
+For your application to connect to your registry, you'll need to create a `ContainerRegistryClient` that can authenticate with it.  The [Azure Identity library][identity] makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.  
+
+When you're developing and debugging your application locally, you can use your own user to authenticate with your registry.  One way to accomplish this is to [authenticate your user with the Azure CLI](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#authenticating-via-the-azure-cli) and run your application from this environment.  If your application is using a client that has been constructed to authenticate with `DefaultAzureCredential`, it will correctly authenticate with the registry at the specified endpoint.  
 
 ```C#
-// Create a ContainerRegistryClient that will authenticate through Azure Active Directory
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+// Create a ContainerRegistryClient that will authenticate to your registry through Azure Active Directory
+Uri endpoint = new Uri("https://myregistry.azurecr.io");
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 ```
 
-Note that this samples assume you have a `REGISTRY_ENDPOINT` environment variable set.  This would be set to a string containing the `https://` prefix and the name of the login server, for example "https://myregistry.azurecr.io".
-
-#### National Clouds
-
-To authenticate with a registry in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
-
-- Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
-- Set the `AuthenticationScope` in `ContainerRegistryClientOptions`
-
-```C#
-// Create a ContainerRegistryClient that will authenticate through AAD in the China national cloud
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint,
-    new DefaultAzureCredential(
-        new DefaultAzureCredentialOptions()
-        {
-            AuthorityHost = AzureAuthorityHosts.AzureChina
-        }),
-    new ContainerRegistryClientOptions()
-    {
-        AuthenticationScope = "https://management.chinacloudapi.cn/.default"
-    });
-```
+Please see the [Azure Identity README][identity] for more approaches to authenticating with `DefaultAzureCredential`, both locally and in deployment environments.  To connect to registries in non-public Azure Clouds, see the samples below.
 
 For more information on using AAD with Azure Container Registry, please see the service's [Authentication Overview](https://docs.microsoft.com/azure/container-registry/container-registry-authentication).
 
@@ -81,16 +63,19 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
+
+The following snippets show brief samples of common developer scenarios using the ACR SDK library. 
+Please note that each sample assumes there is a `REGISTRY_ENDPOINT` environment variable set to a string containing the `https://` prefix and the name of the login server, for example "https://myregistry.azurecr.io".
 
 ### Sync examples
 
@@ -105,6 +90,10 @@ We guarantee that all client instance methods are thread-safe and independent of
 - [List tags with anonymous access asynchronously](#list-tags-with-anonymous-access)
 - [Set artifact properties asynchronously](#set-artifact-properties)
 - [Delete images asynchronously](#delete-images)
+
+### Advanced authentication
+ 
+- [Create a client that can authenticate with a registry in a national cloud](#authenticate-in-a-national-cloud)
 
 ### List repositories
 
@@ -292,6 +281,28 @@ await foreach (string repositoryName in repositoryNames)
 }
 ```
 
+### Authenticate in a National Cloud
+
+To authenticate with a registry in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
+
+- Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
+- Set the `AuthenticationScope` in `ContainerRegistryClientOptions`
+
+```C#
+// Create a ContainerRegistryClient that will authenticate through AAD in the China national cloud
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint,
+    new DefaultAzureCredential(
+        new DefaultAzureCredentialOptions()
+        {
+            AuthorityHost = AzureAuthorityHosts.AzureChina
+        }),
+    new ContainerRegistryClientOptions()
+    {
+        AuthenticationScope = "https://management.chinacloudapi.cn/.default"
+    });
+```
+
 ## Troubleshooting
 
 All container registry service operations will throw a
@@ -315,7 +326,7 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 }
 ```
 
-You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
+You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
 deeper into the requests you're making against the service.
 
 ## Next steps
@@ -339,7 +350,7 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcontainerregistry%2FAzure.Containers.ContainerRegistry%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/src
 [package]: https://www.nuget.org/packages/Azure.Containers.ContainerRegistry/
 [docs]: https://docs.microsoft.com/dotnet/api/azure.containers.containerregistry
 [rest_docs]: https://docs.microsoft.com/rest/api/containerregistry/
@@ -352,9 +363,9 @@ additional questions or comments.
 [container_registry_concepts]: https://docs.microsoft.com/azure/container-registry/container-registry-concepts
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
-[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/
+[identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

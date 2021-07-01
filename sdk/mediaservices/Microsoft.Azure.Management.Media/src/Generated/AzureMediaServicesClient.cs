@@ -49,11 +49,6 @@ namespace Microsoft.Azure.Management.Media
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The version of the API to be used with the client request.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -409,7 +404,6 @@ namespace Microsoft.Azure.Management.Media
             LiveOutputs = new LiveOutputsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

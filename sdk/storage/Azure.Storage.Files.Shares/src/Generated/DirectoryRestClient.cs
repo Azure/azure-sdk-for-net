@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-04-08")
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02")
         {
             if (url == null)
             {
@@ -424,7 +424,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateListFilesAndDirectoriesSegmentRequest(string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout)
+        internal HttpMessage CreateListFilesAndDirectoriesSegmentRequest(string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -453,8 +453,16 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
+            if (include != null)
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
+            if (includeExtendedInfo != null)
+            {
+                request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -465,10 +473,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout);
+            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -494,10 +504,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout);
+            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -694,7 +706,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateListFilesAndDirectoriesSegmentNextPageRequest(string nextLink, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout)
+        internal HttpMessage CreateListFilesAndDirectoriesSegmentNextPageRequest(string nextLink, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -704,6 +716,10 @@ namespace Azure.Storage.Files.Shares
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
+            if (includeExtendedInfo != null)
+            {
+                request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -715,16 +731,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout);
+            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -751,16 +769,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout);
+            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
             switch (message.Response.Status)

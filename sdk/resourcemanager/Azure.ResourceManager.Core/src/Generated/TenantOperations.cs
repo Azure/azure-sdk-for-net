@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.Core
     public class TenantOperations : OperationsBase
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TenantOperations"/> class for mocking.
+        /// </summary>
+        protected TenantOperations()
+        {
+        }
+
+        /// <summary>
         /// The resource type for subscription
         /// </summary>
         public static readonly ResourceType ResourceType = ResourceType.RootResourceType;
@@ -57,6 +64,15 @@ namespace Azure.ResourceManager.Core
         public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, AsyncPageable<T>> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
+        }
+
+        /// <summary>
+        /// Gets the provider container under this subscription.
+        /// </summary>
+        /// <returns> The provider container. </returns>
+        public virtual ProviderContainer GetProviders()
+        {
+            return new ProviderContainer(this);
         }
     }
 }

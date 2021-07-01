@@ -20,6 +20,8 @@ pr:
   paths:
     include:
     - sdk/resourcemanager/
+    - common/ManagementTestShared/
+    - common/ManagementCoreShared/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

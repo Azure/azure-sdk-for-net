@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://amandacanaryoauth.blob.core.windows.net/test-filesystem-834c11c3-947b-9479-11da-9b6fb52f521d?restype=container",
@@ -21,7 +21,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 29 May 2020 00:05:12 GMT",
-        "ETag": "\u00220x8D80363F5A70026\u0022",
+        "ETag": "\"0x8D80363F5A70026\"",
         "Last-Modified": "Fri, 29 May 2020 00:05:13 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -34,7 +34,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-834c11c3-947b-9479-11da-9b6fb52f521d/test-\u0192\u00A1\u00A3\u20AC\u203D%253A-91c34577-ef16-0d15-6bd4-660711495b35?resource=file",
+      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-834c11c3-947b-9479-11da-9b6fb52f521d/test-ƒ¡£€‽%253A-91c34577-ef16-0d15-6bd4-660711495b35?resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -52,7 +52,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 29 May 2020 00:05:12 GMT",
-        "ETag": "\u00220x8D80363F5B27FEB\u0022",
+        "ETag": "\"0x8D80363F5B27FEB\"",
         "Last-Modified": "Fri, 29 May 2020 00:05:13 GMT",
         "Server": [
           "Windows-Azure-HDFS/1.0",
@@ -65,7 +65,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-834c11c3-947b-9479-11da-9b6fb52f521d?resource=filesystem\u0026recursive=true\u0026upn=false",
+      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-834c11c3-947b-9479-11da-9b6fb52f521d?resource=filesystem&recursive=true&upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -98,7 +98,7 @@
             "contentLength": "0",
             "etag": "0x8D80363F5B27FEB",
             "lastModified": "Fri, 29 May 2020 00:05:13 GMT",
-            "name": "test-\u0192\u00A1\u00A3\u20AC\u203D%3A-91c34577-ef16-0d15-6bd4-660711495b35"
+            "name": "test-ƒ¡£€‽%3A-91c34577-ef16-0d15-6bd4-660711495b35"
           }
         ]
       }
@@ -136,6 +136,6 @@
   ],
   "Variables": {
     "RandomSeed": "1268590554",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\namandacanaryoauth\nU2FuaXRpemVk\nhttp://amandacanaryoauth.blob.core.windows.net\nhttp://amandacanaryoauth.file.core.windows.net\nhttp://amandacanaryoauth.queue.core.windows.net\nhttp://amandacanaryoauth.table.core.windows.net\n\n\n\n\nhttp://amandacanaryoauth-secondary.blob.core.windows.net\nhttp://amandacanaryoauth-secondary.file.core.windows.net\nhttp://amandacanaryoauth-secondary.queue.core.windows.net\nhttp://amandacanaryoauth-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://amandacanaryoauth.blob.core.windows.net/;QueueEndpoint=http://amandacanaryoauth.queue.core.windows.net/;FileEndpoint=http://amandacanaryoauth.file.core.windows.net/;BlobSecondaryEndpoint=http://amandacanaryoauth-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandacanaryoauth-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandacanaryoauth-secondary.file.core.windows.net/;AccountName=amandacanaryoauth;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\namandacanaryoauth\nU2FuaXRpemVk\nhttp://amandacanaryoauth.blob.core.windows.net\nhttp://amandacanaryoauth.file.core.windows.net\nhttp://amandacanaryoauth.queue.core.windows.net\nhttp://amandacanaryoauth.table.core.windows.net\n\n\n\n\nhttp://amandacanaryoauth-secondary.blob.core.windows.net\nhttp://amandacanaryoauth-secondary.file.core.windows.net\nhttp://amandacanaryoauth-secondary.queue.core.windows.net\nhttp://amandacanaryoauth-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://amandacanaryoauth.blob.core.windows.net/;QueueEndpoint=http://amandacanaryoauth.queue.core.windows.net/;FileEndpoint=http://amandacanaryoauth.file.core.windows.net/;BlobSecondaryEndpoint=http://amandacanaryoauth-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandacanaryoauth-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandacanaryoauth-secondary.file.core.windows.net/;AccountName=amandacanaryoauth;AccountKey=Sanitized\n\n\n"
   }
 }

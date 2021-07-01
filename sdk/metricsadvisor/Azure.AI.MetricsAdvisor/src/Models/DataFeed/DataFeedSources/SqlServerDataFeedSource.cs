@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an SQL Server data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -40,13 +41,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             Query = parameter.Query;
 
             SetAuthentication(authentication);
-            DatasourceCredentialId = credentialId;
+            DataSourceCredentialId = credentialId;
         }
 
         /// <summary>
         /// The different ways of authenticating to a <see cref="SqlServerDataFeedSource"/>. Be aware that
-        /// some authentication types require you to have a <see cref="DatasourceCredential"/> in the service. In this
-        /// case, you also need to set the property <see cref="DatasourceCredentialId"/> to specify which credential
+        /// some authentication types require you to have a <see cref="DataSourceCredential"/> in the service. In this
+        /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
         /// to use. Defaults to <see cref="Basic"/>.
         /// </summary>
         public enum AuthenticationType
@@ -64,20 +65,20 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             /// <summary>
             /// Uses a SQL Server connection string for authentication. You need to have a
-            /// <see cref="SqlConnectionStringDatasourceCredential"/> in the server in order to use this type of
+            /// <see cref="SqlConnectionStringDataSourceCredential"/> in the server in order to use this type of
             /// authentication.
             /// </summary>
             SqlConnectionString,
 
             /// <summary>
-            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalDatasourceCredential"/>
+            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalDataSourceCredential"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipal,
 
             /// <summary>
             /// Uses Service Principal authentication, but the client ID and the client secret must be
-            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultDatasourceCredential"/>
+            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultDataSourceCredential"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipalInKeyVault
@@ -85,17 +86,17 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The method used to authenticate to this <see cref="SqlServerDataFeedSource"/>. Be aware that some
-        /// authentication types require you to have a <see cref="DatasourceCredential"/> in the service. In this
-        /// case, you also need to set the property <see cref="DatasourceCredentialId"/> to specify which credential
+        /// authentication types require you to have a <see cref="DataSourceCredential"/> in the service. In this
+        /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
         /// to use. Defaults to <see cref="AuthenticationType.Basic"/>.
         /// </summary>
         public AuthenticationType? Authentication { get; set; }
 
         /// <summary>
-        /// The ID of the <see cref="DatasourceCredential"/> to use for authentication. The type of authentication to use
+        /// The ID of the <see cref="DataSourceCredential"/> to use for authentication. The type of authentication to use
         /// must also be specified in the property <see cref="Authentication"/>.
         /// </summary>
-        public string DatasourceCredentialId { get; set; }
+        public string DataSourceCredentialId { get; set; }
 
         /// <summary>
         /// The query to retrieve the data to be ingested.

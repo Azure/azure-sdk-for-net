@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> arrow configuration. </summary>
+    /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
     internal partial class ArrowTextConfigurationInternal
     {
         /// <summary> Initializes a new instance of ArrowTextConfigurationInternal. </summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Azure.ResourceManager.Core
@@ -49,10 +50,6 @@ namespace Azure.ResourceManager.Core
         /// <param name="childType"></param>
         internal ResourceType(ResourceType parent, string childType)
             : this(parent.Namespace, $"{parent.Type}/{childType}")
-        {
-        }
-
-        private ResourceType()
         {
         }
 
@@ -120,29 +117,26 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Compares two <see cref="ResourceType"/> objects.
         /// </summary>
-        /// <param name="source"> First <see cref="ResourceType"/> object. </param>
-        /// <param name="target"> Second <see cref="ResourceType"/> object. </param>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
         /// <returns> True if they are equal, otherwise False. </returns>
-        public static bool operator ==(ResourceType source, ResourceType target)
+        public static bool operator ==(ResourceType left, ResourceType right)
         {
-            if (source is null)
-                return target is null;
+            if (left is null)
+                return right is null;
 
-            return source.Equals(target);
+            return left.Equals(right);
         }
 
         /// <summary>
         /// Compares two <see cref="ResourceType"/> objects.
         /// </summary>
-        /// <param name="source"> First <see cref="ResourceType"/> object. </param>
-        /// <param name="target"> Second <see cref="ResourceType"/> object. </param>
+        /// <param name="left"> First <see cref="ResourceType"/> object. </param>
+        /// <param name="right"> Second <see cref="ResourceType"/> object. </param>
         /// <returns> False if they are equal, otherwise True. </returns>
-        public static bool operator !=(ResourceType source, ResourceType target)
+        public static bool operator !=(ResourceType left, ResourceType right)
         {
-            if (source is null)
-                return !(target is null);
-
-            return !source.Equals(target);
+            return !(left == right);
         }
 
         /// <summary>
@@ -187,28 +181,31 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object other)
         {
-            if (obj is null)
+            if (ReferenceEquals(this, other))
+                return true;
+
+            if (other is null)
                 return false;
 
-            var resourceObj = obj as ResourceType;
+            var resourceObj = other as ResourceType;
 
-            if (!(resourceObj is null))
+            if (resourceObj is not null)
                 return Equals(resourceObj);
 
-            var stringObj = obj as string;
+            var stringObj = other as string;
 
-            if (stringObj != null)
+            if (stringObj is not null)
                 return Equals(stringObj);
 
-            return base.Equals(obj);
+            return false;
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return ToString().GetHashCode();
+            return ToString().ToLower(CultureInfo.InvariantCulture).GetHashCode();
         }
 
         /// <summary>
@@ -249,6 +246,50 @@ namespace Azure.ResourceManager.Core
                 Type = id.ResourceType.Type;
                 Namespace = id.ResourceType.Namespace;
             }
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceType"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than the right. </returns>
+        public static bool operator <(ResourceType left, ResourceType right)
+        {
+            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceType"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than or equal to the right. </returns>
+        public static bool operator <=(ResourceType left, ResourceType right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceType"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than the right. </returns>
+        public static bool operator >(ResourceType left, ResourceType right)
+        {
+            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceType"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than or equal to the right. </returns>
+        public static bool operator >=(ResourceType left, ResourceType right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }

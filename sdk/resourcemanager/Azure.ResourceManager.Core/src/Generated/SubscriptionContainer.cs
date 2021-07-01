@@ -135,16 +135,28 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentException("Invalid parent for subscription container", nameof(identifier));
         }
 
-        /// <inheritdoc />
-        public override Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets details for this subscription from the service.
+        /// </summary>
+        /// <param name="subscriptionGuid"> The Id of the subscription to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="Response{Subscription}"/> operation for this subscription. </returns>
+        /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
+        public Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             return new SubscriptionOperations(
                     new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
                     subscriptionGuid).Get(cancellationToken);
         }
 
-        /// <inheritdoc />
-        public override Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets details for this subscription from the service.
+        /// </summary>
+        /// <param name="subscriptionGuid"> The Id of the subscription to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this subscription. </returns>
+        /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
+        public virtual Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             return new SubscriptionOperations(
                 new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),

@@ -16,9 +16,12 @@ namespace Azure.ResourceManager.Core
         internal const string ProvidersKey = "providers", SubscriptionsKey = "subscriptions",
             ResourceGroupsKey = "resourceGroups", LocationsKey = "locations";
 
-        internal const string ResourceGroupsLowerKey = "resourcegroups"; 
+        internal const string ResourceGroupsLowerKey = "resourcegroups";
 
         internal const string BuiltInResourceNamespace = "Microsoft.Resources";
+
+        internal static readonly IDictionary<string, string> SubscriptionResourceWithImplicitProviderList =
+            new Dictionary<string, string>() { { "tagnames", "Microsoft.Resources" } };
 
         internal static ResourceType SubscriptionType => new ResourceType(BuiltInResourceNamespace, SubscriptionsKey);
         internal static ResourceType LocationsType =>
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers 
+        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
         /// that are contained in a subscription.
         /// </summary>
         /// <param name="subscriptionId"> The GUID string representing the resource. </param>
@@ -130,6 +133,25 @@ namespace Azure.ResourceManager.Core
                         }
                     default:
                         {
+                            // Check for resources that has implicit(omitted) provider
+                            if (SubscriptionResourceWithImplicitProviderList.Keys.Contains(parts[0].ToLowerInvariant()))
+                            {
+                                var resourceTypeName = parts[0].ToLowerInvariant();
+                                var providerName = SubscriptionResourceWithImplicitProviderList[parts[0].ToLowerInvariant()];
+                                var providerIdentifier = new SubscriptionProviderIdentifier(subscription, providerName);
+                                if (parts.Count == 1 || parts[1] == ProvidersKey)
+                                {
+                                    return CreateSubscriptionProviderIdentifier(providerIdentifier, parts.Trim(1));
+                                }
+
+                                if (parts.Count > 1)
+                                {
+                                    return CreateSubscriptionIdentifier(
+                                        new SubscriptionResourceIdentifier(providerIdentifier, providerName, resourceTypeName, parts[1]),
+                                        parts.Skip(2).ToList());
+                                }
+                            }
+
                             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
                         }
                 }
@@ -139,7 +161,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers 
+        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
         /// that are contained in a location.
         /// </summary>
         /// <param name="subscription"> The resource id of the subscription for this resource. </param>
@@ -167,7 +189,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers 
+        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
         /// that are contained in a resource group.
         /// </summary>
         /// <param name="subscription"> The resource id of the subscription for this resource. </param>
@@ -195,7 +217,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers 
+        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
         /// that are based in the tenant.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -215,7 +237,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers 
+        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
         /// that are based in a subscription.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -235,7 +257,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers 
+        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
         /// that are contained in a location.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -255,7 +277,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers 
+        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
         /// that are contained in a resource group.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -443,8 +465,8 @@ namespace Azure.ResourceManager.Core
         /// Compre this resource identifier to the given resource identifier.
         /// </summary>
         /// <param name="other"> The resource identifier to compare to. </param>
-        /// <returns> 0 if the resource identifiers are equivalent, -1 if this resource identifier 
-        /// should be ordered before the given resource identifier, 1 if this resource identifier 
+        /// <returns> 0 if the resource identifiers are equivalent, -1 if this resource identifier
+        /// should be ordered before the given resource identifier, 1 if this resource identifier
         /// should be ordered after the given resource identifier. </returns>
         public int CompareTo(ResourceIdentifier other)
         {
@@ -478,7 +500,7 @@ namespace Azure.ResourceManager.Core
         public static implicit operator ResourceIdentifier(string other) => (other is null ? null : ResourceIdentifier.Create(other));
 
         /// <summary>
-        /// Convert a resource identifier to a string 
+        /// Convert a resource identifier to a string
         /// </summary>
         /// <param name="id"> The resource identifier. </param>
         public static implicit operator string(ResourceIdentifier id) => id?.ToString();
@@ -503,6 +525,50 @@ namespace Azure.ResourceManager.Core
         public static bool operator !=(ResourceIdentifier id1, ResourceIdentifier id2)
         {
             return !ResourceIdentifier.Equals(id1,id2);
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceIdentifier"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than the right. </returns>
+        public static bool operator <(ResourceIdentifier left, ResourceIdentifier right)
+        {
+            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceIdentifier"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than or equal to the right. </returns>
+        public static bool operator <=(ResourceIdentifier left, ResourceIdentifier right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceIdentifier"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than the right. </returns>
+        public static bool operator >(ResourceIdentifier left, ResourceIdentifier right)
+        {
+            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ResourceIdentifier"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than or equal to the right. </returns>
+        public static bool operator >=(ResourceIdentifier left, ResourceIdentifier right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }

@@ -225,14 +225,34 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsTrue(left > right);
         }
 
+        [TestCase("2019-12-01", null)]
+        [TestCase("2020-06-01", "2019-12-01")]
+        [TestCase("2020-06-01", "2020-06-01")]
+        public void TestGreaterThanOrEqualTrue(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsTrue(left >= right);
+        }
+
         [TestCase(null, "2019-12-01")]
         [TestCase("2019-12-01", "2020-06-01")]
         [TestCase(null, null)]
+        [TestCase("2020-06-01", "2020-06-01")]
         public void TestGreaterThanFalse(string leftString, string rightString)
         {
             FakeResourceApiVersions left = ConvertFromString(leftString);
             FakeResourceApiVersions right = ConvertFromString(rightString);
             Assert.IsFalse(left > right);
+        }
+
+        [TestCase(null, "2019-12-01")]
+        [TestCase("2019-12-01", "2020-06-01")]
+        public void TestGreaterThanOrEqualFalse(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsFalse(left >= right);
         }
 
         [TestCase(null, "2019-12-01")]
@@ -244,14 +264,34 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsTrue(left < right);
         }
 
+        [TestCase(null, "2019-12-01")]
+        [TestCase("2019-12-01-foobar", "2019-12-01-preview-1")]
+        [TestCase("2020-06-01", "2020-06-01")]
+        public void TestLessThanOrEqualTrue(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsTrue(left <= right);
+        }
+
         [TestCase("2019-12-01", null)]
         [TestCase("2020-06-01", "2019-12-01-foobar")]
         [TestCase(null, null)]
+        [TestCase("2020-06-01", "2020-06-01")]
         public void TestLessThanFalse(string leftString, string rightString)
         {
             FakeResourceApiVersions left = ConvertFromString(leftString);
             FakeResourceApiVersions right = ConvertFromString(rightString);
             Assert.IsFalse(left < right);
+        }
+
+        [TestCase("2019-12-01", null)]
+        [TestCase("2020-06-01", "2019-12-01-foobar")]
+        public void TestLessThanOrEqualFalse(string leftString, string rightString)
+        {
+            FakeResourceApiVersions left = ConvertFromString(leftString);
+            FakeResourceApiVersions right = ConvertFromString(rightString);
+            Assert.IsFalse(left <= right);
         }
 
         [TestCase]

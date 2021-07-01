@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
     {
         internal static TenantListResult DeserializeTenantListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TenantIdDescription>> value = default;
+            Optional<IReadOnlyList<TenantData>> value = default;
             string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TenantIdDescription> array = new List<TenantIdDescription>();
+                    List<TenantData> array = new List<TenantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantIdDescription.DeserializeTenantIdDescription(item));
+                        array.Add(TenantData.DeserializeTenantIdDescription(item));
                     }
                     value = array;
                     continue;

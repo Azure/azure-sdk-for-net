@@ -13,16 +13,18 @@ namespace Azure.Core.Tests
         private TestResource _value;
         private bool _exceptionOnWait;
         private OperationOrResponseInternals<TestResource> _operationHelper;
+        private int _delaySteps = 0;
 
         protected ArmOperationTest()
         {
         }
 
-        public ArmOperationTest(TestResource value, bool exceptionOnWait = false)
+        public ArmOperationTest(TestResource value, bool exceptionOnWait = false, int delaySteps = 0)
         {
             _value = value;
             _exceptionOnWait = exceptionOnWait;
             _operationHelper = new OperationOrResponseInternals<TestResource>(Response.FromValue(value, new MockResponse(200)));
+            _delaySteps = delaySteps;
         }
 
         public override string Id => "testId";
@@ -35,20 +37,21 @@ namespace Azure.Core.Tests
 
         public override Response GetRawResponse() => _operationHelper.GetRawResponse();
 
-        public override ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            if (_exceptionOnWait)
-                throw new ArgumentException("FakeArg");
-
-            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, new MockResponse(200)));
+            return await WaitForCompletionAsync(OperationInternals.DefaultPollingInterval, cancellationToken);
         }
 
-        public override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
 
-            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, new MockResponse(200)));
+            for (int i = 0; i < _delaySteps; i++)
+            {
+                await Task.Delay(pollingInterval);
+            }
+            return Response.FromValue(_value, new MockResponse(200));
         }
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operationHelper.UpdateStatusAsync(cancellationToken);

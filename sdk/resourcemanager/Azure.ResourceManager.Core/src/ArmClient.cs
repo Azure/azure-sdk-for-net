@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception> 
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public ArmClient(
             string defaultSubscriptionId,
             TokenCredential credential,
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.Core
             Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
-            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
+            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, options ?? ClientOptions);
 
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);
-            ClientOptions.ApiVersions.SetProviderClient(credential, baseUri, defaultSubscriptionId ?? DefaultSubscription.Id.SubscriptionId);
+            ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
         /// <summary>
@@ -136,11 +137,20 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Gets the tenants.
+        /// </summary>
+        /// <returns> Tenant container. </returns>
+        public virtual TenantContainer GetTenants()
+        {
+            return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+        }
+
+        /// <summary>
         /// Gets a resource group operations object.
         /// </summary>
         /// <param name="id"> The id of the resourcegroup </param>
         /// <returns> Resource operations of the resource. </returns>
-        public ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier id)
+        public virtual ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier id)
         {
             return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id.SubscriptionId), id.ResourceGroupName);
         }
@@ -154,24 +164,6 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets a container representing all resources as generic objects in the current tenant.
-        /// </summary>
-        /// <returns> GenericResource container. </returns>
-        public GenericResourceOperations GetGenericResourcesOperations(TenantResourceIdentifier id)
-        {
-            return new GenericResourceOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
-        }
-
-        /// <summary>
-        /// Gets the tenants.
-        /// </summary>
-        /// <returns> Tenant container. </returns>
-        public TenantContainer GetTenants()
-        {
-            return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
-        }
-
-        /// <summary>
         /// Creates a container using the lambda expression passed in.
         /// </summary>
         /// <typeparam name="T"> The type of container to construct. </typeparam>
@@ -181,6 +173,41 @@ namespace Azure.ResourceManager.Core
         public T GetContainer<T>(Func<ArmClientOptions, TokenCredential, Uri, HttpPipeline, T> func)
         {
             return func(ClientOptions, Credential, BaseUri, Pipeline);
+        }
+
+        /// <summary>
+        /// Get the operations for a list of specific resources.
+        /// </summary>
+        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
+        /// <returns></returns>
+        public virtual IList<GenericResourceOperations> GetGenericResourceOperations(IEnumerable<string> ids)
+        {
+            if (ids == null)
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
+
+            IList<GenericResourceOperations> genericRespirceOperations = new List<GenericResourceOperations>();
+            foreach (string id in ids)
+            {
+                genericRespirceOperations.Add(new GenericResourceOperations(DefaultSubscription, id));
+            }
+            return genericRespirceOperations;
+        }
+
+        /// <summary>
+        /// Get the operations for an specific resource.
+        /// </summary>
+        /// <param name="id"> The id of the resource to retrieve. </param>
+        /// <returns></returns>
+        public virtual GenericResourceOperations GetGenericResourceOperations(string id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            return new GenericResourceOperations(DefaultSubscription, id);
         }
     }
 }

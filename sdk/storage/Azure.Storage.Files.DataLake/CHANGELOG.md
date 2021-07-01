@@ -1,6 +1,11 @@
 # Release History
 
-## 12.7.0-beta.5 (Unreleased)
+## 12.8.0-beta.1 (Unreleased)
+- Added support for service version 2020-10-02.
+- Added support for Parquet as an input format in DataLakeFileClient.Query().
+
+## 12.7.0 (2021-06-08)
+- Includes all features from 12.7.0-beta.4
 - Fixed bug where DataLakeFileClient.Read could corrupt data on retry.
 - Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in DataLakeFileClient.ReadTo.
 - Fixed bug where specifying conditions in DataLakeFileClient.OpenRead could override allowModifications flag in DataLakeOpenReadOptions leading to inconsistent read.
