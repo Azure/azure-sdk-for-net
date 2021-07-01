@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static AsyncPageable<Core.GenericResource> ListDeploymentScriptByNameAsync(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Core.GenericResourceExpanded> ListDeploymentScriptByNameAsync(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DeploymentScriptOperations.ResourceType);
             filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContextAsync(subscription, filters, top, cancellationToken);
+            return ResourceListOperations.ListAtContextAsync(subscription, filters, top: top, cancellationToken: cancellationToken);
         }
 
         /// <summary> Filters the list of DeploymentScripts for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static Pageable<Core.GenericResource> ListDeploymentScriptByName(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<Core.GenericResourceExpanded> ListDeploymentScriptByName(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(DeploymentScriptOperations.ResourceType);
             filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContext(subscription, filters, top, cancellationToken);
+            return ResourceListOperations.ListAtContext(subscription, filters, top: top, cancellationToken: cancellationToken);
         }
         #endregion
 
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static AsyncPageable<Core.GenericResource> ListApplicationByNameAsync(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Core.GenericResourceExpanded> ListApplicationByNameAsync(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(ApplicationOperations.ResourceType);
             filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContextAsync(subscription, filters, top, cancellationToken);
+            return ResourceListOperations.ListAtContextAsync(subscription, filters, top: top, cancellationToken: cancellationToken);
         }
 
         /// <summary> Filters the list of Applications for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
-        public static Pageable<Core.GenericResource> ListApplicationByName(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<Core.GenericResourceExpanded> ListApplicationByName(this SubscriptionOperations subscription, string filter, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(ApplicationOperations.ResourceType);
             filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContext(subscription, filters, top, cancellationToken);
+            return ResourceListOperations.ListAtContext(subscription, filters, top: top, cancellationToken: cancellationToken);
         }
         #endregion
 
