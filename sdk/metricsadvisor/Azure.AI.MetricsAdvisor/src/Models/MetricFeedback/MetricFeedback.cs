@@ -74,8 +74,9 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// The user who created the <see cref="MetricFeedback"/>. If <see cref="MetricsAdvisorKeyCredential"/>
         /// authentication was used when creating the feedback, this property contains the email address of the
-        /// creator. If AAD authentication was used instead, it contains the client ID of the service principal
-        /// used.
+        /// creator. If AAD authentication was used instead, the value of this property uniquely identifies the
+        /// creator's user principal, but its value depends on the type of credential used. For instance, if a
+        /// <c>ClientSecretCredential</c> is used, it will contain the client ID.
         /// </summary>
         public string UserPrincipal { get; }
 
