@@ -273,11 +273,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
             ServicePrincipalInKeyVault = 3,
         }
     }
-    public partial class AzureDataLakeStorageGen2DataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
+    public partial class AzureDataLakeStorageDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
     {
-        public AzureDataLakeStorageGen2DataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate) { }
+        public AzureDataLakeStorageDataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate) { }
         public string AccountName { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageGen2DataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
         public string DataSourceCredentialId { get { throw null; } set { } }
         public string DirectoryTemplate { get { throw null; } set { } }
         public string FileSystemName { get { throw null; } set { } }
@@ -936,7 +936,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind AzureBlob { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind AzureCosmosDb { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind AzureDataExplorer { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind AzureDataLakeStorageGen2 { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind AzureDataLakeStorage { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind AzureEventHubs { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind AzureTable { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind InfluxDb { get { throw null; } }

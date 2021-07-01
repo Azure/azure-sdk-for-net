@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             new object[] { new AzureBlobDataFeedSource("secret", "mock", "mock"), "connectionString" },
             new object[] { new AzureCosmosDbDataFeedSource("secret", "mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureDataExplorerDataFeedSource("secret", "mock"), "connectionString" },
-            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "secret", "mock", "mock", "mock"), "accountKey" },
+            new object[] { new AzureDataLakeStorageDataFeedSource("mock", "secret", "mock", "mock", "mock"), "accountKey" },
             new object[] { new AzureEventHubsDataFeedSource("secret", "mock"), "connectionString" },
             new object[] { new AzureTableDataFeedSource("secret", "mock", "mock"), "connectionString" },
             new object[] { new InfluxDbDataFeedSource("secret", "mock", "mock", "mock", "mock"), "connectionString" },
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             new object[] { new AzureBlobDataFeedSource("mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureCosmosDbDataFeedSource("mock", "mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureDataExplorerDataFeedSource("mock", "mock"), "connectionString" },
-            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock"), "accountKey" },
+            new object[] { new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock"), "accountKey" },
             new object[] { new AzureEventHubsDataFeedSource("mock", "mock"), "connectionString" },
             new object[] { new AzureTableDataFeedSource("mock", "mock", "mock"), "connectionString" },
             new object[] { new InfluxDbDataFeedSource("mock", "mock", "mock", "mock", "mock"), "connectionString" },
@@ -144,7 +144,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 case AzureDataExplorerDataFeedSource d:
                     d.UpdateConnectionString("new_secret");
                     break;
-                case AzureDataLakeStorageGen2DataFeedSource d:
+                case AzureDataLakeStorageDataFeedSource d:
                     d.UpdateAccountKey("new_secret");
                     break;
                 case AzureEventHubsDataFeedSource d:
