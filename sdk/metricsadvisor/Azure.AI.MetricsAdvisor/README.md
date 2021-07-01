@@ -222,7 +222,7 @@ Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
 Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in createdDataFeed.AdministratorsEmails)
+foreach (string admin in createdDataFeed.AdministratorEmails)
 {
     Console.WriteLine($" - {admin}");
 }
@@ -345,7 +345,7 @@ AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
 var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
+var metricAlertConfiguration = new MetricAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
 alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 

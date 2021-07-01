@@ -1423,7 +1423,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
         public async Task GetDataFeeds(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
@@ -1441,8 +1440,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.AccessMode, Is.Not.EqualTo(default(DataFeedAccessMode)));
                 Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null);
                 Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
-                Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
-                Assert.That(dataFeed.ViewersEmails, Is.Not.Null);
+                Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
+                Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
                 Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
                 Assert.That(dataFeed.CreatedTime, Is.Not.Null);
                 Assert.That(dataFeed.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
@@ -1584,8 +1583,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 MissingDataPointFillSettings = new(DataFeedMissingDataPointFillType.CustomValue) { CustomFillValue = 45.0 }
             };
 
-            dataFeed.AdministratorsEmails.Add("fake@admin.com");
-            dataFeed.ViewersEmails.Add("fake@viewer.com");
+            dataFeed.AdministratorEmails.Add("fake@admin.com");
+            dataFeed.ViewerEmails.Add("fake@viewer.com");
 
             dataFeed.Schema.MetricColumns.Add(new("cost") { DisplayName = "costDisplayName", Description = "costDescription" });
             dataFeed.Schema.MetricColumns.Add(new("revenue") { DisplayName = "revenueDisplayName", Description = "revenueDescription" });
@@ -1613,12 +1612,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // For this reason, we do a conditional validation in the ValidateUpdatedDataFeedWithOptionalMembersSet
             // method.
 
-            if (dataFeed.AdministratorsEmails.Count > 0)
+            if (dataFeed.AdministratorEmails.Count > 0)
             {
-                dataFeed.AdministratorsEmails.Add("fake@admin.com");
+                dataFeed.AdministratorEmails.Add("fake@admin.com");
             }
 
-            dataFeed.ViewersEmails.Add("fake@viewer.com");
+            dataFeed.ViewerEmails.Add("fake@viewer.com");
 
             dataFeed.Schema = new DataFeedSchema();
             dataFeed.Schema.TimestampColumn = "updatedTimestampColumn";
@@ -1644,9 +1643,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
             Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null.And.Empty);
             Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
-            Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
-            Assert.That(dataFeed.AdministratorsEmails.Single(), Is.EqualTo(dataFeed.CreatorEmail));
-            Assert.That(dataFeed.ViewersEmails, Is.Not.Null.And.Empty);
+            Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
+            Assert.That(dataFeed.AdministratorEmails.Single(), Is.EqualTo(dataFeed.CreatorEmail));
+            Assert.That(dataFeed.ViewerEmails, Is.Not.Null.And.Empty);
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             if (expectedId != null)
@@ -1700,13 +1699,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%metric/%datafeed"));
             Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
 
-            Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
-            Assert.That(dataFeed.AdministratorsEmails.Count, Is.EqualTo(2));
-            Assert.That(dataFeed.AdministratorsEmails, Contains.Item(dataFeed.CreatorEmail));
-            Assert.That(dataFeed.AdministratorsEmails, Contains.Item("fake@admin.com"));
-            Assert.That(dataFeed.ViewersEmails, Is.Not.Null);
-            Assert.That(dataFeed.ViewersEmails.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.ViewersEmails, Contains.Item("fake@viewer.com"));
+            Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
+            Assert.That(dataFeed.AdministratorEmails.Count, Is.EqualTo(2));
+            Assert.That(dataFeed.AdministratorEmails, Contains.Item(dataFeed.CreatorEmail));
+            Assert.That(dataFeed.AdministratorEmails, Contains.Item("fake@admin.com"));
+            Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
+            Assert.That(dataFeed.ViewerEmails.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.ViewerEmails, Contains.Item("fake@viewer.com"));
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
@@ -1775,18 +1774,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // - If the data feed to update was created from scratch, we didn't update the admins list (count = 1).
             // - If the data feed to update was created from a GetDataFeed operation, we added a new fake admin (count = 2).
 
-            Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
-            Assert.That(dataFeed.AdministratorsEmails.Count, Is.EqualTo(1).Or.EqualTo(2));
-            Assert.That(dataFeed.AdministratorsEmails, Contains.Item(dataFeed.CreatorEmail));
+            Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
+            Assert.That(dataFeed.AdministratorEmails.Count, Is.EqualTo(1).Or.EqualTo(2));
+            Assert.That(dataFeed.AdministratorEmails, Contains.Item(dataFeed.CreatorEmail));
 
-            if (dataFeed.AdministratorsEmails.Count == 2)
+            if (dataFeed.AdministratorEmails.Count == 2)
             {
-                Assert.That(dataFeed.AdministratorsEmails, Contains.Item("fake@admin.com"));
+                Assert.That(dataFeed.AdministratorEmails, Contains.Item("fake@admin.com"));
             }
 
-            Assert.That(dataFeed.ViewersEmails, Is.Not.Null);
-            Assert.That(dataFeed.ViewersEmails.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.ViewersEmails, Contains.Item("fake@viewer.com"));
+            Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
+            Assert.That(dataFeed.ViewerEmails.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.ViewerEmails, Contains.Item("fake@viewer.com"));
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
             Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
@@ -1824,7 +1823,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureApplicationInsightsDataSource(AzureApplicationInsightsDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureApplicationInsights));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureApplicationInsights));
             Assert.That(dataSource.ApplicationId, Is.EqualTo(DataSourceAppId));
             Assert.That(dataSource.AzureCloud, Is.EqualTo(DataSourceCloud));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
@@ -1833,7 +1832,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureBlobDataSource(AzureBlobDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureBlob));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureBlob));
             Assert.That(dataSource.Container, Is.EqualTo(DataSourceContainer));
             Assert.That(dataSource.BlobTemplate, Is.EqualTo(DataSourceTemplate));
         }
@@ -1841,7 +1840,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureCosmosDbDataSource(AzureCosmosDbDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureCosmosDb));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureCosmosDb));
             Assert.That(dataSource.SqlQuery, Is.EqualTo(DataSourceQuery));
             Assert.That(dataSource.Database, Is.EqualTo(DataSourceDatabase));
             Assert.That(dataSource.CollectionId, Is.EqualTo(DataSourceCollectionId));
@@ -1850,14 +1849,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureDataExplorerDataSource(AzureDataExplorerDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureDataExplorer));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataExplorer));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
         private void ValidateAzureDataLakeStorageGen2DataSource(AzureDataLakeStorageGen2DataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataLakeStorageGen2));
             Assert.That(dataSource.AccountName, Is.EqualTo(DataSourceAccount));
             Assert.That(dataSource.FileSystemName, Is.EqualTo(DataSourceFileSystem));
             Assert.That(dataSource.DirectoryTemplate, Is.EqualTo(DataSourceDirectory));
@@ -1867,14 +1866,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateAzureEventHubsDataSource(AzureEventHubsDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureEventHubs));
             Assert.That(dataSource.ConsumerGroup, Is.EqualTo(DataSourceConsumerGroup));
         }
 
         private void ValidateAzureTableDataSource(AzureTableDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.AzureTable));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureTable));
             Assert.That(dataSource.Table, Is.EqualTo(DataSourceTable));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
@@ -1882,7 +1881,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateInfluxDbDataSource(InfluxDbDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.InfluxDb));
             Assert.That(dataSource.Database, Is.EqualTo(DataSourceDatabase));
             Assert.That(dataSource.Username, Is.EqualTo(DataSourceUsername));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
@@ -1891,7 +1890,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateLogAnalyticsDataSource(LogAnalyticsDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.LogAnalytics));
             Assert.That(dataSource.WorkspaceId, Is.EqualTo(DataSourceWorkspaceId));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
             Assert.That(dataSource.ClientId, Is.EqualTo(DataSourceClientId));
@@ -1901,7 +1900,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateMongoDbDataSource(MongoDbDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.MongoDb));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.MongoDb));
             Assert.That(dataSource.Database, Is.EqualTo(DataSourceDatabase));
             Assert.That(dataSource.Command, Is.EqualTo(DataSourceCommand));
         }
@@ -1909,29 +1908,29 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateMySqlDataSource(MySqlDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.MySql));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.MySql));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
         private void ValidatePostgreSqlDataSource(PostgreSqlDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.PostgreSql));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.PostgreSql));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
         private void ValidateSqlServerDataSource(SqlServerDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.SqlServer));
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
         private void ValidateGenericDataSource(DataFeedSource dataSource, bool isAdmin)
         {
-            DataFeedSourceType sourceType = dataSource.DataSourceType;
+            DataFeedSourceKind sourceType = dataSource.DataSourceKind;
 
-            if (sourceType == DataFeedSourceType.AzureApplicationInsights)
+            if (sourceType == DataFeedSourceKind.AzureApplicationInsights)
             {
                 var specificDataSource = dataSource as AzureApplicationInsightsDataFeedSource;
 
@@ -1950,7 +1949,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.AzureBlob)
+            else if (sourceType == DataFeedSourceKind.AzureBlob)
             {
                 var specificDataSource = dataSource as AzureBlobDataFeedSource;
 
@@ -1967,7 +1966,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.BlobTemplate, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.AzureCosmosDb)
+            else if (sourceType == DataFeedSourceKind.AzureCosmosDb)
             {
                 var specificDataSource = dataSource as AzureCosmosDbDataFeedSource;
 
@@ -1986,7 +1985,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.CollectionId, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.AzureDataExplorer)
+            else if (sourceType == DataFeedSourceKind.AzureDataExplorer)
             {
                 var specificDataSource = dataSource as AzureDataExplorerDataFeedSource;
 
@@ -2001,7 +2000,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.AzureDataLakeStorageGen2)
+            else if (sourceType == DataFeedSourceKind.AzureDataLakeStorageGen2)
             {
                 var specificDataSource = dataSource as AzureDataLakeStorageGen2DataFeedSource;
 
@@ -2022,7 +2021,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.FileTemplate, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.AzureEventHubs)
+            else if (sourceType == DataFeedSourceKind.AzureEventHubs)
             {
                 var specificDataSource = dataSource as AzureEventHubsDataFeedSource;
 
@@ -2037,7 +2036,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.ConsumerGroup, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.AzureTable)
+            else if (sourceType == DataFeedSourceKind.AzureTable)
             {
                 var specificDataSource = dataSource as AzureTableDataFeedSource;
 
@@ -2054,7 +2053,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.InfluxDb)
+            else if (sourceType == DataFeedSourceKind.InfluxDb)
             {
                 var specificDataSource = dataSource as InfluxDbDataFeedSource;
 
@@ -2073,7 +2072,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.LogAnalytics)
+            else if (sourceType == DataFeedSourceKind.LogAnalytics)
             {
                 var specificDataSource = dataSource as LogAnalyticsDataFeedSource;
 
@@ -2094,7 +2093,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.TenantId, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.MongoDb)
+            else if (sourceType == DataFeedSourceKind.MongoDb)
             {
                 var specificDataSource = dataSource as MongoDbDataFeedSource;
 
@@ -2111,7 +2110,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Command, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.MySql)
+            else if (sourceType == DataFeedSourceKind.MySql)
             {
                 var specificDataSource = dataSource as MySqlDataFeedSource;
 
@@ -2126,7 +2125,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.PostgreSql)
+            else if (sourceType == DataFeedSourceKind.PostgreSql)
             {
                 var specificDataSource = dataSource as PostgreSqlDataFeedSource;
 
@@ -2143,7 +2142,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
             else
             {
-                Assert.That(sourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
+                Assert.That(sourceType, Is.EqualTo(DataFeedSourceKind.SqlServer));
 
                 var specificDataSource = dataSource as SqlServerDataFeedSource;
 

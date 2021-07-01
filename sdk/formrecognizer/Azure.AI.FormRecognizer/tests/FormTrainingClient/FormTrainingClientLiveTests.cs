@@ -549,9 +549,9 @@ namespace Azure.AI.FormRecognizer.Tests
                     regionA = "usgovarizona";
                     regionB = "usgovvirginia";
                     break;
-                case "https://login.chinacloudapi.cn/":
-                    regionA = "chinaeast2";
-                    regionB = "chinanorth";
+                default:
+                    regionA = "westcentralus";
+                    regionB = "eastus2";
                     break;
             }
             var wrongRegion = TestEnvironment.TargetResourceRegion == regionA ? regionB : regionA;

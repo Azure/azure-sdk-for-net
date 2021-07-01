@@ -12,5 +12,11 @@ namespace Azure.Identity
         /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted.
         /// </summary>
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+
+        /// <summary>
+        /// Specifies either the specific <see cref="RegionalAuthority"/> (preferred), or use <see cref="RegionalAuthority.AutoDiscoverRegion"/> to attempt to auto-detect the region.
+        /// If not specified or auto-detection fails the non-regional endpoint will be used.
+        /// </summary>
+        public RegionalAuthority? RegionalAuthority { get; set; } = Azure.Identity.RegionalAuthority.FromEnvironment();
     }
 }

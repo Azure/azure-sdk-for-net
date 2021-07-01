@@ -295,15 +295,6 @@ namespace Azure.Messaging.EventHubs
         public Stream BodyAsStream => EventBody.ToStream();
 
         /// <summary>
-        ///   Indicates whether this instance has a populated set of <see cref="Properties" />
-        ///   or not, to avoid triggering lazy allocation by checking the property itself.
-        /// </summary>
-        ///
-        /// <value><c>true</c> if this instance has properties; otherwise, <c>false</c>.</value>
-        ///
-        internal bool HasProperties => _amqpMessage.HasSection(AmqpMessageSection.ApplicationProperties);
-
-        /// <summary>
         ///   The sequence number of the event that was last enqueued into the Event Hub partition from which this
         ///   event was received.
         /// </summary>

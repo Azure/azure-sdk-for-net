@@ -3,6 +3,8 @@
 ## 12.8.0-beta.1 (Unreleased)
 - Added support for service version 2020-10-02.
 - Added support for Parquet as an input format in DataLakeFileClient.Query().
+- Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.
+    - This feature can be disabled with the environment variable "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION" or the App Context switch "Azure.Storage.DisableRequestConditionsValidation".
 
 ## 12.7.0 (2021-06-08)
 - Includes all features from 12.7.0-beta.4

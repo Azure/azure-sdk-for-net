@@ -14,29 +14,6 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> Model factory for read-only models. </summary>
     internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
-        /// <summary> Initializes new instance of AnomalyAlertConfiguration class. </summary>
-        /// <param name="id"> anomaly alerting configuration unique id. </param>
-        /// <param name="name"> anomaly alerting configuration name. </param>
-        /// <param name="description"> anomaly alerting configuration description. </param>
-        /// <param name="crossMetricsOperator">
-        /// cross metrics operator
-        /// 
-        /// 
-        /// 
-        /// should be specified when setting up multiple metric alerting configurations.
-        /// </param>
-        /// <param name="splitAlertByDimensions"> dimensions used to split alert. </param>
-        /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
-        /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
-        /// <returns> A new <see cref="Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
-        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = default, string name = default, string description = default, MetricAnomalyAlertConfigurationsOperator? crossMetricsOperator = default, IList<string> splitAlertByDimensions = default, IList<string> idsOfHooksToAlert = default, IList<MetricAnomalyAlertConfiguration> metricAlertConfigurations = default)
-        {
-            splitAlertByDimensions ??= new List<string>();
-            idsOfHooksToAlert ??= new List<string>();
-            metricAlertConfigurations ??= new List<MetricAnomalyAlertConfiguration>();
-            return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, splitAlertByDimensions, idsOfHooksToAlert, metricAlertConfigurations);
-        }
-
         /// <summary> Initializes new instance of AnomalyAlert class. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
@@ -112,28 +89,6 @@ namespace Azure.AI.MetricsAdvisor
         public static DataFeedIngestionProgress DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp = default, DateTimeOffset? latestActiveTimestamp = default)
         {
             return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
-        }
-
-        /// <summary> Initializes new instance of MetricSeriesData class. </summary>
-        /// <param name="definition"> . </param>
-        /// <param name="timestamps"> timestamps of the data related to this time series. </param>
-        /// <param name="metricValues"> values of the data related to this time series. </param>
-        /// <returns> A new <see cref="Models.MetricSeriesData"/> instance for mocking. </returns>
-        public static MetricSeriesData MetricSeriesData(MetricSeriesDefinition definition = default, IReadOnlyList<DateTimeOffset> timestamps = default, IReadOnlyList<double> metricValues = default)
-        {
-            timestamps ??= new List<DateTimeOffset>();
-            metricValues ??= new List<double>();
-            return new MetricSeriesData(definition, timestamps, metricValues);
-        }
-
-        /// <summary> Initializes new instance of MetricSeriesDefinition class. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimension"> dimension name and value pair. </param>
-        /// <returns> A new <see cref="Models.MetricSeriesDefinition"/> instance for mocking. </returns>
-        public static MetricSeriesDefinition MetricSeriesDefinition(string metricId = default, IReadOnlyDictionary<string, string> dimension = default)
-        {
-            dimension ??= new Dictionary<string, string>();
-            return new MetricSeriesDefinition(metricId, dimension);
         }
 
         /// <summary> Initializes new instance of EnrichmentStatus class. </summary>
