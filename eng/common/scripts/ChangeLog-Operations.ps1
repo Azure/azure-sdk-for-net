@@ -5,7 +5,7 @@
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
-$RecommendedSectionHeaders = @("Features Added", "Breking Changes", "Bugs Fixed", "Other Changes")
+$RecommendedSectionHeaders = @("Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes")
 
 # Returns a Collection of changeLogEntry object containing changelog info for all version present in the gived CHANGELOG
 function Get-ChangeLogEntries {
