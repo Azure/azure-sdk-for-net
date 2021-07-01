@@ -13,6 +13,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   foreach ($projectOutput in $msbuildOutput)
   {
+    if (!$projectOutput) { continue }
+
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
 
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
