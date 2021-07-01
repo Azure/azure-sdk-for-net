@@ -11,12 +11,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// <summary>
     /// Describes an Azure Data Lake Storage Gen2 data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
-    public class AzureDataLakeStorageGen2DataFeedSource : DataFeedSource
+    public class AzureDataLakeStorageDataFeedSource : DataFeedSource
     {
         private string _accountKey;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureDataLakeStorageGen2DataFeedSource"/> class.
+        /// Initializes a new instance of the <see cref="AzureDataLakeStorageDataFeedSource"/> class.
         /// </summary>
         /// <param name="accountName">The name of the Storage Account.</param>
         /// <param name="accountKey">The Storage Account key.</param>
@@ -49,8 +49,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is empty.</exception>
-        public AzureDataLakeStorageGen2DataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
-            : base(DataFeedSourceKind.AzureDataLakeStorageGen2)
+        public AzureDataLakeStorageDataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
+            : base(DataFeedSourceKind.AzureDataLakeStorage)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
@@ -65,8 +65,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
             FileTemplate = fileTemplate;
         }
 
-        internal AzureDataLakeStorageGen2DataFeedSource(AzureDataLakeStorageGen2Parameter parameter, AuthenticationTypeEnum? authentication, string credentialId)
-            : base(DataFeedSourceKind.AzureDataLakeStorageGen2)
+        internal AzureDataLakeStorageDataFeedSource(AzureDataLakeStorageGen2Parameter parameter, AuthenticationTypeEnum? authentication, string credentialId)
+            : base(DataFeedSourceKind.AzureDataLakeStorage)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
@@ -81,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// The different ways of authenticating to an <see cref="AzureDataLakeStorageGen2DataFeedSource"/>. Be aware that
+        /// The different ways of authenticating to an <see cref="AzureDataLakeStorageDataFeedSource"/>. Be aware that
         /// some authentication types require you to have a <see cref="DataSourceCredentialEntity"/> in the service. In this
         /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
         /// to use. Defaults to <see cref="Basic"/>.
@@ -89,7 +89,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public enum AuthenticationType
         {
             /// <summary>
-            /// Only uses the <see cref="AccountKey"/> present in this <see cref="AzureDataLakeStorageGen2DataFeedSource"/>
+            /// Only uses the <see cref="AccountKey"/> present in this <see cref="AzureDataLakeStorageDataFeedSource"/>
             /// instance for authentication.
             /// </summary>
             Basic,
@@ -115,7 +115,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         };
 
         /// <summary>
-        /// The method used to authenticate to this <see cref="AzureDataLakeStorageGen2DataFeedSource"/>. Be aware that some
+        /// The method used to authenticate to this <see cref="AzureDataLakeStorageDataFeedSource"/>. Be aware that some
         /// authentication types require you to have a <see cref="DataSourceCredentialEntity"/> in the service. In this
         /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
         /// to use. Defaults to <see cref="AuthenticationType.Basic"/>.
