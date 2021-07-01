@@ -54,7 +54,7 @@ namespace Compute.Tests
                     OSDisk osDisk = createdVM.StorageProfile.OsDisk;
 
                     string rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
-                    string rpcName = ComputeManagementTestUtilities.GenerateName("rpcClientTest");
+                    string rpcName = ComputeManagementTestUtilities.GenerateName("rpc1ClientTest");
                     string rpcName2 = ComputeManagementTestUtilities.GenerateName("rpc2ClientTest");
                     string vmId = createdVM.Id;
                     string vmSize = createdVM.HardwareProfile.VmSize;
