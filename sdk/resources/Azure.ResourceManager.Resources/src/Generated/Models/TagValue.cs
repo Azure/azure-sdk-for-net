@@ -5,29 +5,18 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Tag information. </summary>
-    public partial class TagValue
+    internal partial class TagValue : SubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of TagValue. </summary>
         internal TagValue()
         {
         }
 
-        /// <summary> Initializes a new instance of TagValue. </summary>
-        /// <param name="id"> The tag value ID. </param>
-        /// <param name="tagValueValue"> The tag value. </param>
-        /// <param name="count"> The tag value count. </param>
-        internal TagValue(string id, string tagValueValue, TagCount count)
-        {
-            Id = id;
-            TagValueValue = tagValueValue;
-            Count = count;
-        }
-
-        /// <summary> The tag value ID. </summary>
-        public string Id { get; }
         /// <summary> The tag value. </summary>
         public string TagValueValue { get; }
         /// <summary> The tag value count. </summary>

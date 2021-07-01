@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Returns changes that will be made by the deployment if executed at the scope of the subscription. </summary>
     public partial class DeploymentsWhatIfAtSubscriptionScopeOperation : Operation<WhatIfOperationResult>, IOperationSource<WhatIfOperationResult>
     {
-        private readonly ArmOperationHelpers<WhatIfOperationResult> _operation;
+        private readonly OperationInternals<WhatIfOperationResult> _operation;
 
         /// <summary> Initializes a new instance of DeploymentsWhatIfAtSubscriptionScopeOperation for mocking. </summary>
         protected DeploymentsWhatIfAtSubscriptionScopeOperation()
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Resources
 
         internal DeploymentsWhatIfAtSubscriptionScopeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<WhatIfOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsWhatIfAtSubscriptionScopeOperation");
+            _operation = new OperationInternals<WhatIfOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsWhatIfAtSubscriptionScopeOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

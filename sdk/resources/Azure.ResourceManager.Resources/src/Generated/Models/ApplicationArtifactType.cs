@@ -5,11 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The managed application artifact type. </summary>
     public enum ApplicationArtifactType
     {
+        /// <summary> NotSpecified. </summary>
+        NotSpecified,
         /// <summary> Template. </summary>
         Template,
         /// <summary> Custom. </summary>

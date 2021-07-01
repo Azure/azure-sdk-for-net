@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> List of policy set definitions. </summary>
     internal partial class PolicySetDefinitionListResult
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
         internal PolicySetDefinitionListResult()
         {
-            Value = new ChangeTrackingList<PolicySetDefinition>();
+            Value = new ChangeTrackingList<PolicySetDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
         /// <param name="value"> An array of policy set definitions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal PolicySetDefinitionListResult(IReadOnlyList<PolicySetDefinition> value, string nextLink)
+        internal PolicySetDefinitionListResult(IReadOnlyList<PolicySetDefinitionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of policy set definitions. </summary>
-        public IReadOnlyList<PolicySetDefinition> Value { get; }
+        public IReadOnlyList<PolicySetDefinitionData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

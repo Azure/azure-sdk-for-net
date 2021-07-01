@@ -9,22 +9,22 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     internal partial class ResourceLinkResult
     {
         internal static ResourceLinkResult DeserializeResourceLinkResult(JsonElement element)
         {
-            IReadOnlyList<ResourceLink> value = default;
+            IReadOnlyList<ResourceLinkData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ResourceLink> array = new List<ResourceLink>();
+                    List<ResourceLinkData> array = new List<ResourceLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceLink.DeserializeResourceLink(item));
+                        array.Add(ResourceLinkData.DeserializeResourceLinkData(item));
                     }
                     value = array;
                     continue;

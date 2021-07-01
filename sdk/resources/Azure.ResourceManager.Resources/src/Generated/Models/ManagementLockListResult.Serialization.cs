@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     internal partial class ManagementLockListResult
     {
         internal static ManagementLockListResult DeserializeManagementLockListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagementLockObject>> value = default;
+            Optional<IReadOnlyList<ManagementLockObjectData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagementLockObject> array = new List<ManagementLockObject>();
+                    List<ManagementLockObjectData> array = new List<ManagementLockObjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementLockObject.DeserializeManagementLockObject(item));
+                        array.Add(ManagementLockObjectData.DeserializeManagementLockObjectData(item));
                     }
                     value = array;
                     continue;

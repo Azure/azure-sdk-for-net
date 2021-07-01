@@ -6,13 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentScriptsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateCreateRequest(string resourceGroupName, string scriptName, DeploymentScript deploymentScript)
+        internal Azure.Core.HttpMessage CreateCreateRequest(string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
-        public Response Create(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
+        public Response Create(string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateUpdateRequest(string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript)
+        internal Azure.Core.HttpMessage CreateUpdateRequest(string resourceGroupName, string scriptName, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,26 +145,32 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (deploymentScript != null)
+            request.Headers.Add("Content-Type", "application/json");
+            DeploymentScriptUpdateParameter deploymentScriptUpdateParameter = new DeploymentScriptUpdateParameter();
+            if (tags != null)
             {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(deploymentScript);
-                request.Content = content;
+                foreach (var value in tags)
+                {
+                    deploymentScriptUpdateParameter.Tags.Add(value);
+                }
             }
+            var model = deploymentScriptUpdateParameter;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Updates deployment script tags with specified values. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="deploymentScript"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<DeploymentScript>> UpdateAsync(string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScriptData>> UpdateAsync(string resourceGroupName, string scriptName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -175,15 +181,15 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, scriptName, deploymentScript);
+            using var message = CreateUpdateRequest(resourceGroupName, scriptName, tags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeploymentScript value = default;
+                        DeploymentScriptData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
+                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,10 +200,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Updates deployment script tags with specified values. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="deploymentScript"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<DeploymentScript> Update(string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = null, CancellationToken cancellationToken = default)
+        public Response<DeploymentScriptData> Update(string resourceGroupName, string scriptName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -208,15 +214,15 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, scriptName, deploymentScript);
+            using var message = CreateUpdateRequest(resourceGroupName, scriptName, tags);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeploymentScript value = default;
+                        DeploymentScriptData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
+                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -224,7 +230,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetRequest(string resourceGroupName, string scriptName)
+        internal Azure.Core.HttpMessage CreateGetRequest(string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -237,7 +243,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -248,7 +254,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<DeploymentScript>> GetAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScriptData>> GetAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -265,9 +271,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScript value = default;
+                        DeploymentScriptData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
+                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -280,7 +286,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<DeploymentScript> Get(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        public Response<DeploymentScriptData> Get(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -297,9 +303,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentScript value = default;
+                        DeploymentScriptData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
+                        value = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -307,7 +313,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string scriptName)
+        internal Azure.Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -320,7 +326,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -382,7 +388,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListBySubscriptionRequest()
+        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -392,7 +398,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -438,7 +444,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetLogsRequest(string resourceGroupName, string scriptName)
+        internal Azure.Core.HttpMessage CreateGetLogsRequest(string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -452,7 +458,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
             uri.AppendPath("/logs", false);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -522,7 +528,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetLogsDefaultRequest(string resourceGroupName, string scriptName, int? tail)
+        internal Azure.Core.HttpMessage CreateGetLogsDefaultRequest(string resourceGroupName, string scriptName, int? tail)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -536,7 +542,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
             uri.AppendPath("/logs/default", false);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             if (tail != null)
             {
                 uri.AppendQuery("tail", tail.Value, true);
@@ -612,7 +618,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -624,7 +630,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
-            uri.AppendQuery("api-version", "2019-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -684,7 +690,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
+        internal Azure.Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -751,7 +757,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

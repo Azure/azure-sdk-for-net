@@ -5,18 +5,18 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The identity type. </summary>
     public enum ResourceIdentityType
     {
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,
-        /// <summary> None. </summary>
-        None,
         /// <summary> UserAssigned. </summary>
         UserAssigned,
         /// <summary> SystemAssigned, UserAssigned. </summary>
-        SystemAssignedUserAssigned
+        SystemAssignedUserAssigned,
+        /// <summary> None. </summary>
+        None
     }
 }

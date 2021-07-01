@@ -8,18 +8,15 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class Sku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static Sku DeserializeSku(JsonElement element)
         {
-            Optional<string> name = default;
+            string name = default;
             Optional<string> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
@@ -94,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new Sku(name.Value, tier.Value, size.Value, family.Value, model.Value, Optional.ToNullable(capacity));
+            return new Sku(name, tier.Value, size.Value, family.Value, model.Value, Optional.ToNullable(capacity));
         }
     }
 }

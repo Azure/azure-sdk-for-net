@@ -1,0 +1,36 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.Resources",
+  "LibraryName": "Resources",
+  "SharedSourceFolders": [
+    "..\\Generator.Shared",
+    "..\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "model-namespace": false,
+  "OperationGroupToResourceType": {
+    "DeploymentOperations": "Microsoft.Resources/deployments/operations",
+    "ResourceLinks": "Microsoft.Resources/links",
+    "Deployments": "Microsoft.Resources/deployments",
+    "DataPolicyManifests": "Microsoft.Authorization/dataPolicyManifests"
+  },
+  "OperationGroupToResource": {
+    "DeploymentOperations": "DeploymentOperation",
+    "ResourceLinks": "ResourceLink",
+    "Deployments": "DeploymentExtended",
+    "DeploymentScripts": "DeploymentScript",
+    "ApplicationDefinitions": "ApplicationDefinition",
+    "DataPolicyManifests": "DataPolicyManifest"
+  },
+  "OperationGroupToParent": {
+    "Deployments": "tenant",
+    "PolicyAssignments": "tenant",
+    "PolicyDefinitions": "tenant",
+    "PolicySetDefinitions": "tenant",
+    "PolicyExemptions": "tenant",
+    "DeploymentScripts": "resourceGroups",
+    "ManagementLocks": "resourceGroups",
+    "ResourceLinks": "tenant"
+  }
+}

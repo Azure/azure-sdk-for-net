@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of ResourceLinksRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ResourceLinksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateDeleteRequest(string linkId)
+        internal Azure.Core.HttpMessage CreateDeleteRequest(string linkId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateCreateOrUpdateRequest(string linkId, ResourceLink parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string linkId, ResourceLinkProperties properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -116,38 +115,38 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new ResourceLinkData()
+            {
+                Properties = properties
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Creates or updates a resource link between the specified resources. </summary>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
-        /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
+        /// <param name="properties"> Properties for resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ResourceLink>> CreateOrUpdateAsync(string linkId, ResourceLink parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public async Task<Response<ResourceLinkData>> CreateOrUpdateAsync(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
                 throw new ArgumentNullException(nameof(linkId));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateCreateOrUpdateRequest(linkId, parameters);
+            using var message = CreateCreateOrUpdateRequest(linkId, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -157,30 +156,26 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Creates or updates a resource link between the specified resources. </summary>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
-        /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
+        /// <param name="properties"> Properties for resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<ResourceLink> CreateOrUpdate(string linkId, ResourceLink parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public Response<ResourceLinkData> CreateOrUpdate(string linkId, ResourceLinkProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
                 throw new ArgumentNullException(nameof(linkId));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateCreateOrUpdateRequest(linkId, parameters);
+            using var message = CreateCreateOrUpdateRequest(linkId, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,7 +183,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetRequest(string linkId)
+        internal Azure.Core.HttpMessage CreateGetRequest(string linkId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -207,7 +202,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public async Task<Response<ResourceLink>> GetAsync(string linkId, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceLinkData>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -220,9 +215,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -234,7 +229,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public Response<ResourceLink> Get(string linkId, CancellationToken cancellationToken = default)
+        public Response<ResourceLinkData> Get(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
             {
@@ -247,9 +242,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ResourceLink value = default;
+                        ResourceLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
+                        value = ResourceLinkData.DeserializeResourceLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -257,7 +252,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtSubscriptionRequest(string filter)
+        internal Azure.Core.HttpMessage CreateListAtSubscriptionRequest(string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -319,7 +314,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtSourceScopeRequest(string scope)
+        internal Azure.Core.HttpMessage CreateListAtSourceScopeRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -390,7 +385,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtSubscriptionNextPageRequest(string nextLink, string filter)
+        internal Azure.Core.HttpMessage CreateListAtSubscriptionNextPageRequest(string nextLink, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -459,7 +454,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtSourceScopeNextPageRequest(string nextLink, string scope)
+        internal Azure.Core.HttpMessage CreateListAtSourceScopeNextPageRequest(string nextLink, string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The data type of the parameter. </summary>
     public readonly partial struct ParameterType : IEquatable<ParameterType>

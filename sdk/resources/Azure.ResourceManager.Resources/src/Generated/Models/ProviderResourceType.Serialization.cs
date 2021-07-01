@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class ProviderResourceType
     {
@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
             Optional<IReadOnlyList<Alias>> aliases = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<string> defaultApiVersion = default;
+            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
             Optional<string> capabilities = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -41,6 +44,21 @@ namespace Azure.ResourceManager.Resources.Models
                         array.Add(item.GetString());
                     }
                     locations = array;
+                    continue;
+                }
+                if (property.NameEquals("locationMappings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ProviderExtendedLocation> array = new List<ProviderExtendedLocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item));
+                    }
+                    locationMappings = array;
                     continue;
                 }
                 if (property.NameEquals("aliases"))
@@ -73,6 +91,26 @@ namespace Azure.ResourceManager.Resources.Models
                     apiVersions = array;
                     continue;
                 }
+                if (property.NameEquals("defaultApiVersion"))
+                {
+                    defaultApiVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("apiProfiles"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ApiProfile> array = new List<ApiProfile>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ApiProfile.DeserializeApiProfile(item));
+                    }
+                    apiProfiles = array;
+                    continue;
+                }
                 if (property.NameEquals("capabilities"))
                 {
                     capabilities = property.Value.GetString();
@@ -94,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(aliases), Optional.ToList(apiVersions), capabilities.Value, Optional.ToDictionary(properties));
+            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
         }
     }
 }

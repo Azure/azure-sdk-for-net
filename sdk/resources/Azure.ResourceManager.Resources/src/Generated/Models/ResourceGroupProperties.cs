@@ -5,21 +5,14 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The resource group properties. </summary>
-    public partial class ResourceGroupProperties
+    internal partial class ResourceGroupProperties
     {
         /// <summary> Initializes a new instance of ResourceGroupProperties. </summary>
-        public ResourceGroupProperties()
+        internal ResourceGroupProperties()
         {
-        }
-
-        /// <summary> Initializes a new instance of ResourceGroupProperties. </summary>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        internal ResourceGroupProperties(string provisioningState)
-        {
-            ProvisioningState = provisioningState;
         }
 
         /// <summary> The provisioning state. </summary>

@@ -7,23 +7,19 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class BasicDependency
     {
         internal static BasicDependency DeserializeBasicDependency(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> resourceType = default;
             Optional<string> resourceName = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("resourceType"))
                 {
                     resourceType = property.Value.GetString();
@@ -34,8 +30,13 @@ namespace Azure.ResourceManager.Resources.Models
                     resourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new BasicDependency(id.Value, resourceType.Value, resourceName.Value);
+            return new BasicDependency(id, resourceType.Value, resourceName.Value);
         }
     }
 }

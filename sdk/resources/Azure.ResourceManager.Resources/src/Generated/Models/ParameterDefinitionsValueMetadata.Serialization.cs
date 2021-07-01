@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class ParameterDefinitionsValueMetadata : IUtf8JsonSerializable
     {
@@ -26,6 +26,16 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(StrongType))
+            {
+                writer.WritePropertyName("strongType");
+                writer.WriteStringValue(StrongType);
+            }
+            if (Optional.IsDefined(AssignPermissions))
+            {
+                writer.WritePropertyName("assignPermissions");
+                writer.WriteBooleanValue(AssignPermissions.Value);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -38,6 +48,8 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Optional<string> displayName = default;
             Optional<string> description = default;
+            Optional<string> strongType = default;
+            Optional<bool> assignPermissions = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -52,10 +64,25 @@ namespace Azure.ResourceManager.Resources.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("strongType"))
+                {
+                    strongType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("assignPermissions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    assignPermissions = property.Value.GetBoolean();
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParameterDefinitionsValueMetadata(displayName.Value, description.Value, additionalProperties);
+            return new ParameterDefinitionsValueMetadata(displayName.Value, description.Value, strongType.Value, Optional.ToNullable(assignPermissions), additionalProperties);
         }
     }
 }
