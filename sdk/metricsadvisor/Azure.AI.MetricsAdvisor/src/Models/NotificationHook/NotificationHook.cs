@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Administrators = new ChangeTrackingList<string>();
         }
 
-        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
+        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
         {
             HookType = hookType;
             Id = id;
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// the client ID.
         /// </summary>
         [CodeGenMember("Admins")]
-        public IReadOnlyList<string> Administrators { get; }
+        public IList<string> Administrators { get; }
 
         /// <summary> The hook type. </summary>
         internal HookType HookType { get; set; }
@@ -120,7 +120,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             string hookName = default;
             Optional<string> description = default;
             Optional<string> externalLink = default;
-            Optional<IReadOnlyList<string>> admins = default;
+            Optional<IList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookType"))
@@ -169,7 +169,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         private class UnknownNotificationHook : NotificationHook
         {
-            public UnknownNotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
+            public UnknownNotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
                 : base(hookType, id, name, description, internalExternalLink, administrators)
             {
             }
