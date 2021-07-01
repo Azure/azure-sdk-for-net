@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="roleId">The arm role id.</param>
         /// <param name="useCommonAlertSchema">Indicates whether to use common
         /// alert schema.</param>
-        public ArmRoleReceiver(string name, string roleId, bool useCommonAlertSchema)
+        public ArmRoleReceiver(string name, string roleId, bool? useCommonAlertSchema = default(bool?))
         {
             Name = name;
             RoleId = roleId;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets indicates whether to use common alert schema.
         /// </summary>
         [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        public bool? UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Validate the object.
