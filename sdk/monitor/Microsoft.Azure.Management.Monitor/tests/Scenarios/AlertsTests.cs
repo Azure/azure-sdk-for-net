@@ -19,7 +19,7 @@ namespace Monitor.Tests.Scenarios
     {
         private const string ResourceGroupName = "Rac46PostSwapRG";
         private const string RuleName = "chiricutin";
-        private const string ResourceId = "/subscriptions/{0}/resourceGroups/" + ResourceGroupName + "/providers/microsoft.insights/alertrules/" + RuleName;
+        private const string ResourceId = "/subscriptions/{0}/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Insights/alertrules/" + RuleName;
         private const string Location = "westus";
 
         private RecordedDelegatingHandler handler;
@@ -124,7 +124,7 @@ namespace Monitor.Tests.Scenarios
                     resourceGroupName: ResourceGroupName,
                     ruleName: RuleName);
 
-                Assert.Throws<CloudException>(
+                Assert.Throws<ErrorResponseException>(
                     () => insightsClient.AlertRules.Get(
                             resourceGroupName: ResourceGroupName,
                             ruleName: RuleName));

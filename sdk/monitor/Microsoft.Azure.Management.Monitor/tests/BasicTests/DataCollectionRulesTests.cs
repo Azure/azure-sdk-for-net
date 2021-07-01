@@ -27,10 +27,11 @@ namespace Monitor.Tests.BasicTests
         public void CreateDataCollectionRuleTest()
         {
             DataCollectionRuleResource expectedResult = new DataCollectionRuleResource(
-                new DataCollectionRuleDestinations(), 
-                new List<DataFlow>(), 
-                "eastus", "Second DCR", 
-                new DataCollectionRuleDataSources());
+                location: "eastus",
+                destinations: new DataCollectionRuleDestinations(), 
+                dataFlows: new List<DataFlow>(), 
+                description: "Second DCR", 
+                dataSources: new DataCollectionRuleDataSources());
 
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
@@ -49,12 +50,10 @@ namespace Monitor.Tests.BasicTests
                     location: "eastus", 
                     description: "Second DCR", 
                     dataSources: new DataCollectionRuleDataSources(), 
-                    provisioningState: null, 
                     tags: null, 
                     id: null, 
                     name: null, 
-                    type: null, 
-                    etag: null
+                    type: null
                 ));
 
             AreEqual(expectedResult, result);
@@ -70,7 +69,7 @@ namespace Monitor.Tests.BasicTests
             var monitorManagementClient = GetMonitorManagementClient(handler);
 
             var response = await monitorManagementClient.DataCollectionRules.DeleteWithHttpMessagesAsync("rg-amcs-test", "dcrDeleteDataCollectionRuleTest");
-            
+
             Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
         }
 
@@ -79,10 +78,11 @@ namespace Monitor.Tests.BasicTests
         public void GetDataCollectionRuleTest()
         {
             var expectedResult = new DataCollectionRuleResource(
-                new DataCollectionRuleDestinations(),
-                new List<DataFlow>(),
-                "eastus", "Second DCR",
-                new DataCollectionRuleDataSources());
+                location: "eastus",
+                destinations: new DataCollectionRuleDestinations(),
+                dataFlows: new List<DataFlow>(),
+                description: "Second DCR",
+                dataSources: new DataCollectionRuleDataSources());
 
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
@@ -94,7 +94,7 @@ namespace Monitor.Tests.BasicTests
 
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
-            
+
             var result = insightsClient.DataCollectionRules.Get("rg-amcs-test", "dcrGetDataCollectionRuleTest");
 
             AreEqual(expectedResult, result);
@@ -107,15 +107,16 @@ namespace Monitor.Tests.BasicTests
             List<DataCollectionRuleResource> expectedResult = new List<DataCollectionRuleResource>
             {
                 new DataCollectionRuleResource(
-                    new DataCollectionRuleDestinations
+                    destinations: new DataCollectionRuleDestinations
                     {
                         AzureMonitorMetrics = new DestinationsSpecAzureMonitorMetrics("defaultAmm")
                     },
-                    new List<DataFlow>(),
-                    "eastus", "First DCR",
-                    new DataCollectionRuleDataSources()),
-                new DataCollectionRuleResource(new DataCollectionRuleDestinations(), new List<DataFlow>(), "eastus", "Second DCR", new DataCollectionRuleDataSources()),
-                new DataCollectionRuleResource(new DataCollectionRuleDestinations(), new List<DataFlow>(), "eastus", "Third DCR", new DataCollectionRuleDataSources())
+                    dataFlows: new List<DataFlow>(),
+                    location: "eastus",
+                    description: "First DCR",
+                    dataSources: new DataCollectionRuleDataSources()),
+                new DataCollectionRuleResource(destinations: new DataCollectionRuleDestinations(), dataFlows: new List<DataFlow>(), location: "eastus", description: "Second DCR", dataSources: new DataCollectionRuleDataSources()),
+                new DataCollectionRuleResource(destinations: new DataCollectionRuleDestinations(), dataFlows: new List<DataFlow>(), location: "eastus", description: "Third DCR", dataSources: new DataCollectionRuleDataSources())
             };
 
             var handler = new RecordedDelegatingHandler();
@@ -141,17 +142,18 @@ namespace Monitor.Tests.BasicTests
             List<DataCollectionRuleResource> expectedResult = new List<DataCollectionRuleResource>
             {
                 new DataCollectionRuleResource(
-                    new DataCollectionRuleDestinations
+                    destinations: new DataCollectionRuleDestinations
                     {
                         LogAnalytics = new List<LogAnalyticsDestination>
-                        { 
+                        {
                             new LogAnalyticsDestination("/subscription/aaa/", "la-testing")
                         }
                     },
-                    new List<DataFlow>(),
-                    "eastus", "First DCR",
-                    new DataCollectionRuleDataSources()),
-                new DataCollectionRuleResource(new DataCollectionRuleDestinations(), new List<DataFlow>(), "eastus", "Second DCR", new DataCollectionRuleDataSources()),
+                    dataFlows: new List<DataFlow>(),
+                    location: "eastus", 
+                    description: "First DCR",
+                    dataSources: new DataCollectionRuleDataSources()),
+                new DataCollectionRuleResource(destinations: new DataCollectionRuleDestinations(), dataFlows: new List<DataFlow>(), location: "eastus", description: "Second DCR", dataSources: new DataCollectionRuleDataSources()),
             };
 
             var handler = new RecordedDelegatingHandler();
@@ -164,7 +166,7 @@ namespace Monitor.Tests.BasicTests
 
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
-            
+
             var actualDcrs = insightsClient.DataCollectionRules.ListBySubscription();
 
             AreEqual(expectedResult, actualDcrs.ToList());
@@ -174,16 +176,16 @@ namespace Monitor.Tests.BasicTests
         [Trait("Category", "Mock")]
         public void UpdateDataCollectionRuleTest()
         {
-            var expectedResult = new ResourceForUpdate(new Dictionary<string, string>
+            var expectedResult = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
                 { "tag2", "value2" }
-            });
+            };
 
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedResult, insightsClient.SerializationSettings);
-            
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(new DataCollectionRuleResource { Tags = expectedResult }, insightsClient.SerializationSettings);
+
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(serializedObject)
@@ -192,14 +194,8 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
 
-            ActionGroupPatchBody bodyParameter = new ActionGroupPatchBody
-            {
-                Enabled = true,
-                Tags = null
-            };
-
             var result = insightsClient.DataCollectionRules.Update("rg-amcs-test", "dcrUpdateDataCollectionRuleTest", expectedResult);
-            Utilities.AreEqual(expectedResult.Tags, result.Tags);
+            Utilities.AreEqual(expectedResult, result.Tags);
         }
         #endregion
 
@@ -318,7 +314,6 @@ namespace Monitor.Tests.BasicTests
                 Assert.Equal(exp.CounterSpecifiers.ToJson(), act.CounterSpecifiers.ToJson());
                 Assert.Equal(exp.Name, act.Name);
                 Assert.Equal(exp.SamplingFrequencyInSeconds, act.SamplingFrequencyInSeconds);
-                Assert.Equal(exp.ScheduledTransferPeriod, act.ScheduledTransferPeriod);
                 Assert.Equal(exp.Streams.ToJson(), act.Streams.ToJson());
             }
         }
@@ -328,7 +323,6 @@ namespace Monitor.Tests.BasicTests
             if (exp != null)
             {
                 Assert.Equal(exp.Name, act.Name);
-                Assert.Equal(exp.ScheduledTransferPeriod, act.ScheduledTransferPeriod);
                 Assert.Equal(exp.Streams.ToJson(), act.Streams.ToJson());
                 Assert.Equal(exp.XPathQueries.ToJson(), act.XPathQueries.ToJson());
             }
@@ -479,11 +473,9 @@ namespace Monitor.Tests.BasicTests
             return new DataCollectionRuleAssociationProxyOnlyResource(
                     dataCollectionRuleId: "/subscriptions/xxxxxxx-xxxx-xxxx/resourceGroups/rgGroup/providers/Microsoft.Insights/dataCollectionRules/dcrName",
                     description: "Associate VM to DCR",
-                    provisioningState: null,
                     id: id,
                     name: "dcrBcdrTestAssoc",
-                    type: "Microsoft.Insights/dataCollectionRuleAssociations",
-                    etag: null
+                    type: "Microsoft.Insights/dataCollectionRuleAssociations"
                 );
         }
 

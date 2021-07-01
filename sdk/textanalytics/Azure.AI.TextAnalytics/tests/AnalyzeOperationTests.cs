@@ -358,7 +358,6 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
                 {
-                    new ExtractKeyPhrasesAction(),
                     new ExtractKeyPhrasesAction()
                     {
                         ModelVersion = "InvalidVersion"

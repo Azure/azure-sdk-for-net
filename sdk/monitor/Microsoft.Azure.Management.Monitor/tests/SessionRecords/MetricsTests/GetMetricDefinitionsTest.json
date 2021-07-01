@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/microsoft.insights/metricDefinitions?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzA3YzBiMDlkLTlmNjktNGU2ZS04ZDA1LWY1OWY2NzI5OWNiMi9yZXNvdXJjZUdyb3Vwcy9SYWM0NlBvc3RTd2FwUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvYWxlcnRydWxlVGVzdC9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL21ldHJpY0RlZmluaXRpb25zP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/Microsoft.Insights/metricDefinitions?api-version=2018-01-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzA3YzBiMDlkLTlmNjktNGU2ZS04ZDA1LWY1OWY2NzI5OWNiMi9yZXNvdXJjZUdyb3Vwcy9SYWM0NlBvc3RTd2FwUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvYWxlcnRydWxlVGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkluc2lnaHRzL21ldHJpY0RlZmluaXRpb25zP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -70,8 +70,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/56bb45c9-5c14-4914-885e-c6fd6f130f7c/resourceGroups/contoso-data/providers/Microsoft.Storage/storageAccounts/contosodatadiag1/providers/microsoft.insights/metricDefinitions?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTZiYjQ1YzktNWMxNC00OTE0LTg4NWUtYzZmZDZmMTMwZjdjL3Jlc291cmNlR3JvdXBzL2NvbnRvc28tZGF0YS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL2NvbnRvc29kYXRhZGlhZzEvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9tZXRyaWNEZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/56bb45c9-5c14-4914-885e-c6fd6f130f7c/resourceGroups/contoso-data/providers/Microsoft.Storage/storageAccounts/contosodatadiag1/providers/Microsoft.Insights/metricDefinitions?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTZiYjQ1YzktNWMxNC00OTE0LTg4NWUtYzZmZDZmMTMwZjdjL3Jlc291cmNlR3JvdXBzL2NvbnRvc28tZGF0YS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL2NvbnRvc29kYXRhZGlhZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9tZXRyaWNEZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

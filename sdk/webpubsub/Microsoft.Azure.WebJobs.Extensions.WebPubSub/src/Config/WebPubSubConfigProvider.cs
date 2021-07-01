@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
-                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _options, webhookException));
+                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _options, webhookException));
 
             var webpubsubConnectionAttributeRule = context.AddBindingRule<WebPubSubConnectionAttribute>();
             webpubsubConnectionAttributeRule.AddValidator(ValidateWebPubSubConnectionAttributeBinding);

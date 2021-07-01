@@ -9,7 +9,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Represents a batch that consists out of multiple log queries.
+    /// Represents a batch that consists of multiple log queries.
     /// </summary>
     public class LogsBatchQuery
     {

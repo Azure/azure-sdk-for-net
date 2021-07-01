@@ -4,7 +4,7 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -12,12 +12,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     internal class WebPubSubTriggerBindingProvider : ITriggerBindingProvider
     {
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
+        private readonly INameResolver _nameResolver;
         private readonly WebPubSubOptions _options;
         private readonly Exception _webhookException;
 
-        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, WebPubSubOptions options, Exception webhookException)
+        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubOptions options, Exception webhookException)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _webhookException = webhookException;
         }
@@ -41,7 +43,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 throw new NotSupportedException($"WebPubSubTrigger is disabled due to 'AzureWebJobsStorage' connection string is not set or invalid. {_webhookException}");
             }
 
-            return Task.FromResult<ITriggerBinding>(new WebPubSubTriggerBinding(parameterInfo, attribute, _options, _dispatcher));
+            return Task.FromResult<ITriggerBinding>(new WebPubSubTriggerBinding(parameterInfo, GetResolvedAttribute(attribute), _options, _dispatcher));
+        }
+
+        internal WebPubSubTriggerAttribute GetResolvedAttribute(WebPubSubTriggerAttribute attribute)
+        {
+            // Try resolve and throw exception if not able to find one.
+            if (!_nameResolver.TryResolveWholeString(attribute.Hub, out var hub))
+            {
+                throw new ArgumentException($"Failed to resolve substitute configure: {attribute.Hub}, please add.");
+            }
+            if (!_nameResolver.TryResolveWholeString(attribute.EventName, out var eventName))
+            {
+                throw new ArgumentException($"Failed to resolve substitute configure: {attribute.EventName}, please add.");
+            }
+
+            return new WebPubSubTriggerAttribute(
+                hub,
+                attribute.EventType,
+                eventName);
         }
     }
 }
