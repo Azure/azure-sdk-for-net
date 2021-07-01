@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
-    /// Web PubSub Authentication Policy.
+    /// API Management Policy
     /// </summary>
     internal partial class ApimPolicy : HttpPipelineSynchronousPolicy
     {
