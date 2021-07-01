@@ -314,7 +314,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public DataLakeSharedKeyCredentialEntity(string name, string accountKey) { }
         public void UpdateAccountKey(string accountKey) { }
     }
-    public partial class DataSourceCredentialEntity
+    public abstract partial class DataSourceCredentialEntity
     {
         internal DataSourceCredentialEntity() { }
         public string Description { get { throw null; } set { } }
