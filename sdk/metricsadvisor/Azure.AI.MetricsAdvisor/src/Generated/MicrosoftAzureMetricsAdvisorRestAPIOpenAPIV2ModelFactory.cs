@@ -15,6 +15,30 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> Model factory for read-only models. </summary>
     internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
+        /// <summary> Initializes a new instance of AnomalyAlertConfiguration. </summary>
+        /// <param name="id"> anomaly alerting configuration unique id. </param>
+        /// <param name="name"> anomaly alerting configuration name. </param>
+        /// <param name="description"> anomaly alerting configuration description. </param>
+        /// <param name="conditionOperator">
+        /// cross metrics operator
+        /// 
+        /// 
+        /// 
+        /// should be specified when setting up multiple metric alerting configurations.
+        /// </param>
+        /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
+        /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
+        /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
+        /// <returns> A new <see cref="Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
+        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = null, string name = null, string description = null, DetectionConditionOperator? conditionOperator = null, IEnumerable<string> dimensionsToSplitAlert = null, IEnumerable<string> idsOfHooksToAlert = null, IEnumerable<MetricAlertConfiguration> metricAlertConfigurations = null)
+        {
+            dimensionsToSplitAlert ??= new List<string>();
+            idsOfHooksToAlert ??= new List<string>();
+            metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
+
+            return new AnomalyAlertConfiguration(id, name, description, conditionOperator, dimensionsToSplitAlert?.ToList(), idsOfHooksToAlert?.ToList(), metricAlertConfigurations?.ToList());
+        }
+
         /// <summary> Initializes a new instance of AnomalyAlert. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
