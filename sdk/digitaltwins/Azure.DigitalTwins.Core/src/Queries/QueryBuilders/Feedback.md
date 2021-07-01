@@ -31,7 +31,7 @@ After a select clause, the collection that the query is acting upon must be spec
 ``` csharp
 From(AdtCollection.DigitalTwins)
 From(AdtCollection.Relationships)
-CUSTOM -- TODO
+FromCustom("DigitalTwins")
 ```
 
 Queryable collections are specified in the `AdtCollection` enum to provide finite options in an autocompletable format to speed up the process of writing a query.
