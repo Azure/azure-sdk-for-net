@@ -14,22 +14,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// must also be provided.
     /// </summary>
     [CodeGenModel("ServicePrincipalInKVCredential")]
-    [CodeGenSuppress(nameof(DataSourceServicePrincipalInKeyVault), typeof(string), typeof(ServicePrincipalInKVParam))]
-    public partial class DataSourceServicePrincipalInKeyVault
+    [CodeGenSuppress(nameof(ServicePrincipalInKeyVaultCredentialEntity), typeof(string), typeof(ServicePrincipalInKVParam))]
+    public partial class ServicePrincipalInKeyVaultCredentialEntity
     {
         private string _keyVaultClientSecret;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataSourceServicePrincipalInKeyVault"/> class.
+        /// Initializes a new instance of the <see cref="ServicePrincipalInKeyVaultCredentialEntity"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="DataSourceServicePrincipalInKeyVault"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="ServicePrincipalInKeyVaultCredentialEntity"/> to be displayed on the web portal.</param>
         /// <param name="endpoint">The endpoint to connect to the Key Vault resource where the secrets are stored.</param>
         /// <param name="keyVaultClientId">The client ID to authenticate to the Key Vault resource.</param>
         /// <param name="keyVaultClientSecret">The client secret to authenticate to the Key Vault resource.</param>
         /// <param name="tenantId">The tenant ID of the service principals used for authentication.</param>
         /// <param name="secretNameForClientId">The name of the Key Vault secret storing the client ID used for data source authentication.</param>
         /// <param name="secretNameForClientSecret">The name of the Key Vault secret storing the client secret used for data source authentication.</param>
-        public DataSourceServicePrincipalInKeyVault(string name, Uri endpoint, string keyVaultClientId, string keyVaultClientSecret, string tenantId, string secretNameForClientId, string secretNameForClientSecret)
+        public ServicePrincipalInKeyVaultCredentialEntity(string name, Uri endpoint, string keyVaultClientId, string keyVaultClientSecret, string tenantId, string secretNameForClientId, string secretNameForClientSecret)
             : base(name)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             SecretNameForClientSecret = secretNameForClientSecret;
         }
 
-        internal DataSourceServicePrincipalInKeyVault(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
+        internal ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;

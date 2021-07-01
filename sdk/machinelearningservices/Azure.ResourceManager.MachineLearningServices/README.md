@@ -14,7 +14,7 @@ Install-Package Azure.ResourceManager.MachineLearningServices -Version 1.0.0-pre
 
 ### Prerequisites
 
-* You must have an [Azure subscription](https://azure.microsoft.com/free/)
+* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 
 ### Authenticate the Client
 

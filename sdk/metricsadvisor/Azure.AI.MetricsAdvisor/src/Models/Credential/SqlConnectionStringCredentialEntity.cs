@@ -12,17 +12,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// Authenticates to an SQL server via connection string.
     /// </summary>
     [CodeGenModel("AzureSQLConnectionStringCredential")]
-    [CodeGenSuppress(nameof(DataSourceSqlConnectionString), typeof(string), typeof(AzureSQLConnectionStringParam))]
-    public partial class DataSourceSqlConnectionString
+    [CodeGenSuppress(nameof(SqlConnectionStringCredentialEntity), typeof(string), typeof(AzureSQLConnectionStringParam))]
+    public partial class SqlConnectionStringCredentialEntity
     {
         private string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataSourceSqlConnectionString"/> class.
+        /// Initializes a new instance of the <see cref="SqlConnectionStringCredentialEntity"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="DataSourceSqlConnectionString"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="SqlConnectionStringCredentialEntity"/> to be displayed on the web portal.</param>
         /// <param name="connectionString">The connection string to be used for authentication.</param>
-        public DataSourceSqlConnectionString(string name, string connectionString)
+        public SqlConnectionStringCredentialEntity(string name, string connectionString)
             : base(name)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             ConnectionString = connectionString;
         }
 
-        internal DataSourceSqlConnectionString(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters)
+        internal SqlConnectionStringCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;

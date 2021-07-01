@@ -179,12 +179,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAndGetAzureDataLakeStorageGen2DataFeedWithMinimumSetup()
+        public async Task CreateAndGetAzureDataLakeStorageDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
+            var dataSource = new AzureDataLakeStorageDataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -192,16 +192,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
             ValidateDataFeedWithMinimumSetup(createdDataFeed, dataFeedName);
-            ValidateAzureDataLakeStorageGen2DataSource(createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
+            ValidateAzureDataLakeStorageDataSource(createdDataFeed.DataSource as AzureDataLakeStorageDataFeedSource);
         }
 
         [RecordedTest]
-        public async Task CreateAndGetAzureDataLakeStorageGen2DataFeedWithOptionalMembers()
+        public async Task CreateAndGetAzureDataLakeStorageDataFeedWithOptionalMembers()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
+            var dataSource = new AzureDataLakeStorageDataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
             DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -209,7 +209,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
             ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
-            ValidateAzureDataLakeStorageGen2DataSource(createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
+            ValidateAzureDataLakeStorageDataSource(createdDataFeed.DataSource as AzureDataLakeStorageDataFeedSource);
         }
 
         [RecordedTest]
@@ -559,30 +559,30 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAndGetAzureDataLakeStorageGen2DataFeedWithAuthentication()
+        public async Task CreateAndGetAzureDataLakeStorageDataFeedWithAuthentication()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock")
+            var dataSource = new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock")
             {
-                Authentication = AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic
+                Authentication = AzureDataLakeStorageDataFeedSource.AuthenticationType.Basic
             };
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
-            AzureDataLakeStorageGen2DataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+            AzureDataLakeStorageDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
 
-            Assert.That(createdDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic));
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageDataFeedSource.AuthenticationType.Basic));
         }
 
         [RecordedTest]
-        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.SharedKey)]
-        public async Task CreateAndGetAzureDataLakeStorageGen2DataFeedWithCredentialAuthentication(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType authentication)
+        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.SharedKey)]
+        public async Task CreateAndGetAzureDataLakeStorageDataFeedWithCredentialAuthentication(AzureDataLakeStorageDataFeedSource.AuthenticationType authentication)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -591,7 +591,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock")
+            var dataSource = new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock")
             {
                 Authentication = authentication,
                 DataSourceCredentialId = credentialId
@@ -601,7 +601,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
-            AzureDataLakeStorageGen2DataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+            AzureDataLakeStorageDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
 
             Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
             Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
@@ -837,12 +837,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithMinimumSetup()
+        public async Task UpdateAzureDataLakeStorageDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
+            var dataSource = new AzureDataLakeStorageDataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
             const string description = "This data feed was created to test the .NET client.";
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
@@ -855,17 +855,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             ValidateDataFeedWithMinimumSetup(updatedDataFeed, dataFeedName, description, dataFeedToUpdate.Id);
-            ValidateAzureDataLakeStorageGen2DataSource(updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
+            ValidateAzureDataLakeStorageDataSource(updatedDataFeed.DataSource as AzureDataLakeStorageDataFeedSource);
         }
 
         [RecordedTest]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithEveryMember()
+        public async Task UpdateAzureDataLakeStorageDataFeedWithEveryMember()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
+            var dataSource = new AzureDataLakeStorageDataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
@@ -877,7 +877,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
-            ValidateAzureDataLakeStorageGen2DataSource(updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
+            ValidateAzureDataLakeStorageDataSource(updatedDataFeed.DataSource as AzureDataLakeStorageDataFeedSource);
         }
 
         [RecordedTest]
@@ -1313,32 +1313,32 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithAuthentication()
+        public async Task UpdateAzureDataLakeStorageDataFeedWithAuthentication()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock");
+            var dataSource = new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock");
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
-            AzureDataLakeStorageGen2DataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+            AzureDataLakeStorageDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageDataFeedSource;
 
-            dataSourceToUpdate.Authentication = AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic;
+            dataSourceToUpdate.Authentication = AzureDataLakeStorageDataFeedSource.AuthenticationType.Basic;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-            AzureDataLakeStorageGen2DataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+            AzureDataLakeStorageDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
 
-            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic));
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageDataFeedSource.AuthenticationType.Basic));
         }
 
         [RecordedTest]
-        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        [TestCase(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.SharedKey)]
-        public async Task UpdateAzureDataLakeStorageGen2DataFeedWithCredentialAuthentication(AzureDataLakeStorageGen2DataFeedSource.AuthenticationType authentication)
+        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipal)]
+        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
+        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.SharedKey)]
+        public async Task UpdateAzureDataLakeStorageDataFeedWithCredentialAuthentication(AzureDataLakeStorageDataFeedSource.AuthenticationType authentication)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -1347,19 +1347,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string credentialId = disposableCredential.Credential.Id;
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
-            var dataSource = new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock");
+            var dataSource = new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock");
             DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
-            AzureDataLakeStorageGen2DataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+            AzureDataLakeStorageDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageDataFeedSource;
 
             dataSourceToUpdate.Authentication = authentication;
             dataSourceToUpdate.DataSourceCredentialId = credentialId;
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
-            AzureDataLakeStorageGen2DataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource;
+            AzureDataLakeStorageDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
 
             Assert.That(updatedDataSource.Authentication, Is.EqualTo(authentication));
             Assert.That(updatedDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
@@ -1853,10 +1853,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
-        private void ValidateAzureDataLakeStorageGen2DataSource(AzureDataLakeStorageGen2DataFeedSource dataSource)
+        private void ValidateAzureDataLakeStorageDataSource(AzureDataLakeStorageDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
-            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataLakeStorageGen2));
+            Assert.That(dataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.AzureDataLakeStorage));
             Assert.That(dataSource.AccountName, Is.EqualTo(DataSourceAccount));
             Assert.That(dataSource.FileSystemName, Is.EqualTo(DataSourceFileSystem));
             Assert.That(dataSource.DirectoryTemplate, Is.EqualTo(DataSourceDirectory));
@@ -2000,9 +2000,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceKind.AzureDataLakeStorageGen2)
+            else if (sourceType == DataFeedSourceKind.AzureDataLakeStorage)
             {
-                var specificDataSource = dataSource as AzureDataLakeStorageGen2DataFeedSource;
+                var specificDataSource = dataSource as AzureDataLakeStorageDataFeedSource;
 
                 Assert.That(specificDataSource, Is.Not.Null);
 

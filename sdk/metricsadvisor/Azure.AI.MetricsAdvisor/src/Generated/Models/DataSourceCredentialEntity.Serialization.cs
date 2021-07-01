@@ -34,10 +34,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureSQLConnectionString": return DataSourceSqlConnectionString.DeserializeDataSourceSqlConnectionString(element);
-                    case "DataLakeGen2SharedKey": return DataSourceDataLakeGen2SharedKey.DeserializeDataSourceDataLakeGen2SharedKey(element);
-                    case "ServicePrincipal": return DataSourceServicePrincipal.DeserializeDataSourceServicePrincipal(element);
-                    case "ServicePrincipalInKV": return DataSourceServicePrincipalInKeyVault.DeserializeDataSourceServicePrincipalInKeyVault(element);
+                    case "AzureSQLConnectionString": return SqlConnectionStringCredentialEntity.DeserializeSqlConnectionStringCredentialEntity(element);
+                    case "DataLakeGen2SharedKey": return DataLakeSharedKeyCredentialEntity.DeserializeDataLakeSharedKeyCredentialEntity(element);
+                    case "ServicePrincipal": return ServicePrincipalCredentialEntity.DeserializeServicePrincipalCredentialEntity(element);
+                    case "ServicePrincipalInKV": return ServicePrincipalInKeyVaultCredentialEntity.DeserializeServicePrincipalInKeyVaultCredentialEntity(element);
                 }
             }
             DataSourceCredentialType dataSourceCredentialType = default;

@@ -12,7 +12,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// The <see cref="LogsQueryClient"/> allows to query the Azure Monitor Metrics service.
+    /// The <see cref="MetricsQueryClient"/> allows you to query the Azure Monitor Metrics service.
     /// </summary>
     public class MetricsQueryClient
     {

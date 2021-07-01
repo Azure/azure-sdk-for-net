@@ -10,8 +10,8 @@ using Azure.AI.MetricsAdvisor.Models;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    /// <summary> The DataLakeGen2SharedKeyCredential. </summary>
-    public partial class DataSourceDataLakeGen2SharedKey : DataSourceCredentialEntity
+    /// <summary> The ServicePrincipalInKVCredential. </summary>
+    public partial class ServicePrincipalInKeyVaultCredentialEntity : DataSourceCredentialEntity
     {
     }
 }

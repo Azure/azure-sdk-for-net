@@ -261,7 +261,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
-                case AzureDataLakeStorageGen2DataFeedSource s:
+                case AzureDataLakeStorageDataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
@@ -283,7 +283,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
-                case AzureDataLakeStorageGen2DataFeedSource s:
+                case AzureDataLakeStorageDataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
