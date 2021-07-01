@@ -269,6 +269,113 @@ namespace Microsoft.Azure.Management.KeyVault
             }
 
             /// <summary>
+            /// The List operation gets information about the deleted managed HSMs
+            /// associated with the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<DeletedManagedHsm> ListDeleted(this IManagedHsmsOperations operations)
+            {
+                return operations.ListDeletedAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The List operation gets information about the deleted managed HSMs
+            /// associated with the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedManagedHsm>> ListDeletedAsync(this IManagedHsmsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDeletedWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the specified deleted managed HSM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the deleted managed HSM.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the deleted managed HSM.
+            /// </param>
+            public static DeletedManagedHsm GetDeleted(this IManagedHsmsOperations operations, string name, string location)
+            {
+                return operations.GetDeletedAsync(name, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified deleted managed HSM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the deleted managed HSM.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the deleted managed HSM.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeletedManagedHsm> GetDeletedAsync(this IManagedHsmsOperations operations, string name, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedWithHttpMessagesAsync(name, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Permanently deletes the specified managed HSM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the soft-deleted managed HSM.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted managed HSM.
+            /// </param>
+            public static void PurgeDeleted(this IManagedHsmsOperations operations, string name, string location)
+            {
+                operations.PurgeDeletedAsync(name, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Permanently deletes the specified managed HSM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the soft-deleted managed HSM.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted managed HSM.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PurgeDeletedAsync(this IManagedHsmsOperations operations, string name, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.PurgeDeletedWithHttpMessagesAsync(name, location, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Create or update a managed HSM Pool in the specified subscription.
             /// </summary>
             /// <param name='operations'>
@@ -398,6 +505,43 @@ namespace Microsoft.Azure.Management.KeyVault
             }
 
             /// <summary>
+            /// Permanently deletes the specified managed HSM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the soft-deleted managed HSM.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted managed HSM.
+            /// </param>
+            public static void BeginPurgeDeleted(this IManagedHsmsOperations operations, string name, string location)
+            {
+                operations.BeginPurgeDeletedAsync(name, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Permanently deletes the specified managed HSM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the soft-deleted managed HSM.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the soft-deleted managed HSM.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginPurgeDeletedAsync(this IManagedHsmsOperations operations, string name, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginPurgeDeletedWithHttpMessagesAsync(name, location, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// The List operation gets information about the managed HSM Pools associated
             /// with the subscription and within the specified resource group.
             /// </summary>
@@ -464,6 +608,42 @@ namespace Microsoft.Azure.Management.KeyVault
             public static async Task<IPage<ManagedHsm>> ListBySubscriptionNextAsync(this IManagedHsmsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The List operation gets information about the deleted managed HSMs
+            /// associated with the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DeletedManagedHsm> ListDeletedNext(this IManagedHsmsOperations operations, string nextPageLink)
+            {
+                return operations.ListDeletedNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The List operation gets information about the deleted managed HSMs
+            /// associated with the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedManagedHsm>> ListDeletedNextAsync(this IManagedHsmsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDeletedNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

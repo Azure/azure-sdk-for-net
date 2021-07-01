@@ -55,6 +55,11 @@ namespace Microsoft.Azure.Management.KeyVault
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -88,14 +93,24 @@ namespace Microsoft.Azure.Management.KeyVault
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedHsmsOperations.
         /// </summary>
         public virtual IManagedHsmsOperations ManagedHsms { get; private set; }
+
+        /// <summary>
+        /// Gets the IMHSMPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IMHSMPrivateEndpointConnectionsOperations MHSMPrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IMHSMPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IMHSMPrivateLinkResourcesOperations MHSMPrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the KeyVaultManagementClient class.
@@ -341,9 +356,12 @@ namespace Microsoft.Azure.Management.KeyVault
             Vaults = new VaultsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
-            Operations = new Operations(this);
             ManagedHsms = new ManagedHsmsOperations(this);
+            MHSMPrivateEndpointConnections = new MHSMPrivateEndpointConnectionsOperations(this);
+            MHSMPrivateLinkResources = new MHSMPrivateLinkResourcesOperations(this);
+            Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

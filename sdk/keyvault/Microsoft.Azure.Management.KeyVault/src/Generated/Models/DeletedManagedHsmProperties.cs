@@ -16,37 +16,40 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of the deleted vault.
+    /// Properties of the deleted managed HSM.
     /// </summary>
-    public partial class DeletedVaultProperties
+    public partial class DeletedManagedHsmProperties
     {
         /// <summary>
-        /// Initializes a new instance of the DeletedVaultProperties class.
+        /// Initializes a new instance of the DeletedManagedHsmProperties
+        /// class.
         /// </summary>
-        public DeletedVaultProperties()
+        public DeletedManagedHsmProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DeletedVaultProperties class.
+        /// Initializes a new instance of the DeletedManagedHsmProperties
+        /// class.
         /// </summary>
-        /// <param name="vaultId">The resource id of the original
-        /// vault.</param>
-        /// <param name="location">The location of the original vault.</param>
+        /// <param name="mhsmId">The resource id of the original managed
+        /// HSM.</param>
+        /// <param name="location">The location of the original managed
+        /// HSM.</param>
         /// <param name="deletionDate">The deleted date.</param>
         /// <param name="scheduledPurgeDate">The scheduled purged date.</param>
-        /// <param name="tags">Tags of the original vault.</param>
         /// <param name="purgeProtectionEnabled">Purge protection status of the
-        /// original vault.</param>
-        public DeletedVaultProperties(string vaultId = default(string), string location = default(string), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? scheduledPurgeDate = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? purgeProtectionEnabled = default(bool?))
+        /// original managed HSM.</param>
+        /// <param name="tags">Tags of the original managed HSM.</param>
+        public DeletedManagedHsmProperties(string mhsmId = default(string), string location = default(string), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? scheduledPurgeDate = default(System.DateTime?), bool? purgeProtectionEnabled = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            VaultId = vaultId;
+            MhsmId = mhsmId;
             Location = location;
             DeletionDate = deletionDate;
             ScheduledPurgeDate = scheduledPurgeDate;
-            Tags = tags;
             PurgeProtectionEnabled = purgeProtectionEnabled;
+            Tags = tags;
             CustomInit();
         }
 
@@ -56,13 +59,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the resource id of the original vault.
+        /// Gets the resource id of the original managed HSM.
         /// </summary>
-        [JsonProperty(PropertyName = "vaultId")]
-        public string VaultId { get; private set; }
+        [JsonProperty(PropertyName = "mhsmId")]
+        public string MhsmId { get; private set; }
 
         /// <summary>
-        /// Gets the location of the original vault.
+        /// Gets the location of the original managed HSM.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; private set; }
@@ -80,16 +83,16 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public System.DateTime? ScheduledPurgeDate { get; private set; }
 
         /// <summary>
-        /// Gets tags of the original vault.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; private set; }
-
-        /// <summary>
-        /// Gets purge protection status of the original vault.
+        /// Gets purge protection status of the original managed HSM.
         /// </summary>
         [JsonProperty(PropertyName = "purgeProtectionEnabled")]
         public bool? PurgeProtectionEnabled { get; private set; }
+
+        /// <summary>
+        /// Gets tags of the original managed HSM.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; private set; }
 
     }
 }

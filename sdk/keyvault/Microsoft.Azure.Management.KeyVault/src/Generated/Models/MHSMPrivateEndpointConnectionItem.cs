@@ -11,27 +11,28 @@
 namespace Microsoft.Azure.Management.KeyVault.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Private endpoint connection resource.
+    /// Private endpoint connection item.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PrivateEndpointConnection : IResource
+    public partial class MHSMPrivateEndpointConnectionItem
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the MHSMPrivateEndpointConnectionItem
+        /// class.
         /// </summary>
-        public PrivateEndpointConnection()
+        public MHSMPrivateEndpointConnectionItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the MHSMPrivateEndpointConnectionItem
+        /// class.
         /// </summary>
         /// <param name="privateEndpoint">Properties of the private endpoint
         /// object.</param>
@@ -41,14 +42,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// endpoint connection. Possible values include: 'Succeeded',
         /// 'Creating', 'Updating', 'Deleting', 'Failed',
         /// 'Disconnected'</param>
-        /// <param name="etag">Modified whenever there is a change in the state
-        /// of private endpoint connection.</param>
-        public PrivateEndpointConnection(PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string), string etag = default(string))
+        public MHSMPrivateEndpointConnectionItem(MHSMPrivateEndpoint privateEndpoint = default(MHSMPrivateEndpoint), MHSMPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(MHSMPrivateLinkServiceConnectionState), string provisioningState = default(string))
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
-            Etag = etag;
             CustomInit();
         }
 
@@ -61,13 +59,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Gets or sets properties of the private endpoint object.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public MHSMPrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets approval state of the private link connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public MHSMPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the private endpoint connection.
@@ -76,13 +74,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// Gets or sets modified whenever there is a change in the state of
-        /// private endpoint connection.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
 
     }
 }

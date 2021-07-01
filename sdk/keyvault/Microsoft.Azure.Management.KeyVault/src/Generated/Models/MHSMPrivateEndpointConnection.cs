@@ -20,18 +20,20 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// Private endpoint connection resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PrivateEndpointConnection : IResource
+    public partial class MHSMPrivateEndpointConnection : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the MHSMPrivateEndpointConnection
+        /// class.
         /// </summary>
-        public PrivateEndpointConnection()
+        public MHSMPrivateEndpointConnection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the MHSMPrivateEndpointConnection
+        /// class.
         /// </summary>
         /// <param name="privateEndpoint">Properties of the private endpoint
         /// object.</param>
@@ -43,7 +45,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// 'Disconnected'</param>
         /// <param name="etag">Modified whenever there is a change in the state
         /// of private endpoint connection.</param>
-        public PrivateEndpointConnection(PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string), string etag = default(string))
+        public MHSMPrivateEndpointConnection(MHSMPrivateEndpoint privateEndpoint = default(MHSMPrivateEndpoint), MHSMPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(MHSMPrivateLinkServiceConnectionState), string provisioningState = default(string), string etag = default(string))
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -61,13 +63,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Gets or sets properties of the private endpoint object.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public MHSMPrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets approval state of the private link connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public MHSMPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the private endpoint connection.

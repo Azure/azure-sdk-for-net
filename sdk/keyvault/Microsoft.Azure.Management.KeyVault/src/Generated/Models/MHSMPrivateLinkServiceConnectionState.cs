@@ -17,20 +17,20 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// An object that represents the approval state of the private link
     /// connection.
     /// </summary>
-    public partial class PrivateLinkServiceConnectionState
+    public partial class MHSMPrivateLinkServiceConnectionState
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkServiceConnectionState
-        /// class.
+        /// Initializes a new instance of the
+        /// MHSMPrivateLinkServiceConnectionState class.
         /// </summary>
-        public PrivateLinkServiceConnectionState()
+        public MHSMPrivateLinkServiceConnectionState()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkServiceConnectionState
-        /// class.
+        /// Initializes a new instance of the
+        /// MHSMPrivateLinkServiceConnectionState class.
         /// </summary>
         /// <param name="status">Indicates whether the connection has been
         /// approved, rejected or removed by the key vault owner. Possible
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="actionsRequired">A message indicating if changes on
         /// the service provider require any updates on the consumer. Possible
         /// values include: 'None'</param>
-        public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionsRequired = default(string))
+        public MHSMPrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionsRequired = default(string))
         {
             Status = status;
             Description = description;

@@ -42,13 +42,15 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="location">Azure location of the key vault
         /// resource.</param>
         /// <param name="tags">Tags assigned to the key vault resource.</param>
-        public Vault(VaultProperties properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="systemData">System metadata for the key vault.</param>
+        public Vault(VaultProperties properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            SystemData = systemData;
             Properties = properties;
             CustomInit();
         }
@@ -87,6 +89,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets system metadata for the key vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Gets or sets properties of the vault

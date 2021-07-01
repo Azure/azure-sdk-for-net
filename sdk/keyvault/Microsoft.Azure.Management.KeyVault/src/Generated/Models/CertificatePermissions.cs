@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// </summary>
     public static class CertificatePermissions
     {
-        public const string All = "all";
         public const string Get = "get";
         public const string List = "list";
         public const string Delete = "delete";

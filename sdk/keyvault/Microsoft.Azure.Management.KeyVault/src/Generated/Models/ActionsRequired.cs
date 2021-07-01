@@ -12,17 +12,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
 {
 
     /// <summary>
-    /// Defines values for SecretPermissions.
+    /// Defines values for ActionsRequired.
     /// </summary>
-    public static class SecretPermissions
+    public static class ActionsRequired
     {
-        public const string Get = "get";
-        public const string List = "list";
-        public const string Set = "set";
-        public const string Delete = "delete";
-        public const string Backup = "backup";
-        public const string Restore = "restore";
-        public const string Recover = "recover";
-        public const string Purge = "purge";
+        public const string None = "None";
     }
 }
