@@ -55,7 +55,7 @@ namespace Compute.Tests
 
                     string rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
                     string rpcName = ComputeManagementTestUtilities.GenerateName("rpcClientTest");
-                    string rpcName2 = ComputeManagementTestUtilities.GenerateName("rpcClientTest");
+                    string rpcName2 = ComputeManagementTestUtilities.GenerateName("rpc2ClientTest");
                     string vmId = createdVM.Id;
                     string vmSize = createdVM.HardwareProfile.VmSize;
 
