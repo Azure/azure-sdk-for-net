@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// The kind of feedback.
+        /// The feedback kind.
         /// </summary>
         [CodeGenMember("FeedbackType")]
         public MetricFeedbackKind Kind { get; internal set; }
