@@ -44,11 +44,11 @@ namespace Azure.AI.MetricsAdvisor
             DimensionKey = dimensionKey;
         }
 
-        internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdTime, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter)
+        internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter)
         {
             Kind = kind;
             Id = id;
-            CreatedTime = createdTime;
+            CreatedOn = createdOn;
             UserPrincipal = userPrincipal;
             MetricId = metricId;
             DimensionKey = dimensionFilter.DimensionFilter;
@@ -69,7 +69,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Date and time, in UTC, when the <see cref="MetricFeedback"/> was created.
         /// </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        [CodeGenMember("CreatedTime")]
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
         /// The user who created the <see cref="MetricFeedback"/>. If <see cref="MetricsAdvisorKeyCredential"/>

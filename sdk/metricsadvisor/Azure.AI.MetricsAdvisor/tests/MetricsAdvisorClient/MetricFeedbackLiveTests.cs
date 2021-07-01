@@ -212,7 +212,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
                 Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
-                Assert.That(feedback.CreatedTime, Is.Not.Null);
+                Assert.That(feedback.CreatedOn, Is.Not.Null);
 
                 Assert.That(feedback.DimensionFilter, Is.Not.Null);
                 Assert.That(feedback.DimensionFilter.DimensionFilter, Is.Not.Null);
@@ -279,7 +279,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var options = new GetAllFeedbackOptions()
             {
                 Filter = new DimensionKey(columns),
-                TimeMode = FeedbackQueryTimeMode.FeedbackCreatedTime,
+                TimeMode = FeedbackQueryTimeMode.FeedbackCreatedOn,
                 StartTime = feedbackSamplingStartTime,
                 EndTime = feedbackSamplingEndTime,
                 FeedbackKind = MetricFeedbackKind.Comment,
@@ -293,9 +293,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(feedback.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
                 Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
-                Assert.That(feedback.CreatedTime, Is.Not.Null);
-                Assert.That(feedback.CreatedTime, Is.GreaterThanOrEqualTo(feedbackSamplingStartTime));
-                Assert.That(feedback.CreatedTime, Is.LessThanOrEqualTo(feedbackSamplingEndTime));
+                Assert.That(feedback.CreatedOn, Is.Not.Null);
+                Assert.That(feedback.CreatedOn, Is.GreaterThanOrEqualTo(feedbackSamplingStartTime));
+                Assert.That(feedback.CreatedOn, Is.LessThanOrEqualTo(feedbackSamplingEndTime));
 
                 Assert.That(feedback.DimensionFilter, Is.Not.Null);
 
@@ -332,7 +332,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(feedback.UserPrincipal, Is.Not.Null.And.Not.Empty);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(feedback.CreatedTime, Is.GreaterThan(justNow));
+            Assert.That(feedback.CreatedOn, Is.GreaterThan(justNow));
 
             Assert.That(feedback.DimensionFilter, Is.Not.Null);
 

@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
             var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope);
 
             string configName = Recording.GenerateAlphaNumericId("config");
@@ -80,7 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DimensionKey groupKey = new DimensionKey(columns);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var scope = MetricAnomalyAlertScope.GetScopeForSeriesGroup(groupKey);
+            var scope = MetricAnomalyAlertScope.CreateScopeForSeriesGroup(groupKey);
             var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope);
 
             string configName = Recording.GenerateAlphaNumericId("config");
@@ -129,8 +129,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var topNGroup = new TopNGroupScope(30, 20, 10);
-            var scope = MetricAnomalyAlertScope.GetScopeForTopNGroup(topNGroup);
+            var scope = MetricAnomalyAlertScope.CreateScopeForTopNGroup(30, 20, 10);
             var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope);
 
             string configName = Recording.GenerateAlphaNumericId("config");
@@ -194,7 +193,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using var disposableHook1 = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate1);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
             var metricAlertConfig = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(12, SnoozeScope.Series, true),
@@ -276,7 +275,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Alert Configurations to be used.
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
             var metricAlertConfig0 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertConditions = new MetricAnomalyAlertConditions()
@@ -385,7 +384,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
             var metricAlertConfig0 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(12, SnoozeScope.Series, true),
@@ -503,7 +502,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
             var metricAlertConfig0 = new MetricAlertConfiguration(detectionConfigId, scope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(12, SnoozeScope.Series, true),
@@ -550,7 +549,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             configToUpdate.ConditionOperator = DetectionConditionOperator.And;
             configToUpdate.MetricAlertConfigurations.RemoveAt(1);
 
-            var newScope = MetricAnomalyAlertScope.GetScopeForTopNGroup(new TopNGroupScope(50, 40, 30));
+            var newScope = MetricAnomalyAlertScope.CreateScopeForTopNGroup(50, 40, 30);
             var newMetricAlertConfig = new MetricAlertConfiguration(detectionConfigId, newScope)
             {
                 AlertSnoozeCondition = new MetricAnomalyAlertSnoozeCondition(4, SnoozeScope.Metric, true),
@@ -697,7 +696,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string configName = Recording.GenerateAlphaNumericId("config");
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,

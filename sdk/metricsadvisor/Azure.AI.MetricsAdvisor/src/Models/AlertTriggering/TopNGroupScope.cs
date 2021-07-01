@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// min count should be in top N, value range : [1, +∞)
         /// should be less than or equal to period.
         /// </param>
-        public TopNGroupScope(int top, int period, int minimumTopCount)
+        internal TopNGroupScope(int top, int period, int minimumTopCount)
         {
             Top = top;
             Period = period;

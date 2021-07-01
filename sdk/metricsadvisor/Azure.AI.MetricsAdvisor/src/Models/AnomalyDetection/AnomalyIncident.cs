@@ -17,14 +17,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Property")]
     public partial class AnomalyIncident
     {
-        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
+        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startedOn, DateTimeOffset lastDetectedOn, SeriesIdentity rootNode, IncidentProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
             DetectionConfigurationId = detectionConfigurationId;
             Id = id;
-            StartTime = startTime;
-            LastTime = endTime;
+            StartedOn = startedOn;
+            LastDetectedOn = lastDetectedOn;
             RootDimensionKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
             Status = property.IncidentStatus;
@@ -74,12 +74,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Corresponds to the time, in UTC, when the first associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        [CodeGenMember("StartTime")]
+        public DateTimeOffset StartedOn { get; }
 
         /// <summary>
         /// Corresponds to the time, in UTC, when the last associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
-        public DateTimeOffset LastTime { get; }
+        [CodeGenMember("LastTime")]
+        public DateTimeOffset LastDetectedOn { get; }
 
         /// <summary>
         /// The severity of the detected <see cref="AnomalyIncident"/>, as evaluated by the service.

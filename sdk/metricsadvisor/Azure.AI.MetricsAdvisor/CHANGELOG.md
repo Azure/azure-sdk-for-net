@@ -33,6 +33,11 @@
 - `WebNotificationHook` constructor now takes the required `name` and `endpoint` parameters.
 - `MetricSeriesGroupDetectionCondition` constructor now takes the required `seriesGroupKey` parameter.
 - `MetricSingleSeriesDetectionCondition` constructor now takes the required `seriesKey` parameter.
+- Renamed all occurrences of `CreatedTime` to `CreatedOn` and `ModifiedTime` to `LastModified`.
+- Renamed `AnomalyIncident.StartTime` to `StartedOn` and `AnomalyIncident.LastTime` to `LastDetectedOn`.
+- Renamed `AlertQueryTimeMode.AnomalyTime` to `AnomalyDetectedOn`, and `FeedbackQueryTimeMode.FeedbackCreatedTime` to `FeedbackCreatedOn`.
+- Renamed `DataFeedRollupSettings.AlreadyRollupIdentificationValue` to `RollupIdentificationValue`.
+- In `DataFeedRollupType`, renamed `AlreadyRollup` to `AlreadyRolledUp`, `NeedRollup` to `RollupNeeded`, and `NoRollup` to `NoRollupNeeded`.
 - In `DataFeed`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ViewersEmails` to `ViewerEmails`.
 - In `NotificationHook`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ExternalLink` to `ExternalUri`.
 - In `MetricAnomalyFeedback`, renamed `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`, and `AnomalyDetectionConfigurationSnapshot` to `DetectionConfigurationSnapshot`.
@@ -41,6 +46,8 @@
 - In `DataPointAnomaly`, renamed property `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`.
 - In `DataFeedMetric`, renamed constructor parameter `metricName` to `name` only.
 - In `DataFeedDimension`, renamed constructor parameter `dimensionName` to `name` only.
+- In `MetricAnomalyAlertScope`, renamed static methods `GetScopeFor<...>` to `CreateScopeFor<...>`. For instance, `GetScopeForSeriesGroup` was renamed to `CreateScopeForSeriesGroup`.
+- Changed signature of the `MetricAnomalyAlertScope.GetScopeForTopNGroup` method to take the parameters `top`, `period`, and `minimumTopCount` directly. For this reason, removed the public constructor of `TopNGroupScope`.
 - Moved `GetAlertConfigurationsOptions`, `GetDatasourceCredentialsOptions`, and `GetDetectionConfigurationsOptions` to the `Azure.AI.MetricsAdvisor.Administration` namespace.
 - Moved `DatasourceCredential`, `DataFeedSource`, `NotificationHook`, and all of their concrete child types to the `Azure.AI.MetricsAdvisor.Administration` namespace.
 - Moved `MetricFeedback` and all of its concrete child types to the `Azure.AI.MetricsAdvisor` namespace.
@@ -50,6 +57,7 @@
 - In `MetricsAdvisorKeyCredential`, merged `UpdateSubscriptionKey` and `UpdateApiKey` into a single method, `Update`, to make it an atomic operation.
 - Removed setters from `StartTime` and `EndTime`, both in `MetricAnomalyFeedback` and in `MetricChangePointFeedback`.
 - The class `NotificationHook` is now abstract.
+- The class `DatasourceCredential` (now called `DataSourceCredentialEntity`) is now abstract.
 
 ## 1.0.0-beta.4 (2021-06-07)
 

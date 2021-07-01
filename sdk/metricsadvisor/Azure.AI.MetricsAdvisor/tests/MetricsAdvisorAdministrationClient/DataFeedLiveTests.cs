@@ -1443,8 +1443,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
                 Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
                 Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
-                Assert.That(dataFeed.CreatedTime, Is.Not.Null);
-                Assert.That(dataFeed.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(dataFeed.CreatedOn, Is.Not.Null);
+                Assert.That(dataFeed.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
 
                 Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
                 Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.Not.Null);
@@ -1654,7 +1654,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
+            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
             Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
             Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.PreviousValue));
@@ -1709,7 +1709,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
+            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
             Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
             Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.CustomValue));
@@ -1788,7 +1788,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.ViewerEmails, Contains.Item("fake@viewer.com"));
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
+            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
             Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
             Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.NoFilling));

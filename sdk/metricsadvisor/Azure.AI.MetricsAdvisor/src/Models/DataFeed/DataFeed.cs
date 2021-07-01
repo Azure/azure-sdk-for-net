@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
-            CreatedTime = dataFeedDetail.CreatedTime;
+            CreatedOn = dataFeedDetail.CreatedTime;
             CreatorEmail = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
             MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.Name, metric => metric.Id);
@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Date and time, in UTC, when this <see cref="DataFeed"/> was created.
         /// </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
         /// The e-mail address of creator of this <see cref="DataFeed"/>.
@@ -169,7 +169,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (RollupSettings != null)
             {
-                detail.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                detail.AllUpIdentification = RollupSettings.RollupIdentificationValue;
                 detail.NeedRollup = RollupSettings.RollupType;
                 detail.RollUpMethod = RollupSettings.AutoRollupMethod;
                 foreach (string columnName in RollupSettings.AutoRollupGroupByColumnNames)
@@ -230,7 +230,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (RollupSettings != null)
             {
-                patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                patch.AllUpIdentification = RollupSettings.RollupIdentificationValue;
                 patch.NeedRollup = RollupSettings.RollupType;
                 patch.RollUpMethod = RollupSettings.AutoRollupMethod;
                 patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
