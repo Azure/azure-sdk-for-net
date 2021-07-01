@@ -10,6 +10,8 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
+    // test change
+
     /// <summary>
     /// The sample secrets client.
     /// </summary>
