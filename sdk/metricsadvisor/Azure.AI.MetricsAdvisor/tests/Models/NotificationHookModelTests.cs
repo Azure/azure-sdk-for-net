@@ -67,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockRequest request = mockTransport.Requests.Last();
             string content = ReadContent(request);
 
-            Assert.That(request.Uri.Path, Is.EqualTo($"/metricsadvisor/v1.0/hooks/{FakeGuid}"));
+            Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
             Assert.That(content, ContainsJsonString("hookName", "newHookName"));
             Assert.That(content, ContainsJsonString("hookType", "unknownType"));
             Assert.That(content, ContainsJsonString("externalLink", "https://newfakeuri.com/"));
