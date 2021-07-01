@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Deployment on error behavior. </summary>
     public partial class OnErrorDeployment

@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Script execution log object. </summary>
-    public partial class ScriptLog : AzureResourceBase
+    public partial class ScriptLog : Resource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of ScriptLog. </summary>
         public ScriptLog()
@@ -16,11 +18,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ScriptLog. </summary>
-        /// <param name="id"> String Id used to locate any resource on Azure. </param>
-        /// <param name="name"> Name of this resource. </param>
-        /// <param name="type"> Type of this resource. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="log"> Script execution logs in text format. </param>
-        internal ScriptLog(string id, string name, string type, string log) : base(id, name, type)
+        internal ScriptLog(TenantResourceIdentifier id, string name, ResourceType type, string log) : base(id, name, type)
         {
             Log = log;
         }

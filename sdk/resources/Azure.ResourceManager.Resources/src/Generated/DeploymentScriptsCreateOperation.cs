@@ -12,24 +12,28 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Creates a deployment script. </summary>
     public partial class DeploymentScriptsCreateOperation : Operation<DeploymentScript>, IOperationSource<DeploymentScript>
     {
-        private readonly ArmOperationHelpers<DeploymentScript> _operation;
+        private readonly OperationInternals<DeploymentScript> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DeploymentScriptsCreateOperation for mocking. </summary>
         protected DeploymentScriptsCreateOperation()
         {
         }
 
-        internal DeploymentScriptsCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeploymentScriptsCreateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DeploymentScript>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentScriptsCreateOperation");
+            _operation = new OperationInternals<DeploymentScript>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentScriptsCreateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +64,13 @@ namespace Azure.ResourceManager.Resources
         DeploymentScript IOperationSource<DeploymentScript>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return DeploymentScript.DeserializeDeploymentScript(document.RootElement);
+            return new DeploymentScript(_operationBase, DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement));
         }
 
         async ValueTask<DeploymentScript> IOperationSource<DeploymentScript>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DeploymentScript.DeserializeDeploymentScript(document.RootElement);
+            return new DeploymentScript(_operationBase, DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement));
         }
     }
 }

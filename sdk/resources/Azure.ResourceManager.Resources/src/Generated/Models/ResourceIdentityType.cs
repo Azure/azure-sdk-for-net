@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The identity type. </summary>
     public enum ResourceIdentityType

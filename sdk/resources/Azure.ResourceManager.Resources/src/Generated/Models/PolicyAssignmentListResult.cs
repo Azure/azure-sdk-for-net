@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> List of policy assignments. </summary>
     internal partial class PolicyAssignmentListResult
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>
         internal PolicyAssignmentListResult()
         {
-            Value = new ChangeTrackingList<PolicyAssignment>();
+            Value = new ChangeTrackingList<PolicyAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>
         /// <param name="value"> An array of policy assignments. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal PolicyAssignmentListResult(IReadOnlyList<PolicyAssignment> value, string nextLink)
+        internal PolicyAssignmentListResult(IReadOnlyList<PolicyAssignmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of policy assignments. </summary>
-        public IReadOnlyList<PolicyAssignment> Value { get; }
+        public IReadOnlyList<PolicyAssignmentData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

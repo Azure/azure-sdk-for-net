@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class ScriptLog : IUtf8JsonSerializable
     {
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ScriptLog DeserializeScriptLog(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            TenantResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> log = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ScriptLog(id.Value, name.Value, type.Value, log.Value);
+            return new ScriptLog(id, name, type, log.Value);
         }
     }
 }

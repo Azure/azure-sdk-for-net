@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
-    /// <summary> Specified resource. </summary>
-    public partial class Resource
+    /// <summary> Resource information. </summary>
+    public partial class Resource : Resource<ResourceGroupResourceIdentifier>
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         public Resource()
@@ -20,26 +21,17 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal Resource(string id, string name, string type, string location, IDictionary<string, string> tags)
+        internal Resource(ResourceGroupResourceIdentifier id, string name, ResourceType type, string location, IDictionary<string, string> tags) : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             Location = location;
             Tags = tags;
         }
 
-        /// <summary> Resource ID. </summary>
-        public string Id { get; }
-        /// <summary> Resource name. </summary>
-        public string Name { get; }
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
         /// <summary> Resource location. </summary>
         public string Location { get; set; }
         /// <summary> Resource tags. </summary>

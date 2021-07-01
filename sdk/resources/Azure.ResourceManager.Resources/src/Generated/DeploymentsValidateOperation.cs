@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Validates whether the specified template is syntactically correct and will be accepted by Azure Resource Manager.. </summary>
     public partial class DeploymentsValidateOperation : Operation<DeploymentValidateResult>, IOperationSource<DeploymentValidateResult>
     {
-        private readonly ArmOperationHelpers<DeploymentValidateResult> _operation;
+        private readonly OperationInternals<DeploymentValidateResult> _operation;
 
         /// <summary> Initializes a new instance of DeploymentsValidateOperation for mocking. </summary>
         protected DeploymentsValidateOperation()
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Resources
 
         internal DeploymentsValidateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DeploymentValidateResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsValidateOperation");
+            _operation = new OperationInternals<DeploymentValidateResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsValidateOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

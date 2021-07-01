@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The resource management error additional info. </summary>
     public partial class ErrorAdditionalInfo

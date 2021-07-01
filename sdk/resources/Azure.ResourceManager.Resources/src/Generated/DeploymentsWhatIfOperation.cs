@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
     public partial class DeploymentsWhatIfOperation : Operation<WhatIfOperationResult>, IOperationSource<WhatIfOperationResult>
     {
-        private readonly ArmOperationHelpers<WhatIfOperationResult> _operation;
+        private readonly OperationInternals<WhatIfOperationResult> _operation;
 
         /// <summary> Initializes a new instance of DeploymentsWhatIfOperation for mocking. </summary>
         protected DeploymentsWhatIfOperation()
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Resources
 
         internal DeploymentsWhatIfOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<WhatIfOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsWhatIfOperation");
+            _operation = new OperationInternals<WhatIfOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsWhatIfOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -5,23 +5,14 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Tag count. </summary>
-    public partial class TagCount
+    internal partial class TagCount
     {
         /// <summary> Initializes a new instance of TagCount. </summary>
         internal TagCount()
         {
-        }
-
-        /// <summary> Initializes a new instance of TagCount. </summary>
-        /// <param name="type"> Type of count. </param>
-        /// <param name="value"> Value of count. </param>
-        internal TagCount(string type, int? value)
-        {
-            Type = type;
-            Value = value;
         }
 
         /// <summary> Type of count. </summary>

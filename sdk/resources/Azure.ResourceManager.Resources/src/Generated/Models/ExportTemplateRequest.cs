@@ -8,20 +8,20 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Export resource group template request parameters. </summary>
-    public partial class ExportTemplateRequest
+    internal partial class ExportTemplateRequest
     {
         /// <summary> Initializes a new instance of ExportTemplateRequest. </summary>
-        public ExportTemplateRequest()
+        internal ExportTemplateRequest()
         {
             Resources = new ChangeTrackingList<string>();
         }
 
         /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </summary>
-        public IList<string> Resources { get; }
+        public IReadOnlyList<string> Resources { get; }
         /// <summary> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </summary>
-        public string Options { get; set; }
+        public string Options { get; }
     }
 }

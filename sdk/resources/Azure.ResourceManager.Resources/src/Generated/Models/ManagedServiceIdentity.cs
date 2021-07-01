@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Managed identity generic object. </summary>
     public partial class ManagedServiceIdentity
@@ -21,15 +21,19 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
         /// <param name="type"> Type of the managed identity. </param>
+        /// <param name="tenantId"> ID of the Azure Active Directory. </param>
         /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        internal ManagedServiceIdentity(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal ManagedServiceIdentity(ManagedServiceIdentityType? type, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             Type = type;
+            TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
         }
 
         /// <summary> Type of the managed identity. </summary>
         public ManagedServiceIdentityType? Type { get; set; }
+        /// <summary> ID of the Azure Active Directory. </summary>
+        public string TenantId { get; }
         /// <summary> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

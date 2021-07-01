@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Deployment properties with additional details. </summary>
     public partial class DeploymentPropertiesExtended
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of DeploymentPropertiesExtended. </summary>
-        /// <param name="provisioningState"> The state of the provisioning. </param>
+        /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="correlationId"> The correlation ID of the deployment. </param>
         /// <param name="timestamp"> The timestamp of the template deployment. </param>
         /// <param name="duration"> The duration of the template deployment. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal DeploymentPropertiesExtended(string provisioningState, string correlationId, DateTimeOffset? timestamp, string duration, object outputs, IReadOnlyList<Provider> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, object parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<ResourceReference> outputResources, IReadOnlyList<ResourceReference> validatedResources, ErrorResponse error)
+        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, string duration, object outputs, IReadOnlyList<Provider> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, object parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<ResourceReference> outputResources, IReadOnlyList<ResourceReference> validatedResources, ErrorResponse error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Resources.Models
             Error = error;
         }
 
-        /// <summary> The state of the provisioning. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Denotes the state of provisioning. </summary>
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> The correlation ID of the deployment. </summary>
         public string CorrelationId { get; }
         /// <summary> The timestamp of the template deployment. </summary>

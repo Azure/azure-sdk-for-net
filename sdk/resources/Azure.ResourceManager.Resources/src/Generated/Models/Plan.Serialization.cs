@@ -8,48 +8,36 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class Plan : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Publisher))
-            {
-                writer.WritePropertyName("publisher");
-                writer.WriteStringValue(Publisher);
-            }
-            if (Optional.IsDefined(Product))
-            {
-                writer.WritePropertyName("product");
-                writer.WriteStringValue(Product);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("publisher");
+            writer.WriteStringValue(Publisher);
+            writer.WritePropertyName("product");
+            writer.WriteStringValue(Product);
             if (Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode");
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version");
-                writer.WriteStringValue(Version);
-            }
+            writer.WritePropertyName("version");
+            writer.WriteStringValue(Version);
             writer.WriteEndObject();
         }
 
         internal static Plan DeserializePlan(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
+            string name = default;
+            string publisher = default;
+            string product = default;
             Optional<string> promotionCode = default;
-            Optional<string> version = default;
+            string version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -78,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new Plan(name.Value, publisher.Value, product.Value, promotionCode.Value, version.Value);
+            return new Plan(name, publisher, product, promotionCode.Value, version);
         }
     }
 }

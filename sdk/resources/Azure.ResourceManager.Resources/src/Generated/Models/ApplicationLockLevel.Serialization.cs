@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     internal static partial class ApplicationLockLevelExtensions
     {

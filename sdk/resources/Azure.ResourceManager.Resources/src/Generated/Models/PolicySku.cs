@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The policy sku. This property is optional, obsolete, and will be ignored. </summary>
     public partial class PolicySku

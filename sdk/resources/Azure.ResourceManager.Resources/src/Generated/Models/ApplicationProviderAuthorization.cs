@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The managed application provider authorization. </summary>
     public partial class ApplicationProviderAuthorization

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The type of property change. </summary>
     public enum PropertyChangeType
@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The property exists in both current and desired state and is different. The value of the property will change when the deployment is executed. </summary>
         Modify,
         /// <summary> The property is an array and contains nested changes. </summary>
-        Array
+        Array,
+        /// <summary> The property will not be set or updated. </summary>
+        NoEffect
     }
 }

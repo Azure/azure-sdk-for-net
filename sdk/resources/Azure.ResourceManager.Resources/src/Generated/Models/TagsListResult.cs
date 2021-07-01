@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> List of subscription tags. </summary>
     internal partial class TagsListResult
@@ -17,15 +17,6 @@ namespace Azure.ResourceManager.Resources.Models
         internal TagsListResult()
         {
             Value = new ChangeTrackingList<TagDetails>();
-        }
-
-        /// <summary> Initializes a new instance of TagsListResult. </summary>
-        /// <param name="value"> An array of tags. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal TagsListResult(IReadOnlyList<TagDetails> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
         }
 
         /// <summary> An array of tags. </summary>

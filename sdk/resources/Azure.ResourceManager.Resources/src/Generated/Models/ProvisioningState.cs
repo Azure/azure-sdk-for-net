@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Provisioning status of the managed application. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
+        private const string NotSpecifiedValue = "NotSpecified";
 
         /// <summary> Accepted. </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
@@ -56,6 +57,8 @@ namespace Azure.ResourceManager.Resources.Models
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
         /// <summary> Updating. </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        /// <summary> NotSpecified. </summary>
+        public static ProvisioningState NotSpecified { get; } = new ProvisioningState(NotSpecifiedValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>

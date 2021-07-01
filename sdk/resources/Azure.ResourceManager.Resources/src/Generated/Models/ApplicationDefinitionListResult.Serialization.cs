@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     internal partial class ApplicationDefinitionListResult
     {
         internal static ApplicationDefinitionListResult DeserializeApplicationDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationDefinition>> value = default;
+            Optional<IReadOnlyList<ApplicationDefinitionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationDefinition> array = new List<ApplicationDefinition>();
+                    List<ApplicationDefinitionData> array = new List<ApplicationDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationDefinition.DeserializeApplicationDefinition(item));
+                        array.Add(ApplicationDefinitionData.DeserializeApplicationDefinitionData(item));
                     }
                     value = array;
                     continue;

@@ -12,24 +12,28 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> You can provide the template and parameters directly in the request or link to JSON files. </summary>
     public partial class DeploymentsCreateOrUpdateAtTenantScopeOperation : Operation<DeploymentExtended>, IOperationSource<DeploymentExtended>
     {
-        private readonly ArmOperationHelpers<DeploymentExtended> _operation;
+        private readonly OperationInternals<DeploymentExtended> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DeploymentsCreateOrUpdateAtTenantScopeOperation for mocking. </summary>
         protected DeploymentsCreateOrUpdateAtTenantScopeOperation()
         {
         }
 
-        internal DeploymentsCreateOrUpdateAtTenantScopeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeploymentsCreateOrUpdateAtTenantScopeOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DeploymentExtended>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsCreateOrUpdateAtTenantScopeOperation");
+            _operation = new OperationInternals<DeploymentExtended>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsCreateOrUpdateAtTenantScopeOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +64,13 @@ namespace Azure.ResourceManager.Resources
         DeploymentExtended IOperationSource<DeploymentExtended>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
+            return new DeploymentExtended(_operationBase, DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement));
         }
 
         async ValueTask<DeploymentExtended> IOperationSource<DeploymentExtended>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DeploymentExtended.DeserializeDeploymentExtended(document.RootElement);
+            return new DeploymentExtended(_operationBase, DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement));
         }
     }
 }

@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class ResourceLink : IUtf8JsonSerializable
     {
@@ -25,17 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourceLink DeserializeResourceLink(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<object> type = default;
             Optional<ResourceLinkProperties> properties = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -61,8 +57,13 @@ namespace Azure.ResourceManager.Resources.Models
                     properties = ResourceLinkProperties.DeserializeResourceLinkProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ResourceLink(id.Value, name.Value, type.Value, properties.Value);
+            return new ResourceLink(id, name.Value, type.Value, properties.Value);
         }
     }
 }

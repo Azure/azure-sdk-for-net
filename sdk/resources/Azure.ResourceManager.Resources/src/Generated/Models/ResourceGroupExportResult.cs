@@ -5,23 +5,14 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Resource group export result. </summary>
-    public partial class ResourceGroupExportResult
+    internal partial class ResourceGroupExportResult
     {
         /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
         internal ResourceGroupExportResult()
         {
-        }
-
-        /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
-        /// <param name="template"> The template content. </param>
-        /// <param name="error"> The template export error. </param>
-        internal ResourceGroupExportResult(object template, ErrorResponse error)
-        {
-            Template = template;
-            Error = error;
         }
 
         /// <summary> The template content. </summary>

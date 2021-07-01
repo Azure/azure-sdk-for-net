@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> List of resource groups. </summary>
     internal partial class ResourceListResult
@@ -17,15 +17,6 @@ namespace Azure.ResourceManager.Resources.Models
         internal ResourceListResult()
         {
             Value = new ChangeTrackingList<GenericResourceExpanded>();
-        }
-
-        /// <summary> Initializes a new instance of ResourceListResult. </summary>
-        /// <param name="value"> An array of resources. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ResourceListResult(IReadOnlyList<GenericResourceExpanded> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
         }
 
         /// <summary> An array of resources. </summary>
