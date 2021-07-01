@@ -28,9 +28,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly bool _singleDispatch;
         private readonly BlobsCheckpointStore _checkpointStore;
         private readonly EventHubOptions _options;
-        private readonly ILogger _logger;
 
         private Lazy<EventHubsScaleMonitor> _scaleMonitor;
+        private readonly ILoggerFactory _loggerFactory;
 
         public EventHubListener(
             string functionId,
@@ -40,9 +40,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             IEventHubConsumerClient consumerClient,
             BlobsCheckpointStore checkpointStore,
             EventHubOptions options,
-            ILogger logger)
+            ILoggerFactory loggerFactory)
         {
-            _logger = logger;
+            _loggerFactory = loggerFactory;
             _executor = executor;
             _eventProcessorHost = eventProcessorHost;
             _singleDispatch = singleDispatch;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     functionId,
                     consumerClient,
                     checkpointStore,
-                    _logger));
+                    _loggerFactory.CreateLogger<EventHubsScaleMonitor>()));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         IEventProcessor IEventProcessorFactory.CreateEventProcessor()
         {
-            return new EventProcessor(_options, _executor, _logger, _singleDispatch);
+            return new EventProcessor(_options, _executor, _loggerFactory.CreateLogger<EventProcessor>(), _singleDispatch);
         }
 
         public IScaleMonitor GetMonitor()
