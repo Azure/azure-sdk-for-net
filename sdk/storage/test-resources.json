@@ -17,6 +17,20 @@
             "metadata": {
                 "description": "The principal to assign the role to. This is application object id."
             }
+        },
+        "azureAuthorityHost": {
+            "type": "string",
+            "defaultValue": "https://login.microsoftonline.com",
+            "metadata": {
+                "description": "The azure authority host. Its value will be changed for different clouds test."
+            }
+        },
+        "enableStorageVersioning": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable Versioning enabled setting, default value is true"
+            },
+            "defaultValue": true
         }
     },
     "variables": {
@@ -56,7 +70,21 @@
             "virtualNetworkRules": [],
             "ipRules": [],
             "defaultAction": "Allow"
-        }
+        },
+        "versioningEnableProperties": {
+            "isVersioningEnabled": true,
+            "lastAccessTimeTrackingPolicy": {
+                "enable": true,
+                "name": "AccessTimeTracking",
+                "trackingGranularityInDays": 1,
+                "blobType": [
+                    "blockBlob"
+                ]
+            }
+        },
+        "nullProperties": {
+        },
+        "locationsProperty": "[if(parameters('enableStorageVersioning'), variables('versioningEnableProperties'), variables('nullProperties'))]"
     },
     "resources": [
         {
@@ -107,17 +135,7 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('primaryAccountName'), '/default')]",
-            "properties": {
-                "isVersioningEnabled": true,
-                "lastAccessTimeTrackingPolicy": {
-                    "enable": true,
-                    "name": "AccessTimeTracking",
-                    "trackingGranularityInDays": 1,
-                    "blobType": [
-                        "blockBlob"
-                    ]
-                }
-            },
+            "properties": "[variables('locationsProperty')]",
             "dependsOn": [
                 "[variables('primaryAccountName')]"
             ]
@@ -524,6 +542,10 @@
     "SOFT_DELETE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('softDeleteAccountName')]"
+    },
+    "AZURE_AUTHORITY_HOST": {
+        "type": "string",
+        "value": "[parameters('azureAuthorityHost')]"
     },
     "SOFT_DELETE_ACCOUNT_KEY": {
       "type": "string",
