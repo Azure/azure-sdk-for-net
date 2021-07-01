@@ -64,14 +64,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
             ManagedIdentity,
 
             /// <summary>
-            /// Uses Service Principal authentication. You need to have a <see cref="DataSourceServicePrincipal"/>
+            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalCredentialEntity"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipal,
 
             /// <summary>
             /// Uses Service Principal authentication, but the client ID and the client secret must be
-            /// stored in a Key Vault resource. You need to have a <see cref="DataSourceServicePrincipalInKeyVault"/>
+            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultCredentialEntity"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipalInKeyVault

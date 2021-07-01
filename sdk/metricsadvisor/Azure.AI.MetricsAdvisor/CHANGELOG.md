@@ -6,6 +6,7 @@
 - `DimensionKey` now implements the `IEnumerable<KeyValuePair<string, string>>` interface. Dimension columns can now be enumerated.
 - Added method `Contains` to `DimensionKey` to check whether or not a dimension column is present.
 - Added a property setter to `MetricSeriesGroupDetectionCondition.SeriesGroupKey` and to `MetricSingleSeriesDetectionCondition.SeriesKey`.
+- Added property `MeasureType` to `MetricBoundaryCondition` to control which measure should be used when checking boundaries for alert triggering. Current supported types are `Value` and `Mean`.
 
 ### Breaking Changes
 - Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
@@ -13,13 +14,14 @@
 - `DimensionKey` constructor now takes the required `dimension` parameter.
 - The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in methods, method parameters, and properties.
   - Renamed class `DatasourceCredential` to `DataSourceCredentialEntity`.
-  - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataSourceDataLakeGen2SharedKey`.
-  - Renamed class `ServicePrincipalDatasourceCredential` to `DataSourceServicePrincipal`.
-  - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `DataSourceServicePrincipalInKeyVault`.
-  - Renamed class `SqlConnectionStringDatasourceCredential` to `DataSourceSqlConnectionString`.
+  - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataLakeSharedKeyCredentialEntity`.
+  - Renamed class `ServicePrincipalDatasourceCredential` to `ServicePrincipalCredentialEntity`.
+  - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `ServicePrincipalInKeyVaultCredentialEntity`.
+  - Renamed class `SqlConnectionStringDatasourceCredential` to `SqlConnectionStringCredentialEntity`.
 - Renamed class `MetricAnomalyAlertConfiguration` to `MetricAlertConfiguration`.
 - Renamed class `MetricAnomalyAlertConfigurationsOperator` to `DetectionConditionOperator`. Similarly, `MetricAnomalyAlertConfiguration.CrossMetricsOperator` has been renamed to `ConditionOperator`.
 - Renamed class `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
+- Renamed class `AzureDataLakeStorageGen2DataFeedSource` to `AzureDataLakeStorageDataFeedSource`. Similarly, `DataSourceType.AzureDataLakeStorageGen2` has been renamed to `AzureDataLakeStorage`.
 - Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` has been renamed to `Kind`.
 - Renamed class `PeriodType` to `MetricPeriodType`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
@@ -47,6 +49,7 @@
 - Moved property `DataFeed.SourceType` to `DataFeedSource.DataSourceType`.
 - In `MetricsAdvisorKeyCredential`, merged `UpdateSubscriptionKey` and `UpdateApiKey` into a single method, `Update`, to make it an atomic operation.
 - Removed setters from `StartTime` and `EndTime`, both in `MetricAnomalyFeedback` and in `MetricChangePointFeedback`.
+- The class `NotificationHook` is now abstract.
 
 ## 1.0.0-beta.4 (2021-06-07)
 

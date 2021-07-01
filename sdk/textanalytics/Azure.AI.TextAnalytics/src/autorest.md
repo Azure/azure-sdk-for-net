@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: release_3_1_preview.5
+tag: release_3_1
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/5e1ad2fb49b88b1a17a941228f5238aba74992a6/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/9820e5b189076cb9b329b6968a8d2fc405eef2f6/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
 ```
 
 ### Make generated models internal by default
@@ -19,29 +19,6 @@ directive:
   where: $.definitions.*
   transform: >
     $["x-accessibility"] = "internal"
-```
-
-### Make the API version parameterized so we generate a multi-versioned API
-
-This should be fixed in the swagger, but we're working around it locally for now.
-``` yaml
-directive:
-- from: swagger-document
-  where: $["x-ms-parameterized-host"]
-  transform: >
-    $.hostTemplate = "{Endpoint}/text/analytics/{apiVersion}";
-    $.parameters.push({
-      "name": "apiVersion",
-      "description": "Text Analytics API version (for example: v3.0).",
-      "x-ms-parameter-location": "client",
-      "required": true,
-      "type": "string",
-      "enum": [
-        "v3.1"
-      ],
-      "in": "path",
-      "x-ms-skip-url-encoding": true
-    });
 ```
 
 ### Add nullable annotations
@@ -71,6 +48,16 @@ directive:
   transform: >
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
+```
+
+### Make taskName non-required
+This should be deleted in service v3.2 when service enables taskName again
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TaskState
+  transform: >
+    $["required"] = ["status", "lastUpdateDateTime"]
 ```
 
 ### Add x-ms-paths section if not exists

@@ -2,7 +2,7 @@ namespace Azure.AI.Translation.Document
 {
     public static partial class BatchDocumentTranslationModelFactory
     {
-        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IReadOnlyList<string> fileExtensions = null, System.Collections.Generic.IReadOnlyList<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IReadOnlyList<string> formatVersions = null) { throw null; }
+        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
     }
     public partial class DocumentFilter
     {

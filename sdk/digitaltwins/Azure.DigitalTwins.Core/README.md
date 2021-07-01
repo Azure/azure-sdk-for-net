@@ -137,7 +137,7 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/src
 [package]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

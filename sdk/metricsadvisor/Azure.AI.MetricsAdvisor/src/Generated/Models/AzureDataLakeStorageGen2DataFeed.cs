@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
 
             DataSourceParameter = dataSourceParameter;
-            DataSourceType = DataFeedSourceKind.AzureDataLakeStorageGen2;
+            DataSourceType = DataFeedSourceKind.AzureDataLakeStorage;
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeStorageGen2DataFeed. </summary>
