@@ -18,6 +18,20 @@
                 "description": "The principal to assign the role to. This is application object id."
             }
         },
+        "storageEndpointSuffix": {
+            "type": "string",
+            "defaultValue": "core.windows.net",
+            "metadata": {
+                "description": "The storage endpoint suffix. Its value will be changed for different clouds test."
+            }
+        },
+        "keyVaultEndpointSuffix": {
+            "defaultValue": ".vault.azure.net",
+            "type": "string",
+            "metadata": {
+                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
+            }
+        },
         "azureAuthorityHost": {
             "type": "string",
             "defaultValue": "https://login.microsoftonline.com",
@@ -25,10 +39,17 @@
                 "description": "The azure authority host. Its value will be changed for different clouds test."
             }
         },
+        "keyVaultSku": {
+            "type": "string",
+            "defaultValue": "premium",
+            "metadata": {
+                "description": "Key Vault SKU to deploy. The default is 'premium'"
+            }
+        },
         "enableStorageVersioning": {
             "type": "bool",
             "metadata": {
-                "description": "Enable Versioning enabled setting, default value is true"
+              "description": "Enable Versioning enabled setting, default value is true"
             },
             "defaultValue": true
         }
@@ -50,7 +71,7 @@
         "webjobsPrimaryAccountName": "[concat(parameters('baseName'), 'wjprim')]",
         "webjobsSecondaryAccountName": "[concat(parameters('baseName'), 'wjsec')]",
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
+        "azureKeyVaultUrl": "[format('https://{0}{1}', variables('keyvaultName'), parameters('keyVaultEndpointSuffix'))]",
         "location": "[resourceGroup().location]",
         "resourceGroupName": "[resourceGroup().name]",
         "subscriptionId": "[subscription().subscriptionId]",
@@ -326,7 +347,7 @@
             "properties": {
                 "sku": {
                     "family": "A",
-                    "name": "premium"
+                    "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
@@ -542,6 +563,10 @@
     "SOFT_DELETE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('softDeleteAccountName')]"
+    },
+    "STORAGE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[parameters('storageEndpointSuffix')]"
     },
     "AZURE_AUTHORITY_HOST": {
         "type": "string",
