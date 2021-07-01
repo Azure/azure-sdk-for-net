@@ -16,18 +16,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase("anomalyTime")]
-        [TestCase("createdTime")]
-        [TestCase("modifiedTime")]
+        [TestCase("anomalyDetectedOn")]
+        [TestCase("createdOn")]
+        [TestCase("lastModified")]
         public async Task GetAlerts(string timeModeName)
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             AlertQueryTimeMode timeMode = timeModeName switch
             {
-                "anomalyTime" => AlertQueryTimeMode.AnomalyDetectedOn,
-                "createdTime" => AlertQueryTimeMode.CreatedOn,
-                "modifiedTime" => AlertQueryTimeMode.ModifiedOn,
+                "anomalyDetectedOn" => AlertQueryTimeMode.AnomalyDetectedOn,
+                "createdOn" => AlertQueryTimeMode.CreatedOn,
+                "lastModified" => AlertQueryTimeMode.LastModified,
                 _ => throw new ArgumentOutOfRangeException("Invalid test case.")
             };
 
@@ -41,13 +41,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(alert.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(alert.Timestamp, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(alert.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
-                Assert.That(alert.ModifiedOn, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(alert.LastModified, Is.Not.EqualTo(default(DateTimeOffset)));
 
                 DateTimeOffset filteredTime = timeModeName switch
                 {
-                    "anomalyTime" => alert.Timestamp,
-                    "createdTime" => alert.CreatedOn,
-                    "modifiedTime" => alert.ModifiedOn,
+                    "anomalyDetectedOn" => alert.Timestamp,
+                    "createdOn" => alert.CreatedOn,
+                    "lastModified" => alert.LastModified,
                     _ => throw new ArgumentOutOfRangeException("Invalid test case.")
                 };
 
@@ -77,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(alert.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(alert.Timestamp, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(alert.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
-                Assert.That(alert.ModifiedOn, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(alert.LastModified, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(alert.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
 
                 if (++alertCount >= MaximumSamplesCount)
@@ -106,7 +106,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.Timestamp, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(anomaly.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
-                Assert.That(anomaly.ModifiedOn, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(anomaly.LastModified, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(anomaly.Status, Is.Not.EqualTo(default(AnomalyStatus)));
                 Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 

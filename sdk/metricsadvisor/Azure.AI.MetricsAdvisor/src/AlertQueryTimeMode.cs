@@ -27,9 +27,9 @@ namespace Azure.AI.MetricsAdvisor
         public static AlertQueryTimeMode CreatedOn { get; } = new AlertQueryTimeMode(CreatedOnValue);
 
         /// <summary>
-        /// Filters alerts by <see cref="AnomalyAlert.ModifiedOn"/>.
+        /// Filters alerts by <see cref="AnomalyAlert.LastModified"/>.
         /// </summary>
         [CodeGenMember("ModifiedTime")]
-        public static AlertQueryTimeMode ModifiedOn { get; } = new AlertQueryTimeMode(ModifiedOnValue);
+        public static AlertQueryTimeMode LastModified { get; } = new AlertQueryTimeMode(LastModifiedValue);
     }
 }

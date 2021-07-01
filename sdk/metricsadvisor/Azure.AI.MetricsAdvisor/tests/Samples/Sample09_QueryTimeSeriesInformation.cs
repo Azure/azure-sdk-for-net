@@ -57,9 +57,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string dimensionName = "city";
 
-            var startOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endOn = DateTimeOffset.UtcNow;
-            var options = new GetAnomalyDimensionValuesOptions(startOn, endOn)
+            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endTime = DateTimeOffset.UtcNow;
+            var options = new GetAnomalyDimensionValuesOptions(startTime, endTime)
             {
                 MaxPageSize = 10
             };
@@ -92,9 +92,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            var startOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endOn = DateTimeOffset.UtcNow;
-            var options = new GetMetricEnrichmentStatusesOptions(startOn, endOn) { MaxPageSize = 5 };
+            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endTime = DateTimeOffset.UtcNow;
+            var options = new GetMetricEnrichmentStatusesOptions(startTime, endTime) { MaxPageSize = 5 };
 
             int statusCount = 0;
 
@@ -161,9 +161,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            var startOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endOn = DateTimeOffset.UtcNow;
-            var options = new GetMetricSeriesDataOptions(startOn, endOn);
+            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endTime = DateTimeOffset.UtcNow;
+            var options = new GetMetricSeriesDataOptions(startTime, endTime);
 
             // Only the two time series with the keys specified below will be returned.
 
@@ -238,10 +238,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
 
-            var startOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endOn = DateTimeOffset.UtcNow;
+            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endTime = DateTimeOffset.UtcNow;
 
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(detectionConfigurationId, seriesKeys, startOn, endOn))
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(detectionConfigurationId, seriesKeys, startTime, endTime))
             {
                 Console.WriteLine("Time series key:");
 

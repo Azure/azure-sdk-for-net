@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor
 
         private const string AnomalyDetectedOnValue = "AnomalyTime";
         private const string CreatedOnValue = "CreatedTime";
-        private const string ModifiedOnValue = "ModifiedTime";
+        private const string LastModifiedValue = "ModifiedTime";
         /// <summary> Determines if two <see cref="AlertQueryTimeMode"/> values are the same. </summary>
         public static bool operator ==(AlertQueryTimeMode left, AlertQueryTimeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertQueryTimeMode"/> values are not the same. </summary>

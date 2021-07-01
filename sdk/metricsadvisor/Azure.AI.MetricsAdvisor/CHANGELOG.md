@@ -25,14 +25,13 @@
 - Renamed class `PeriodType` to `MetricPeriodType`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
-- `DataFeedIngestionSettings` constructor now takes the required `ingestionStartOn` parameter. For this reason, the property `IngestionStartTime` (now named `IngestionStartOn`) is not nullable anymore.
+- `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
 - `DataFeedMissingDataPointFillSettings` constructor now takes the required `fillType` parameter. For this reason, the property `FillType` is not nullable anymore.
 - `EmailNotificationHook` constructor now takes the required `name` parameter.
 - `WebNotificationHook` constructor now takes the required `name` and `endpoint` parameters.
 - `MetricSeriesGroupDetectionCondition` constructor now takes the required `seriesGroupKey` parameter.
 - `MetricSingleSeriesDetectionCondition` constructor now takes the required `seriesKey` parameter.
-- Renamed `DataFeedIngestionSettings.IngestionStartTime` to `IngestionStartOn`.
-- Renamed all occurrences of `StartTime` to `StartOn`, `EndTime` to `EndOn`, `CreatedTime` to `CreatedOn`, and `ModifiedTime` to `ModifiedOn`.
+- Renamed all occurrences of `CreatedTime` to `CreatedOn` and `ModifiedTime` to `LastModified`.
 - Renamed `AnomalyIncident.LastTime` to `LastDetectedOn`.
 - Renamed `AlertQueryTimeMode.AnomalyTime` to `AnomalyDetectedOn`, and `FeedbackQueryTimeMode.FeedbackCreatedTime` to `FeedbackCreatedOn`.
 - Renamed `DataFeedRollupSettings.AlreadyRollupIdentificationValue` to `RollupIdentificationValue`.

@@ -33,13 +33,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 DimensionFilter = new DimensionKey(dimensionColumns)
             };
 
-            var startOn = DateTimeOffset.Parse("2020-02-01T00:00:00Z");
-            var endOn = DateTimeOffset.Parse("2020-02-03T00:00:00Z");
+            var startTime = DateTimeOffset.Parse("2020-02-01T00:00:00Z");
+            var endTime = DateTimeOffset.Parse("2020-02-03T00:00:00Z");
 
             // Other types of feedback, such as MetricCommentFeedback, MetricChangePointFeedback,
             // and MetricPeriodFeedback are supported as well.
 
-            var anomalyFeedback = new MetricAnomalyFeedback(metricId, filter, startOn, endOn, AnomalyValue.NotAnomaly);
+            var anomalyFeedback = new MetricAnomalyFeedback(metricId, filter, startTime, endTime, AnomalyValue.NotAnomaly);
 
             Response<MetricFeedback> response = await client.AddFeedbackAsync(anomalyFeedback);
 
@@ -111,8 +111,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var options = new GetAllFeedbackOptions()
             {
-                StartOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z"),
-                EndOn = DateTimeOffset.Parse("2020-09-09T00:00:00Z"),
+                StartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z"),
+                EndTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z"),
                 TimeMode = FeedbackQueryTimeMode.MetricTimestamp,
                 MaxPageSize = 5
             };

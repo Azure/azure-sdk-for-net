@@ -16,9 +16,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdOn"> created time. </param>
-        /// <param name="modifiedOn"> modified time. </param>
+        /// <param name="lastModified"> modified time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal AnomalyAlert(string id, DateTimeOffset timestamp, DateTimeOffset createdOn, DateTimeOffset modifiedOn)
+        internal AnomalyAlert(string id, DateTimeOffset timestamp, DateTimeOffset createdOn, DateTimeOffset lastModified)
         {
             if (id == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Id = id;
             Timestamp = timestamp;
             CreatedOn = createdOn;
-            ModifiedOn = modifiedOn;
+            LastModified = lastModified;
         }
     }
 }

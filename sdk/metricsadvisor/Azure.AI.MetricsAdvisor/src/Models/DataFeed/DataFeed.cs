@@ -148,7 +148,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal DataFeedDetail GetDataFeedDetail()
         {
-            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartOn);
+            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime);
 
             foreach (var column in Schema.DimensionColumns)
             {
@@ -217,7 +217,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (IngestionSettings != null)
             {
-                patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartOn);
+                patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime);
                 patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
                 patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
                 patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;

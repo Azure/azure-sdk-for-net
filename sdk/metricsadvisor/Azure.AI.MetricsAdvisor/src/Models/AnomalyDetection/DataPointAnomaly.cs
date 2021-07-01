@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DetectionConfigurationId = anomalyDetectionConfigurationId;
             Timestamp = timestamp;
             CreatedOn = createdOn;
-            ModifiedOn = modifiedOn;
+            LastModified = modifiedOn;
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
             Status = property.AnomalyStatus;
@@ -103,7 +103,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         [CodeGenMember("ModifiedTime")]
-        public DateTimeOffset? ModifiedOn { get; }
+        public DateTimeOffset? LastModified { get; }
 
         /// <summary>
         /// The value of the data point that generated this anomaly.

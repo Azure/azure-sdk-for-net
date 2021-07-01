@@ -37,17 +37,17 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result under the chosen <see cref="TimeMode"/>. Only results from this point in time,
         /// in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary>
         /// Filters the result under the chosen <see cref="TimeMode"/>. Only results up to this point in time,
         /// in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
 
         /// <summary>
-        /// Specifies to which time property of a <see cref="MetricFeedback"/> the filters <see cref="StartOn"/>
-        /// and <see cref="EndOn"/> will be applied.
+        /// Specifies to which time property of a <see cref="MetricFeedback"/> the filters <see cref="StartTime"/>
+        /// and <see cref="EndTime"/> will be applied.
         /// </summary>
         public FeedbackQueryTimeMode? TimeMode { get; set; }
 

@@ -35,6 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The date and time, in UTC, in which this alert entry has been modified for the last time.
         /// </summary>
         [CodeGenMember("ModifiedTime")]
-        public DateTimeOffset ModifiedOn { get; }
+        public DateTimeOffset LastModified { get; }
     }
 }

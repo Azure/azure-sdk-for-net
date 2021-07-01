@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.MetricId, Is.Null);
                 Assert.That(anomaly.DetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.CreatedOn, Is.Null);
-                Assert.That(anomaly.ModifiedOn, Is.Null);
+                Assert.That(anomaly.LastModified, Is.Null);
                 Assert.That(anomaly.Status, Is.Null);
 
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
@@ -80,7 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.MetricId, Is.Null);
                 Assert.That(anomaly.DetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.CreatedOn, Is.Null);
-                Assert.That(anomaly.ModifiedOn, Is.Null);
+                Assert.That(anomaly.LastModified, Is.Null);
                 Assert.That(anomaly.Status, Is.Null);
 
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));

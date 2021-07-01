@@ -12,23 +12,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
     public class GetDataFeedIngestionStatusesOptions
     {
         /// <summary> Initializes a new instance of the <see cref="GetDataFeedIngestionStatusesOptions"/> class. </summary>
-        /// <param name="startOn"> The start point of time range to query data ingestion status. </param>
-        /// <param name="endOn"> The end point of time range to query data ingestion status. </param>
-        public GetDataFeedIngestionStatusesOptions(DateTimeOffset startOn, DateTimeOffset endOn)
+        /// <param name="startTime"> The start point of time range to query data ingestion status. </param>
+        /// <param name="endTime"> The end point of time range to query data ingestion status. </param>
+        public GetDataFeedIngestionStatusesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartTime = startTime;
+            EndTime = endTime;
         }
 
         /// <summary>
         /// Filters the result. Only status of data being ingested from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartTime { get; }
 
         /// <summary>
         /// Filters the result. Only status of data being ingested up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndTime { get; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the count of items to be skipped.

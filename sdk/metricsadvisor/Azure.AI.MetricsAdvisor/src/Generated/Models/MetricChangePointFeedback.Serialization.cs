@@ -18,9 +18,9 @@ namespace Azure.AI.MetricsAdvisor
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime");
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime");
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndTime, "O");
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType");

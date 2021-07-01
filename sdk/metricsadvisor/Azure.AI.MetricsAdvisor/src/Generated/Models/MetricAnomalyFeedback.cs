@@ -21,15 +21,15 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"> . </param>
-        /// <param name="startOn"> the start timestamp of feedback time range. </param>
-        /// <param name="endOn"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
+        /// <param name="startTime"> the start timestamp of feedback time range. </param>
+        /// <param name="endTime"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
         /// <param name="valueInternal"> . </param>
         /// <param name="detectionConfigurationId"> the corresponding anomaly detection configuration of this feedback. </param>
         /// <param name="detectionConfigurationSnapshot"> . </param>
-        internal MetricAnomalyFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startOn, DateTimeOffset endOn, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(kind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        internal MetricAnomalyFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(kind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartTime = startTime;
+            EndTime = endTime;
             ValueInternal = valueInternal;
             DetectionConfigurationId = detectionConfigurationId;
             DetectionConfigurationSnapshot = detectionConfigurationSnapshot;
