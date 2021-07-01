@@ -103,9 +103,27 @@
                 ]
             }
         },
+        "deleteContainerRetentionPolicyProperties": {
+            "containerDeleteRetentionPolicy": {
+                "enabled": true,
+                "days": 1
+            }
+        },
+        "deleteRetentionPolicyProperties": {
+            "deleteRetentionPolicy": {
+                "enabled": true,
+                "days": 1
+            },
+            "containerDeleteRetentionPolicy": {
+              "enabled": true,
+              "days": 1
+            }
+        },
         "nullProperties": {
         },
-        "locationsProperty": "[if(parameters('enableStorageVersioning'), variables('versioningEnableProperties'), variables('nullProperties'))]"
+        "locationsProperty": "[if(parameters('enableStorageVersioning'), variables('versioningEnableProperties'), variables('nullProperties'))]",
+        "deleteContainerRetentionPolicyProperty": "[if(parameters('enableStorageVersioning'), variables('deleteContainerRetentionPolicyProperties'), variables('nullProperties'))]",
+        "deleteRetentionPolicyProperty": "[if(parameters('enableStorageVersioning'), variables('deleteRetentionPolicyProperties'), variables('nullProperties'))]"
     },
     "resources": [
         {
@@ -229,12 +247,7 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('dataLakeAccountName'), '/default')]",
-            "properties": {
-                "containerDeleteRetentionPolicy": {
-                    "enabled": true,
-                    "days": 1
-                }
-            },
+            "properties": "[variables('deleteContainerRetentionPolicyProperty')]",
             "dependsOn": [
                 "[variables('dataLakeAccountName')]"
             ]
@@ -260,16 +273,7 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('softDeleteAccountName'), '/default')]",
-            "properties": {
-                "deleteRetentionPolicy": {
-                      "enabled": true,
-                      "days": 1
-                },
-                "containerDeleteRetentionPolicy": {
-                    "enabled": true,
-                    "days": 1
-                }
-            },
+            "properties": "[variables('deleteRetentionPolicyProperty')]",
             "dependsOn": [
                 "[variables('softDeleteAccountName')]"
             ]
