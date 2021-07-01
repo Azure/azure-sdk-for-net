@@ -2,6 +2,12 @@
 
 This extension provides functionality for receiving Web PubSub webhook calls in Azure Functions, allowing you to easily write functions that respond to any event published to Web PubSub.
 
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src) |
+[Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub) |
+[API reference documentation](https://azure.github.io/azure-webpubsub/references/functions-bindings) |
+[Product documentation](https://aka.ms/awps/doc) |
+[Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/samples)
+
 ## Getting started
 
 ### Install the package
