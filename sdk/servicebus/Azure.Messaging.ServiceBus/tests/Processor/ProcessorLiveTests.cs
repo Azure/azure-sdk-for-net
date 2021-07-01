@@ -248,7 +248,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(20, 1)]
         public async Task MaxAutoLockRenewalDurationRespected(int numThreads, int autoLockRenewalDuration)
         {
-            var lockDuration = TimeSpan.FromSeconds(5);
+            var lockDuration = ShortLockDuration;
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false,
@@ -604,7 +604,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
-                enableSession: false))
+                enableSession: false,
+                lockDuration: ShortLockDuration))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
@@ -655,7 +656,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 var receiver = client.CreateReceiver(scope.QueueName);
-                var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
+                var msg = await receiver.ReceiveMessageAsync(ShortLockDuration);
                 if (settleMethod == "" || settleMethod == "Abandon")
                 {
                     // if the message is abandoned (whether by user callback or

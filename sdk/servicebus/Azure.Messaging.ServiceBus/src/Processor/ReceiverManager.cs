@@ -30,9 +30,7 @@ namespace Azure.Messaging.ServiceBus
         protected readonly IList<ServiceBusPlugin> _plugins;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
-
-        private readonly CancellationTokenSource _closingTokenSource = new();
-
+        
         public ReceiverManager(
             ServiceBusProcessor processor,
             EntityScopeFactory scopeFactory,
@@ -69,7 +67,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 try
                 {
-                    _closingTokenSource.Cancel();
                     await capturedReceiver.DisposeAsync().ConfigureAwait(false);
                 }
                 finally
@@ -157,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
                     Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     AutoRenewLock)
                 {
-                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_closingTokenSource.Token);
+                    renewLockCancellationTokenSource = new CancellationTokenSource();
                     renewLock = RenewMessageLock(
                         message,
                         renewLockCancellationTokenSource);
@@ -190,8 +187,6 @@ namespace Azure.Messaging.ServiceBus
                         CancellationToken.None)
                         .ConfigureAwait(false);
                 }
-
-                await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
             }
             catch (Exception ex)
             // This prevents exceptions relating to processing a message from bubbling up all
@@ -243,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
             }
             finally
             {
-                renewLockCancellationTokenSource?.Cancel();
+                await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
                 renewLockCancellationTokenSource?.Dispose();
             }
         }
