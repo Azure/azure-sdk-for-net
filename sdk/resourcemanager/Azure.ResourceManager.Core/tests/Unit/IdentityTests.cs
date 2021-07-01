@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
@@ -163,13 +164,6 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase]
-        public void TestDeserializerInvalidNullType()
-        {
-            var identityJsonProperty = DeserializerHelper("InvalidTypeIsNull.json");
-            Assert.Throws<InvalidOperationException>(delegate { ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value); });
-        }
-
-        [TestCase]
         public void TestDeserializerValidSystemAndUserAssigned()
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValid.json");
@@ -180,17 +174,6 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
             Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
-        }
-
-        [TestCase]
-        public void TestDeserializerInvalidType()
-        {
-            var identityJsonProperty = DeserializerHelper("InvalidType.json");
-            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
-            var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a2eaa6a-b49c-4a63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
-            Assert.AreEqual("77563a98-c9d9-4f7b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
         }
 
         [TestCase]
@@ -283,28 +266,17 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceIdentity identity = new ResourceIdentity(systemAssignedIdentity, dict1);
             string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
             string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
-            string expected = "{\"identity\":{" +
-                system + "," +
-                "\"kind\":\"SystemAssigned, UserAssigned\"," +
+            string expected = "{\"systemAssignedIdentity\":{" +
+                system + "}," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport\":" +
-                user + "}}}";
-            string actual = "";
-            using (Stream stream = new MemoryStream())
-            {
-                using (StreamReader streamReader = new StreamReader(stream))
-                {
-                    var writer = new Utf8JsonWriter(stream);
-                    ResourceIdentity.Serialize(writer, identity);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    actual = streamReader.ReadToEnd();
-                }
-            }
-            Assert.AreEqual(expected, actual);
+                user + "}}";
+
+            JsonAsserts.AssertSerialization(expected, identity);
         }
 
         [TestCase]
-        public void TestSerializerValidSystemAndMultUser()
+        public void TestSerializerValidSystemAndMultiUser()
         {
             SystemAssignedIdentity systemAssignedIdentity = new SystemAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
             UserAssignedIdentity userAssignedIdentity1 = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
@@ -314,28 +286,17 @@ namespace Azure.ResourceManager.Core.Tests
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport2"] = userAssignedIdentity2;
             ResourceIdentity identity = new ResourceIdentity(systemAssignedIdentity, dict1);
             string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
-            string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
+            string user1 = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
             string user2 = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011cb47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddcebaa98\"}";
-            string expected = "{\"identity\":{" +
-                system + "," +
-                "\"kind\":\"SystemAssigned, UserAssigned\"," +
+            string expected = "{\"systemAssignedIdentity\":{" +
+                system + "}," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport1\":" +
-                user + "," +
+                user1 + "," +
                 "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport2\":" +
-                user2 + "}}}";
-            string actual = "";
-            using (Stream stream = new MemoryStream())
-            {
-                using (StreamReader streamReader = new StreamReader(stream))
-                {
-                    var writer = new Utf8JsonWriter(stream);
-                    ResourceIdentity.Serialize(writer, identity);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    actual = streamReader.ReadToEnd();
-                }
-            }
-            Assert.AreEqual(expected, actual);
+                user2 + "}}";
+
+            JsonAsserts.AssertSerialization(expected, identity);
         }
 
         [TestCase]
@@ -344,21 +305,10 @@ namespace Azure.ResourceManager.Core.Tests
             SystemAssignedIdentity systemAssignedIdentity = new SystemAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
             ResourceIdentity identity = new ResourceIdentity(systemAssignedIdentity, null);
             string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
-            string expected = "{\"identity\":{" +
-                system + "," +
-                "\"kind\":\"SystemAssigned\"}}";
-            string actual = "";
-            using (Stream stream = new MemoryStream())
-            {
-                using (StreamReader streamReader = new StreamReader(stream))
-                {
-                    var writer = new Utf8JsonWriter(stream);
-                    ResourceIdentity.Serialize(writer, identity);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    actual = streamReader.ReadToEnd();
-                }
-            }
-            Assert.AreEqual(expected, actual);
+            string expected = "{\"systemAssignedIdentity\":{" +
+                system + "},\"userAssignedIdentities\":{}}";
+            
+            JsonAsserts.AssertSerialization(expected, identity);
         }
 
         [TestCase]
@@ -368,26 +318,13 @@ namespace Azure.ResourceManager.Core.Tests
             var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(dict1, true);
-            string system = "\"principalId\":\"null\",\"tenantId\":\"null\"";
             string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
-            string expected = "{\"identity\":{" +
-                system + "," +
-                "\"kind\":\"SystemAssigned, UserAssigned\"," +
+            string expected = "{\"systemAssignedIdentity\":{}," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport\":" +
-                user + "}}}";
-            string actual = "";
-            using (Stream stream = new MemoryStream())
-            {
-                using (StreamReader streamReader = new StreamReader(stream))
-                {
-                    var writer = new Utf8JsonWriter(stream);
-                    ResourceIdentity.Serialize(writer, identity);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    actual = streamReader.ReadToEnd();
-                }
-            }
-            Assert.AreEqual(expected, actual);
+                user + "}}";
+
+            JsonAsserts.AssertSerialization(expected, identity);
         }
 
         [TestCase]
@@ -398,63 +335,37 @@ namespace Azure.ResourceManager.Core.Tests
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(dict1, false);
             string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
-            string expected = "{\"identity\":{" +
-                "\"kind\":\"UserAssigned\"," +
-                "\"userAssignedIdentities\":" +
+            string expected = "{\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport\":" +
-                user + "}}}";
-            string actual = "";
-            using (Stream stream = new MemoryStream())
-            {
-                using (StreamReader streamReader = new StreamReader(stream))
-                {
-                    var writer = new Utf8JsonWriter(stream);
-                    ResourceIdentity.Serialize(writer, identity);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    actual = streamReader.ReadToEnd();
-                }
-            }
-            Assert.AreEqual(expected, actual);
+                user + "}}";
+            
+            JsonAsserts.AssertSerialization(expected, identity);
         }
 
         [TestCase]
         public void TestSerializerValidIdentityNull()
         {
             ResourceIdentity identity = new ResourceIdentity();
-            string expected = "{\"identity\":\"null\"}";
-            string actual = "";
-            using (Stream stream = new MemoryStream())
-            {
-                using (StreamReader streamReader = new StreamReader(stream))
-                {
-                    var writer = new Utf8JsonWriter(stream);
-                    ResourceIdentity.Serialize(writer, identity);
-                    stream.Seek(0, SeekOrigin.Begin);
-                    actual = streamReader.ReadToEnd();
-                }
-            }
-            Assert.AreEqual(expected, actual);
+            string expected = "{\"userAssignedIdentities\":{}}";
+
+            JsonAsserts.AssertSerialization(expected, identity);
         }
 
         [TestCase]
         public void TestSerializerInvalidNullWriter()
         {
             ResourceIdentity identity = new ResourceIdentity();
-            using (Stream stream = new MemoryStream())
-            {
-                Assert.Throws<ArgumentNullException>(delegate { ResourceIdentity.Serialize(null, identity); });
-            }
+            var serializable = identity as IUtf8JsonSerializable;
+            Assert.Throws<NullReferenceException>(delegate
+            { serializable.Write(null); });
         }
 
         [TestCase]
         public void TestSerializerInvalidNullIdentity()
         {
             ResourceIdentity identity = null;
-            using (Stream stream = new MemoryStream())
-            {
-                var writer = new Utf8JsonWriter(stream);
-                Assert.Throws<ArgumentNullException>(delegate { ResourceIdentity.Serialize(writer, identity); });
-            }
+            Assert.Throws<NullReferenceException>(delegate
+            { JsonAsserts.AssertSerializes(identity); });
         }
     }
 }

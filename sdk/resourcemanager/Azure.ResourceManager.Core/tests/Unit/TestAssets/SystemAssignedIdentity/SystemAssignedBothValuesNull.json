@@ -1,8 +1,9 @@
 ﻿{
-  "identity": {
-    "principalId": null,
-    "tenantId": null,
-    "type": "SystemAssigned",
-    "userAssignedIdentities": null
-  }
+    "identity": {
+        "systemAssignedIdentity": {
+            "principalId": null,
+            "tenantId": null
+        },
+        "userAssignedIdentities": null
+    }
 }
