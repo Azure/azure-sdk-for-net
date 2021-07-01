@@ -1884,18 +1884,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region Credential
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredential"/> and assigns it a unique ID. This API provides different ways of
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
         /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
-        /// Please see <see cref="DataSourceCredential"/> for a list of supported credentials.
+        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
         /// </summary>
-        /// <param name="dataSourceCredential">Specifies how the created <see cref="DataSourceCredential"/> should be configured.</param>
+        /// <param name="dataSourceCredential">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredential"/>
-        /// instance containing information about the created data source credential.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing information about the created data source credential entity.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredential"/> is null.</exception>
-        public virtual async Task<Response<DataSourceCredential>> CreateDataSourceCredentialAsync(DataSourceCredential dataSourceCredential, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataSourceCredentialEntity>> CreateDataSourceCredentialAsync(DataSourceCredentialEntity dataSourceCredential, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceCredential, nameof(dataSourceCredential));
 
@@ -1926,18 +1926,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredential"/> and assigns it a unique ID. This API provides different ways of
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
         /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
-        /// Please see <see cref="DataSourceCredential"/> for a list of supported credentials.
+        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
         /// </summary>
-        /// <param name="dataSourceCredential">Specifies how the created <see cref="DataSourceCredential"/> should be configured.</param>
+        /// <param name="dataSourceCredential">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredential"/>
-        /// instance containing information about the created data source credential.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing information about the created data source credential entity.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredential"/> is null.</exception>
-        public virtual Response<DataSourceCredential> CreateDataSourceCredential(DataSourceCredential dataSourceCredential, CancellationToken cancellationToken = default)
+        public virtual Response<DataSourceCredentialEntity> CreateDataSourceCredential(DataSourceCredentialEntity dataSourceCredential, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceCredential, nameof(dataSourceCredential));
 
@@ -1968,18 +1968,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DataSourceCredential"/>. In order to update your credential, you cannot create a <see cref="DataSourceCredential"/>
+        /// Updates an existing <see cref="DataSourceCredentialEntity"/>. In order to update your credential, you cannot create a <see cref="DataSourceCredentialEntity"/>
         /// directly from its constructor. You need to obtain an instance via <see cref="GetDataSourceCredentialAsync"/> or another CRUD operation and update
         /// it before calling this method.
         /// </summary>
-        /// <param name="dataSourceCredential">The <see cref="DataSourceCredential"/> model containing the updates to be applied.</param>
+        /// <param name="dataSourceCredential">The <see cref="DataSourceCredentialEntity"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredential"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
         /// instance containing information about the updated credential.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredential"/> or <paramref name="dataSourceCredential"/>.Id is null.</exception>
-        public virtual async Task<Response<DataSourceCredential>> UpdateDataSourceCredentialAsync(DataSourceCredential dataSourceCredential, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataSourceCredentialEntity>> UpdateDataSourceCredentialAsync(DataSourceCredentialEntity dataSourceCredential, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceCredential, nameof(dataSourceCredential));
 
@@ -2007,18 +2007,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DataSourceCredential"/>. In order to update your credential, you cannot create a <see cref="DataSourceCredential"/>
+        /// Updates an existing <see cref="DataSourceCredentialEntity"/>. In order to update your credential, you cannot create a <see cref="DataSourceCredentialEntity"/>
         /// directly from its constructor. You need to obtain an instance via <see cref="GetDataSourceCredentialAsync"/> or another CRUD operation and update
         /// it before calling this method.
         /// </summary>
-        /// <param name="dataSourceCredential">The <see cref="DataSourceCredential"/> model containing the updates to be applied.</param>
+        /// <param name="dataSourceCredential">The <see cref="DataSourceCredentialEntity"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredential"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
         /// instance containing information about the updated credential.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredential"/> or <paramref name="dataSourceCredential"/>.Id is null.</exception>
-        public virtual Response<DataSourceCredential> UpdateDataSourceCredential(DataSourceCredential dataSourceCredential, CancellationToken cancellationToken = default)
+        public virtual Response<DataSourceCredentialEntity> UpdateDataSourceCredential(DataSourceCredentialEntity dataSourceCredential, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceCredential, nameof(dataSourceCredential));
 
@@ -2046,17 +2046,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="DataSourceCredential"/>.
+        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredential"/>.</param>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredential"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredentialId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataSourceCredentialId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<DataSourceCredential>> GetDataSourceCredentialAsync(string dataSourceCredentialId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataSourceCredentialEntity>> GetDataSourceCredentialAsync(string dataSourceCredentialId, CancellationToken cancellationToken = default)
         {
             Guid credentialGuid = ClientCommon.ValidateGuid(dataSourceCredentialId, nameof(dataSourceCredentialId));
 
@@ -2075,17 +2075,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="DataSourceCredential"/>.
+        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredential"/>.</param>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredential"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredentialId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataSourceCredentialId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<DataSourceCredential> GetDataSourceCredential(string dataSourceCredentialId, CancellationToken cancellationToken = default)
+        public virtual Response<DataSourceCredentialEntity> GetDataSourceCredential(string dataSourceCredentialId, CancellationToken cancellationToken = default)
         {
             Guid credentialGuid = ClientCommon.ValidateGuid(dataSourceCredentialId, nameof(dataSourceCredentialId));
 
@@ -2104,18 +2104,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="DataSourceCredential"/> instances in this Metrics
+        /// Gets a collection of items describing the existing <see cref="DataSourceCredentialEntity"/> instances in this Metrics
         /// Advisor resource.
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataSourceCredential"/> instances.</returns>
-        public virtual AsyncPageable<DataSourceCredential> GetDataSourceCredentialsAsync(GetDataSourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataSourceCredentialEntity"/> instances.</returns>
+        public virtual AsyncPageable<DataSourceCredentialEntity> GetDataSourceCredentialsAsync(GetDataSourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
         {
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            async Task<Page<DataSourceCredential>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataSourceCredentialEntity>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataSourceCredentials)}");
                 scope.Start();
@@ -2132,7 +2132,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            async Task<Page<DataSourceCredential>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataSourceCredentialEntity>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataSourceCredentials)}");
                 scope.Start();
@@ -2153,18 +2153,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="DataSourceCredential"/> instances in this Metrics
+        /// Gets a collection of items describing the existing <see cref="DataSourceCredentialEntity"/> instances in this Metrics
         /// Advisor resource.
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataSourceCredential"/> instances.</returns>
-        public virtual Pageable<DataSourceCredential> GetDataSourceCredentials(GetDataSourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataSourceCredentialEntity"/> instances.</returns>
+        public virtual Pageable<DataSourceCredentialEntity> GetDataSourceCredentials(GetDataSourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
         {
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            Page<DataSourceCredential> FirstPageFunc(int? pageSizeHint)
+            Page<DataSourceCredentialEntity> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataSourceCredentials)}");
                 scope.Start();
@@ -2181,7 +2181,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            Page<DataSourceCredential> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataSourceCredentialEntity> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataSourceCredentials)}");
                 scope.Start();
@@ -2202,9 +2202,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredential"/>.
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredential"/> to be deleted.</param>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
@@ -2230,9 +2230,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredential"/>.
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredential"/> to be deleted.</param>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.

@@ -82,7 +82,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// The different ways of authenticating to an <see cref="AzureDataLakeStorageGen2DataFeedSource"/>. Be aware that
-        /// some authentication types require you to have a <see cref="DataSourceCredential"/> in the service. In this
+        /// some authentication types require you to have a <see cref="DataSourceCredentialEntity"/> in the service. In this
         /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
         /// to use. Defaults to <see cref="Basic"/>.
         /// </summary>
@@ -96,19 +96,19 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             /// <summary>
             /// Uses a Data Lake Storage Gen 2 shared key for authentication. You need to have a
-            /// <see cref="DataLakeGen2SharedKeyDataSourceCredential"/> in the server in order to use this type of authentication.
+            /// <see cref="DataSourceDataLakeGen2SharedKey"/> in the server in order to use this type of authentication.
             /// </summary>
             SharedKey,
 
             /// <summary>
-            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalDataSourceCredential"/>
+            /// Uses Service Principal authentication. You need to have a <see cref="DataSourceServicePrincipal"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipal,
 
             /// <summary>
             /// Uses Service Principal authentication, but the client ID and the client secret must be
-            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultDataSourceCredential"/>
+            /// stored in a Key Vault resource. You need to have a <see cref="DataSourceServicePrincipalInKeyVault"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipalInKeyVault
@@ -116,14 +116,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// The method used to authenticate to this <see cref="AzureDataLakeStorageGen2DataFeedSource"/>. Be aware that some
-        /// authentication types require you to have a <see cref="DataSourceCredential"/> in the service. In this
+        /// authentication types require you to have a <see cref="DataSourceCredentialEntity"/> in the service. In this
         /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
         /// to use. Defaults to <see cref="AuthenticationType.Basic"/>.
         /// </summary>
         public AuthenticationType? Authentication { get; set; }
 
         /// <summary>
-        /// The ID of the <see cref="DataSourceCredential"/> to use for authentication. The type of authentication to use
+        /// The ID of the <see cref="DataSourceCredentialEntity"/> to use for authentication. The type of authentication to use
         /// must also be specified in the property <see cref="Authentication"/>.
         /// </summary>
         public string DataSourceCredentialId { get; set; }

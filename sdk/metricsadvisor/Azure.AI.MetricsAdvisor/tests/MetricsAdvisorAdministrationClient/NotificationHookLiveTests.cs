@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
-using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

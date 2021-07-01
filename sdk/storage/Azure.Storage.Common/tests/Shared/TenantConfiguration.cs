@@ -18,6 +18,12 @@ namespace Azure.Storage.Test
     /// </summary>
     public class TenantConfiguration
     {
+        static TenantConfiguration()
+        {
+            propertyCount = typeof(TenantConfiguration).GetProperties(BindingFlags.Instance | BindingFlags.Public).Length;
+        }
+        private static int propertyCount { get; }
+
         private const string SanitizeValue = "Sanitized";
 
         public string TenantName { get; private set; }
@@ -128,9 +134,10 @@ namespace Azure.Storage.Test
         public static TenantConfiguration Parse(string text)
         {
             var values = text?.Split('\n');
-            if (values == null || values.Length != 24)
+            if (values == null || values.Length != propertyCount)
             {
-                throw new ArgumentException();
+                const string nullString = "<null>";
+                throw new ArgumentException($"Values count: {values?.Length.ToString() ?? nullString}. Expected: {propertyCount}", nameof(text));
             }
 
             return new TenantConfiguration

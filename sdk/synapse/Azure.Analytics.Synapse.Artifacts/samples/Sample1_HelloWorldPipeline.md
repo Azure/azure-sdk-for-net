@@ -1,6 +1,6 @@
 # Create, Retrieve and Delete Synapse Pipelines
 
-This sample demonstrates basic operations with two core classes in this library: `PipelineClient` and `PipelineResource`. `PipelineClient` is used to call the Azure Synapse Pipeline service - each method call sends a request to the service's REST API. `PipelineResource` is an entity that represents a pipeline within Synapse. The sample walks through the basics of adding, retrieving, and deleting pipeline. To get started, you'll need a connection endpoint to Azure Synapse. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/README.md) for links and instructions.
+This sample demonstrates basic operations with two core classes in this library: `PipelineClient` and `PipelineResource`. `PipelineClient` is used to call the Azure Synapse Pipeline service - each method call sends a request to the service's REST API. `PipelineResource` is an entity that represents a pipeline within Synapse. The sample walks through the basics of adding, retrieving, and deleting pipeline. To get started, you'll need a connection endpoint to Azure Synapse. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/synapse/Azure.Analytics.Synapse.Artifacts/README.md) for links and instructions.
 
 ## Create pipeline client
 

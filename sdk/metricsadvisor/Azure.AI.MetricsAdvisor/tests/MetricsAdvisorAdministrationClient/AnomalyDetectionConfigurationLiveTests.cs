@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
@@ -139,19 +140,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions and create the configuration.
 
-            var groupConditions0 = new MetricSeriesGroupDetectionCondition()
+            var columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" } };
+            var groupConditions0 = new MetricSeriesGroupDetectionCondition(new DimensionKey(columns))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            groupConditions0.SeriesGroupKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Delhi");
-
-            var groupConditions1 = new MetricSeriesGroupDetectionCondition()
+            columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" } };
+            var groupConditions1 = new MetricSeriesGroupDetectionCondition(new DimensionKey(columns))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            groupConditions1.SeriesGroupKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions0);
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions1);
@@ -204,7 +203,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdGroupConditions1, Is.Not.Null);
 
-            ValidateTempDataFeedDimensionKey(createdGroupConditions1.SeriesGroupKey, "Koltaka");
+            ValidateTempDataFeedDimensionKey(createdGroupConditions1.SeriesGroupKey, "Kolkata");
 
             Assert.That(createdGroupConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(createdGroupConditions1.HardThresholdCondition, Is.Null);
@@ -242,21 +241,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series conditions and create the configuration.
 
-            var seriesConditions0 = new MetricSingleSeriesDetectionCondition()
+            var columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" }, { TempDataFeedDimensionNameB, "Handmade" } };
+            var seriesConditions0 = new MetricSingleSeriesDetectionCondition(new DimensionKey(columns))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            seriesConditions0.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Delhi");
-            seriesConditions0.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameB, "Handmade");
-
-            var seriesConditions1 = new MetricSingleSeriesDetectionCondition()
+            columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" }, { TempDataFeedDimensionNameB, "Grocery & Gourmet Food" } };
+            var seriesConditions1 = new MetricSingleSeriesDetectionCondition(new DimensionKey(columns))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            seriesConditions1.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Koltaka");
-            seriesConditions1.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameB, "Grocery & Gourmet Food");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions0);
             configToCreate.SeriesDetectionConditions.Add(seriesConditions1);
@@ -309,7 +304,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdSeriesConditions1, Is.Not.Null);
 
-            ValidateTempDataFeedDimensionKey(createdSeriesConditions1.SeriesKey, "Koltaka", "Grocery & Gourmet Food");
+            ValidateTempDataFeedDimensionKey(createdSeriesConditions1.SeriesKey, "Kolkata", "Grocery & Gourmet Food");
 
             Assert.That(createdSeriesConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(createdSeriesConditions1.HardThresholdCondition, Is.Null);
@@ -350,24 +345,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupConditions = new MetricSeriesGroupDetectionCondition()
+            var columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" } };
+            var groupConditions = new MetricSeriesGroupDetectionCondition(new DimensionKey(columns))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            groupConditions.SeriesGroupKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesConditions = new MetricSingleSeriesDetectionCondition()
+            columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" }, { TempDataFeedDimensionNameB, "Handmade" } };
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(new DimensionKey(columns))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
-
-            seriesConditions.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -407,7 +399,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions, Is.Not.Null);
 
-            ValidateTempDataFeedDimensionKey(updatedGroupConditions.SeriesGroupKey, "Koltaka");
+            ValidateTempDataFeedDimensionKey(updatedGroupConditions.SeriesGroupKey, "Kolkata");
 
             Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
@@ -464,24 +456,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupConditions = new MetricSeriesGroupDetectionCondition()
+            var columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" } };
+            var groupConditions = new MetricSeriesGroupDetectionCondition(new DimensionKey(columns))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            groupConditions.SeriesGroupKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesConditions = new MetricSingleSeriesDetectionCondition()
+            columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" }, { TempDataFeedDimensionNameB, "Handmade" } };
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(new DimensionKey(columns))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
-
-            seriesConditions.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn(TempDataFeedDimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -498,12 +487,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
             configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new(75.0, AnomalyDetectorDirection.Both, new(15, 16.0));
 
-            var newGroupConditions = new MetricSeriesGroupDetectionCondition()
+            columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" } };
+            var newGroupConditions = new MetricSeriesGroupDetectionCondition(new DimensionKey(columns))
             {
                 SmartDetectionCondition = new(95.0, AnomalyDetectorDirection.Both, new(25, 26.0))
             };
-
-            newGroupConditions.SeriesGroupKey.AddDimensionColumn(TempDataFeedDimensionNameA, "Delhi");
 
             configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
 
@@ -541,7 +529,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions0, Is.Not.Null);
 
-            ValidateTempDataFeedDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Koltaka");
+            ValidateTempDataFeedDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Kolkata");
 
             Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);

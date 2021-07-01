@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                             $"The request content should be parseable into a JSON object or array, but was {events.Type}.");
                 }
 
-                SubscriptionValidationResponse validationResponse = new(){ ValidationResponse = validationCode };
+                SubscriptionValidationResponse validationResponse = new SubscriptionValidationResponse{ ValidationResponse = validationCode };
                 var returnMessage = new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     // use System.Text.Json to leverage the custom converter so that the casing is correct.
