@@ -21,6 +21,7 @@
 - Renamed class `MetricAnomalyAlertConfiguration` to `MetricAlertConfiguration`.
 - Renamed class `MetricAnomalyAlertConfigurationsOperator` to `DetectionConditionOperator`. Similarly, `MetricAnomalyAlertConfiguration.CrossMetricsOperator` has been renamed to `ConditionOperator`.
 - Renamed class `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
+- Renamed class `AzureDataLakeStorageGen2DataFeedSource` to `AzureDataLakeStorageDataFeedSource`. Similarly, `DataSourceType.AzureDataLakeStorageGen2` has been renamed to `AzureDataLakeStorage`.
 - Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` has been renamed to `Kind`.
 - Renamed class `PeriodType` to `MetricPeriodType`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
