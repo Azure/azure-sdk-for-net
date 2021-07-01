@@ -18,5 +18,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
     {
         public const string StripNone = "StripNone";
         public const string StripAll = "StripAll";
+        public const string StripOnly = "StripOnly";
+        public const string StripAllExcept = "StripAllExcept";
     }
 }

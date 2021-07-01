@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -18,58 +19,78 @@ namespace SnippetGenerator
     {
         private const string _snippetPrefix = "Snippet:";
         private readonly string _directory;
-        private readonly Lazy<List<Snippet>> _snippets;
+        private readonly Lazy<Task<List<Snippet>>> _snippets;
         private static readonly Regex _markdownOnlyRegex = new Regex(
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         private const string _codeOnlyPattern = "/*@@*/";
+        private static readonly Regex _regionRegex = new Regex(
+            @"^(?<indent>\s*)(#region|#endregion)\s*(?<line>.*)",
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
+        private static string[] _snippetPreprocessorSymbols = new [] {"SNIPPET"};
 
         public DirectoryProcessor(string directory)
         {
             _directory = directory;
-            _snippets = new Lazy<List<Snippet>>(DiscoverSnippets);
+            _snippets = new Lazy<Task<List<Snippet>>>(DiscoverSnippetsAsync);
         }
 
-        public void Process()
+        public async Task ProcessAsync()
         {
-            foreach (var mdFile in Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories))
+
+            List<string> files = new List<string>();
+            files.AddRange(Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories));
+            files.AddRange(Directory.EnumerateFiles(_directory, "*.cs", SearchOption.AllDirectories));
+
+            foreach (var file in files)
             {
-                Console.WriteLine($"Processing {mdFile}");
-
-                var text = File.ReadAllText(mdFile);
-                bool changed = false;
-
-                text = MarkdownProcessor.Process(text, s =>
+                async ValueTask<string> SnippetProvider(string s)
                 {
-                    var selectedSnippets = _snippets.Value.Where(snip => snip.Name == s).ToArray();
+                    var snippets = await _snippets.Value;
+                    var selectedSnippets = snippets.Where(snip => snip.Name == s).ToArray();
                     if (selectedSnippets.Length > 1)
                     {
                         throw new InvalidOperationException($"Multiple snippets with the name '{s}' defined '{_directory}'");
                     }
+
                     if (selectedSnippets.Length == 0)
                     {
                         throw new InvalidOperationException($"Snippet '{s}' not found in directory '{_directory}'");
                     }
 
                     var selectedSnippet = selectedSnippets.Single();
-                    Console.WriteLine($"Replaced {selectedSnippet.Name}");
-                    changed = true;
+                    Console.WriteLine($"Replaced {selectedSnippet.Name} in {file}");
                     return FormatSnippet(selectedSnippet.Text);
-                });
+                }
 
-                if (changed)
+                var originalText = await File.ReadAllTextAsync(file);
+
+                string text;
+                switch (Path.GetExtension(file))
+                {
+                    case ".md":
+                        text = await MarkdownProcessor.ProcessAsync(originalText, SnippetProvider);
+                        break;
+                    case ".cs":
+                        text = await CSharpProcessor.ProcessAsync(originalText, SnippetProvider);
+                        break;
+                    default:
+                        throw new NotSupportedException(file);
+                }
+
+                if (text != originalText)
                 {
                     _utf8EncodingWithoutBOM = new UTF8Encoding(false);
-                    File.WriteAllText(mdFile, text, _utf8EncodingWithoutBOM);
+                    await File.WriteAllTextAsync(file, text, _utf8EncodingWithoutBOM);
                 }
             }
         }
 
-        private List<Snippet> DiscoverSnippets()
+        private async Task<List<Snippet>> DiscoverSnippetsAsync()
         {
-            var snippets = GetSnippetsInDirectory(_directory);
+            var snippets = await GetSnippetsInDirectoryAsync(_directory);
             Console.WriteLine($"Discovered snippets:");
 
             foreach (var snippet in snippets)
@@ -122,7 +143,7 @@ namespace SnippetGenerator
                 var line = lines[index];
                 line = string.IsNullOrWhiteSpace(line) ? string.Empty : line.Substring(minIndent);
                 line = RemoveMarkdownOnlyPrefix(line);
-                if (!IsCodeOnlyLine(line))
+                if (!IsCodeOnlyLine(line) && !IsRegionLine(line))
                 {
                     stringBuilder.AppendLine(line);
                 }
@@ -172,16 +193,39 @@ namespace SnippetGenerator
         private static bool IsCodeOnlyLine(string line) =>
             line.IndexOf(_codeOnlyPattern) >= 0;
 
-        private List<Snippet> GetSnippetsInDirectory(string baseDirectory)
+        /// <summary>
+        /// Detects whether the line being processed is actually the region header or footer.
+        /// These lines should be stripped out in order to support nested regions.
+        /// </summary>
+        /// <param name="line">The line of text.</param>
+        /// <returns>Whether this is a region line.</returns>
+        private static bool IsRegionLine(string line) =>
+            _regionRegex.IsMatch(line);
+
+        private async Task<List<Snippet>> GetSnippetsInDirectoryAsync(string baseDirectory)
         {
             var list = new List<Snippet>();
             foreach (var file in Directory.GetFiles(baseDirectory, "*.cs", SearchOption.AllDirectories))
             {
-                var syntaxTree = CSharpSyntaxTree.ParseText(
-                    File.ReadAllText(file),
-                    new CSharpParseOptions(LanguageVersion.Preview),
-                    path: file);
-                list.AddRange(GetAllSnippets(syntaxTree));
+                try
+                {
+                    var text = await File.ReadAllTextAsync(file);
+                    if (!text.Contains($"#region {_snippetPrefix}"))
+                    {
+                        continue;
+                    }
+
+                    var syntaxTree = CSharpSyntaxTree.ParseText(
+                        text,
+                        new CSharpParseOptions(LanguageVersion.Preview, preprocessorSymbols: _snippetPreprocessorSymbols),
+                        path: file);
+
+                    list.AddRange(GetAllSnippets(syntaxTree));
+                }
+                catch (Exception e)
+                {
+                    throw new InvalidOperationException($"Failed to discover snippets from file {file}", e);
+                }
             }
 
             return list;
@@ -190,12 +234,21 @@ namespace SnippetGenerator
         private Snippet[] GetAllSnippets(SyntaxTree syntaxTree)
         {
             var snippets = new List<Snippet>();
+            var newRoot = PreprocessorDirectiveRemover.Instance.Visit(syntaxTree.GetRoot());
+            syntaxTree = syntaxTree.WithRootAndOptions(newRoot, syntaxTree.Options);
+
             var directiveWalker = new DirectiveWalker();
             directiveWalker.Visit(syntaxTree.GetRoot());
 
             foreach (var region in directiveWalker.Regions)
             {
-                var syntaxTrivia = region.Item1.EndOfDirectiveToken.LeadingTrivia.First(t => t.IsKind(SyntaxKind.PreprocessingMessageTrivia));
+                var leadingTrivia = region.Item1.EndOfDirectiveToken.LeadingTrivia;
+                if (!leadingTrivia.Any())
+                {
+                    // Skip unnamed regions
+                    continue;
+                }
+                var syntaxTrivia = leadingTrivia.First(t => t.IsKind(SyntaxKind.PreprocessingMessageTrivia));
                 var fromBounds = TextSpan.FromBounds(
                     region.Item1.GetLocation().SourceSpan.End,
                     region.Item2.GetLocation().SourceSpan.Start);
@@ -210,6 +263,41 @@ namespace SnippetGenerator
             return snippets.ToArray();
         }
 
+        class PreprocessorDirectiveRemover : CSharpSyntaxRewriter
+        {
+            public static PreprocessorDirectiveRemover Instance = new PreprocessorDirectiveRemover();
+            private PreprocessorDirectiveRemover() : base(visitIntoStructuredTrivia: true)
+            {
+            }
+
+            public override SyntaxTrivia VisitTrivia(SyntaxTrivia trivia)
+            {
+                if (trivia.Kind() == SyntaxKind.DisabledTextTrivia)
+                    return SyntaxFactory.Whitespace("");
+
+                return base.VisitTrivia(trivia);
+            }
+
+            public override SyntaxNode VisitIfDirectiveTrivia(IfDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitElifDirectiveTrivia(ElifDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitElseDirectiveTrivia(ElseDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitEndIfDirectiveTrivia(EndIfDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+        }
         class DirectiveWalker : CSharpSyntaxWalker
         {
             private Stack<RegionDirectiveTriviaSyntax> _regions = new Stack<RegionDirectiveTriviaSyntax>();

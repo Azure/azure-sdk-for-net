@@ -7,8 +7,18 @@
 		<PackageId>Microsoft.Azure.Management.StreamAnalytics</PackageId>
 		<Description>Provides streaming job management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.StreamAnalytics</AssemblyName>
-		<Version>2.1.0</Version>
+		<Version>3.0.0-preview</Version>
 		<PackageTags>Microsoft Azure Stream Analytics management;Stream Analytics management;streaming jobs;streaming job management;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+ - Support Stream Analythics Cluster, a new top-level tracked resource in Azure Resource Manager that customers can provision and run streaming jobs on. 
+ - Support private endpoint related operations for Stream Analythics Cluster.
+ - Support CustomClr and Parquet Serialization type.
+ - Support Microsoft.StreamAnalytics/CLRUdf and Microsoft.MachineLearningServices function type.
+ - Support MSI for job storage account.
+ - Support MSI for SqlDatabase, AzureDataLakeStore, Blob and PowerBI as output data source.
+      ]]>
+		</PackageReleaseNotes>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the StreamingEntityScaleUnit class.
         /// </summary>
-        /// <param name="scaleUnit">The scale unit number of the
-        /// StreamingEndpoint.</param>
+        /// <param name="scaleUnit">The scale unit number of the streaming
+        /// endpoint.</param>
         public StreamingEntityScaleUnit(int? scaleUnit = default(int?))
         {
             ScaleUnit = scaleUnit;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the scale unit number of the StreamingEndpoint.
+        /// Gets or sets the scale unit number of the streaming endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "scaleUnit")]
         public int? ScaleUnit { get; set; }

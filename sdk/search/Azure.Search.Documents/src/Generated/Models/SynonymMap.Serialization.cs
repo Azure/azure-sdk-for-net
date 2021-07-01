@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SynonymMap : IUtf8JsonSerializable
     {
@@ -21,15 +21,22 @@ namespace Azure.Search.Documents.Models
             writer.WriteStringValue(Format);
             writer.WritePropertyName("synonyms");
             writer.WriteStringValue(Synonyms);
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
-                writer.WritePropertyName("encryptionKey");
-                writer.WriteObjectValue(EncryptionKey);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey");
+                    writer.WriteObjectValue(EncryptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey");
+                }
             }
-            if (ETag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
         }
@@ -39,8 +46,8 @@ namespace Azure.Search.Documents.Models
             string name = default;
             string format = default;
             string synonyms = default;
-            EncryptionKey encryptionKey = default;
-            string odataetag = default;
+            Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -62,22 +69,19 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = EncryptionKey.DeserializeEncryptionKey(property.Value);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    odataetag = property.Value.GetString();
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new SynonymMap(name, format, synonyms, encryptionKey, odataetag);
+            return new SynonymMap(name, format, synonyms, encryptionKey.Value, odataEtag.Value);
         }
     }
 }

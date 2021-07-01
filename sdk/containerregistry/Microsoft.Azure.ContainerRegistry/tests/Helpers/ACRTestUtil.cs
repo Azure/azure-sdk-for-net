@@ -60,7 +60,7 @@ namespace ContainerRegistry.Tests
         {
             var registryManagementClient = context.GetServiceClient<ContainerRegistryManagementClient>(handlers: CreateNewRecordedDelegatingHandler());
             var registry = await registryManagementClient.Registries.GetAsync(_testResourceGroup, registryName);
-            
+
             ContainerRegistryCredentials credential = null;
 
             switch (loginMode)
@@ -83,6 +83,41 @@ namespace ContainerRegistry.Tests
 
             var acrClient = context.GetServiceClientWithCredentials<AzureContainerRegistryClient>(credential, CreateNewRecordedDelegatingHandler());
             return acrClient;
+        }
+
+        /// <summary>
+        /// Acquires registry credentials for the testing network. 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="registryName"></param>
+        /// <param name="loginMode"></param>
+        /// <returns></returns>
+        public static async Task<ContainerRegistryCredentials> GetCredentialsAsync(MockContext context, string registryName, LoginMode loginMode = ContainerRegistryCredentials.LoginMode.TokenAuth)
+        {
+            var registryManagementClient = context.GetServiceClient<ContainerRegistryManagementClient>(handlers: CreateNewRecordedDelegatingHandler());
+            var registry = await registryManagementClient.Registries.GetAsync(_testResourceGroup, registryName);
+
+            ContainerRegistryCredentials credential = null;
+
+            switch (loginMode)
+            {
+                case LoginMode.Basic:
+                case LoginMode.TokenAuth:
+                    var registryCredentials = await registryManagementClient.Registries.ListCredentialsAsync(_testResourceGroup, registryName);
+                    string username = registryCredentials.Username;
+                    string password = registryCredentials.Passwords[0].Value;
+                    credential = new ContainerRegistryCredentials(loginMode, registry.LoginServer, username, password);                    
+                    break;
+                case LoginMode.TokenAad:
+                    var aadToken = await GetAADAccessToken();
+                    AcquireCallback newAADCallback = () => GetAADAccessToken().GetAwaiter().GetResult();
+                    credential = new ContainerRegistryCredentials(aadToken, registry.LoginServer, newAADCallback);
+                    break;
+                default:
+                    throw new ArgumentException($"Unkown {nameof(LoginMode)}. Expected one of ['{LoginMode.Basic}', '{LoginMode.TokenAuth}', '{LoginMode.TokenAad}'] but got '{loginMode}'");
+            }
+
+            return credential;
         }
 
         /// <summary>

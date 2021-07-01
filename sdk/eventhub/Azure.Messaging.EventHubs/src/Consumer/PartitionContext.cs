@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   created with <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.
         /// </summary>
         ///
-        /// <returns>The set of properties for the last event that was enqueued to the partition.</returns>
+        /// <returns>The set of properties for the last event that was enqueued to the partition.  If no events were read or tracking was not set, the properties will be returned with default values.</returns>
         ///
         /// <remarks>
         ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
@@ -42,7 +42,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </remarks>
         ///
         /// <exception cref="EventHubsException">Occurs when the Event Hubs client needed to read this information is no longer available.</exception>
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.</exception>
         ///
         public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties()
         {

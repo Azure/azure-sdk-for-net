@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +34,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         /// <param name="clientGroupInfo">The information of AAD security
         /// group.</param>
-        public KafkaRestProperties(ClientGroupInfo clientGroupInfo = default(ClientGroupInfo))
+        /// <param name="configurationOverride">The configurations that need to
+        /// be overriden.</param>
+        public KafkaRestProperties(ClientGroupInfo clientGroupInfo = default(ClientGroupInfo), IDictionary<string, string> configurationOverride = default(IDictionary<string, string>))
         {
             ClientGroupInfo = clientGroupInfo;
+            ConfigurationOverride = configurationOverride;
             CustomInit();
         }
 
@@ -48,6 +53,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "clientGroupInfo")]
         public ClientGroupInfo ClientGroupInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the configurations that need to be overriden.
+        /// </summary>
+        [JsonProperty(PropertyName = "configurationOverride")]
+        public IDictionary<string, string> ConfigurationOverride { get; set; }
 
     }
 }

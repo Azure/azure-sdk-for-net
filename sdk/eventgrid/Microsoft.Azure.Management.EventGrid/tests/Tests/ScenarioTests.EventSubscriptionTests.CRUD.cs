@@ -13,7 +13,7 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=an3f31ORDSQ/<HIDDEN>";
+        const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=<HIDDEN>";
         const string AzureFunctionArmId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Web/sites/devexpfuncappdestination/functions/EventGridTrigger1";
 
         const string SampleAzureActiveDirectoryTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
@@ -114,6 +114,20 @@ namespace EventGrid.Tests.ScenarioTests
                     Destination = new WebHookEventSubscriptionDestination()
                     {
                         EndpointUrl = AzureFunctionEndpointUrl,
+                        DeliveryAttributeMappings = new List<DeliveryAttributeMapping> 
+                        { 
+                            new StaticDeliveryAttributeMapping()
+                            {
+                                Name = "StaticDeliveryAttribute1",
+                                IsSecret = false,
+                                Value = "someValue"
+                            },
+                            new DynamicDeliveryAttributeMapping()
+                            { 
+                                Name = "DynamicDeliveryAttribute1",
+                                SourceField = "SomeField"
+                            }
+                        }
                     },
                     Filter = new EventSubscriptionFilter()
                     {
@@ -135,6 +149,10 @@ namespace EventGrid.Tests.ScenarioTests
                 eventSubscriptionResponse = this.eventGridManagementClient.EventSubscriptions.UpdateAsync(scope, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
                 Assert.Equal(".jpg", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
+                Assert.NotNull(((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings);
+                Assert.Equal(2, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
+                Assert.Equal("StaticDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[0].Name);
+                Assert.Equal("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
                 // List event subscriptions
                 var eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;

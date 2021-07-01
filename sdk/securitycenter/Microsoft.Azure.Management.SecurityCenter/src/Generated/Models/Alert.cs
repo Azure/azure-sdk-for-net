@@ -37,76 +37,93 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="state">State of the alert (Active, Dismissed
-        /// etc.)</param>
-        /// <param name="reportedTimeUtc">The time the incident was reported to
-        /// Microsoft.Security in UTC</param>
-        /// <param name="vendorName">Name of the vendor that discovered the
-        /// incident</param>
-        /// <param name="alertName">Name of the alert type</param>
-        /// <param name="alertDisplayName">Display name of the alert
-        /// type</param>
-        /// <param name="detectedTimeUtc">The time the incident was detected by
-        /// the vendor</param>
-        /// <param name="description">Description of the incident and what it
-        /// means</param>
-        /// <param name="remediationSteps">Recommended steps to reradiate the
-        /// incident</param>
-        /// <param name="actionTaken">The action that was taken as a response
-        /// to the alert (Active, Blocked etc.)</param>
-        /// <param name="reportedSeverity">Estimated severity of this alert.
+        /// <param name="alertType">Unique identifier for the detection logic
+        /// (all alert instances from the same detection logic will have the
+        /// same alertType).</param>
+        /// <param name="systemAlertId">Unique identifier for the
+        /// alert.</param>
+        /// <param name="productComponentName">The name of Azure Security
+        /// Center pricing tier which powering this alert. Learn more:
+        /// https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing</param>
+        /// <param name="alertDisplayName">The display name of the
+        /// alert.</param>
+        /// <param name="description">Description of the suspicious activity
+        /// that was detected.</param>
+        /// <param name="severity">The risk level of the threat that was
+        /// detected. Learn more:
+        /// https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified.
         /// Possible values include: 'Informational', 'Low', 'Medium',
         /// 'High'</param>
-        /// <param name="compromisedEntity">The entity that the incident
-        /// happened on</param>
-        /// <param name="associatedResource">Azure resource ID of the
-        /// associated resource</param>
-        /// <param name="systemSource">The type of the alerted resource (Azure,
-        /// Non-Azure)</param>
-        /// <param name="canBeInvestigated">Whether this alert can be
-        /// investigated with Azure Security Center</param>
-        /// <param name="isIncident">Whether this alert is for incident type or
-        /// not (otherwise - single alert)</param>
-        /// <param name="entities">objects that are related to this
-        /// alerts</param>
-        /// <param name="confidenceScore">level of confidence we have on the
-        /// alert</param>
-        /// <param name="confidenceReasons">reasons the alert got the
-        /// confidenceScore value</param>
-        /// <param name="subscriptionId">Azure subscription ID of the resource
-        /// that had the security alert or the subscription ID of the workspace
-        /// that this resource reports to</param>
-        /// <param name="instanceId">Instance ID of the alert.</param>
-        /// <param name="workspaceArmId">Azure resource ID of the workspace
-        /// that the alert was reported to.</param>
-        /// <param name="correlationKey">Alerts with the same CorrelationKey
-        /// will be grouped together in Ibiza.</param>
-        public Alert(string id = default(string), string name = default(string), string type = default(string), string state = default(string), System.DateTime? reportedTimeUtc = default(System.DateTime?), string vendorName = default(string), string alertName = default(string), string alertDisplayName = default(string), System.DateTime? detectedTimeUtc = default(System.DateTime?), string description = default(string), string remediationSteps = default(string), string actionTaken = default(string), string reportedSeverity = default(string), string compromisedEntity = default(string), string associatedResource = default(string), IDictionary<string, object> extendedProperties = default(IDictionary<string, object>), string systemSource = default(string), bool? canBeInvestigated = default(bool?), bool? isIncident = default(bool?), IList<AlertEntity> entities = default(IList<AlertEntity>), double? confidenceScore = default(double?), IList<AlertConfidenceReason> confidenceReasons = default(IList<AlertConfidenceReason>), string subscriptionId = default(string), string instanceId = default(string), string workspaceArmId = default(string), string correlationKey = default(string))
+        /// <param name="intent">The kill chain related intent behind the
+        /// alert. For list of supported values, and explanations of Azure
+        /// Security Center's supported kill chain intents. Possible values
+        /// include: 'Unknown', 'PreAttack', 'InitialAccess', 'Persistence',
+        /// 'PrivilegeEscalation', 'DefenseEvasion', 'CredentialAccess',
+        /// 'Discovery', 'LateralMovement', 'Execution', 'Collection',
+        /// 'Exfiltration', 'CommandAndControl', 'Impact', 'Probing',
+        /// 'Exploitation'</param>
+        /// <param name="startTimeUtc">The UTC time of the first event or
+        /// activity included in the alert in ISO8601 format.</param>
+        /// <param name="endTimeUtc">The UTC time of the last event or activity
+        /// included in the alert in ISO8601 format.</param>
+        /// <param name="resourceIdentifiers">The resource identifiers that can
+        /// be used to direct the alert to the right product exposure group
+        /// (tenant, workspace, subscription etc.). There can be multiple
+        /// identifiers of different type per alert.</param>
+        /// <param name="remediationSteps">Manual action items to take to
+        /// remediate the alert.</param>
+        /// <param name="vendorName">The name of the vendor that raises the
+        /// alert.</param>
+        /// <param name="status">The life cycle status of the alert. Possible
+        /// values include: 'Active', 'Resolved', 'Dismissed'</param>
+        /// <param name="extendedLinks">Links related to the alert</param>
+        /// <param name="alertUri">A direct link to the alert page in Azure
+        /// Portal.</param>
+        /// <param name="timeGeneratedUtc">The UTC time the alert was generated
+        /// in ISO8601 format.</param>
+        /// <param name="productName">The name of the product which published
+        /// this alert (Azure Security Center, Azure ATP, Microsoft Defender
+        /// ATP, O365 ATP, MCAS, and so on).</param>
+        /// <param name="processingEndTimeUtc">The UTC processing end time of
+        /// the alert in ISO8601 format.</param>
+        /// <param name="entities">A list of entities related to the
+        /// alert.</param>
+        /// <param name="isIncident">This field determines whether the alert is
+        /// an incident (a compound grouping of several alerts) or a single
+        /// alert.</param>
+        /// <param name="correlationKey">Key for corelating related alerts.
+        /// Alerts with the same correlation key considered to be
+        /// related.</param>
+        /// <param name="extendedProperties">Custom properties for the
+        /// alert.</param>
+        /// <param name="compromisedEntity">The display name of the resource
+        /// most related to this alert.</param>
+        public Alert(string id = default(string), string name = default(string), string type = default(string), string alertType = default(string), string systemAlertId = default(string), string productComponentName = default(string), string alertDisplayName = default(string), string description = default(string), string severity = default(string), string intent = default(string), System.DateTime? startTimeUtc = default(System.DateTime?), System.DateTime? endTimeUtc = default(System.DateTime?), IList<ResourceIdentifier> resourceIdentifiers = default(IList<ResourceIdentifier>), IList<string> remediationSteps = default(IList<string>), string vendorName = default(string), string status = default(string), IList<IDictionary<string, string>> extendedLinks = default(IList<IDictionary<string, string>>), string alertUri = default(string), System.DateTime? timeGeneratedUtc = default(System.DateTime?), string productName = default(string), System.DateTime? processingEndTimeUtc = default(System.DateTime?), IList<AlertEntity> entities = default(IList<AlertEntity>), bool? isIncident = default(bool?), string correlationKey = default(string), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), string compromisedEntity = default(string))
             : base(id, name, type)
         {
-            State = state;
-            ReportedTimeUtc = reportedTimeUtc;
-            VendorName = vendorName;
-            AlertName = alertName;
+            AlertType = alertType;
+            SystemAlertId = systemAlertId;
+            ProductComponentName = productComponentName;
             AlertDisplayName = alertDisplayName;
-            DetectedTimeUtc = detectedTimeUtc;
             Description = description;
+            Severity = severity;
+            Intent = intent;
+            StartTimeUtc = startTimeUtc;
+            EndTimeUtc = endTimeUtc;
+            ResourceIdentifiers = resourceIdentifiers;
             RemediationSteps = remediationSteps;
-            ActionTaken = actionTaken;
-            ReportedSeverity = reportedSeverity;
-            CompromisedEntity = compromisedEntity;
-            AssociatedResource = associatedResource;
-            ExtendedProperties = extendedProperties;
-            SystemSource = systemSource;
-            CanBeInvestigated = canBeInvestigated;
-            IsIncident = isIncident;
+            VendorName = vendorName;
+            Status = status;
+            ExtendedLinks = extendedLinks;
+            AlertUri = alertUri;
+            TimeGeneratedUtc = timeGeneratedUtc;
+            ProductName = productName;
+            ProcessingEndTimeUtc = processingEndTimeUtc;
             Entities = entities;
-            ConfidenceScore = confidenceScore;
-            ConfidenceReasons = confidenceReasons;
-            SubscriptionId = subscriptionId;
-            InstanceId = instanceId;
-            WorkspaceArmId = workspaceArmId;
+            IsIncident = isIncident;
             CorrelationKey = correlationKey;
+            ExtendedProperties = extendedProperties;
+            CompromisedEntity = compromisedEntity;
             CustomInit();
         }
 
@@ -116,167 +133,163 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets state of the alert (Active, Dismissed etc.)
+        /// Gets unique identifier for the detection logic (all alert instances
+        /// from the same detection logic will have the same alertType).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; private set; }
+        [JsonProperty(PropertyName = "properties.alertType")]
+        public string AlertType { get; private set; }
 
         /// <summary>
-        /// Gets the time the incident was reported to Microsoft.Security in
-        /// UTC
+        /// Gets unique identifier for the alert.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.reportedTimeUtc")]
-        public System.DateTime? ReportedTimeUtc { get; private set; }
+        [JsonProperty(PropertyName = "properties.systemAlertId")]
+        public string SystemAlertId { get; private set; }
 
         /// <summary>
-        /// Gets name of the vendor that discovered the incident
+        /// Gets the name of Azure Security Center pricing tier which powering
+        /// this alert. Learn more:
+        /// https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vendorName")]
-        public string VendorName { get; private set; }
+        [JsonProperty(PropertyName = "properties.productComponentName")]
+        public string ProductComponentName { get; private set; }
 
         /// <summary>
-        /// Gets name of the alert type
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.alertName")]
-        public string AlertName { get; private set; }
-
-        /// <summary>
-        /// Gets display name of the alert type
+        /// Gets the display name of the alert.
         /// </summary>
         [JsonProperty(PropertyName = "properties.alertDisplayName")]
         public string AlertDisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the time the incident was detected by the vendor
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.detectedTimeUtc")]
-        public System.DateTime? DetectedTimeUtc { get; private set; }
-
-        /// <summary>
-        /// Gets description of the incident and what it means
+        /// Gets description of the suspicious activity that was detected.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; private set; }
 
         /// <summary>
-        /// Gets recommended steps to reradiate the incident
+        /// Gets the risk level of the threat that was detected. Learn more:
+        /// https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified.
+        /// Possible values include: 'Informational', 'Low', 'Medium', 'High'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.severity")]
+        public string Severity { get; private set; }
+
+        /// <summary>
+        /// Gets the kill chain related intent behind the alert. For list of
+        /// supported values, and explanations of Azure Security Center's
+        /// supported kill chain intents. Possible values include: 'Unknown',
+        /// 'PreAttack', 'InitialAccess', 'Persistence', 'PrivilegeEscalation',
+        /// 'DefenseEvasion', 'CredentialAccess', 'Discovery',
+        /// 'LateralMovement', 'Execution', 'Collection', 'Exfiltration',
+        /// 'CommandAndControl', 'Impact', 'Probing', 'Exploitation'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.intent")]
+        public string Intent { get; private set; }
+
+        /// <summary>
+        /// Gets the UTC time of the first event or activity included in the
+        /// alert in ISO8601 format.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.startTimeUtc")]
+        public System.DateTime? StartTimeUtc { get; private set; }
+
+        /// <summary>
+        /// Gets the UTC time of the last event or activity included in the
+        /// alert in ISO8601 format.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.endTimeUtc")]
+        public System.DateTime? EndTimeUtc { get; private set; }
+
+        /// <summary>
+        /// Gets the resource identifiers that can be used to direct the alert
+        /// to the right product exposure group (tenant, workspace,
+        /// subscription etc.). There can be multiple identifiers of different
+        /// type per alert.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceIdentifiers")]
+        public IList<ResourceIdentifier> ResourceIdentifiers { get; private set; }
+
+        /// <summary>
+        /// Gets manual action items to take to remediate the alert.
         /// </summary>
         [JsonProperty(PropertyName = "properties.remediationSteps")]
-        public string RemediationSteps { get; private set; }
+        public IList<string> RemediationSteps { get; private set; }
 
         /// <summary>
-        /// Gets the action that was taken as a response to the alert (Active,
-        /// Blocked etc.)
+        /// Gets the name of the vendor that raises the alert.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.actionTaken")]
-        public string ActionTaken { get; private set; }
+        [JsonProperty(PropertyName = "properties.vendorName")]
+        public string VendorName { get; private set; }
 
         /// <summary>
-        /// Gets estimated severity of this alert. Possible values include:
-        /// 'Informational', 'Low', 'Medium', 'High'
+        /// Gets the life cycle status of the alert. Possible values include:
+        /// 'Active', 'Resolved', 'Dismissed'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.reportedSeverity")]
-        public string ReportedSeverity { get; private set; }
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
 
         /// <summary>
-        /// Gets the entity that the incident happened on
+        /// Gets links related to the alert
         /// </summary>
-        [JsonProperty(PropertyName = "properties.compromisedEntity")]
-        public string CompromisedEntity { get; private set; }
+        [JsonProperty(PropertyName = "properties.extendedLinks")]
+        public IList<IDictionary<string, string>> ExtendedLinks { get; private set; }
 
         /// <summary>
-        /// Gets azure resource ID of the associated resource
+        /// Gets a direct link to the alert page in Azure Portal.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.associatedResource")]
-        public string AssociatedResource { get; private set; }
+        [JsonProperty(PropertyName = "properties.alertUri")]
+        public string AlertUri { get; private set; }
 
         /// <summary>
+        /// Gets the UTC time the alert was generated in ISO8601 format.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.extendedProperties")]
-        public IDictionary<string, object> ExtendedProperties { get; set; }
+        [JsonProperty(PropertyName = "properties.timeGeneratedUtc")]
+        public System.DateTime? TimeGeneratedUtc { get; private set; }
 
         /// <summary>
-        /// Gets the type of the alerted resource (Azure, Non-Azure)
+        /// Gets the name of the product which published this alert (Azure
+        /// Security Center, Azure ATP, Microsoft Defender ATP, O365 ATP, MCAS,
+        /// and so on).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.systemSource")]
-        public string SystemSource { get; private set; }
+        [JsonProperty(PropertyName = "properties.productName")]
+        public string ProductName { get; private set; }
 
         /// <summary>
-        /// Gets whether this alert can be investigated with Azure Security
-        /// Center
+        /// Gets the UTC processing end time of the alert in ISO8601 format.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.canBeInvestigated")]
-        public bool? CanBeInvestigated { get; private set; }
+        [JsonProperty(PropertyName = "properties.processingEndTimeUtc")]
+        public System.DateTime? ProcessingEndTimeUtc { get; private set; }
 
         /// <summary>
-        /// Gets whether this alert is for incident type or not (otherwise -
-        /// single alert)
+        /// Gets a list of entities related to the alert.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.entities")]
+        public IList<AlertEntity> Entities { get; private set; }
+
+        /// <summary>
+        /// Gets this field determines whether the alert is an incident (a
+        /// compound grouping of several alerts) or a single alert.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isIncident")]
         public bool? IsIncident { get; private set; }
 
         /// <summary>
-        /// Gets or sets objects that are related to this alerts
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.entities")]
-        public IList<AlertEntity> Entities { get; set; }
-
-        /// <summary>
-        /// Gets level of confidence we have on the alert
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.confidenceScore")]
-        public double? ConfidenceScore { get; private set; }
-
-        /// <summary>
-        /// Gets or sets reasons the alert got the confidenceScore value
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.confidenceReasons")]
-        public IList<AlertConfidenceReason> ConfidenceReasons { get; set; }
-
-        /// <summary>
-        /// Gets azure subscription ID of the resource that had the security
-        /// alert or the subscription ID of the workspace that this resource
-        /// reports to
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.subscriptionId")]
-        public string SubscriptionId { get; private set; }
-
-        /// <summary>
-        /// Gets instance ID of the alert.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.instanceId")]
-        public string InstanceId { get; private set; }
-
-        /// <summary>
-        /// Gets azure resource ID of the workspace that the alert was reported
-        /// to.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.workspaceArmId")]
-        public string WorkspaceArmId { get; private set; }
-
-        /// <summary>
-        /// Gets alerts with the same CorrelationKey will be grouped together
-        /// in Ibiza.
+        /// Gets key for corelating related alerts. Alerts with the same
+        /// correlation key considered to be related.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlationKey")]
         public string CorrelationKey { get; private set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets custom properties for the alert.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ConfidenceScore > 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ConfidenceScore", 1);
-            }
-            if (ConfidenceScore < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ConfidenceScore", 0);
-            }
-        }
+        [JsonProperty(PropertyName = "properties.extendedProperties")]
+        public IDictionary<string, string> ExtendedProperties { get; set; }
+
+        /// <summary>
+        /// Gets the display name of the resource most related to this alert.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.compromisedEntity")]
+        public string CompromisedEntity { get; private set; }
+
     }
 }

@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -34,7 +36,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "cs"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor without event hub should perform validation.");
             Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "cs", "eh"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor with event hub should perform validation.");
-            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should perform validation.");
             Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>()), Throws.InstanceOf<ArgumentException>(), "The connection constructor should perform validation.");
         }
 
@@ -49,7 +53,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "cs"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor without event hub should perform validation.");
             Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "cs", "eh"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor with event hub should perform validation.");
-            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should perform validation.");
             Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, Mock.Of<EventHubConnection>()), Throws.InstanceOf<ArgumentException>(), "The connection constructor should perform validation.");
         }
 
@@ -76,7 +82,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("amqps://namespace.windows.servicebus.net")]
         public void ConstructorValidatesTheFullyQualifiedNamespace(string fullyQualifiedNamespace)
         {
-            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, fullyQualifiedNamespace, "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, fullyQualifiedNamespace, "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, fullyQualifiedNamespace, "eh", new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, fullyQualifiedNamespace, "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should perform validation.");
         }
 
         /// <summary>
@@ -88,7 +96,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHubName(string eventHubName)
         {
-            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", eventHubName, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", eventHubName, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", eventHubName, new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", eventHubName, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should perform validation.");
         }
 
         /// <summary>
@@ -98,7 +108,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheCredential()
         {
-            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", default(TokenCredential)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", default(TokenCredential)), Throws.InstanceOf<ArgumentNullException>(), "The token credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", default(AzureNamedKeyCredential)), Throws.InstanceOf<ArgumentNullException>(), "The shared key credential constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", default(AzureSasCredential)), Throws.InstanceOf<ArgumentNullException>(), "The SAS credential constructor should perform validation.");
         }
 
         /// <summary>
@@ -131,11 +143,39 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ExpandedConstructorSetsTheRetryPolicy()
+        public void TokenCredentialConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
             var options = new PartitionReceiverOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>(), options);
+
+            Assert.That(GetRetryPolicy(receiver), Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheRetryPolicy()
+        {
+            var expected = Mock.Of<EventHubsRetryPolicy>();
+            var options = new PartitionReceiverOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value"), options);
+
+            Assert.That(GetRetryPolicy(receiver), Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheRetryPolicy()
+        {
+            var expected = Mock.Of<EventHubsRetryPolicy>();
+            var options = new PartitionReceiverOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), options);
 
             Assert.That(GetRetryPolicy(receiver), Is.SameAs(expected));
         }
@@ -152,6 +192,77 @@ namespace Azure.Messaging.EventHubs.Tests
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>(), options);
 
             Assert.That(GetRetryPolicy(receiver), Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConnectionStringConstructorSetsTheDefaultMaximumWaitTime()
+        {
+            var expected = TimeSpan.FromMinutes(1);
+            var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = expected };
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString, options);
+
+            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void TokenCredentialConstructorSetsTheDefaultMaximumWaitTime()
+        {
+            var expected = TimeSpan.FromMinutes(1);
+            var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = expected };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>(), options);
+
+            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheDefaultMaximumWaitTime()
+        {
+            var expected = TimeSpan.FromMinutes(1);
+            var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = expected };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value"), options);
+
+            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheDefaultMaximumWaitTime()
+        {
+            var expected = TimeSpan.FromMinutes(1);
+            var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = expected };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), options);
+
+            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConnectionConstructorSetsTheDefaultMaximumWaitTime()
+        {
+            var expected = (TimeSpan?)null;
+            var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = expected };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>(), options);
+
+            Assert.That(GetDefaultMaximumWaitTime(receiver), Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -187,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ExpandedConstructorCreatesTheTransportConsumer()
+        public void TokenCredentialConstructorCreatesTheTransportConsumer()
         {
             var expectedRetryPolicy = Mock.Of<EventHubsRetryPolicy>();
             var expectedOptions = new PartitionReceiverOptions
@@ -198,6 +309,60 @@ namespace Azure.Messaging.EventHubs.Tests
                 TrackLastEnqueuedEventProperties = false
             };
             var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>(), expectedOptions);
+
+            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup), "The constructor should have used the correct consumer group.");
+            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId), "The constructor should have used the correct partition id.");
+            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition), "The constructor should have used the correct initial position.");
+            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy), "The constructor should have used the correct retry policy.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions, Is.Not.SameAs(expectedOptions), "The constructor should have cloned the options.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties), "The constructor should have used the correct track last enqueued event properties.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The constructor should have used the correct owner level.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The constructor should have used the correct prefetch count.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorCreatesTheTransportConsumer()
+        {
+            var expectedRetryPolicy = Mock.Of<EventHubsRetryPolicy>();
+            var expectedOptions = new PartitionReceiverOptions
+            {
+                RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expectedRetryPolicy },
+                OwnerLevel = 99,
+                PrefetchCount = 42,
+                TrackLastEnqueuedEventProperties = false
+            };
+            var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value"), expectedOptions);
+
+            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup), "The constructor should have used the correct consumer group.");
+            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId), "The constructor should have used the correct partition id.");
+            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition), "The constructor should have used the correct initial position.");
+            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy), "The constructor should have used the correct retry policy.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions, Is.Not.SameAs(expectedOptions), "The constructor should have cloned the options.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties), "The constructor should have used the correct track last enqueued event properties.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The constructor should have used the correct owner level.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The constructor should have used the correct prefetch count.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorCreatesTheTransportConsumer()
+        {
+            var expectedRetryPolicy = Mock.Of<EventHubsRetryPolicy>();
+            var expectedOptions = new PartitionReceiverOptions
+            {
+                RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expectedRetryPolicy },
+                OwnerLevel = 99,
+                PrefetchCount = 42,
+                TrackLastEnqueuedEventProperties = false
+            };
+            var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), expectedOptions);
 
             Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup), "The constructor should have used the correct consumer group.");
             Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId), "The constructor should have used the correct partition id.");
@@ -262,10 +427,50 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ExpandedConstructorCreatesDefaultOptions()
+        public void TokenCredentialConstructorCreatesDefaultOptions()
         {
             var defaultOptions = new PartitionReceiverOptions();
             var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>());
+            var options = receiver.TransportConsumerCreatedWithOptions;
+
+            Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+            Assert.That(options.ConnectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.That(options.DefaultMaximumReceiveWaitTime, Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+            Assert.That(options.OwnerLevel, Is.EqualTo(defaultOptions.OwnerLevel), "The constructor should have set the correct owner level.");
+            Assert.That(options.PrefetchCount, Is.EqualTo(defaultOptions.PrefetchCount), "The constructor should have set the correct prefetch count.");
+            Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), "The constructor should have set the correct track last enqueued event properties.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorCreatesDefaultOptions()
+        {
+            var defaultOptions = new PartitionReceiverOptions();
+            var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value"));
+            var options = receiver.TransportConsumerCreatedWithOptions;
+
+            Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+            Assert.That(options.ConnectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.That(options.DefaultMaximumReceiveWaitTime, Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+            Assert.That(options.OwnerLevel, Is.EqualTo(defaultOptions.OwnerLevel), "The constructor should have set the correct owner level.");
+            Assert.That(options.PrefetchCount, Is.EqualTo(defaultOptions.PrefetchCount), "The constructor should have set the correct prefetch count.");
+            Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), "The constructor should have set the correct track last enqueued event properties.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorCreatesDefaultOptions()
+        {
+            var defaultOptions = new PartitionReceiverOptions();
+            var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value));
             var options = receiver.TransportConsumerCreatedWithOptions;
 
             Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
@@ -316,10 +521,36 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ExpandedConstructorSetsTheConsumerGroup()
+        public void TokenCredentialConstructorSetsTheConsumerGroup()
         {
             var consumerGroup = "SomeGroup";
             var receiver = new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>());
+
+            Assert.That(receiver.ConsumerGroup, Is.EqualTo(consumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheConsumerGroup()
+        {
+            var consumerGroup = "SomeGroup";
+            var receiver = new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value"));
+
+            Assert.That(receiver.ConsumerGroup, Is.EqualTo(consumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheConsumerGroup()
+        {
+            var consumerGroup = "SomeGroup";
+            var receiver = new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value));
 
             Assert.That(receiver.ConsumerGroup, Is.EqualTo(consumerGroup));
         }
@@ -356,10 +587,36 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ExpandedConstructorSetsThePartitionId()
+        public void TokenCredentialConstructorSetsThePartitionId()
         {
             var partitionId = "partitionId";
             var receiver = new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>());
+
+            Assert.That(receiver.PartitionId, Is.EqualTo(partitionId));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsThePartitionId()
+        {
+            var partitionId = "partitionId";
+            var receiver = new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", new AzureNamedKeyCredential("key", "value"));
+
+            Assert.That(receiver.PartitionId, Is.EqualTo(partitionId));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsThePartitionId()
+        {
+            var partitionId = "partitionId";
+            var receiver = new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value));
 
             Assert.That(receiver.PartitionId, Is.EqualTo(partitionId));
         }
@@ -396,10 +653,36 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ExpandedConstructorSetsTheInitialPosition()
+        public void TokenCredentialConstructorSetsTheInitialPosition()
         {
             var expectedPosition = EventPosition.FromOffset(999);
             var receiver = new PartitionReceiver("cg", "pid", expectedPosition, "fqns", "eh", Mock.Of<TokenCredential>());
+
+            Assert.That(receiver.InitialPosition, Is.EqualTo(expectedPosition));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheInitialPosition()
+        {
+            var expectedPosition = EventPosition.FromOffset(999);
+            var receiver = new PartitionReceiver("cg", "pid", expectedPosition, "fqns", "eh", new AzureNamedKeyCredential("key", "value"));
+
+            Assert.That(receiver.InitialPosition, Is.EqualTo(expectedPosition));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheInitialPosition()
+        {
+            var expectedPosition = EventPosition.FromOffset(999);
+            var receiver = new PartitionReceiver("cg", "pid", expectedPosition, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value));
 
             Assert.That(receiver.InitialPosition, Is.EqualTo(expectedPosition));
         }
@@ -463,10 +746,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartitionId = "partitionId";
             var expectedPosition = EventPosition.FromOffset(55);
             var expectedRetryPolicy = Mock.Of<EventHubsRetryPolicy>();
+            var expectedInvalidateOnSteal = false;
             var expectedOptions = new PartitionReceiverOptions
             {
                 OwnerLevel = 99,
                 PrefetchCount = 42,
+                PrefetchSizeInBytes = 43,
                 TrackLastEnqueuedEventProperties = false
             };
 
@@ -479,9 +764,89 @@ namespace Azure.Messaging.EventHubs.Tests
                     expectedPosition,
                     expectedRetryPolicy,
                     expectedOptions.TrackLastEnqueuedEventProperties,
+                    expectedInvalidateOnSteal,
                     expectedOptions.OwnerLevel,
-                    (uint?)expectedOptions.PrefetchCount),
+                    (uint?)expectedOptions.PrefetchCount,
+                    expectedOptions.PrefetchSizeInBytes),
                 Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReadLastEnqueuedEventProperties" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadLastEnqueuedEventPropertiesDelegatesToTheTransportConsumer()
+        {
+            var lastEvent = new EventData
+            (
+                eventBody: Array.Empty<byte>(),
+                lastPartitionSequenceNumber: 1234,
+                lastPartitionOffset: 42,
+                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
+                lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
+            );
+
+            var options = new PartitionReceiverOptions { TrackLastEnqueuedEventProperties = true };
+            var mockConsumer = new LastEventConsumerMock(lastEvent);
+            var mockConnection = new Mock<EventHubConnection>();
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
+                .Returns(mockConsumer);
+
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+            var information = receiver.ReadLastEnqueuedEventProperties();
+
+            Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
+            Assert.That(information.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+            Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
+            Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReadLastEnqueuedEventProperties" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadLastEnqueuedEventPropertiesAllowsTheOperationWhenTheOptionIsUnset()
+        {
+            var defaultProperties = new LastEnqueuedEventProperties();
+            var options = new PartitionReceiverOptions { TrackLastEnqueuedEventProperties = false };
+            var mockConsumer = new Mock<TransportConsumer>();
+            var mockConnection = new Mock<EventHubConnection>();
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
+                .Returns(mockConsumer.Object);
+
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+            var information = receiver.ReadLastEnqueuedEventProperties();
+
+            Assert.That(information.SequenceNumber, Is.EqualTo(defaultProperties.SequenceNumber), "The sequence number should match.");
+            Assert.That(information.Offset, Is.EqualTo(defaultProperties.Offset), "The offset should match.");
+            Assert.That(information.EnqueuedTime, Is.EqualTo(defaultProperties.EnqueuedTime), "The last enqueue time should match.");
+            Assert.That(information.LastReceivedTime, Is.EqualTo(defaultProperties.LastReceivedTime), "The retrieval time should match.");
         }
 
         /// <summary>
@@ -490,10 +855,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetPartitionPropertiesUsesThePartitionId()
+        public async Task GetPartitionPropertiesDelegatesToTheConnection()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockConnection = new Mock<EventHubConnection>();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -519,7 +884,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesUsesTheRetryPolicy()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockConnection = new Mock<EventHubConnection>();
             var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
@@ -547,7 +912,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesUsesTheCancellationToken()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockConnection = new Mock<EventHubConnection>();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -573,7 +938,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesFailsWhenPartitionReceiverIsClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -597,7 +962,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ReceiveBatchAsyncValidatesTheMaximumEventCount(int maximumEventCount)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -618,7 +983,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ReceiveBatchAsyncValidatesTheMaximumWaitTime(int waitTimeSeconds)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -636,7 +1001,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveBatchAsyncFailsWhenPartitionReceiverIsClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -665,6 +1030,145 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReceiveBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReceiveBatchAsyncDelegatesToTheTransportConsumer()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedMaximumCount = 50;
+            var expectedWaitTime = TimeSpan.FromMilliseconds(23);
+            var mockConsumer = new Mock<TransportConsumer>();
+            var mockConnection = new Mock<EventHubConnection>();
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
+                .Returns(mockConsumer.Object);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Array.Empty<EventData>());
+
+            await using var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+            await receiver.ReceiveBatchAsync(expectedMaximumCount, expectedWaitTime, CancellationToken.None);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockConsumer
+                .Verify(consumer => consumer.ReceiveAsync(
+                    expectedMaximumCount,
+                    expectedWaitTime,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReceiveBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReceiveBatchAsyncUsesTheDefaultMaximumReceiveWaitTimeWhenNoWaitTimeIsSpecified()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedMaximumCount = 50;
+            var expectedWaitTime = TimeSpan.FromMilliseconds(23);
+            var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = expectedWaitTime };
+            var mockConsumer = new Mock<TransportConsumer>();
+            var mockConnection = new Mock<EventHubConnection>();
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
+                .Returns(mockConsumer.Object);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Array.Empty<EventData>());
+
+            await using var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object, options);
+            await receiver.ReceiveBatchAsync(expectedMaximumCount, CancellationToken.None);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockConsumer
+                .Verify(consumer => consumer.ReceiveAsync(
+                    expectedMaximumCount,
+                    expectedWaitTime,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReceiveBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReceiveBatchAsyncRespectsTheDefaultMaximumWaitTimeBeingUnset()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedMaximumCount = 50;
+            var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = default };
+            var mockConsumer = new Mock<TransportConsumer>();
+            var mockConnection = new Mock<EventHubConnection>();
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
+                .Returns(mockConsumer.Object);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Array.Empty<EventData>());
+
+            await using var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object, options);
+            await receiver.ReceiveBatchAsync(expectedMaximumCount, CancellationToken.None);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockConsumer
+                .Verify(consumer => consumer.ReceiveAsync(
+                    expectedMaximumCount,
+                    default(TimeSpan?),
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="PartitionReceiver.CloseAsync" />
         ///   method.
         /// </summary>
@@ -673,7 +1177,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncMarksTheClientAsClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -695,7 +1199,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheTransportConsumer()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var mockConsumer = new Mock<TransportConsumer>();
@@ -709,8 +1213,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -734,7 +1240,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloseAsyncSurfacesExceptionsForTheTransportConsumer()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new InsufficientMemoryException("This message is expected.");
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
@@ -753,8 +1259,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -773,7 +1281,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheConnectionWhenOwned()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -795,7 +1303,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDoesNotCloseTheConnectionWhenNotOwned()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var connection = new EventHubConnection(connectionString);
@@ -834,7 +1342,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncLogsNormalClose()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
             var eventHubName = "somehub";
@@ -849,8 +1357,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -863,14 +1373,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseStart(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
 
             mockEventSource
                 .Verify(log => log.ClientCloseComplete(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
@@ -885,7 +1395,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncLogsErrorDuringClose()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new InsufficientMemoryException("This message is expected.");
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
@@ -906,8 +1416,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
-                    It.IsAny<uint?>()))
+                    It.IsAny<uint?>(),
+                    It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -927,14 +1439,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseStart(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
 
             mockEventSource
                 .Verify(log => log.ClientCloseError(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>(),
                     expectedException.Message),
@@ -942,7 +1454,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseComplete(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
@@ -988,6 +1500,16 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetValue(partitionReceiver);
 
         /// <summary>
+        ///   Retrieves the DefaultMaximumWaitTime for the partition receiver using its private accessor.
+        /// </summary>
+        ///
+        private static TimeSpan? GetDefaultMaximumWaitTime(PartitionReceiver partitionReceiver) =>
+            (TimeSpan?)
+                typeof(PartitionReceiver)
+                    .GetProperty("DefaultMaximumWaitTime", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(partitionReceiver);
+
+        /// <summary>
         ///   Allows the observation of the creation of a <see cref="TransportConsumer"/>
         ///   for testing purposes.
         /// </summary>
@@ -1020,7 +1542,18 @@ namespace Azure.Messaging.EventHubs.Tests
                                                        EventPosition eventPosition,
                                                        string fullyQualifiedNamespace,
                                                        string eventHubName,
-                                                       TokenCredential credential) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential)
+                                                       AzureNamedKeyCredential credential,
+                                                       PartitionReceiverOptions options = default) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public ObservableConsumerPartitionReceiver(string consumerGroup,
+                                                       string partitionId,
+                                                       EventPosition eventPosition,
+                                                       string fullyQualifiedNamespace,
+                                                       string eventHubName,
+                                                       AzureSasCredential credential,
+                                                       PartitionReceiverOptions options = default) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential, options)
             {
             }
 
@@ -1030,7 +1563,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                        string fullyQualifiedNamespace,
                                                        string eventHubName,
                                                        TokenCredential credential,
-                                                       PartitionReceiverOptions options) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential, options)
+                                                       PartitionReceiverOptions options = default) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential, options)
             {
             }
 
@@ -1063,6 +1596,22 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 return base.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options);
             }
+        }
+
+        /// <summary>
+        ///   Allows for setting the last received event by the consumer
+        ///   for testing purposes.
+        /// </summary>
+        ///
+        private class LastEventConsumerMock : TransportConsumer
+        {
+            public LastEventConsumerMock(EventData lastEvent)
+            {
+                LastReceivedEvent = lastEvent;
+            }
+
+            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => throw new NotImplementedException();
+            public override Task CloseAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
         }
     }
 }

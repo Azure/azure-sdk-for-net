@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Media
             /// List StreamingEndpoints
             /// </summary>
             /// <remarks>
-            /// Lists the StreamingEndpoints in the account.
+            /// Lists the streaming endpoints in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Media
             /// List StreamingEndpoints
             /// </summary>
             /// <remarks>
-            /// Lists the StreamingEndpoints in the account.
+            /// Lists the streaming endpoints in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Gets a StreamingEndpoint.
+            /// Gets a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             public static StreamingEndpoint Get(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
             {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Media
             /// Get StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Gets a StreamingEndpoint.
+            /// Gets a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Creates a StreamingEndpoint.
+            /// Creates a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,10 +135,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Creates a StreamingEndpoint.
+            /// Creates a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,10 +165,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Media
             /// Update StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Updates a existing StreamingEndpoint.
+            /// Updates a existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -201,10 +201,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             public static StreamingEndpoint Update(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpoint parameters)
             {
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Media
             /// Update StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Updates a existing StreamingEndpoint.
+            /// Updates a existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,10 +227,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Deletes a StreamingEndpoint.
+            /// Deletes a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             public static void Delete(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
             {
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Deletes a StreamingEndpoint.
+            /// Deletes a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Media
             /// Start StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Starts an existing StreamingEndpoint.
+            /// Starts an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             public static void Start(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
             {
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Media
             /// Start StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Starts an existing StreamingEndpoint.
+            /// Starts an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Stops an existing StreamingEndpoint.
+            /// Stops an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             public static void Stop(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
             {
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Stops an existing StreamingEndpoint.
+            /// Stops an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -380,7 +380,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Management.Media
             /// Scale StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Scales an existing StreamingEndpoint.
+            /// Scales an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -406,10 +406,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='scaleUnit'>
-            /// The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the streaming endpoint.
             /// </param>
             public static void Scale(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, int? scaleUnit = default(int?))
             {
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.Media
             /// Scale StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Scales an existing StreamingEndpoint.
+            /// Scales an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -432,10 +432,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='scaleUnit'>
-            /// The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the streaming endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -449,7 +449,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Creates a StreamingEndpoint.
+            /// Creates a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -461,10 +461,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -479,7 +479,7 @@ namespace Microsoft.Azure.Management.Media
             /// Create StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Creates a StreamingEndpoint.
+            /// Creates a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -491,10 +491,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
             /// The flag indicates if the resource should be automatically started on
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.Media
             /// Update StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Updates a existing StreamingEndpoint.
+            /// Updates a existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -527,10 +527,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             public static StreamingEndpoint BeginUpdate(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpoint parameters)
             {
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.Management.Media
             /// Update StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Updates a existing StreamingEndpoint.
+            /// Updates a existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -553,10 +553,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='parameters'>
-            /// StreamingEndpoint properties needed for creation.
+            /// Streaming endpoint properties needed for creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -573,7 +573,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Deletes a StreamingEndpoint.
+            /// Deletes a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -585,7 +585,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             public static void BeginDelete(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
             {
@@ -596,7 +596,7 @@ namespace Microsoft.Azure.Management.Media
             /// Delete StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Deletes a StreamingEndpoint.
+            /// Deletes a streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -608,7 +608,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -622,7 +622,7 @@ namespace Microsoft.Azure.Management.Media
             /// Start StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Starts an existing StreamingEndpoint.
+            /// Starts an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -634,7 +634,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             public static void BeginStart(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
             {
@@ -645,7 +645,7 @@ namespace Microsoft.Azure.Management.Media
             /// Start StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Starts an existing StreamingEndpoint.
+            /// Starts an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -657,7 +657,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Stops an existing StreamingEndpoint.
+            /// Stops an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -683,7 +683,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             public static void BeginStop(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
             {
@@ -694,7 +694,7 @@ namespace Microsoft.Azure.Management.Media
             /// Stop StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Stops an existing StreamingEndpoint.
+            /// Stops an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -706,7 +706,7 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -720,7 +720,7 @@ namespace Microsoft.Azure.Management.Media
             /// Scale StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Scales an existing StreamingEndpoint.
+            /// Scales an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -732,10 +732,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='scaleUnit'>
-            /// The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the streaming endpoint.
             /// </param>
             public static void BeginScale(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, int? scaleUnit = default(int?))
             {
@@ -746,7 +746,7 @@ namespace Microsoft.Azure.Management.Media
             /// Scale StreamingEndpoint
             /// </summary>
             /// <remarks>
-            /// Scales an existing StreamingEndpoint.
+            /// Scales an existing streaming endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -758,10 +758,10 @@ namespace Microsoft.Azure.Management.Media
             /// The Media Services account name.
             /// </param>
             /// <param name='streamingEndpointName'>
-            /// The name of the StreamingEndpoint.
+            /// The name of the streaming endpoint, maximum length is 24.
             /// </param>
             /// <param name='scaleUnit'>
-            /// The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the streaming endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -775,7 +775,7 @@ namespace Microsoft.Azure.Management.Media
             /// List StreamingEndpoints
             /// </summary>
             /// <remarks>
-            /// Lists the StreamingEndpoints in the account.
+            /// Lists the streaming endpoints in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -792,7 +792,7 @@ namespace Microsoft.Azure.Management.Media
             /// List StreamingEndpoints
             /// </summary>
             /// <remarks>
-            /// Lists the StreamingEndpoints in the account.
+            /// Lists the streaming endpoints in the account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

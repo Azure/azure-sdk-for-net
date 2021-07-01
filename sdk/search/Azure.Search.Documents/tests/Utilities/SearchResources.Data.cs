@@ -4,17 +4,11 @@
 using System;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Azure.Core.GeoJson;
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Models;
-using Microsoft.Azure.Search;
-using Microsoft.Azure.Search.Models;
+using Azure.Search.Documents.Indexes.Models;
 using Microsoft.Spatial;
-using AnalyzerName = Microsoft.Azure.Search.Models.AnalyzerName;
-using DataType = Microsoft.Azure.Search.Models.DataType;
-using DistanceScoringFunction = Microsoft.Azure.Search.Models.DistanceScoringFunction;
-using DistanceScoringParameters = Microsoft.Azure.Search.Models.DistanceScoringParameters;
-using ScoringFunctionAggregation = Microsoft.Azure.Search.Models.ScoringFunctionAggregation;
-using ScoringProfile = Microsoft.Azure.Search.Models.ScoringProfile;
-using Suggester = Microsoft.Azure.Search.Models.Suggester;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -23,69 +17,77 @@ namespace Azure.Search.Documents.Tests
     public partial class SearchResources
     {
         /// <summary>
-        /// Get a Search Index for the Hotels sample data.
-        ///
+        /// <para>
+        /// Get a <see cref="SearchIndex"/> for the Hotels sample data.
+        /// </para>
+        /// <para>
         /// This index is tuned more for exercising document serialization,
         /// indexing, and querying operations. Also, the fields of this index
         /// should exactly match the properties of the Hotel test model class
         /// below.
+        /// </para>
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private static Microsoft.Azure.Search.Models.Index GetHotelIndex(string name) =>
-            new Microsoft.Azure.Search.Models.Index()
+        /// <param name="name">The name of the index to create.</param>
+        /// <returns>A <see cref="SearchIndex"/> for the Hotels sample data.</returns>
+        internal static SearchIndex GetHotelIndex(string name) =>
+            new SearchIndex(name)
             {
-                Name = name,
-                Fields = new[]
+                Fields =
                 {
-                    Field.New("hotelId", DataType.String, isKey: true, isFilterable: true, isSortable: true, isFacetable: true),
-                    Field.New("hotelName", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: false),
-                    Field.NewSearchableString("description", AnalyzerName.EnLucene),
-                    Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene),
-                    Field.New("category", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
-                    Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isFacetable: true),
-                    Field.New("parkingIncluded", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
-                    Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
-                    Field.New("lastRenovationDate", DataType.DateTimeOffset, isFilterable: true, isSortable: true, isFacetable: true),
-                    Field.New("rating", DataType.Int32, isFilterable: true, isSortable: true, isFacetable: true),
-                    Field.New("location", DataType.GeographyPoint, isFilterable: true, isSortable: true),
-                    Field.NewComplex("address", isCollection: false, fields: new[]
+                    new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
+                    new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
+                    new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
+                    new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
+                    new SimpleField("parkingIncluded", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("smokingAllowed", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("lastRenovationDate", SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("rating", SearchFieldDataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("location", SearchFieldDataType.GeographyPoint) { IsFilterable = true, IsSortable = true },
+                    new SimpleField("geoLocation", SearchFieldDataType.GeographyPoint) { IsFilterable = true, IsSortable = true },
+                    new ComplexField("address")
                     {
-                        Field.New("streetAddress", DataType.String, isSearchable: true),
-                        Field.New("city", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
-                        Field.New("stateProvince", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
-                        Field.New("country", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
-                        Field.New("postalCode", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true)
-                    }),
-                    Field.NewComplex("rooms", isCollection: true, fields: new[]
+                        Fields =
+                        {
+                            new SearchableField("streetAddress"),
+                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                        },
+                    },
+                    new ComplexField("rooms", collection: true)
                     {
-                        Field.NewSearchableString("description", AnalyzerName.EnLucene),
-                        Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene),
-                        Field.New("type", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
-                        Field.New("baseRate", DataType.Double, isFilterable: true, isFacetable: true),
-                        Field.New("bedOptions", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
-                        Field.New("sleepsCount", DataType.Int32, isFilterable: true, isFacetable: true),
-                        Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isFacetable: true),
-                        Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isFacetable: true)
-                    })
+                        Fields =
+                        {
+                            new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
+                            new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
+                            new SearchableField("type") { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("baseRate", SearchFieldDataType.Double) { IsFilterable = true, IsFacetable = true },
+                            new SearchableField("bedOptions") { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("sleepsCount", SearchFieldDataType.Int32) { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("smokingAllowed", SearchFieldDataType.Boolean) { IsFilterable = true, IsFacetable = true },
+                            new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
+                        },
+                    },
                 },
-                Suggesters = new[]
+                Suggesters =
                 {
-                    new Suggester(
-                        name: "sg",
-                        sourceFields: new[] { "description", "hotelName" })
+                    new SearchSuggester("sg", "description", "hotelName"),
                 },
-                ScoringProfiles = new[]
+                ScoringProfiles =
                 {
                     new ScoringProfile("nearest")
                     {
                         FunctionAggregation = ScoringFunctionAggregation.Sum,
-                        Functions = new[]
+                        Functions =
                         {
-                            new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100))
-                        }
-                    }
-                }
+                            new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100)),
+                            new DistanceScoringFunction("geoLocation", 2, new DistanceScoringParameters("mygeoloc", 100)),
+                        },
+                    },
+                },
             };
 
         /// <summary>
@@ -113,7 +115,8 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.Zero),
                     Rating = 5,
-                    Location = GeographyPoint.Create(47.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 47.678581),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-122.131577, 47.678581),
                 },
                 new Hotel()
                 {
@@ -127,7 +130,8 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 1,
-                    Location = GeographyPoint.Create(49.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 49.678581),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-122.131577, 49.678581),
                 },
                 new Hotel()
                 {
@@ -141,7 +145,8 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(1995, 7, 1, 0, 0, 0, TimeSpan.Zero),
                     Rating = 4,
-                    Location = GeographyPoint.Create(46.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 46.678581),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-122.131577, 46.678581),
                 },
                 new Hotel()
                 {
@@ -155,7 +160,8 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(1995, 7, 1, 0, 0, 0, TimeSpan.Zero),
                     Rating = 4,
-                    Location = GeographyPoint.Create(48.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 48.678581),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-122.131577, 48.678581),
                 },
                 new Hotel()
                 {
@@ -169,7 +175,8 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(2012, 8, 12, 0, 0, 0, TimeSpan.Zero),
                     Rating = 4,
-                    Location = GeographyPoint.Create(48.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 48.678581),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-122.131577, 48.678581),
                 },
                 new Hotel()
                 {
@@ -202,7 +209,8 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     Rating = 4,
-                    Location = GeographyPoint.Create(40.760586, -73.975403),
+                    Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-73.975403, 40.760586),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "677 5th Ave",
@@ -249,7 +257,8 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 3,
-                    Location = GeographyPoint.Create(35.904160, -78.940483),
+                    Location = TestExtensions.CreatePoint(-78.940483, 35.904160),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-78.940483, 35.904160),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "6910 Fayetteville Rd",
@@ -287,54 +296,45 @@ namespace Azure.Search.Documents.Tests
             };
     }
 
-    [SerializePropertyNamesAsCamelCase]
     internal class Hotel
     {
-        [System.ComponentModel.DataAnnotations.Key, IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("hotelId")]
         public string HotelId { get; set; }
 
-        [IsSearchable, IsFilterable, IsSortable]
         [JsonPropertyName("hotelName")]
         public string HotelName { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
         [JsonPropertyName("descriptionFr")]
         public string DescriptionFr { get; set; }
 
-        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("category")]
         public string Category { get; set; }
 
-        [IsSearchable, IsFilterable, IsFacetable]
         [JsonPropertyName("tags")]
         // TODO: #10596 - Investigate JsonConverter for null arrays
         public string[] Tags { get; set; } = new string[] { };
 
-        [IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("parkingIncluded")]
         public bool? ParkingIncluded { get; set; }
 
-        [IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("smokingAllowed")]
         public bool? SmokingAllowed { get; set; }
 
-        [IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("lastRenovationDate")]
         public DateTimeOffset? LastRenovationDate { get; set; }
 
-        [IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("rating")]
         public int? Rating { get; set; }
 
-        [IsFilterable, IsSortable]
-        // TODO: #10592- Unify on an Azure.Core spatial type
-        [JsonIgnore]
-        public GeographyPoint Location { get; set; } = null;
+        [JsonPropertyName("geoLocation")]
+        public GeoPoint GeoLocation { get; set; }
+
+        [JsonPropertyName("location")]
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
+        public GeographyPoint Location { get; set; }
 
         [JsonPropertyName("address")]
         public HotelAddress Address { get; set; }
@@ -355,8 +355,8 @@ namespace Azure.Search.Documents.Tests
             SmokingAllowed == other.SmokingAllowed &&
             LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
             Rating == other.Rating &&
-            // TODO: #10592- Unify on an Azure.Core spatial type
-            // Location.EqualsNullSafe(other.Location) &&
+            (GeoLocation?.Coordinates ?? default).Equals(other.GeoLocation?.Coordinates ?? default) &&
+            Location.EqualsNullSafe(other.Location) &&
             Address.EqualsNullSafe(other.Address) &&
             Rooms.SequenceEqualsNullSafe(other.Rooms);
 
@@ -370,6 +370,7 @@ namespace Azure.Search.Documents.Tests
                 $"Description (French): {DescriptionFr}; Category: {Category}; " +
                 $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
                 $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
+                $"GeoLocation: [{GeoLocation?.Coordinates.Longitude ?? 0}, {GeoLocation?.Coordinates.Latitude ?? 0}]; " +
                 $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
                 $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
         }
@@ -387,47 +388,68 @@ namespace Azure.Search.Documents.Tests
                 ["smokingAllowed"] = SmokingAllowed,
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating,
-                // TODO: #10592- Unify on an Azure.Core spatial type
-                // ["location"] = Location,
-                ["location"] = Location == null ? null : new SearchDocument()
-                {
-                    ["type"] = "Point",
-                    ["coordinates"] = new double[] { Location.Longitude, Location.Latitude },
-                    ["crs"] = new SearchDocument()
-                    {
-                        ["type"] = "name",
-                        ["properties"] = new SearchDocument()
-                        {
-                            ["name"] = "EPSG:4326"
-                        }
-                    }
-                },
+                ["geoLocation"] = GeoLocation,
+                ["location"] = Location.AsDocument(),
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].
                 ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new object[0]
             };
     }
 
-    [SerializePropertyNamesAsCamelCase]
+    // Same structure as Hotel, but without attributes that change to camelCase
+    internal class UncasedHotel
+    {
+        public string HotelId { get; set; }
+        public string HotelName { get; set; }
+        public string Description { get; set; }
+        public string DescriptionFr { get; set; }
+        public string Category { get; set; }
+        // TODO: #10596 - Investigate JsonConverter for null arrays
+        public string[] Tags { get; set; } = new string[] { };
+        public bool? ParkingIncluded { get; set; }
+        public bool? SmokingAllowed { get; set; }
+        public DateTimeOffset? LastRenovationDate { get; set; }
+        public int? Rating { get; set; }
+        public GeoPoint GeoLocation { get; set; }
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
+        public GeographyPoint Location { get; set; } = null;
+        public HotelAddress Address { get; set; }
+        public HotelRoom[] Rooms { get; set; } = new HotelRoom[] { };
+
+        public override bool Equals(object obj) =>
+            obj is Hotel other &&
+            HotelId == other.HotelId &&
+            HotelName == other.HotelName &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Category == other.Category &&
+            Tags.SequenceEqualsNullSafe(other.Tags) &&
+            ParkingIncluded == other.ParkingIncluded &&
+            SmokingAllowed == other.SmokingAllowed &&
+            LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
+            Rating == other.Rating &&
+            (GeoLocation?.Coordinates ?? default).Equals(other.GeoLocation?.Coordinates ?? default) &&
+            Location.EqualsNullSafe(other.Location) &&
+            Address.EqualsNullSafe(other.Address) &&
+            Rooms.SequenceEqualsNullSafe(other.Rooms);
+
+        public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
+    }
+
     internal class HotelAddress
     {
-        [IsSearchable]
         [JsonPropertyName("streetAddress")]
         public string StreetAddress { get; set; }
 
-        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("city")]
         public string City { get; set; }
 
-        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("stateProvince")]
         public string StateProvince { get; set; }
 
-        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("country")]
         public string Country { get; set; }
 
-        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         [JsonPropertyName("postalCode")]
         public string PostalCode { get; set; }
 
@@ -456,38 +478,29 @@ namespace Azure.Search.Documents.Tests
             };
     }
 
-    [SerializePropertyNamesAsCamelCase]
     internal class HotelRoom
     {
-        [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
         [JsonPropertyName("descriptionFr")]
         public string DescriptionFr { get; set; }
 
-        [IsSearchable, IsFilterable, IsFacetable]
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [IsFilterable, IsFacetable]
         [JsonPropertyName("baseRate")]
         public double? BaseRate { get; set; }
 
-        [IsSearchable, IsFilterable, IsFacetable]
         [JsonPropertyName("bedOptions")]
         public string BedOptions { get; set; }
 
-        [IsFilterable, IsFacetable]
         [JsonPropertyName("sleepsCount")]
         public int? SleepsCount { get; set; }
 
-        [IsFilterable, IsFacetable]
         [JsonPropertyName("smokingAllowed")]
         public bool? SmokingAllowed { get; set; }
 
-        [IsSearchable, IsFilterable, IsFacetable]
         [JsonPropertyName("tags")]
         // TODO: #10596 - Investigate JsonConverter for null arrays
         public string[] Tags { get; set; } = new string[] { };

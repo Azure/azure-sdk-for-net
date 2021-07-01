@@ -3,23 +3,38 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.SearchAsync"/> that
+    /// Options for <see cref="SearchClient.SearchAsync"/> that
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
-    [CodeGenSchema("SearchRequest")]
-    public partial class SearchOptions : SearchRequestOptions
+    [CodeGenModel("SearchRequest")]
+    public partial class SearchOptions
     {
+        private const string QueryAnswerRawSplitter = "|count-";
+
+        /// <summary>
+        /// Initializes a new instance of SearchOptions from a continuation
+        /// token to continue fetching results from a previous search.
+        /// </summary>
+        /// <param name="continuationToken">
+        /// Encapsulates the state required to fetch the next page of search
+        /// results from the index.
+        /// </param>
+        internal SearchOptions(string continuationToken) =>
+            Copy(SearchContinuationToken.Deserialize(continuationToken), this);
+
         /// <summary>
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.
         /// </summary>
-        [CodeGenSchemaMember("search")]
+        [CodeGenMember("search")]
         internal string SearchText { get; set; }
 
         /// <summary>
@@ -27,7 +42,7 @@ namespace Azure.Search.Documents
         /// use <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        [CodeGenSchemaMember("filter")]
+        [CodeGenMember("filter")]
         public string Filter { get; set; }
 
         /// <summary>
@@ -40,7 +55,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join HighlightFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("highlight")]
+        [CodeGenMember("HighlightFields")]
         internal string HighlightFieldsRaw
         {
             get => HighlightFields.CommaJoin();
@@ -60,7 +75,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("searchFields")]
+        [CodeGenMember("searchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
@@ -78,7 +93,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("select")]
+        [CodeGenMember("select")]
         internal string SelectRaw
         {
             get => Select.CommaJoin();
@@ -94,7 +109,7 @@ namespace Azure.Search.Documents
         /// that can be used to issue another Search request for the next page
         /// of results.
         /// </summary>
-        [CodeGenSchemaMember("top")]
+        [CodeGenMember("top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -113,7 +128,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("orderby")]
+        [CodeGenMember("orderby")]
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
@@ -128,7 +143,7 @@ namespace Azure.Search.Documents
         /// performance impact.  Note that the count returned is an
         /// approximation.
         /// </summary>
-        [CodeGenSchemaMember("count")]
+        [CodeGenMember("IncludeTotalResultCount")]
         public bool? IncludeTotalCount { get; set; }
 
         /// <summary>
@@ -136,7 +151,7 @@ namespace Azure.Search.Documents
         /// facet expression contains a field name, optionally followed by a
         /// comma-separated list of name:value pairs.
         /// </summary>
-        [CodeGenSchemaMember("facets")]
+        [CodeGenMember("facets")]
         public IList<string> Facets { get; internal set; } = new List<string>();
 
         /// <summary>
@@ -146,7 +161,122 @@ namespace Azure.Search.Documents
         /// called &apos;mylocation&apos; the parameter string would be
         /// &quot;mylocation--122.2,44.8&quot; (without the quotes).
         /// </summary>
-        [CodeGenSchemaMember("scoringParameters")]
+        [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
+
+        /// <summary> A value that specifies the language of the search query. </summary>
+        [CodeGenMember("queryLanguage")]
+        public QueryLanguage? QueryLanguage { get; set; }
+
+        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
+        [CodeGenMember("speller")]
+        public QuerySpeller? QuerySpeller { get; set; }
+
+        /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
+        public QueryAnswer? QueryAnswer { get; set; }
+
+        /// <summary>
+        /// A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response.
+        /// </summary>
+        public int? QueryAnswerCount { get; set; }
+
+        /// <summary>
+        /// Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>
+        /// </summary>
+        [CodeGenMember("answers")]
+        internal string QueryAnswerRaw
+        {
+            get
+            {
+                string queryAnswerStringValue = null;
+
+                if (QueryAnswer.HasValue)
+                {
+                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}";
+                }
+
+                return queryAnswerStringValue;
+            }
+
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    QueryAnswer = null;
+                    QueryAnswerCount = null;
+                }
+                else
+                {
+                    if (value.Contains(QueryAnswerRawSplitter))
+                    {
+                        var queryAnswerPart = value.Substring(0, value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase));
+                        var countPart = value.Substring(value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryAnswerRawSplitter.Length);
+
+                        if (string.IsNullOrEmpty(queryAnswerPart))
+                        {
+                            QueryAnswer = null;
+                        }
+                        else
+                        {
+                            QueryAnswer = new QueryAnswer(queryAnswerPart);
+                        }
+
+                        if (int.TryParse(countPart, out int countValue))
+                        {
+                            QueryAnswerCount = countValue;
+                        }
+                    }
+                    else
+                    {
+                        QueryAnswer = new QueryAnswer(value);
+                        QueryAnswerCount = null;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shallow copy one SearchOptions instance to another.
+        /// </summary>
+        /// <param name="source">The source options.</param>
+        /// <param name="destination">The destination options.</param>
+        private static void Copy(SearchOptions source, SearchOptions destination)
+        {
+            Debug.Assert(source != null);
+            Debug.Assert(destination != null);
+
+            destination.Facets = source.Facets;
+            destination.Filter = source.Filter;
+            destination.HighlightFields = source.HighlightFields;
+            destination.HighlightPostTag = source.HighlightPostTag;
+            destination.HighlightPreTag = source.HighlightPreTag;
+            destination.IncludeTotalCount = source.IncludeTotalCount;
+            destination.MinimumCoverage = source.MinimumCoverage;
+            destination.OrderBy = source.OrderBy;
+            destination.QueryAnswer = source.QueryAnswer;
+            destination.QueryAnswerCount = source.QueryAnswerCount;
+            destination.QueryLanguage = source.QueryLanguage;
+            destination.QuerySpeller = source.QuerySpeller;
+            destination.QueryType = source.QueryType;
+            destination.ScoringParameters = source.ScoringParameters;
+            destination.ScoringProfile = source.ScoringProfile;
+            destination.SearchFields = source.SearchFields;
+            destination.SearchMode = source.SearchMode;
+            destination.SearchText = source.SearchText;
+            destination.Select = source.Select;
+            destination.Size = source.Size;
+            destination.Skip = source.Skip;
+        }
+
+        /// <summary>
+        /// Creates a shallow copy of the SearchOptions.
+        /// </summary>
+        /// <returns>The cloned SearchOptions.</returns>
+        internal SearchOptions Clone()
+        {
+            SearchOptions clone = new SearchOptions();
+            Copy(this, clone);
+            return clone;
+        }
     }
 }

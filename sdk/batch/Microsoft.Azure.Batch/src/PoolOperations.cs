@@ -206,12 +206,12 @@ namespace Microsoft.Azure.Batch
         /// <param name="cloudServiceConfiguration">The <see cref="CloudServiceConfiguration"/> for the pool.</param>
         /// <param name="targetDedicatedComputeNodes">
         /// The desired number of dedicated compute nodes in the pool.
-        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted,
         /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
         /// </param>
         /// <param name="targetLowPriorityComputeNodes">
         /// The desired number of low-priority compute nodes in the pool.
-        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted,
         /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
         /// </param>
         /// <returns>A <see cref="CloudPool"/> representing a new pool that has not been added to the Batch service.
@@ -242,18 +242,18 @@ namespace Microsoft.Azure.Batch
         /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="virtualMachineSize">The size of virtual machines in the pool. 
+        /// <param name="virtualMachineSize">The size of virtual machines in the pool.
         /// See https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/ for windows sizes and https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/ for linux sizes.
         /// </param>
         /// <param name="virtualMachineConfiguration">The <see cref="VirtualMachineConfiguration"/> for the pool.</param>
         /// <param name="targetDedicatedComputeNodes">
         /// The desired number of dedicated compute nodes in the pool.
-        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted,
         /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
         /// </param>
         /// <param name="targetLowPriorityComputeNodes">
         /// The desired number of low-priority compute nodes in the pool.
-        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted,
         /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
         /// </param>
         /// <returns>A <see cref="CloudPool"/> representing a new pool that has not been added to the Batch service.
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Batch
         {
             // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
-            
+
             // get enumerable
             IPagedEnumerable<ComputeNode> enumerable = ListComputeNodesImpl(poolId, bhMgr, detailLevel);
 
@@ -499,7 +499,7 @@ namespace Microsoft.Azure.Batch
 
         internal async System.Threading.Tasks.Task<ComputeNode> GetComputeNodeAsyncImpl(
             string poolId,
-            string computeNodeId, 
+            string computeNodeId,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
@@ -524,9 +524,9 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="ComputeNode"/> containing information about the specified compute node.</returns>
         /// <remarks>The get node operation runs asynchronously.</remarks>
         public System.Threading.Tasks.Task<ComputeNode> GetComputeNodeAsync(
-            string poolId, 
+            string poolId,
             string computeNodeId,
-            DetailLevel detailLevel = null, 
+            DetailLevel detailLevel = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -548,8 +548,8 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="ComputeNode"/> containing information about the specified compute node.</returns>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetComputeNodeAsync"/>.</remarks>
         public ComputeNode GetComputeNode(
-            string poolId, 
-            string computeNodeId, 
+            string poolId,
+            string computeNodeId,
             DetailLevel detailLevel = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>This operation runs asynchronously.</remarks>
         public System.Threading.Tasks.Task EnableComputeNodeSchedulingAsync(
-            string poolId, 
+            string poolId,
             string computeNodeId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -588,7 +588,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="EnableComputeNodeScheduling"/>.</remarks>
         public void EnableComputeNodeScheduling(
-            string poolId, 
+            string poolId,
             string computeNodeId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
@@ -640,7 +640,7 @@ namespace Microsoft.Azure.Batch
         }
 
         internal async System.Threading.Tasks.Task EnableAutoScaleAsyncImpl(
-            string poolId, 
+            string poolId,
             string autoscaleFormula,
             TimeSpan? autoscaleEvaluationInterval,
             BehaviorManager bhMgr,
@@ -672,7 +672,7 @@ namespace Microsoft.Azure.Batch
         /// <para>The enable autoscale operation runs asynchronously.</para>
         /// </remarks>
         public async System.Threading.Tasks.Task EnableAutoScaleAsync(
-            string poolId, 
+            string poolId,
             string autoscaleFormula = null,
             TimeSpan? autoscaleEvaluationInterval = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
@@ -700,7 +700,7 @@ namespace Microsoft.Azure.Batch
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="EnableAutoScaleAsync"/>.</para>
         /// </remarks>
         public void EnableAutoScale(
-            string poolId, 
+            string poolId,
             string autoscaleFormula = null,
             TimeSpan? autoscaleEvaluationInterval = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
@@ -772,7 +772,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the result of evaluating an automatic scaling formula on the specified pool.  This 
+        /// Gets the result of evaluating an automatic scaling formula on the specified pool.  This
         /// is primarily for validating an autoscale formula, as it simply returns the result
         /// without applying the formula to the pool.
         /// </summary>
@@ -798,7 +798,7 @@ namespace Microsoft.Azure.Batch
             // start call
             System.Threading.Tasks.Task<AutoScaleRun> asyncTask = EvaluateAutoScaleAsyncImpl(
                 poolId,
-                autoscaleFormula, 
+                autoscaleFormula,
                 bhMgr,
                 cancellationToken);
 
@@ -808,7 +808,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the result of evaluating an automatic scaling formula on the specified pool.  This 
+        /// Gets the result of evaluating an automatic scaling formula on the specified pool.  This
         /// is primarily for validating an autoscale formula, as it simply returns the result
         /// without applying the formula to the pool.
         /// </summary>
@@ -900,11 +900,11 @@ namespace Microsoft.Azure.Batch
         {
             // start call
             System.Threading.Tasks.Task asyncTask = this._parentBatchClient.ProtocolLayer.RemovePoolComputeNodes(
-                poolId, 
-                computeNodeIds, 
-                deallocationOption, 
-                resizeTimeout, 
-                bhMgr, 
+                poolId,
+                computeNodeIds,
+                deallocationOption,
+                resizeTimeout,
+                bhMgr,
                 cancellationToken);
 
             return asyncTask;
@@ -940,10 +940,10 @@ namespace Microsoft.Azure.Batch
 
             // start call
             System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsyncImpl(
-                poolId, 
-                computeNodeIds, 
+                poolId,
+                computeNodeIds,
                 deallocationOption,
-                resizeTimeout, 
+                resizeTimeout,
                 bhMgr,
                 cancellationToken);
 
@@ -1053,10 +1053,10 @@ namespace Microsoft.Azure.Batch
 
             // start call
             System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsyncImpl(
-                poolId, 
-                computeNodeIds, 
+                poolId,
+                computeNodeIds,
                 deallocationOption,
-                resizeTimeout, 
+                resizeTimeout,
                 bhMgr,
                 cancellationToken);
 
@@ -1093,10 +1093,10 @@ namespace Microsoft.Azure.Batch
 
             // start call
             System.Threading.Tasks.Task asyncTask = RemoveFromPoolAsyncImpl(
-                poolId, 
-                computeNodes, 
+                poolId,
+                computeNodes,
                 deallocationOption,
-                resizeTimeout, 
+                resizeTimeout,
                 bhMgr,
                 cancellationToken);
 
@@ -1158,9 +1158,9 @@ namespace Microsoft.Azure.Batch
         /// <para>The delete operation runs asynchronously.</para>
         /// </remarks>
         public System.Threading.Tasks.Task DeleteComputeNodeUserAsync(
-            string poolId, 
+            string poolId,
             string computeNodeId,
-            string userName, 
+            string userName,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1169,8 +1169,8 @@ namespace Microsoft.Azure.Batch
 
             System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.DeleteComputeNodeUser(
                 poolId,
-                computeNodeId, 
-                userName, 
+                computeNodeId,
+                userName,
                 bhMgr,
                 cancellationToken);
 
@@ -1208,13 +1208,13 @@ namespace Microsoft.Azure.Batch
         /// <para>This method does not close the <paramref name="rdpStream"/> stream, and it does not reset the position after writing.
         /// It is the caller's responsibility to close the stream, or to reset the position if required.</para>
         /// <para>The get RDP file operation runs asynchronously.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property. 
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict). 
+        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
+        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
         /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettings"/> must be used.</para>
         /// </remarks>
         public System.Threading.Tasks.Task GetRDPFileAsync(
-            string poolId, 
-            string computeNodeId, 
+            string poolId,
+            string computeNodeId,
             Stream rdpStream,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -1224,8 +1224,8 @@ namespace Microsoft.Azure.Batch
 
             System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(
                 poolId,
-                computeNodeId, 
-                rdpStream, 
+                computeNodeId,
+                rdpStream,
                 bhMgr,
                 cancellationToken);
 
@@ -1244,8 +1244,8 @@ namespace Microsoft.Azure.Batch
         /// <para>This method does not close the <paramref name="rdpStream"/> stream, and it does not reset the position after writing.
         /// It is the caller's responsibility to close the stream, or to reset the position if required.</para>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetRDPFileAsync(string, string, Stream, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property. 
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict). 
+        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
+        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
         /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettings"/> must be used.</para>
         /// </remarks>
         public void GetRDPFile(string poolId, string computeNodeId, Stream rdpStream,
@@ -1256,9 +1256,9 @@ namespace Microsoft.Azure.Batch
         }
 
         internal async System.Threading.Tasks.Task GetRDPFileViaFileNameAsyncImpl(
-            string poolId, 
+            string poolId,
             string computeNodeId,
-            string rdpFileNameToCreate, 
+            string rdpFileNameToCreate,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
@@ -1271,7 +1271,7 @@ namespace Microsoft.Azure.Batch
                 await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
                 // stream has rdp contents, flush
-                await rdpStream.FlushAsync().ConfigureAwait(continueOnCapturedContext: false);
+                await rdpStream.FlushAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
             }
         }
 
@@ -1287,14 +1287,14 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// <para>If the file specified by <paramref name="rdpFileNameToCreate"/> already exists, it is overwritten.</para>
         /// <para>The get RDP file operation runs asynchronously.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property. 
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict). 
+        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
+        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
         /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettingsAsync"/> must be used.</para>
         /// </remarks>
         public System.Threading.Tasks.Task GetRDPFileAsync(
-            string poolId, 
+            string poolId,
             string computeNodeId,
-            string rdpFileNameToCreate, 
+            string rdpFileNameToCreate,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1302,9 +1302,9 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             System.Threading.Tasks.Task asyncTask = GetRDPFileViaFileNameAsyncImpl(
-                poolId, 
+                poolId,
                 computeNodeId,
-                rdpFileNameToCreate, 
+                rdpFileNameToCreate,
                 bhMgr,
                 cancellationToken);
 
@@ -1321,8 +1321,8 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// <para>If the file specified by <paramref name="rdpFileNameToCreate"/> already exists, it is overwritten.</para>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetRDPFileAsync(string, string, string, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property. 
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict). 
+        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
+        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
         /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettings"/> must be used.</para>
         /// </remarks>
         public void GetRDPFile(string poolId, string computeNodeId, string rdpFileNameToCreate,
@@ -1337,9 +1337,9 @@ namespace Microsoft.Azure.Batch
             var asyncTask = _parentBatchClient.ProtocolLayer.GetRemoteLoginSettings(poolId, computeNodeId, bhMgr, cancellationToken);
 
             var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-            
+
             Models.ComputeNodeGetRemoteLoginSettingsResult rlSettings = response.Body;
-            
+
             RemoteLoginSettings rls = new RemoteLoginSettings(rlSettings);
 
             return rls;
@@ -1355,12 +1355,12 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The get remote login settings operation runs asynchronously.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property. 
-        /// If this method is invoked on pools created with <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration" />, then Batch service returns 409 (Conflict). 
+        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property.
+        /// If this method is invoked on pools created with <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration" />, then Batch service returns 409 (Conflict).
         /// For pools with a <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
         /// </remarks>
         public System.Threading.Tasks.Task<RemoteLoginSettings> GetRemoteLoginSettingsAsync(
-            string poolId, 
+            string poolId,
             string computeNodeId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -1385,13 +1385,13 @@ namespace Microsoft.Azure.Batch
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetRemoteLoginSettingsAsync(string, string, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property. 
-        /// If this method is invoked on pools created with <see cref="CloudServiceConfiguration" />, then Batch service returns 409 (Conflict). 
+        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property.
+        /// If this method is invoked on pools created with <see cref="CloudServiceConfiguration" />, then Batch service returns 409 (Conflict).
         /// For pools with a <see cref="CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
         /// </remarks>
         public RemoteLoginSettings GetRemoteLoginSettings(
-            string poolId, 
-            string computeNodeId, 
+            string poolId,
+            string computeNodeId,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<RemoteLoginSettings> asyncTask = GetRemoteLoginSettingsAsync(poolId, computeNodeId, additionalBehaviors);
@@ -1413,10 +1413,10 @@ namespace Microsoft.Azure.Batch
         /// <para>You can reboot a compute node only when it is in the <see cref="Common.ComputeNodeState.Idle"/> or <see cref="Common.ComputeNodeState.Running"/> state.</para>
         /// <para>The reboot operation runs asynchronously.</para>
         /// </remarks>
-        public System.Threading.Tasks.Task RebootAsync(string poolId, 
+        public System.Threading.Tasks.Task RebootAsync(string poolId,
             string computeNodeId,
             Common.ComputeNodeRebootOption? rebootOption = null,
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // create the behavior manager
@@ -1424,8 +1424,8 @@ namespace Microsoft.Azure.Batch
 
             System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.RebootComputeNode(
                 poolId,
-                computeNodeId, 
-                rebootOption, 
+                computeNodeId,
+                rebootOption,
                 bhMgr,
                 cancellationToken);
 
@@ -1464,7 +1464,7 @@ namespace Microsoft.Azure.Batch
         /// <para>The reimage operation runs asynchronously.</para>
         /// </remarks>
         public System.Threading.Tasks.Task ReimageAsync(
-            string poolId, 
+            string poolId,
             string computeNodeId,
             Common.ComputeNodeReimageOption? reimageOption = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
@@ -1504,12 +1504,12 @@ namespace Microsoft.Azure.Batch
             CancellationToken cancellationToken)
         {
             var getNodeFilePropertiesTask = await this.ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByNode(
-                poolId, 
-                computeNodeId, 
-                filePath, 
+                poolId,
+                computeNodeId,
+                filePath,
                 bhMgr,
                 cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-         
+
             Models.NodeFile file = getNodeFilePropertiesTask.Body;
 
             // wrap protocol object
@@ -1529,9 +1529,9 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="NodeFile"/> containing information about the file, and which can be used to download the file (see <see cref="NodeFile.CopyToStreamAsync"/>).</returns>
         /// <remarks>The get file operation runs asynchronously.</remarks>
         public System.Threading.Tasks.Task<NodeFile> GetNodeFileAsync(
-            string poolId, 
+            string poolId,
             string computeNodeId,
-            string filePath, 
+            string filePath,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1539,8 +1539,8 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             System.Threading.Tasks.Task<NodeFile> asyncTask = this.GetNodeFileAsyncImpl(
-                poolId, 
-                computeNodeId, 
+                poolId,
+                computeNodeId,
                 filePath,
                 bhMgr,
                 cancellationToken);
@@ -1756,8 +1756,8 @@ namespace Microsoft.Azure.Batch
         /// <param name="computeNodeId">The id of the compute node.</param>
         /// <param name="filePath">The path of the file to delete.</param>
         /// <param name="recursive">
-        /// If the file-path parameter represents a directory instead of a file, you can set the optional 
-        /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false 
+        /// If the file-path parameter represents a directory instead of a file, you can set the optional
+        /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false
         /// then the directory must be empty or deletion will fail.
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
@@ -1765,8 +1765,8 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>The delete operation runs asynchronously.</remarks>
         public System.Threading.Tasks.Task DeleteNodeFileAsync(
-            string poolId, 
-            string computeNodeId, 
+            string poolId,
+            string computeNodeId,
             string filePath,
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
@@ -1777,8 +1777,8 @@ namespace Microsoft.Azure.Batch
 
             System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.DeleteNodeFileByNode(
                 poolId,
-                computeNodeId, 
-                filePath, 
+                computeNodeId,
+                filePath,
                 recursive,
                 bhMgr,
                 cancellationToken);
@@ -1793,15 +1793,15 @@ namespace Microsoft.Azure.Batch
         /// <param name="computeNodeId">The id of the compute node.</param>
         /// <param name="filePath">The path of the file to delete.</param>
         /// <param name="recursive">
-        /// If the file-path parameter represents a directory instead of a file, you can set the optional 
-        /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false 
+        /// If the file-path parameter represents a directory instead of a file, you can set the optional
+        /// recursive parameter to true to delete the directory and all of the files and subdirectories in it. If recursive is false
         /// then the directory must be empty or deletion will fail.
         /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>This is a blocking operation.  For a non-blocking equivalent, see <see cref="DeleteNodeFileAsync"/>.</remarks>
         public void DeleteNodeFile(
-            string poolId, 
-            string computeNodeId, 
+            string poolId,
+            string computeNodeId,
             string filePath,
             bool? recursive = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
@@ -1825,7 +1825,7 @@ namespace Microsoft.Azure.Batch
             // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> asyncTask = 
+            System.Threading.Tasks.Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> asyncTask =
                 this.ParentBatchClient.ProtocolLayer.GetAllPoolLifetimeStats(bhMgr, cancellationToken);
 
             var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -1836,7 +1836,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets lifetime summary statistics for all of the pools in the current account.  
+        /// Gets lifetime summary statistics for all of the pools in the current account.
         /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
         /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </summary>
@@ -1882,7 +1882,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Enumerates the node agent Sku values supported by Batch Service. 
+        /// Enumerates the node agent Sku values supported by Batch Service.
         /// </summary>
         /// <param name="detailLevel">A <see cref="DetailLevel"/> used for filtering the list and for controlling which properties are retrieved from the service.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/> and <paramref name="detailLevel"/>.</param>
@@ -1925,7 +1925,7 @@ namespace Microsoft.Azure.Batch
                 cancellationToken);
 
             var result = await task.ConfigureAwait(false);
-            
+
             return new UploadBatchServiceLogsResult(result.Body);
         }
 

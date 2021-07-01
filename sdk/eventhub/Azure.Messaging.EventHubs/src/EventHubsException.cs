@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -113,33 +114,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubsException"/> class, using the <paramref name="reason"/>
-        ///   to detect whether or not it should be transient.
-        /// </summary>
-        ///
-        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="reason">The reason for the failure that resulted in the exception.</param>
-        ///
-        public EventHubsException(string eventHubName,
-                                  string message,
-                                  FailureReason reason) : this(default, eventHubName, message, reason, null)
-        {
-            switch (reason)
-            {
-                case FailureReason.ServiceCommunicationProblem:
-                case FailureReason.ServiceTimeout:
-                case FailureReason.ServiceBusy:
-                    IsTransient = true;
-                    break;
-
-                default:
-                    IsTransient = false;
-                    break;
-            }
-        }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubsException"/> class.
         /// </summary>
         ///
@@ -177,12 +151,57 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubsException"/> class, using the <paramref name="reason"/>
+        ///   to detect whether or not it should be transient.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="reason">The reason for the failure that resulted in the exception.</param>
+        ///
+        public EventHubsException(string eventHubName,
+                                  string message,
+                                  FailureReason reason) : this(eventHubName, message, reason, null)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubsException"/> class, using the <paramref name="reason"/>
+        ///   to detect whether or not it should be transient.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="reason">The reason for the failure that resulted in the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
+        ///
+        internal EventHubsException(string eventHubName,
+                                    string message,
+                                    FailureReason reason,
+                                    Exception innerException) : this(false, eventHubName, message, reason, innerException)
+        {
+            switch (reason)
+            {
+                case FailureReason.ServiceCommunicationProblem:
+                case FailureReason.ServiceTimeout:
+                case FailureReason.ServiceBusy:
+                    IsTransient = true;
+                    break;
+
+                default:
+                    IsTransient = false;
+                    break;
+            }
+        }
+
+        /// <summary>
         ///   Converts the instance to string representation.
         /// </summary>
         ///
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
-        public override string ToString() => $"{ typeof(EventHubsException).Name }({ Reason })";
+        public override string ToString() =>
+            $"{ typeof(EventHubsException).FullName }({ Reason }): { Message }{ Environment.NewLine }{ StackTrace }";
 
         /// <summary>
         ///   The set of well-known reasons for an Event Hubs operation failure that
@@ -216,7 +235,13 @@ namespace Azure.Messaging.EventHubs
             ServiceTimeout,
 
             /// <summary>There was a general communications error encountered when interacting with the Azure Event Hubs service.</summary>
-            ServiceCommunicationProblem
+            ServiceCommunicationProblem,
+
+            /// <summary>A client was forcefully disconnected from an Event Hub instance.  This typically occurs when another consumer with higher <see cref="PartitionPublishingOptions.OwnerLevel" /> asserts ownership over the partition and producer group.</summary>
+            ProducerDisconnected,
+
+            /// <summary>A client is in an invalid state from which it cannot recover.  It is recommended that the client be closed and recreated to force reinitialization of state.</summary>
+            InvalidClientState
         }
     }
 }

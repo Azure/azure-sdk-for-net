@@ -1,0 +1,63 @@
+{
+  "Name": "TaskSlotCounts",
+  "ProtocolName": "Models.TaskSlotCounts",
+  "SummaryComment": "The number of TaskSlots required by Tasks per state.",
+  "IsConstructorPublic": false,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Active",
+        "SummaryComment": "The number of TaskSlots for active Tasks.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Running",
+        "SummaryComment": "The number of TaskSlots for running Tasks.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Completed",
+        "SummaryComment": "The number of TaskSlots for completed Tasks.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Succeeded",
+        "SummaryComment": "The number of TaskSlots for succeeded Tasks.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Failed",
+        "SummaryComment": "The number of TaskSlots for failed Tasks.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    }
+  ]
+}

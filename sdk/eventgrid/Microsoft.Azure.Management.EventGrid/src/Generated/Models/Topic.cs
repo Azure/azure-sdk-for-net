@@ -37,11 +37,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="tags">Tags of the resource.</param>
-        /// <param name="privateEndpointConnections">List of private endpoint
-        /// connections.</param>
         /// <param name="provisioningState">Provisioning state of the topic.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>
@@ -67,7 +65,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="sku">The Sku pricing tier for the topic.</param>
         /// <param name="identity">Identity information for the
         /// resource.</param>
-        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo))
+        /// <param name="kind">Kind of the resource. Possible values include:
+        /// 'Azure', 'AzureArc'</param>
+        /// <param name="extendedLocation">Extended location of the
+        /// resource.</param>
+        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo), string kind = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -80,6 +82,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             InboundIpRules = inboundIpRules;
             Sku = sku;
             Identity = identity;
+            Kind = kind;
+            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -89,7 +93,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of private endpoint connections.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
@@ -162,6 +165,19 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets kind of the resource. Possible values include:
+        /// 'Azure', 'AzureArc'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
+        /// <summary>
+        /// Gets or sets extended location of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -269,46 +269,6 @@ namespace Microsoft.Azure.Management.Batch
         /// </exception>
         Task<AzureOperationResponse<Pool,PoolStopResizeHeaders>> StopResizeWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new pool inside the specified account.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the Batch account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Batch account.
-        /// </param>
-        /// <param name='poolName'>
-        /// The pool name. This must be unique within the account.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters for pool creation.
-        /// </param>
-        /// <param name='ifMatch'>
-        /// The entity state (ETag) version of the pool to update. A value of
-        /// "*" can be used to apply the operation only if the pool already
-        /// exists. If omitted, this operation will always be applied.
-        /// </param>
-        /// <param name='ifNoneMatch'>
-        /// Set to '*' to allow a new pool to be created, but to prevent
-        /// updating an existing pool. Other values will be ignored.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Pool,PoolCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, Pool parameters, string ifMatch = default(string), string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Deletes the specified pool.
         /// </summary>
         /// <param name='resourceGroupName'>

@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
         /// <param name="rights">The rights associated with the rule.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
         public AuthorizationRule(IList<string> rights, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {

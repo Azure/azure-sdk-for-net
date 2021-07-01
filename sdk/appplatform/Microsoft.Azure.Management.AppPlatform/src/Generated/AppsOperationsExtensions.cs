@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static AppResource CreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource CreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> CreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> CreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the update operation
             /// </param>
-            public static AppResource Update(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource Update(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.UpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> UpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> UpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -321,6 +321,60 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
+            /// Check the resource name is valid as well as not in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='validatePayload'>
+            /// Custom domain payload to be validated
+            /// </param>
+            public static CustomDomainValidateResult ValidateDomain(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, CustomDomainValidatePayload validatePayload)
+            {
+                return operations.ValidateDomainAsync(resourceGroupName, serviceName, appName, validatePayload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the resource name is valid as well as not in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='validatePayload'>
+            /// Custom domain payload to be validated
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CustomDomainValidateResult> ValidateDomainAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, CustomDomainValidatePayload validatePayload, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ValidateDomainWithHttpMessagesAsync(resourceGroupName, serviceName, appName, validatePayload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create a new App or update an exiting App.
             /// </summary>
             /// <param name='operations'>
@@ -339,7 +393,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static AppResource BeginCreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource BeginCreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -366,12 +420,57 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> BeginCreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> BeginCreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Operation to delete an App.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            public static void BeginDelete(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, serviceName, appName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to delete an App.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serviceName, appName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -393,7 +492,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the update operation
             /// </param>
-            public static AppResource BeginUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource BeginUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -420,7 +519,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {

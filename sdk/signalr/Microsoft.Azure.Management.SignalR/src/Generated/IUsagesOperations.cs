@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.SignalR
     public partial interface IUsagesOperations
     {
         /// <summary>
-        /// List usage quotas for Azure SignalR service by location.
+        /// List resource usage quotas by location.
         /// </summary>
         /// <param name='location'>
         /// the location like "eastus"
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// </exception>
         Task<AzureOperationResponse<IPage<SignalRUsage>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List usage quotas for Azure SignalR service by location.
+        /// List resource usage quotas by location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

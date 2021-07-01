@@ -47,13 +47,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// https://azure.microsoft.com/en-us/pricing/details/sql-database/.
         /// Possible values include: 'Basic', 'Standard', 'Premium',
         /// 'PremiumRS'</param>
-        public IntegrationRuntimeSsisCatalogInfo(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string catalogServerEndpoint = default(string), string catalogAdminUserName = default(string), SecureString catalogAdminPassword = default(SecureString), string catalogPricingTier = default(string))
+        /// <param name="dualStandbyPairName">The dual standby pair name of
+        /// Azure-SSIS Integration Runtimes to support SSISDB failover.</param>
+        public IntegrationRuntimeSsisCatalogInfo(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string catalogServerEndpoint = default(string), string catalogAdminUserName = default(string), SecureString catalogAdminPassword = default(SecureString), string catalogPricingTier = default(string), string dualStandbyPairName = default(string))
         {
             AdditionalProperties = additionalProperties;
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
             CatalogAdminPassword = catalogAdminPassword;
             CatalogPricingTier = catalogPricingTier;
+            DualStandbyPairName = dualStandbyPairName;
             CustomInit();
         }
 
@@ -97,6 +100,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "catalogPricingTier")]
         public string CatalogPricingTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dual standby pair name of Azure-SSIS Integration
+        /// Runtimes to support SSISDB failover.
+        /// </summary>
+        [JsonProperty(PropertyName = "dualStandbyPairName")]
+        public string DualStandbyPairName { get; set; }
 
         /// <summary>
         /// Validate the object.

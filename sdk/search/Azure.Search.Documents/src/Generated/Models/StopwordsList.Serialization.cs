@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class StopwordsListExtensions
+    internal static partial class StopwordsListExtensions
     {
         public static string ToSerialString(this StopwordsList value) => value switch
         {

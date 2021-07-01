@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task OnlyRetriesRetriebleCodes()
+        public async Task OnlyRetriesRetriableCodes()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
@@ -293,9 +293,10 @@ namespace Azure.Core.Tests
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("RequestRetrying", e.EventName);
             Assert.AreEqual(request.ClientRequestId, e.GetProperty<string>("requestId"));
+            Assert.IsTrue(e.GetProperty<double>("seconds") > 0);
         }
 
-        protected (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
+        protected (HttpPipelinePolicy Policy, AsyncGate<TimeSpan, object> Gate) CreateRetryPolicy(int maxRetries = 3)
         {
             var policy = new RetryPolicyMock(_mode, maxRetries, TimeSpan.FromSeconds(3), maxDelay: TimeSpan.MaxValue);
             return (policy, policy.DelayGate);

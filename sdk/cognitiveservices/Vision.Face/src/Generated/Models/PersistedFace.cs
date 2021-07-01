@@ -32,8 +32,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         /// <param name="persistedFaceId">The persistedFaceId of the target
         /// face, which is persisted and will not expire. Different from faceId
-        /// created by Face - Detect and will expire in 24 hours after the
-        /// detection call.</param>
+        /// created by Face - Detect and will expire in at the time specified
+        /// by faceIdTimeToLive after the detection call.</param>
         /// <param name="userData">User-provided data attached to the face. The
         /// size limit is 1KB.</param>
         public PersistedFace(System.Guid persistedFaceId, string userData = default(string))
@@ -51,7 +51,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Gets or sets the persistedFaceId of the target face, which is
         /// persisted and will not expire. Different from faceId created by
-        /// Face - Detect and will expire in 24 hours after the detection call.
+        /// Face - Detect and will expire in at the time specified by
+        /// faceIdTimeToLive after the detection call.
         /// </summary>
         [JsonProperty(PropertyName = "persistedFaceId")]
         public System.Guid PersistedFaceId { get; set; }

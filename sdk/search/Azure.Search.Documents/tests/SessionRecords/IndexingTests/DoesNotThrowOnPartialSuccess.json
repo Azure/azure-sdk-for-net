@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-pxcpgvqm.search.windows.net/indexes(\u0027xcbmtopw\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027kbkymbde\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "482",
+        "Content-Length": "552",
         "Content-Type": "application/json",
-        "traceparent": "00-d588fc7a14f1964795e3e8120e561840-e192cdba41794346-00",
+        "traceparent": "00-181bbee1749a3b4991fcfe2cb447c675-db8b506682eb9c43-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "6e910c0169b1aa35c735dc9af96c6957",
         "x-ms-return-client-request-id": "true"
@@ -29,6 +30,8 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "geoLocation": null,
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -44,6 +47,8 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "geoLocation": null,
+            "location": null,
             "address": null,
             "rooms": []
           }
@@ -52,19 +57,20 @@
       "StatusCode": 207,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "315",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 12 Mar 2020 06:30:56 GMT",
-        "elapsed-time": "121",
+        "client-request-id": "6e910c01-69b1-aa35-c735-dc9af96c6957",
+        "Content-Length": "155",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Sat, 27 Mar 2021 18:27:25 GMT",
+        "elapsed-time": "113",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "6e910c01-69b1-aa35-c735-dc9af96c6957",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "6e910c01-69b1-aa35-c735-dc9af96c6957"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pxcpgvqm.search.windows.net/indexes(\u0027xcbmtopw\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
         "value": [
           {
             "key": "1",
@@ -80,11 +86,42 @@
           }
         ]
       }
+    },
+    {
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027kbkymbde\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-cb192dea9bedc3418f556951699d8ad5-e6ad33f161bb774f-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "68f1a98ae169fec5658ba5e97fcee7b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "68f1a98a-e169-fec5-658b-a5e97fcee7b7",
+        "Date": "Sat, 27 Mar 2021 18:27:25 GMT",
+        "elapsed-time": "175",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "68f1a98a-e169-fec5-658b-a5e97fcee7b7",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "68f1a98a-e169-fec5-658b-a5e97fcee7b7"
+      },
+      "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "552340877",
-    "SearchIndexName": "xcbmtopw",
-    "SearchServiceName": "azs-net-pxcpgvqm"
+    "SearchIndexName": "kbkymbde",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

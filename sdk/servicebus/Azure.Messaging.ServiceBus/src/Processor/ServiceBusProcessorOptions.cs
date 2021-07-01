@@ -4,22 +4,24 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiver"/> or <see cref="ServiceBusProcessor" />
-    /// to configure its behavior.
+    /// The set of options that can be specified when creating a
+    /// <see cref="ServiceBusProcessor" /> to configure its behavior.
     /// </summary>
     public class ServiceBusProcessorOptions
     {
         /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
+        /// Gets or sets the number of messages that will be eagerly requested
+        /// from Queues or Subscriptions and queued locally, intended to help
+        /// maximize throughput by allowing the processor to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public int PrefetchCount
         {
             get
@@ -28,65 +30,100 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
-                }
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
         /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages
+        /// are received. Defaults to PeekLock mode.
         /// </summary>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
-        /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// Receiver.CompleteAsync() on messages after the callback has completed processing.
-        /// The default value is true.</summary>
-        /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
-        public bool AutoComplete { get; set; } = true;
+        /// <summary>
+        /// Gets or sets a value that indicates whether the processor
+        /// should automatically complete messages after the <see cref="ServiceBusProcessor.ProcessMessageAsync"/> handler has
+        /// completed processing. If the message handler triggers an exception, the message will not be automatically completed.
+        /// The default value is true.
+        /// </summary>
+        ///
+        /// <value>true to complete the message automatically on successful execution of the message handler; otherwise, false.</value>
+        public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
         ///
-        /// <value>The maximum duration during which locks are automatically renewed.</value>
+        /// <value>The maximum duration during which message locks are automatically renewed.</value>
         ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
 
             set
             {
-                TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
+                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
                 _maxAutoRenewDuration = value;
             }
         }
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate. The default value when used with a session processor is 8. For a non-session processor, the default is 1.</summary>
-        /// <value>The maximum number of concurrent calls to the callback.</value>
+        /// <summary>
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
+        internal TimeSpan? MaxReceiveWaitTime
+        {
+            get => _maxReceiveWaitTime;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertPositive(value.Value, nameof(MaxReceiveWaitTime));
+                }
+
+                _maxReceiveWaitTime = value;
+            }
+        }
+        private TimeSpan? _maxReceiveWaitTime;
+
+        /// <summary>Gets or sets the maximum number of concurrent calls to the
+        /// message handler the processor should initiate.
+        /// The default is 1.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the message handler.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentCalls
         {
             get => _maxConcurrentCalls;
 
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
-                }
-
+                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCalls));
                 _maxConcurrentCalls = value;
             }
         }
+        private int _maxConcurrentCalls = 1;
 
-        private int _maxConcurrentCalls;
+        /// <summary>
+        /// Gets or sets the subqueue to connect the processor to. By default, the processor will not connect to a subqueue.
+        /// </summary>
+        public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -123,18 +160,16 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A new copy of <see cref="ServiceBusProcessorOptions" />.</returns>
         internal ServiceBusProcessorOptions Clone()
         {
-            var clone = new ServiceBusProcessorOptions
+            return new ServiceBusProcessorOptions
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                AutoComplete = AutoComplete,
+                AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
+                MaxReceiveWaitTime = MaxReceiveWaitTime,
+                MaxConcurrentCalls = MaxConcurrentCalls,
+                SubQueue = SubQueue
             };
-            if (MaxConcurrentCalls > 0)
-            {
-                clone.MaxConcurrentCalls = MaxConcurrentCalls;
-            }
-            return clone;
         }
     }
 }

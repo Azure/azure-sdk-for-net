@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="topic">Name of the topic of the event
         /// subscription.</param>
         /// <param name="provisioningState">Provisioning state of the event
@@ -77,7 +77,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Uses the managed identity setup on the parent resource (namely,
         /// topic or domain) to acquire the authentication tokens being used
         /// during delivery / dead-lettering.</param>
-        public EventSubscription(string id = default(string), string name = default(string), string type = default(string), string topic = default(string), string provisioningState = default(string), EventSubscriptionDestination destination = default(EventSubscriptionDestination), DeliveryWithResourceIdentity deliveryWithResourceIdentity = default(DeliveryWithResourceIdentity), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>), System.DateTime? expirationTimeUtc = default(System.DateTime?), string eventDeliverySchema = default(string), RetryPolicy retryPolicy = default(RetryPolicy), DeadLetterDestination deadLetterDestination = default(DeadLetterDestination), DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default(DeadLetterWithResourceIdentity))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public EventSubscription(string id = default(string), string name = default(string), string type = default(string), string topic = default(string), string provisioningState = default(string), EventSubscriptionDestination destination = default(EventSubscriptionDestination), DeliveryWithResourceIdentity deliveryWithResourceIdentity = default(DeliveryWithResourceIdentity), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>), System.DateTime? expirationTimeUtc = default(System.DateTime?), string eventDeliverySchema = default(string), RetryPolicy retryPolicy = default(RetryPolicy), DeadLetterDestination deadLetterDestination = default(DeadLetterDestination), DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default(DeadLetterWithResourceIdentity), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Topic = topic;
@@ -91,6 +93,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             RetryPolicy = retryPolicy;
             DeadLetterDestination = deadLetterDestination;
             DeadLetterWithResourceIdentity = deadLetterWithResourceIdentity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -187,6 +190,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.deadLetterWithResourceIdentity")]
         public DeadLetterWithResourceIdentity DeadLetterWithResourceIdentity { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

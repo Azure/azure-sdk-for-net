@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class KeepTokenFilter : IUtf8JsonSerializable
     {
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (LowerCaseKeepWords != null)
+            if (Optional.IsDefined(LowerCaseKeepWords))
             {
                 writer.WritePropertyName("keepWordsCase");
                 writer.WriteBooleanValue(LowerCaseKeepWords.Value);
@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Models
         internal static KeepTokenFilter DeserializeKeepTokenFilter(JsonElement element)
         {
             IList<string> keepWords = default;
-            bool? keepWordsCase = default;
-            string odatatype = default;
+            Optional<bool> keepWordsCase = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,6 +57,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keepWordsCase = property.Value.GetBoolean();
@@ -64,7 +65,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -73,7 +74,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new KeepTokenFilter(keepWords, keepWordsCase, odatatype, name);
+            return new KeepTokenFilter(odataType, name, keepWords, Optional.ToNullable(keepWordsCase));
         }
     }
 }

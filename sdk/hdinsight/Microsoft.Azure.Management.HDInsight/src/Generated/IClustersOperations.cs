@@ -174,6 +174,31 @@ namespace Microsoft.Azure.Management.HDInsight
         /// </exception>
         Task<AzureOperationResponse> ResizeWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterResizeParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates the Autoscale Configuration for HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters for the update autoscale configuration operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateAutoScaleConfigurationWithHttpMessagesAsync(string resourceGroupName, string clusterName, AutoscaleConfigurationUpdateParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -267,6 +292,59 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> UpdateGatewaySettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, UpdateGatewaySettingsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The the async operation status.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='operationId'>
+        /// The long running operation id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AsyncOperationResult>> GetAzureAsyncOperationStatusWithHttpMessagesAsync(string resourceGroupName, string clusterName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the cluster identity certificate.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='parameters'>
+        /// The cluster configurations.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateIdentityCertificateWithHttpMessagesAsync(string resourceGroupName, string clusterName, UpdateClusterIdentityCertificateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Executes script actions on the specified HDInsight cluster.
         /// </summary>
@@ -368,6 +446,31 @@ namespace Microsoft.Azure.Management.HDInsight
         /// </exception>
         Task<AzureOperationResponse> BeginResizeWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterResizeParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates the Autoscale Configuration for HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters for the update autoscale configuration operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginUpdateAutoScaleConfigurationWithHttpMessagesAsync(string resourceGroupName, string clusterName, AutoscaleConfigurationUpdateParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Rotate disk encryption key of the specified HDInsight cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -417,6 +520,31 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginUpdateGatewaySettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, UpdateGatewaySettingsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the cluster identity certificate.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='parameters'>
+        /// The cluster configurations.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginUpdateIdentityCertificateWithHttpMessagesAsync(string resourceGroupName, string clusterName, UpdateClusterIdentityCertificateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Executes script actions on the specified HDInsight cluster.
         /// </summary>

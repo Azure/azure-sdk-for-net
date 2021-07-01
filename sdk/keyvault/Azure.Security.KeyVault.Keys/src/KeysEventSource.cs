@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        [Event(AlgorithmNotSupportedEvent, Level = EventLevel.Verbose, Message = "The algorithm {1} is not supported on this machine. Will try the {0} operation in the service.")]
+        [Event(AlgorithmNotSupportedEvent, Level = EventLevel.Verbose, Message = "The algorithm {1} is not supported on this machine. Cannot perform the {0} operation locally.")]
         public void AlgorithmNotSupported(string operation, string algorithm) => WriteEvent(AlgorithmNotSupportedEvent, operation, algorithm);
 
         [NonEvent]
@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        [Event(KeyTypeNotSupportedEvent, Level = EventLevel.Verbose, Message = "The key type {1} is not supported on this machine. Will try the {0} operation in the service.")]
+        [Event(KeyTypeNotSupportedEvent, Level = EventLevel.Verbose, Message = "The key type {1} is not supported on this machine. Cannot perform the {0} operation locally.")]
         public void KeyTypeNotSupported(string operation, string keyType) => WriteEvent(KeyTypeNotSupportedEvent, operation, keyType);
 
         [Event(PrivateKeyRequiredEvent, Level = EventLevel.Verbose, Message = "A private key is required for a {0} operation")]
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        [Event(CryptographicExceptionEvent, Level = EventLevel.Informational, Message = "A cryptographic exception occured: {1}.\r\nWill try the {0} operation in the service.")]
+        [Event(CryptographicExceptionEvent, Level = EventLevel.Informational, Message = "A cryptographic exception occured: {1}.\r\nCannot perform the {0} operation locally.")]
         public void CryptographicException(string operation, string message) => WriteEvent(CryptographicExceptionEvent, operation, message);
 
         private static string FormatException(Exception ex)

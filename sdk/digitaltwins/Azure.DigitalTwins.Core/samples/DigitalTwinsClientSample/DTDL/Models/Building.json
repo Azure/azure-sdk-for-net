@@ -1,0 +1,35 @@
+{
+    "@id": "dtmi:com:samples:Building;1",
+    "@type": "Interface",
+    "@context": "dtmi:dtdl:context;2",
+    "displayName": "Building",
+    "contents": [
+        {
+            "@type": "Relationship",
+            "name": "has",
+            "target": "dtmi:com:samples:Floor;1",
+            "properties": [
+                {
+                    "@type": "Property",
+                    "name": "isAccessRestricted",
+                    "schema": "boolean"
+                }
+            ]
+        },
+        {
+            "@type": "Relationship",
+            "name": "isEquippedWith",
+            "target": "dtmi:com:samples:HVAC;1"
+        },
+        {
+            "@type": "Property",
+            "name": "AverageTemperature",
+            "schema": "double"
+        },
+        {
+            "@type": "Property",
+            "name": "TemperatureUnit",
+            "schema": "string"
+        }
+    ]
+}

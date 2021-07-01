@@ -65,7 +65,15 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// populated if cloud tiering is enabled.</param>
         /// <param name="recallStatus">Recall status. Only populated if cloud
         /// tiering is enabled.</param>
-        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), ServerEndpointSyncStatus syncStatus = default(ServerEndpointSyncStatus), string offlineDataTransfer = default(string), string offlineDataTransferStorageAccountResourceId = default(string), string offlineDataTransferStorageAccountTenantId = default(string), string offlineDataTransferShareName = default(string), ServerEndpointCloudTieringStatus cloudTieringStatus = default(ServerEndpointCloudTieringStatus), ServerEndpointRecallStatus recallStatus = default(ServerEndpointRecallStatus))
+        /// <param name="initialDownloadPolicy">Policy for how namespace and
+        /// files are recalled during FastDr. Possible values include:
+        /// 'NamespaceOnly', 'NamespaceThenModifiedFiles',
+        /// 'AvoidTieredFiles'</param>
+        /// <param name="localCacheMode">Policy for enabling follow-the-sun
+        /// business models: link local cache to cloud behavior to pre-populate
+        /// before local access. Possible values include:
+        /// 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'</param>
+        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), ServerEndpointSyncStatus syncStatus = default(ServerEndpointSyncStatus), string offlineDataTransfer = default(string), string offlineDataTransferStorageAccountResourceId = default(string), string offlineDataTransferStorageAccountTenantId = default(string), string offlineDataTransferShareName = default(string), ServerEndpointCloudTieringStatus cloudTieringStatus = default(ServerEndpointCloudTieringStatus), ServerEndpointRecallStatus recallStatus = default(ServerEndpointRecallStatus), string initialDownloadPolicy = default(string), string localCacheMode = default(string))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
@@ -84,6 +92,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             OfflineDataTransferShareName = offlineDataTransferShareName;
             CloudTieringStatus = cloudTieringStatus;
             RecallStatus = recallStatus;
+            InitialDownloadPolicy = initialDownloadPolicy;
+            LocalCacheMode = localCacheMode;
             CustomInit();
         }
 
@@ -192,6 +202,23 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public ServerEndpointRecallStatus RecallStatus { get; private set; }
 
         /// <summary>
+        /// Gets or sets policy for how namespace and files are recalled during
+        /// FastDr. Possible values include: 'NamespaceOnly',
+        /// 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.initialDownloadPolicy")]
+        public string InitialDownloadPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy for enabling follow-the-sun business models:
+        /// link local cache to cloud behavior to pre-populate before local
+        /// access. Possible values include: 'DownloadNewAndModifiedFiles',
+        /// 'UpdateLocallyCachedFiles'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.localCacheMode")]
+        public string LocalCacheMode { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -218,6 +245,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             if (SyncStatus != null)
             {
                 SyncStatus.Validate();
+            }
+            if (CloudTieringStatus != null)
+            {
+                CloudTieringStatus.Validate();
             }
             if (RecallStatus != null)
             {

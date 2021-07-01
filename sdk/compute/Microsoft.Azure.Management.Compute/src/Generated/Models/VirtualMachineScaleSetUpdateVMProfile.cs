@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// profile.</param>
         /// <param name="networkProfile">The virtual machine scale set network
         /// profile.</param>
+        /// <param name="securityProfile">The virtual machine scale set
+        /// Security profile</param>
         /// <param name="diagnosticsProfile">The virtual machine scale set
         /// diagnostics profile.</param>
         /// <param name="extensionProfile">The virtual machine scale set
@@ -48,16 +50,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
-        public VirtualMachineScaleSetUpdateVMProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default(VirtualMachineScaleSetUpdateOSProfile), VirtualMachineScaleSetUpdateStorageProfile storageProfile = default(VirtualMachineScaleSetUpdateStorageProfile), VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default(VirtualMachineScaleSetUpdateNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
+        /// <param name="userData">UserData for the VM, which must be base-64
+        /// encoded. Customer should not pass any secrets in here.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01</param>
+        public VirtualMachineScaleSetUpdateVMProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default(VirtualMachineScaleSetUpdateOSProfile), VirtualMachineScaleSetUpdateStorageProfile storageProfile = default(VirtualMachineScaleSetUpdateStorageProfile), VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default(VirtualMachineScaleSetUpdateNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
+            SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
             ExtensionProfile = extensionProfile;
             LicenseType = licenseType;
             BillingProfile = billingProfile;
             ScheduledEventsProfile = scheduledEventsProfile;
+            UserData = userData;
             CustomInit();
         }
 
@@ -83,6 +90,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkProfile")]
         public VirtualMachineScaleSetUpdateNetworkProfile NetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine scale set Security profile
+        /// </summary>
+        [JsonProperty(PropertyName = "securityProfile")]
+        public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine scale set diagnostics profile.
@@ -116,6 +129,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "scheduledEventsProfile")]
         public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets userData for the VM, which must be base-64 encoded.
+        /// Customer should not pass any secrets in here.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version: 2021-03-01
+        /// </summary>
+        [JsonProperty(PropertyName = "userData")]
+        public string UserData { get; set; }
 
     }
 }

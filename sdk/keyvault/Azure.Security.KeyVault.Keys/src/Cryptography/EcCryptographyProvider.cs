@@ -13,13 +13,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private readonly KeyCurveName _curve;
         private readonly JsonWebKey _keyMaterial;
 
-        internal EcCryptographyProvider(KeyVaultKey key) : base(key)
+        internal EcCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties, bool localOnly) : base(keyMaterial, keyProperties, localOnly)
         {
             // Unset the KeyMaterial since we want to conditionally set it if supported.
             KeyMaterial = null;
 
             // Only set the JWK if we support the algorithm locally.
-            JsonWebKey keyMaterial = key.Key;
             if (keyMaterial != null && keyMaterial.CurveName.HasValue)
             {
                 // Save the key material to use for operational support validation.

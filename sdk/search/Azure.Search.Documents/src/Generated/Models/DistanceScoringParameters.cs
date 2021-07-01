@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a distance scoring function. </summary>
     public partial class DistanceScoringParameters
@@ -15,6 +15,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of DistanceScoringParameters. </summary>
         /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="referencePointParameter"/> is null. </exception>
         public DistanceScoringParameters(string referencePointParameter, double boostingDistance)
         {
             if (referencePointParameter == null)
@@ -27,8 +28,8 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the parameter passed in search queries to specify the reference location. </summary>
-        public string ReferencePointParameter { get; }
+        public string ReferencePointParameter { get; set; }
         /// <summary> The distance in kilometers from the reference location where the boosting range ends. </summary>
-        public double BoostingDistance { get; }
+        public double BoostingDistance { get; set; }
     }
 }

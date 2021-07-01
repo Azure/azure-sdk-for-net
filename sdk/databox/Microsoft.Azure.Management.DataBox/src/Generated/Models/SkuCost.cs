@@ -31,10 +31,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="meterId">Meter id of the Sku.</param>
         /// <param name="meterType">The type of the meter.</param>
-        public SkuCost(string meterId = default(string), string meterType = default(string))
+        /// <param name="multiplier">Multiplier specifies the region specific
+        /// value to be multiplied with 1$ guid. Eg: Our new regions will be
+        /// using 1$ shipping guid with appropriate multiplier specific to
+        /// region.</param>
+        public SkuCost(string meterId = default(string), string meterType = default(string), double? multiplier = default(double?))
         {
             MeterId = meterId;
             MeterType = meterType;
+            Multiplier = multiplier;
             CustomInit();
         }
 
@@ -54,6 +59,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "meterType")]
         public string MeterType { get; private set; }
+
+        /// <summary>
+        /// Gets multiplier specifies the region specific value to be
+        /// multiplied with 1$ guid. Eg: Our new regions will be using 1$
+        /// shipping guid with appropriate multiplier specific to region.
+        /// </summary>
+        [JsonProperty(PropertyName = "multiplier")]
+        public double? Multiplier { get; private set; }
 
     }
 }

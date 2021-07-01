@@ -174,4 +174,7 @@
   <data name="PluginRegistrationFailed" xml:space="preserve">
     <value>There was an error trying to register the {0} plugin.</value>
   </data>
+  <data name="ClientAlreadyClosed" xml:space="preserve">
+    <value>Client object already closed.</value>
+  </data>
 </root>

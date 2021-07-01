@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// instance</param>
         /// <param name="discoveryStatus">Discovery status of the deployment
         /// instance</param>
-        public DeploymentInstance(string name = default(string), string status = default(string), string reason = default(string), string discoveryStatus = default(string))
+        /// <param name="startTime">Start time of the deployment
+        /// instance</param>
+        public DeploymentInstance(string name = default(string), string status = default(string), string reason = default(string), string discoveryStatus = default(string), string startTime = default(string))
         {
             Name = name;
             Status = status;
             Reason = reason;
             DiscoveryStatus = discoveryStatus;
+            StartTime = startTime;
             CustomInit();
         }
 
@@ -72,6 +75,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "discoveryStatus")]
         public string DiscoveryStatus { get; private set; }
+
+        /// <summary>
+        /// Gets start time of the deployment instance
+        /// </summary>
+        [JsonProperty(PropertyName = "startTime")]
+        public string StartTime { get; private set; }
 
     }
 }

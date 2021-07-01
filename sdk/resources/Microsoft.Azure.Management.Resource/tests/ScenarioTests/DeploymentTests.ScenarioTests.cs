@@ -18,8 +18,9 @@ namespace ResourceGroups.Tests
     public class LiveDeploymentTests : TestBase
     {
         const string DummyTemplateUri = "https://testtemplates.blob.core.windows.net/templates/dummytemplate.js";
-        const string GoodWebsiteTemplateUri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json";
+        const string GoodWebsiteTemplateUri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-webapp-managed-mysql/azuredeploy.json";
         const string BadTemplateUri = "https://testtemplates.blob.core.windows.net/templates/bad-website-1.js";
+        const string GoodResourceId = "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/net-sdk-scenario-test-rg/providers/Microsoft.Resources/TemplateSpecs/storage-account-spec/versions/v1";
 
         const string LocationWestEurope = "West Europe";
         const string LocationSouthCentralUS = "South Central US";
@@ -115,6 +116,7 @@ namespace ResourceGroups.Tests
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
+                string administratorLoginPassword = TestUtilities.GenerateGuid().ToString();
 
                 var parameters = new Deployment
                 {
@@ -124,9 +126,8 @@ namespace ResourceGroups.Tests
                         {
                             Uri = GoodWebsiteTemplateUri,
                         },
-                        Parameters =
-                        JObject.Parse(
-                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
+                        Parameters = JObject.Parse(
+                            @"{'siteName': {'value': '" + resourceName  + "'}, 'location': {'value': 'westus'}, 'administratorLogin': {'value': 'resourceAdmin'}, 'administratorLoginPassword': {'value': '" + administratorLoginPassword + "'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
@@ -159,7 +160,97 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void CreateDeploymentWithResourceId()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string resourceName = TestUtilities.GenerateName("csmr");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        TemplateLink = new TemplateLink
+                        {
+                            Id = GoodResourceId
+                        },
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
+                };
+                string groupName = TestUtilities.GenerateName("csmrg");
+                string deploymentName = TestUtilities.GenerateName("csmd");
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
+                var deploymentCreateResult = client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
+
+                Assert.NotNull(deploymentCreateResult.Id);
+                Assert.Equal(deploymentName, deploymentCreateResult.Name);
+
+                TestUtilities.Wait(1000);
+
+                var deploymentListResult = client.Deployments.ListByResourceGroup(groupName, null);
+                var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
+
+                Assert.NotEmpty(deploymentListResult);
+                Assert.Equal(deploymentName, deploymentGetResult.Name);
+                Assert.Equal(deploymentName, deploymentListResult.First().Name);
+                Assert.Equal(GoodResourceId, deploymentGetResult.Properties.TemplateLink.Id);
+                Assert.Equal(GoodResourceId, deploymentListResult.First().Properties.TemplateLink.Id);
+                Assert.NotNull(deploymentGetResult.Properties.ProvisioningState);
+                Assert.NotNull(deploymentListResult.First().Properties.ProvisioningState);
+                Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.First().Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.First().Tags);
+                Assert.True(deploymentListResult.First().Tags.ContainsKey("tagKey1"));
+            }
+        }
+
+        [Fact]
         public void ValidateGoodDeployment()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = TestUtilities.GenerateName("csmrg");
+                string deploymentName = TestUtilities.GenerateName("csmd");
+                string resourceName = TestUtilities.GenerateName("csres");
+                string administratorLoginPassword = TestUtilities.GenerateGuid().ToString();
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        TemplateLink = new TemplateLink
+                        {
+                            Uri = GoodWebsiteTemplateUri,
+                        },
+                        Parameters = JObject.Parse(
+                            @"{'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'administratorLogin': {'value': 'resourceAdmin'}, 'administratorLoginPassword': {'value': '" + administratorLoginPassword + "'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    }
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
+
+                //Action
+                var validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
+ 
+                 //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+                Assert.Equal(2, validationResult.Properties.Providers.Count);
+                Assert.Equal("Microsoft.Web", validationResult.Properties.Providers[0].NamespaceProperty);
+            }
+        }
+
+        [Fact]
+        public void ValidateGoodDeploymentWithId()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
@@ -176,10 +267,8 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = GoodWebsiteTemplateUri,
+                            Id = GoodResourceId,
                         },
-                        Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -188,13 +277,12 @@ namespace ResourceGroups.Tests
 
                 //Action
                 var validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
- 
-                 //Assert
+
+                //Assert
                 Assert.Null(validationResult.Error);
                 Assert.NotNull(validationResult.Properties);
                 Assert.NotNull(validationResult.Properties.Providers);
                 Assert.Equal(1, validationResult.Properties.Providers.Count);
-                Assert.Equal("Microsoft.Web", validationResult.Properties.Providers[0].NamespaceProperty);
             }
         }
 
@@ -210,6 +298,7 @@ namespace ResourceGroups.Tests
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
                 string resourceName = TestUtilities.GenerateName("csmr");
+                string administratorLoginPassword = TestUtilities.GenerateGuid().ToString();
 
                 var parameters = new Deployment
                 {
@@ -217,7 +306,8 @@ namespace ResourceGroups.Tests
                    {
                         Template = File.ReadAllText(Path.Combine("ScenarioTests", "good-website.json")),
                         Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
+                        JObject.Parse(
+                            @"{'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'administratorLogin': {'value': 'resourceAdmin'}, 'administratorLoginPassword': {'value': '" + administratorLoginPassword + "'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -268,8 +358,49 @@ namespace ResourceGroups.Tests
             }
         }
 
-        // TODO: Fix
-        [Fact(Skip = "TODO: Re-record test")]
+        [Fact]
+        public void CreateDeploymentCheckSuccessOperations()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = TestUtilities.GenerateName("csmrg");
+                string deploymentName = TestUtilities.GenerateName("csmd");
+                string resourceName = TestUtilities.GenerateName("csres");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        TemplateLink = new TemplateLink
+                        {
+                            Id = GoodResourceId,
+                        },
+                        Mode = DeploymentMode.Incremental,
+                    }
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
+
+                client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
+
+                //Wait for deployment to complete
+                TestUtilities.Wait(30000);
+                var operations = client.DeploymentOperations.List(groupName, deploymentName, null);
+
+                Assert.True(operations.Any());
+                Assert.NotNull(operations.First().Id);
+                Assert.NotNull(operations.First().OperationId);
+                Assert.NotNull(operations.First().Properties);
+                Assert.Null(operations.First().Properties.StatusMessage);
+            }
+
+        }
+
+            // TODO: Fix
+            [Fact(Skip = "TODO: Re-record test")]
         public void CreateDummyDeploymentProducesOperations()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -332,6 +463,7 @@ namespace ResourceGroups.Tests
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
+                string administratorLoginPassword = TestUtilities.GenerateGuid().ToString();
 
                 var parameters = new Deployment
                 {
@@ -341,8 +473,8 @@ namespace ResourceGroups.Tests
                         {
                             Uri = GoodWebsiteTemplateUri,
                         },
-                        Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
+                        Parameters = JObject.Parse(
+                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'administratorLogin': {'value': 'resourceAdmin'}, 'administratorLoginPassword': {'value': '" + administratorLoginPassword + "'}, 'databaseSkucapacity': {'value': 2}, 'databaseSkuName': {'value': 'GP_Gen5_2'}, 'databaseSkuSizeMB': {'value': 51200}, 'databaseSkuTier': {'value': 'GeneralPurpose'}, 'mysqlVersion': {'value': '5.6'}, 'databaseSkuFamily': {'value': 'Gen5'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -381,6 +513,7 @@ namespace ResourceGroups.Tests
                 string resourceName = TestUtilities.GenerateName("csmr");
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
+                string administratorLoginPassword = TestUtilities.GenerateGuid().ToString();
 
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -392,7 +525,8 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
+                        JObject.Parse(
+                            @"{'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'administratorLogin': {'value': 'resourceAdmin'}, 'administratorLoginPassword': {'value': '" + administratorLoginPassword + "'}, 'databaseSkucapacity': {'value': 2}, 'databaseSkuName': {'value': 'GP_Gen5_2'}, 'databaseSkuSizeMB': {'value': 51200}, 'databaseSkuTier': {'value': 'GeneralPurpose'}, 'mysqlVersion': {'value': '5.6'}, 'databaseSkuFamily': {'value': 'Gen5'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -461,7 +595,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
-                string groupId = "tag-mg1";
+                string groupId = "tag-mg-sdk";
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
                 var parameters = new ScopedDeployment
@@ -470,7 +604,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tagsa021920'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa051021'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Location = "East US",
@@ -511,7 +645,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "tenant_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
+                        JObject.Parse("{'managementGroupId': {'value': 'net-sdk-testmg'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Location = "East US 2",
@@ -555,7 +689,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "tenant_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
+                        JObject.Parse("{'managementGroupId': {'value': 'net-sdk-testmg'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Location = "East US 2",
@@ -591,7 +725,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
-                string groupId = "tag-mg1";
+                string groupId = "tag-mg-sdk";
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
                 var parameters = new Deployment
@@ -600,7 +734,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tagsa021920'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Location = "East US",
@@ -696,7 +830,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "simple-storage-account.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tianotest105'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'sdkTestStorageAccount1'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }

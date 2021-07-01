@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the AutomationSource class.
         /// </summary>
         /// <param name="eventSource">A valid event source type. Possible
-        /// values include: 'Assessments', 'Alerts'</param>
+        /// values include: 'Assessments', 'SubAssessments', 'Alerts'</param>
         /// <param name="ruleSets">A set of rules which evaluate upon event
         /// interception. A logical disjunction is applied between defined rule
         /// sets (logical 'or').</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets or sets a valid event source type. Possible values include:
-        /// 'Assessments', 'Alerts'
+        /// 'Assessments', 'SubAssessments', 'Alerts'
         /// </summary>
         [JsonProperty(PropertyName = "eventSource")]
         public string EventSource { get; set; }

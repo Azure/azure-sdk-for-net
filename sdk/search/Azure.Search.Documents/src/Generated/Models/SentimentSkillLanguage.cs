@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by SentimentSkill. </summary>
     public readonly partial struct SentimentSkillLanguage : IEquatable<SentimentSkillLanguage>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="SentimentSkillLanguage"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SentimentSkillLanguage(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Models
         private const string ItValue = "it";
         private const string NoValue = "no";
         private const string PlValue = "pl";
-        private const string PtValue = "pt-PT";
+        private const string PtPTValue = "pt-PT";
         private const string RuValue = "ru";
         private const string EsValue = "es";
         private const string SvValue = "sv";
@@ -58,7 +59,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Polish. </summary>
         public static SentimentSkillLanguage Pl { get; } = new SentimentSkillLanguage(PlValue);
         /// <summary> Portuguese (Portugal). </summary>
-        public static SentimentSkillLanguage Pt { get; } = new SentimentSkillLanguage(PtValue);
+        public static SentimentSkillLanguage PtPT { get; } = new SentimentSkillLanguage(PtPTValue);
         /// <summary> Russian. </summary>
         public static SentimentSkillLanguage Ru { get; } = new SentimentSkillLanguage(RuValue);
         /// <summary> Spanish. </summary>
@@ -78,7 +79,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SentimentSkillLanguage other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(SentimentSkillLanguage other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(SentimentSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

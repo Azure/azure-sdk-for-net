@@ -45,13 +45,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure Subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current
-        /// version is 2017-04-18
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -80,6 +79,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         IAccountsOperations Accounts { get; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        IDeletedAccountsOperations DeletedAccounts { get; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         IResourceSkusOperations ResourceSkus { get; }
@@ -88,6 +92,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
         /// Check available SKUs.
@@ -110,7 +124,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CheckSkuAvailabilityResultList>> CheckSkuAvailabilityWithHttpMessagesAsync(string location, IList<string> skus, string kind, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SkuAvailabilityListResult>> CheckSkuAvailabilityWithHttpMessagesAsync(string location, IList<string> skus, string kind, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Check whether a domain is available.
@@ -127,7 +141,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CheckDomainAvailabilityResult>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DomainAvailability>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -45,12 +45,13 @@ namespace Microsoft.Azure.Management.MixedReality
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to be used with the HTTP request.
         /// </summary>
         string ApiVersion { get; }
 
         /// <summary>
-        /// Azure subscription ID.
+        /// The Azure subscription ID. This is a GUID-formatted string (e.g.
+        /// 00000000-0000-0000-0000-000000000000)
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -84,7 +85,17 @@ namespace Microsoft.Azure.Management.MixedReality
         ISpatialAnchorsAccountsOperations SpatialAnchorsAccounts { get; }
 
         /// <summary>
-        /// Check Name Availability for global uniqueness
+        /// Gets the IRemoteRenderingAccountsOperations.
+        /// </summary>
+        IRemoteRenderingAccountsOperations RemoteRenderingAccounts { get; }
+
+        /// <summary>
+        /// Gets the IObjectAnchorsAccountsOperations.
+        /// </summary>
+        IObjectAnchorsAccountsOperations ObjectAnchorsAccounts { get; }
+
+        /// <summary>
+        /// Check Name Availability for local uniqueness
         /// </summary>
         /// <param name='location'>
         /// The location in which uniqueness will be verified.

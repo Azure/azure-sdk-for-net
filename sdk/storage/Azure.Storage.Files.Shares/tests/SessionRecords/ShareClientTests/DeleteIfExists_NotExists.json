@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seandevtest.file.core.windows.net/test-share-057a2727-b6c2-4795-15c0-7348675a743b?restype=share",
@@ -14,7 +14,8 @@
         "x-ms-date": "Thu, 20 Feb 2020 23:00:09 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-07-07",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -32,9 +33,9 @@
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
         "RequestId:022795ce-d01a-0002-6e41-e808f0000000\n",
-        "Time:2020-02-20T23:00:09.3290796Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-02-20T23:00:09.3290796Z</Message></Error>"
       ]
     }
   ],

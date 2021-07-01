@@ -65,8 +65,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="encryption">Encryption property can be used to encrypt
         /// data at rest with customer managed keys or platform managed
         /// keys.</param>
+        /// <param name="networkAccessPolicy">Possible values include:
+        /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
+        /// <param name="diskAccessId">ARM id of the DiskAccess resource for
+        /// using private endpoints on disks.</param>
+        /// <param name="tier">Performance tier of the disk (e.g, P4, S10) as
+        /// described here:
+        /// https://azure.microsoft.com/en-us/pricing/details/managed-disks/.
+        /// Does not apply to Ultra disks.</param>
+        /// <param name="burstingEnabled">Set to true to enable bursting beyond
+        /// the provisioned performance target of the disk. Bursting is
+        /// disabled by default. Does not apply to Ultra disks.</param>
+        /// <param name="purchasePlan">Purchase plan information to be added on
+        /// the OS disk</param>
+        /// <param name="propertyUpdatesInProgress">Properties of the disk for
+        /// which update is pending.</param>
+        /// <param name="supportsHibernation">Indicates the OS on a disk
+        /// supports hibernation.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -77,6 +94,13 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiskMBpsReadOnly = diskMBpsReadOnly;
             MaxShares = maxShares;
             Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            Tier = tier;
+            BurstingEnabled = burstingEnabled;
+            PurchasePlan = purchasePlan;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -161,6 +185,55 @@ namespace Microsoft.Azure.Management.Compute.Models
         public Encryption Encryption { get; set; }
 
         /// <summary>
+        /// Gets or sets possible values include: 'AllowAll', 'AllowPrivate',
+        /// 'DenyAll'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAccessPolicy")]
+        public string NetworkAccessPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets ARM id of the DiskAccess resource for using private
+        /// endpoints on disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskAccessId")]
+        public string DiskAccessId { get; set; }
+
+        /// <summary>
+        /// Gets or sets performance tier of the disk (e.g, P4, S10) as
+        /// described here:
+        /// https://azure.microsoft.com/en-us/pricing/details/managed-disks/.
+        /// Does not apply to Ultra disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tier")]
+        public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets set to true to enable bursting beyond the provisioned
+        /// performance target of the disk. Bursting is disabled by default.
+        /// Does not apply to Ultra disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.burstingEnabled")]
+        public bool? BurstingEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets purchase plan information to be added on the OS disk
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.purchasePlan")]
+        public PurchasePlan PurchasePlan { get; set; }
+
+        /// <summary>
+        /// Gets properties of the disk for which update is pending.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.propertyUpdatesInProgress")]
+        public PropertyUpdatesInProgress PropertyUpdatesInProgress { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indicates the OS on a disk supports hibernation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHibernation")]
+        public bool? SupportsHibernation { get; set; }
+
+        /// <summary>
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
@@ -182,6 +255,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (EncryptionSettingsCollection != null)
             {
                 EncryptionSettingsCollection.Validate();
+            }
+            if (PurchasePlan != null)
+            {
+                PurchasePlan.Validate();
             }
         }
     }

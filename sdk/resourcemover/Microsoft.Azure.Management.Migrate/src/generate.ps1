@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "resourcemover/resource-manager" -AutoRestVersion "V2"

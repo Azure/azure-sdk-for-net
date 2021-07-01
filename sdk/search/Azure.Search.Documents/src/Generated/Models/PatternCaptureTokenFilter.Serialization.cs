@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternCaptureTokenFilter : IUtf8JsonSerializable
     {
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (PreserveOriginal != null)
+            if (Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal");
                 writer.WriteBooleanValue(PreserveOriginal.Value);
@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Models
         internal static PatternCaptureTokenFilter DeserializePatternCaptureTokenFilter(JsonElement element)
         {
             IList<string> patterns = default;
-            bool? preserveOriginal = default;
-            string odatatype = default;
+            Optional<bool> preserveOriginal = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,6 +57,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preserveOriginal = property.Value.GetBoolean();
@@ -64,7 +65,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -73,7 +74,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternCaptureTokenFilter(patterns, preserveOriginal, odatatype, name);
+            return new PatternCaptureTokenFilter(odataType, name, patterns, Optional.ToNullable(preserveOriginal));
         }
     }
 }

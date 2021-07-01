@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class StemmerTokenFilterLanguageExtensions
+    internal static partial class StemmerTokenFilterLanguageExtensions
     {
         public static string ToSerialString(this StemmerTokenFilterLanguage value) => value switch
         {

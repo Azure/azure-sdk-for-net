@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
+        /// <param name="extendedLocation">Resource extended location.</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="plan">The plan of the resource.</param>
         /// <param name="properties">The resource properties.</param>
@@ -43,8 +45,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// resource.</param>
         /// <param name="sku">The SKU of the resource.</param>
         /// <param name="identity">The identity of the resource.</param>
-        public GenericResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
-            : base(id, name, type, location, tags)
+        public GenericResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
+            : base(id, name, type, location, extendedLocation, tags)
         {
             Plan = plan;
             Properties = properties;
@@ -96,5 +98,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Kind != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Kind, "^[-\\w\\._,\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Kind", "^[-\\w\\._,\\(\\)]+$");
+                }
+            }
+        }
     }
 }

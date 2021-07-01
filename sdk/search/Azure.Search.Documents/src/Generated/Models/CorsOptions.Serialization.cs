@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CorsOptions : IUtf8JsonSerializable
     {
@@ -23,10 +23,17 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MaxAgeInSeconds != null)
+            if (Optional.IsDefined(MaxAgeInSeconds))
             {
-                writer.WritePropertyName("maxAgeInSeconds");
-                writer.WriteNumberValue(MaxAgeInSeconds.Value);
+                if (MaxAgeInSeconds != null)
+                {
+                    writer.WritePropertyName("maxAgeInSeconds");
+                    writer.WriteNumberValue(MaxAgeInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxAgeInSeconds");
+                }
             }
             writer.WriteEndObject();
         }
@@ -34,7 +41,7 @@ namespace Azure.Search.Documents.Models
         internal static CorsOptions DeserializeCorsOptions(JsonElement element)
         {
             IList<string> allowedOrigins = default;
-            long? maxAgeInSeconds = default;
+            Optional<long?> maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"))
@@ -51,13 +58,14 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxAgeInSeconds = null;
                         continue;
                     }
                     maxAgeInSeconds = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new CorsOptions(allowedOrigins, maxAgeInSeconds);
+            return new CorsOptions(allowedOrigins, Optional.ToNullable(maxAgeInSeconds));
         }
     }
 }

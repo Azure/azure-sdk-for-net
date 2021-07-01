@@ -1,9 +1,17 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 7.0.0-preview
+
+- Switch the .NET client to use api-version `2020-12-01`
+- new entities added, are `ContentType`, `ContentItem`, `DeletedServices`, `GatewayCertificateAuthority`, `PortalRevision`, `PortalSettings`, `TenantSettings`, `ApiManagementSkus`.
+- Added support for creating Azure KeyVault based `namedValues`, which allows auto rotation of this Entity. blocked POST operations to get entity secret from it due to Security Issue.
+- Added support for creating Azure KeyVault based `certificates`, which allows auto rotation of this Entity.
+
 ### Changes in 5.0.0-preview
 
-- Switch the .NET client to use api-version `2019-12-01-preview`
+- Switch the .NET client to use api-version `2019-12-01`
 - `properties` entity renamed to `namedValues` 
+- new `gateway` entity added
 - Added POST operations to get entities secret properties. Secret properties will not be returned with GET or LIST operations anymore. Entities are: `accessInformation`, `authorizationServers`, `delegationSettings`, `identityProviders`, `namedValues`, `openIdConnectProviders`, `subscriptions`. 
 - `diagnostics` entity: `enableHttpCorrelationHeaders` property is not supported, `loggerId` is a required property now.
 - Breaking Change: `capacity` is a required parameter with creating ApiManagement service.

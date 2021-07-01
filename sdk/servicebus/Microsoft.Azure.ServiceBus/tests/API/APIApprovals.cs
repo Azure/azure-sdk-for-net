@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
         ///   If the expected assembly output from generation changes, that file will need to be updated with the new expectation in order for this test
         ///   to pass.
         /// </remarks>
-        ///
+#if !NET5_0 // We don't ship a NET5 specific target of the library and PublicApiGenerator have a problem with API generation when running netcoreapp5.0
         [Fact]
         public void ApproveAzureServiceBus()
         {
@@ -37,6 +37,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
                 CleanApprovalsTempFiles(ApprovalUtilities.Utilities.PathUtilities.GetDirectoryForCaller());
             }
         }
+#endif
 
         string Filter(string text)
         {

@@ -71,14 +71,14 @@ namespace Azure.Core.Pipeline
 
             string password = "";
             string domain = null;
-            int idx = value.IndexOf(':');
+            int idx = value.IndexOfOrdinal(':');
             if (idx != -1)
             {
                 password = value.Substring(idx + 1);
                 value = value.Substring(0, idx);
             }
 
-            idx = value.IndexOf('\\');
+            idx = value.IndexOfOrdinal('\\');
             if (idx != -1)
             {
                 domain = value.Substring(0, idx);

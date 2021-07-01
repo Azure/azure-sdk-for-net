@@ -2,40 +2,49 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The ServiceBusClient is the top-level client through which all Service Bus entities can
-    /// be interacted with. Any lower level types retrieved from here, such as <see cref="ServiceBusSender"/> and
-    /// <see cref="ServiceBusReceiver"/> will share the same AMQP connection. Disposing the ServiceBusClient will
-    /// cause the AMQP connection to close.
-    ///
+    /// The <see cref="ServiceBusClient"/> is the top-level client through which all Service Bus
+    /// entities can be interacted with. Any lower level types retrieved from here, such
+    /// as <see cref="ServiceBusSender"/> and <see cref="ServiceBusReceiver"/> will share the
+    /// same AMQP connection. Disposing the <see cref="ServiceBusClient"/> will cause the AMQP
+    /// connection to close.
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
+        private readonly ServiceBusClientOptions _options;
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed;
+
         /// <summary>
         ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace { get; }
+        public virtual string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been disposed.
+        ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been closed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the client is disposed; otherwise, <c>false</c>.
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        ///
-        public bool IsDisposed { get; private set; } = false;
+        public virtual bool IsClosed
+        {
+            get => _closed;
+            private set => _closed = value;
+        }
 
         /// <summary>
         /// The transport type used for this <see cref="ServiceBusClient"/>.
@@ -45,14 +54,17 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   A unique name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
-        ///
         internal string Identifier { get; }
 
         /// <summary>
-        ///   The set of client options used for creation of client.
+        ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
-        ///
-        private ServiceBusClientOptions Options { get; set; }
+        internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+
+        /// <summary>
+        /// The list of plugins for the client.
+        /// </summary>
+        internal IList<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
@@ -60,24 +72,24 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
-            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusConnection), Identifier);
-            IsDisposed = true;
+            Logger.ClientCloseStart(typeof(ServiceBusClient), Identifier);
+            IsClosed = true;
             try
             {
                 await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                GC.SuppressFinalize(this);
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusConnection), Identifier, ex);
+                Logger.ClientCloseException(typeof(ServiceBusClient), Identifier, ex);
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusConnection), Identifier);
+                Logger.ClientCloseComplete(typeof(ServiceBusClient), Identifier);
             }
         }
 
@@ -89,77 +101,202 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// The connection that is used for the client.
         /// </summary>
         internal ServiceBusConnection Connection { get; }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="connectionString"></param>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the
+        /// Service Bus namespace.</param>
+        ///
+        /// <remarks>
+        /// If the connection string specifies a specific entity name, any subsequent calls to
+        /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
+        /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
+        ///
+        /// The connection string will recognize and apply properties populated by the
+        /// Azure portal such as Endpoint, SharedAccessKeyName, SharedAccessKey, and EntityPath.
+        /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
+        /// </remarks>
         public ServiceBusClient(string connectionString) :
             this(connectionString, new ServiceBusClientOptions())
         {
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="connectionString"></param>
-        /// <param name="options"></param>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the
+        /// Service Bus namespace.</param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for
+        /// configuring this <see cref="ServiceBusClient"/>.</param>
+        ///
+        /// <remarks>
+        /// If the connection string specifies a specific entity name, any subsequent calls to
+        /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
+        /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
+        ///
+        /// The connection string will recognize and apply properties populated by the
+        /// Azure portal such as Endpoint, SharedAccessKeyName, SharedAccessKey, and EntityPath.
+        /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
+        /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
-            Connection = new ServiceBusConnection(connectionString, options);
-            Options = Connection.Options;
-            Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Connection = new ServiceBusConnection(connectionString, _options);
+            Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
+            Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Plugins = _options.Plugins;
+            TransportType = _options.TransportType;
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="fullyQualifiedNamespace"></param>
-        /// <param name="credential"></param>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        public ServiceBusClient(
+            string fullyQualifiedNamespace,
+            AzureNamedKeyCredential credential,
+            ServiceBusClientOptions options = default) :
+                this(fullyQualifiedNamespace, (object)credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="AzureSasCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        public ServiceBusClient(
+            string fullyQualifiedNamespace,
+            AzureSasCredential credential,
+            ServiceBusClientOptions options = default) :
+                this(fullyQualifiedNamespace, (object)credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
-            this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
+            this(fullyQualifiedNamespace, (object)credential, new ServiceBusClientOptions())
         {
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="fullyQualifiedNamespace"></param>
-        /// <param name="credential"></param>
-        /// <param name="options"></param>
-        public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential, ServiceBusClientOptions options)
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        public ServiceBusClient(
+            string fullyQualifiedNamespace,
+            TokenCredential credential,
+            ServiceBusClientOptions options) :
+                this(fullyQualifiedNamespace, (object)credential, options)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        private ServiceBusClient(
+            string fullyQualifiedNamespace,
+            object credential,
+            ServiceBusClientOptions options)
+        {
+            Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
-            Connection = new ServiceBusConnection(
+            Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,
-                options);
-            Options = Connection.Options;
+                _options);
+            Plugins = _options.Plugins;
+            TransportType = _options.TransportType;
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
+        /// queue or topic.
         /// </summary>
-        /// <param name="queueOrTopicName"></param>
-        /// <returns></returns>
-        public ServiceBusSender GetSender(string queueOrTopicName)
+        ///
+        /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/>
+        /// for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName)
         {
             ValidateEntityName(queueOrTopicName);
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                connection: Connection);
+                options: new ServiceBusSenderOptions(),
+                connection: Connection,
+                plugins: Plugins);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
+        /// queue or topic.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string queueName)
+        ///
+        /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use for configuring
+        /// this <see cref="ServiceBusSender"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
+        internal virtual ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
+        {
+            return new ServiceBusSender(
+                entityPath: queueOrTopicName,
+                options: options,
+                connection: Connection,
+                plugins: Plugins);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
+        /// from a specific queue. It uses <see cref="ServiceBusReceiveMode"/> to specify how messages are received. Defaults to PeekLock mode.
+        /// If you want to change the <see cref="ServiceBusReceiveMode"/>, use <see cref="CreateReceiver(string, ServiceBusReceiverOptions)"/> method.
+        /// The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// </summary>
+        ///
+        /// <param name="queueName">The queue to create a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="queueName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusReceiver CreateReceiver(string queueName)
         {
             ValidateEntityName(queueName);
 
@@ -167,16 +304,26 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusReceiverOptions());
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
+        /// from a specific queue. It uses <see cref="ServiceBusReceiveMode"/> to specify how messages are received. Defaults to PeekLock mode.
+        /// The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(
+        ///
+        /// <param name="queueName">The queue to create a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusReceiver"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="queueName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusReceiver CreateReceiver(
             string queueName,
             ServiceBusReceiverOptions options)
         {
@@ -186,16 +333,28 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and
+        /// settling messages from a specific subscription. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. If you want to change the <see cref="ServiceBusReceiveMode"/>,
+        /// use <see cref="CreateReceiver(string, string, ServiceBusReceiverOptions)"/> method.
+        /// The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="subscriptionName">The subscription specific to the specified topic to create
+        /// a <see cref="ServiceBusReceiver"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="topicName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusReceiver CreateReceiver(
             string topicName,
             string subscriptionName)
         {
@@ -205,17 +364,28 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusReceiverOptions());
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for
+        /// receiving and settling messages from a specific subscription. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="subscriptionName">The subscription specific to the specified topic to create
+        /// a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusReceiver"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="topicName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusReceiver CreateReceiver(
             string topicName,
             string subscriptionName,
             ServiceBusReceiverOptions options)
@@ -226,17 +396,34 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled queue. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
-        /// <returns></returns>
-        public virtual async Task<ServiceBusSessionReceiver> GetSessionReceiverAsync(
+        ///
+        /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If there are no available messages in the queue,
+        /// this will throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        /// <exception cref="ServiceBusException">
+        ///   There are no unlocked sessions in the entity. This can occur if the entity has no messages, or if all of the messages
+        ///   belong to sessions that are locked by other receivers.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        /// </exception>
+        public virtual async Task<ServiceBusSessionReceiver> AcceptNextSessionAsync(
             string queueName,
-            ServiceBusReceiverOptions options = default,
-            string sessionId = default,
+            ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
             ValidateEntityName(queueName);
@@ -244,20 +431,38 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
-                sessionId: sessionId,
+                plugins: Plugins,
                 options: options,
+                sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled subscription. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
-        /// <returns></returns>
-        public virtual async Task<ServiceBusSessionReceiver> GetSessionReceiverAsync(
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If there are no available messages in the queue,
+        /// this will throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        /// <exception cref="ServiceBusException">
+        ///   There are no unlocked sessions in the entity. This can occur if the entity has no messages, or if all of the messages
+        ///   belong to sessions that are locked by other receivers.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        /// </exception>
+        public virtual async Task<ServiceBusSessionReceiver> AcceptNextSessionAsync(
             string topicName,
             string subscriptionName,
-            ServiceBusReceiverOptions options = default,
-            string sessionId = default,
+            ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
             ValidateEntityName(topicName);
@@ -265,60 +470,110 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                sessionId: sessionId,
+                plugins: Plugins,
                 options: options,
+                sessionId: default,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled queue. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusReceiver GetDeadLetterReceiver(
+        ///
+        /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
+        /// sessionId parameter is null, and there are no available messages in the queue, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        /// <exception cref="ServiceBusException">
+        ///   The <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionCannotBeLocked"/> in this case.
+        /// </exception>
+        public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
             string queueName,
-            ServiceBusReceiverOptions options = default)
+            string sessionId,
+            ServiceBusSessionReceiverOptions options = default,
+            CancellationToken cancellationToken = default)
         {
             ValidateEntityName(queueName);
+            options ??= new ServiceBusSessionReceiverOptions();
 
-            return new ServiceBusReceiver(
+            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                entityPath: queueName,
                 connection: Connection,
-                entityPath: EntityNameFormatter.FormatDeadLetterPath(queueName),
-                isSessionEntity: false,
-                options: options);
+                plugins: Plugins,
+                options: options,
+                sessionId: sessionId,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled subscription. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusReceiver GetDeadLetterReceiver(
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
+        /// sessionId parameter is null, and there are no available messages in the queue, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        /// <exception cref="ServiceBusException">
+        ///   The <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionCannotBeLocked"/> in this case.
+        /// </exception>
+        public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
             string topicName,
             string subscriptionName,
-            ServiceBusReceiverOptions options = default)
+            string sessionId,
+            ServiceBusSessionReceiverOptions options = default,
+            CancellationToken cancellationToken = default)
         {
             ValidateEntityName(topicName);
+            options ??= new ServiceBusSessionReceiverOptions();
 
-            return new ServiceBusReceiver(
+            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                entityPath: EntityNameFormatter.FormatDeadLetterPath(
-                    EntityNameFormatter.FormatSubscriptionPath(
-                        topicName,
-                        subscriptionName)),
-                isSessionEntity: false,
-                options: options);
+                plugins: Plugins,
+                options: options,
+                sessionId: sessionId,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. If you want to change the <see cref="ServiceBusReceiveMode"/>,
+        /// use <see cref="CreateProcessor(string, ServiceBusProcessorOptions)"/> method.
+        /// The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusProcessorOptions"/> type.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string queueName)
+        ///
+        /// <param name="queueName">The queue to create a <see cref="ServiceBusProcessor"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="queueName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusProcessor CreateProcessor(string queueName)
         {
             ValidateEntityName(queueName);
 
@@ -326,16 +581,26 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusProcessorOptions());
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusProcessorOptions"/> type.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(
+        ///
+        /// <param name="queueName">The queue to create a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <see cref="ServiceBusProcessor"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="queueName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusProcessor CreateProcessor(
             string queueName,
             ServiceBusProcessorOptions options)
         {
@@ -345,16 +610,27 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. If you want to change the <see cref="ServiceBusReceiveMode"/>,
+        /// use <see cref="CreateProcessor(string, string, ServiceBusProcessorOptions)"/> method.
+        /// The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusProcessorOptions"/> type.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusProcessor"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="topicName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusProcessor CreateProcessor(
             string topicName,
             string subscriptionName)
         {
@@ -364,17 +640,23 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusProcessorOptions());
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusProcessorOptions"/> type.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <see cref="ServiceBusProcessor"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
+        public virtual ServiceBusProcessor CreateProcessor(
             string topicName,
             string subscriptionName,
             ServiceBusProcessorOptions options)
@@ -385,68 +667,74 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process session messages using
+        /// event handlers that are set on the processor. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusProcessorOptions"/> type.
         /// </summary>
-        /// <returns></returns>
-        public ServiceBusSessionProcessor GetSessionProcessor(
+        ///
+        /// <param name="queueName">The queue to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionProcessor"/>.</param>
+        /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
+        public virtual ServiceBusSessionProcessor CreateSessionProcessor(
             string queueName,
-            ServiceBusProcessorOptions options = default,
-            string sessionId = default,
-            CancellationToken cancellationToken = default)
+            ServiceBusSessionProcessorOptions options = default)
         {
             ValidateEntityName(queueName);
 
             return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
-                sessionId: sessionId,
-                options: options ?? new ServiceBusProcessorOptions());
+                plugins: Plugins,
+                options: options ?? new ServiceBusSessionProcessorOptions());
         }
 
         /// <summary>
-        ///
+        /// Creates a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process
+        /// messages using event handlers that are set on the processor. It uses <see cref="ServiceBusReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ServiceBusReceiveMode"/> is set in <see cref="ServiceBusProcessorOptions"/> type.
         /// </summary>
-        /// <returns></returns>
-        public ServiceBusSessionProcessor GetSessionProcessor(
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
+        /// <see cref="ServiceBusSessionProcessor"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
+        public virtual ServiceBusSessionProcessor CreateSessionProcessor(
             string topicName,
             string subscriptionName,
-            ServiceBusProcessorOptions options = default,
-            string sessionId = default,
-            CancellationToken cancellationToken = default)
+            ServiceBusSessionProcessorOptions options = default)
         {
             ValidateEntityName(topicName);
 
             return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                sessionId: sessionId,
-                options: options ?? new ServiceBusProcessorOptions());
+                plugins: Plugins,
+                options: options ?? new ServiceBusSessionProcessorOptions());
         }
 
+        /// <summary>
+        /// Validates that the specified entity name matches the entity path in the Connection,
+        /// if an entity path is specified in the connection.
+        /// </summary>
+        ///
+        /// <param name="entityName">Entity name to validate.</param>
         private void ValidateEntityName(string entityName)
         {
-            // The entity name may only be specified in one of the possible forms, either as part of the
-            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
-            // value, then do not consider this a failure.
+            // If the entity name is specified in both the connection string and as a stand-alone parameter,
+            // validate that they are the same.
 
             if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified);
+                throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
             }
-        }
-
-        /// <summary>
-        /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
-        /// </summary>
-        internal ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName)
-        {
-            ValidateEntityName(topicName);
-
-            return new ServiceBusRuleManager(topicName, subscriptionName);
         }
     }
 }

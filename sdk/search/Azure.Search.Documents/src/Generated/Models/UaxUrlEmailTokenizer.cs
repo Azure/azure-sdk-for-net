@@ -7,13 +7,14 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tokenizes urls and emails as one token. This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class UaxUrlEmailTokenizer : Tokenizer
+    public partial class UaxUrlEmailTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of UaxUrlEmailTokenizer. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public UaxUrlEmailTokenizer(string name) : base(name)
         {
             if (name == null)
@@ -25,10 +26,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of UaxUrlEmailTokenizer. </summary>
-        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal UaxUrlEmailTokenizer(int? maxTokenLength, string oDataType, string name) : base(oDataType, name)
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
+        internal UaxUrlEmailTokenizer(string oDataType, string name, int? maxTokenLength) : base(oDataType, name)
         {
             MaxTokenLength = maxTokenLength;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.UaxUrlEmailTokenizer";

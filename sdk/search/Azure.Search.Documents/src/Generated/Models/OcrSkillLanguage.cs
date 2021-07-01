@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input by OcrSkill. </summary>
     public readonly partial struct OcrSkillLanguage : IEquatable<OcrSkillLanguage>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OcrSkillLanguage(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -111,7 +112,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OcrSkillLanguage other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(OcrSkillLanguage other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(OcrSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -41,10 +41,24 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "keyVaultEndpointSuffix": {
+            "defaultValue": ".vault.azure.net",
+            "type": "string",
+            "metadata": {
+                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
+            }
+        },
+        "keyVaultSku": {
+            "type": "string",
+            "defaultValue": "premium",
+            "metadata": {
+                "description": "Key Vault SKU to deploy. The default is 'premium'"
+            }
         }
     },
     "variables": {
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]",
+        "azureKeyVaultUrl": "[format('https://{0}{1}', parameters('baseName'), parameters('keyVaultEndpointSuffix'))]",
         "mgmtApiVersion": "2019-04-01",
         "blobAccountName": "[parameters('baseName')]"
     },
@@ -57,7 +71,7 @@
             "properties": {
                 "sku": {
                     "family": "A",
-                    "name": "premium"
+                    "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
@@ -137,23 +151,10 @@
         }
     ],
   "outputs": {
-    "AZURE_TENANT_ID": {
-        "type": "string",
-        "value": "[parameters('tenantId')]"
-    },
-    "AZURE_CLIENT_ID": {
-        "type": "string",
-        "value": "[parameters('testApplicationId')]"
-    },
-    "AZURE_CLIENT_SECRET": {
-        "type": "string",
-        "value": "[parameters('testApplicationSecret')]"
-    },
     "AZURE_KEYVAULT_URL": {
         "type": "string",
         "value": "[variables('azureKeyVaultUrl')]"
     },
-
     "BLOB_STORAGE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('blobAccountName')]"

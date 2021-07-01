@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
     /// Describes a hybrid machine.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Machine : Resource
+    public partial class Machine : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the Machine class.
@@ -34,14 +34,15 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <summary>
         /// Initializes a new instance of the Machine class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="type1">The identity type.</param>
-        /// <param name="principalId">The identity's principal id.</param>
-        /// <param name="tenantId">The identity's tenant id.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="osProfile">Specifies the operating system settings for
         /// the hybrid machine.</param>
         /// <param name="provisioningState">The provisioning state, which only
@@ -59,17 +60,26 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// name.</param>
         /// <param name="machineFqdn">Specifies the hybrid machine
         /// FQDN.</param>
-        /// <param name="physicalLocation">Resource's Physical Location</param>
         /// <param name="clientPublicKey">Public Key that the client provides
         /// to be used during initial resource onboarding</param>
         /// <param name="osName">The Operating System running on the hybrid
         /// machine.</param>
         /// <param name="osVersion">The version of Operating System running on
         /// the hybrid machine.</param>
+        /// <param name="vmUuid">Specifies the Arc Machine's unique SMBIOS
+        /// ID</param>
         /// <param name="extensions">Machine Extensions information</param>
-        public Machine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type1 = default(string), string principalId = default(string), string tenantId = default(string), OSProfile osProfile = default(OSProfile), string provisioningState = default(string), StatusTypes? status = default(StatusTypes?), System.DateTime? lastStatusChange = default(System.DateTime?), IList<ErrorDetail> errorDetails = default(IList<ErrorDetail>), string agentVersion = default(string), string vmId = default(string), string displayName = default(string), string machineFqdn = default(string), string physicalLocation = default(string), string clientPublicKey = default(string), string osName = default(string), string osVersion = default(string), IList<MachineExtensionInstanceView> extensions = default(IList<MachineExtensionInstanceView>))
-            : base(location, id, name, type, tags, type1, principalId, tenantId)
+        /// <param name="osSku">Specifies the Operating System product
+        /// SKU.</param>
+        /// <param name="domainName">Specifies the Windows domain name.</param>
+        /// <param name="adFqdn">Specifies the AD fully qualified display
+        /// name.</param>
+        /// <param name="dnsFqdn">Specifies the DNS fully qualified display
+        /// name.</param>
+        public Machine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), LocationData locationData = default(LocationData), MachinePropertiesOsProfile osProfile = default(MachinePropertiesOsProfile), string provisioningState = default(string), string status = default(string), System.DateTime? lastStatusChange = default(System.DateTime?), IList<ErrorDetail> errorDetails = default(IList<ErrorDetail>), string agentVersion = default(string), string vmId = default(string), string displayName = default(string), string machineFqdn = default(string), string clientPublicKey = default(string), string osName = default(string), string osVersion = default(string), string vmUuid = default(string), IList<MachineExtensionInstanceView> extensions = default(IList<MachineExtensionInstanceView>), string osSku = default(string), string domainName = default(string), string adFqdn = default(string), string dnsFqdn = default(string), MachineIdentity identity = default(MachineIdentity))
+            : base(location, id, name, type, tags)
         {
+            LocationData = locationData;
             OsProfile = osProfile;
             ProvisioningState = provisioningState;
             Status = status;
@@ -79,11 +89,16 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
             VmId = vmId;
             DisplayName = displayName;
             MachineFqdn = machineFqdn;
-            PhysicalLocation = physicalLocation;
             ClientPublicKey = clientPublicKey;
             OsName = osName;
             OsVersion = osVersion;
+            VmUuid = vmUuid;
             Extensions = extensions;
+            OsSku = osSku;
+            DomainName = domainName;
+            AdFqdn = adFqdn;
+            DnsFqdn = dnsFqdn;
+            Identity = identity;
             CustomInit();
         }
 
@@ -93,11 +108,16 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.locationData")]
+        public LocationData LocationData { get; set; }
+
+        /// <summary>
         /// Gets or sets specifies the operating system settings for the hybrid
         /// machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.osProfile")]
-        public OSProfile OsProfile { get; set; }
+        public MachinePropertiesOsProfile OsProfile { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
@@ -110,7 +130,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// include: 'Connected', 'Disconnected', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public StatusTypes? Status { get; private set; }
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets the time of the last status change.
@@ -131,10 +151,10 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         public string AgentVersion { get; private set; }
 
         /// <summary>
-        /// Gets specifies the hybrid machine unique ID.
+        /// Gets or sets specifies the hybrid machine unique ID.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmId")]
-        public string VmId { get; private set; }
+        public string VmId { get; set; }
 
         /// <summary>
         /// Gets specifies the hybrid machine display name.
@@ -147,12 +167,6 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.machineFqdn")]
         public string MachineFqdn { get; private set; }
-
-        /// <summary>
-        /// Gets or sets resource's Physical Location
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.physicalLocation")]
-        public string PhysicalLocation { get; set; }
 
         /// <summary>
         /// Gets or sets public Key that the client provides to be used during
@@ -174,10 +188,45 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         public string OsVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets machine Extensions information
+        /// Gets specifies the Arc Machine's unique SMBIOS ID
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vmUuid")]
+        public string VmUuid { get; private set; }
+
+        /// <summary>
+        /// Gets machine Extensions information
         /// </summary>
         [JsonProperty(PropertyName = "properties.extensions")]
-        public IList<MachineExtensionInstanceView> Extensions { get; set; }
+        public IList<MachineExtensionInstanceView> Extensions { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the Operating System product SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.osSku")]
+        public string OsSku { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the Windows domain name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.domainName")]
+        public string DomainName { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the AD fully qualified display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.adFqdn")]
+        public string AdFqdn { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the DNS fully qualified display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsFqdn")]
+        public string DnsFqdn { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public MachineIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -188,6 +237,10 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         public override void Validate()
         {
             base.Validate();
+            if (LocationData != null)
+            {
+                LocationData.Validate();
+            }
             if (ErrorDetails != null)
             {
                 foreach (var element in ErrorDetails)

@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +26,9 @@ namespace Azure.Messaging.ServiceBus.Core
 
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+        /// <summary>The maximum number of seconds allowed for a <see cref="TimeSpan" />.</summary>
+        private static double MaximumTimeSpanSeconds = TimeSpan.MaxValue.TotalSeconds;
 
         /// <summary>
         ///   The set of options responsible for configuring the retry
@@ -77,10 +81,10 @@ namespace Azure.Messaging.ServiceBus.Core
             Exception lastException,
             int attemptCount)
         {
-            if ((Options.MaximumRetries <= 0)
+            if ((Options.MaxRetries <= 0)
                 || (Options.Delay == TimeSpan.Zero)
-                || (Options.MaximumDelay == TimeSpan.Zero)
-                || (attemptCount > Options.MaximumRetries)
+                || (Options.MaxDelay == TimeSpan.Zero)
+                || (attemptCount > Options.MaxRetries)
                 || (!ShouldRetryException(lastException)))
             {
                 return null;
@@ -92,15 +96,15 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 ServiceBusRetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
                 ServiceBusRetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
-                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources1.UnknownRetryMode, Options.Mode.ToString())),
+                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
             };
 
             // Adjust the delay, if needed, to keep within the maximum
             // duration.
 
-            if (Options.MaximumDelay < retryDelay)
+            if (Options.MaxDelay < retryDelay)
             {
-                return Options.MaximumDelay;
+                return Options.MaxDelay;
             }
 
             return retryDelay;
@@ -116,7 +120,8 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         private static bool ShouldRetryException(Exception exception)
         {
-            // There's there's an ambient transaction - should not retry
+            // There's an ambient transaction - should not retry
+
             if (Transaction.Current != null)
             {
                 return false;
@@ -141,6 +146,8 @@ namespace Azure.Messaging.ServiceBus.Core
 
                 case TimeoutException _:
                 case SocketException _:
+                case IOException _:
+                case UnauthorizedAccessException _:
                     return true;
 
                 default:
@@ -163,8 +170,11 @@ namespace Azure.Messaging.ServiceBus.Core
             int attemptCount,
             double baseDelaySeconds,
             double baseJitterSeconds,
-            Random random) =>
-            TimeSpan.FromSeconds((Math.Pow(2, attemptCount) * baseDelaySeconds) + (random.NextDouble() * baseJitterSeconds));
+            Random random)
+        {
+            var delay = (Math.Pow(2, attemptCount) * baseDelaySeconds) + (random.NextDouble() * baseJitterSeconds);
+            return delay > MaximumTimeSpanSeconds ? TimeSpan.MaxValue : TimeSpan.FromSeconds(delay);
+        }
 
         /// <summary>
         ///   Calculates the delay for a fixed back-off.
@@ -179,7 +189,10 @@ namespace Azure.Messaging.ServiceBus.Core
         private static TimeSpan CalculateFixedDelay(
             double baseDelaySeconds,
             double baseJitterSeconds,
-            Random random) =>
-            TimeSpan.FromSeconds(baseDelaySeconds + (random.NextDouble() * baseJitterSeconds));
+            Random random)
+        {
+            var delay = baseDelaySeconds + (random.NextDouble() * baseJitterSeconds);
+            return delay > MaximumTimeSpanSeconds ? TimeSpan.MaxValue : TimeSpan.FromSeconds(delay);
+        }
     }
 }

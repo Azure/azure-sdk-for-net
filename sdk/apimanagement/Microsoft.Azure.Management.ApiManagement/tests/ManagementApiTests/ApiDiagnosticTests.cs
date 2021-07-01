@@ -59,7 +59,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var credentials = new Dictionary<string, string>();
                     credentials.Add("instrumentationKey", applicationInsightsGuid.ToString());
 
-                    var loggerCreateParameters = new LoggerContract(LoggerType.ApplicationInsights, credentials);
+                    var loggerCreateParameters = new LoggerContract(LoggerType.ApplicationInsights, credentials: credentials);
                     var loggerContract = await testBase.client.Logger.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
@@ -181,6 +181,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                         apiDiagnosticId,
                         "*");
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, loggerId, "*");
+
+                    // clean up all properties
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var property in listOfProperties)
+                    {
+                        testBase.client.NamedValue.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            property.Name,
+                            "*");
+                    }
                 }
             }
         }

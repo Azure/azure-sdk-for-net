@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -331,9 +329,23 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='systemTopicName'>
             /// Name of the system topic.
             /// </param>
-            public static IEnumerable<EventSubscription> ListBySystemTopic(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName)
+            /// <param name='filter'>
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
+            /// </param>
+            public static IPage<EventSubscription> ListBySystemTopic(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, string filter = default(string), int? top = default(int?))
             {
-                return operations.ListBySystemTopicAsync(resourceGroupName, systemTopicName).GetAwaiter().GetResult();
+                return operations.ListBySystemTopicAsync(resourceGroupName, systemTopicName, filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -351,12 +363,82 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='systemTopicName'>
             /// Name of the system topic.
             /// </param>
+            /// <param name='filter'>
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListBySystemTopicAsync(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListBySystemTopicAsync(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySystemTopicWithHttpMessagesAsync(resourceGroupName, systemTopicName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySystemTopicWithHttpMessagesAsync(resourceGroupName, systemTopicName, filter, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get delivery attributes for an event subscription.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='systemTopicName'>
+            /// Name of the system topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription to be created. Event subscription names must
+            /// be between 3 and 100 characters in length and use alphanumeric letters
+            /// only.
+            /// </param>
+            public static DeliveryAttributeListResult GetDeliveryAttributes(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, string eventSubscriptionName)
+            {
+                return operations.GetDeliveryAttributesAsync(resourceGroupName, systemTopicName, eventSubscriptionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get delivery attributes for an event subscription.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='systemTopicName'>
+            /// Name of the system topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription to be created. Event subscription names must
+            /// be between 3 and 100 characters in length and use alphanumeric letters
+            /// only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeliveryAttributeListResult> GetDeliveryAttributesAsync(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, string eventSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeliveryAttributesWithHttpMessagesAsync(resourceGroupName, systemTopicName, eventSubscriptionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -538,6 +620,46 @@ namespace Microsoft.Azure.Management.EventGrid
             public static async Task<EventSubscription> BeginUpdateAsync(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, systemTopicName, eventSubscriptionName, eventSubscriptionUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List event subscriptions of a system topic.
+            /// </summary>
+            /// <remarks>
+            /// List event subscriptions that belong to a specific system topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListBySystemTopicNext(this ISystemTopicEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListBySystemTopicNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List event subscriptions of a system topic.
+            /// </summary>
+            /// <remarks>
+            /// List event subscriptions that belong to a specific system topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListBySystemTopicNextAsync(this ISystemTopicEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySystemTopicNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

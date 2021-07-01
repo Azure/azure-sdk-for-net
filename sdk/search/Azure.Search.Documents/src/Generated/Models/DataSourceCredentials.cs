@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
-    public partial class DataSourceCredentials
+    internal partial class DataSourceCredentials
     {
         /// <summary> Initializes a new instance of DataSourceCredentials. </summary>
         public DataSourceCredentials()
@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of DataSourceCredentials. </summary>
-        /// <param name="connectionString"> The connection string for the datasource. </param>
+        /// <param name="connectionString"> The connection string for the datasource. Set to &apos;&lt;unchanged&gt;&apos; if you do not want the connection string updated. </param>
         internal DataSourceCredentials(string connectionString)
         {
             ConnectionString = connectionString;
         }
 
-        /// <summary> The connection string for the datasource. </summary>
+        /// <summary> The connection string for the datasource. Set to &apos;&lt;unchanged&gt;&apos; if you do not want the connection string updated. </summary>
         public string ConnectionString { get; set; }
     }
 }

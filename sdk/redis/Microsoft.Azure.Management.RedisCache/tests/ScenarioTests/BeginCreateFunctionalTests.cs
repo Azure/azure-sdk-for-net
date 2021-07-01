@@ -54,6 +54,7 @@ namespace AzureRedisCache.Tests
                     Assert.Null(response.Instances[i].NonSslPort);
                     Assert.Null(response.Instances[i].ShardId);
                     Assert.Null(response.Instances[i].Zone);
+                    Assert.Null(response.Instances[i].IsMaster);
                 }
 
                 for (int i = 0; i < 60; i++)

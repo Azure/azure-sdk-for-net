@@ -19,21 +19,22 @@ namespace Microsoft.Azure.Management.StorageCache
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("StorageCache", "Caches", "2019-11-01"),
-                new Tuple<string, string, string>("StorageCache", "Operations", "2019-11-01"),
-                new Tuple<string, string, string>("StorageCache", "Skus", "2019-11-01"),
-                new Tuple<string, string, string>("StorageCache", "StorageTargets", "2019-11-01"),
-                new Tuple<string, string, string>("StorageCache", "UsageModels", "2019-11-01"),
+                new Tuple<string, string, string>("StorageCache", "AscOperations", "2021-03-01"),
+                new Tuple<string, string, string>("StorageCache", "Caches", "2021-03-01"),
+                new Tuple<string, string, string>("StorageCache", "Operations", "2021-03-01"),
+                new Tuple<string, string, string>("StorageCache", "Skus", "2021-03-01"),
+                new Tuple<string, string, string>("StorageCache", "StorageTargets", "2021-03-01"),
+                new Tuple<string, string, string>("StorageCache", "UsageModels", "2021-03-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagecache/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.StorageCache --csharp.output-folder=C:\\Avere\\service\\azure-sdk-for-net\\sdk\\storagecache\\Microsoft.Azure.Management.StorageCache\\src\\Generated";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4417";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagecache/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.StorageCache --csharp.output-folder=C:\\swaggersdk\\azure-sdk-for-net\\sdk\\storagecache\\Microsoft.Azure.Management.StorageCache\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "42d8ead1da60419364bfa289632e1402c858d05f";
+      public static readonly String GithubCommidId = "1b0ed8edd58bb7c9ade9a27430759527bd4eec8e";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

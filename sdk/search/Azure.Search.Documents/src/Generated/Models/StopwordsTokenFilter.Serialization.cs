@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class StopwordsTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Stopwords != null)
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();
@@ -26,17 +26,17 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (StopwordsList != null)
+            if (Optional.IsDefined(StopwordsList))
             {
                 writer.WritePropertyName("stopwordsList");
                 writer.WriteStringValue(StopwordsList.Value.ToSerialString());
             }
-            if (IgnoreCase != null)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase");
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (RemoveTrailingStopWords != null)
+            if (Optional.IsDefined(RemoveTrailingStopWords))
             {
                 writer.WritePropertyName("removeTrailing");
                 writer.WriteBooleanValue(RemoveTrailingStopWords.Value);
@@ -50,11 +50,11 @@ namespace Azure.Search.Documents.Models
 
         internal static StopwordsTokenFilter DeserializeStopwordsTokenFilter(JsonElement element)
         {
-            IList<string> stopwords = default;
-            StopwordsList? stopwordsList = default;
-            bool? ignoreCase = default;
-            bool? removeTrailing = default;
-            string odatatype = default;
+            Optional<IList<string>> stopwords = default;
+            Optional<StopwordsList> stopwordsList = default;
+            Optional<bool> ignoreCase = default;
+            Optional<bool> removeTrailing = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -62,6 +62,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -76,6 +77,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stopwordsList = property.Value.GetString().ToStopwordsList();
@@ -85,6 +87,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ignoreCase = property.Value.GetBoolean();
@@ -94,6 +97,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     removeTrailing = property.Value.GetBoolean();
@@ -101,7 +105,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -110,7 +114,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new StopwordsTokenFilter(stopwords, stopwordsList, ignoreCase, removeTrailing, odatatype, name);
+            return new StopwordsTokenFilter(odataType, name, Optional.ToList(stopwords), Optional.ToNullable(stopwordsList), Optional.ToNullable(ignoreCase), Optional.ToNullable(removeTrailing));
         }
     }
 }

@@ -19,5 +19,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string Invalid = "Invalid";
         public const string GeoRedundant = "GeoRedundant";
         public const string LocallyRedundant = "LocallyRedundant";
+        public const string ZoneRedundant = "ZoneRedundant";
+        public const string ReadAccessGeoZoneRedundant = "ReadAccessGeoZoneRedundant";
     }
 }

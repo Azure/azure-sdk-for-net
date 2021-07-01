@@ -57,16 +57,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// The ID of the target subscription.
-        /// </summary>
-        public string SubscriptionId1 { get; set; }
-
-        /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion11 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -98,6 +88,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the IProvidersOperations.
         /// </summary>
         public virtual IProvidersOperations Providers { get; private set; }
+
+        /// <summary>
+        /// Gets the IProviderResourceTypesOperations.
+        /// </summary>
+        public virtual IProviderResourceTypesOperations ProviderResourceTypes { get; private set; }
 
         /// <summary>
         /// Gets the IResourcesOperations.
@@ -363,12 +358,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             Operations = new Operations(this);
             Deployments = new DeploymentsOperations(this);
             Providers = new ProvidersOperations(this);
+            ProviderResourceTypes = new ProviderResourceTypesOperations(this);
             Resources = new ResourcesOperations(this);
             ResourceGroups = new ResourceGroupsOperations(this);
             Tags = new TagsOperations(this);
             DeploymentOperations = new DeploymentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-10-01";
+            ApiVersion = "2021-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

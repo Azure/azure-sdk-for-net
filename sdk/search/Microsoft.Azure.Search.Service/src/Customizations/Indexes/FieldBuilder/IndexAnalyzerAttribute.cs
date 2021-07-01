@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search
         /// Indicates that the specified analyzer should be used.
         /// </summary>
         /// <param name="analyzerName">
-        /// The name of the analyzer. Use one of the names in <c cref="AnalyzerName.AsString">AnalyzerName.AsString</c>
+        /// The name of the analyzer. Use one of the names in <see cref="AnalyzerName.AsString" />
         /// or the name of a custom analyzer.
         /// </param>
         public IndexAnalyzerAttribute(string analyzerName)

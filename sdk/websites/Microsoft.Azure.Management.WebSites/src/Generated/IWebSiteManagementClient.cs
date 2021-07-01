@@ -51,6 +51,11 @@ namespace Microsoft.Azure.Management.WebSites
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// API Version
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -73,6 +78,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the IAppServiceCertificateOrdersOperations.
         /// </summary>
         IAppServiceCertificateOrdersOperations AppServiceCertificateOrders { get; }
+
+        /// <summary>
+        /// Gets the ICertificateOrdersDiagnosticsOperations.
+        /// </summary>
+        ICertificateOrdersDiagnosticsOperations CertificateOrdersDiagnostics { get; }
 
         /// <summary>
         /// Gets the ICertificateRegistrationProviderOperations.
@@ -110,6 +120,11 @@ namespace Microsoft.Azure.Management.WebSites
         IDiagnosticsOperations Diagnostics { get; }
 
         /// <summary>
+        /// Gets the IGlobalModelOperations.
+        /// </summary>
+        IGlobalModelOperations GlobalModel { get; }
+
+        /// <summary>
         /// Gets the IProviderOperations.
         /// </summary>
         IProviderOperations Provider { get; }
@@ -123,6 +138,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the IWebAppsOperations.
         /// </summary>
         IWebAppsOperations WebApps { get; }
+
+        /// <summary>
+        /// Gets the IStaticSitesOperations.
+        /// </summary>
+        IStaticSitesOperations StaticSites { get; }
 
         /// <summary>
         /// Gets the IAppServiceEnvironmentsOperations.
@@ -140,10 +160,31 @@ namespace Microsoft.Azure.Management.WebSites
         IResourceHealthMetadataOperations ResourceHealthMetadata { get; }
 
         /// <summary>
+        /// Exchange code for GitHub access token for AppService CLI
+        /// </summary>
+        /// <remarks>
+        /// Description for Exchange code for GitHub access token for
+        /// AppService CLI
+        /// </remarks>
+        /// <param name='code'>
+        /// Code string to exchange for Github Access token
+        /// </param>
+        /// <param name='state'>
+        /// State string used for verification.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<AppserviceGithubToken>> GenerateGithubAccessTokenForAppserviceCLIAsyncWithHttpMessagesAsync(string code, string state, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets publishing user
         /// </summary>
         /// <remarks>
-        /// Gets publishing user
+        /// Description for Gets publishing user
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,7 +198,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Updates publishing user
         /// </summary>
         /// <remarks>
-        /// Updates publishing user
+        /// Description for Updates publishing user
         /// </remarks>
         /// <param name='userDetails'>
         /// Details of publishing user
@@ -174,7 +215,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the source controls available for Azure websites.
         /// </summary>
         /// <remarks>
-        /// Gets the source controls available for Azure websites.
+        /// Description for Gets the source controls available for Azure
+        /// websites.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -188,7 +230,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets source control token
         /// </summary>
         /// <remarks>
-        /// Gets source control token
+        /// Description for Gets source control token
         /// </remarks>
         /// <param name='sourceControlType'>
         /// Type of source control
@@ -205,7 +247,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Updates source control token
         /// </summary>
         /// <remarks>
-        /// Updates source control token
+        /// Description for Updates source control token
         /// </remarks>
         /// <param name='sourceControlType'>
         /// Type of source control
@@ -225,7 +267,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets a list of meters for a given location.
         /// </summary>
         /// <remarks>
-        /// Gets a list of meters for a given location.
+        /// Description for Gets a list of meters for a given location.
         /// </remarks>
         /// <param name='billingLocation'>
         /// Azure Location of billable resource
@@ -245,7 +287,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Check if a resource name is available.
         /// </summary>
         /// <remarks>
-        /// Check if a resource name is available.
+        /// Description for Check if a resource name is available.
         /// </remarks>
         /// <param name='name'>
         /// Resource name to verify.
@@ -272,7 +314,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets list of available geo regions plus ministamps
         /// </summary>
         /// <remarks>
-        /// Gets list of available geo regions plus ministamps
+        /// Description for Gets list of available geo regions plus ministamps
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -286,12 +328,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a list of available geographical regions.
         /// </summary>
         /// <remarks>
-        /// Get a list of available geographical regions.
+        /// Description for Get a list of available geographical regions.
         /// </remarks>
         /// <param name='sku'>
         /// Name of SKU used to filter the regions. Possible values include:
         /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic',
-        /// 'Isolated', 'PremiumV2', 'ElasticPremium', 'ElasticIsolated'
+        /// 'Isolated', 'IsolatedV2', 'PremiumV2', 'PremiumV3',
+        /// 'PremiumContainer', 'ElasticPremium', 'ElasticIsolated'
         /// </param>
         /// <param name='linuxWorkersEnabled'>
         /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only
@@ -317,7 +360,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all apps that are assigned to a hostname.
         /// </summary>
         /// <remarks>
-        /// List all apps that are assigned to a hostname.
+        /// Description for List all apps that are assigned to a hostname.
         /// </remarks>
         /// <param name='nameIdentifier'>
         /// Hostname information.
@@ -334,7 +377,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all premier add-on offers.
         /// </summary>
         /// <remarks>
-        /// List all premier add-on offers.
+        /// Description for List all premier add-on offers.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -348,7 +391,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all SKUs.
         /// </summary>
         /// <remarks>
-        /// List all SKUs.
+        /// Description for List all SKUs.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -363,8 +406,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// by analyzing the Network Security Group rules.
         /// </summary>
         /// <remarks>
-        /// Verifies if this VNET is compatible with an App Service Environment
-        /// by analyzing the Network Security Group rules.
+        /// Description for Verifies if this VNET is compatible with an App
+        /// Service Environment by analyzing the Network Security Group rules.
         /// </remarks>
         /// <param name='parameters'>
         /// VNET information
@@ -381,7 +424,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Move resources between resource groups.
         /// </summary>
         /// <remarks>
-        /// Move resources between resource groups.
+        /// Description for Move resources between resource groups.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -401,7 +444,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Validate if a resource can be created.
         /// </summary>
         /// <remarks>
-        /// Validate if a resource can be created.
+        /// Description for Validate if a resource can be created.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -418,29 +461,10 @@ namespace Microsoft.Azure.Management.WebSites
         Task<AzureOperationResponse<ValidateResponse>> ValidateWithHttpMessagesAsync(string resourceGroupName, ValidateRequest validateRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Validate if the container settings are correct.
-        /// </summary>
-        /// <remarks>
-        /// Validate if the container settings are correct.
-        /// </remarks>
-        /// <param name='validateContainerSettingsRequest'>
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> ValidateContainerSettingsWithHttpMessagesAsync(ValidateContainerSettingsRequest validateContainerSettingsRequest, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Validate whether a resource can be moved.
         /// </summary>
         /// <remarks>
-        /// Validate whether a resource can be moved.
+        /// Description for Validate whether a resource can be moved.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -460,7 +484,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the source controls available for Azure websites.
         /// </summary>
         /// <remarks>
-        /// Gets the source controls available for Azure websites.
+        /// Description for Gets the source controls available for Azure
+        /// websites.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -477,7 +502,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets a list of meters for a given location.
         /// </summary>
         /// <remarks>
-        /// Gets a list of meters for a given location.
+        /// Description for Gets a list of meters for a given location.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -494,7 +519,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a list of available geographical regions.
         /// </summary>
         /// <remarks>
-        /// Get a list of available geographical regions.
+        /// Description for Get a list of available geographical regions.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -511,7 +536,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all apps that are assigned to a hostname.
         /// </summary>
         /// <remarks>
-        /// List all apps that are assigned to a hostname.
+        /// Description for List all apps that are assigned to a hostname.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -528,7 +553,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all premier add-on offers.
         /// </summary>
         /// <remarks>
-        /// List all premier add-on offers.
+        /// Description for List all premier add-on offers.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

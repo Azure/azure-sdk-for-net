@@ -242,49 +242,6 @@ namespace Microsoft.Azure.Management.Batch
         /// </exception>
         Task<AzureOperationResponse<Certificate,CertificateCancelDeletionHeaders>> CancelDeletionWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new certificate inside the specified account.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the Batch account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Batch account.
-        /// </param>
-        /// <param name='certificateName'>
-        /// The identifier for the certificate. This must be made up of
-        /// algorithm and thumbprint separated by a dash, and must match the
-        /// certificate data in the request. For example SHA1-a3d1c5.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters for certificate creation.
-        /// </param>
-        /// <param name='ifMatch'>
-        /// The entity state (ETag) version of the certificate to update. A
-        /// value of "*" can be used to apply the operation only if the
-        /// certificate already exists. If omitted, this operation will always
-        /// be applied.
-        /// </param>
-        /// <param name='ifNoneMatch'>
-        /// Set to '*' to allow a new certificate to be created, but to prevent
-        /// updating an existing certificate. Other values will be ignored.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Certificate,CertificateCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string certificateName, CertificateCreateOrUpdateParameters parameters, string ifMatch = default(string), string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Deletes the specified certificate.
         /// </summary>
         /// <param name='resourceGroupName'>

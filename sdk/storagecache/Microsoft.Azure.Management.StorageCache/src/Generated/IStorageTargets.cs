@@ -19,13 +19,40 @@ namespace Microsoft.Azure.Management.StorageCache
     public partial interface IStorageTargets
     {
         /// <summary>
+        /// Tells a storage target to refresh its DNS information.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Target resource group.
+        /// </param>
+        /// <param name='cacheName'>
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
+        /// </param>
+        /// <param name='storageTargetName'>
+        /// Name of Storage Target.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse> DnsRefreshWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Returns a list of Storage Targets for the specified Cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -55,7 +82,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
         /// Name of Storage Target.
@@ -69,13 +97,10 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, string storageTargetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a Storage Target from a Cache.
         /// </summary>
@@ -83,10 +108,11 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of the Storage Target.
+        /// Name of Storage Target.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -114,10 +140,11 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of the Storage Target.
+        /// Name of Storage Target.
         /// </param>
         /// <param name='storagetarget'>
         /// Object containing the definition of a Storage Target.

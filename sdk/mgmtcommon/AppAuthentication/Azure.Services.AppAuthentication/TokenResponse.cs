@@ -32,9 +32,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
         [DataMember(Name = "expiresOn", IsRequired = false)]
         public string ExpiresOn2 { get; private set; }
 
-        [DataMember(Name = "error_description", IsRequired = false)]
-        public string ErrorDescription { get; private set; }
-
         // VS token service returns resource
         [DataMember(Name = "resource", IsRequired = false)]
         public string Resource { get; private set; }

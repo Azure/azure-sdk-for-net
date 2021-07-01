@@ -38,8 +38,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// configuration for the Pool.</param>
         /// <param name="virtualMachineConfiguration">The virtual machine
         /// configuration for the Pool.</param>
-        /// <param name="maxTasksPerNode">The maximum number of Tasks that can
-        /// run concurrently on a single Compute Node in the Pool.</param>
+        /// <param name="taskSlotsPerNode">The number of task slots that can be
+        /// used to run concurrent tasks on a single compute node in the
+        /// pool.</param>
         /// <param name="taskSchedulingPolicy">How Tasks are distributed across
         /// Compute Nodes in a Pool.</param>
         /// <param name="resizeTimeout">The timeout for allocation of Compute
@@ -75,13 +76,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Pool as metadata.</param>
         /// <param name="mountConfiguration">A list of file systems to mount on
         /// each node in the pool.</param>
-        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
+        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
         {
             DisplayName = displayName;
             VmSize = vmSize;
             CloudServiceConfiguration = cloudServiceConfiguration;
             VirtualMachineConfiguration = virtualMachineConfiguration;
-            MaxTasksPerNode = maxTasksPerNode;
+            TaskSlotsPerNode = taskSlotsPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
             ResizeTimeout = resizeTimeout;
             TargetDedicatedNodes = targetDedicatedNodes;
@@ -159,15 +160,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of Tasks that can run concurrently
-        /// on a single Compute Node in the Pool.
+        /// Gets or sets the number of task slots that can be used to run
+        /// concurrent tasks on a single compute node in the pool.
         /// </summary>
         /// <remarks>
         /// The default value is 1. The maximum value is the smaller of 4 times
-        /// the number of cores of the vmSize of the Pool or 256.
+        /// the number of cores of the vmSize of the pool or 256.
         /// </remarks>
-        [JsonProperty(PropertyName = "maxTasksPerNode")]
-        public int? MaxTasksPerNode { get; set; }
+        [JsonProperty(PropertyName = "taskSlotsPerNode")]
+        public int? TaskSlotsPerNode { get; set; }
 
         /// <summary>
         /// Gets or sets how Tasks are distributed across Compute Nodes in a

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "managementGroupName": {
+      "value": "tag-mg-sdk"
+    },
+    "subscriptionId": {
+      "value": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
+    }
+  }
+}
+

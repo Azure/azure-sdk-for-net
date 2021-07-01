@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.NetApp
     using System.Net.Http;
 
     /// <summary>
-    /// Microsoft NetApp Azure Resource Provider specification
+    /// Microsoft NetApp Files Azure Resource Provider specification
     /// </summary>
     public partial class AzureNetAppFilesManagementClient : ServiceClient<AzureNetAppFilesManagementClient>, IAzureNetAppFilesManagementClient, IAzureClient
     {
@@ -102,14 +102,34 @@ namespace Microsoft.Azure.Management.NetApp
         public virtual IVolumesOperations Volumes { get; private set; }
 
         /// <summary>
-        /// Gets the IMountTargetsOperations.
-        /// </summary>
-        public virtual IMountTargetsOperations MountTargets { get; private set; }
-
-        /// <summary>
         /// Gets the ISnapshotsOperations.
         /// </summary>
         public virtual ISnapshotsOperations Snapshots { get; private set; }
+
+        /// <summary>
+        /// Gets the ISnapshotPoliciesOperations.
+        /// </summary>
+        public virtual ISnapshotPoliciesOperations SnapshotPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupsOperations.
+        /// </summary>
+        public virtual IBackupsOperations Backups { get; private set; }
+
+        /// <summary>
+        /// Gets the IAccountBackupsOperations.
+        /// </summary>
+        public virtual IAccountBackupsOperations AccountBackups { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupPoliciesOperations.
+        /// </summary>
+        public virtual IBackupPoliciesOperations BackupPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IVaultsOperations.
+        /// </summary>
+        public virtual IVaultsOperations Vaults { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AzureNetAppFilesManagementClient class.
@@ -357,10 +377,14 @@ namespace Microsoft.Azure.Management.NetApp
             Accounts = new AccountsOperations(this);
             Pools = new PoolsOperations(this);
             Volumes = new VolumesOperations(this);
-            MountTargets = new MountTargetsOperations(this);
             Snapshots = new SnapshotsOperations(this);
+            SnapshotPolicies = new SnapshotPoliciesOperations(this);
+            Backups = new BackupsOperations(this);
+            AccountBackups = new AccountBackupsOperations(this);
+            BackupPolicies = new BackupPoliciesOperations(this);
+            Vaults = new VaultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-10-01";
+            ApiVersion = "2021-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

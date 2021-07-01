@@ -44,6 +44,10 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional. When specified, only container names starting with the
         /// filter will be listed.
         /// </param>
+        /// <param name='include'>
+        /// Optional, used to include the properties for soft deleted blob
+        /// containers. Possible values include: 'deleted'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -59,7 +63,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string include = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new container under the specified account as described by
         /// request body. The container resource includes metadata and
@@ -82,13 +86,8 @@ namespace Microsoft.Azure.Management.Storage
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
         /// </param>
-        /// <param name='publicAccess'>
-        /// Specifies whether data in the container may be accessed publicly
-        /// and the level of access. Possible values include: 'Container',
-        /// 'Blob', 'None'
-        /// </param>
-        /// <param name='metadata'>
-        /// A name-value pair to associate with the container as metadata.
+        /// <param name='blobContainer'>
+        /// Properties of the blob container to create.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -105,7 +104,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BlobContainer>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BlobContainer>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates container properties as specified in request body.
         /// Properties not mentioned in the request will be unchanged. Update
@@ -127,13 +126,8 @@ namespace Microsoft.Azure.Management.Storage
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
         /// </param>
-        /// <param name='publicAccess'>
-        /// Specifies whether data in the container may be accessed publicly
-        /// and the level of access. Possible values include: 'Container',
-        /// 'Blob', 'None'
-        /// </param>
-        /// <param name='metadata'>
-        /// A name-value pair to associate with the container as metadata.
+        /// <param name='blobContainer'>
+        /// Properties to update for the blob container.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -150,7 +144,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BlobContainer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BlobContainer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets properties of a specified container.
         /// </summary>
@@ -400,8 +394,8 @@ namespace Microsoft.Azure.Management.Storage
         /// Aborts an unlocked immutability policy. The response of delete has
         /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
         /// required for this operation. Deleting a locked immutability policy
-        /// is not allowed, only way is to delete the container after deleting
-        /// all blobs inside the container.
+        /// is not allowed, the only way is to delete the container after
+        /// deleting all expired blobs inside the policy locked container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -579,6 +573,78 @@ namespace Microsoft.Azure.Management.Storage
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<LeaseContainerResponse>> LeaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters = default(LeaseContainerRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation migrates a blob container from container level WORM
+        /// to object level immutability enabled container. Prerequisites
+        /// require a container level immutability policy either in locked or
+        /// unlocked state, Account level versioning must be enabled and there
+        /// should be no Legal hold on the container.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage
+        /// account. Blob container names must be between 3 and 63 characters
+        /// in length and use numbers, lower-case letters and dash (-) only.
+        /// Every dash (-) character must be immediately preceded and followed
+        /// by a letter or number.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ObjectLevelWormWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation migrates a blob container from container level WORM
+        /// to object level immutability enabled container. Prerequisites
+        /// require a container level immutability policy either in locked or
+        /// unlocked state, Account level versioning must be enabled and there
+        /// should be no Legal hold on the container.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage
+        /// account. Blob container names must be between 3 and 63 characters
+        /// in length and use numbers, lower-case letters and dash (-) only.
+        /// Every dash (-) character must be immediately preceded and followed
+        /// by a letter or number.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginObjectLevelWormWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all containers and does not support a prefix like data plane.
         /// Also SRP today does not return continuation token.

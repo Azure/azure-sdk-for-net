@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Specifies blob lease access conditions for a container or blob.
     /// </summary>
-    public class BlobRequestConditions : RequestConditions
+    public class BlobRequestConditions : BlobLeaseRequestConditions
     {
         /// <summary>
         /// Optionally limit requests to resources with an active lease
@@ -40,6 +40,17 @@ namespace Azure.Storage.Blobs.Models
             }
             return conditions.ToString();
         }
+
+        internal BlobRequestConditions WithIfMatch(ETag etag) =>
+            new BlobRequestConditions
+            {
+                LeaseId = LeaseId,
+                IfMatch = etag,
+                IfNoneMatch = IfNoneMatch,
+                IfModifiedSince = IfModifiedSince,
+                IfUnmodifiedSince = IfUnmodifiedSince,
+                TagConditions = TagConditions,
+            };
 
         /// <summary>
         /// Collect any request conditions.  Conditions should be separated by
@@ -71,6 +82,11 @@ namespace Azure.Storage.Blobs.Models
             if (LeaseId != null)
             {
                 conditions.Append(nameof(LeaseId)).Append('=').Append(LeaseId).Append(';');
+            }
+
+            if (TagConditions != null)
+            {
+                conditions.Append(nameof(TagConditions)).Append('=').Append(TagConditions).Append(';');
             }
         }
     }

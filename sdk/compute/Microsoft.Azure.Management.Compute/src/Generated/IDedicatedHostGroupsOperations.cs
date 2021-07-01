@@ -112,6 +112,13 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='hostGroupName'>
         /// The name of the dedicated host group.
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation. 'InstanceView'
+        /// will retrieve the list of instance views of the dedicated hosts
+        /// under the dedicated host group. 'UserData' is not supported for
+        /// dedicated host group. Possible values include: 'instanceView',
+        /// 'userData'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -127,7 +134,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DedicatedHostGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DedicatedHostGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, InstanceViewTypes? expand = default(InstanceViewTypes?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the dedicated host groups in the specified resource
         /// group. Use the nextLink property in the response to get the next

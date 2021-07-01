@@ -19,7 +19,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             var messageBody = Encoding.UTF8.GetBytes("test");
             var messageId = Guid.NewGuid().ToString();
-            var partitionKey = Guid.NewGuid().ToString();
             var viaPartitionKey = Guid.NewGuid().ToString();
             var sessionId = Guid.NewGuid().ToString();
             var correlationId = Guid.NewGuid().ToString();
@@ -34,7 +33,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var brokeredMessage = new Message(messageBody)
             {
                 MessageId = messageId,
-                PartitionKey = partitionKey,
                 ViaPartitionKey = viaPartitionKey,
                 SessionId = sessionId,
                 CorrelationId = correlationId,
@@ -53,7 +51,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.NotNull(clone.Body);
             Assert.Equal("SomeUserProperty", clone.UserProperties["UserProperty"]);
             Assert.Equal(messageId, clone.MessageId);
-            Assert.Equal(partitionKey, clone.PartitionKey);
             Assert.Equal(viaPartitionKey, clone.ViaPartitionKey);
             Assert.Equal(sessionId, clone.SessionId);
             Assert.Equal(correlationId, clone.CorrelationId);
@@ -62,6 +59,29 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(contentType, clone.ContentType);
             Assert.Equal(replyTo, clone.ReplyTo);
             Assert.Equal(replyToSessionId, clone.ReplyToSessionId);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public void TestSessionIdOverwritePartitionKey()
+        {
+            var messageBody = Encoding.UTF8.GetBytes("test");
+            var brokeredMessage = new Message(messageBody);
+            string partitionKey1 = "partitionKey1";
+            string sessionId1 = "sessionId1";
+            brokeredMessage.PartitionKey = partitionKey1;
+            Assert.Equal(partitionKey1, brokeredMessage.PartitionKey);
+            brokeredMessage.SessionId = sessionId1;
+            Assert.Equal(sessionId1, brokeredMessage.PartitionKey);
+            try
+            {
+                brokeredMessage.PartitionKey = partitionKey1;
+                Assert.False(true, "PartitionKey should not be set to a value different from SessionId");
+            }
+            catch (InvalidOperationException)
+            {
+                // Expected
+            }
         }
 
         public class WhenQueryingIsReceivedProperty

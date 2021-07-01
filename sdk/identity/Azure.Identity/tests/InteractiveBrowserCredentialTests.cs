@@ -2,63 +2,20 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.Diagnostics;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
 {
     public class InteractiveBrowserCredentialTests : ClientTestBase
     {
-        private const string MultiTenantClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
-        private const string SingleTenantClientId = "9985250a-c1c3-4caf-a039-9d98f2a0707a";
-        private const string TenantId = "a7fc734e-9961-43ce-b4de-21b8b38403ba";
-
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        [Test]
-        [Ignore("This test is an integration test which can only be run with user interaction")]
-        public async Task AuthenticateWithBrowserAsync()
-        {
-            // to fully manually verify the InteractiveBrowserCredential this test should be run both authenticating with a
-            // school / organization account as well as a personal live account, i.e. a @outlook.com, @live.com, or @hotmail.com
-            var cred = new InteractiveBrowserCredential();
-
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
-
-            Assert.NotNull(token.Token);
-        }
-
-        [Test]
-        [Ignore("This test is an integration test which can only be run with user interaction")]
-        public void AuthenticateBrowserCancellationAsync()
-        {
-            var cred = new InteractiveBrowserCredential();
-
-            var cancelSource = new CancellationTokenSource();
-
-            ValueTask<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
-
-            cancelSource.Cancel();
-
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await getTokenTask.ConfigureAwait(false));
-        }
-
-        [Test]
-        [Ignore("This test is an integration test which can only be run with user interaction")]
-        public async Task AuthenticateWithBrowserSingleTenantAsync()
-        {
-            var cred = new InteractiveBrowserCredential(TenantId, SingleTenantClientId);
-
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
-
-            Assert.NotNull(token.Token);
         }
 
         [Test]
@@ -66,9 +23,9 @@ namespace Azure.Identity.Tests
         {
             string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockMsalClient = new MockMsalPublicClient() { InteractiveAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); } };
+            var mockMsalClient = new MockMsalPublicClient { AuthFactory = _ => { throw new MockClientException(expInnerExMessage); } };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -90,11 +47,11 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
-                SilentAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); }
+                AuthFactory = _ => { return AuthenticationResultFactory.Create(expToken, expiresOn: expExpiresOn); },
+                SilentAuthFactory = _ => { throw new MockClientException(expInnerExMessage); }
             };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -122,11 +79,11 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
+                AuthFactory = (_) => { return AuthenticationResultFactory.Create(expToken, expiresOn: expExpiresOn); },
                 SilentAuthFactory = (_) => { throw new MsalUiRequiredException("errorCode", "message"); }
             };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -134,7 +91,7 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expExpiresOn, token.ExpiresOn);
 
-            mockMsalClient.InteractiveAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); };
+            mockMsalClient.AuthFactory = (_) => { throw new MockClientException(expInnerExMessage); };
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -145,6 +102,105 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
 
             await Task.CompletedTask;
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task InteractiveBrowserValidateSyncWorkaroundCompatSwitch()
+        {
+            // once the AppContext switch is set it cannot be unset for this reason this test must sequentially test the following
+            // neither Environment variable or AppContext switch is set.
+            // environment variable is set and AppContext switch is not set
+            // AppContext switch is set
+            await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", string.Empty))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+            }
+
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "false"))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+            }
+
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "true"))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(false);
+            }
+
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "1"))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(false);
+            }
+
+            AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", true);
+
+            await ValidateSyncWorkaroundCompatSwitch(false);
+
+            AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", false);
+
+            await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+        }
+
+        [Test]
+        public async Task LoginHint([Values(null, "fring@contoso.com")] string loginHint)
+        {
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                InteractiveAuthFactory = (_, _, prompt, hintArg, _, _) =>
+                {
+                    Assert.AreEqual(loginHint == null ? Prompt.SelectAccount : Prompt.NoPrompt, prompt);
+                    Assert.AreEqual(loginHint, hintArg);
+                    return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
+                }
+            };
+            var options = new InteractiveBrowserCredentialOptions { LoginHint = loginHint };
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", options, default, mockMsalClient));
+
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+        }
+
+        private async Task ValidateSyncWorkaroundCompatSwitch(bool expectedThreadPoolExecution)
+        {
+            bool threadPoolExec = false;
+            bool inlineExec = false;
+
+            AzureEventSourceListener listener = new AzureEventSourceListener((args, text) =>
+            {
+                if (args.EventName == "InteractiveAuthenticationExecutingOnThreadPool")
+                {
+                    threadPoolExec = true;
+                }
+                if (args.EventName == "InteractiveAuthenticationExecutingInline")
+                {
+                    inlineExec = true;
+                }
+            }, System.Diagnostics.Tracing.EventLevel.Informational);
+
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                AuthFactory = _ => { return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5)); }
+            };
+
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
+
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expectedThreadPoolExecution, threadPoolExec);
+            Assert.AreEqual(!expectedThreadPoolExecution, inlineExec);
+        }
+
+        [Test]
+        public void DisableAutomaticAuthenticationException()
+        {
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { DisableAutomaticAuthentication = true });
+
+            var expTokenRequestContext = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }, Guid.NewGuid().ToString());
+
+            var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext).ConfigureAwait(false));
+
+            Assert.AreEqual(expTokenRequestContext, ex.TokenRequestContext);
         }
     }
 }

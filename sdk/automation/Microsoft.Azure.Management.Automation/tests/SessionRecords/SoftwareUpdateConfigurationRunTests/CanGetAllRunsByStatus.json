@@ -1,20 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns?api-version=2017-05-15-preview&$filter=properties%2Fstatus%20eq%20%27Failed%27",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL3RvLWRlbGV0ZS0wMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dG9tYXRpb24vYXV0b21hdGlvbkFjY291bnRzL2Zicy1hYS0wMS9zb2Z0d2FyZVVwZGF0ZUNvbmZpZ3VyYXRpb25SdW5zP2FwaS12ZXJzaW9uPTIwMTctMDUtMTUtcHJldmlldyYkZmlsdGVyPXByb3BlcnRpZXMlMkZzdGF0dXMlMjBlcSUyMCUyN0ZhaWxlZCUyNw==",
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-02/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns?api-version=2019-06-01&$filter=properties%2Fstatus%20eq%20%27Failed%27",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL3RvLWRlbGV0ZS0wMi9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dG9tYXRpb24vYXV0b21hdGlvbkFjY291bnRzL2Zicy1hYS0wMS9zb2Z0d2FyZVVwZGF0ZUNvbmZpZ3VyYXRpb25SdW5zP2FwaS12ZXJzaW9uPTIwMTktMDYtMDEmJGZpbHRlcj1wcm9wZXJ0aWVzJTJGc3RhdHVzJTIwZXElMjAlMjdGYWlsZWQlMjc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c8a9265c-c1d3-4af3-9aa7-cd6e4069f416"
+          "05a994c9-0404-49b5-82b1-29e9812feab4"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -25,13 +27,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c8a9265c-c1d3-4af3-9aa7-cd6e4069f416"
+          "05a994c9-0404-49b5-82b1-29e9812feab4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -40,19 +42,19 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11988"
         ],
         "x-ms-correlation-request-id": [
-          "efdfc304-db6d-4e61-9363-7b6a464a3f2c"
+          "cf6bd6f5-8b7d-45cf-b7f6-2eb4f4b822fe"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T185642Z:efdfc304-db6d-4e61-9363-7b6a464a3f2c"
+          "CENTRALINDIA:20210331T115637Z:cf6bd6f5-8b7d-45cf-b7f6-2eb4f4b822fe"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 18:56:41 GMT"
+          "Wed, 31 Mar 2021 11:56:37 GMT"
         ],
         "Content-Length": [
           "12"

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexer : IUtf8JsonSerializable
     {
@@ -18,31 +18,45 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("dataSourceName");
             writer.WriteStringValue(DataSourceName);
-            if (SkillsetName != null)
+            if (Optional.IsDefined(SkillsetName))
             {
                 writer.WritePropertyName("skillsetName");
                 writer.WriteStringValue(SkillsetName);
             }
             writer.WritePropertyName("targetIndexName");
             writer.WriteStringValue(TargetIndexName);
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule");
-                writer.WriteObjectValue(Schedule);
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule");
+                    writer.WriteObjectValue(Schedule);
+                }
+                else
+                {
+                    writer.WriteNull("schedule");
+                }
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
+                if (Parameters != null)
+                {
+                    writer.WritePropertyName("parameters");
+                    writer.WriteObjectValue(Parameters);
+                }
+                else
+                {
+                    writer.WriteNull("parameters");
+                }
             }
-            if (FieldMappings != null)
+            if (Optional.IsCollectionDefined(FieldMappings))
             {
                 writer.WritePropertyName("fieldMappings");
                 writer.WriteStartArray();
@@ -52,7 +66,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputFieldMappings != null)
+            if (Optional.IsCollectionDefined(OutputFieldMappings))
             {
                 writer.WritePropertyName("outputFieldMappings");
                 writer.WriteStartArray();
@@ -62,15 +76,34 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsDisabled != null)
+            if (Optional.IsDefined(IsDisabled))
             {
-                writer.WritePropertyName("disabled");
-                writer.WriteBooleanValue(IsDisabled.Value);
+                if (IsDisabled != null)
+                {
+                    writer.WritePropertyName("disabled");
+                    writer.WriteBooleanValue(IsDisabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("disabled");
+                }
             }
-            if (ETag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
+            }
+            if (Optional.IsDefined(EncryptionKey))
+            {
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey");
+                    writer.WriteObjectValue(EncryptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey");
+                }
             }
             writer.WriteEndObject();
         }
@@ -78,16 +111,17 @@ namespace Azure.Search.Documents.Models
         internal static SearchIndexer DeserializeSearchIndexer(JsonElement element)
         {
             string name = default;
-            string description = default;
+            Optional<string> description = default;
             string dataSourceName = default;
-            string skillsetName = default;
+            Optional<string> skillsetName = default;
             string targetIndexName = default;
-            IndexingSchedule schedule = default;
-            IndexingParameters parameters = default;
-            IList<FieldMapping> fieldMappings = default;
-            IList<FieldMapping> outputFieldMappings = default;
-            bool? disabled = default;
-            string odataetag = default;
+            Optional<IndexingSchedule> schedule = default;
+            Optional<IndexingParameters> parameters = default;
+            Optional<IList<FieldMapping>> fieldMappings = default;
+            Optional<IList<FieldMapping>> outputFieldMappings = default;
+            Optional<bool?> disabled = default;
+            Optional<string> odataEtag = default;
+            Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -97,10 +131,6 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -111,10 +141,6 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("skillsetName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     skillsetName = property.Value.GetString();
                     continue;
                 }
@@ -127,6 +153,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        schedule = null;
                         continue;
                     }
                     schedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value);
@@ -136,6 +163,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        parameters = null;
                         continue;
                     }
                     parameters = IndexingParameters.DeserializeIndexingParameters(property.Value);
@@ -145,6 +173,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FieldMapping> array = new List<FieldMapping>();
@@ -159,6 +188,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FieldMapping> array = new List<FieldMapping>();
@@ -173,6 +203,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        disabled = null;
                         continue;
                     }
                     disabled = property.Value.GetBoolean();
@@ -180,15 +211,21 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
+                    odataEtag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("encryptionKey"))
+                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        encryptionKey = null;
                         continue;
                     }
-                    odataetag = property.Value.GetString();
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
             }
-            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, disabled, odataetag);
+            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value);
         }
     }
 }

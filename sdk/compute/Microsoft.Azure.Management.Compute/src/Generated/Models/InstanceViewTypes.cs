@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     public enum InstanceViewTypes
     {
         [EnumMember(Value = "instanceView")]
-        InstanceView
+        InstanceView,
+        [EnumMember(Value = "userData")]
+        UserData
     }
     internal static class InstanceViewTypesEnumExtension
     {
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 case InstanceViewTypes.InstanceView:
                     return "instanceView";
+                case InstanceViewTypes.UserData:
+                    return "userData";
             }
             return null;
         }
@@ -47,6 +51,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 case "instanceView":
                     return InstanceViewTypes.InstanceView;
+                case "userData":
+                    return InstanceViewTypes.UserData;
             }
             return null;
         }

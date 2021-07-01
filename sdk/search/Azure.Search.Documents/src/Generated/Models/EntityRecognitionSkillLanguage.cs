@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by EntityRecognitionSkill. </summary>
     public readonly partial struct EntityRecognitionSkillLanguage : IEquatable<EntityRecognitionSkillLanguage>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="EntityRecognitionSkillLanguage"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityRecognitionSkillLanguage(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -38,7 +39,7 @@ namespace Azure.Search.Documents.Models
         private const string KoValue = "ko";
         private const string NoValue = "no";
         private const string PlValue = "pl";
-        private const string PtValue = "pt-PT";
+        private const string PtPTValue = "pt-PT";
         private const string PtBRValue = "pt-BR";
         private const string RuValue = "ru";
         private const string EsValue = "es";
@@ -80,7 +81,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Polish. </summary>
         public static EntityRecognitionSkillLanguage Pl { get; } = new EntityRecognitionSkillLanguage(PlValue);
         /// <summary> Portuguese (Portugal). </summary>
-        public static EntityRecognitionSkillLanguage Pt { get; } = new EntityRecognitionSkillLanguage(PtValue);
+        public static EntityRecognitionSkillLanguage PtPT { get; } = new EntityRecognitionSkillLanguage(PtPTValue);
         /// <summary> Portuguese (Brazil). </summary>
         public static EntityRecognitionSkillLanguage PtBR { get; } = new EntityRecognitionSkillLanguage(PtBRValue);
         /// <summary> Russian. </summary>
@@ -102,7 +103,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityRecognitionSkillLanguage other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(EntityRecognitionSkillLanguage other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(EntityRecognitionSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

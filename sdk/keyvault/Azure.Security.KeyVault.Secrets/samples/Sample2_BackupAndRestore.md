@@ -1,11 +1,11 @@
 # Back up and restore a secret
 
 This sample demonstrates how to back up and restore a secret from Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) for links and instructions.
 
 ## Creating a SecretClient
 
-To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to a Key Vault and credentials.
+To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
@@ -17,7 +17,7 @@ var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 ## Creating a secret
 
 Let's next create a secret holding a storage account password valid for 1 year.
-If the secret already exists in the Key Vault, a new version of the secret is created.
+If the secret already exists in the Azure Key Vault, a new version of the secret is created.
 
 ```C# Snippet:SecretsSample2CreateSecret
 string secretName = $"StorageAccountPassword{Guid.NewGuid()}";
@@ -41,7 +41,7 @@ File.WriteAllBytes(backupPath, secretBackup);
 
 ## Restoring a secret
 
-If the secret is deleted for any reason, you can restore it from the backup back into Key Vault.
+If the secret is deleted for any reason, you can restore it from the backup back into Azure Key Vault.
 
 ```C# Snippet:SecretsSample2RestoreSecret
 byte[] secretBackupToRestore = File.ReadAllBytes(backupPath);
@@ -53,7 +53,7 @@ SecretProperties restoreSecret = client.RestoreSecretBackup(secretBackupToRestor
 
 To see the full example source, see:
 
-* [Synchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestore.cs)
-* [Asynchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestoreAsync.cs)
+* [Synchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestore.cs)
+* [Asynchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestoreAsync.cs)
 
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

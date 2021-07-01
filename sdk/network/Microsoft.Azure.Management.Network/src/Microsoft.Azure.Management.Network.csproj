@@ -5,18 +5,25 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
-		<Description>Provides management capabilities for Network services.</Description>
+		<Description>
+			Provides management capabilities for Network services.
+			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
+		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.19.0-preview</Version>
+		<Version>20.5.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added support for NetworkVirtualAppliance
-            - Added support for FQDN in LocalNetworkGateway and VpnSiteLink
-            - Added support for private IP address and BGP peering addresses in VirtualNetworkGateway
-            - Added support for IPv6 private peering in ExpressRouteCircuitConnection
-            - Added support for IP groups in AzureFirewall
-            - Added client-side validation for Azure Firewall name's length
+            - Added new api version 2021-02-01
+			- Swagger change for CustomIpPrefix. Adding four new attributes
+			- VPN NAT for Virtual Network Gateway feature changes
+			- Added a new feature FlowTimeoutInMinutes under Virtual Network Property
+			- Added new failedMessage property for CustomIpPrefix
+			- Added Preferred Routing Gateway Support 
+			- Feature: Address space update in peered vNets
+			- Removed max file size limit enforcement as it is done in NRP
+			- Hotfix extended location parameter hierarchy
+			- Added bastion SKU
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

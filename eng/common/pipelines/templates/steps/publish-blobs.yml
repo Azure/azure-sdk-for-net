@@ -4,19 +4,27 @@ parameters:
   TargetLanguage: ''
   BlobName: ''
   ScriptPath: ''
+  ArtifactLocation: ''
+  RepoId: $(Build.Repository.Name)
 
 steps:
+- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 - pwsh: |
-    Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://aka.ms/downloadazcopy-v10-windows" `
-    -OutFile "azcopy.zip" | Wait-Process; Expand-Archive -Path "azcopy.zip" -DestinationPath "$(Build.BinariesDirectory)/azcopy/"
+    Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://aka.ms/downloadazcopy-v10-windows" -OutFile "azcopy.zip" | Wait-Process;
+    Expand-Archive -Path "azcopy.zip" -DestinationPath "$(Build.BinariesDirectory)/azcopy/"
   workingDirectory: $(Build.BinariesDirectory)
   displayName: Download and Extract azcopy Zip
 
 - task: Powershell@2
   inputs:
-    targetType: 'filePath'
     filePath: ${{ parameters.ScriptPath }}
-    arguments: -AzCopy $(Resolve-Path "$(Build.BinariesDirectory)/azcopy/azcopy_windows_amd64_*/azcopy.exe")[0] -DocLocation "${{ parameters.FolderForUpload }}" -SASKey "${{ parameters.BlobSASKey }}" -Language "${{ parameters.TargetLanguage }}" -BlobName "${{ parameters.BlobName }}"
+    arguments: >
+      -AzCopy $(Resolve-Path "$(Build.BinariesDirectory)/azcopy/azcopy_windows_amd64_*/azcopy.exe")[0]
+      -DocLocation "${{ parameters.FolderForUpload }}"
+      -SASKey "${{ parameters.BlobSASKey }}"
+      -BlobName "${{ parameters.BlobName }}"
+      -PublicArtifactLocation "${{ parameters.ArtifactLocation }}"
+      -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)$(DefaultBranch)"
     pwsh: true
     workingDirectory: $(Pipeline.Workspace)
   displayName: Copy Docs to Blob

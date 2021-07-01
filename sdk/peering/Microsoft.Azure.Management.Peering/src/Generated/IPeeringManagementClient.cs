@@ -74,6 +74,11 @@ namespace Microsoft.Azure.Management.Peering
 
 
         /// <summary>
+        /// Gets the ICdnPeeringPrefixesOperations.
+        /// </summary>
+        ICdnPeeringPrefixesOperations CdnPeeringPrefixes { get; }
+
+        /// <summary>
         /// Gets the ILegacyPeeringsOperations.
         /// </summary>
         ILegacyPeeringsOperations LegacyPeerings { get; }
@@ -107,6 +112,11 @@ namespace Microsoft.Azure.Management.Peering
         /// Gets the IPeeringsOperations.
         /// </summary>
         IPeeringsOperations Peerings { get; }
+
+        /// <summary>
+        /// Gets the IReceivedRoutesOperations.
+        /// </summary>
+        IReceivedRoutesOperations ReceivedRoutes { get; }
 
         /// <summary>
         /// Gets the IPeeringServiceCountriesOperations.

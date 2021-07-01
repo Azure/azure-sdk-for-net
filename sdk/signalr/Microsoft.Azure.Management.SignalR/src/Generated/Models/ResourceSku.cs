@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// The billing information of the SignalR resource.
+    /// The billing information of the resource.
     /// </summary>
     public partial class ResourceSku
     {
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.SignalR.Models
         ///
         /// `Basic` is deprecated, use `Standard` instead. Possible values
         /// include: 'Free', 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="size">Optional string. For future use.</param>
-        /// <param name="family">Optional string. For future use.</param>
-        /// <param name="capacity">Optional, integer. The unit count of SignalR
+        /// <param name="size">Not used. Retained for future use.</param>
+        /// <param name="family">Not used. Retained for future use.</param>
+        /// <param name="capacity">Optional, integer. The unit count of the
         /// resource. 1 by default.
         ///
         /// If present, following values are allowed:
@@ -80,20 +80,20 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets optional string. For future use.
+        /// Gets not used. Retained for future use.
         /// </summary>
         [JsonProperty(PropertyName = "size")]
-        public string Size { get; set; }
+        public string Size { get; private set; }
 
         /// <summary>
-        /// Gets or sets optional string. For future use.
+        /// Gets not used. Retained for future use.
         /// </summary>
         [JsonProperty(PropertyName = "family")]
-        public string Family { get; set; }
+        public string Family { get; private set; }
 
         /// <summary>
-        /// Gets or sets optional, integer. The unit count of SignalR resource.
-        /// 1 by default.
+        /// Gets or sets optional, integer. The unit count of the resource. 1
+        /// by default.
         ///
         /// If present, following values are allowed:
         /// Free: 1

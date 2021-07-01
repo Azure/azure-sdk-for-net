@@ -1,11 +1,11 @@
 # Creating, getting, updating, and deleting keys
 
 This sample demonstrates how to create, get, update, and delete a key in Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
 
 ## Creating a KeyClient
 
-To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
+To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
@@ -17,7 +17,7 @@ var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ## Creating a key
 
 Let's create an RSA key valid for 1 year.
-If the key already exists in the Key Vault, then a new version of the key is created.
+If the key already exists in the Azure Key Vault, then a new version of the key is created.
 
 ```C# Snippet:KeysSample1CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
@@ -32,7 +32,7 @@ client.CreateRsaKey(rsaKey);
 
 ## Getting a key
 
-Let's get the cloud RSA key from the Key Vault.
+Let's get the cloud RSA key from the Azure Key Vault.
 
 ```C# Snippet:KeysSample1GetKey
 KeyVaultKey cloudRsaKey = client.GetKey(rsaKeyName);
@@ -52,8 +52,8 @@ Debug.WriteLine($"Key's updated expiry time is {updatedKey.Properties.ExpiresOn}
 
 ## Updating a key size
 
-We need the cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure it has the required size.
-Calling `CreateRsaKey` on an existing key creates a new version of the key in the Key Vault with the new specified size.
+We need the cloud RSA key with bigger key size, so you want to update the key in Azure Key Vault to ensure it has the required size.
+Calling `CreateRsaKey` on an existing key creates a new version of the key in the Azure Key Vault with the new specified size.
 
 ```C# Snippet:KeysSample1UpdateKey
 var newRsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
@@ -75,7 +75,7 @@ DeleteKeyOperation operation = client.StartDeleteKey(rsaKeyName);
 
 ## Purging a deleted key
 
-If the Key Vault is soft delete-enabled and you want to permanently delete the key before its `ScheduledPurgeDate`,
+If the Azure Key Vault is soft delete-enabled and you want to permanently delete the key before its `ScheduledPurgeDate`,
 the deleted key needs to be purged. Before it can be purged, you need to wait until the key is fully deleted.
 
 ```C# Snippet:KeysSample1PurgeKey
@@ -104,7 +104,7 @@ await client.PurgeDeletedKeyAsync(rsaKeyName);
 
 ## Source
 
-* [Synchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorld.cs)
-* [Asynchronous Sample1_HelloWorldAsync.cs](../tests/samples/Sample1_HelloWorldAsync.cs)
+* [Synchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample1_HelloWorld.cs)
+* [Asynchronous Sample1_HelloWorldAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample1_HelloWorldAsync.cs)
 
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

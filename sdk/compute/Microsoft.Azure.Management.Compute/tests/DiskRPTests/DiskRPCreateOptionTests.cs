@@ -13,7 +13,7 @@ namespace Compute.Tests.DiskRPTests
 {
     public class DiskRPCreateOptionTests : DiskRPTestsBase
     {
-        private static string DiskRPLocation = "centralus";
+        private static string DiskRPLocation = "centraluseuap";
 
         /// <summary>
         /// positive test for testing upload disks
@@ -60,11 +60,11 @@ namespace Compute.Tests.DiskRPTests
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage);
-                disk.Location = DiskRPLocation;
+                disk.Location = "centraluseuap";
                 disk.CreationData.GalleryImageReference = new ImageDiskReference
                 {
-                    Id = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/swaggertests/providers/Microsoft.Compute/galleries/swaggergallery/images/lunexample2/versions/1.0.0",
-                    Lun = 1
+                    Id = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.Compute/galleries/swaggergallery/images/swaggerimage/versions/1.1.0",
+                    Lun = 0
                 };
                 try
                 {

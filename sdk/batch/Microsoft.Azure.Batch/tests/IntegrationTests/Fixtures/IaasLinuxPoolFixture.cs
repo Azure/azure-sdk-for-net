@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests.Fixtures
+namespace BatchClientIntegrationTests.Fixtures
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using IntegrationTestUtilities;
@@ -14,14 +13,14 @@
     {
         public IaasLinuxPoolFixture() : base(TestUtilities.GetMyName() + "-pooltest-linux")
         {
-            this.Pool = this.CreatePool();
+            Pool = CreatePool();
         }
 
         public static ImageInformation GetUbuntuImageDetails(BatchClient client)
         {
             List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
 
-            Func<ImageInformation, bool> ubuntuImageScanner = imageInfo =>
+            static bool ubuntuImageScanner(ImageInformation imageInfo) =>
                 imageInfo.ImageReference.Publisher == "canonical" &&
                 imageInfo.ImageReference.Offer == "ubuntuserver" &&
                 imageInfo.ImageReference.Sku.Contains("16.04");
@@ -33,19 +32,19 @@
 
         protected CloudPool CreatePool()
         {
-            CloudPool currentPool = this.FindPoolIfExists();
+            CloudPool currentPool = FindPoolIfExists();
 
             // gotta create a new pool
             if (currentPool == null)
             {
-                var ubuntuImageDetails = GetUbuntuImageDetails(this.client);
+                var ubuntuImageDetails = GetUbuntuImageDetails(client);
 
                 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
                     ubuntuImageDetails.ImageReference,
                     nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
 
-                currentPool = this.client.PoolOperations.CreatePool(
-                    poolId: this.PoolId,
+                currentPool = client.PoolOperations.CreatePool(
+                    poolId: PoolId,
                     virtualMachineSize: VMSize,
                     virtualMachineConfiguration: virtualMachineConfiguration,
                     targetDedicatedComputeNodes: 1);
@@ -53,7 +52,7 @@
                 currentPool.Commit();
             }
 
-            return WaitForPoolAllocation(this.client, this.PoolId);
+            return WaitForPoolAllocation(client, PoolId);
         }
     }
 

@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the SensitivityLabel class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="schemaName">The schema name.</param>
+        /// <param name="tableName">The table name.</param>
+        /// <param name="columnName">The column name.</param>
         /// <param name="labelName">The label name.</param>
         /// <param name="labelId">The label ID.</param>
         /// <param name="informationType">The information type.</param>
@@ -46,14 +49,22 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Applicable for recommended sensitivity label only. Specifies
         /// whether the sensitivity recommendation on this column is disabled
         /// (dismissed) or not.</param>
-        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string), bool? isDisabled = default(bool?))
+        /// <param name="rank">Possible values include: 'None', 'Low',
+        /// 'Medium', 'High', 'Critical'</param>
+        /// <param name="managedBy">managed by</param>
+        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string schemaName = default(string), string tableName = default(string), string columnName = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string), bool? isDisabled = default(bool?), SensitivityLabelRank? rank = default(SensitivityLabelRank?), string managedBy = default(string))
             : base(id, name, type)
         {
+            SchemaName = schemaName;
+            TableName = tableName;
+            ColumnName = columnName;
             LabelName = labelName;
             LabelId = labelId;
             InformationType = informationType;
             InformationTypeId = informationTypeId;
             IsDisabled = isDisabled;
+            Rank = rank;
+            ManagedBy = managedBy;
             CustomInit();
         }
 
@@ -61,6 +72,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the schema name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.schemaName")]
+        public string SchemaName { get; private set; }
+
+        /// <summary>
+        /// Gets the table name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tableName")]
+        public string TableName { get; private set; }
+
+        /// <summary>
+        /// Gets the column name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.columnName")]
+        public string ColumnName { get; private set; }
 
         /// <summary>
         /// Gets or sets the label name.
@@ -94,6 +123,19 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isDisabled")]
         public bool? IsDisabled { get; private set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'None', 'Low', 'Medium',
+        /// 'High', 'Critical'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rank")]
+        public SensitivityLabelRank? Rank { get; set; }
+
+        /// <summary>
+        /// Gets managed by
+        /// </summary>
+        [JsonProperty(PropertyName = "managedBy")]
+        public string ManagedBy { get; private set; }
 
     }
 }

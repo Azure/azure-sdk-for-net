@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Monitor
     public partial interface IAlertRulesOperations
     {
         /// <summary>
-        /// Creates or updates an alert rule.
+        /// Creates or updates a classic metric alert rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<AlertRuleResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ruleName, AlertRuleResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an alert rule
+        /// Deletes a classic metric alert rule
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an alert rule
+        /// Gets a classic metric alert rule
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -99,8 +99,8 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<AlertRuleResource>> GetWithHttpMessagesAsync(string resourceGroupName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an existing AlertRuleResource. To update other fields use
-        /// the CreateOrUpdate method.
+        /// Updates an existing classic metric AlertRuleResource. To update
+        /// other fields use the CreateOrUpdate method.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<AlertRuleResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List the alert rules within a resource group.
+        /// List the classic metric alert rules within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<AlertRuleResource>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List the alert rules within a subscription.
+        /// List the classic metric alert rules within a subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="extendedLocation">The extended location of the load
+        /// balancer.</param>
         /// <param name="loadBalancerFrontendIpConfigurations">An array of
         /// references to the load balancer IP configurations.</param>
         /// <param name="ipConfigurations">An array of private link service IP
@@ -60,9 +62,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is enabled for proxy protocol or not.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public PrivateLinkService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations = default(IList<FrontendIPConfiguration>), IList<PrivateLinkServiceIpConfiguration> ipConfigurations = default(IList<PrivateLinkServiceIpConfiguration>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), PrivateLinkServicePropertiesVisibility visibility = default(PrivateLinkServicePropertiesVisibility), PrivateLinkServicePropertiesAutoApproval autoApproval = default(PrivateLinkServicePropertiesAutoApproval), IList<string> fqdns = default(IList<string>), string alias = default(string), bool? enableProxyProtocol = default(bool?), string etag = default(string))
+        public PrivateLinkService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations = default(IList<FrontendIPConfiguration>), IList<PrivateLinkServiceIpConfiguration> ipConfigurations = default(IList<PrivateLinkServiceIpConfiguration>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), PrivateLinkServicePropertiesVisibility visibility = default(PrivateLinkServicePropertiesVisibility), PrivateLinkServicePropertiesAutoApproval autoApproval = default(PrivateLinkServicePropertiesAutoApproval), IList<string> fqdns = default(IList<string>), string alias = default(string), bool? enableProxyProtocol = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
+            ExtendedLocation = extendedLocation;
             LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
             IpConfigurations = ipConfigurations;
             NetworkInterfaces = networkInterfaces;
@@ -81,6 +84,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the extended location of the load balancer.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets or sets an array of references to the load balancer IP

@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.ManagedServiceIdentity;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -16,6 +17,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using Xunit;
 using CM=Microsoft.Azure.Management.Compute.Models;
 using NM=Microsoft.Azure.Management.Network.Models;
@@ -27,11 +29,15 @@ namespace Compute.Tests
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
+        
+        protected static readonly string DummyUserData1 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some User Data"));
+        protected static readonly string DummyUserData2 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some new User Data"));
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
         protected StorageManagementClient m_SrpClient;
         protected NetworkManagementClient m_NrpClient;
+        protected ManagedServiceIdentityClient m_MsiClient;
 
         protected bool m_initialized = false;
         protected object m_lock = new object();
@@ -51,6 +57,7 @@ namespace Compute.Tests
                         m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_MsiClient = ComputeManagementTestUtilities.GetManagedServiceIdentityClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         m_subId = m_CrpClient.SubscriptionId;
                         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
@@ -81,14 +88,14 @@ namespace Compute.Tests
             };
         }
 
-        protected ImageReference GetPlatformVMImage(bool useWindowsImage)
+        protected ImageReference GetPlatformVMImage(bool useWindowsImage, string sku = null)
         {
             if (useWindowsImage)
             {
                 if (m_windowsImageReference == null)
                 {
                     Trace.TraceInformation("Querying available Windows Server image from PIR...");
-                    m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
+                    m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", sku ?? "2012-R2-Datacenter");
                 }
                 return m_windowsImageReference;
             }
@@ -96,9 +103,9 @@ namespace Compute.Tests
             if (m_linuxImageReference == null)
             {
                 Trace.TraceInformation("Querying available Ubuntu image from PIR...");
-                // If this sku disappears, query latest with 
+                // If this sku disappears, query latest with
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "19.04");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", sku ?? "19.04");
             }
             return m_linuxImageReference;
         }
@@ -111,6 +118,17 @@ namespace Compute.Tests
                 {
                     Enabled = true,
                     StorageUri = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName)
+                }
+            };
+        }
+
+        protected DiagnosticsProfile GetManagedDiagnosticsProfile()
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true
                 }
             };
         }
@@ -150,7 +168,7 @@ namespace Compute.Tests
 
         protected string getDefaultDiskEncryptionSetId()
         {
-            return "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.Compute/diskEncryptionSets/longlivedBvtDES";
+            return "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/diskEncryptionSets/DESforTest";
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -200,9 +218,10 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            string userData = null)
         {
-            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
+            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, userData: userData);
         }
 
         protected VirtualMachine CreateVM(
@@ -213,13 +232,19 @@ namespace Compute.Tests
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
             bool hasDiffDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0,
+            string vmSize = VirtualMachineSizeTypes.StandardA1V2,
             string osDiskStorageAccountType = "Standard_LRS",
             string dataDiskStorageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null,
             string ppgName = null,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null,
+            bool? encryptionAtHostEnabled = null,
+            string securityType = null,
+            string dedicatedHostGroupReferenceId = null,
+            string dedicatedHostGroupName = null,
+            string dedicatedHostName = null,
+            string userData = null)
         {
             try
             {
@@ -250,7 +275,7 @@ namespace Compute.Tests
 
                 string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks, ppgId: ppgId);
 
-                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType, 
+                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType,
                     dataDiskStorageAccountType, writeAcceleratorEnabled, diskEncryptionSetId);
 
                 if (hasDiffDisks)
@@ -263,10 +288,51 @@ namespace Compute.Tests
                     };
                 }
 
+                if (dedicatedHostGroupReferenceId != null)
+                {
+                    CreateDedicatedHostGroup(rgName, dedicatedHostGroupName, availabilityZone: null);
+                    CreateDedicatedHost(rgName, dedicatedHostGroupName, dedicatedHostName, "DSv3-Type1");
+                    inputVM.HostGroup = new CM.SubResource { Id = dedicatedHostGroupReferenceId };
+                    inputVM.AvailabilitySet = null;
+                }
+
+                if (encryptionAtHostEnabled != null)
+                {
+                    inputVM.SecurityProfile = new SecurityProfile
+                    {
+                        EncryptionAtHost = encryptionAtHostEnabled.Value
+                    };
+                }
+                
+                if (securityType != null && securityType.Equals("TrustedLaunch"))
+                {
+                    if(inputVM.SecurityProfile != null)
+                    {
+                        inputVM.SecurityProfile.SecurityType = SecurityTypes.TrustedLaunch;
+                        inputVM.SecurityProfile.UefiSettings = new UefiSettings
+                        {
+                            VTpmEnabled = true,
+                            SecureBootEnabled = true
+                        };
+                    }
+                    else
+                    {
+                        inputVM.SecurityProfile = new SecurityProfile
+                        {
+                            SecurityType = SecurityTypes.TrustedLaunch,
+                            UefiSettings = new UefiSettings
+                            {
+                                VTpmEnabled = true,
+                                SecureBootEnabled = true
+                            }
+                        };
+                    }
+                }
+
                 if (zones != null)
                 {
                     inputVM.AvailabilitySet = null;
-                    // If no vmSize is provided and we are using the default value, change the default value for VMs with Zones.                    
+                    // If no vmSize is provided and we are using the default value, change the default value for VMs with Zones.
                     if(vmSize == VirtualMachineSizeTypes.StandardA0)
                     {
                         vmSize = VirtualMachineSizeTypes.StandardA1V2;
@@ -274,6 +340,8 @@ namespace Compute.Tests
                     inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
                 }
+                
+                inputVM.UserData = userData;
 
                 if (vmCustomizer != null)
                 {
@@ -298,11 +366,13 @@ namespace Compute.Tests
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") ||
                     createOrUpdateResponse.Location.ToLower() == inputVM.Location.ToLower());
 
-                if (zones == null)
+                bool hasUserDefinedAvSet = inputVM.AvailabilitySet != null;
+                if (hasUserDefinedAvSet)
                 {
                     Assert.True(createOrUpdateResponse.AvailabilitySet.Id.ToLowerInvariant() == asetId.ToLowerInvariant());
                 }
-                else
+
+                if (zones != null)
                 {
                     Assert.True(createOrUpdateResponse.Zones.Count == 1);
                     Assert.True(createOrUpdateResponse.Zones.FirstOrDefault() == zones.FirstOrDefault());
@@ -310,7 +380,9 @@ namespace Compute.Tests
 
                 // The intent here is to validate that the GET response is as expected.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: zones == null, expectedPpgReferenceId: ppgId);
+                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled,
+                    hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled,
+                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
 
                 return getResponse;
             }
@@ -364,7 +436,7 @@ namespace Compute.Tests
             return getPublicIpAddressResponse;
         }
 
-        protected Subnet CreateVNET(string rgName, bool addDnsServer = true)
+        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false)
         {
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -395,6 +467,7 @@ namespace Compute.Tests
                             {
                                 Name = subnetName,
                                 AddressPrefix = "10.0.0.0/24",
+                                PrivateEndpointNetworkPolicies = disablePEPolicies ? "Disabled" : null
                             }
                         }
             };
@@ -531,6 +604,22 @@ namespace Compute.Tests
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
             var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicname);
             return getNicResponse;
+        }
+        
+        protected static VirtualMachineNetworkInterfaceConfiguration CreateNICConfig(Subnet subnetResponse)
+        {
+            List<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigs = new List<VirtualMachineNetworkInterfaceIPConfiguration>()
+                    {
+                        new VirtualMachineNetworkInterfaceIPConfiguration()
+                        {
+                            Name = ComputeManagementTestUtilities.GenerateName("ipConfig"),
+                            Primary = true,
+                            Subnet = new Microsoft.Azure.Management.Compute.Models.SubResource(subnetResponse.Id),
+                            PublicIPAddressConfiguration = new VirtualMachinePublicIPAddressConfiguration(ComputeManagementTestUtilities.GenerateName("ip"), deleteOption: DeleteOptions.Detach.ToString())
+                        }
+                    };
+            VirtualMachineNetworkInterfaceConfiguration vmNicConfig = new VirtualMachineNetworkInterfaceConfiguration(ComputeManagementTestUtilities.GenerateName("nicConfig"), primary: true, deleteOption: DeleteOptions.Delete.ToString(), ipConfigurations: ipConfigs);
+            return vmNicConfig;
         }
 
         private static string GetChildAppGwResourceId(string subscriptionId,
@@ -805,10 +894,10 @@ namespace Compute.Tests
         {
             return CreateProximityPlacementGroup(m_subId, rgName, ppgName, m_CrpClient, m_location);
         }
-        
-        protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
-            string diskEncryptionSetId = null)
+
+        protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId = null, bool hasManagedDisks = false,
+            string vmSize = "Standard_A1_v2", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
+            string diskEncryptionSetId = null, VirtualMachineNetworkInterfaceConfiguration vmNicConfig = null, string networkApiVersion = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -826,7 +915,6 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId },
                 HardwareProfile = new HardwareProfile
                 {
                     VmSize = vmSize
@@ -875,16 +963,6 @@ namespace Compute.Tests
                         }
                     },
                 },
-                NetworkProfile = new NetworkProfile
-                {
-                    NetworkInterfaces = new List<NetworkInterfaceReference>
-                        {
-                            new NetworkInterfaceReference
-                            {
-                                Id = nicId
-                            }
-                        }
-                },
                 OsProfile = new OSProfile
                 {
                     AdminUsername = "Foo12",
@@ -892,6 +970,36 @@ namespace Compute.Tests
                     ComputerName = ComputerName
                 }
             };
+            
+            if (!string.IsNullOrEmpty(asetId))
+            {
+                vm.AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId };
+            }
+
+            CM.NetworkProfile vmNetworkProfile = new CM.NetworkProfile();
+            if (!string.IsNullOrEmpty(nicId))
+            {
+                vmNetworkProfile.NetworkInterfaces = new List<NetworkInterfaceReference>
+                        {
+                            new NetworkInterfaceReference
+                            {
+                                Id = nicId
+                            }
+                        };
+            }
+            if (vmNicConfig != null)
+            {
+                vmNetworkProfile.NetworkInterfaceConfigurations = new List<VirtualMachineNetworkInterfaceConfiguration>
+                        {
+                            vmNicConfig
+                        };
+            }
+            if (!string.IsNullOrEmpty(networkApiVersion))
+            {
+                vmNetworkProfile.NetworkApiVersion = networkApiVersion;
+            }
+
+            vm.NetworkProfile = vmNetworkProfile;
 
             if(dataDiskStorageAccountType == StorageAccountTypes.UltraSSDLRS)
             {
@@ -906,7 +1014,7 @@ namespace Compute.Tests
             return vm;
         }
 
-        protected DedicatedHostGroup CreateDedicatedHostGroup( string rgName, string dedicatedHostGroupName)
+        protected DedicatedHostGroup CreateDedicatedHostGroup( string rgName, string dedicatedHostGroupName, int? availabilityZone = 1)
         {
             m_ResourcesClient.ResourceGroups.CreateOrUpdate(
                    rgName,
@@ -919,13 +1027,14 @@ namespace Compute.Tests
             DedicatedHostGroup dedicatedHostGroup = new DedicatedHostGroup()
             {
                 Location = m_location,
-                Zones = new List<string> { "1" },
-                PlatformFaultDomainCount = 1
+                Zones = availabilityZone == null ? null : new List<string> { availabilityZone.ToString() },
+                PlatformFaultDomainCount = 1,
+                SupportAutomaticPlacement = true
             };
             return m_CrpClient.DedicatedHostGroups.CreateOrUpdate(rgName, dedicatedHostGroupName, dedicatedHostGroup);
         }
 
-        protected DedicatedHost CreateDedicatedHost(string rgName, string dedicatedHostGroupName, string dedicatedHostName)
+        protected DedicatedHost CreateDedicatedHost(string rgName, string dedicatedHostGroupName, string dedicatedHostName, string dedicatedHostSku)
         {
             //Check if DedicatedHostGroup already exist and if does not exist, create one.
             DedicatedHostGroup existingDHG = m_CrpClient.DedicatedHostGroups.Get(rgName, dedicatedHostGroupName);
@@ -938,12 +1047,13 @@ namespace Compute.Tests
                 {
                     Location = m_location,
                     Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } },
-                    Sku = new CM.Sku() { Name = "ESv3-Type1" }
+                    Sku = new CM.Sku() { Name = dedicatedHostSku }
                 });
         }
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
-            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null)
+            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
+            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -951,6 +1061,8 @@ namespace Compute.Tests
 
             Assert.True(vmOut.HardwareProfile.VmSize
                      == vm.HardwareProfile.VmSize);
+
+            Assert.True(vmOut.ExtensionsTimeBudget == vm.ExtensionsTimeBudget);
 
             Assert.NotNull(vmOut.StorageProfile.OsDisk);
 
@@ -996,6 +1108,15 @@ namespace Compute.Tests
                     else
                     {
                         Assert.Null(vm.StorageProfile.OsDisk.DiffDiskSettings);
+                    }
+
+                    if(encryptionAtHostEnabled != null)
+                    {
+                        Assert.True(vmOut.SecurityProfile.EncryptionAtHost == vm.SecurityProfile.EncryptionAtHost);
+                    }
+                    else
+                    {
+                        Assert.Null(vmOut.SecurityProfile?.EncryptionAtHost);
                     }
 
                     if (writeAcceleratorEnabled.HasValue)
@@ -1127,25 +1248,35 @@ namespace Compute.Tests
             {
                 Assert.Null(vmOut.ProximityPlacementGroup);
             }
+
+            if (expectedDedicatedHostGroupReferenceId != null)
+            {
+                Assert.NotNull(vmOut.HostGroup);
+                Assert.Equal(expectedDedicatedHostGroupReferenceId, vmOut.HostGroup.Id, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                Assert.Null(vmOut.HostGroup);
+            }
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachine vmOut, bool hasManagedDisks = false,
-            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedDedicatedHostReferenceId = null)
         {
             Assert.NotNull(vmOut.InstanceView);
-            ValidateVMInstanceView(vmIn, vmOut.InstanceView, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion);
+            ValidateVMInstanceView(vmIn, vmOut.InstanceView, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedDedicatedHostReferenceId);
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false,
-            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedDedicatedHostReferenceId = null)
         {
-            ValidateVMInstanceView(vmInstanceView, hasManagedDisks, 
+            ValidateVMInstanceView(vmInstanceView, hasManagedDisks,
                 !hasManagedDisks ? vmIn.StorageProfile.OsDisk.Name : null,
-                expectedComputerName, expectedOSName, expectedOSVersion);
+                expectedComputerName, expectedOSName, expectedOSVersion, expectedDedicatedHostReferenceId: expectedDedicatedHostReferenceId);
         }
 
         private void ValidateVMInstanceView(VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false, string osDiskName = null,
-            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedDedicatedHostReferenceId = null)
         {
             Assert.Contains(vmInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
 
@@ -1167,7 +1298,8 @@ namespace Compute.Tests
                 //Assert.NotNull(diskInstanceView.Statuses[0].Message); // TODO: it's null somtimes.
                 //Assert.NotNull(diskInstanceView.Statuses[0].Time);    // TODO: it's null somtimes.
             }
-
+            // Below three properties might not be populated in time.
+            /*
             if (expectedComputerName != null)
             {
                 Assert.Equal(expectedComputerName, vmInstanceView.ComputerName, StringComparer.OrdinalIgnoreCase);
@@ -1179,6 +1311,11 @@ namespace Compute.Tests
             if (expectedOSVersion != null)
             {
                 Assert.Equal(expectedOSVersion, vmInstanceView.OsVersion, StringComparer.OrdinalIgnoreCase);
+            }
+            */
+            if (expectedDedicatedHostReferenceId != null)
+            {
+                Assert.Equal(expectedDedicatedHostReferenceId, vmInstanceView.AssignedHost, StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -1198,8 +1335,20 @@ namespace Compute.Tests
             Assert.Equal(inputPlan.PromotionCode, outPutPlan.PromotionCode);
         }
 
-        protected void ValidateBootDiagnosticsInstanceView(BootDiagnosticsInstanceView bootDiagnosticsInstanceView, bool hasError)
+        /// <remarks>
+        /// BootDiagnosticsInstanceView properties will be null if VM is enabled with managed boot diagnostics
+        /// </remarks>
+        protected void ValidateBootDiagnosticsInstanceView(BootDiagnosticsInstanceView bootDiagnosticsInstanceView, bool hasError, bool enabledWithManagedBootDiagnostics = false)
         {
+            // VM with managed boot diagnostics will not return blob URIs or status in BootDiagnosticsInstanceView
+            if (enabledWithManagedBootDiagnostics)
+            {
+                Assert.Null(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.Status);
+                return;
+            }
+
             if (hasError)
             {
                 Assert.Null(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
@@ -1212,6 +1361,13 @@ namespace Compute.Tests
                 Assert.NotNull(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
                 Assert.Null(bootDiagnosticsInstanceView.Status);
             }
+        }
+
+        protected static void ValidateBootDiagnosticsData(RetrieveBootDiagnosticsDataResult bootDiagnosticsData)
+        {
+            Assert.NotNull(bootDiagnosticsData);
+            Assert.NotNull(bootDiagnosticsData.ConsoleScreenshotBlobUri);
+            Assert.NotNull(bootDiagnosticsData.SerialConsoleLogBlobUri);
         }
     }
 }

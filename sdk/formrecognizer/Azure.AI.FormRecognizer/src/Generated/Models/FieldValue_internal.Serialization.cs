@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -16,19 +17,21 @@ namespace Azure.AI.FormRecognizer.Models
         internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element)
         {
             FieldValueType type = default;
-            string valueString = default;
-            string valueDate = default;
-            string valueTime = default;
-            string valuePhoneNumber = default;
-            float? valueNumber = default;
-            int? valueInteger = default;
-            IReadOnlyList<FieldValue_internal> valueArray = default;
-            IReadOnlyDictionary<string, FieldValue_internal> valueObject = default;
-            string text = default;
-            IReadOnlyList<float> boundingBox = default;
-            float? confidence = default;
-            IReadOnlyList<string> elements = default;
-            int? page = default;
+            Optional<string> valueString = default;
+            Optional<DateTimeOffset> valueDate = default;
+            Optional<TimeSpan> valueTime = default;
+            Optional<string> valuePhoneNumber = default;
+            Optional<float> valueNumber = default;
+            Optional<long> valueInteger = default;
+            Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
+            Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
+            Optional<SelectionMarkState> valueSelectionMark = default;
+            Optional<string> valueCountryRegion = default;
+            Optional<string> text = default;
+            Optional<IReadOnlyList<float>> boundingBox = default;
+            Optional<float> confidence = default;
+            Optional<IReadOnlyList<string>> elements = default;
+            Optional<int> page = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -38,10 +41,6 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("valueString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     valueString = property.Value.GetString();
                     continue;
                 }
@@ -49,26 +48,24 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueDate = property.Value.GetString();
+                    valueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("valueTime"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueTime = property.Value.GetString();
+                    valueTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (property.NameEquals("valuePhoneNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     valuePhoneNumber = property.Value.GetString();
                     continue;
                 }
@@ -76,6 +73,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueNumber = property.Value.GetSingle();
@@ -85,15 +83,17 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueInteger = property.Value.GetInt32();
+                    valueInteger = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("valueArray"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FieldValue_internal> array = new List<FieldValue_internal>();
@@ -108,22 +108,41 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
+                        }
                     }
                     valueObject = dictionary;
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("valueSelectionMark"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
+                    valueSelectionMark = property.Value.GetString().ToSelectionMarkState();
+                    continue;
+                }
+                if (property.NameEquals("valueCountryRegion"))
+                {
+                    valueCountryRegion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("text"))
+                {
                     text = property.Value.GetString();
                     continue;
                 }
@@ -131,6 +150,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<float> array = new List<float>();
@@ -145,6 +165,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     confidence = property.Value.GetSingle();
@@ -154,6 +175,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -168,13 +190,14 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     page = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new FieldValue_internal(type, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueArray, valueObject, text, boundingBox, confidence, elements, page);
+            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
         }
     }
 }

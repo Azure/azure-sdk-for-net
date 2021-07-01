@@ -45,6 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The maximum wait time should match.");
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
             Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count should match.");
+            Assert.That(clone.PrefetchSizeInBytes, Is.EqualTo(options.PrefetchSizeInBytes), "The prefetch size should match.");
             Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "Tracking of last enqueued events should match.");
         }
 
@@ -96,6 +97,42 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PrefetchCountIsValidated(int count)
         {
             Assert.That(() => new PartitionReceiverOptions { PrefetchCount = count }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiverOptions.PrefetchSize" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        public void PrefetchSizeInBytesIsValidated(int count)
+        {
+            Assert.That(() => new PartitionReceiverOptions { PrefetchSizeInBytes = count }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiverOptions.PrefetchSize" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesAllowsNull()
+        {
+            Assert.That(() => new PartitionReceiverOptions { PrefetchSizeInBytes = null }, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiverOptions.PrefetchSize" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesAllowZero()
+        {
+            Assert.That(() => new PartitionReceiverOptions { PrefetchSizeInBytes = 0 }, Throws.Nothing);
         }
     }
 }

@@ -30,6 +30,5 @@ namespace Azure.Storage.Files.DataLake.Models
         /// You can use DataLakeModelFactory.PathCreateInfo instead.
         /// </summary>
         internal PathCreateInfo() { }
-
     }
 }

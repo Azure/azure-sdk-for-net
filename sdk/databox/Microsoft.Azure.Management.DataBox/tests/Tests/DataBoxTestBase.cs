@@ -1,16 +1,16 @@
-using System;
+using DataBox.Tests.Helpers;
+using Microsoft.Azure.Management.DataBox;
+using Microsoft.Azure.Management.DataBox.Models;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Threading;
+using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
-using Microsoft.Azure.Management.DataBox;
-using System.Reflection;
-using DataBox.Tests.Helpers;
-using Microsoft.Azure.Management.Resources;
-using System.Threading;
-using Microsoft.Azure.Management.DataBox.Models;
-using System.Collections.Generic;
-using Xunit;
 
 namespace DataBox.Tests
 {
@@ -38,6 +38,7 @@ namespace DataBox.Tests
             this.RMClient = this.Context.GetServiceClient<ResourceManagementClient>();
 
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
+            
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 HttpMockServer.Variables[SubIdKey] = testEnv.SubscriptionId;
@@ -80,13 +81,24 @@ namespace DataBox.Tests
             };
         }
 
-        protected static List<DestinationAccountDetails> GetDestinationAccountsList()
+        protected static List<StorageAccountDetails> GetDestinationAccountsList()
         {
-            return new List<DestinationAccountDetails>
+            return new List<StorageAccountDetails>
             {
-                new DestinationStorageAccountDetails
+                new StorageAccountDetails
                 {
-                    AccountId = "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount",
+                    StorageAccountId = "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount",
+                }
+            };
+        }
+
+        protected static List<StorageAccountDetails> GetSourceAccountsList()
+        {
+            return new List<StorageAccountDetails>
+            {
+                new StorageAccountDetails
+                {
+                    StorageAccountId = "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.Storage/storageAccounts/aaaaaa2",
                 }
             };
         }
@@ -162,8 +174,8 @@ namespace DataBox.Tests
             {
                 switch (validationResponse.GetType().Name)
                 {
-                    case "DataDestinationDetailsValidationResponseProperties":
-                        Assert.True(((DataDestinationDetailsValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);
+                    case "DataTransferDetailsValidationResponseProperties":
+                        Assert.True(((DataTransferDetailsValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);
                         break;
                     case "SubscriptionIsAllowedToCreateJobValidationResponseProperties":
                         Assert.True(((SubscriptionIsAllowedToCreateJobValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);

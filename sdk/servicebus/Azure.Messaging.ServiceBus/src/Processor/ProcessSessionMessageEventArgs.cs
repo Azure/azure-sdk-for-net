@@ -3,50 +3,55 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///
+    /// The <see cref="ProcessSessionMessageEventArgs"/> contain event args that
+    /// are specific to the <see cref="ServiceBusReceivedMessage"/> and session that
+    /// is being processed.
     /// </summary>
     public class ProcessSessionMessageEventArgs : EventArgs
     {
         /// <summary>
-        /// The received message to be processed.
+        /// Gets the <see cref="ServiceBusReceivedMessage"/> to be processed.
         /// </summary>
         public ServiceBusReceivedMessage Message { get; }
 
         /// <summary>
-        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        /// Gets the <see cref="System.Threading.CancellationToken"/> instance which
+        /// will be cancelled when <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>
+        /// is called, or when the session lock has been lost.
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// The session receiver that will be used for all settlement methods for the args.
+        /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
         /// <summary>
-        /// The Session Id associated with the receiver.
+        /// Gets the Session Id associated with the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         public string SessionId => _sessionReceiver.SessionId;
 
         /// <summary>
-        /// Gets the DateTime that the current receiver is locked until.
+        /// Gets the DateTime that the session corresponding to
+        /// the <see cref="ServiceBusReceivedMessage"/> is locked until.
         /// </summary>
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message"></param>
-        /// <param name="receiver"></param>
-        /// <param name="cancellationToken"></param>
-        internal ProcessSessionMessageEventArgs(
+        /// <param name="message">The current <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
+        /// for the args.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        public ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
             ServiceBusSessionReceiver receiver,
             CancellationToken cancellationToken)
@@ -56,131 +61,82 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken = cancellationToken;
         }
 
-        /// <summary>
-        /// Gets the session state.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The session state as byte array.</returns>
-        public virtual async Task<byte[]> GetStateAsync(
+        /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
+        public virtual async Task<BinaryData> GetSessionStateAsync(
             CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.GetStateAsync(cancellationToken).ConfigureAwait(false);
+            await _sessionReceiver.GetSessionStateAsync(cancellationToken).ConfigureAwait(false);
 
-        /// <summary>
-        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
-        /// </summary>
-        ///
-        /// <param name="sessionState">A byte array of session state</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task SetStateAsync(
-            byte[] sessionState,
+        /// <inheritdoc cref="ServiceBusSessionReceiver.SetSessionStateAsync(BinaryData, CancellationToken)"/>
+        public virtual async Task SetSessionStateAsync(
+            BinaryData sessionState,
             CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.SetStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
+            await _sessionReceiver.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
 
-        /// <summary>
-        /// Renews the lock on the session specified by the <see cref="SessionId"/>. The lock will be renewed based on the setting specified on the entity.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// <para>
-        /// When you get session receiver, the session is locked for this receiver by the service for a duration as specified during the Queue/Subscription creation.
-        /// If processing of the session requires longer than this duration, the session-lock needs to be renewed.
-        /// For each renewal, it resets the time the session is locked by the LockDuration set on the Entity.
-        /// </para>
-        /// <para>
-        /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.
-        /// </para>
-        /// </remarks>
-        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task AbandonAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.AbandonAsync(message, propertiesToModify, cancellationToken)
-            .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.AbandonMessageAsync(message, propertiesToModify, cancellationToken)
+                .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task CompleteAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.CompleteMessageAsync(ServiceBusReceivedMessage, CancellationToken)"/>
+        public virtual async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
-            CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.CompleteAsync(
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.CompleteMessageAsync(
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="deadLetterReason"></param>
-        /// <param name="deadLetterErrorDescription"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task DeadLetterAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
-            CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.DeadLetterAsync(
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.DeadLetterMessageAsync(
                 message,
                 deadLetterReason,
                 deadLetterErrorDescription,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task DeadLetterAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.DeadLetterAsync(
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.DeadLetterMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task DeferAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.DeferAsync(
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.DeferMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
     }
 }

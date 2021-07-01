@@ -40,7 +40,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
-        public MultiMetricCriteria(string name, string metricName, object timeAggregation, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        /// <param name="skipMetricValidation">Allows creating an alert rule on
+        /// a custom metric that isn't yet emitted, by causing the metric
+        /// validation to be skipped.</param>
+        public MultiMetricCriteria(string name, string metricName, object timeAggregation, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             Name = name;
@@ -48,6 +51,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             MetricNamespace = metricNamespace;
             TimeAggregation = timeAggregation;
             Dimensions = dimensions;
+            SkipMetricValidation = skipMetricValidation;
             CustomInit();
         }
 
@@ -92,6 +96,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IList<MetricDimension> Dimensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets allows creating an alert rule on a custom metric that
+        /// isn't yet emitted, by causing the metric validation to be skipped.
+        /// </summary>
+        [JsonProperty(PropertyName = "skipMetricValidation")]
+        public bool? SkipMetricValidation { get; set; }
 
         /// <summary>
         /// Validate the object.

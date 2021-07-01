@@ -17,10 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Specifies the Linux operating system settings on the virtual machine.
     /// &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see
     /// [Linux on Azure-Endorsed
-    /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-    /// &lt;br&gt;&lt;br&gt; For running non-endorsed distributions, see
-    /// [Information for Non-Endorsed
-    /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+    /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
     /// </summary>
     public partial class LinuxConfiguration
     {
@@ -45,11 +42,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// request body, default behavior is to set it to true.  This will
         /// ensure that VM Agent is installed on the VM so that extensions can
         /// be added to the VM later.</param>
-        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration), bool? provisionVMAgent = default(bool?))
+        /// <param name="patchSettings">[Preview Feature] Specifies settings
+        /// related to VM Guest Patching on Linux.</param>
+        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration), bool? provisionVMAgent = default(bool?), LinuxPatchSettings patchSettings = default(LinuxPatchSettings))
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
             Ssh = ssh;
             ProvisionVMAgent = provisionVMAgent;
+            PatchSettings = patchSettings;
             CustomInit();
         }
 
@@ -81,6 +81,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisionVMAgent")]
         public bool? ProvisionVMAgent { get; set; }
+
+        /// <summary>
+        /// Gets or sets [Preview Feature] Specifies settings related to VM
+        /// Guest Patching on Linux.
+        /// </summary>
+        [JsonProperty(PropertyName = "patchSettings")]
+        public LinuxPatchSettings PatchSettings { get; set; }
 
     }
 }

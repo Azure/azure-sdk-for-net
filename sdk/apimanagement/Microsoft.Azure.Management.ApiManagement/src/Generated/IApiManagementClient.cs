@@ -147,11 +147,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IOperationOperations Operation { get; }
 
         /// <summary>
-        /// Gets the IApiExportOperations.
-        /// </summary>
-        IApiExportOperations ApiExport { get; }
-
-        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         IApiVersionSetOperations ApiVersionSet { get; }
@@ -175,6 +170,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the ICertificateOperations.
         /// </summary>
         ICertificateOperations Certificate { get; }
+
+        /// <summary>
+        /// Gets the IContentTypeOperations.
+        /// </summary>
+        IContentTypeOperations ContentType { get; }
+
+        /// <summary>
+        /// Gets the IContentItemOperations.
+        /// </summary>
+        IContentItemOperations ContentItem { get; }
+
+        /// <summary>
+        /// Gets the IDeletedServicesOperations.
+        /// </summary>
+        IDeletedServicesOperations DeletedServices { get; }
 
         /// <summary>
         /// Gets the IApiManagementOperations.
@@ -202,6 +212,26 @@ namespace Microsoft.Azure.Management.ApiManagement
         IEmailTemplateOperations EmailTemplate { get; }
 
         /// <summary>
+        /// Gets the IGatewayOperations.
+        /// </summary>
+        IGatewayOperations Gateway { get; }
+
+        /// <summary>
+        /// Gets the IGatewayHostnameConfigurationOperations.
+        /// </summary>
+        IGatewayHostnameConfigurationOperations GatewayHostnameConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IGatewayApiOperations.
+        /// </summary>
+        IGatewayApiOperations GatewayApi { get; }
+
+        /// <summary>
+        /// Gets the IGatewayCertificateAuthorityOperations.
+        /// </summary>
+        IGatewayCertificateAuthorityOperations GatewayCertificateAuthority { get; }
+
+        /// <summary>
         /// Gets the IGroupOperations.
         /// </summary>
         IGroupOperations Group { get; }
@@ -225,6 +255,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the ILoggerOperations.
         /// </summary>
         ILoggerOperations Logger { get; }
+
+        /// <summary>
+        /// Gets the INamedValueOperations.
+        /// </summary>
+        INamedValueOperations NamedValue { get; }
 
         /// <summary>
         /// Gets the INetworkStatusOperations.
@@ -260,6 +295,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IPolicyDescriptionOperations.
         /// </summary>
         IPolicyDescriptionOperations PolicyDescription { get; }
+
+        /// <summary>
+        /// Gets the IPortalRevisionOperations.
+        /// </summary>
+        IPortalRevisionOperations PortalRevision { get; }
+
+        /// <summary>
+        /// Gets the IPortalSettingsOperations.
+        /// </summary>
+        IPortalSettingsOperations PortalSettings { get; }
 
         /// <summary>
         /// Gets the ISignInSettingsOperations.
@@ -302,11 +347,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IProductPolicyOperations ProductPolicy { get; }
 
         /// <summary>
-        /// Gets the INamedValueOperations.
-        /// </summary>
-        INamedValueOperations NamedValue { get; }
-
-        /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
         /// </summary>
         IQuotaByCounterKeysOperations QuotaByCounterKeys { get; }
@@ -325,6 +365,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IReportsOperations.
         /// </summary>
         IReportsOperations Reports { get; }
+
+        /// <summary>
+        /// Gets the ITenantSettingsOperations.
+        /// </summary>
+        ITenantSettingsOperations TenantSettings { get; }
+
+        /// <summary>
+        /// Gets the IApiManagementSkusOperations.
+        /// </summary>
+        IApiManagementSkusOperations ApiManagementSkus { get; }
 
         /// <summary>
         /// Gets the ISubscriptionOperations.
@@ -375,6 +425,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         IUserConfirmationPasswordOperations UserConfirmationPassword { get; }
+
+        /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        IApiExportOperations ApiExport { get; }
 
     }
 }

@@ -2,10 +2,6 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.KeyVault.Tests Class Library</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefineConstants Condition="'$(AZURE_KEYVAULT_TEST_MODE)'=='Live'">
-      $(DefineConstants);
-      AZURE_KEYVAULT_TEST_MODE_LIVE;
-    </DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Update="appsettings.json">
@@ -27,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
   </ItemGroup>
 

@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class MicrosoftTokenizerLanguageExtensions
+    internal static partial class MicrosoftTokenizerLanguageExtensions
     {
         public static string ToSerialString(this MicrosoftTokenizerLanguage value) => value switch
         {

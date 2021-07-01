@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='parentType'>
         /// The type of the parent resource. This can be either \'topics\' or
-        /// \'domains\'.
+        /// \'domains\'. Possible values include: 'topics', 'domains'
         /// </param>
         /// <param name='parentName'>
         /// The name of the parent resource (namely, either, the topic name or domain
@@ -113,7 +113,10 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2020-04-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -125,7 +128,6 @@ namespace Microsoft.Azure.Management.EventGrid
                 tracingParameters.Add("parentType", parentType);
                 tracingParameters.Add("parentName", parentName);
                 tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -134,13 +136,13 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -278,7 +280,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='parentType'>
         /// The type of the parent resource. This can be either \'topics\' or
-        /// \'domains\'.
+        /// \'domains\'. Possible values include: 'topics', 'domains'
         /// </param>
         /// <param name='parentName'>
         /// The name of the parent resource (namely, either, the topic name or domain
@@ -287,16 +289,19 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection connection.
         /// </param>
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection object to update.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<PrivateEndpointConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PrivateEndpointConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, privateEndpointConnection, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -311,7 +316,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='parentType'>
         /// The type of the parent resource. This can be either \'topics\' or
-        /// \'domains\'.
+        /// \'domains\'. Possible values include: 'topics', 'domains'
         /// </param>
         /// <param name='parentName'>
         /// The name of the parent resource (namely, either, the topic name or domain
@@ -344,7 +349,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='parentType'>
         /// The type of the parent resource. This can be either \'topics\' or
-        /// \'domains\'.
+        /// \'domains\'. Possible values include: 'topics', 'domains'
         /// </param>
         /// <param name='parentName'>
         /// The name of the parent resource (namely, either, the topic name or domain
@@ -403,7 +408,10 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parentName");
             }
-            string apiVersion = "2020-04-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -414,7 +422,6 @@ namespace Microsoft.Azure.Management.EventGrid
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parentType", parentType);
                 tracingParameters.Add("parentName", parentName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -425,12 +432,12 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (filter != null)
             {
@@ -576,7 +583,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='parentType'>
         /// The type of the parent resource. This can be either \'topics\' or
-        /// \'domains\'.
+        /// \'domains\'. Possible values include: 'topics', 'domains'
         /// </param>
         /// <param name='parentName'>
         /// The name of the parent resource (namely, either, the topic name or domain
@@ -584,6 +591,9 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection connection.
+        /// </param>
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection object to update.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -606,7 +616,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -628,7 +638,14 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2020-04-01-preview";
+            if (privateEndpointConnection == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnection");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -640,7 +657,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 tracingParameters.Add("parentType", parentType);
                 tracingParameters.Add("parentName", parentName);
                 tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("privateEndpointConnection", privateEndpointConnection);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
@@ -649,13 +666,13 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -695,6 +712,12 @@ namespace Microsoft.Azure.Management.EventGrid
 
             // Serialize Request
             string _requestContent = null;
+            if(privateEndpointConnection != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(privateEndpointConnection, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -811,7 +834,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='parentType'>
         /// The type of the parent resource. This can be either \'topics\' or
-        /// \'domains\'.
+        /// \'domains\'. Possible values include: 'topics', 'domains'
         /// </param>
         /// <param name='parentName'>
         /// The name of the parent resource (namely, either, the topic name or domain
@@ -860,7 +883,10 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2020-04-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -872,7 +898,6 @@ namespace Microsoft.Azure.Management.EventGrid
                 tracingParameters.Add("parentType", parentType);
                 tracingParameters.Add("parentName", parentName);
                 tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -881,13 +906,13 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

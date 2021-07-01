@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the DataBoxAccountCopyLogDetails
         /// class.
         /// </summary>
-        /// <param name="accountName">Destination account name.</param>
+        /// <param name="accountName">Account name.</param>
         /// <param name="copyLogLink">Link for copy logs.</param>
-        public DataBoxAccountCopyLogDetails(string accountName = default(string), string copyLogLink = default(string))
+        /// <param name="copyVerboseLogLink">Link for copy verbose logs. This
+        /// will be set only when LogCollectionLevel is set to Verbose.</param>
+        public DataBoxAccountCopyLogDetails(string accountName = default(string), string copyLogLink = default(string), string copyVerboseLogLink = default(string))
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;
+            CopyVerboseLogLink = copyVerboseLogLink;
             CustomInit();
         }
 
@@ -47,7 +50,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets destination account name.
+        /// Gets account name.
         /// </summary>
         [JsonProperty(PropertyName = "accountName")]
         public string AccountName { get; private set; }
@@ -57,6 +60,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "copyLogLink")]
         public string CopyLogLink { get; private set; }
+
+        /// <summary>
+        /// Gets link for copy verbose logs. This will be set only when
+        /// LogCollectionLevel is set to Verbose.
+        /// </summary>
+        [JsonProperty(PropertyName = "copyVerboseLogLink")]
+        public string CopyVerboseLogLink { get; private set; }
 
     }
 }

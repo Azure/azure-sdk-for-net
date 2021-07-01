@@ -60,7 +60,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal static partial class BlobExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="BlobSasBuilder.Permissions"/>.

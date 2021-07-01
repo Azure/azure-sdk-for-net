@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a magnitude scoring function. </summary>
     public partial class MagnitudeScoringParameters
@@ -31,9 +31,9 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The field value at which boosting starts. </summary>
-        public double BoostingRangeStart { get; }
+        public double BoostingRangeStart { get; set; }
         /// <summary> The field value at which boosting ends. </summary>
-        public double BoostingRangeEnd { get; }
+        public double BoostingRangeEnd { get; set; }
         /// <summary> A value indicating whether to apply a constant boost for field values beyond the range end value; default is false. </summary>
         public bool? ShouldBoostBeyondRangeByConstant { get; set; }
     }

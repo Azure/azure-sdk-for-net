@@ -1,0 +1,223 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "226",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "c01e429010ef5276d0a96ac356e278e1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "dimensionFilter": {
+          "dimension": {
+            "city": "Delhi"
+          }
+        },
+        "feedbackType": "Comment",
+        "startTime": "2020-12-01T00:00:00Z",
+        "endTime": "2020-12-31T00:00:00Z",
+        "timeMode": "FeedbackCreatedTime"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "28113ebc-6a10-435b-9a61-6a43b9dc6cb8",
+        "Content-Length": "3692",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 15 Dec 2020 01:34:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "84",
+        "x-request-id": "28113ebc-6a10-435b-9a61-6a43b9dc6cb8"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "feedbackId": "9445c504-b4bb-4a87-9e68-cdce3a91c108",
+            "createdTime": "2020-12-08T01:43:38.824Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": null,
+            "endTime": null,
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "a2cc9667-b9ea-4e4b-979a-1cda60528ffc",
+            "createdTime": "2020-12-08T01:43:38.423Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "a2cb7427-f408-45e1-bab8-4927d2e0e6cf",
+            "createdTime": "2020-12-08T01:43:35.16Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": null,
+            "endTime": null,
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "244df76b-1196-4b56-892d-8c4fe18784d4",
+            "createdTime": "2020-12-08T01:43:34.74Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "fa3d4d40-a337-4bba-9c43-836613c64bea",
+            "createdTime": "2020-12-08T00:36:31.721Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": null,
+            "endTime": null,
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "c7950531-3465-42d7-aa87-4391660119dc",
+            "createdTime": "2020-12-08T00:36:31.298Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "c5402275-d6b7-49b4-a1ba-3b61377125c1",
+            "createdTime": "2020-12-08T00:34:27.526Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": null,
+            "endTime": null,
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "c6aadf1d-3cf0-41e2-a42d-0dc2a495dc00",
+            "createdTime": "2020-12-08T00:34:27.051Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "733d79ab-9e58-4c01-b00e-cce37113ef70",
+            "createdTime": "2020-12-07T20:00:28.633Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          },
+          {
+            "feedbackId": "7ce703dc-87f2-413f-9fd0-ea580918423d",
+            "createdTime": "2020-12-07T20:00:22.503Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimensionFilter": {
+              "dimension": {
+                "city": "Delhi"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": "2020-09-26T00:00:00Z",
+            "endTime": "2020-09-29T00:00:00Z",
+            "value": {
+              "commentValue": "Feedback created in a .NET test."
+            }
+          }
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "189484243"
+  }
+}

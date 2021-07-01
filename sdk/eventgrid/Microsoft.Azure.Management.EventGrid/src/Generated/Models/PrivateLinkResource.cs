@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         public PrivateLinkResource(string groupId = default(string), string displayName = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>), string id = default(string), string name = default(string), string type = default(string))
         {
             GroupId = groupId;
@@ -82,13 +82,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the resource
+        /// Gets or sets name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets type of the resource
+        /// Gets or sets type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

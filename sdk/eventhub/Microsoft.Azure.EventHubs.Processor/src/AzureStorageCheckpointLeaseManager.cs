@@ -9,8 +9,8 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Blob;
+    using Microsoft.Azure.Storage;
+    using Microsoft.Azure.Storage.Blob;
     using Newtonsoft.Json;
 
     class AzureStorageCheckpointLeaseManager : ICheckpointManager, ILeaseManager
@@ -166,12 +166,12 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         public Task<bool> LeaseStoreExistsAsync()
         {
-            return this.eventHubContainer.ExistsAsync(this.defaultRequestOptions, this.operationContext);
+            return this.eventHubContainer.ExistsAsync(null, this.operationContext);
         }
 
         public Task<bool> CreateLeaseStoreIfNotExistsAsync()
         {
-            return this.eventHubContainer.CreateIfNotExistsAsync(this.defaultRequestOptions, this.operationContext);
+            return this.eventHubContainer.CreateIfNotExistsAsync(null, this.operationContext);
         }
 
         public async Task<bool> DeleteLeaseStoreAsync()
@@ -406,14 +406,8 @@ namespace Microsoft.Azure.EventHubs.Processor
                     await this.RenewLeaseCoreAsync(lease).ConfigureAwait(false);
                 }
 
-                // Update owner in the metadata first since clients get ownership information by looking at metadata.
+                // Update owner in the metadata and upload the lease content.
                 lease.Blob.Metadata[MetaDataOwnerName] = lease.Owner;
-                await lease.Blob.SetMetadataAsync(
-                    AccessCondition.GenerateLeaseCondition(lease.Token),
-                    this.defaultRequestOptions,
-                    this.operationContext).ConfigureAwait(false);
-
-                // Then update deserialized lease content.
                 await leaseBlob.UploadTextAsync(
                     JsonConvert.SerializeObject(lease),
                     null,

@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public async Task HelloWorldExtended()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample2_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);
@@ -44,7 +44,6 @@ namespace Azure.Data.AppConfiguration.Samples
             instancesToUpdate.Value = "5";
             await client.SetConfigurationSettingAsync(instancesToUpdate);
             #endregion
-
 
             #region Snippet:AzConfigSample2_GetConfigurationSettingsAsync
             var selector = new SettingSelector { LabelFilter = "production" };

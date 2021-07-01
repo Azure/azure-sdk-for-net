@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Blueprint</PackageId>
     <Description>Provides Microsoft Azure Blueprint management operations including the ability to create, update and delete Blueprint definition and assignment.</Description>
-    <Version>0.20.6-preview</Version>
+    <Version>0.20.8-preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Blueprint Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Blueprint</AssemblyName>
@@ -14,7 +14,7 @@
     <PackageReleaseNotes>
 <![CDATA[This is a preview release sdk for Azure Blueprints, allows you to do Blueprint definition and assignment CRUD.
 
- - This version adds support for management group level Blueprint assignment.
+ - This version removes resource group name and location length validation in a blueprint.
 
 ]]>
 </PackageReleaseNotes>

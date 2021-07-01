@@ -173,7 +173,7 @@ namespace Batch.Tests.ScenarioTests
                     Assert.Equal(batchAccountName, batchAccount.Name);
                     Assert.Null(batchAccount.DedicatedCoreQuota);
                     Assert.Null(batchAccount.DedicatedCoreQuotaPerVMFamily);
-                    Assert.False(batchAccount.DedicatedCoreQuotaPerVMFamilyEnforced); // TODO: change this when pfq enforcement happens
+                    Assert.True(batchAccount.DedicatedCoreQuotaPerVMFamilyEnforced);
                     Assert.Null(batchAccount.LowPriorityCoreQuota);
                     Assert.Equal(PoolAllocationMode.UserSubscription, batchAccount.PoolAllocationMode);
                     Assert.Equal(keyVaultReferenceId, batchAccount.KeyVaultReference.Id);

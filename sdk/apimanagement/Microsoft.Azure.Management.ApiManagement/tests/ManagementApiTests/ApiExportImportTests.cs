@@ -15,7 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiExportImportTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void SwaggerTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -71,13 +71,25 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     // remove the API
                     testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, swaggerApi, "*");
-                }
 
+                    // clean up all tags
+                    var listOfTags = testBase.client.Tag.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var tag in listOfTags)
+                    {
+                        testBase.client.Tag.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            tag.Name,
+                            "*");
+                    }
+                }
             }
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void WadlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -136,12 +148,25 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     // remove the API
                     testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, wadlApi, "*");
+
+                    // clean up all tags
+                    var listOfTags = testBase.client.Tag.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var tag in listOfTags)
+                    {
+                        testBase.client.NamedValue.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            tag.Name,
+                            "*");
+                    }
                 }
             }
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void WsdlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -227,7 +252,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void OpenApiTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -283,12 +308,25 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     // remove the API
                     testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, openApiId, "*");
-                }
 
+                    // clean up all tags
+                    var listOfTags = testBase.client.Tag.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var tag in listOfTags)
+                    {
+                        testBase.client.Tag.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            tag.Name,
+                            "*");
+                    }
+                }
             }
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public void OpenApiInJsonTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -344,8 +382,20 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     // remove the API
                     testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, openApiId, "*");
-                }
 
+                    // clean up all tags
+                    var listOfTags = testBase.client.Tag.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var tag in listOfTags)
+                    {
+                        testBase.client.Tag.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            tag.Name,
+                            "*");
+                    }
+                }
             }
         }
     }

@@ -36,10 +36,15 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Windows VMs.</param>
         /// <param name="adminPassword">The administrator password to use for
         /// Windows VMs.</param>
-        public ManagedClusterWindowsProfile(string adminUsername, string adminPassword = default(string))
+        /// <param name="licenseType">The licenseType to use for Windows VMs.
+        /// Windows_Server is used to enable Azure Hybrid User Benefits for
+        /// Windows VMs. Possible values include: 'None',
+        /// 'Windows_Server'</param>
+        public ManagedClusterWindowsProfile(string adminUsername, string adminPassword = default(string), string licenseType = default(string))
         {
             AdminUsername = adminUsername;
             AdminPassword = adminPassword;
+            LicenseType = licenseType;
             CustomInit();
         }
 
@@ -61,6 +66,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string AdminPassword { get; set; }
 
         /// <summary>
+        /// Gets or sets the licenseType to use for Windows VMs. Windows_Server
+        /// is used to enable Azure Hybrid User Benefits for Windows VMs.
+        /// Possible values include: 'None', 'Windows_Server'
+        /// </summary>
+        [JsonProperty(PropertyName = "licenseType")]
+        public string LicenseType { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -71,6 +84,20 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             if (AdminUsername == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AdminUsername");
+            }
+            if (AdminUsername != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(AdminUsername, "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "AdminUsername", "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
+                }
+            }
+            if (AdminPassword != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(AdminPassword, "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "AdminPassword", "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$");
+                }
             }
         }
     }

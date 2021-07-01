@@ -51,12 +51,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="userName">User name of the OData service. Type: string
         /// (or Expression with resultType string).</param>
         /// <param name="password">Password of the OData service.</param>
+        /// <param name="authHeaders">The additional HTTP headers in the
+        /// request to RESTful API used for authorization. Type: object (or
+        /// Expression with resultType object).</param>
         /// <param name="tenant">Specify the tenant information (domain name or
         /// tenant ID) under which your application resides. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="servicePrincipalId">Specify the application id of your
         /// application registered in Azure Active Directory. Type: string (or
         /// Expression with resultType string).</param>
+        /// <param name="azureCloudType">Indicates the azure cloud type of the
+        /// service principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="aadResourceId">Specify the resource you are requesting
         /// authorization to use Directory. Type: string (or Expression with
         /// resultType string).</param>
@@ -79,15 +87,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public ODataLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object tenant = default(object), object servicePrincipalId = default(object), object aadResourceId = default(object), string aadServicePrincipalCredentialType = default(string), SecretBase servicePrincipalKey = default(SecretBase), SecretBase servicePrincipalEmbeddedCert = default(SecretBase), SecretBase servicePrincipalEmbeddedCertPassword = default(SecretBase), object encryptedCredential = default(object))
+        public ODataLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object authHeaders = default(object), object tenant = default(object), object servicePrincipalId = default(object), object azureCloudType = default(object), object aadResourceId = default(object), string aadServicePrincipalCredentialType = default(string), SecretBase servicePrincipalKey = default(SecretBase), SecretBase servicePrincipalEmbeddedCert = default(SecretBase), SecretBase servicePrincipalEmbeddedCertPassword = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Url = url;
             AuthenticationType = authenticationType;
             UserName = userName;
             Password = password;
+            AuthHeaders = authHeaders;
             Tenant = tenant;
             ServicePrincipalId = servicePrincipalId;
+            AzureCloudType = azureCloudType;
             AadResourceId = aadResourceId;
             AadServicePrincipalCredentialType = aadServicePrincipalCredentialType;
             ServicePrincipalKey = servicePrincipalKey;
@@ -131,6 +141,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public SecretBase Password { get; set; }
 
         /// <summary>
+        /// Gets or sets the additional HTTP headers in the request to RESTful
+        /// API used for authorization. Type: object (or Expression with
+        /// resultType object).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.authHeaders")]
+        public object AuthHeaders { get; set; }
+
+        /// <summary>
         /// Gets or sets specify the tenant information (domain name or tenant
         /// ID) under which your application resides. Type: string (or
         /// Expression with resultType string).
@@ -145,6 +163,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalId")]
         public object ServicePrincipalId { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the azure cloud type of the service
+        /// principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.azureCloudType")]
+        public object AzureCloudType { get; set; }
 
         /// <summary>
         /// Gets or sets specify the resource you are requesting authorization

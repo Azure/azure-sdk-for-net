@@ -4,8 +4,9 @@
     <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>
     <RepoSrcPath>$(RepoRoot)src</RepoSrcPath>
     <RepoSdkPath>$(RepoRoot)src/SDKs</RepoSdkPath>
-    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
-    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and '$(IsClientLibrary)' == 'true'">true</IsDataPlaneProject>
+    <IsLegacyMgmtProject Condition="'$(IsLegacyMgmtProject)' == '' and $(MSBuildProjectName.Contains('.Management.'))">true</IsLegacyMgmtProject>
+    <ProjectStartsWithStandardName Condition="$(MSBuildProjectName.StartsWith('Azure.')) or $(MSBuildProjectName.StartsWith('Microsoft.'))">true</ProjectStartsWithStandardName>
+    <ImportRepoCommonSettings Condition="'$(ImportRepoCommonSettings)' == '' and '$(ProjectStartsWithStandardName)' == 'true' and '$(IsLegacyMgmtProject)' != 'true'">true</ImportRepoCommonSettings>
   </PropertyGroup>
 
   <!-- Setup default project properties -->
@@ -32,9 +33,12 @@
     <IntermediateOutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
     <IntermediateOutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseIntermediateOutputPath)$(PlatformName)\$(Configuration)\</IntermediateOutputPath>
 
-    <PackageOutputPath>$(ArtifactsPackagesDir)</PackageOutputPath>
+    <PackageOutputPath>$(ArtifactsPackagesDir)/$(MSBuildProjectName)</PackageOutputPath>
+
+    <!-- Used to help catch projects that use this property but don't end up importing our props below -->
+    <RequiredTargetFrameworks>import-required-properties</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />
-  <Import Project="$(RepoEngPath)\Directory.Build.Data.props" Condition="'$(IsDataPlaneProject)' == 'true'" />
+  <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.props" Condition="'$(IsLegacyMgmtProject)' == 'true'" />
+  <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
 </Project>

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class OutputFieldMappingEntry : IUtf8JsonSerializable
     {
@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (TargetName != null)
+            if (Optional.IsDefined(TargetName))
             {
                 writer.WritePropertyName("targetName");
                 writer.WriteStringValue(TargetName);
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
         internal static OutputFieldMappingEntry DeserializeOutputFieldMappingEntry(JsonElement element)
         {
             string name = default;
-            string targetName = default;
+            Optional<string> targetName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,15 +38,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("targetName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetName = property.Value.GetString();
                     continue;
                 }
             }
-            return new OutputFieldMappingEntry(name, targetName);
+            return new OutputFieldMappingEntry(name, targetName.Value);
         }
     }
 }

@@ -49,8 +49,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// video before it is encoded. When submitting a Job, exactly one of
         /// the JobInputs should be the image file, and it should have the
         /// label 'xyz'.</param>
-        public JobInputAsset(string assetName, IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string))
-            : base(files, start, end, label)
+        /// <param name="inputDefinitions">Defines a list of InputDefinitions.
+        /// For each InputDefinition, it defines a list of track selections and
+        /// related metadata.</param>
+        public JobInputAsset(string assetName, IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string), IList<InputDefinition> inputDefinitions = default(IList<InputDefinition>))
+            : base(files, start, end, label, inputDefinitions)
         {
             AssetName = assetName;
             CustomInit();

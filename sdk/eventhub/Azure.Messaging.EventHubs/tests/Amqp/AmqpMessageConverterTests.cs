@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using Azure.Messaging.EventHubs.Amqp;
 using Microsoft.Azure.Amqp;
@@ -12,6 +13,8 @@ using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
+
+using FramingData = Microsoft.Azure.Amqp.Framing.Data;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -60,6 +63,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///  The set of test cases for optional idempotent publishing properties.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> IdempotentPropertyTestCases()
+        {
+            // The values represent the test arguments:
+            //   - Pending Sequence Number (int?)
+            //   - Pending Producer Group Id (long?)
+            //   - Pending Owner Level (short?)
+
+            yield return new object[] { (int?)123, (long?)456, (short?)789 };
+            yield return new object[] { null, (long?)456, (short?)789 };
+            yield return new object[] { (int?)123, null, (short?)789 };
+            yield return new object[] { (int?)123, (long?)456, null };
+            yield return new object[] { (int?)123, null, null };
+            yield return new object[] { null, (long?)456, null };
+            yield return new object[] { null, null, (short?)789 };
+            yield return new object[] { null, null, null };
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
         ///   method.
         /// </summary>
@@ -103,7 +127,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var messageData = message.DataBody.ToList();
             Assert.That(messageData.Count, Is.EqualTo(1), "The AMQP message should a single data body.");
-            Assert.That(messageData[0].Value, Is.EqualTo(eventData.Body.ToArray()), "The AMQP message data should match the event body.");
+            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToArray()), "The AMQP message data should match the event body.");
         }
 
         /// <summary>
@@ -179,6 +203,58 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 Assert.That(containsValue, Is.True, $"The message properties did not contain: [{ property }]");
                 Assert.That(value, Is.EqualTo(eventData.Properties[property]), $"The property value did not match for: [{ property }]");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(IdempotentPropertyTestCases))]
+        public void CreateMessageFromEventPopulatesIdempotentAnnotations(int? pendingSequenceNumber,
+                                                                         long? pendingGroupId,
+                                                                         short? pendingOwnerLevel)
+        {
+            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 });
+            eventData.PendingPublishSequenceNumber = pendingSequenceNumber;
+            eventData.PendingProducerGroupId = pendingGroupId;
+            eventData.PendingProducerOwnerLevel = pendingOwnerLevel;
+
+            using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
+
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.DataBody, Is.Not.Null, "The AMQP message should a body.");
+            Assert.That(message.MessageAnnotations, Is.Not.Null, "The AMQP message annotations should be present.");
+
+            // Each annotation should only be present if a value was assigned.
+
+            if (pendingSequenceNumber.HasValue)
+            {
+                Assert.That(message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(eventData.PendingPublishSequenceNumber.Value), "The publishing sequence number should have been set.");
+            }
+            else
+            {
+                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.ProducerSequenceNumber.Value), Is.False, "The publishing sequence number should not have been set.");
+            }
+
+            if (pendingGroupId.HasValue)
+            {
+                Assert.That(message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId], Is.EqualTo(eventData.PendingProducerGroupId.Value), "The producer group should have been set.");
+            }
+            else
+            {
+                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.ProducerGroupId.Value), Is.False, "The producer group should not have been set.");
+            }
+
+            if (pendingOwnerLevel.HasValue)
+            {
+                Assert.That(message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(eventData.PendingProducerOwnerLevel.Value), "The producer owner level should have been set.");
+            }
+            else
+            {
+                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.ProducerOwnerLevel.Value), Is.False, "The producer owner level should not have been set.");
             }
         }
 
@@ -294,6 +370,20 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateMessageFromEventDoesNotTriggerPropertiesInstantation()
+        {
+            var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
+            using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
+
+            Assert.That(GetEventDataPropertiesBackingStore(eventData), Is.Null, "Translation should not have cause the properties dictionary to be instantiated.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateBatchFromEvents" />
         ///   method.
         /// </summary>
@@ -399,7 +489,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var messageData = message.DataBody.ToList();
             Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelope should a single data body.");
-            Assert.That(messageData[0].Value, Is.EqualTo(eventData.Body.ToArray()), "The batch envelope data should match the event body.");
+            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToArray()), "The batch envelope data should match the event body.");
 
             Assert.That(message.ApplicationProperties.Map.TryGetValue(nameof(property), out object propertyValue), Is.True, "The application property should exist in the batch.");
             Assert.That(propertyValue, Is.EqualTo(property), "The application property value should match.");
@@ -601,7 +691,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var messageData = batchEnvelope.DataBody.ToList();
             Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelope should a single data body.");
-            Assert.That(messageData[0].Value, Is.EqualTo(eventData.Body.ToArray()), "The batch envelope data should match the event body.");
+            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToArray()), "The batch envelope data should match the event body.");
 
             Assert.That(batchEnvelope.ApplicationProperties.Map.TryGetValue(nameof(property), out object propertyValue), Is.True, "The application property should exist in the batch.");
             Assert.That(propertyValue, Is.EqualTo(property), "The application property value should match.");
@@ -676,7 +766,6 @@ namespace Azure.Messaging.EventHubs.Tests
             using AmqpMessage firstMessage = converter.CreateMessageFromEvent(firstEvent, partitionKey);
             using AmqpMessage secondMessage = converter.CreateMessageFromEvent(secondEvent, partitionKey);
 
-
             AmqpMessage[] source = new[] { firstMessage, secondMessage };
 
             using AmqpMessage batchEnvelope = converter.CreateBatchFromMessages(source, partitionKey);
@@ -723,16 +812,14 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateEventFromMessagePopulatesTheBody()
         {
             var body = new byte[] { 0x11, 0x22, 0x33 };
-
-            using var bodyStream = new MemoryStream(body, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            using var message = AmqpMessage.Create(new Data { Value = body });
 
             var converter = new AmqpMessageConverter();
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
-            Assert.That(eventData.Body.ToArray(), Is.EqualTo(body), "The body contents should match.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody.ToArray(), Is.EqualTo(body), "The body contents should match.");
         }
 
         /// <summary>
@@ -764,9 +851,9 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var applicationProperties = propertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            using var message = AmqpMessage.Create(dataBody);
 
             foreach (KeyValuePair<string, object> pair in applicationProperties)
             {
@@ -777,7 +864,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Any(), Is.True, "The event should have a set of application properties.");
 
             // The collection comparisons built into the test assertions do not recognize
@@ -804,8 +891,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                  object propertyValueRaw,
                                                                                  Func<object, object> propertyValueAccessor)
         {
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             var describedProperty = new DescribedType(typeDescriptor, propertyValueAccessor(propertyValueRaw));
             message.ApplicationProperties.Map.Add(typeDescriptor.ToString(), describedProperty);
@@ -814,7 +901,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Any(), Is.True, "The event should have a set of application properties.");
 
             var containsValue = eventData.Properties.TryGetValue(typeDescriptor.ToString(), out object value);
@@ -830,8 +917,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesAnArrayApplicationPropertyType()
         {
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             var propertyKey = "Test";
             var propertyValue = new byte[] { 0x11, 0x15, 0xF8, 0x20 };
@@ -841,7 +928,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Any(), Is.True, "The event should have a set of application properties.");
 
             var containsValue = eventData.Properties.TryGetValue(propertyKey, out var eventValue);
@@ -857,8 +944,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesAFullArraySegmentApplicationPropertyType()
         {
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             var propertyKey = "Test";
             var propertyValue = new byte[] { 0x11, 0x15, 0xF8, 0x20 };
@@ -868,7 +955,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Any(), Is.True, "The event should have a set of application properties.");
 
             var containsValue = eventData.Properties.TryGetValue(propertyKey, out var eventValue);
@@ -884,8 +971,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesAnArraySegmentApplicationPropertyType()
         {
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             var propertyKey = "Test";
             var propertyValue = new byte[] { 0x11, 0x15, 0xF8, 0x20 };
@@ -895,7 +982,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Any(), Is.True, "The event should have a set of application properties.");
 
             var containsValue = eventData.Properties.TryGetValue(propertyKey, out var eventValue);
@@ -911,8 +998,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessageDoesNotIncludeUnknownApplicationPropertyType()
         {
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             var typeDescriptor = (AmqpSymbol)"INVALID";
             var describedProperty = new DescribedType(typeDescriptor, 1234);
@@ -922,7 +1009,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Any(), Is.False, "The event should not have a set of application properties.");
 
             var containsValue = eventData.Properties.TryGetValue(typeDescriptor.ToString(), out var _);
@@ -942,8 +1029,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var partitionKey = "OMG! partition!";
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
@@ -957,7 +1044,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
             Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
@@ -981,8 +1068,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondMessageAnnotation = "hello";
             var subjectValue = "Test";
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
@@ -996,7 +1083,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
             Assert.That(eventData.SystemProperties.ContainsKey(nameof(firstMessageAnnotation)), Is.True, "The first annotation should be in the system properties.");
             Assert.That(eventData.SystemProperties.ContainsKey(nameof(secondMessageAnnotation)), Is.True, "The second annotation should be in the system properties.");
@@ -1023,8 +1110,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var lastRetrievalTime = DateTimeOffset.Parse("203-09-27T04:32:00Z");
             var partitionKey = "OMG! partition!";
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
@@ -1043,7 +1130,7 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData eventData = converter.CreateEventFromMessage(message);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
-            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
             Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
@@ -1066,8 +1153,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var lastEnqueuedTime = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, enqueuedTime.UtcDateTime);
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedTimeUtc, lastEnqueuedTime.UtcDateTime);
@@ -1091,8 +1178,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var lastEnqueuedTime = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+            using var message = AmqpMessage.Create(dataBody);
 
             message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, enqueuedTime.UtcTicks);
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedTimeUtc, lastEnqueuedTime.UtcTicks);
@@ -1114,9 +1201,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateEventFromMessagePopulatesLastRetrievalTimeFromDateTime()
         {
             var lastRetrieval = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            using var message = AmqpMessage.Create(dataBody);
 
             message.DeliveryAnnotations.Map.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, lastRetrieval.UtcDateTime);
 
@@ -1136,9 +1223,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateEventFromMessagePopulatesLastRetrievalTimeFromTicks()
         {
             var lastRetrieval = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
 
-            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
-            using var message = AmqpMessage.Create(bodyStream, true);
+            using var message = AmqpMessage.Create(dataBody);
 
             message.DeliveryAnnotations.Map.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, lastRetrieval.UtcTicks);
 
@@ -1180,6 +1267,25 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "There should have been properties present.");
             Assert.That(eventData.Properties.First().Value, Is.EqualTo(propertyValue), "The application property should have been populated.");
             Assert.That(eventData.Offset, Is.EqualTo(propertyValue), "The offset should have been populated.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventFromMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventFromMessageDoesNotPopulatePropertiesByDefault()
+        {
+            var body = new byte[] { 0x11, 0x22, 0x33 };
+            using var message = AmqpMessage.Create(new Data { Value = body } );
+
+            var converter = new AmqpMessageConverter();
+            var eventData = converter.CreateEventFromMessage(message);
+
+            Assert.That(eventData, Is.Not.Null, "The event should have been created.");
+            Assert.That(GetEventDataPropertiesBackingStore(eventData), Is.Null, "The event should have a null properties dictionary.");
+            Assert.That(eventData.SystemProperties, Is.SameAs(GetEventDataEmptySystemProperties()), "The event should have the default empty system properties.");
         }
 
         /// <summary>
@@ -1300,7 +1406,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var converter = new AmqpMessageConverter();
 
-            using var response = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x11, 0x22 }) });
+            using var response = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x11, 0x22 }) });
             Assert.That(() => converter.CreateEventHubPropertiesFromResponse(response), Throws.InstanceOf<InvalidOperationException>());
         }
 
@@ -1449,7 +1555,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var converter = new AmqpMessageConverter();
 
-            using var response = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x11, 0x22 }) });
+            using var response = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x11, 0x22 }) });
             Assert.That(() => converter.CreatePartitionPropertiesFromResponse(response), Throws.InstanceOf<InvalidOperationException>());
         }
 
@@ -1492,5 +1598,33 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueueTime), "The last enqueued time should match");
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The empty flag should match");
         }
+
+        /// <summary>
+        ///   Retrieves the empty system properties dictionary from the Event Data
+        ///   type, using its private field.
+        /// </summary>
+        ///
+        /// <returns>The empty dictionary used as the default for the <see cref="EventData.SystemProperties" /> set.</returns>
+        ///
+        private static IReadOnlyDictionary<string, object> GetEventDataEmptySystemProperties() =>
+            (IReadOnlyDictionary<string, object>)
+                typeof(EventData)
+                    .GetField("EmptySystemProperties", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetValue(null);
+
+        /// <summary>
+        ///   Retrieves the backing store for the Properties dictionary from the Event Data
+        ///   type, using its private field.
+        /// </summary>
+        ///
+        /// <param name="eventData">The instance to read the field from.</param>
+        ///
+        /// <returns>The backing store for the <see cref="EventData.Properties" /> set.</returns>
+        ///
+        private static IReadOnlyDictionary<string, object> GetEventDataPropertiesBackingStore(EventData eventData) =>
+            (IReadOnlyDictionary<string, object>)
+                typeof(EventData)
+                    .GetField("_properties", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(eventData);
     }
 }

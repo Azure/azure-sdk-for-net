@@ -49,15 +49,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the route
         /// table resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
+        /// <param name="resourceGuid">The resource GUID property of the route
+        /// table.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public RouteTable(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<Route> routes = default(IList<Route>), IList<Subnet> subnets = default(IList<Subnet>), bool? disableBgpRoutePropagation = default(bool?), string provisioningState = default(string), string etag = default(string))
+        public RouteTable(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<Route> routes = default(IList<Route>), IList<Subnet> subnets = default(IList<Subnet>), bool? disableBgpRoutePropagation = default(bool?), string provisioningState = default(string), string resourceGuid = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             Routes = routes;
             Subnets = subnets;
             DisableBgpRoutePropagation = disableBgpRoutePropagation;
             ProvisioningState = provisioningState;
+            ResourceGuid = resourceGuid;
             Etag = etag;
             CustomInit();
         }
@@ -92,6 +95,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the resource GUID property of the route table.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

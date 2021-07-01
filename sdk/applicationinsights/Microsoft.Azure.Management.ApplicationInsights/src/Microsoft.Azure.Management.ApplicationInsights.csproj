@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure Application Insights Library</Description>
-		<Version>0.2.0-preview</Version>
+		<Version>0.3.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ApplicationInsights</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ApplicationInsights</PackageId>
-		<PackageTags>Management.ApplicationInsights;</PackageTags>
-		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+		<PackageTags>Management.ApplicationInsights</PackageTags>
+		<PackageReleaseNotes>- Update API for component and add linked storage account related SDK</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

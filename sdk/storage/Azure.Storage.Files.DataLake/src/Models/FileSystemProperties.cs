@@ -62,6 +62,16 @@ namespace Azure.Storage.Files.DataLake.Models
         public IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
+        /// DeletedTime.
+        /// </summary>
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays.
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileSystemProperties instances.
         /// You can use BlobsModelFactory.FileSystemProperties instead.
         /// </summary>

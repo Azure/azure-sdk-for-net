@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// run has to happen.</param>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled for the run or not.</param>
+        /// <param name="agentPoolName">The dedicated agent pool for the
+        /// run.</param>
         /// <param name="imageNames">The fully qualified image names including
         /// the repository and tag.</param>
         /// <param name="isPushEnabled">The value of this property indicates
@@ -58,8 +60,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// calling listBuildSourceUploadUrl API.</param>
         /// <param name="credentials">The properties that describes a set of
         /// credentials that will be used when this run is invoked.</param>
-        public DockerBuildRequest(string dockerFilePath, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string target = default(string), IList<Argument> arguments = default(IList<Argument>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string), Credentials credentials = default(Credentials))
-            : base(isArchiveEnabled)
+        public DockerBuildRequest(string dockerFilePath, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), string agentPoolName = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string target = default(string), IList<Argument> arguments = default(IList<Argument>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string), Credentials credentials = default(Credentials))
+            : base(isArchiveEnabled, agentPoolName)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;

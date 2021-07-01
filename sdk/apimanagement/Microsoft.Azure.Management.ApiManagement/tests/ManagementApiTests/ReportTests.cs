@@ -18,7 +18,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ReportTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public void Query()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -94,7 +94,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName);
 
                 Assert.NotNull(bySubscriptionResponse);
-                Assert.Equal(2, bySubscriptionResponse.Count());
+                Assert.Equal(3, bySubscriptionResponse.Count());
                 Assert.NotNull(bySubscriptionResponse.First().SubscriptionId);
                 Assert.NotNull(bySubscriptionResponse.First().ProductId);
 

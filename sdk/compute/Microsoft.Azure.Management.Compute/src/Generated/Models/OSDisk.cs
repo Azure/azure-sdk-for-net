@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Specifies information about the operating system disk used by the
     /// virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks,
     /// see [About disks and VHDs for Azure virtual
-    /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+    /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
     /// </summary>
     public partial class OSDisk
     {
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="caching">Specifies the caching requirements.
         /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
         /// **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt;
-        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
+        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None** for Standard
+        /// storage. **ReadOnly** for Premium storage. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
@@ -73,7 +73,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
         /// cannot be larger than 1023 GB</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public OSDisk(string createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), DiffDiskSettings diffDiskSettings = default(DiffDiskSettings), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters))
+        /// <param name="deleteOption">Specifies whether OS Disk should be
+        /// deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible
+        /// values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the
+        /// OS disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt;
+        /// **Detach** If this value is used, the os disk is retained after VM
+        /// is deleted. &lt;br&gt;&lt;br&gt; The default value is set to
+        /// **detach**. For an ephemeral OS Disk, the default value is set to
+        /// **Delete**. User cannot change the delete option for ephemeral OS
+        /// Disk. Possible values include: 'Delete', 'Detach'</param>
+        public OSDisk(string createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), DiffDiskSettings diffDiskSettings = default(DiffDiskSettings), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), string deleteOption = default(string))
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -86,6 +95,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             CreateOption = createOption;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
+            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -140,8 +150,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **None**
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadOnly**
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadWrite**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None** for Standard
+        /// storage. **ReadOnly** for Premium storage. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
@@ -190,6 +200,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "managedDisk")]
         public ManagedDiskParameters ManagedDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether OS Disk should be deleted or
+        /// detached upon VM deletion. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// Possible values: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Delete** If
+        /// this value is used, the OS disk is deleted when VM is
+        /// deleted.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Detach** If this
+        /// value is used, the os disk is retained after VM is deleted.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; The default value is set to
+        /// **detach**. For an ephemeral OS Disk, the default value is set to
+        /// **Delete**. User cannot change the delete option for ephemeral OS
+        /// Disk. Possible values include: 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteOption")]
+        public string DeleteOption { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -86,5 +86,20 @@ namespace Microsoft.Azure.Management.SignalR
         /// </summary>
         IUsagesOperations Usages { get; }
 
+        /// <summary>
+        /// Gets the ISignalRPrivateEndpointConnectionsOperations.
+        /// </summary>
+        ISignalRPrivateEndpointConnectionsOperations SignalRPrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the ISignalRPrivateLinkResourcesOperations.
+        /// </summary>
+        ISignalRPrivateLinkResourcesOperations SignalRPrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the ISignalRSharedPrivateLinkResourcesOperations.
+        /// </summary>
+        ISignalRSharedPrivateLinkResourcesOperations SignalRSharedPrivateLinkResources { get; }
+
     }
 }

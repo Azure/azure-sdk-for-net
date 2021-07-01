@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The size of subsequent ranges.
         /// </summary>
-        private readonly int _rangeSize;
+        private readonly long _rangeSize;
 
         public PartitionedDownloader(
             BlobBaseClient client,
@@ -55,10 +55,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _rangeSize
-            if (transferOptions.MaximumTransferLength.HasValue
-                && transferOptions.MaximumTransferLength.Value > 0)
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize.Value > 0)
             {
-                _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
+                _rangeSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
@@ -66,10 +66,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _initialRangeSize
-            if (transferOptions.InitialTransferLength.HasValue
-                && transferOptions.InitialTransferLength.Value > 0)
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
             {
-                _initialRangeSize = transferOptions.MaximumTransferLength.Value;
+                _initialRangeSize = transferOptions.InitialTransferSize.Value;
             }
             else
             {
@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -94,14 +94,27 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Task<Response<BlobDownloadInfo>> initialResponseTask =
-                    _client.DownloadAsync(
+                Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
+                    _client.DownloadStreamingAsync(
                         initialRange,
                         conditions,
                         rangeGetContentHash: false,
                         cancellationToken);
-                Response<BlobDownloadInfo> initialResponse =
-                    await initialResponseTask.ConfigureAwait(false);
+
+                Response<BlobDownloadStreamingResult> initialResponse = null;
+                try
+                {
+                    initialResponse = await initialResponseTask.ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
+                {
+                    initialResponse = await _client.DownloadStreamingAsync(
+                        range: default,
+                        conditions,
+                        false,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
@@ -112,7 +125,7 @@ namespace Azure.Storage.Blobs
 
                 // If the first segment was the entire blob, we'll copy that to
                 // the output stream and finish now
-                long initialLength = initialResponse.Value.ContentLength;
+                long initialLength = initialResponse.Value.Details.ContentLength;
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
@@ -128,14 +141,19 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Create a queue of tasks that will each download one segment
                 // of the blob.  The queue maintains the order of the segments
                 // so we can keep appending to the end of the destination
                 // stream when each segment finishes.
-                var runningTasks = new Queue<Task<Response<BlobDownloadInfo>>>();
+                var runningTasks = new Queue<Task<Response<BlobDownloadStreamingResult>>>();
                 runningTasks.Enqueue(initialResponseTask);
+                if (_maxWorkerCount <= 1)
+                {
+                    // consume initial task immediately if _maxWorkerCount is 1 (or less to be safe). Otherwise loop below would have 2 concurrent tasks.
+                    await ConsumeQueuedTask().ConfigureAwait(false);
+                }
 
                 // Fill the queue with tasks to download each of the remaining
                 // ranges in the blob
@@ -143,7 +161,7 @@ namespace Azure.Storage.Blobs
                 {
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
-                    runningTasks.Enqueue(_client.DownloadAsync(
+                    runningTasks.Enqueue(_client.DownloadStreamingAsync(
                         httpRange,
                         conditionsWithEtag,
                         rangeGetContentHash: false,
@@ -177,7 +195,7 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    using BlobDownloadInfo result =
+                    using BlobDownloadStreamingResult result =
                         await runningTasks.Dequeue().ConfigureAwait(false);
 
                     // Even though the BlobDownloadInfo is returned immediately,
@@ -208,7 +226,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -218,11 +236,24 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Response<BlobDownloadInfo> initialResponse = _client.Download(
-                    initialRange,
+                Response<BlobDownloadStreamingResult> initialResponse;
+
+                try
+                {
+                    initialResponse = _client.DownloadStreaming(
+                        initialRange,
+                        conditions,
+                        rangeGetContentHash: false,
+                        cancellationToken);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
+                {
+                    initialResponse = _client.DownloadStreaming(
+                    range: default,
                     conditions,
                     rangeGetContentHash: false,
                     cancellationToken);
+                }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
@@ -235,7 +266,7 @@ namespace Azure.Storage.Blobs
                 CopyTo(initialResponse, destination, cancellationToken);
 
                 // If the first segment was the entire blob, we're finished now
-                long initialLength = initialResponse.Value.ContentLength;
+                long initialLength = initialResponse.Value.Details.ContentLength;
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
@@ -246,7 +277,7 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Download each of the remaining ranges in the blob
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
@@ -254,7 +285,7 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    Response<BlobDownloadInfo> result = _client.Download(
+                    Response<BlobDownloadStreamingResult> result = _client.DownloadStreaming(
                         httpRange,
                         conditionsWithEtag,
                         rangeGetContentHash: false,
@@ -277,6 +308,10 @@ namespace Azure.Storage.Blobs
 
         private static long ParseRangeTotalLength(string range)
         {
+            if (range == null)
+            {
+                return 0;
+            }
             int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
             if (lengthSeparator == -1)
             {
@@ -285,33 +320,28 @@ namespace Azure.Storage.Blobs
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        private static BlobRequestConditions CreateConditionsWithEtag(BlobRequestConditions conditions, ETag etag) =>
-            new BlobRequestConditions
-            {
-                LeaseId = conditions?.LeaseId,
-                IfMatch = conditions?.IfMatch ?? etag,
-                IfNoneMatch = conditions?.IfNoneMatch,
-                IfModifiedSince = conditions?.IfModifiedSince,
-                IfUnmodifiedSince = conditions?.IfUnmodifiedSince
-            };
-
         private static async Task CopyToAsync(
-            BlobDownloadInfo result,
+            BlobDownloadStreamingResult result,
             Stream destination,
-            CancellationToken cancellationToken) =>
-            await result.Content.CopyToAsync(
+            CancellationToken cancellationToken)
+        {
+            using Stream source = result.Content;
+
+            await source.CopyToAsync(
                 destination,
                 Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private static void CopyTo(
-            BlobDownloadInfo result,
+            BlobDownloadStreamingResult result,
             Stream destination,
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+            result.Content.Dispose();
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

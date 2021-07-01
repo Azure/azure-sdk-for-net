@@ -9,23 +9,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class SearchServiceError
     {
         internal static SearchServiceError DeserializeSearchServiceError(JsonElement element)
         {
-            string code = default;
+            Optional<string> code = default;
             string message = default;
-            IReadOnlyList<SearchServiceError> details = default;
+            Optional<IReadOnlyList<SearchServiceError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
@@ -38,6 +34,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SearchServiceError> array = new List<SearchServiceError>();
@@ -49,7 +46,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchServiceError(code, message, details);
+            return new SearchServiceError(code.Value, message, Optional.ToList(details));
         }
     }
 }

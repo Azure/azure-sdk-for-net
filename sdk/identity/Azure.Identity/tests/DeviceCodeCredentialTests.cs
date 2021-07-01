@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +50,6 @@ namespace Azure.Identity.Tests
 
         private class MockException : Exception
         {
-
         }
 
         private async Task ThrowingDeviceCodeCallback(DeviceCodeInfo code, CancellationToken cancellationToken)
@@ -96,6 +96,42 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
+        public async Task AuthenticateWithDeviceCodeNoCallback()
+        {
+            var capturedOut = new StringBuilder();
+
+            var capturedOutWriter = new StringWriter(capturedOut);
+
+            var stdOut = Console.Out;
+
+            Console.SetOut(capturedOutWriter);
+
+            try
+            {
+                var expectedCode = Guid.NewGuid().ToString();
+
+                var expectedToken = Guid.NewGuid().ToString();
+
+                var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
+
+                var options = new DeviceCodeCredentialOptions() { Transport = mockTransport };
+
+                var cred = InstrumentClient(new DeviceCodeCredential(options));
+
+                AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
+
+                Assert.AreEqual(token.Token, expectedToken);
+
+                Assert.AreEqual(expectedCode + Environment.NewLine, capturedOut.ToString());
+            }
+            finally
+            {
+                Console.SetOut(stdOut);
+            }
+        }
+
+        [Test]
         public async Task AuthenticateWithDeviceCodeMockVerifyMsalCancellationAsync()
         {
             var expectedCode = Guid.NewGuid().ToString();
@@ -126,7 +162,7 @@ namespace Azure.Identity.Tests
 
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-            var cancelSource = new CancellationTokenSource(1000);
+            var cancelSource = new CancellationTokenSource(100);
 
             var cred = InstrumentClient(new DeviceCodeCredential(VerifyDeviceCodeCallbackCancellationToken, ClientId, options: options));
 
@@ -140,6 +176,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithDeviceCodeCallbackThrowsAsync()
         {
+            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             var expectedCode = Guid.NewGuid().ToString();
 
             var expectedToken = Guid.NewGuid().ToString();
@@ -152,21 +189,36 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, ClientId, options: options));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { testEnvironment.KeyvaultScope }), cancelSource.Token));
 
             Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
         }
 
+        [Test]
+        public void DisableAutomaticAuthenticationException()
+        {
+            var expectedCode = Guid.NewGuid().ToString();
+
+            var cred = InstrumentClient(new DeviceCodeCredential(new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true, DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode) }));
+
+            var expTokenRequestContext = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }, Guid.NewGuid().ToString());
+
+            var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext));
+
+            Assert.AreEqual(expTokenRequestContext, ex.TokenRequestContext);
+        }
+
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)
         {
+            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/discovery/instance"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "common/discovery/instance").ToString()))
             {
                 return DiscoveryInstanceResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/v2.0/.well-known/openid-configuration"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "organizations/v2.0/.well-known/openid-configuration").ToString()))
             {
                 return OpenIdConfigurationResponse;
             }
@@ -179,7 +231,6 @@ namespace Azure.Identity.Tests
             if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"))
             {
                 return CreateTokenResponse(code, token);
-
             }
 
             throw new InvalidOperationException();
@@ -373,7 +424,4 @@ namespace Azure.Identity.Tests
             }
         }
     }
-
-
-
 }

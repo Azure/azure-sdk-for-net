@@ -1,0 +1,15 @@
+﻿{
+    "$metadata": {
+        "$model": "dtmi:com:samples:Room;1"
+    },
+    "Temperature": 80,
+    "Humidity": 25,
+    "IsOccupied": true,
+    "EmployeeId": "Employee1",
+    "wifiAccessPoint": {
+        "$metadata": {
+        },
+        "RouterName": "Cisco1",
+        "Network": "Room1"
+    }
+}

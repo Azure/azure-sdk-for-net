@@ -8,17 +8,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal interface ICryptographyProvider
     {
-        bool ShouldRemote { get; }
+        bool CanRemote { get; }
 
         bool SupportsOperation(KeyOperation operation);
 
-        Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default);
+        Task<EncryptResult> EncryptAsync(EncryptParameters parameters, CancellationToken cancellationToken = default);
 
-        EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default);
+        EncryptResult Encrypt(EncryptParameters parameters, CancellationToken cancellationToken = default);
 
-        Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default);
+        Task<DecryptResult> DecryptAsync(DecryptParameters parameters, CancellationToken cancellationToken = default);
 
-        DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default);
+        DecryptResult Decrypt(DecryptParameters parameters, CancellationToken cancellationToken = default);
 
         Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default);
 

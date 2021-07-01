@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.KeyVault.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// <summary>
     /// Resource information with extended details.
     /// </summary>
-    public partial class Vault : Resource
+    public partial class Vault : IResource
     {
         /// <summary>
         /// Initializes a new instance of the Vault class.
@@ -33,18 +34,21 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Vault class.
         /// </summary>
-        /// <param name="location">The supported Azure location where the key
-        /// vault should be created.</param>
         /// <param name="properties">Properties of the vault</param>
-        /// <param name="id">The Azure Resource Manager resource ID for the key
-        /// vault.</param>
-        /// <param name="name">The name of the key vault.</param>
-        /// <param name="type">The resource type of the key vault.</param>
-        /// <param name="tags">The tags that will be assigned to the key vault.
-        /// </param>
-        public Vault(string location, VaultProperties properties, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(location, id, name, type, tags)
+        /// <param name="id">Fully qualified identifier of the key vault
+        /// resource.</param>
+        /// <param name="name">Name of the key vault resource.</param>
+        /// <param name="type">Resource type of the key vault resource.</param>
+        /// <param name="location">Azure location of the key vault
+        /// resource.</param>
+        /// <param name="tags">Tags assigned to the key vault resource.</param>
+        public Vault(VaultProperties properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Id = id;
+            Name = name;
+            Type = type;
+            Location = location;
+            Tags = tags;
             Properties = properties;
             CustomInit();
         }
@@ -53,6 +57,36 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets fully qualified identifier of the key vault resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets name of the key vault resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets resource type of the key vault resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets azure location of the key vault resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets tags assigned to the key vault resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets properties of the vault
@@ -66,9 +100,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");

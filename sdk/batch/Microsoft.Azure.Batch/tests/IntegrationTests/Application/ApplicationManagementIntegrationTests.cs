@@ -40,54 +40,50 @@
         {
             string accountName = TestCommon.Configuration.BatchAccountName;
 
-            Func<Task> test = async () =>
+            async Task test()
+            {
+                var poolId = "app-ref-test" + Guid.NewGuid();
+                using BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync();
+                using var mgmtClient = IntegrationTestCommon.OpenBatchManagementClient();
+                // Give the application a display name
+                await mgmtClient.Application.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId, new UpdateApplicationParameters
                 {
-                    var poolId = "app-ref-test" + Guid.NewGuid();
-                    using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
-                    {
-                        using (var mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
-                        {
-                            // Give the application a display name
-                            await mgmtClient.Application.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId, new UpdateApplicationParameters
-                            {
-                                AllowUpdates = true,
-                                DefaultVersion = ApplicationIntegrationCommon.Version,
-                                DisplayName = DisplayName
-                            }).ConfigureAwait(false);
+                    AllowUpdates = true,
+                    DefaultVersion = ApplicationIntegrationCommon.Version,
+                    DisplayName = DisplayName
+                }).ConfigureAwait(false);
 
-                            List<ApplicationSummary> applicationSummaries = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync().ConfigureAwait(false);
+                List<ApplicationSummary> applicationSummaries = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync().ConfigureAwait(false);
 
-                            ApplicationSummary applicationSummary = applicationSummaries.First();
-                            Assert.Equal(ApplicationIntegrationCommon.Version, applicationSummary.Versions.First());
-                            Assert.Equal(ApplicationId, applicationSummary.Id);
-                            Assert.Equal(DisplayName, applicationSummary.DisplayName);
+                ApplicationSummary applicationSummary = applicationSummaries.First();
+                Assert.Equal(ApplicationIntegrationCommon.Version, applicationSummary.Versions.First());
+                Assert.Equal(ApplicationId, applicationSummary.Id);
+                Assert.Equal(DisplayName, applicationSummary.DisplayName);
 
 
-                            ApplicationSummary getApplicationSummary = await client.ApplicationOperations.GetApplicationSummaryAsync(applicationSummary.Id).ConfigureAwait(false);
+                ApplicationSummary getApplicationSummary = await client.ApplicationOperations.GetApplicationSummaryAsync(applicationSummary.Id).ConfigureAwait(false);
 
-                            Assert.Equal(getApplicationSummary.Id, applicationSummary.Id);
-                            Assert.Equal(getApplicationSummary.Versions.Count(), applicationSummary.Versions.Count());
-                            Assert.Equal(getApplicationSummary.DisplayName, applicationSummary.DisplayName);
+                Assert.Equal(getApplicationSummary.Id, applicationSummary.Id);
+                Assert.Equal(getApplicationSummary.Versions.Count(), applicationSummary.Versions.Count());
+                Assert.Equal(getApplicationSummary.DisplayName, applicationSummary.DisplayName);
 
-                            var appPackage = await mgmtClient.ApplicationPackage.GetAsync(
-                                    TestCommon.Configuration.BatchAccountResourceGroup,
-                                    accountName,
-                                    ApplicationId,
-                                    ApplicationIntegrationCommon.Version).ConfigureAwait(false);
+                var appPackage = await mgmtClient.ApplicationPackage.GetAsync(
+                        TestCommon.Configuration.BatchAccountResourceGroup,
+                        accountName,
+                        ApplicationId,
+                        ApplicationIntegrationCommon.Version).ConfigureAwait(false);
 
-                            Assert.Equal(PackageState.Active, appPackage.State);
-                            Assert.Equal(ApplicationIntegrationCommon.Version, appPackage.Version);
-                            Assert.Equal(ApplicationId, appPackage.Id);
+                Assert.Equal(PackageState.Active, appPackage.State);
+                Assert.Equal(ApplicationIntegrationCommon.Version, appPackage.Version);
+                Assert.Equal(ApplicationId, appPackage.Id);
 
-                            var application = await mgmtClient.Application.GetAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId).ConfigureAwait(false);
+                var application = await mgmtClient.Application.GetAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId).ConfigureAwait(false);
 
-                            Assert.Equal(ApplicationIntegrationCommon.Version, application.DefaultVersion);
-                            Assert.Equal(ApplicationId, application.Id);
+                Assert.Equal(ApplicationIntegrationCommon.Version, application.DefaultVersion);
+                Assert.Equal(ApplicationId, application.Id);
 
-                            await AssertPoolWasCreatedWithApplicationReferences(client, poolId, ApplicationId).ConfigureAwait(false);
-                        }
-                    }
-                };
+                await AssertPoolWasCreatedWithApplicationReferences(client, poolId, ApplicationId).ConfigureAwait(false);
+            }
 
             await SynchronizationContextHelper.RunTestAsync(test, LongRunningTestTimeout);
         }
@@ -95,7 +91,6 @@
 
         private static async Task AssertPoolWasCreatedWithApplicationReferences(BatchClient client, string poolId, string applicationId)
         {
-            CloudPool referenceToPool = null;
             try
             {
                 CloudPool pool = client.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily));
@@ -104,7 +99,7 @@
 
                 await pool.CommitAsync().ConfigureAwait(false);
 
-                referenceToPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
+                CloudPool referenceToPool = await client.PoolOperations.GetPoolAsync(poolId).ConfigureAwait(false);
 
                 ApplicationPackageReference apr = referenceToPool.ApplicationPackageReferences.First();
 

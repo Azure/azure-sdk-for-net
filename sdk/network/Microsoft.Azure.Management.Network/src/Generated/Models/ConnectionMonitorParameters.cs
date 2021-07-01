@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -128,7 +129,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
@@ -136,6 +137,18 @@ namespace Microsoft.Azure.Management.Network.Models
             if (Source != null)
             {
                 Source.Validate();
+            }
+            if (Destination != null)
+            {
+                Destination.Validate();
+            }
+            if (MonitoringIntervalInSeconds > 1800)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MonitoringIntervalInSeconds", 1800);
+            }
+            if (MonitoringIntervalInSeconds < 30)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MonitoringIntervalInSeconds", 30);
             }
             if (Endpoints != null)
             {

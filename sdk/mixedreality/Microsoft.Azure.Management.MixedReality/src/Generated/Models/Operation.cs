@@ -33,10 +33,17 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// {provider}/{resource}/{operation}</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="isDataAction">Whether or not this is a data plane
+        /// operation</param>
+        /// <param name="origin">The origin</param>
+        /// <param name="properties">Properties of the operation</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), bool? isDataAction = default(bool?), string origin = default(string), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
             Display = display;
+            IsDataAction = isDataAction;
+            Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -56,6 +63,24 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not this is a data plane operation
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the origin
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public OperationProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
