@@ -14,8 +14,8 @@ namespace Compute.Tests
     public class VMMarketplaceTest : VMTestBase
     {
         public const string vmmPublisherName = "datastax";
-        public const string vmmOfferName = "datastax-enterprise-non-production-use-only";
-        public const string vmmSku = "sandbox_single-node";
+        public const string vmmOfferName = "datastax_test";
+        public const string vmmSku = "dse-6";
 
         public VirtualMachineImage GetMarketplaceImage()
         {
@@ -88,7 +88,7 @@ namespace Compute.Tests
                 {
                     // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with 
                     // the resources from this test.
-                    //m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
                 }
             }
         }

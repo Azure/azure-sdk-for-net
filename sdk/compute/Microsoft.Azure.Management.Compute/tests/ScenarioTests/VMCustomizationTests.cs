@@ -18,10 +18,11 @@ namespace Compute.Tests
         [Fact]
         public void TestDisablingHyperthreadingAndConstrainedvCPUsScenario()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
-
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 var image = m_CrpClient.VirtualMachineImages.Get(
@@ -34,11 +35,10 @@ namespace Compute.Tests
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
                 VirtualMachine inputVM;
-                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+                
 
                 try
-                {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                {                    
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
                     {
