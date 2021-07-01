@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.Personalizer.Models
 {
     /// <summary> A Counterfactual Evaluation. </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "API name cannot be changed")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "This is a descriptive name and should not be changed")]
     public partial class Evaluation
     {
         /// <summary> Initializes a new instance of Evaluation. </summary>
@@ -32,7 +32,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="policyResults"> The results of the evaluation. </param>
         /// <param name="featureImportance"> Feature Importance. </param>
         /// <param name="evaluationType"> Evaluation type (manual or through Automatic Optimization). </param>
-        /// <param name="optimalPolicy"> Thr optimal policy. </param>
+        /// <param name="optimalPolicy"> The optimal policy. </param>
         /// <param name="creationTime"> Craetion time. </param>
         internal Evaluation(string id, string name, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, EvaluationJobStatus? status, IReadOnlyList<PolicyResult> policyResults, IReadOnlyList<IList<string>> featureImportance, EvaluationType? evaluationType, string optimalPolicy, DateTimeOffset? creationTime)
         {
@@ -67,7 +67,7 @@ namespace Azure.AI.Personalizer.Models
         public IReadOnlyList<IList<string>> FeatureImportance { get; }
         /// <summary> Evaluation type (manual or through Automatic Optimization). </summary>
         public EvaluationType? EvaluationType { get; }
-        /// <summary> Thr optimal policy. </summary>
+        /// <summary> The optimal policy. </summary>
         public string OptimalPolicy { get; }
         /// <summary> Craetion time. </summary>
         public DateTimeOffset? CreationTime { get; }

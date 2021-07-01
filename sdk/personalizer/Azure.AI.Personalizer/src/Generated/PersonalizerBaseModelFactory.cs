@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Personalizer.Models;
 
-namespace Azure.AI.Personalizer
+namespace Azure.AI.Personalizer.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class PersonalizerBaseModelFactory
@@ -25,7 +24,7 @@ namespace Azure.AI.Personalizer
         /// <param name="policyResults"> The results of the evaluation. </param>
         /// <param name="featureImportance"> Feature Importance. </param>
         /// <param name="evaluationType"> Evaluation type (manual or through Automatic Optimization). </param>
-        /// <param name="optimalPolicy"> Thr optimal policy. </param>
+        /// <param name="optimalPolicy"> The optimal policy. </param>
         /// <param name="creationTime"> Craetion time. </param>
         /// <returns> A new <see cref="Models.Evaluation"/> instance for mocking. </returns>
         public static Evaluation Evaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, EvaluationJobStatus? status = null, IEnumerable<PolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, EvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)

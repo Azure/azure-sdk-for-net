@@ -150,5 +150,41 @@ namespace Azure.AI.Personalizer
                 throw;
             }
         }
+
+        /// <summary> Apply Learning Settings and model from a pre-existing Offline Evaluation, making them the current online Learning Settings and model and replacing the previous ones. </summary>
+        /// <param name="body"> The PolicyReferenceContract to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> ApplyFromEvaluationAsync(PolicyReferenceContract body, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceConfigurationClient.ApplyFromEvaluation");
+            scope.Start();
+            try
+            {
+                return await RestClient.ApplyFromEvaluationAsync(body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Apply Learning Settings and model from a pre-existing Offline Evaluation, making them the current online Learning Settings and model and replacing the previous ones. </summary>
+        /// <param name="body"> The PolicyReferenceContract to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response ApplyFromEvaluation(PolicyReferenceContract body, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceConfigurationClient.ApplyFromEvaluation");
+            scope.Start();
+            try
+            {
+                return RestClient.ApplyFromEvaluation(body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

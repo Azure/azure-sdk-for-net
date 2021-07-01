@@ -19,8 +19,6 @@ namespace Azure.AI.Personalizer
         public LogClient Log { get; set; }
         /// <summary> The Events service client. </summary>
         public EventsClient Events { get; set; }
-        /// <summary> The Evaluation service client. </summary>
-        public EvaluationClient Evaluation { get; set; }
         /// <summary> The Evaluations service client. </summary>
         public EvaluationsClient Evaluations { get; set; }
         /// <summary> The Policy service client. </summary>
@@ -45,7 +43,6 @@ namespace Azure.AI.Personalizer
             Model = new ModelClient(endpoint, credential, options);
             Log = new LogClient(endpoint, credential, options);
             Events = new EventsClient(endpoint, credential, options);
-            Evaluation = new EvaluationClient(endpoint, credential, options);
             Evaluations = new EvaluationsClient(endpoint, credential, options);
             Policy = new PolicyClient(endpoint, credential, options);
             ServiceConfiguration = new ServiceConfigurationClient(endpoint, credential, options);
@@ -63,7 +60,6 @@ namespace Azure.AI.Personalizer
             Model = new ModelClient(endpoint, credential, options);
             Log = new LogClient(endpoint, credential, options);
             Events = new EventsClient(endpoint, credential, options);
-            Evaluation = new EvaluationClient(endpoint, credential, options);
             Evaluations = new EvaluationsClient(endpoint, credential, options);
             Policy = new PolicyClient(endpoint, credential, options);
             ServiceConfiguration = new ServiceConfigurationClient(endpoint, credential, options);

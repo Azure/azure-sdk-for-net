@@ -27,6 +27,14 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
+        public async Task ApplyFromEvaluation()
+        {
+            PersonalizerClient client = GetPersonalizerClient();
+            PolicyReferenceContract policyReferenceContract = new PolicyReferenceContract("628a6299-ce45-4a9d-98a6-017c2c9ff008", "Inter-len1");
+            await client.ServiceConfiguration.ApplyFromEvaluationAsync(policyReferenceContract);
+        }
+
+        [Test]
         public async Task UpdateServiceConfiguration()
         {
             PersonalizerClient client = GetPersonalizerClient();
