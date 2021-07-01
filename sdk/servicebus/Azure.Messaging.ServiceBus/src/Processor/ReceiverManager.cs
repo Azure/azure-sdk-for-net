@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         protected readonly IList<ServiceBusPlugin> _plugins;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
-        
+
         public ReceiverManager(
             ServiceBusProcessor processor,
             EntityScopeFactory scopeFactory,
