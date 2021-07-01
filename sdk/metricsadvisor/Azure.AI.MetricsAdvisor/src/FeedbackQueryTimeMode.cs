@@ -22,6 +22,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Filters feedbacks by <see cref="MetricFeedback.CreatedOn"/>.
         /// </summary>
-        public static FeedbackQueryTimeMode FeedbackCreatedTime { get; } = new FeedbackQueryTimeMode(FeedbackCreatedTimeValue);
+        [CodeGenMember("FeedbackCreatedTime")]
+        public static FeedbackQueryTimeMode FeedbackCreatedOn { get; } = new FeedbackQueryTimeMode(FeedbackCreatedOnValue);
     }
 }

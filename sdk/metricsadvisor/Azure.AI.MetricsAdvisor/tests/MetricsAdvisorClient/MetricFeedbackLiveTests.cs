@@ -291,7 +291,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var options = new GetAllFeedbackOptions()
             {
                 Filter = new DimensionKey(columns),
-                TimeMode = FeedbackQueryTimeMode.FeedbackCreatedTime,
+                TimeMode = FeedbackQueryTimeMode.FeedbackCreatedOn,
                 StartOn = feedbackSamplingStartTime,
                 EndOn = feedbackSamplingEndTime,
                 FeedbackKind = MetricFeedbackKind.Comment,

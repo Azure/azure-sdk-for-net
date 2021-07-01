@@ -17,16 +17,19 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Filters alerts by <see cref="AnomalyAlert.Timestamp"/>.
         /// </summary>
-        public static AlertQueryTimeMode AnomalyTime { get; } = new AlertQueryTimeMode(AnomalyTimeValue);
+        [CodeGenMember("AnomalyTime")]
+        public static AlertQueryTimeMode AnomalyDetectedOn { get; } = new AlertQueryTimeMode(AnomalyDetectedOnValue);
 
         /// <summary>
         /// Filters alerts by <see cref="AnomalyAlert.CreatedOn"/>.
         /// </summary>
-        public static AlertQueryTimeMode CreatedTime { get; } = new AlertQueryTimeMode(CreatedTimeValue);
+        [CodeGenMember("CreatedTime")]
+        public static AlertQueryTimeMode CreatedOn { get; } = new AlertQueryTimeMode(CreatedOnValue);
 
         /// <summary>
         /// Filters alerts by <see cref="AnomalyAlert.ModifiedOn"/>.
         /// </summary>
-        public static AlertQueryTimeMode ModifiedTime { get; } = new AlertQueryTimeMode(ModifiedTimeValue);
+        [CodeGenMember("ModifiedTime")]
+        public static AlertQueryTimeMode ModifiedOn { get; } = new AlertQueryTimeMode(ModifiedOnValue);
     }
 }

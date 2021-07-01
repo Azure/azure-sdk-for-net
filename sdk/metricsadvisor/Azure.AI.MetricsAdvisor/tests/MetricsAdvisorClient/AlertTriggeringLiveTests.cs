@@ -25,9 +25,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             AlertQueryTimeMode timeMode = timeModeName switch
             {
-                "anomalyTime" => AlertQueryTimeMode.AnomalyTime,
-                "createdTime" => AlertQueryTimeMode.CreatedTime,
-                "modifiedTime" => AlertQueryTimeMode.ModifiedTime,
+                "anomalyTime" => AlertQueryTimeMode.AnomalyDetectedOn,
+                "createdTime" => AlertQueryTimeMode.CreatedOn,
+                "modifiedTime" => AlertQueryTimeMode.ModifiedOn,
                 _ => throw new ArgumentOutOfRangeException("Invalid test case.")
             };
 
@@ -67,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential: true);
 
-            var options = new GetAlertsOptions(SamplingStartTime, SamplingEndTime, AlertQueryTimeMode.AnomalyTime);
+            var options = new GetAlertsOptions(SamplingStartTime, SamplingEndTime, AlertQueryTimeMode.AnomalyDetectedOn);
 
             var alertCount = 0;
 

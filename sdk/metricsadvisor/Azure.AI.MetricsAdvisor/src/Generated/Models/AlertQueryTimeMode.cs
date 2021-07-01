@@ -22,9 +22,9 @@ namespace Azure.AI.MetricsAdvisor
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AnomalyTimeValue = "AnomalyTime";
-        private const string CreatedTimeValue = "CreatedTime";
-        private const string ModifiedTimeValue = "ModifiedTime";
+        private const string AnomalyDetectedOnValue = "AnomalyTime";
+        private const string CreatedOnValue = "CreatedTime";
+        private const string ModifiedOnValue = "ModifiedTime";
         /// <summary> Determines if two <see cref="AlertQueryTimeMode"/> values are the same. </summary>
         public static bool operator ==(AlertQueryTimeMode left, AlertQueryTimeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertQueryTimeMode"/> values are not the same. </summary>
