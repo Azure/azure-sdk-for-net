@@ -453,13 +453,11 @@ namespace Azure.Search.Documents.Tests
         public async Task KeyFieldAccessor_FieldBuilder()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
-
-            SearchIndexClient indexClient = new SearchIndexClient(resources.Endpoint, new AzureKeyCredential(resources.PrimaryApiKey), resources.TestFixture.GetSearchClientOptions());
-            SearchClient client = indexClient.GetSearchClient(resources.IndexName);
+            SearchClient client = resources.GetSearchClient();
 
             LessSimpleDocument[] data = LessSimpleDocument.GetDocuments(10);
 
-            await using SearchIndexingBufferedSender<LessSimpleDocument> indexer = new(client);
+            await using SearchIndexingBufferedSender<LessSimpleDocument> indexer = new(GetOriginal(client));
             AssertNoFailures(indexer);
 
             await indexer.UploadDocumentsAsync(data);

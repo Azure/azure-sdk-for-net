@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
         #endregion
 
-        private async Task<SearchClient> CreateIndexAsync(SearchResources resources, bool instrumentClient = true)
+        private async Task<SearchClient> CreateIndexAsync(SearchResources resources)
         {
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
             #endregion
 
-            indexClient = new SearchIndexClient(endpoint, credential, GetSearchClientOptions());
+            indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
             // Create the search index
@@ -104,11 +104,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient searchClient = indexClient.GetSearchClient(indexName);
             #endregion
 
-            if (instrumentClient)
-            {
-                indexClient = InstrumentClient(indexClient);
-                searchClient = InstrumentClient(searchClient);
-            }
+            searchClient = InstrumentClient(searchClient);
 
             return searchClient;
         }
@@ -167,18 +163,18 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient searchClient = null;
             try
             {
-                searchClient = await CreateIndexAsync(resources, instrumentClient: false);
+                searchClient = await CreateIndexAsync(resources);
 
                 // Simple
                 {
+                    searchClient = GetOriginal(searchClient);
+
                     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender1
                     await using SearchIndexingBufferedSender<Product> indexer =
                         new SearchIndexingBufferedSender<Product>(searchClient);
                     await indexer.UploadDocumentsAsync(GenerateCatalog(count: 100000));
                     #endregion
                 }
-
-                searchClient = InstrumentClient(searchClient);
 
                 await WaitForDocumentCountAsync(searchClient, 100000);
 
