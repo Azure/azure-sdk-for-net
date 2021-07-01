@@ -12,17 +12,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// Authenticates to a Data Lake Storage Gen2 resource via shared key.
     /// </summary>
     [CodeGenModel("DataLakeGen2SharedKeyCredential")]
-    [CodeGenSuppress(nameof(DataSourceDataLakeGen2SharedKey), typeof(string), typeof(DataLakeGen2SharedKeyParam))]
-    public partial class DataSourceDataLakeGen2SharedKey
+    [CodeGenSuppress(nameof(DataLakeSharedKeyCredentialEntity), typeof(string), typeof(DataLakeGen2SharedKeyParam))]
+    public partial class DataLakeSharedKeyCredentialEntity
     {
         private string _accountKey;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataSourceDataLakeGen2SharedKey"/> class.
+        /// Initializes a new instance of the <see cref="DataLakeSharedKeyCredentialEntity"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="DataSourceDataLakeGen2SharedKey"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="DataLakeSharedKeyCredentialEntity"/> to be displayed on the web portal.</param>
         /// <param name="accountKey">The account key to be used for authentication.</param>
-        public DataSourceDataLakeGen2SharedKey(string name, string accountKey)
+        public DataLakeSharedKeyCredentialEntity(string name, string accountKey)
             : base(name)
         {
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             AccountKey = accountKey;
         }
 
-        internal DataSourceDataLakeGen2SharedKey(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
+        internal DataLakeSharedKeyCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;

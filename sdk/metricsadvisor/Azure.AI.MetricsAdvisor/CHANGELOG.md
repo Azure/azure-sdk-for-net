@@ -14,10 +14,10 @@
 - `DimensionKey` constructor now takes the required `dimension` parameter.
 - The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in methods, method parameters, and properties.
   - Renamed class `DatasourceCredential` to `DataSourceCredentialEntity`.
-  - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataSourceDataLakeGen2SharedKey`.
-  - Renamed class `ServicePrincipalDatasourceCredential` to `DataSourceServicePrincipal`.
-  - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `DataSourceServicePrincipalInKeyVault`.
-  - Renamed class `SqlConnectionStringDatasourceCredential` to `DataSourceSqlConnectionString`.
+  - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataLakeSharedKeyCredentialEntity`.
+  - Renamed class `ServicePrincipalDatasourceCredential` to `ServicePrincipalCredentialEntity`.
+  - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `ServicePrincipalInKeyVaultCredentialEntity`.
+  - Renamed class `SqlConnectionStringDatasourceCredential` to `SqlConnectionStringCredentialEntity`.
 - Renamed class `MetricAnomalyAlertConfiguration` to `MetricAlertConfiguration`.
 - Renamed class `MetricAnomalyAlertConfigurationsOperator` to `DetectionConditionOperator`. Similarly, `MetricAnomalyAlertConfiguration.CrossMetricsOperator` has been renamed to `ConditionOperator`.
 - Renamed class `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
