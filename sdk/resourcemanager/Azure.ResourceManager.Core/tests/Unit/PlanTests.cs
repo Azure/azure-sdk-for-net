@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
@@ -116,14 +117,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Plan plan1 = new Plan(name1, null, null, null, null);
             Plan plan2 = new Plan(name2, null, null, null, null);
-            if (expected)
-            {
-                Assert.IsTrue(plan1.Equals(plan2));
-            }
-            else
-            {
-                Assert.IsFalse(plan1.Equals(plan2));
-            }
+            Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
+            Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
 
         [TestCase(true, "product", "product")]
@@ -137,14 +132,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Plan plan1 = new Plan(null, null, product1, null, null);
             Plan plan2 = new Plan(null, null, product2, null, null);
-            if (expected)
-            {
-                Assert.IsTrue(plan1.Equals(plan2));
-            }
-            else
-            {
-                Assert.IsFalse(plan1.Equals(plan2));
-            }
+            Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
+            Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
 
         [TestCase(true, "promotionCode", "promotionCode")]
@@ -158,14 +147,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Plan plan1 = new Plan(null, null, null, promotionCode1, null);
             Plan plan2 = new Plan(null, null, null, promotionCode2, null);
-            if (expected)
-            {
-                Assert.IsTrue(plan1.Equals(plan2));
-            }
-            else
-            {
-                Assert.IsFalse(plan1.Equals(plan2));
-            }
+            Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
+            Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
 
         [TestCase(true, "publisher", "publisher")]
@@ -179,14 +162,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Plan plan1 = new Plan(null, publisher1, null, null, null);
             Plan plan2 = new Plan(null, publisher2, null, null, null);
-            if (expected)
-            {
-                Assert.IsTrue(plan1.Equals(plan2));
-            }
-            else
-            {
-                Assert.IsFalse(plan1.Equals(plan2));
-            }
+            Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
+            Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
 
         [TestCase(true, "version", "version")]
@@ -200,14 +177,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Plan plan1 = new Plan(null, null, null, null, version1);
             Plan plan2 = new Plan(null, null, null, null, version2);
-            if (expected)
-            {
-                Assert.IsTrue(plan1.Equals(plan2));
-            }
-            else
-            {
-                Assert.IsFalse(plan1.Equals(plan2));
-            }
+            Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
+            Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
 
         [Test]
@@ -222,7 +193,16 @@ namespace Azure.ResourceManager.Core.Tests
         public void EqualsToObject()
         {
             Plan plan1 = new Plan(null, null, null, null, null);
-            object plan2 = "random";
+            object stringPlan = "random";
+            Assert.IsFalse(plan1.Equals(stringPlan));
+
+            object nullObject = null;
+            Assert.IsFalse(plan1.Equals(nullObject));
+
+            object samePlan = plan1;
+            Assert.IsTrue(plan1.Equals(samePlan));
+
+            object plan2 = new Plan("Plan2", null, null, null, null);
             Assert.IsFalse(plan1.Equals(plan2));
         }
 
@@ -239,14 +219,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string expected = "{\"properties\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}}";
             Plan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
-            var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteObjectValue(plan);
-            writer.WriteEndObject();
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.IsTrue(expected.Equals(json));
         }
 
@@ -254,14 +227,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void InvalidSerializationTest()
         {
             Plan plan = new(null, null, null, null, null);
-            var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteObjectValue(plan);
-            writer.WriteEndObject();
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.IsTrue(json.Equals("{\"properties\":{}}"));
         }
 
@@ -283,6 +249,122 @@ namespace Azure.ResourceManager.Core.Tests
             Plan plan = Plan.DeserializePlan(element);
             Assert.IsTrue(plan.Publisher == null);
             Assert.IsTrue(plan.PromotionCode == null);
+        }
+
+        [Test]
+        public void LessThanNull()
+        {
+            Plan plan = new Plan("PlanName", null, null, "PlanPromoCode", null);
+            Assert.IsTrue(null < plan);
+            Assert.IsFalse(plan < null);
+        }
+
+        [Test]
+        public void LessThanOrEqualNull()
+        {
+            Plan plan = new Plan("PlanName", null, null, "PlanPromoCode", null);
+            Assert.IsTrue(null <= plan);
+            Assert.IsFalse(plan <= null);
+        }
+
+        [Test]
+        public void GreaterThanNull()
+        {
+            Plan plan = new Plan("PlanName", null, null, "PlanPromoCode", null);
+            Assert.IsFalse(null > plan);
+            Assert.IsTrue(plan > null);
+        }
+
+        [Test]
+        public void GreaterThanOrEqualNull()
+        {
+            Plan plan = new Plan("PlanName", null, null, "PlanPromoCode", null);
+            Assert.IsFalse(null >= plan);
+            Assert.IsTrue(plan >= null);
+        }
+
+        [TestCase(false, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(false, "Nameb", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "Nameb", "Familyb", "familya")]
+        public void LessThanOperator(bool expected, string name1, string name2, string promo1, string promo2)
+        {
+            Plan plan1 = new Plan(name1, null, null, promo1, null);
+            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            Assert.AreEqual(expected, plan1 < plan2);
+        }
+
+        [TestCase(false, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(false, "Nameb", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "Nameb", "Familyb", "familya")]
+        public void LessThanOrEqualOperator(bool expected, string name1, string name2, string promo1, string promo2)
+        {
+            Plan plan1 = new Plan(name1, null, null, promo1, null);
+            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            Assert.AreEqual(expected, plan1 <= plan2);
+        }
+
+        [TestCase(true, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(true, "Nameb", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "Nameb", "Familyb", "familya")]
+        public void GreaterThanOperator(bool expected, string name1, string name2, string promo1, string promo2)
+        {
+            Plan plan1 = new Plan(name1, null, null, promo1, null);
+            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            Assert.AreEqual(expected, plan1 > plan2);
+        }
+
+        [TestCase(true, "Nameb", "namea", "familya", "Familyb")]
+        [TestCase(true, "Nameb", "namea", "familya", "familya")]
+        [TestCase(true, "namea", "namea", "familya", "familya")]
+        [TestCase(false, "namea", "Nameb", "Familyb", "familya")]
+        public void GreaterThanOrEqualOperator(bool expected, string name1, string name2, string promo1, string promo2)
+        {
+            Plan plan1 = new Plan(name1, null, null, promo1, null);
+            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            Assert.AreEqual(expected, plan1 >= plan2);
+        }
+
+        [TestCase(true, "name", "name", "family", "family")]
+        [TestCase(true, "Name", "name", "Family", "family")]
+        [TestCase(false, "name", "name1", "family", "family")]
+        [TestCase(false, "Name", "name", "Family", "family1")]
+        [TestCase(true, null, null, null, null)]
+        [TestCase(false, "name", null, "family", null)]
+        [TestCase(false, null, "name", null, "family")]
+        [TestCase(true, "${?/>._`", "${?/>._`", "${?/>._`", "${?/>._`")]
+        [TestCase(false, "${?/>._`", "", "${?/>._`", "")]
+        public void EqualsToOperator(bool expected, string name1, string name2, string promo1, string promo2)
+        {
+            Plan plan1 = new Plan(name1, null, null, promo1, null);
+            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            Assert.AreEqual(expected, plan1 == plan2);
+        }
+
+        [TestCase(false, "name", "name", "family", "family")]
+        [TestCase(false, "Name", "name", "Family", "family")]
+        [TestCase(true, "name", "name1", "family", "family")]
+        [TestCase(true, "Name", "name", "Family", "family1")]
+        [TestCase(false, null, null, null, null)]
+        [TestCase(true, "name", null, "family", null)]
+        [TestCase(true, null, "name", null, "family")]
+        [TestCase(false, "${?/>._`", "${?/>._`", "${?/>._`", "${?/>._`")]
+        [TestCase(true, "${?/>._`", "", "${?/>._`", "")]
+        public void NotEqualsToOperator(bool expected, string name1, string name2, string promo1, string promo2)
+        {
+            Plan plan1 = new Plan(name1, null, null, promo1, null);
+            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            Assert.AreEqual(expected, plan1 != plan2);
+        }
+
+        [Test]
+        public void EqualOperatorNull()
+        {
+            Plan plan1 = new Plan("PlanName", null, null, "PlanPromo", null);
+            Assert.IsFalse(plan1 == null);
+            Assert.IsFalse(null == plan1);
         }
     }
 }

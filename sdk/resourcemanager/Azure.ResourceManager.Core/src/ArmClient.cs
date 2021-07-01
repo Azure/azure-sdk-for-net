@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception> 
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public ArmClient(
             string defaultSubscriptionId,
             TokenCredential credential,
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Core
             Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
-            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
+            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, options ?? ClientOptions);
 
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);
-            ClientOptions.ApiVersions.SetProviderClient(credential, baseUri, defaultSubscriptionId ?? DefaultSubscription.Id.SubscriptionId);
+            ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
         /// <summary>

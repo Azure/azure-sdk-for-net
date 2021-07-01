@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Represents a managed identity
     /// </summary>
+    [PropertyReferenceType(new Type[] { typeof(ResourceIdentityType) })]
     public class ResourceIdentity : IEquatable<ResourceIdentity>
     {
         private const string SystemAssigned = "SystemAssigned";
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceIdentity"/> class.
         /// </summary>
+        [InitializationConstructor]
         public ResourceIdentity()
             : this(null, false)
         {
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="user"> Dictionary with a <see cref="ResourceIdentifier"/> key and a <see cref="UserAssignedIdentity"/> object value. </param>
         /// <param name="useSystemAssigned"> Flag for using <see cref="SystemAssignedIdentity"/> or not. </param>
+        [SerializationConstructor]
         public ResourceIdentity(Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user, bool useSystemAssigned)
         {
             // check for combination of user and system on the impact to type value
@@ -78,7 +81,9 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="element"> A <see cref="JsonElement"/> containing an <see cref="ResourceIdentity"/>. </param>
         /// <returns> New Identity object with JSON values. </returns>
-        internal static ResourceIdentity Deserialize(JsonElement element)
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             if (element.ValueKind == JsonValueKind.Undefined)
             {
@@ -208,7 +213,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> True if they are equal, otherwise False. </returns>
         public bool Equals(ResourceIdentity other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
                 return false;
 
             if (UserAssignedIdentities.Count == other.UserAssignedIdentities.Count)
@@ -231,6 +236,21 @@ namespace Azure.ResourceManager.Core
             }
 
             return SystemAssignedIdentity.Equals(SystemAssignedIdentity, other.SystemAssignedIdentity);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            return Equals(obj as ResourceIdentity);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCodeBuilder.Combine(SystemAssignedIdentity, UserAssignedIdentities);
         }
     }
 }

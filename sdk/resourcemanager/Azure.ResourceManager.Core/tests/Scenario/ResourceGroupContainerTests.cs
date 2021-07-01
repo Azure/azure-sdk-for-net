@@ -85,6 +85,20 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
             Assert.AreEqual(rg.Data.Tags, rg2.Data.Tags);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().GetAsync(null));
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task DoesExist()
+        {
+            var rgName = Recording.GenerateAssetName("testRg-");
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
+            Assert.IsTrue(await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(rgName));
+            Assert.IsFalse(await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(rgName + "1"));
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(null));
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = providerNamespace;
             IsChild = true;
+            ResourceType = ProviderOperations.ResourceType;
         }
 
         internal TenantProviderIdentifier(TenantProviderIdentifier parent, string providerNamespace, string typeName, string resourceName)
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TenantProviderIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="TenantProviderIdentifier"/> class
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -54,10 +55,15 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            TenantProviderIdentifier id = ResourceIdentifier.Create(other) as TenantProviderIdentifier;
-            if (other is null)
-                throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as TenantProviderIdentifier;
+        }
+
+        /// <inheritdoc/>
+        public override bool TryGetProvider(out string providerId)
+        {
+            providerId = Provider;
+            return true;
         }
     }
 }

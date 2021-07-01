@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing an Identity assigned by the user.
     /// </summary>
-    public sealed class UserAssignedIdentity
+    public sealed class UserAssignedIdentity : IEquatable<UserAssignedIdentity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAssignedIdentity"/> class.
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets or sets the Client ID.
         /// </summary>
-        public Guid ClientId { get; set; }
+        public Guid ClientId { get; }
 
         /// <summary>
         /// Gets or sets the Principal ID.
         /// </summary>
-        public Guid PrincipalId { get; set; }
+        public Guid PrincipalId { get; }
 
         /// <summary>
         /// Converts a <see cref="JsonElement"/> into an <see cref="UserAssignedIdentity"/> object.
@@ -141,6 +141,21 @@ namespace Azure.ResourceManager.Core
                 return false;
 
             return ClientId.Equals(other.ClientId) && PrincipalId.Equals(other.PrincipalId);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            return Equals(obj as UserAssignedIdentity);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCodeBuilder.Combine(ClientId, PrincipalId);
         }
     }
 }
