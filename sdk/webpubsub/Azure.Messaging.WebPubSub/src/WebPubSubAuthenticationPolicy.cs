@@ -67,7 +67,12 @@ namespace Azure.Messaging.WebPubSub
         private static bool TryGetAudience(HttpMessage message, out string audience)
         {
             // this is to support API Management Server
-            if (message.TryGetProperty(AUDIENCE_SETTING, out var jwtAudience))
+            if (message.TryGetProperty(AUDIENCE_SETTING, out var jwtAudience) && 
+            	jwtAudience is string uri)
+            {
+            	audience = uri;
+                return true;
+            }
             {
                 var uri = jwtAudience as string;
                 if (uri != null)
