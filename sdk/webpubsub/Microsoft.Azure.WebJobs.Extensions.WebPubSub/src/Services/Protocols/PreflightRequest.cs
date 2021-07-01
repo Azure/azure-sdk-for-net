@@ -3,7 +3,7 @@
 
 namespace Azure.Messaging.WebPubSub
 {
-    public class PreflightRequest : ServiceRequest
+    public sealed class PreflightRequest : ServiceRequest
     {
         public override string Name => nameof(PreflightRequest);
 

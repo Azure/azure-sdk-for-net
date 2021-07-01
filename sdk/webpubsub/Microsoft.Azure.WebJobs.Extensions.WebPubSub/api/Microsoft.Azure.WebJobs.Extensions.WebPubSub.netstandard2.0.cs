@@ -23,7 +23,7 @@ namespace Azure.Messaging.WebPubSub
         public override string Name { get { throw null; } }
         public string Reason { get { throw null; } }
     }
-    public partial class InvalidRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    public sealed partial class InvalidRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
         public InvalidRequest(System.Net.HttpStatusCode statusCode, string message = null) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
         public override string Name { get { throw null; } }
@@ -46,7 +46,7 @@ namespace Azure.Messaging.WebPubSub
         public System.BinaryData Message { get { throw null; } }
         public override string Name { get { throw null; } }
     }
-    public partial class PreflightRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    public sealed partial class PreflightRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
         public PreflightRequest(bool valid) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
         public override string Name { get { throw null; } }

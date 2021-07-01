@@ -5,7 +5,7 @@ using System.Net;
 
 namespace Azure.Messaging.WebPubSub
 {
-    public class InvalidRequest : ServiceRequest
+    public sealed class InvalidRequest : ServiceRequest
     {
         public override string Name => nameof(InvalidRequest);
 
