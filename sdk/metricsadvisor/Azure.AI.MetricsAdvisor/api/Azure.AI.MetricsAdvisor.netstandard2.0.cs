@@ -309,39 +309,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         internal DataFeedSource() { }
         public Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind DataSourceKind { get { throw null; } }
     }
+    public partial class DataLakeSharedKeyCredentialEntity : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
+    {
+        public DataLakeSharedKeyCredentialEntity(string name, string accountKey) { }
+        public void UpdateAccountKey(string accountKey) { }
+    }
     public partial class DataSourceCredentialEntity
     {
         internal DataSourceCredentialEntity() { }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
-    }
-    public partial class DataSourceDataLakeGen2SharedKey : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
-    {
-        public DataSourceDataLakeGen2SharedKey(string name, string accountKey) { }
-        public void UpdateAccountKey(string accountKey) { }
-    }
-    public partial class DataSourceServicePrincipal : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
-    {
-        public DataSourceServicePrincipal(string name, string clientId, string clientSecret, string tenantId) { }
-        public string ClientId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
-        public void UpdateClientSecret(string clientSecret) { }
-    }
-    public partial class DataSourceServicePrincipalInKeyVault : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
-    {
-        public DataSourceServicePrincipalInKeyVault(string name, System.Uri endpoint, string keyVaultClientId, string keyVaultClientSecret, string tenantId, string secretNameForClientId, string secretNameForClientSecret) { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public string KeyVaultClientId { get { throw null; } set { } }
-        public string SecretNameForClientId { get { throw null; } set { } }
-        public string SecretNameForClientSecret { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
-        public void UpdateKeyVaultClientSecret(string keyVaultClientSecret) { }
-    }
-    public partial class DataSourceSqlConnectionString : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
-    {
-        public DataSourceSqlConnectionString(string name, string connectionString) { }
-        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class EmailNotificationHook : Azure.AI.MetricsAdvisor.Administration.NotificationHook
     {
@@ -506,6 +484,28 @@ namespace Azure.AI.MetricsAdvisor.Administration
     {
         public PostgreSqlDataFeedSource(string connectionString, string query) { }
         public string Query { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
+    }
+    public partial class ServicePrincipalCredentialEntity : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
+    {
+        public ServicePrincipalCredentialEntity(string name, string clientId, string clientSecret, string tenantId) { }
+        public string ClientId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public void UpdateClientSecret(string clientSecret) { }
+    }
+    public partial class ServicePrincipalInKeyVaultCredentialEntity : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
+    {
+        public ServicePrincipalInKeyVaultCredentialEntity(string name, System.Uri endpoint, string keyVaultClientId, string keyVaultClientSecret, string tenantId, string secretNameForClientId, string secretNameForClientSecret) { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public string KeyVaultClientId { get { throw null; } set { } }
+        public string SecretNameForClientId { get { throw null; } set { } }
+        public string SecretNameForClientSecret { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public void UpdateKeyVaultClientSecret(string keyVaultClientSecret) { }
+    }
+    public partial class SqlConnectionStringCredentialEntity : Azure.AI.MetricsAdvisor.Administration.DataSourceCredentialEntity
+    {
+        public SqlConnectionStringCredentialEntity(string name, string connectionString) { }
         public void UpdateConnectionString(string connectionString) { }
     }
     public partial class SqlServerDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
