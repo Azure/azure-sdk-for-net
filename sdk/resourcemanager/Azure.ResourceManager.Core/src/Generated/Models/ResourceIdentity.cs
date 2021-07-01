@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -26,7 +27,6 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="user"> Dictionary with a <see cref="ResourceIdentifier"/> key and a <see cref="UserAssignedIdentity"/> object value. </param>
         /// <param name="useSystemAssigned"> Flag for using <see cref="SystemAssignedIdentity"/> or not. </param>
-        [SerializationConstructor]
         public ResourceIdentity(Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user, bool useSystemAssigned)
         {
             // check for combination of user and system on the impact to type value
@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="systemAssigned"> The <see cref="SystemAssignedIdentity"/> to use. </param>
         /// <param name="user"> Dictionary with a <see cref="ResourceIdentifier"/> key and a <see cref="UserAssignedIdentity"/> object value. </param>
-        public ResourceIdentity(SystemAssignedIdentity systemAssigned, IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user)
+        [SerializationConstructor]
+        internal ResourceIdentity(SystemAssignedIdentity systemAssigned, IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user)
         {
             // TODO: remove this constructor later
             SystemAssignedIdentity = systemAssigned;

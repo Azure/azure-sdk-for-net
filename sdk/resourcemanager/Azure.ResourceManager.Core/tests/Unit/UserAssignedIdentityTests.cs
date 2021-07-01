@@ -212,6 +212,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
             string expected = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";
+
             JsonAsserts.AssertSerialization(expected, userAssignedIdentity);
         }
 
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
             var serializable = userAssignedIdentity as IUtf8JsonSerializable;
-            Assert.Throws<NullReferenceException>(delegate
+            Assert.Throws<ArgumentNullException>(delegate
             { serializable.Write(null); });
         }
 

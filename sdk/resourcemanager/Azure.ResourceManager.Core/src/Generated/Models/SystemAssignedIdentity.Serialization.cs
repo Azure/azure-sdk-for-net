@@ -15,19 +15,29 @@ namespace Azure.ResourceManager.Core
         /// <param name="writer"> Utf8JsonWriter object to which the output is going to be written. </param>
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
+            if (writer == null)
+                throw new ArgumentNullException(nameof(writer));
+
+            writer.WritePropertyName("principalId");
+            if (!Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("principalId");
+                writer.WriteStringValue("null");
+            }
+            else
+            {
                 writer.WriteStringValue(PrincipalId.ToString());
             }
-            if (Optional.IsDefined(TenantId))
+
+            writer.WritePropertyName("tenantId");
+            if (!Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WriteStringValue("null");
+            }
+            else
+            {
                 writer.WriteStringValue(TenantId.ToString());
             }
 
-            writer.WriteEndObject();
             writer.Flush();
         }
 

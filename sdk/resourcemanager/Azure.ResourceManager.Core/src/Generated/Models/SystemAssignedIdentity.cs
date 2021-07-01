@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// A class representing an Identity assigned by the system.
     /// </summary>
-    public sealed class SystemAssignedIdentity : IEquatable<SystemAssignedIdentity>
+    public sealed partial class SystemAssignedIdentity : IEquatable<SystemAssignedIdentity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SystemAssignedIdentity"/> class with Null properties.
