@@ -17,12 +17,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Initializes new instance of AnomalyAlert class. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
-        /// <param name="createdTime"> created time. </param>
-        /// <param name="modifiedTime"> modified time. </param>
+        /// <param name="createdOn"> created time. </param>
+        /// <param name="modifiedOn"> modified time. </param>
         /// <returns> A new <see cref="Models.AnomalyAlert"/> instance for mocking. </returns>
-        public static AnomalyAlert AnomalyAlert(string id = default, DateTimeOffset timestamp = default, DateTimeOffset createdTime = default, DateTimeOffset modifiedTime = default)
+        public static AnomalyAlert AnomalyAlert(string id = default, DateTimeOffset timestamp = default, DateTimeOffset createdOn = default, DateTimeOffset modifiedOn = default)
         {
-            return new AnomalyAlert(id, timestamp, createdTime, modifiedTime);
+            return new AnomalyAlert(id, timestamp, createdOn, modifiedOn);
         }
 
         /// <summary> Initializes new instance of AnomalyDetectionConfiguration class. </summary>

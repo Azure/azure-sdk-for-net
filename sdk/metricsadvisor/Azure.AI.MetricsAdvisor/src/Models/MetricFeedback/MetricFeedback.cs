@@ -36,7 +36,8 @@ namespace Azure.AI.MetricsAdvisor
         public string Id { get; }
 
         /// <summary> feedback created time. </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        [CodeGenMember("CreatedTime")]
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> user who gives this feedback. </summary>
         public string UserPrincipal { get; }

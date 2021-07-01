@@ -34,8 +34,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.DataFeedId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
                 Assert.That(anomaly.DetectionConfigurationId, Is.Null);
-                Assert.That(anomaly.CreatedTime, Is.Null);
-                Assert.That(anomaly.ModifiedTime, Is.Null);
+                Assert.That(anomaly.CreatedOn, Is.Null);
+                Assert.That(anomaly.ModifiedOn, Is.Null);
                 Assert.That(anomaly.Status, Is.Null);
 
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
@@ -79,8 +79,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(anomaly.DataFeedId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
                 Assert.That(anomaly.DetectionConfigurationId, Is.Null);
-                Assert.That(anomaly.CreatedTime, Is.Null);
-                Assert.That(anomaly.ModifiedTime, Is.Null);
+                Assert.That(anomaly.CreatedOn, Is.Null);
+                Assert.That(anomaly.ModifiedOn, Is.Null);
                 Assert.That(anomaly.Status, Is.Null);
 
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
@@ -121,8 +121,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
-                Assert.That(incident.StartTime, Is.GreaterThanOrEqualTo(SamplingStartTime));
-                Assert.That(incident.LastTime, Is.LessThanOrEqualTo(SamplingEndTime));
+                Assert.That(incident.StartedOn, Is.GreaterThanOrEqualTo(SamplingStartTime));
+                Assert.That(incident.LastDetectedOn, Is.LessThanOrEqualTo(SamplingEndTime));
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
@@ -163,8 +163,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
-                Assert.That(incident.StartTime, Is.GreaterThanOrEqualTo(SamplingStartTime));
-                Assert.That(incident.LastTime, Is.LessThanOrEqualTo(SamplingEndTime));
+                Assert.That(incident.StartedOn, Is.GreaterThanOrEqualTo(SamplingStartTime));
+                Assert.That(incident.LastDetectedOn, Is.LessThanOrEqualTo(SamplingEndTime));
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 

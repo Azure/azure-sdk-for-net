@@ -1443,8 +1443,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
                 Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
                 Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
-                Assert.That(dataFeed.CreatedTime, Is.Not.Null);
-                Assert.That(dataFeed.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(dataFeed.CreatedOn, Is.Not.Null);
+                Assert.That(dataFeed.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
 
                 Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
                 Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.Not.Null);
@@ -1495,7 +1495,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.Schema.TimestampColumn, Is.Not.Null);
 
                 Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-                Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(dataFeed.IngestionSettings.IngestionStartOn, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.Not.Null);
                 Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.Not.Null);
                 Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.Not.Null);
@@ -1654,7 +1654,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
+            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
             Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
             Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.PreviousValue));
@@ -1679,7 +1679,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Schema.TimestampColumn, Is.Empty);
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.EqualTo(ingestionStartTime));
+            Assert.That(dataFeed.IngestionSettings.IngestionStartOn, Is.EqualTo(ingestionStartTime));
             Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.Zero));
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(-1)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromSeconds(-1)));
@@ -1709,7 +1709,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
+            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
             Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
             Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.CustomValue));
@@ -1750,7 +1750,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("timestamp"));
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.EqualTo(ingestionStartTime));
+            Assert.That(dataFeed.IngestionSettings.IngestionStartOn, Is.EqualTo(ingestionStartTime));
             Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(30)));
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(80)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(10)));
@@ -1788,7 +1788,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.ViewerEmails, Contains.Item("fake@viewer.com"));
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
-            Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
+            Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
 
             Assert.That(dataFeed.MissingDataPointFillSettings, Is.Not.Null);
             Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.NoFilling));
@@ -1813,7 +1813,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("updatedTimestampColumn"));
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.EqualTo(ingestionStartTime));
+            Assert.That(dataFeed.IngestionSettings.IngestionStartOn, Is.EqualTo(ingestionStartTime));
             Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(40)));
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(90)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(20)));

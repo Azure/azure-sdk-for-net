@@ -600,7 +600,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(options, nameof(options));
 
-            IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartTime, options.EndTime);
+            IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartOn, options.EndOn);
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 
@@ -653,7 +653,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(options, nameof(options));
 
-            IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartTime, options.EndTime);
+            IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartOn, options.EndOn);
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 

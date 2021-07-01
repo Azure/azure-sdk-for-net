@@ -19,24 +19,24 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetIncidentsForDetectionConfigurationOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only incidents detected from this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.</param>
-        public GetIncidentsForDetectionConfigurationOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="startOn">Filters the result. Only incidents detected from this point in time, in UTC, will be returned.</param>
+        /// <param name="endOn">Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.</param>
+        public GetIncidentsForDetectionConfigurationOptions(DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             DimensionsToFilter = new ChangeTrackingList<DimensionKey>();
         }
 
         /// <summary>
         /// Filters the result. Only incidents detected from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartOn { get; }
 
         /// <summary>
         /// Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndOn { get; }
 
         /// <summary>
         /// Filters the result by series. Only incidents detected in the time series groups specified will

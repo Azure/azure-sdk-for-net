@@ -18,11 +18,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/>. </summary>
         /// <param name="metricId"> The metric unique id. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>
-        /// <param name="startTime"> The start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
+        /// <param name="startOn"> The start timestamp of feedback timerange. </param>
+        /// <param name="endOn"> The end timestamp of feedback timerange. When this is equal to <paramref name="startOn"/> it indicates a single timestamp. </param>
         /// <param name="value"> The <see cref="Models.AnomalyValue"/> for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
-        public MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyValue value) : base(metricId, dimensionFilter)
+        public MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startOn, DateTimeOffset endOn, AnomalyValue value) : base(metricId, dimensionFilter)
         {
             if (value == default)
             {
@@ -30,8 +30,8 @@ namespace Azure.AI.MetricsAdvisor
             }
 
             DimensionFilter = dimensionFilter;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             ValueInternal = new AnomalyFeedbackValue(value);
             Kind = MetricFeedbackKind.Anomaly;
         }
@@ -39,19 +39,19 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/>. </summary>
         /// <param name="metricId"> The metric unique id. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>
-        /// <param name="startTime"> The start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
+        /// <param name="startOn"> The start timestamp of feedback timerange. </param>
+        /// <param name="endOn"> The end timestamp of feedback timerange. When this is equal to <paramref name="startOn"/> it indicates a single timestamp. </param>
         /// <param name="value"> The <see cref="AnomalyFeedbackValue"/> for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
-        internal MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value) : base(metricId, dimensionFilter)
+        internal MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startOn, DateTimeOffset endOn, AnomalyFeedbackValue value) : base(metricId, dimensionFilter)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             ValueInternal = value;
             Kind = MetricFeedbackKind.Anomaly;
         }
@@ -59,17 +59,19 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// The start timestamp of feedback time range.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        [CodeGenMember("StartTime")]
+        public DateTimeOffset StartOn { get; set; }
 
         /// <summary>
-        /// The end timestamp of feedback timerange. When this is equal to <see cref="StartTime"/> it indicates a single timestamp.
+        /// The end timestamp of feedback timerange. When this is equal to <see cref="StartOn"/> it indicates a single timestamp.
         /// </summary>
-        public DateTimeOffset EndTime { get; set; }
+        [CodeGenMember("EndTime")]
+        public DateTimeOffset EndOn { get; set; }
 
         /// <summary>
         /// The ID of the <see cref="AnomalyDetectionConfiguration"/> to which this feedback applies. If
         /// <c>null</c>, this feedback applies to all anomalies within the specified time range, defined
-        /// by <see cref="StartTime"/> and <see cref="EndTime"/>, without regard for the configuration used
+        /// by <see cref="StartOn"/> and <see cref="EndOn"/>, without regard for the configuration used
         /// to detect them.
         /// </summary>
         [CodeGenMember("AnomalyDetectionConfigurationId")]

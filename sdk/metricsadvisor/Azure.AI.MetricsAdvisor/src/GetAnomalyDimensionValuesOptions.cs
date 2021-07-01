@@ -15,23 +15,23 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAnomalyDimensionValuesOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only dimension values for anomalies created from this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only dimension values for anomalies created up to this point in time, in UTC, will be returned.</param>
-        public GetAnomalyDimensionValuesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="startOn">Filters the result. Only dimension values for anomalies created from this point in time, in UTC, will be returned.</param>
+        /// <param name="endOn">Filters the result. Only dimension values for anomalies created up to this point in time, in UTC, will be returned.</param>
+        public GetAnomalyDimensionValuesOptions(DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary>
         /// Filters the result. Only dimension values for anomalies created from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartOn { get; }
 
         /// <summary>
         /// Filters the result. Only dimension values for anomalies created up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndOn { get; }
 
         /// <summary>
         /// Filters the result by series. Only anomalies detected in the time series group specified will

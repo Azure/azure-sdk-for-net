@@ -57,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
             Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
-            Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
+            Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedOn.Value}");
 
             Console.WriteLine($"Data feed administrators:");
             foreach (string admin in createdDataFeed.AdministratorEmails)
@@ -101,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             DataFeed dataFeed = response.Value;
 
             Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
-            Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+            Console.WriteLine($"Data feed created time: {dataFeed.CreatedOn.Value}");
 
             Console.WriteLine($"Data feed administrators emails:");
             foreach (string admin in dataFeed.AdministratorEmails)

@@ -20,12 +20,12 @@ namespace Azure.AI.MetricsAdvisor
         public static AlertQueryTimeMode AnomalyTime { get; } = new AlertQueryTimeMode(AnomalyTimeValue);
 
         /// <summary>
-        /// Filters alerts by <see cref="AnomalyAlert.CreatedTime"/>.
+        /// Filters alerts by <see cref="AnomalyAlert.CreatedOn"/>.
         /// </summary>
         public static AlertQueryTimeMode CreatedTime { get; } = new AlertQueryTimeMode(CreatedTimeValue);
 
         /// <summary>
-        /// Filters alerts by <see cref="AnomalyAlert.ModifiedTime"/>.
+        /// Filters alerts by <see cref="AnomalyAlert.ModifiedOn"/>.
         /// </summary>
         public static AlertQueryTimeMode ModifiedTime { get; } = new AlertQueryTimeMode(ModifiedTimeValue);
     }

@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
-            CreatedTime = dataFeedDetail.CreatedTime;
+            CreatedOn = dataFeedDetail.CreatedTime;
             CreatorEmail = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
             MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.Name, metric => metric.Id);
@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Date and time, in UTC, when this <see cref="DataFeed"/> was created.
         /// </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
         /// The e-mail address of creator of this <see cref="DataFeed"/>.
@@ -148,7 +148,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal DataFeedDetail GetDataFeedDetail()
         {
-            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime);
+            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartOn);
 
             foreach (var column in Schema.DimensionColumns)
             {
@@ -217,7 +217,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (IngestionSettings != null)
             {
-                patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime);
+                patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartOn);
                 patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
                 patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
                 patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
