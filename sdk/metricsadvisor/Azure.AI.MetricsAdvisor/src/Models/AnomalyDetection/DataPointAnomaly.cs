@@ -18,14 +18,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Dimension")]
     public partial class DataPointAnomaly
     {
-        internal DataPointAnomaly(string dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
+        internal DataPointAnomaly(string dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
             DetectionConfigurationId = anomalyDetectionConfigurationId;
             Timestamp = timestamp;
             CreatedOn = createdOn;
-            LastModified = modifiedOn;
+            LastModified = lastModified;
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
             Status = property.AnomalyStatus;
