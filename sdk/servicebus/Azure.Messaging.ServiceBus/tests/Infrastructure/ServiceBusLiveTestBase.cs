@@ -12,10 +12,10 @@ namespace Azure.Messaging.ServiceBus.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
-        private const int DefaultTryTimeout = 15;
+        private const int DefaultTryTimeout = 10;
 
-        // for tests that use short lock durations, don't go below 10 seconds to avoid flakiness.
-        protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
+        // for tests that use short lock durations, don't go below 5 seconds to avoid flakiness.
+        protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(5);
 
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 
