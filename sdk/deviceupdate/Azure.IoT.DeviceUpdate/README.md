@@ -13,7 +13,7 @@ For the best development experience, developers should use the official Microsof
 
 ### Prerequisites
 
-- Microsoft Azure Subscription: To call Microsoft Azure services, you need to create an [Azure subscription](https://azure.microsoft.com/free/)
+- Microsoft Azure Subscription: To call Microsoft Azure services, you need to create an [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - Device Update for IoT Hub instance
 - Azure IoT Hub instance
 
