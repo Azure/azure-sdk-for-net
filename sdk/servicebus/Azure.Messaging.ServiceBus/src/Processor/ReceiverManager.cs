@@ -31,6 +31,8 @@ namespace Azure.Messaging.ServiceBus
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
+        private readonly CancellationTokenSource _closingTokenSource = new();
+
         public ReceiverManager(
             ServiceBusProcessor processor,
             EntityScopeFactory scopeFactory,
@@ -67,6 +69,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 try
                 {
+                    _closingTokenSource.Cancel();
                     await capturedReceiver.DisposeAsync().ConfigureAwait(false);
                 }
                 finally
@@ -154,7 +157,7 @@ namespace Azure.Messaging.ServiceBus
                     Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     AutoRenewLock)
                 {
-                    renewLockCancellationTokenSource = new CancellationTokenSource();
+                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_closingTokenSource.Token);
                     renewLock = RenewMessageLock(
                         message,
                         renewLockCancellationTokenSource);
