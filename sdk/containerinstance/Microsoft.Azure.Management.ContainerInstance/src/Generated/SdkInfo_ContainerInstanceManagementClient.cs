@@ -19,10 +19,10 @@ namespace Microsoft.Azure.Management.ContainerInstance
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ContainerInstance", "ContainerGroups", "2019-12-01"),
-                new Tuple<string, string, string>("ContainerInstance", "Containers", "2019-12-01"),
-                new Tuple<string, string, string>("ContainerInstance", "Location", "2019-12-01"),
-                new Tuple<string, string, string>("ContainerInstance", "Operations", "2019-12-01"),
+                new Tuple<string, string, string>("ContainerInstance", "ContainerGroups", "2021-03-01"),
+                new Tuple<string, string, string>("ContainerInstance", "Containers", "2021-03-01"),
+                new Tuple<string, string, string>("ContainerInstance", "Location", "2021-03-01"),
+                new Tuple<string, string, string>("ContainerInstance", "Operations", "2021-03-01"),
               }.AsEnumerable();
           }
       }
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/containerinstance/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\nochangi\\DEV\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "ae8d69cc6c78331c24b13951979bf171bf132d26";
+      public static readonly String GithubCommidId = "b4276bd344f1df934a5b055f4faf2dc0aa627445";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
