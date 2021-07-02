@@ -26,7 +26,7 @@
 - Renamed class `AzureDataLakeStorageGen2DataFeedSource` to `AzureDataLakeStorageDataFeedSource`. Similarly, `DataSourceType.AzureDataLakeStorageGen2` has been renamed to `AzureDataLakeStorage`.
 - Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` has been renamed to `Kind`.
 - Renamed class `PeriodType` to `MetricPeriodType`.
-- Renamed class `FeedbackDimensionFilter` to `GetAllFeedbackFilter`.
+- Renamed class `FeedbackDimensionFilter` to `GetAllFeedbackFilter` and moved it to the namespace `Azure.AI.MetricsAdvisor`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - Removed the property `DimensionFilter` in `MetricFeedback`. It's now a property of type `DimensionKey` (named `DimensionKey` as well). Similarly, feedback constructors now require a `dimensionKey` parameter to be passed.
