@@ -493,7 +493,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetAzureBlobDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureBlobDataFeedSource.AuthenticationType>(authenticationType);
+            AzureBlobDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureBlobDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock")
@@ -516,7 +517,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetAzureDataExplorerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
+            AzureDataExplorerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock")
@@ -539,7 +541,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetAzureDataExplorerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
+            AzureDataExplorerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authenticationType);
@@ -589,7 +592,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetAzureDataLakeStorageDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureDataLakeStorageDataFeedSource.AuthenticationType>(authenticationType);
+            AzureDataLakeStorageDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureDataLakeStorageDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authenticationType);
@@ -618,7 +622,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetSqlServerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
+            SqlServerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource("mock", "mock")
@@ -642,7 +647,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetSqlServerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
+            SqlServerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authenticationType);
@@ -1247,7 +1253,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task UpdateAzureBlobDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureBlobDataFeedSource.AuthenticationType>(authenticationType);
+            AzureBlobDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureBlobDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock");
@@ -1272,7 +1279,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task UpdateAzureDataExplorerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
+            AzureDataExplorerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock");
@@ -1297,7 +1305,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task UpdateAzureDataExplorerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
+            AzureDataExplorerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authenticationType);
@@ -1351,7 +1360,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task UpdateAzureDataLakeStorageDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<AzureDataLakeStorageDataFeedSource.AuthenticationType>(authenticationType);
+            AzureDataLakeStorageDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<AzureDataLakeStorageDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authenticationType);
@@ -1382,7 +1392,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task UpdateSqlServerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
+            SqlServerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource("mock", "mock");
@@ -1408,7 +1419,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task UpdateSqlServerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
+            SqlServerDataFeedSource.AuthenticationType authentication =
+                GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authenticationType);
