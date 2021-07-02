@@ -269,21 +269,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 case AzureBlobDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     break;
                 case AzureDataExplorerDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
             }
@@ -297,21 +297,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 case AzureBlobDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     break;
                 case AzureDataExplorerDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
                     authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
             }
