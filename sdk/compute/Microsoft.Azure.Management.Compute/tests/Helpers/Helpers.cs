@@ -32,6 +32,7 @@ namespace Compute.Tests
         {
             return GetSubEntityReferenceId(subId, resourceGrpName, ApiConstants.HostGroups, dedicatedHostGroupName, ApiConstants.Hosts, dedicatedHostName);
         }
+
         public static string GetCapacityReservationGroupRef(string subId, string resourceGrpName, string capacityReservationGroupName)
         {
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.CapacityReservationGroups, capacityReservationGroupName);
