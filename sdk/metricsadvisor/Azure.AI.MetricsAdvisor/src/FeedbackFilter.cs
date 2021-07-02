@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor
         public DimensionKey DimensionKey { get; set; }
 
         /// <summary>
-        /// Filters the result by <see cref="MetricFeedback.Kind"/>.
+        /// Filters the result by <see cref="MetricFeedback.FeedbackKind"/>.
         /// </summary>
         public MetricFeedbackKind? FeedbackKind { get; set; }
 

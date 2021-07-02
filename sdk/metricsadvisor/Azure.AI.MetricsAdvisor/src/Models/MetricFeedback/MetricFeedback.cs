@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor
 
         internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter)
         {
-            Kind = kind;
+            FeedbackKind = kind;
             Id = id;
             CreatedOn = createdOn;
             UserPrincipal = userPrincipal;
@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor
         /// The feedback kind.
         /// </summary>
         [CodeGenMember("FeedbackType")]
-        public MetricFeedbackKind Kind { get; internal set; }
+        public MetricFeedbackKind FeedbackKind { get; internal set; }
 
         /// <summary>
         /// The unique identifier of the <see cref="MetricFeedback"/>. Set by the service.

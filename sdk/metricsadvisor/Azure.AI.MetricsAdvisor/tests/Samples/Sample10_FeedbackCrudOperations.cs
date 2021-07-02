@@ -63,29 +63,29 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             Console.WriteLine($"Feedback ID: {feedback.Id}");
             Console.WriteLine($"Metric ID: {feedback.MetricId}");
-            Console.WriteLine($"Feedback type: {feedback.Kind}");
+            Console.WriteLine($"Feedback type: {feedback.FeedbackKind}");
             Console.WriteLine();
 
-            if (feedback.Kind == MetricFeedbackKind.Anomaly)
+            if (feedback.FeedbackKind == MetricFeedbackKind.Anomaly)
             {
                 MetricAnomalyFeedback anomalyFeedback = feedback as MetricAnomalyFeedback;
 
                 Console.WriteLine($"Detection configuration ID: {anomalyFeedback.DetectionConfigurationId}");
                 Console.WriteLine($"Anomaly value: {anomalyFeedback.AnomalyValue}");
             }
-            else if (feedback.Kind == MetricFeedbackKind.Comment)
+            else if (feedback.FeedbackKind == MetricFeedbackKind.Comment)
             {
                 MetricCommentFeedback commentFeedback = feedback as MetricCommentFeedback;
 
                 Console.WriteLine($"Comment: {commentFeedback.Comment}");
             }
-            else if (feedback.Kind == MetricFeedbackKind.ChangePoint)
+            else if (feedback.FeedbackKind == MetricFeedbackKind.ChangePoint)
             {
                 MetricChangePointFeedback changePointFeedback = feedback as MetricChangePointFeedback;
 
                 Console.WriteLine($"Change point value: {changePointFeedback.ChangePointValue}");
             }
-            else if (feedback.Kind == MetricFeedbackKind.Period)
+            else if (feedback.FeedbackKind == MetricFeedbackKind.Period)
             {
                 MetricPeriodFeedback periodFeedback = feedback as MetricPeriodFeedback;
 
@@ -123,7 +123,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             {
                 Console.WriteLine($"Feedback ID: {feedback.Id}");
                 Console.WriteLine($"Metric ID: {feedback.MetricId}");
-                Console.WriteLine($"Feedback type: {feedback.Kind}");
+                Console.WriteLine($"Feedback type: {feedback.FeedbackKind}");
                 Console.WriteLine();
 
                 // Print at most 5 feedback entries.

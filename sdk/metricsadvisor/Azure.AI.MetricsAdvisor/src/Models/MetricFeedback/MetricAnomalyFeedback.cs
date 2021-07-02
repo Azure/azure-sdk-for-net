@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = new AnomalyFeedbackValue(value);
-            Kind = MetricFeedbackKind.Anomaly;
+            FeedbackKind = MetricFeedbackKind.Anomaly;
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = value;
-            Kind = MetricFeedbackKind.Anomaly;
+            FeedbackKind = MetricFeedbackKind.Anomaly;
         }
 
         /// <summary>

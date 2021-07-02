@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor
             : base(metricId, dimensionKey)
         {
             ValueInternal = new PeriodFeedbackValue(periodType, periodValue);
-            Kind = MetricFeedbackKind.Period;
+            FeedbackKind = MetricFeedbackKind.Period;
         }
 
         /// <summary> Initializes a new instance of MetricPeriodFeedback. </summary>
@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor
             }
 
             ValueInternal = valueInternal;
-            Kind = MetricFeedbackKind.Period;
+            FeedbackKind = MetricFeedbackKind.Period;
         }
 
         /// <summary>
