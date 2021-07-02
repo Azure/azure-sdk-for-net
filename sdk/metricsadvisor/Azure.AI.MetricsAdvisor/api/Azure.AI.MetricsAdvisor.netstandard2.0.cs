@@ -474,7 +474,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     public abstract partial class NotificationHook
     {
         internal NotificationHook() { }
-        public System.Collections.Generic.IReadOnlyList<string> AdministratorEmails { get { throw null; } }
+        public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Uri ExternalUri { get { throw null; } set { } }
         public string Id { get { throw null; } }
@@ -744,9 +744,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeed() { }
         public Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode? AccessMode { get { throw null; } set { } }
         public string ActionLinkTemplate { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AdministratorEmails { get { throw null; } }
+        public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string CreatorEmail { get { throw null; } }
+        public string Creator { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Administration.DataFeedSource DataSource { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedGranularity Granularity { get { throw null; } set { } }
@@ -759,7 +759,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedSchema Schema { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IList<string> ViewerEmails { get { throw null; } }
+        public System.Collections.Generic.IList<string> Viewers { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFeedAccessMode : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode>
