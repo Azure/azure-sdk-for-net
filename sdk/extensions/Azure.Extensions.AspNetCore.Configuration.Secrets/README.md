@@ -93,7 +93,7 @@ additional questions or comments.
 [keyvault_create_portal]: https://docs.microsoft.com/azure/key-vault/quick-create-portal#create-a-vault
 [keyvault_create_ps]: https://docs.microsoft.com/azure/key-vault/quick-create-powershell#create-a-key-vault
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [aspnetcore_configuration_doc]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes

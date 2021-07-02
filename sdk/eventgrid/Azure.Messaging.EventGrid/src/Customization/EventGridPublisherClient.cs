@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
@@ -160,26 +159,9 @@ namespace Azure.Messaging.EventGrid
 
                 using HttpMessage message = _pipeline.CreateMessage();
                 Request request = CreateEventRequest(message, "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (EventGridEvent egEvent in events)
-                {
-                    JsonDocument data = JsonDocument.Parse(egEvent.Data.ToStream());
-                    EventGridEventInternal newEGEvent = new EventGridEventInternal(
-                        egEvent.Id,
-                        egEvent.Subject,
-                        data.RootElement,
-                        egEvent.EventType,
-                        egEvent.EventTime,
-                        egEvent.DataVersion)
-                    {
-                        Topic = egEvent.Topic
-                    };
-                    content.JsonWriter.WriteObjectValue(newEGEvent);
-                }
 
-                content.JsonWriter.WriteEndArray();
-                request.Content = content;
+                // leverage custom converter for EventGridEvent
+                request.Content = RequestContent.Create(JsonSerializer.Serialize(events));
 
                 if (async)
                 {

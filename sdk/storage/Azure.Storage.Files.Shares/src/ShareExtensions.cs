@@ -172,11 +172,12 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            // Set Directory metadata returns limited resposne headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
+            // Set Directory metadata returns limited response headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
             return new ShareDirectoryInfo
             {
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties()
+                SmbProperties = new FileSmbProperties(),
+                LastModified = response.GetRawResponse().Headers.ExtractLastModified()
             };
         }
 
@@ -200,6 +201,7 @@ namespace Azure.Storage.Files.Shares
             {
                 return null;
             }
+
             return new StorageClosedHandlesSegment
             {
                 Marker = response.Headers.Marker,
@@ -893,6 +895,18 @@ namespace Azure.Storage.Files.Shares
                 changedOn: fileProperty.ChangeTime,
                 lastModified: fileProperty.LastModified,
                 eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag));
+        }
+
+        internal static DateTimeOffset ExtractLastModified(this ResponseHeaders responseHeaders)
+        {
+            DateTimeOffset lastModified = DateTimeOffset.MinValue;
+
+            if (responseHeaders.TryGetValue(Constants.HeaderNames.LastModified, out string lastModifiedString))
+            {
+                lastModified = DateTimeOffset.Parse(lastModifiedString, CultureInfo.InvariantCulture);
+            }
+
+            return lastModified;
         }
     }
 }

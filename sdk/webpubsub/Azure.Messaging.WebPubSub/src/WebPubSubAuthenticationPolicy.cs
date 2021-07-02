@@ -14,6 +14,7 @@ namespace Azure.Messaging.WebPubSub
     internal partial class WebPubSubAuthenticationPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly AzureKeyCredential _credential;
+        private volatile KeyBytesCache _keyCache = new KeyBytesCache(string.Empty); // it's volatile so that the cache update below is not reordered
 
         /// <summary>
         /// Creates an instance of the authentication policy
@@ -28,9 +29,15 @@ namespace Azure.Messaging.WebPubSub
             var now = DateTimeOffset.UtcNow;
             var expiresAt = now + TimeSpan.FromMinutes(5);
 
-            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
+            var key = _credential.Key;
+            var cache = _keyCache;
+            if (!ReferenceEquals(key, cache.Key))
+            {
+                cache = new KeyBytesCache(key);
+                _keyCache = cache;
+            }
 
-            var writer = new JwtBuilder(keyBytes);
+            var writer = new JwtBuilder(cache.KeyBytes);
             writer.AddClaim(JwtBuilder.Nbf, now);
             writer.AddClaim(JwtBuilder.Exp, expiresAt);
             writer.AddClaim(JwtBuilder.Iat, now);
@@ -46,6 +53,17 @@ namespace Azure.Messaging.WebPubSub
             });
 
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+        }
+
+        private sealed class KeyBytesCache
+        {
+            public KeyBytesCache(string key)
+            {
+                Key = key;
+                KeyBytes = Encoding.UTF8.GetBytes(key);
+            }
+            public readonly byte[] KeyBytes;
+            public readonly string Key;
         }
     }
 }

@@ -15,6 +15,7 @@
     </NoWarn>
     <IncludeAzureCoreSharedCode>true</IncludeAzureCoreSharedCode>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

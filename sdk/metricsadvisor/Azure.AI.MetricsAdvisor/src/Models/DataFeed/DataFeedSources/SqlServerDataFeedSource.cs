@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="query"/> is empty.</exception>
         public SqlServerDataFeedSource(string connectionString, string query)
-            : base(DataFeedSourceType.SqlServer)
+            : base(DataFeedSourceKind.SqlServer)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal SqlServerDataFeedSource(SqlSourceParameter parameter, AuthenticationTypeEnum? authentication, string credentialId)
-            : base(DataFeedSourceType.SqlServer)
+            : base(DataFeedSourceKind.SqlServer)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
@@ -65,20 +65,20 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             /// <summary>
             /// Uses a SQL Server connection string for authentication. You need to have a
-            /// <see cref="DataSourceSqlConnectionString"/> in the server in order to use this type of
+            /// <see cref="SqlConnectionStringCredentialEntity"/> in the server in order to use this type of
             /// authentication.
             /// </summary>
             SqlConnectionString,
 
             /// <summary>
-            /// Uses Service Principal authentication. You need to have a <see cref="DataSourceServicePrincipal"/>
+            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalCredentialEntity"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipal,
 
             /// <summary>
             /// Uses Service Principal authentication, but the client ID and the client secret must be
-            /// stored in a Key Vault resource. You need to have a <see cref="DataSourceServicePrincipalInKeyVault"/>
+            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultCredentialEntity"/>
             /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipalInKeyVault
