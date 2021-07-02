@@ -77,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new DataLakeSharedKeyCredentialEntity(DataSourceCredentialType.DataLakeGen2SharedKey, FakeGuid,
+            var credential = new DataLakeSharedKeyCredentialEntity(DataSourceCredentialKind.DataLakeSharedKey, FakeGuid,
                 default, default, new DataLakeGen2SharedKeyParam());
 
             Assert.That(credential.AccountKey, Is.Null);
@@ -101,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new ServicePrincipalCredentialEntity(DataSourceCredentialType.ServicePrincipal, FakeGuid,
+            var credential = new ServicePrincipalCredentialEntity(DataSourceCredentialKind.ServicePrincipal, FakeGuid,
                 default, default, new ServicePrincipalParam("mock", "mock"));
 
             Assert.That(credential.ClientSecret, Is.Null);
@@ -125,7 +125,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialType.ServicePrincipal, FakeGuid,
+            var credential = new ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialKind.ServicePrincipal, FakeGuid,
                 default, default, new ServicePrincipalInKVParam(FakeUri.AbsoluteUri, "mock", "mock", "mock", "mock"));
 
             Assert.That(credential.KeyVaultClientSecret, Is.Null);
@@ -149,7 +149,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new SqlConnectionStringCredentialEntity(DataSourceCredentialType.AzureSQLConnectionString, FakeGuid,
+            var credential = new SqlConnectionStringCredentialEntity(DataSourceCredentialKind.SqlConnectionString, FakeGuid,
                 default, default, new AzureSQLConnectionStringParam());
 
             Assert.That(credential.ConnectionString, Is.Null);

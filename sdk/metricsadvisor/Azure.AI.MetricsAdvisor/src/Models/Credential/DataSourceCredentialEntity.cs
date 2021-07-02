@@ -32,6 +32,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// The credential kind.
+        /// </summary>
+        [CodeGenMember("DataSourceCredentialType")]
+        public DataSourceCredentialKind CredentialKind { get; internal set; }
+
+        /// <summary>
         /// The unique identifier of this <see cref="DataSourceCredentialEntity"/>. Set by the service.
         /// </summary>
         [CodeGenMember("DataSourceCredentialId")]
@@ -80,7 +86,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 _ => new DataSourceCredentialPatch()
             };
 
-            patch.DataSourceCredentialType = DataSourceCredentialType;
+            patch.DataSourceCredentialType = CredentialKind;
             patch.DataSourceCredentialName = Name;
             patch.DataSourceCredentialDescription = Description;
 
@@ -103,7 +109,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                         return ServicePrincipalInKeyVaultCredentialEntity.DeserializeServicePrincipalInKeyVaultCredentialEntity(element);
                 }
             }
-            DataSourceCredentialType dataSourceCredentialType = default;
+            DataSourceCredentialKind dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
             Optional<string> dataSourceCredentialDescription = default;
@@ -111,7 +117,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("dataSourceCredentialType"))
                 {
-                    dataSourceCredentialType = new DataSourceCredentialType(property.Value.GetString());
+                    dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialId"))
@@ -135,7 +141,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         private class UnknownCredentialEntity : DataSourceCredentialEntity
         {
-            public UnknownCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description)
+            public UnknownCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description)
                 : base(dataSourceCredentialType, id, name, description)
             {
             }
