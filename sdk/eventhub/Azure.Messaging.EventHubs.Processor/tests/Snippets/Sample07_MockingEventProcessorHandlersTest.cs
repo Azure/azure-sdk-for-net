@@ -19,13 +19,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     public class Sample07_MockingEventProcessorHandlersTest
     {
         /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
+        ///   Performs basic unit test validation of the contained snippet.
         /// </summary>
         ///
         [Test]
-        public async Task BasicEventProcessing()
+        public async Task MockingProccessEventHandler()
         {
-            #region Snippet:EventHubs_Processor_Sample07_MockingEventProcessingHandlers
+            #region Snippet:EventHubs_Processor_Sample07_MockingProcessEventArgs
 
             var mockPartitionId = "<< Event Hub Partion Id >>";
             var mockPartitionContext = EventHubsModelFactory.PartitionContext(mockPartitionId);
@@ -33,11 +33,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var mockEventData = EventHubsModelFactory.EventData(mockEventBody);
 
             var mockProcessEventArgs = new ProcessEventArgs(mockPartitionContext, mockEventData, updateToken => Task.CompletedTask, CancellationToken.None);
-
-            var mockOperation = "mock operation";
-            var mockException = new Exception("mock exception");
-
-            var mockProcessErrorEventArgs = new ProcessErrorEventArgs(mockPartitionId, mockOperation, mockException, CancellationToken.None);
 
             Task processEventHandler(ProcessEventArgs args)
             {
@@ -69,6 +64,26 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 return Task.CompletedTask;
             }
 
+            await processEventHandler(mockProcessEventArgs);
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic unit test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task MockingProccessErrorEventHandler()
+        {
+            #region Snippet:EventHubs_Processor_Sample07_MockingProcessErrorEventArgs
+
+            var mockPartitionId = "<< Event Hub Partion Id >>";
+            var mockOperation = "mock operation";
+            var mockException = new Exception("mock exception");
+
+            var mockProcessErrorEventArgs = new ProcessErrorEventArgs(mockPartitionId, mockOperation, mockException, CancellationToken.None);
+
             Task processErrorHandler(ProcessErrorEventArgs args)
             {
                 try
@@ -90,8 +105,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 return Task.CompletedTask;
             }
-
-            await processEventHandler(mockProcessEventArgs);
 
             await processErrorHandler(mockProcessErrorEventArgs);
 

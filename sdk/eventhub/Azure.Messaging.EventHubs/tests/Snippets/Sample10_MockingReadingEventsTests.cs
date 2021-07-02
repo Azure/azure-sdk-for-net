@@ -24,16 +24,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task ReadPartition()
+        public async Task MockingReadEventsFromPartition()
         {
-            #region Snippet:EventHubs_Sample05_MockingEventHubConsumer
+            #region Snippet:EventHubs_Sample10_MockingReadEventsFromPartition
 
             var mockEventHubConsumerClient = new Mock<EventHubConsumerClient>();
             var mockPartitionId = "sample partition id";
 
-            mockEventHubConsumerClient
-                .Setup(c => c.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new string[] { mockPartitionId });
             mockEventHubConsumerClient
                 .Setup(c => c.ReadEventsFromPartitionAsync(It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<CancellationToken>()))
                 .Returns(GetMockEventsFromPartition(mockPartitionId));
@@ -44,18 +41,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                string firstPartition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 EventPosition startingPosition = EventPosition.Earliest;
 
                 await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
-                    firstPartition,
+                    mockPartitionId,
                     startingPosition,
                     cancellationSource.Token))
                 {
                     string readFromPartition = partitionEvent.Partition.PartitionId;
                     ReadOnlyMemory<byte> eventBodyBytes = partitionEvent.Data.EventBody.ToMemory();
-
-                    Debug.WriteLine($"Read event of length { eventBodyBytes.Length } from { readFromPartition }");
                 }
             }
             catch (TaskCanceledException)
@@ -76,17 +70,75 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task ReadPartitionWithReceiver()
+        public async Task MockingReadEventsFromPartition_WithLastEnqueuedEventProperties()
+        {
+            #region Snippet:EventHubs_Sample10_MockingReadEventsFromPartitionWithLastEnqueuedEventProperties
+
+            var mockEventHubConsumerClient = new Mock<EventHubConsumerClient>();
+            var mockPartitionId = "sample partition id";
+            var lastSequence = long.MaxValue - 100;
+            var lastOffset = long.MaxValue - 10;
+            var fakeDate = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
+
+            // creating last enqued event properties
+            var mockLastEnqueuedEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, fakeDate, fakeDate);
+
+            mockEventHubConsumerClient
+                .Setup(c => c.ReadEventsFromPartitionAsync(It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<CancellationToken>()))
+                .Returns(GetMockEventsFromPartition(mockPartitionId,mockLastEnqueuedEventProperties));
+
+            var consumer = mockEventHubConsumerClient.Object;
+            try
+            {
+                using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                EventPosition startingPosition = EventPosition.Earliest;
+
+                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
+                    mockPartitionId,
+                    startingPosition,
+                    cancellationSource.Token))
+                {
+                    string readFromPartition = partitionEvent.Partition.PartitionId;
+                    ReadOnlyMemory<byte> eventBodyBytes = partitionEvent.Data.EventBody.ToMemory();
+                    var readLastEnqueuedEventProperties = partitionEvent.Partition.ReadLastEnqueuedEventProperties();
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // This is expected if the cancellation token is
+                // signaled.
+            }
+            finally
+            {
+                await consumer.CloseAsync();
+            }
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic unit test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task MockingReadPartitionWithReceiver()
         {
             #region Snippet:EventHubs_Sample10_MockingReadPartitionWithReceiver
 
-            var mockEventHubProducerClient = new Mock<EventHubProducerClient>();
-            mockEventHubProducerClient
-                .Setup(c => c.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new string[1] { "sample id" });
-
             var mockEventHubPartitionReceiver = new Mock<PartitionReceiver>();
-            var mockBatchData = GenerateBatchData();
+
+            // generating mock batch data
+            var mockBatchData = new List<EventData>();
+            var properties = new Dictionary<string, object> { { "id", 12 } };
+            var systemProperties = new Dictionary<string, object> { { "custom", "sys-value" } };
+            for (int index = 0; index < 5; ++index)
+            {
+                var eventBody = new BinaryData($"This is an example event body #{index}");
+                mockBatchData.Add(EventHubsModelFactory.EventData(eventBody, properties, systemProperties));
+            }
+
             mockEventHubPartitionReceiver
                 .Setup(r => r.ReceiveBatchAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockBatchData)
@@ -94,13 +146,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             using CancellationTokenSource cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-            string firstPartition;
-
-            await using (var producer = mockEventHubProducerClient.Object)
-            {
-                firstPartition = (await producer.GetPartitionIdsAsync()).First();
-            }
 
             var receiver = mockEventHubPartitionReceiver.Object;
             try
@@ -115,11 +160,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         waitTime,
                         cancellationSource.Token);
 
-                    //do we need assertion like this?
-                    for (var index = 0; index < mockBatchData.Count(); ++index)
-                    {
-                        Assert.AreEqual(mockBatchData.ElementAt(index).EventBody.ToString(), eventBatch.ElementAt(index).EventBody.ToString());
-                    }
+                    // if needed we can assert the received batch data;
+                    // the received batch data would match the mocked batch data we generated above
                 }
             }
             catch (TaskCanceledException)
@@ -140,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task ReadPartitionTrackLastEnqueued()
+        public async Task MockingEventHubMetaData()
         {
             #region Snippet:EventHubs_Sample10_MockingEventHubMetaData
 
@@ -152,7 +194,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var fakeDate = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
 
             // creating last enqued event properties
-            var mockLastEnquedEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence,lastOffset, fakeDate, fakeDate);
+            var mockLastEnqueuedEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, fakeDate, fakeDate);
 
             // creating event hub properties
             var mockEventHubProperties = EventHubsModelFactory.EventHubProperties(mockEventHubName, fakeDate, new string[] { mockPartitionId });
@@ -164,12 +206,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var mockPartitionPublishingProperties = EventHubsModelFactory.PartitionPublishingProperties(true, 675, (short)12, 4);
 
             mockEventHubConsumerClient
-                .Setup(c => c.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new string[] { mockPartitionId });
-
-            mockEventHubConsumerClient
                 .Setup(c => c.ReadEventsFromPartitionAsync(It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<ReadEventOptions>(),It.IsAny<CancellationToken>()))
-                .Returns(GetMockEventsFromPartition(mockPartitionId,mockLastEnquedEventProperties))
+                .Returns(GetMockEventsFromPartition(mockPartitionId,mockLastEnqueuedEventProperties))
                 .Verifiable();
 
             mockEventHubConsumerClient
@@ -187,19 +225,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-                string firstPartition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 // get partition properties
-                PartitionProperties partitionProperties = await consumer.GetPartitionPropertiesAsync(firstPartition, cancellationSource.Token);
-
-                // assert partition properties
-                Assert.IsNotNull(partitionProperties);
-                Assert.AreEqual(mockPartitionProperties.EventHubName, partitionProperties.EventHubName);
-                Assert.AreEqual(mockPartitionProperties.Id, partitionProperties.Id);
-                Assert.AreEqual(mockPartitionProperties.BeginningSequenceNumber, partitionProperties.BeginningSequenceNumber);
-                Assert.AreEqual(mockPartitionProperties.LastEnqueuedSequenceNumber, partitionProperties.LastEnqueuedSequenceNumber);
-                Assert.AreEqual(mockPartitionProperties.LastEnqueuedOffset, partitionProperties.LastEnqueuedOffset);
-                Assert.AreEqual(mockPartitionProperties.LastEnqueuedTime, partitionProperties.LastEnqueuedTime);
-                Assert.AreEqual(mockPartitionProperties.IsEmpty, partitionProperties.IsEmpty);
+                // the fetched partition properties will match the mock partition properties we generated above
+                PartitionProperties partitionProperties = await consumer.GetPartitionPropertiesAsync(mockPartitionId, cancellationSource.Token);
 
                 EventPosition startingPosition = EventPosition.FromOffset(partitionProperties.LastEnqueuedOffset);
 
@@ -209,39 +237,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 };
 
                 await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
-                    firstPartition,
+                    mockPartitionId,
                     startingPosition,
                     options,
                     cancellationSource.Token))
                 {
                     // read last enqued event properties
+                    // the fetched last enqueued event properties will match the mock last enqueued event properties we generated above
                     LastEnqueuedEventProperties properties =
                         partitionEvent.Partition.ReadLastEnqueuedEventProperties();
-
-                    // asserting last enqued event properties
-                    Assert.IsNotNull(properties);
-                    Assert.AreEqual(mockPartitionId, partitionEvent.Partition.PartitionId);
-                    Assert.AreEqual(lastSequence, properties.SequenceNumber);
-                    Assert.AreEqual(lastOffset, properties.Offset);
-                    Assert.AreEqual(fakeDate, properties.EnqueuedTime);
-                    Assert.AreEqual(fakeDate, properties.LastReceivedTime);
                 }
 
                 // get event hub properties
+                // the fetched event hub properties will match the mock event hub properties we generated above
                 var eventHubProperties = await consumer.GetEventHubPropertiesAsync(CancellationToken.None);
-
-                // assert event hub properties
-                Assert.IsNotNull(eventHubProperties);
-                Assert.AreEqual(mockEventHubProperties.Name, eventHubProperties.Name);
-                Assert.AreEqual(mockEventHubProperties.PartitionIds, eventHubProperties.PartitionIds);
-                Assert.AreEqual(mockEventHubProperties.CreatedOn, eventHubProperties.CreatedOn);
-
-                // assert partition publishing properties
-                Assert.IsNotNull(mockPartitionPublishingProperties);
-                Assert.IsTrue(mockPartitionPublishingProperties.IsIdempotentPublishingEnabled);
-                Assert.AreEqual(675,mockPartitionPublishingProperties.ProducerGroupId);
-                Assert.AreEqual((short)12,mockPartitionPublishingProperties.OwnerLevel);
-                Assert.AreEqual(4, mockPartitionPublishingProperties.LastPublishedSequenceNumber);
             }
             catch (TaskCanceledException)
             {
@@ -258,33 +267,26 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #endregion
         }
 
-        private IEnumerable<EventData> GenerateBatchData()
+        private async IAsyncEnumerable<PartitionEvent> GetMockEventsFromPartition(string partitionId)
         {
-            var generatedBatchData = new List<EventData>();
-            var properties = new Dictionary<string, object> { { "id", 12 } };
-            var systemProperties = new Dictionary<string, object> { { "custom", "sys-value" } };
+            // we are using this as we dont have an async operation in our test
+            await Task.Yield();
 
-            for (int index = 0; index < 5; ++index)
-            {
-                var eventBody = new BinaryData($"This is an example event body #{index}");
-                generatedBatchData.Add(EventHubsModelFactory.EventData(eventBody, properties, systemProperties));
-            }
+            var partitionContext = EventHubsModelFactory.PartitionContext(partitionId);
 
-            return generatedBatchData;
+            yield return new PartitionEvent(partitionContext, new EventData("one"));
+            yield return new PartitionEvent(partitionContext, new EventData("two"));
         }
 
-        private async IAsyncEnumerable<PartitionEvent> GetMockEventsFromPartition(string partitionId,LastEnqueuedEventProperties lastEnqueuedEventProperties = default)
+        private async IAsyncEnumerable<PartitionEvent> GetMockEventsFromPartition(string partitionId,LastEnqueuedEventProperties lastEnqueuedEventProperties)
         {
             // we are using this as we dont have an async operation in our test
             await Task.Yield();
 
             var partitionContext = EventHubsModelFactory.PartitionContext(partitionId, lastEnqueuedEventProperties);
-            var eventBody = new BinaryData("This is an example event body");
-            var properties = new Dictionary<string, object> { { "id", 12 } };
-            var systemProperties = new Dictionary<string, object> { { "custom", "sys-value" } };
-            var eventData = EventHubsModelFactory.EventData(eventBody, properties, systemProperties);
 
-            yield return new PartitionEvent(partitionContext, eventData);
+            yield return new PartitionEvent(partitionContext, new EventData("one"));
+            yield return new PartitionEvent(partitionContext, new EventData("two"));
         }
     }
 }

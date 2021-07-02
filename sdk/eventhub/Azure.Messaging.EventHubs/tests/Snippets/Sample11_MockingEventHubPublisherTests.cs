@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests.Snippets
 {
     [TestFixture]
-    public class Sample09_MockingEventHubPublisherTests
+    public class Sample11_MockingEventHubPublisherTests
     {
         /// <summary>
         ///     Performs basic unit test validation of the contained snippet.
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task AddingEventBatch_TryAddReturnsFalse()
         {
-            #region Snippet:EventHubs_Sample09_AddingEventBatchMock
+            #region Snippet:EventHubs_Sample11_AddingEventBatchMock
 
             var mockBatchSizeInBytes = 1024;
             var eventStore = new List<EventData>();
@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task PublishingEventBatch()
         {
-            #region Snippet:EventHubs_Sample09_MockingPublishingEventBatch
+            #region Snippet:EventHubs_Sample11_MockingPublishingEventBatch
 
             var mockBatchSizeInBytes = 1024;
             var eventStore = new List<EventData>();
