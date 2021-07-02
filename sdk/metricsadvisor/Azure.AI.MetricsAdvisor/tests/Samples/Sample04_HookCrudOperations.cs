@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($" - {admin}");
             }
 
-            if (hook.HookType == HookType.Email)
+            if (hook.HookKind == NotificationHookKind.Email)
             {
                 EmailNotificationHook emailHook = hook as EmailNotificationHook;
 
@@ -83,7 +83,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                     Console.WriteLine($" - {email}");
                 }
             }
-            else if (hook.HookType == HookType.Webhook)
+            else if (hook.HookKind == NotificationHookKind.Webhook)
             {
                 WebNotificationHook webHook = hook as WebNotificationHook;
 
@@ -143,7 +143,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Hook ID: {hook.Id}");
                 Console.WriteLine($"Name: {hook.Name}");
                 Console.WriteLine($"Description: {hook.Description}");
-                Console.WriteLine($"Type: {hook.HookType}");
+                Console.WriteLine($"Type: {hook.HookKind}");
                 Console.WriteLine();
 
                 // Print at most 5 hooks.

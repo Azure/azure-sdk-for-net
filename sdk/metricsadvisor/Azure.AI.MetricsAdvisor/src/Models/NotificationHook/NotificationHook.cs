@@ -23,9 +23,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Administrators = new ChangeTrackingList<string>();
         }
 
-        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
+        internal NotificationHook(NotificationHookKind hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
         {
-            HookType = hookType;
+            HookKind = hookType;
             Id = id;
             Name = name;
             Description = description;
@@ -56,13 +56,20 @@ namespace Azure.AI.MetricsAdvisor.Administration
         [CodeGenMember("Admins")]
         public IList<string> Administrators { get; }
 
-        /// <summary> The hook type. </summary>
-        internal HookType HookType { get; set; }
+        /// <summary>
+        /// The hook kind.
+        /// </summary>
+        [CodeGenMember("HookType")]
+        public NotificationHookKind HookKind { get; internal set; }
 
-        /// <summary> The hook description. </summary>
+        /// <summary>
+        /// The hook description.
+        /// </summary>
         public string Description { get; set; }
 
-        /// <summary> Optional field which enables a customized redirect, such as for troubleshooting notes. </summary>
+        /// <summary>
+        /// Optional field which enables a customized redirect, such as for troubleshooting notes.
+        /// </summary>
         public Uri ExternalUri { get; set; }
 
         /// <summary>
@@ -94,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 _ => new HookInfoPatch()
             };
 
-            patch.HookType = hook.HookType;
+            patch.HookType = hook.HookKind;
             patch.HookName = hook.Name;
             patch.Description = hook.Description;
             patch.ExternalLink = hook.ExternalUri?.AbsoluteUri;
@@ -115,7 +122,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                         return WebNotificationHook.DeserializeWebNotificationHook(element);
                 }
             }
-            HookType hookType = default;
+            NotificationHookKind hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
             Optional<string> description = default;
@@ -125,7 +132,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             {
                 if (property.NameEquals("hookType"))
                 {
-                    hookType = new HookType(property.Value.GetString());
+                    hookType = new NotificationHookKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hookId"))
@@ -169,7 +176,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         private class UnknownNotificationHook : NotificationHook
         {
-            public UnknownNotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
+            public UnknownNotificationHook(NotificationHookKind hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
                 : base(hookType, id, name, description, internalExternalLink, administrators)
             {
             }
