@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="principalId">Principal Id</param>
         /// <param name="tenantId">Tenant Id</param>
         /// <param name="type">The type of identity used for the resource. The
-        /// type 'SystemAssigned, UserAssigned' includes both an implicitly
+        /// type 'SystemAssigned,UserAssigned' includes both an implicitly
         /// created identity and a set of user assigned identities. The type
         /// 'None' will remove any identities from the service. Possible values
         /// include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
 
         /// <summary>
         /// Gets or sets the type of identity used for the resource. The type
-        /// 'SystemAssigned, UserAssigned' includes both an implicitly created
+        /// 'SystemAssigned,UserAssigned' includes both an implicitly created
         /// identity and a set of user assigned identities. The type 'None'
         /// will remove any identities from the service. Possible values
         /// include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
