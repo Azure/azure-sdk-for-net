@@ -126,8 +126,7 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file) {
     }
 
     $tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
-    $prefix = ($file | Resolve-Path -Relative) -replace '\.|/', '_'
-    $templateFilePath = Join-Path $tmp ($prefix + '.test-resources.compiled.json')
+    $templateFilePath = Join-Path $tmp "test-resources.$(New-Guid).compiled.json"
 
     # Az can deploy bicep files natively, but by compiling here it becomes easier to parse the
     # outputted json for mismatched parameter declarations.
@@ -579,6 +578,11 @@ try {
         if (Test-Path $postDeploymentScript) {
             Log "Invoking post-deployment script '$postDeploymentScript'"
             &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+        }
+
+        if ($templateFile.EndsWith('.compiled.json')) {
+            Write-Verbose "Removing compiled bicep file $templateFile"
+            Remove-Item $templateFile
         }
     }
 
