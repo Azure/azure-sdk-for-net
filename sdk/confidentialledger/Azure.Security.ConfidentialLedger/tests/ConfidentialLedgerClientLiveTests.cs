@@ -57,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             if (!TestsNotRequiringLedgerEntry.Contains(TestContext.CurrentContext.Test.MethodName))
             {
-                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") })).GetAwaiter().GetResult();
+                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true).GetAwaiter().GetResult();
                 transactionId = operation.Id;
             }
         }
@@ -166,7 +166,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task PostLedgerEntry()
         {
-            var operation = await Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+            var operation = await Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true);
             var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 

@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Security.ConfidentialLedger
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync"/>
+    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestOptions)"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync(Azure.Core.RequestContent,string,bool,Azure.RequestOptions)"/>
     /// until completion.
     /// </summary>
     public class PostLedgerEntryOperation : Operation
@@ -45,7 +45,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <inheritdoc />
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _client._clientDiagnostics.CreateScope($"{nameof(PostLedgerEntryOperation)}.{nameof(UpdateStatus)}");
+            using DiagnosticScope scope = _client.clientDiagnostics.CreateScope($"{nameof(PostLedgerEntryOperation)}.{nameof(UpdateStatus)}");
             scope.Start();
 
             try
@@ -74,7 +74,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _client._clientDiagnostics.CreateScope($"{nameof(PostLedgerEntryOperation)}.{nameof(UpdateStatus)}");
+            using DiagnosticScope scope = _client.clientDiagnostics.CreateScope($"{nameof(PostLedgerEntryOperation)}.{nameof(UpdateStatus)}");
             scope.Start();
 
             try

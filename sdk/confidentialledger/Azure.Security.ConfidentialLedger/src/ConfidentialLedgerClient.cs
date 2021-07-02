@@ -11,6 +11,7 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerClient
     {
         internal TimeSpan DefaultPollingInterval { get; }
+        internal readonly ClientDiagnostics clientDiagnostics;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
@@ -29,6 +30,7 @@ namespace Azure.Security.ConfidentialLedger
 
             options ??= new ConfidentialLedgerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
+            clientDiagnostics = _clientDiagnostics;
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(
@@ -84,7 +86,7 @@ namespace Azure.Security.ConfidentialLedger
             RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            var response = PostLedgerEntryInternal(content, subLedgerId, options);
+            var response = PostLedgerEntry(content, subLedgerId, options);
             response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
             var operation = new PostLedgerEntryOperation(this, transactionId);
@@ -140,7 +142,7 @@ namespace Azure.Security.ConfidentialLedger
             RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            var response = await PostLedgerEntryInternalAsync(content, subLedgerId, options).ConfigureAwait(false);
+            var response = await PostLedgerEntryAsync(content, subLedgerId, options).ConfigureAwait(false);
             response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 
             var operation = new PostLedgerEntryOperation(this, transactionId);
@@ -149,6 +151,104 @@ namespace Azure.Security.ConfidentialLedger
                 await operation.WaitForCompletionResponseAsync(DefaultPollingInterval, options?.CancellationToken ?? default).ConfigureAwait(false);
             }
             return operation;
+        }
+
+#pragma warning disable AZC0002
+        internal virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+#pragma warning disable AZC0002
+        internal virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId = null, RequestOptions options = null)
+        {
+            if (options.CancellationToken == null)
+            {
+                // Just need to get rid of the error.
+            }
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(ledgerUri);
+            uri.AppendPath("/app/transactions", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            if (subLedgerId != null)
+            {
+                uri.AppendQuery("subLedgerId", subLedgerId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
         }
     }
 }

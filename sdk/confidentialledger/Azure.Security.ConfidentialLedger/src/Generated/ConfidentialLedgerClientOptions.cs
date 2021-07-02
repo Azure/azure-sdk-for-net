@@ -33,10 +33,5 @@ namespace Azure.Security.ConfidentialLedger
                 _ => throw new NotSupportedException()
             };
         }
-
-        /// <summary>
-        /// The default polling interval for client methods that return an <see cref="Operation"/> when waitForCompletion is <c>true</c>.
-        /// </summary>
-        public TimeSpan WaitForCompletionDefaultPollingInterval { get; set; } = OperationHelpers.DefaultPollingInterval;
     }
 }

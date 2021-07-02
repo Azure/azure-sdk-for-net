@@ -22,14 +22,12 @@ namespace Azure.Security.ConfidentialLedger
         private readonly TokenCredential _tokenCredential;
         private Uri ledgerUri;
         private readonly string apiVersion;
-        internal readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient for mocking. </summary>
         protected ConfidentialLedgerClient()
         {
         }
-
-
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="options"> The request options. </param>
@@ -425,170 +423,6 @@ namespace Azure.Security.ConfidentialLedger
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> A sub-ledger id may optionally be specified. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> Contents of the ledger entry. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Identifier for sub-ledgers. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual async Task<Response> PostLedgerEntryInternalAsync(RequestContent content, string subLedgerId = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> A sub-ledger id may optionally be specified. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> Contents of the ledger entry. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Identifier for sub-ledgers. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        internal virtual Response PostLedgerEntryInternal(RequestContent content, string subLedgerId = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="PostLedgerEntryInternal(Azure.Core.RequestContent,string,Azure.RequestOptions)"/> and <see cref="PostLedgerEntryAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(ledgerUri);
-            uri.AppendPath("/app/transactions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            if (subLedgerId != null)
-            {
-                uri.AppendQuery("subLedgerId", subLedgerId, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
             return message;
         }
 
