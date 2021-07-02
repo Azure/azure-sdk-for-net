@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// class.
         /// </summary>
         /// <param name="publicKeys">The list of SSH public keys used to
-        /// authenticate with Linux-based VMs. Only expect one key
+        /// authenticate with Linux-based VMs. A maximum of 1 key may be
         /// specified.</param>
         public ContainerServiceSshConfiguration(IList<ContainerServiceSshPublicKey> publicKeys)
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// Gets or sets the list of SSH public keys used to authenticate with
-        /// Linux-based VMs. Only expect one key specified.
+        /// Linux-based VMs. A maximum of 1 key may be specified.
         /// </summary>
         [JsonProperty(PropertyName = "publicKeys")]
         public IList<ContainerServiceSshPublicKey> PublicKeys { get; set; }

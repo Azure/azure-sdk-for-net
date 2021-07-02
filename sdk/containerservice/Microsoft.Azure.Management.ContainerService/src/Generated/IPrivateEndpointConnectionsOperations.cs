@@ -28,9 +28,8 @@ namespace Microsoft.Azure.Management.ContainerService
         /// managed cluster.
         /// </summary>
         /// <remarks>
-        /// Gets a list of private endpoint connections in the specified
-        /// managed cluster. The operation returns properties of each private
-        /// endpoint connection.
+        /// To learn more about private clusters, see:
+        /// https://docs.microsoft.com/azure/aks/private-clusters
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -55,11 +54,11 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse<PrivateEndpointConnectionListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the private endpoint connection.
+        /// Gets the specified private endpoint connection.
         /// </summary>
         /// <remarks>
-        /// Gets the details of the private endpoint connection by managed
-        /// cluster and resource group.
+        /// To learn more about private clusters, see:
+        /// https://docs.microsoft.com/azure/aks/private-clusters
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -89,10 +88,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Updates a private endpoint connection.
         /// </summary>
-        /// <remarks>
-        /// Updates a private endpoint connection in the specified managed
-        /// cluster.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -103,8 +98,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// The name of the private endpoint connection.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update a private endpoint connection
-        /// operation.
+        /// The updated private endpoint connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -125,10 +119,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Deletes a private endpoint connection.
         /// </summary>
-        /// <remarks>
-        /// Deletes the private endpoint connection in the specified managed
-        /// cluster.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -154,10 +144,6 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <summary>
         /// Deletes a private endpoint connection.
         /// </summary>
-        /// <remarks>
-        /// Deletes the private endpoint connection in the specified managed
-        /// cluster.
-        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
