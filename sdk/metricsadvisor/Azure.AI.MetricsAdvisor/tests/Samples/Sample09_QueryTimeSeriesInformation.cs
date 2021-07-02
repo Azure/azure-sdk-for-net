@@ -181,8 +181,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
             };
             var seriesKey2 = new DimensionKey(dimensionColumns);
 
-            options.SeriesToFilter.Add(seriesKey1);
-            options.SeriesToFilter.Add(seriesKey2);
+            options.SeriesKeys.Add(seriesKey1);
+            options.SeriesKeys.Add(seriesKey2);
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(metricId, options))
             {

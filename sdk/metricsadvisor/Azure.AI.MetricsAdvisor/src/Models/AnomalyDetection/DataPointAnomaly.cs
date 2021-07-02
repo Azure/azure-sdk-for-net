@@ -62,8 +62,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The key that, within a metric, uniquely identifies the time series in which this anomaly has
-        /// been detected. Every dimension contained in the associated <see cref="DataFeed"/> has been
-        /// assigned a value.
+        /// been detected. In this key, a value is assigned to every possible dimension.
         /// </summary>
         public DimensionKey SeriesKey { get; }
 

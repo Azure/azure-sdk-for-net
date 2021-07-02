@@ -68,8 +68,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             columns = new Dictionary<string, string>() { { "city", "Kolkata" } };
             var groupKey2 = new DimensionKey(columns);
 
-            options.Filter.SeriesGroupKeys.Add(groupKey1);
-            options.Filter.SeriesGroupKeys.Add(groupKey2);
+            options.Filter.DimensionKeys.Add(groupKey1);
+            options.Filter.DimensionKeys.Add(groupKey2);
 
             var anomalyCount = 0;
 
@@ -126,7 +126,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(incident.RootDimensionKey);
+                ValidateSeriesKey(incident.RootSeriesKey);
 
                 if (++incidentCount >= MaximumSamplesCount)
                 {
@@ -150,8 +150,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             columns = new Dictionary<string, string>() { { "city", "Kolkata" } };
             var groupKey2 = new DimensionKey(columns);
 
-            options.DimensionsToFilter.Add(groupKey1);
-            options.DimensionsToFilter.Add(groupKey2);
+            options.DimensionKeys.Add(groupKey1);
+            options.DimensionKeys.Add(groupKey2);
 
             var incidentCount = 0;
 
@@ -168,10 +168,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(incident.RootDimensionKey);
+                ValidateSeriesKey(incident.RootSeriesKey);
 
-                incident.RootDimensionKey.TryGetValue("city", out string city);
-                incident.RootDimensionKey.TryGetValue("category", out string category);
+                incident.RootSeriesKey.TryGetValue("city", out string city);
+                incident.RootSeriesKey.TryGetValue("category", out string category);
 
                 Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
 
@@ -220,7 +220,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var columns = new Dictionary<string, string>() { { "city", "__SUM__" }, { "category", "Grocery & Gourmet Food" } };
             var groupKey = new DimensionKey(columns);
 
-            options.DimensionsToFilter.Add(groupKey);
+            options.DimensionKeys.Add(groupKey);
 
             await foreach (AnomalyIncident currentIncident in client.GetIncidentsForDetectionConfigurationAsync(DetectionConfigurationId, options))
             {
@@ -324,7 +324,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var columns = new Dictionary<string, string>() { { "category", "Handmade" } };
             var options = new GetAnomalyDimensionValuesOptions(SamplingStartTime, SamplingEndTime)
             {
-                DimensionToFilter = new DimensionKey(columns)
+                SeriesGroupKey = new DimensionKey(columns)
             };
 
             var valueCount = 0;

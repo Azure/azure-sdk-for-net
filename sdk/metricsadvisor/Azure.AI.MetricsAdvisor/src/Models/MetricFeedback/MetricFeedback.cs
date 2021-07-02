@@ -88,8 +88,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary>
         /// A key that identifies a set of time series to which the <see cref="MetricFeedback"/> applies.
-        /// If all possible dimension columns are set, this key uniquely identifies a single time series
-        /// for the specified <see cref="MetricId"/>. If only a subset of dimension columns are set, this
+        /// If all possible dimensions are set, this key uniquely identifies a single time series
+        /// for the specified <see cref="MetricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </summary>
         public DimensionKey DimensionKey { get; }

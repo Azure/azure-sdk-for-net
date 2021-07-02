@@ -44,8 +44,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var endTime = DateTimeOffset.UtcNow;
             var options = new GetIncidentsForDetectionConfigurationOptions(startTime, endTime) { MaxPageSize = 3 };
 
-            options.DimensionsToFilter.Add(groupKey1);
-            options.DimensionsToFilter.Add(groupKey2);
+            options.DimensionKeys.Add(groupKey1);
+            options.DimensionKeys.Add(groupKey2);
 
             int incidentCount = 0;
 
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootSeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootSeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }

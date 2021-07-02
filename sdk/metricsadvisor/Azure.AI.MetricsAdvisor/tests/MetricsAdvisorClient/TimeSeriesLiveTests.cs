@@ -154,7 +154,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetMetricSeriesDataOptions(SamplingStartTime, SamplingEndTime)
             {
-                SeriesToFilter = { seriesKey1, seriesKey2 }
+                SeriesKeys = { seriesKey1, seriesKey2 }
             };
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))

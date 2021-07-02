@@ -34,10 +34,11 @@ namespace Azure.AI.MetricsAdvisor
         public DateTimeOffset EndTime { get; }
 
         /// <summary>
-        /// Filters the result by series. Only anomalies detected in the time series group specified will
-        /// be returned.
+        /// Filters the result by time series. Only dimension values for anomalies detected in the time series
+        /// group specified will be returned. This key represents a group of time series for the corresponding
+        /// metric, so only a subset of dimensions must be set.
         /// </summary>
-        public DimensionKey DimensionToFilter { get; set; }
+        public DimensionKey SeriesGroupKey { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to
