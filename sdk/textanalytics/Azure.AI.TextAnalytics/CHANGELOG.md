@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0-beta.8 (Unreleased)
+## 5.1.0 (Unreleased)
 ### New features
 - Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
 - Added AAD support for the `StartAnalyzeHealthcareEntities` methods.
