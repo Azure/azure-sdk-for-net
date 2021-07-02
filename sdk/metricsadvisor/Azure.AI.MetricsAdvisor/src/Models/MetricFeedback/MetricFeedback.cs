@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor
     /// </list>
     /// </summary>
     [CodeGenModel("MetricFeedback")]
-    [CodeGenSuppress(nameof(MetricFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
+    [CodeGenSuppress(nameof(MetricFeedback), typeof(string), typeof(GetAllFeedbackFilter))]
     public abstract partial class MetricFeedback : IUtf8JsonSerializable
     {
         /// <summary>
@@ -44,14 +44,14 @@ namespace Azure.AI.MetricsAdvisor
             DimensionKey = dimensionKey;
         }
 
-        internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter)
+        internal MetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, GetAllFeedbackFilter dimensionFilter)
         {
             Kind = kind;
             Id = id;
             CreatedOn = createdOn;
             UserPrincipal = userPrincipal;
             MetricId = metricId;
-            DimensionKey = dimensionFilter.DimensionFilter;
+            DimensionKey = dimensionFilter.DimensionKey;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal FeedbackDimensionFilter DimensionFilter => new FeedbackDimensionFilter(DimensionKey.Dimension);
+        internal GetAllFeedbackFilter DimensionFilter => new GetAllFeedbackFilter(DimensionKey.Dimension);
 
         internal static MetricFeedback DeserializeMetricFeedback(JsonElement element)
         {

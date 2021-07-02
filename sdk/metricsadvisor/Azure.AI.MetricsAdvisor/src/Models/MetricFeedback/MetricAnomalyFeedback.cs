@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor
     /// You can specify whether a point should or shouldn't be an anomaly.
     /// </summary>
     [CodeGenModel("AnomalyFeedback")]
-    [CodeGenSuppress(nameof(MetricAnomalyFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
+    [CodeGenSuppress(nameof(MetricAnomalyFeedback), typeof(string), typeof(GetAllFeedbackFilter))]
     public partial class MetricAnomalyFeedback : MetricFeedback
     {
         /// <summary>
@@ -46,8 +46,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
         /// <param name="value"> The <see cref="AnomalyFeedbackValue"/> for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
-        internal MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value)
-            : base(metricId, dimensionFilter.DimensionFilter)
+        internal MetricAnomalyFeedback(string metricId, GetAllFeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value)
+            : base(metricId, dimensionFilter.DimensionKey)
         {
             if (value == null)
             {
