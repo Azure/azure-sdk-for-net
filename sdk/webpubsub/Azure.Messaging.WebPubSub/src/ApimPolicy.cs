@@ -20,7 +20,9 @@ namespace Azure.Messaging.WebPubSub
         public override void OnSendingRequest(HttpMessage message)
         {
             var originalUri = message.Request.Uri.ToUri();
+            var path = originalUri.PathAndQuery;
             message.Request.Uri.Reset(_apimEndpoint);
+            message.Request.Uri.AppendPath(path, escape: false);
             WebPubSubAuthenticationPolicy.SetAudience(message, originalUri);
         }
     }

@@ -14,7 +14,7 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClientOptions : ClientOptions
     {
         /// <summary>
-        /// 
+        /// API Management Gateway URL
         /// </summary>
         public Uri ApiManagementEndpoint { get; set; }
     }
