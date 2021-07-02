@@ -1,10 +1,29 @@
 # Release History
 
-## 7.2.0-beta.4 (Unreleased)
+## 7.3.0-beta.1 (Unreleased)
 
-### Key Bug Fixes
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 7.2.0 (2021-06-22)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Jason Dryhurst-Smith _([GitHub](https://github.com/jasond-s))_
+- Oscar Cabrero _([GitHub](https://github.com/oscarcabrero))_
+
+### Fixed
 
 - The retry policy used by clients will no longer overflow the `TimeSpan` maximum when using an `Exponential` strategy with a large number of retries and long delay set.
+
+- The name of the property displayed in the `ArgumentOutOfRangeException` in the `MaxDeliveryCount` property in `SubscriptionProperties` was updated to use the correct property name.  (A community contribution, courtesy of _[oscarcabrero](https://github.com/oscarcabrero))_
 
 ## 7.2.0-beta.3 (2021-05-12)
 

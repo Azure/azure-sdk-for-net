@@ -36,16 +36,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="DataFeed"/> in which this anomaly was detected. This property
         /// is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
+        /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public string DataFeedId { get; }
 
         /// <summary>
         /// The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> that detected
-        /// this anomaly. This property is only populated when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
-        /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
+        /// this anomaly. This property is only populated when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
+        /// or <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         [CodeGenMember("AnomalyDetectionConfigurationId")]
@@ -54,8 +54,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="DataFeedMetric"/> of the time series in which this
         /// anomaly has been detected. This property is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
+        /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public string MetricId { get; }
@@ -74,8 +74,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The status of the issue that caused this <see cref="DataPointAnomaly"/>. This property is only populated
-        /// when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
+        /// when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         [CodeGenMember("AnomalyStatus")]
@@ -89,16 +89,16 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The date and time, in UTC, in which this anomaly entry has been created. This property is only
-        /// populated when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
-        /// <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
+        /// populated when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public DateTimeOffset? CreatedTime { get; }
 
         /// <summary>
         /// The date and time, in UTC, in which this anomaly entry has been modified for the last time. This
-        /// property is only populated when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
-        /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
+        /// property is only populated when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
+        /// or <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public DateTimeOffset? ModifiedTime { get; }

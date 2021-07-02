@@ -231,6 +231,43 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        public async Task CreateAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(AppendBlobRequestConditions.IfAppendPositionEqual):
+                    conditions.IfAppendPositionEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    conditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+            }
+
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Conditions = conditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.CreateAsync(
+                    options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Create does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CreateAsync_Tags()
         {
@@ -963,6 +1000,52 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [TestCase(nameof(AppendBlobRequestConditions.LeaseId))]
+        [TestCase(nameof(AppendBlobRequestConditions.TagConditions))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        public async Task AppendBlockFromUriAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions sourceConditions = new AppendBlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(AppendBlobRequestConditions.LeaseId):
+                    sourceConditions.LeaseId = "LeaseId";
+                    break;
+                case nameof(AppendBlobRequestConditions.TagConditions):
+                    sourceConditions.TagConditions = "TagConditions";
+                    break;
+                case nameof(AppendBlobRequestConditions.IfAppendPositionEqual):
+                    sourceConditions.IfAppendPositionEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    sourceConditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+            }
+
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.AppendBlockFromUriAsync(
+                    uri,
+                    options),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"AppendBlockFromUri does not support the {invalidSourceCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                });
+        }
+
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1474,6 +1557,39 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
+        [TestCase(nameof(AppendBlobRequestConditions.TagConditions))]
+        public async Task SealAsync_InvalidRequestConditions(string invalidCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            AppendBlobClient appendBlobClient = new AppendBlobClient(uri, GetOptions());
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions();
+
+            switch (invalidCondition)
+            {
+                case nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual):
+                    conditions.IfMaxSizeLessThanOrEqual = 0;
+                    break;
+                case nameof(AppendBlobRequestConditions.TagConditions):
+                    conditions.TagConditions = "TagConditions";
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                appendBlobClient.SealAsync(
+                    conditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"Seal does not support the {invalidCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
+                });
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SealAsync_Error()
         {
             // Arrange
@@ -1866,8 +1982,8 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { Match = ReceivedETag },
                 new AccessConditionParameters { NoneMatch = GarbageETag },
                 new AccessConditionParameters { LeaseId = ReceivedLeaseId },
-                new AccessConditionParameters { AppendPosE = 0 },
-                new AccessConditionParameters { MaxSizeLTE = 100 }
+                new AccessConditionParameters { AppendPosE = overwrite ? null : 0 },
+                new AccessConditionParameters { MaxSizeLTE = overwrite ? null : 100 }
             };
             foreach (AccessConditionParameters parameters in testCases)
             {

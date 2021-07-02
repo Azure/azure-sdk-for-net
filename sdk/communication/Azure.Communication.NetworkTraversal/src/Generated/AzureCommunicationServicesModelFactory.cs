@@ -7,31 +7,34 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.NetworkTraversal
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AzureCommunicationServicesModelFactory
     {
-        /// <summary> Initializes new instance of CommunicationRelayConfiguration class. </summary>
+        /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
         /// <param name="turnServers"> An array representing the credentials and the TURN server URL. </param>
         /// <returns> A new <see cref="NetworkTraversal.CommunicationRelayConfiguration"/> instance for mocking. </returns>
-        public static CommunicationRelayConfiguration CommunicationRelayConfiguration(DateTimeOffset expiresOn = default, IReadOnlyList<CommunicationTurnServer> turnServers = default)
+        public static CommunicationRelayConfiguration CommunicationRelayConfiguration(DateTimeOffset expiresOn = default, IEnumerable<CommunicationTurnServer> turnServers = null)
         {
             turnServers ??= new List<CommunicationTurnServer>();
-            return new CommunicationRelayConfiguration(expiresOn, turnServers);
+
+            return new CommunicationRelayConfiguration(expiresOn, turnServers?.ToList());
         }
 
-        /// <summary> Initializes new instance of CommunicationTurnServer class. </summary>
+        /// <summary> Initializes a new instance of CommunicationTurnServer. </summary>
         /// <param name="urls"> List of TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
         /// <returns> A new <see cref="NetworkTraversal.CommunicationTurnServer"/> instance for mocking. </returns>
-        public static CommunicationTurnServer CommunicationTurnServer(IReadOnlyList<string> urls = default, string username = default, string credential = default)
+        public static CommunicationTurnServer CommunicationTurnServer(IEnumerable<string> urls = null, string username = null, string credential = null)
         {
             urls ??= new List<string>();
-            return new CommunicationTurnServer(urls, username, credential);
+
+            return new CommunicationTurnServer(urls?.ToList(), username, credential);
         }
     }
 }

@@ -866,6 +866,13 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Create)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfAppendPositionEqual
+                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual,
+                    operationName: nameof(AppendBlobClient.Create),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -1126,6 +1133,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
+
+                // All AppendBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(AppendBlobClient.AppendBlock),
+                    parameterName: nameof(conditions));
 
                 try
                 {
@@ -1522,6 +1535,21 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
 
+                // All destination AppendBlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(AppendBlobClient.AppendBlockFromUri),
+                    parameterName: nameof(conditions));
+
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.LeaseId
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfAppendPositionEqual
+                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual,
+                    operationName: nameof(AppendBlobClient.AppendBlockFromUri),
+                    parameterName: nameof(sourceConditions));
+
                 try
                 {
                     scope.Start();
@@ -1690,6 +1718,13 @@ namespace Azure.Storage.Blobs.Specialized
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Seal)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
+                        | BlobRequestConditionProperty.TagConditions,
+                    operationName: nameof(AppendBlobClient.Seal),
+                    parameterName: nameof(conditions));
 
                 try
                 {

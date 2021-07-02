@@ -14,28 +14,18 @@ namespace Azure.Communication.CallingServer
     {
         internal static ResultInfo DeserializeResultInfo(JsonElement element)
         {
-            Optional<int> code = default;
-            Optional<int> subcode = default;
+            int code = default;
+            int subcode = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     code = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("subcode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     subcode = property.Value.GetInt32();
                     continue;
                 }
@@ -45,7 +35,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new ResultInfo(Optional.ToNullable(code), Optional.ToNullable(subcode), message.Value);
+            return new ResultInfo(code, subcode, message.Value);
         }
     }
 }
