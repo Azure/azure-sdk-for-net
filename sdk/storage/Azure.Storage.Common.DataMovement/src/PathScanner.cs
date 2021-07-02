@@ -21,7 +21,7 @@ namespace Azure.Storage.Common.DataMovement
             // Resolve the given path to an absolute path in case it isn't one already
             _basePath = Path.GetFullPath(path);
 
-            // If there's no file/directory at the given path, Throw an exception.
+            // If there's no file/directory at the given path, throw an exception.
             //
             // TODO: Logging for bad path
             if (!(Directory.Exists(_basePath) || File.Exists(_basePath)))
@@ -30,7 +30,7 @@ namespace Azure.Storage.Common.DataMovement
             }
         }
 
-        public IEnumerable<string> Scan(bool skipSubdirectories = true)
+        public IEnumerable<string> Scan(bool continueOnError = true)
         {
             // If the given path is a single file, return only the given path
             if (!((File.GetAttributes(_basePath) & FileAttributes.Directory) == FileAttributes.Directory))
@@ -61,15 +61,16 @@ namespace Azure.Storage.Common.DataMovement
                 }
                 catch
                 {
-                    // If we lack permissions to enumerate, throw if we fail on the main directory or
-                    // if the user instructs us to do so on failing to enumerate a subdirectory.
+                    // If we lack permissions to enumerate, throw if the caller specifies
+                    // that we shouldn't continue on error.
                     //
                     // TODO: Logging for missing permissions to enumerate folder
                     //
-                    // Afterthought: once logging is implemented, we can maybe just log any problems
+                    // Afterthought: once logging is implemented, we can just log any problems
                     // (whether with given dir or subdir), and skip if told to/throw if not. No need for
-                    // the `dir == _basePath` check.
-                    if ((dir == _basePath) || !skipSubdirectories)
+                    // the `dir == _basePath` check (which right now is just a filler signal
+                    // for something going wrong, as opposed to an "success" with an empty list).
+                    if ((dir == _basePath) || !continueOnError)
                     {
                         throw;
                     }
