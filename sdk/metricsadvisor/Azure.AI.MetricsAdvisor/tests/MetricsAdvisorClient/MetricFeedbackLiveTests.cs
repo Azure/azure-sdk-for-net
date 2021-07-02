@@ -278,22 +278,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var dimensions = new Dictionary<string, string>() { { "city", "Delhi" } };
             var options = new GetAllFeedbackOptions()
             {
-<<<<<<< HEAD
                 Filter = new FeedbackFilter()
                 {
-                    DimensionKey = new DimensionKey(columns),
+                    DimensionKey = new DimensionKey(dimensions),
                     TimeMode = FeedbackQueryTimeMode.FeedbackCreatedOn,
                     StartTime = feedbackSamplingStartTime,
                     EndTime = feedbackSamplingEndTime,
                     FeedbackKind = MetricFeedbackKind.Comment,
                 }
-=======
-                Filter = new DimensionKey(dimensions),
-                TimeMode = FeedbackQueryTimeMode.FeedbackCreatedOn,
-                StartTime = feedbackSamplingStartTime,
-                EndTime = feedbackSamplingEndTime,
-                FeedbackKind = MetricFeedbackKind.Comment,
->>>>>>> camaiaor/ma-beta5
             };
 
             var feedbackCount = 0;
