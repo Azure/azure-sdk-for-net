@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             ConnectionString = parameter.ConnectionString;
             Query = parameter.Query;
 
-            SetAuthentication(authentication);
+            Authentication = (authentication == null) ? default(AuthenticationType?) : new AuthenticationType(authentication.ToString());
             DataSourceCredentialId = credentialId;
         }
 
@@ -83,26 +83,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ConnectionString = connectionString;
-        }
-
-        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
-        {
-            if (authentication == AuthenticationTypeEnum.Basic)
-            {
-                Authentication = AuthenticationType.Basic;
-            }
-            else if (authentication == AuthenticationTypeEnum.ManagedIdentity)
-            {
-                Authentication = AuthenticationType.ManagedIdentity;
-            }
-            else if (authentication == AuthenticationTypeEnum.ServicePrincipal)
-            {
-                Authentication = AuthenticationType.ServicePrincipal;
-            }
-            else if (authentication == AuthenticationTypeEnum.ServicePrincipalInKV)
-            {
-                Authentication = AuthenticationType.ServicePrincipalInKeyVault;
-            }
         }
 
         /// <summary>

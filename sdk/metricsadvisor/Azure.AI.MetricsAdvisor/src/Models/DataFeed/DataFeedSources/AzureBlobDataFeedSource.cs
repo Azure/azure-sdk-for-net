@@ -69,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Container = parameter.Container;
             BlobTemplate = parameter.BlobTemplate;
 
-            SetAuthentication(authentication);
+            Authentication = (authentication == null) ? default(AuthenticationType?) : new AuthenticationType(authentication.ToString());
         }
 
         /// <summary>
@@ -129,18 +129,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ConnectionString = connectionString;
-        }
-
-        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
-        {
-            if (authentication == AuthenticationTypeEnum.Basic)
-            {
-                Authentication = AuthenticationType.Basic;
-            }
-            else if (authentication == AuthenticationTypeEnum.ManagedIdentity)
-            {
-                Authentication = AuthenticationType.ManagedIdentity;
-            }
         }
 
         /// <summary>

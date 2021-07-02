@@ -77,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             DirectoryTemplate = parameter.DirectoryTemplate;
             FileTemplate = parameter.FileTemplate;
 
-            SetAuthentication(authentication);
+            Authentication = (authentication == null) ? default(AuthenticationType?) : new AuthenticationType(authentication.ToString());
             DataSourceCredentialId = credentialId;
         }
 
@@ -156,26 +156,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
             AccountKey = accountKey;
-        }
-
-        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
-        {
-            if (authentication == AuthenticationTypeEnum.Basic)
-            {
-                Authentication = AuthenticationType.Basic;
-            }
-            else if (authentication == AuthenticationTypeEnum.DataLakeGen2SharedKey)
-            {
-                Authentication = AuthenticationType.SharedKey;
-            }
-            else if (authentication == AuthenticationTypeEnum.ServicePrincipal)
-            {
-                Authentication = AuthenticationType.ServicePrincipal;
-            }
-            else if (authentication == AuthenticationTypeEnum.ServicePrincipalInKV)
-            {
-                Authentication = AuthenticationType.ServicePrincipalInKeyVault;
-            }
         }
 
         /// <summary>
