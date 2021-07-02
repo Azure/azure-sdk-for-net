@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Optional filters, such as filtering by feedback kind or by dimension.
         /// </summary>
-        public GetAllFeedbackFilter Filter { get; set; }
+        public FeedbackFilter Filter { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

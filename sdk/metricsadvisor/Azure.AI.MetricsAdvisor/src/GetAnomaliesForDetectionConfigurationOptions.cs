@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Optional filters, such as filtering by time series or by severity level.
         /// </summary>
-        public GetAnomaliesForDetectionConfigurationFilter Filter { get; set; }
+        public AnomalyFilter Filter { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

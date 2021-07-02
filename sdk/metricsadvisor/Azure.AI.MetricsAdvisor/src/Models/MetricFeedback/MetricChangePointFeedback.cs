@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor
     /// Feedback indicating that this is the start of a trend change.
     /// </summary>
     [CodeGenModel("ChangePointFeedback")]
-    [CodeGenSuppress(nameof(MetricChangePointFeedback), typeof(string), typeof(GetAllFeedbackFilter))]
+    [CodeGenSuppress(nameof(MetricChangePointFeedback), typeof(string), typeof(FeedbackFilter))]
     public partial class MetricChangePointFeedback : MetricFeedback
     {
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="startTime"> The start timestamp of feedback timerange. </param>
         /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
         /// <param name="value"> The <see cref="Models.ChangePointFeedbackValue"/> for the feedback. </param>
-        internal MetricChangePointFeedback(string metricId, GetAllFeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value)
+        internal MetricChangePointFeedback(string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value)
             : base(metricId, dimensionFilter.DimensionKey)
         {
             Argument.AssertNotNull(value, nameof(value));

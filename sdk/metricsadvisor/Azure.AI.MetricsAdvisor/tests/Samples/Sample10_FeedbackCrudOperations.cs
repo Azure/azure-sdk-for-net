@@ -108,7 +108,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var options = new GetAllFeedbackOptions()
             {
-                Filter = new GetAllFeedbackFilter()
+                Filter = new FeedbackFilter()
                 {
                     StartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z"),
                     EndTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z"),

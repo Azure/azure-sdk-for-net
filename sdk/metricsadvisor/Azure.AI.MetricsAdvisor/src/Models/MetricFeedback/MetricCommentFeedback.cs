@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The CommentFeedback. </summary>
     [CodeGenModel("CommentFeedback")]
-    [CodeGenSuppress(nameof(MetricCommentFeedback), typeof(string), typeof(GetAllFeedbackFilter))]
+    [CodeGenSuppress(nameof(MetricCommentFeedback), typeof(string), typeof(FeedbackFilter))]
     public partial class MetricCommentFeedback : MetricFeedback
     {
         /// <summary>
@@ -36,10 +36,10 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Initializes a new <see cref="MetricCommentFeedback"/> instance. </summary>
         /// <param name="metricId"> The metric unique id. </param>
-        /// <param name="dimensionFilter"> The <see cref="GetAllFeedbackFilter"/> to apply to the feedback. </param>
+        /// <param name="dimensionFilter"> The <see cref="FeedbackFilter"/> to apply to the feedback. </param>
         /// <param name="comment"> The comment content for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="comment"/> is null. </exception>
-        internal MetricCommentFeedback(string metricId, GetAllFeedbackFilter dimensionFilter, CommentFeedbackValue comment)
+        internal MetricCommentFeedback(string metricId, FeedbackFilter dimensionFilter, CommentFeedbackValue comment)
             : base(metricId, dimensionFilter.DimensionKey)
         {
             Argument.AssertNotNullOrEmpty(comment?.CommentValue, nameof(comment.CommentValue));

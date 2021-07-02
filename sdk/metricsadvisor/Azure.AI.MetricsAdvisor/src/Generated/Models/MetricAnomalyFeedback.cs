@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="valueInternal"> . </param>
         /// <param name="detectionConfigurationId"> the corresponding anomaly detection configuration of this feedback. </param>
         /// <param name="detectionConfigurationSnapshot"> . </param>
-        internal MetricAnomalyFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, GetAllFeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(kind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        internal MetricAnomalyFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(kind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
             StartTime = startTime;
             EndTime = endTime;

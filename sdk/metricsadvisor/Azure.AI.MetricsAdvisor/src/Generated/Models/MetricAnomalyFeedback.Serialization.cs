@@ -68,7 +68,7 @@ namespace Azure.AI.MetricsAdvisor
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
             string metricId = default;
-            GetAllFeedbackFilter dimensionFilter = default;
+            FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -138,7 +138,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("dimensionFilter"))
                 {
-                    dimensionFilter = GetAllFeedbackFilter.DeserializeGetAllFeedbackFilter(property.Value);
+                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
             }

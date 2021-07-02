@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The FeedbackDimensionFilter. </summary>
-    public partial class GetAllFeedbackFilter
+    public partial class FeedbackFilter
     {
     }
 }

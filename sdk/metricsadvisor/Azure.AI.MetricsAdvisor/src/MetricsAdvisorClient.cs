@@ -550,7 +550,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            GetAllFeedbackFilter filter = options?.Filter;
+            FeedbackFilter filter = options?.Filter;
 
             MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(metricGuid)
             {
@@ -621,7 +621,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            GetAllFeedbackFilter filter = options?.Filter;
+            FeedbackFilter filter = options?.Filter;
 
             MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(metricGuid)
             {

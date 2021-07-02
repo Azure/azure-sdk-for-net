@@ -12,22 +12,22 @@ namespace Azure.AI.MetricsAdvisor
     /// Filters the result of the <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfiguration(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> and
     /// <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfigurationAsync(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> operations.
     /// </summary>
-    public class GetAnomaliesForDetectionConfigurationFilter
+    public class AnomalyFilter
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationFilter"/> class.
+        /// Initializes a new instance of the <see cref="AnomalyFilter"/> class.
         /// </summary>
-        public GetAnomaliesForDetectionConfigurationFilter()
+        public AnomalyFilter()
         {
             SeriesGroupKeys = new ChangeTrackingList<DimensionKey>();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationFilter"/> class.
+        /// Initializes a new instance of the <see cref="AnomalyFilter"/> class.
         /// </summary>
         /// <param name="minimumSeverity">The minimum severity level an anomaly must have to be returned.</param>
         /// <param name="maximumSeverity">The maximum severity level an anomaly must have to be returned.</param>
-        public GetAnomaliesForDetectionConfigurationFilter(AnomalySeverity minimumSeverity, AnomalySeverity maximumSeverity)
+        public AnomalyFilter(AnomalySeverity minimumSeverity, AnomalySeverity maximumSeverity)
         {
             MinimumSeverity = minimumSeverity;
             MaximumSeverity = maximumSeverity;

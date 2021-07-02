@@ -162,14 +162,14 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            var filter = new GetDataFeedsFilter()
+            var filter = new DataFeedFilter()
             {
                 Status = DataFeedStatus.Active,
                 GranularityType = DataFeedGranularityType.Daily
             };
             var options = new GetDataFeedsOptions()
             {
-                GetDataFeedsFilter = filter,
+                Filter = filter,
                 MaxPageSize = 5
             };
 

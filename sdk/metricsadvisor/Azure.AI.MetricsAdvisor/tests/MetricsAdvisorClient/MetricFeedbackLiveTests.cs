@@ -278,7 +278,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var columns = new Dictionary<string, string>() { { "city", "Delhi" } };
             var options = new GetAllFeedbackOptions()
             {
-                Filter = new GetAllFeedbackFilter()
+                Filter = new FeedbackFilter()
                 {
                     DimensionKey = new DimensionKey(columns),
                     TimeMode = FeedbackQueryTimeMode.FeedbackCreatedOn,
