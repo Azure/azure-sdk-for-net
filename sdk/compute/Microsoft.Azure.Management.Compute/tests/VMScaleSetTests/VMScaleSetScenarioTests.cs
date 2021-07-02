@@ -281,6 +281,71 @@ namespace Compute.Tests
         }
 
         [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_SpotTryRestorePolicy")]
+        public void TestVMScaleSetScenarioOperations_SpotTryRestorePolicy()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    SpotRestorePolicy spotRestorePolicy = new SpotRestorePolicy(enabled: true, restoreTimeout: "PT1H");
+                    var createVmssResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.Overprovision = true;
+                            vmScaleSet.VirtualMachineProfile.Priority = VirtualMachinePriorityTypes.Spot;
+                            vmScaleSet.VirtualMachineProfile.EvictionPolicy = VirtualMachineEvictionPolicyTypes.Deallocate;
+                            vmScaleSet.SpotRestorePolicy = spotRestorePolicy;
+                            vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1V2;
+                            vmScaleSet.Sku.Tier = "Standard";
+                            vmScaleSet.Sku.Capacity = 2;
+                        },
+                        createWithManagedDisks: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, createVmssResponse, true);
+
+                    VirtualMachineScaleSet getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    ValidateVMScaleSet(inputVMScaleSet, getVmss, true);
+
+                    Assert.NotNull(getVmss);
+                    Assert.NotNull(getVmss.SpotRestorePolicy);
+                    Assert.True(getVmss.SpotRestorePolicy.Enabled);
+                    Assert.Equal(spotRestorePolicy.RestoreTimeout, getVmss.SpotRestorePolicy.RestoreTimeout);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
         public void TestVMScaleSetScenarioOperations_ScheduledEvents()
         {
