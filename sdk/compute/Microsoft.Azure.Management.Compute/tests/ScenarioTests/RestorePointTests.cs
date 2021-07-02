@@ -74,8 +74,8 @@ namespace Compute.Tests
                     // for PATCH RPC, only tags are allowed to be updated
                     Dictionary<string, string> newTags = new Dictionary<string, string>()
                     {
-                        {"newTag", "newValue"},
-                        {"newtestTag", "newValue"},
+                        {"newTag", "newValue1"},
+                        {"newtestTag", "newValue2"},
                     };
                     UpdateRpc(rgName, rpcName, createdRpc, newTags);
 
