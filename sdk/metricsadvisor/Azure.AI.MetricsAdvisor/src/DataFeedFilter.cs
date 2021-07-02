@@ -9,12 +9,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// Filters the result of the <see cref="MetricsAdvisorAdministrationClient.GetDataFeeds"/> and
     /// <see cref="MetricsAdvisorAdministrationClient.GetDataFeedsAsync"/> operations.
     /// </summary>
-    public class GetDataFeedsFilter
+    public class DataFeedFilter
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetDataFeedsFilter"/> class.
+        /// Initializes a new instance of the <see cref="DataFeedFilter"/> class.
         /// </summary>
-        public GetDataFeedsFilter()
+        public DataFeedFilter()
         {
         }
 

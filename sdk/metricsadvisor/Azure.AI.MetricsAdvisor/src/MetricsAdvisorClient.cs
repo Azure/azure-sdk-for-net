@@ -550,15 +550,21 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            FeedbackFilter filter = options?.Filter;
 
             MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(metricGuid)
             {
-                DimensionFilter = options?.DimensionFilter,
-                EndTime = options?.EndTime,
-                FeedbackType = options?.FeedbackKind,
-                StartTime = options?.StartTime,
-                TimeMode = options?.TimeMode
+                DimensionFilter = filter
             };
+
+            if (filter != null)
+            {
+                queryOptions.EndTime = filter.EndTime;
+                queryOptions.FeedbackType = filter.FeedbackKind;
+                queryOptions.StartTime = filter.StartTime;
+                queryOptions.TimeMode = filter.TimeMode;
+            }
+
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
@@ -615,15 +621,21 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            FeedbackFilter filter = options?.Filter;
 
             MetricFeedbackFilter queryOptions = new MetricFeedbackFilter(metricGuid)
             {
-                DimensionFilter = options?.DimensionFilter,
-                EndTime = options?.EndTime,
-                FeedbackType = options?.FeedbackKind,
-                StartTime = options?.StartTime,
-                TimeMode = options?.TimeMode
+                DimensionFilter = filter
             };
+
+            if (filter != null)
+            {
+                queryOptions.EndTime = filter.EndTime;
+                queryOptions.FeedbackType = filter.FeedbackKind;
+                queryOptions.StartTime = filter.StartTime;
+                queryOptions.TimeMode = filter.TimeMode;
+            }
+
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 

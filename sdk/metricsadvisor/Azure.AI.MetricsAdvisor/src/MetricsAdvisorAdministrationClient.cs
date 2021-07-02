@@ -167,11 +167,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
         public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
-            string name = options?.GetDataFeedsFilter?.Name;
-            DataFeedSourceKind? sourceKind = options?.GetDataFeedsFilter?.SourceKind;
-            DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
-            DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
-            string creator = options?.GetDataFeedsFilter?.Creator;
+            string name = options?.Filter?.Name;
+            DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
+            DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
+            DataFeedStatus? status = options?.Filter?.Status;
+            string creator = options?.Filter?.Creator;
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
@@ -221,11 +221,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
         public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
-            string name = options?.GetDataFeedsFilter?.Name;
-            DataFeedSourceKind? sourceKind = options?.GetDataFeedsFilter?.SourceKind;
-            DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
-            DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
-            string creator = options?.GetDataFeedsFilter?.Creator;
+            string name = options?.Filter?.Name;
+            DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
+            DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
+            DataFeedStatus? status = options?.Filter?.Status;
+            string creator = options?.Filter?.Creator;
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 

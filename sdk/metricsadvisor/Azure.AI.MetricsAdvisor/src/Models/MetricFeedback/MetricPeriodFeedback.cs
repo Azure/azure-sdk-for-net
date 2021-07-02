@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor
     /// Feedback indicating that this is an interval of seasonality.
     /// </summary>
     [CodeGenModel("PeriodFeedback")]
-    [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
+    [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackFilter))]
     public partial class MetricPeriodFeedback : MetricFeedback
     {
         /// <summary>
@@ -37,11 +37,11 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Initializes a new instance of MetricPeriodFeedback. </summary>
         /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
+        /// <param name="feedbackFilter"> . </param>
         /// <param name="valueInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/>, <paramref name="dimensionFilter"/>, or <paramref name="valueInternal"/> is null. </exception>
-        internal MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, PeriodFeedbackValue valueInternal)
-            : base(metricId, dimensionFilter.DimensionKey)
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/>, <paramref name="feedbackFilter"/>, or <paramref name="valueInternal"/> is null. </exception>
+        internal MetricPeriodFeedback(string metricId, FeedbackFilter feedbackFilter, PeriodFeedbackValue valueInternal)
+            : base(metricId, feedbackFilter.DimensionKey)
         {
             if (valueInternal == null)
             {

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The FeedbackDimensionFilter. </summary>
-    public partial class FeedbackDimensionFilter
+    public partial class FeedbackFilter
     {
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetAnomaliesForDetectionConfigurationOptions(SamplingStartTime, SamplingEndTime)
             {
-                Filter = new GetAnomaliesForDetectionConfigurationFilter(AnomalySeverity.Medium, AnomalySeverity.Medium)
+                Filter = new AnomalyFilter(AnomalySeverity.Medium, AnomalySeverity.Medium)
             };
 
             var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
