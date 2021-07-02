@@ -54,16 +54,16 @@ namespace Microsoft.Azure.Management.BotService
         /// Creates a Channel registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Channel resource. Possible values include:
+        /// The name of the Channel resource. Possible values include: 'AlexaChannel',
         /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
         /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel'
+        /// 'DirectLineChannel', 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
         /// </param>
         /// <param name='parameters'>
         /// The parameters to provide for the created bot.
@@ -94,6 +94,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -304,16 +319,16 @@ namespace Microsoft.Azure.Management.BotService
         /// Updates a Channel registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Channel resource. Possible values include:
+        /// The name of the Channel resource. Possible values include: 'AlexaChannel',
         /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
         /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel'
+        /// 'DirectLineChannel', 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
         /// </param>
         /// <param name='location'>
         /// Specifies the location of the resource.
@@ -326,7 +341,7 @@ namespace Microsoft.Azure.Management.BotService
         /// </param>
         /// <param name='kind'>
         /// Required. Gets or sets the Kind of the resource. Possible values include:
-        /// 'sdk', 'designer', 'bot', 'function'
+        /// 'sdk', 'designer', 'bot', 'function', 'azurebot'
         /// </param>
         /// <param name='etag'>
         /// Entity Tag
@@ -360,6 +375,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -576,7 +606,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Deletes a Channel registration from a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -607,6 +637,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -785,7 +830,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Returns a BotService Channel registration specified by the parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -819,6 +864,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -1015,16 +1075,16 @@ namespace Microsoft.Azure.Management.BotService
         /// Lists a Channel registration for a Bot Service including secrets
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Channel resource. Possible values include:
+        /// The name of the Channel resource. Possible values include: 'AlexaChannel',
         /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
         /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
-        /// 'DirectLineChannel', 'SmsChannel'
+        /// 'DirectLineChannel', 'SmsChannel', 'LineChannel', 'DirectLineSpeechChannel'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1052,6 +1112,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {
@@ -1229,7 +1304,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Returns all the Channel registrations of a particular BotService resource
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -1260,6 +1335,21 @@ namespace Microsoft.Azure.Management.BotService
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 64);
+                }
+                if (resourceGroupName.Length < 2)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 2);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
+                }
             }
             if (resourceName == null)
             {

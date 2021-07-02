@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// pairs.</param>
         /// <param name="sku">Gets or sets the SKU of the resource.</param>
         /// <param name="kind">Required. Gets or sets the Kind of the resource.
-        /// Possible values include: 'sdk', 'designer', 'bot',
-        /// 'function'</param>
+        /// Possible values include: 'sdk', 'designer', 'bot', 'function',
+        /// 'azurebot'</param>
         /// <param name="etag">Entity Tag</param>
         public Resource(string id = default(string), string name = default(string), string location = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string))
         {
@@ -101,7 +101,8 @@ namespace Microsoft.Azure.Management.BotService.Models
 
         /// <summary>
         /// Gets or sets required. Gets or sets the Kind of the resource.
-        /// Possible values include: 'sdk', 'designer', 'bot', 'function'
+        /// Possible values include: 'sdk', 'designer', 'bot', 'function',
+        /// 'azurebot'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

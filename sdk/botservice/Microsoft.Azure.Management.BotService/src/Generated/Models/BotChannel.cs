@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// pairs.</param>
         /// <param name="sku">Gets or sets the SKU of the resource.</param>
         /// <param name="kind">Required. Gets or sets the Kind of the resource.
-        /// Possible values include: 'sdk', 'designer', 'bot',
-        /// 'function'</param>
+        /// Possible values include: 'sdk', 'designer', 'bot', 'function',
+        /// 'azurebot'</param>
         /// <param name="etag">Entity Tag</param>
         /// <param name="properties">The set of properties specific to bot
         /// channel resource</param>

@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the EmailChannelProperties class.
         /// </summary>
         /// <param name="emailAddress">The email address</param>
+        /// <param name="isEnabled">Whether this channel is enabled for the
+        /// bot</param>
         /// <param name="password">The password for the email address. Value
         /// only returned through POST to the action Channel List API,
         /// otherwise empty.</param>
-        /// <param name="isEnabled">Whether this channel is enabled for the
-        /// bot</param>
-        public EmailChannelProperties(string emailAddress, string password, bool isEnabled)
+        public EmailChannelProperties(string emailAddress, bool isEnabled, string password = default(string))
         {
             EmailAddress = emailAddress;
             Password = password;
@@ -80,10 +80,6 @@ namespace Microsoft.Azure.Management.BotService.Models
             if (EmailAddress == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "EmailAddress");
-            }
-            if (Password == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
             }
         }
     }

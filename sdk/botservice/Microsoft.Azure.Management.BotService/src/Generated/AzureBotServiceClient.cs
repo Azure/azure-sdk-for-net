@@ -53,25 +53,25 @@ namespace Microsoft.Azure.Management.BotService
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current version is
-        /// 2017-12-01
+        /// Version of the API to be used with the client request.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -86,9 +86,52 @@ namespace Microsoft.Azure.Management.BotService
         public virtual IChannelsOperations Channels { get; private set; }
 
         /// <summary>
+        /// Gets the IDirectLineOperations.
+        /// </summary>
+        public virtual IDirectLineOperations DirectLine { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IBotConnectionOperations.
+        /// </summary>
+        public virtual IBotConnectionOperations BotConnection { get; private set; }
+
+        /// <summary>
+        /// Gets the IHostSettingsOperations.
+        /// </summary>
+        public virtual IHostSettingsOperations HostSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationResultsOperations.
+        /// </summary>
+        public virtual IOperationResultsOperations OperationResults { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the AzureBotServiceClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling AzureBotServiceClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected AzureBotServiceClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AzureBotServiceClient class.
@@ -173,6 +216,33 @@ namespace Microsoft.Azure.Management.BotService
         /// Thrown when a required parameter is null
         /// </exception>
         public AzureBotServiceClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AzureBotServiceClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling AzureBotServiceClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public AzureBotServiceClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -293,9 +363,15 @@ namespace Microsoft.Azure.Management.BotService
         {
             Bots = new BotsOperations(this);
             Channels = new ChannelsOperations(this);
+            DirectLine = new DirectLineOperations(this);
             Operations = new Operations(this);
+            BotConnection = new BotConnectionOperations(this);
+            HostSettings = new HostSettingsOperations(this);
+            OperationResults = new OperationResultsOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-12-01";
+            ApiVersion = "2021-05-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -312,6 +388,7 @@ namespace Microsoft.Azure.Management.BotService
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -327,6 +404,7 @@ namespace Microsoft.Azure.Management.BotService
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Channel>("channelName"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Channel>("channelName"));
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }
