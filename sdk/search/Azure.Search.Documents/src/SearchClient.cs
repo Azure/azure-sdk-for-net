@@ -208,7 +208,7 @@ namespace Azure.Search.Documents
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
                 Pipeline,
-                endpoint.ToString(),
+                endpoint.AbsoluteUri,
                 indexName,
                 null,
                 Version.ToVersionString());
@@ -327,7 +327,7 @@ namespace Azure.Search.Documents
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
                 Pipeline,
-                endpoint.ToString(),
+                endpoint.AbsoluteUri,
                 IndexName,
                 null,
                 Version.ToVersionString());
@@ -1316,7 +1316,7 @@ namespace Azure.Search.Documents
                     Request request = message.Request;
                     request.Method = RequestMethod.Post;
                     RawRequestUriBuilder uri = new RawRequestUriBuilder();
-                    uri.AppendRaw(Endpoint.ToString(), false);
+                    uri.AppendRaw(Endpoint.AbsoluteUri, false);
                     uri.AppendRaw("/indexes('", false);
                     uri.AppendRaw(IndexName, true);
                     uri.AppendRaw("')", false);
