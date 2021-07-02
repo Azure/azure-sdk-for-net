@@ -18,6 +18,7 @@ namespace Azure.Search.Documents
     public partial class SearchOptions
     {
         private const string QueryAnswerRawSplitter = "|count-";
+        private const string QueryCaptionRawSplitter = "|highlight-";
 
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
@@ -230,6 +231,63 @@ namespace Azure.Search.Documents
                     {
                         QueryAnswer = new QueryAnswer(value);
                         QueryAnswerCount = null;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// A value that specifies whether <see cref="SearchResults{T}.Captions"/> should be returned as part of the search response.
+        /// <para>The default value is <see cref="QueryCaption.None"/>.</para>
+        /// </summary>
+        public QueryCaption? QueryCaption { get; set; }
+
+        /// <summary>
+        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaption.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
+        /// It populates <see cref="CaptionResult.Highlights"/>.
+        /// <para>The default value is <c>true</c>.</para>
+        /// </summary>
+        public bool? QueryCaptionHighlight { get; set; }
+
+        /// <summary>
+        /// Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlight"/>
+        /// </summary>
+        [CodeGenMember("captions")]
+        internal string QueryCaptionRaw
+        {
+            get
+            {
+                string queryCaptionStringValue = null;
+
+                if (QueryCaption.HasValue)
+                {
+                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlight.GetValueOrDefault(true)}";
+                }
+
+                return queryCaptionStringValue;
+            }
+
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    QueryCaption = null;
+                    QueryCaptionHighlight = null;
+                }
+                else
+                {
+                    if (value.Contains(QueryCaptionRawSplitter))
+                    {
+                        var queryCaptionPart = value.Substring(0, value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase));
+                        var highlightPart = value.Substring(value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryCaptionRawSplitter.Length);
+
+                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaption(queryCaptionPart);
+                        QueryCaptionHighlight = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
+                    }
+                    else
+                    {
+                        QueryCaption = new QueryCaption(value);
+                        QueryCaptionHighlight = null;
                     }
                 }
             }

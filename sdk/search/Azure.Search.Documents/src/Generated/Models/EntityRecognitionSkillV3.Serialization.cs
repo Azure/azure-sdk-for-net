@@ -11,39 +11,56 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class OcrSkill : IUtf8JsonSerializable
+    public partial class EntityRecognitionSkillV3 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Categories))
+            {
+                writer.WritePropertyName("categories");
+                writer.WriteStartArray();
+                foreach (var item in Categories)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
                 {
                     writer.WritePropertyName("defaultLanguageCode");
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                    writer.WriteStringValue(DefaultLanguageCode);
                 }
                 else
                 {
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(ShouldDetectOrientation))
+            if (Optional.IsDefined(MinimumPrecision))
             {
-                if (ShouldDetectOrientation != null)
+                if (MinimumPrecision != null)
                 {
-                    writer.WritePropertyName("detectOrientation");
-                    writer.WriteBooleanValue(ShouldDetectOrientation.Value);
+                    writer.WritePropertyName("minimumPrecision");
+                    writer.WriteNumberValue(MinimumPrecision.Value);
                 }
                 else
                 {
-                    writer.WriteNull("detectOrientation");
+                    writer.WriteNull("minimumPrecision");
                 }
             }
-            if (Optional.IsDefined(LineEnding))
+            if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("lineEnding");
-                writer.WriteStringValue(LineEnding.Value.ToString());
+                if (ModelVersion != null)
+                {
+                    writer.WritePropertyName("modelVersion");
+                    writer.WriteStringValue(ModelVersion);
+                }
+                else
+                {
+                    writer.WriteNull("modelVersion");
+                }
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -79,11 +96,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static OcrSkill DeserializeOcrSkill(JsonElement element)
+        internal static EntityRecognitionSkillV3 DeserializeEntityRecognitionSkillV3(JsonElement element)
         {
-            Optional<OcrSkillLanguage?> defaultLanguageCode = default;
-            Optional<bool?> detectOrientation = default;
-            Optional<LineEnding> lineEnding = default;
+            Optional<IList<string>> categories = default;
+            Optional<string> defaultLanguageCode = default;
+            Optional<double?> minimumPrecision = default;
+            Optional<string> modelVersion = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -92,6 +110,21 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("categories"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    categories = array;
+                    continue;
+                }
                 if (property.NameEquals("defaultLanguageCode"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,27 +132,27 @@ namespace Azure.Search.Documents.Indexes.Models
                         defaultLanguageCode = null;
                         continue;
                     }
-                    defaultLanguageCode = new OcrSkillLanguage(property.Value.GetString());
+                    defaultLanguageCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectOrientation"))
+                if (property.NameEquals("minimumPrecision"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        detectOrientation = null;
+                        minimumPrecision = null;
                         continue;
                     }
-                    detectOrientation = property.Value.GetBoolean();
+                    minimumPrecision = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("lineEnding"))
+                if (property.NameEquals("modelVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        modelVersion = null;
                         continue;
                     }
-                    lineEnding = new LineEnding(property.Value.GetString());
+                    modelVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
@@ -163,7 +196,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation), Optional.ToNullable(lineEnding));
+            return new EntityRecognitionSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), modelVersion.Value);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class OcrSkill : IUtf8JsonSerializable
+    public partial class SentimentSkillV3 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,29 +21,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DefaultLanguageCode != null)
                 {
                     writer.WritePropertyName("defaultLanguageCode");
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                    writer.WriteStringValue(DefaultLanguageCode);
                 }
                 else
                 {
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(ShouldDetectOrientation))
+            if (Optional.IsDefined(IncludeOpinionMining))
             {
-                if (ShouldDetectOrientation != null)
+                writer.WritePropertyName("includeOpinionMining");
+                writer.WriteBooleanValue(IncludeOpinionMining.Value);
+            }
+            if (Optional.IsDefined(ModelVersion))
+            {
+                if (ModelVersion != null)
                 {
-                    writer.WritePropertyName("detectOrientation");
-                    writer.WriteBooleanValue(ShouldDetectOrientation.Value);
+                    writer.WritePropertyName("modelVersion");
+                    writer.WriteStringValue(ModelVersion);
                 }
                 else
                 {
-                    writer.WriteNull("detectOrientation");
+                    writer.WriteNull("modelVersion");
                 }
-            }
-            if (Optional.IsDefined(LineEnding))
-            {
-                writer.WritePropertyName("lineEnding");
-                writer.WriteStringValue(LineEnding.Value.ToString());
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -79,11 +79,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static OcrSkill DeserializeOcrSkill(JsonElement element)
+        internal static SentimentSkillV3 DeserializeSentimentSkillV3(JsonElement element)
         {
-            Optional<OcrSkillLanguage?> defaultLanguageCode = default;
-            Optional<bool?> detectOrientation = default;
-            Optional<LineEnding> lineEnding = default;
+            Optional<string> defaultLanguageCode = default;
+            Optional<bool> includeOpinionMining = default;
+            Optional<string> modelVersion = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -99,27 +99,27 @@ namespace Azure.Search.Documents.Indexes.Models
                         defaultLanguageCode = null;
                         continue;
                     }
-                    defaultLanguageCode = new OcrSkillLanguage(property.Value.GetString());
+                    defaultLanguageCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectOrientation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        detectOrientation = null;
-                        continue;
-                    }
-                    detectOrientation = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("lineEnding"))
+                if (property.NameEquals("includeOpinionMining"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lineEnding = new LineEnding(property.Value.GetString());
+                    includeOpinionMining = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("modelVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        modelVersion = null;
+                        continue;
+                    }
+                    modelVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation), Optional.ToNullable(lineEnding));
+            return new SentimentSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(includeOpinionMining), modelVersion.Value);
         }
     }
 }
