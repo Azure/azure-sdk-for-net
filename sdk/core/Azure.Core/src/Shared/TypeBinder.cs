@@ -26,6 +26,12 @@ namespace Azure.Monitor.Query
             info.Serialize(value, destination, this);
         }
 
+        public void Serialize(object value, Type type, TExchange destination)
+        {
+            var info = GetBinderInfo(type);
+            info.Serialize(value, destination, this);
+        }
+
         private BoundTypeInfo GetBinderInfo(Type type)
         {
             return _cache.GetOrAdd(type, static t => new(t));
@@ -129,6 +135,7 @@ namespace Azure.Monitor.Query
 
             public string Name { get; }
             public MemberInfo MemberInfo { get; }
+            public abstract Type Type { get; }
             public abstract bool CanRead { get; }
             public abstract bool CanWrite { get; }
             public abstract void Serialize(object o, TExchange destination, TypeBinder<TExchange> binderImplementation);
@@ -144,16 +151,17 @@ namespace Azure.Monitor.Query
             private static ParameterExpression InputParameter = Expression.Parameter(typeof(object), "input");
             private static ParameterExpression ValueParameter = Expression.Parameter(typeof(TProperty), "value");
 
-            public BoundMemberInfo(PropertyInfo propertyInfo) : this(propertyInfo, propertyInfo.CanRead, propertyInfo.CanWrite)
+            public BoundMemberInfo(PropertyInfo propertyInfo) : this(propertyInfo, propertyInfo.CanRead, propertyInfo.CanWrite, propertyInfo.PropertyType)
             {
             }
 
-            public BoundMemberInfo(FieldInfo fieldInfo) : this(fieldInfo, true, !fieldInfo.IsInitOnly)
+            public BoundMemberInfo(FieldInfo fieldInfo) : this(fieldInfo, true, !fieldInfo.IsInitOnly, fieldInfo.FieldType)
             {
             }
 
-            private BoundMemberInfo(MemberInfo memberInfo, bool canRead, bool canWrite) : base(memberInfo)
+            private BoundMemberInfo(MemberInfo memberInfo, bool canRead, bool canWrite, Type type) : base(memberInfo)
             {
+                Type = type;
                 CanRead = canRead;
                 CanWrite = canWrite;
 
@@ -178,6 +186,7 @@ namespace Azure.Monitor.Query
             private PropertyGetter<TProperty> Getter { get; }
             private PropertySetter<TProperty> Setter { get; }
 
+            public override Type Type { get; }
             public override bool CanRead { get; }
             public override bool CanWrite { get; }
 
