@@ -134,13 +134,14 @@ namespace Azure.Identity
                     (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
                     _sources = default;
                     asyncLock.SetValue(credential);
+                    AzureIdentityEventSource.Singleton.DefaultAzureCredentialCredentialSelected(credential.GetType().FullName);
                 }
 
                 return scope.Succeeded(token);
             }
             catch (Exception e)
             {
-               throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
