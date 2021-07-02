@@ -141,8 +141,8 @@ namespace Azure.AI.MetricsAdvisor
         internal MetricFeedback() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionKey { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind FeedbackKind { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind Kind { get { throw null; } }
         public string MetricId { get { throw null; } }
         public string UserPrincipal { get { throw null; } }
     }
@@ -342,6 +342,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     public abstract partial class DataSourceCredentialEntity
     {
         internal DataSourceCredentialEntity() { }
+        public Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind CredentialKind { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
@@ -493,6 +494,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Uri ExternalUri { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.NotificationHookKind HookKind { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
@@ -1017,6 +1019,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         public double Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataSourceCredentialKind : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataSourceCredentialKind(string value) { throw null; }
+        public static Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind DataLakeSharedKey { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind ServicePrincipal { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind ServicePrincipalInKeyVault { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind SqlConnectionString { get { throw null; } }
+        public bool Equals(Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind left, Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind right) { throw null; }
+        public static implicit operator Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind left, Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DetectionConditionOperator : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator>
     {
         private readonly object _dummy;
@@ -1250,6 +1272,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         public Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator? CrossConditionsOperator { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.HardThresholdCondition HardThresholdCondition { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.SmartDetectionCondition SmartDetectionCondition { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NotificationHookKind : System.IEquatable<Azure.AI.MetricsAdvisor.Models.NotificationHookKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NotificationHookKind(string value) { throw null; }
+        public static Azure.AI.MetricsAdvisor.Models.NotificationHookKind Email { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.NotificationHookKind Webhook { get { throw null; } }
+        public bool Equals(Azure.AI.MetricsAdvisor.Models.NotificationHookKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.NotificationHookKind left, Azure.AI.MetricsAdvisor.Models.NotificationHookKind right) { throw null; }
+        public static implicit operator Azure.AI.MetricsAdvisor.Models.NotificationHookKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.NotificationHookKind left, Azure.AI.MetricsAdvisor.Models.NotificationHookKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SeverityCondition
     {
