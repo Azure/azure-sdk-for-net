@@ -263,21 +263,27 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private static void SetAuthenticationProperties(DataFeedDetail detail, DataFeedSource dataSource)
         {
+            string authentication;
+
             switch (dataSource)
             {
                 case AzureBlobDataFeedSource s:
-                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     break;
                 case AzureDataExplorerDataFeedSource s:
-                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageDataFeedSource s:
-                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
-                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    detail.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
             }
@@ -285,21 +291,27 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private static void SetAuthenticationProperties(DataFeedDetailPatch patch, DataFeedSource dataSource)
         {
+            string authentication;
+
             switch (dataSource)
             {
                 case AzureBlobDataFeedSource s:
-                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     break;
                 case AzureDataExplorerDataFeedSource s:
-                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageDataFeedSource s:
-                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
-                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    authentication = s.Authentication?.ToString();
+                    patch.AuthenticationType = (authentication == null) ? null : new AuthenticationTypeEnum(authentication);
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
             }

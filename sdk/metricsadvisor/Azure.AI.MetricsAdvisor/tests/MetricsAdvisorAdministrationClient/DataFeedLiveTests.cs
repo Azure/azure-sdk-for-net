@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -487,11 +488,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureBlobDataFeedSource.AuthenticationType.Basic)]
-        [TestCase(AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity)]
-        public async Task CreateAndGetAzureBlobDataFeedWithAuthentication(AzureBlobDataFeedSource.AuthenticationType authentication)
+        [TestCase("Basic")]
+        [TestCase("ManagedIdentity")]
+        public async Task CreateAndGetAzureBlobDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureBlobDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock")
@@ -509,11 +511,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.Basic)]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ManagedIdentity)]
-        public async Task CreateAndGetAzureDataExplorerDataFeedWithAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        [TestCase("Basic")]
+        [TestCase("ManagedIdentity")]
+        public async Task CreateAndGetAzureDataExplorerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock")
@@ -531,11 +534,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        public async Task CreateAndGetAzureDataExplorerDataFeedWithCredentialAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        [TestCase("ServicePrincipal")]
+        [TestCase("ServicePrincipalInKeyVault")]
+        public async Task CreateAndGetAzureDataExplorerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
@@ -579,12 +583,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.SharedKey)]
-        public async Task CreateAndGetAzureDataLakeStorageDataFeedWithCredentialAuthentication(AzureDataLakeStorageDataFeedSource.AuthenticationType authentication)
+        [TestCase("ServicePrincipal")]
+        [TestCase("ServicePrincipalInKeyVault")]
+        [TestCase("SharedKey")]
+        public async Task CreateAndGetAzureDataLakeStorageDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureDataLakeStorageDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
@@ -608,11 +613,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.Basic)]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.ManagedIdentity)]
-        public async Task CreateAndGetSqlServerDataFeedWithAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        [TestCase("Basic")]
+        [TestCase("ManagedIdentity")]
+        public async Task CreateAndGetSqlServerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource("mock", "mock")
@@ -630,12 +636,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.SqlConnectionString)]
-        public async Task CreateAndGetSqlServerDataFeedWithCredentialAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        [TestCase("ServicePrincipal")]
+        [TestCase("ServicePrincipalInKeyVault")]
+        [TestCase("SqlConnectionString")]
+        public async Task CreateAndGetSqlServerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
@@ -1235,11 +1242,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureBlobDataFeedSource.AuthenticationType.Basic)]
-        [TestCase(AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity)]
-        public async Task UpdateAzureBlobDataFeedWithAuthentication(AzureBlobDataFeedSource.AuthenticationType authentication)
+        [TestCase("Basic")]
+        [TestCase("ManagedIdentity")]
+        public async Task UpdateAzureBlobDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureBlobDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock");
@@ -1259,11 +1267,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.Basic)]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ManagedIdentity)]
-        public async Task UpdateAzureDataExplorerDataFeedWithAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        [TestCase("Basic")]
+        [TestCase("ManagedIdentity")]
+        public async Task UpdateAzureDataExplorerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock");
@@ -1283,11 +1292,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        public async Task UpdateAzureDataExplorerDataFeedWithCredentialAuthentication(AzureDataExplorerDataFeedSource.AuthenticationType authentication)
+        [TestCase("ServicePrincipal")]
+        [TestCase("ServicePrincipalInKeyVault")]
+        public async Task UpdateAzureDataExplorerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureDataExplorerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
@@ -1335,12 +1345,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        [TestCase(AzureDataLakeStorageDataFeedSource.AuthenticationType.SharedKey)]
-        public async Task UpdateAzureDataLakeStorageDataFeedWithCredentialAuthentication(AzureDataLakeStorageDataFeedSource.AuthenticationType authentication)
+        [TestCase("ServicePrincipal")]
+        [TestCase("ServicePrincipalInKeyVault")]
+        [TestCase("SharedKey")]
+        public async Task UpdateAzureDataLakeStorageDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<AzureDataLakeStorageDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
@@ -1366,11 +1377,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.Basic)]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.ManagedIdentity)]
-        public async Task UpdateSqlServerDataFeedWithAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        [TestCase("Basic")]
+        [TestCase("ManagedIdentity")]
+        public async Task UpdateSqlServerDataFeedWithAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource("mock", "mock");
@@ -1390,12 +1402,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipal)]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault)]
-        [TestCase(SqlServerDataFeedSource.AuthenticationType.SqlConnectionString)]
-        public async Task UpdateSqlServerDataFeedWithCredentialAuthentication(SqlServerDataFeedSource.AuthenticationType authentication)
+        [TestCase("ServicePrincipal")]
+        [TestCase("ServicePrincipalInKeyVault")]
+        [TestCase("SqlConnectionString")]
+        public async Task UpdateSqlServerDataFeedWithCredentialAuthentication(string authenticationType)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            var authentication = GetAuthenticationInstance<SqlServerDataFeedSource.AuthenticationType>(authenticationType);
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
             await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, authentication.ToString());
@@ -2157,6 +2170,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
+        }
+
+        private T GetAuthenticationInstance<T>(string authenticationType)
+        {
+            Type dataSourceType = typeof(T);
+            PropertyInfo staticAuthenticationProperty = dataSourceType.GetProperty(authenticationType);
+
+            return (T)staticAuthenticationProperty.GetValue(null);
         }
     }
 }
