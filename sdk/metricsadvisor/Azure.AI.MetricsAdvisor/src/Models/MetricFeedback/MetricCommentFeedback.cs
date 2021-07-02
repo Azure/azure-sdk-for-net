@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="comment"> The comment content for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="comment"/> is null. </exception>
         internal MetricCommentFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, CommentFeedbackValue comment)
-            : base(metricId, dimensionFilter.DimensionFilter)
+            : base(metricId, dimensionFilter.DimensionKey)
         {
             Argument.AssertNotNullOrEmpty(comment?.CommentValue, nameof(comment.CommentValue));
 

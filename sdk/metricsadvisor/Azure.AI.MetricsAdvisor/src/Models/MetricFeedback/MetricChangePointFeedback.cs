@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
         /// <param name="value"> The <see cref="Models.ChangePointFeedbackValue"/> for the feedback. </param>
         internal MetricChangePointFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value)
-            : base(metricId, dimensionFilter.DimensionFilter)
+            : base(metricId, dimensionFilter.DimensionKey)
         {
             Argument.AssertNotNull(value, nameof(value));
 

@@ -114,7 +114,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
             {
-                DimensionValueFilter = options?.DimensionValueToFilter
+                DimensionValueFilter = options?.DimensionValueFilter
             };
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
@@ -174,7 +174,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
             {
-                DimensionValueFilter = options?.DimensionValueToFilter
+                DimensionValueFilter = options?.DimensionValueFilter
             };
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
@@ -238,7 +238,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }
@@ -302,7 +302,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }

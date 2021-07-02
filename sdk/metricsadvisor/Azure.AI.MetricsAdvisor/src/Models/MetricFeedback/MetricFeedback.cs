@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor
             CreatedOn = createdOn;
             UserPrincipal = userPrincipal;
             MetricId = metricId;
-            DimensionKey = dimensionFilter.DimensionFilter;
+            DimensionKey = dimensionFilter.DimensionKey;
         }
 
         /// <summary>

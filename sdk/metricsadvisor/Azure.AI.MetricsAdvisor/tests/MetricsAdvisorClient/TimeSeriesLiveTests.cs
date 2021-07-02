@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetMetricDimensionValuesOptions()
             {
-                DimensionValueToFilter = filter
+                DimensionValueFilter = filter
             };
 
             var valueCount = 0;
@@ -106,8 +106,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
-            options.DimensionCombinationsToFilter.Add("city", cityFilter);
-            options.DimensionCombinationsToFilter.Add("category", categoryFilter);
+            options.DimensionCombinationsFilter.Add("city", cityFilter);
+            options.DimensionCombinationsFilter.Add("category", categoryFilter);
 
             var definitionCount = 0;
 

@@ -215,9 +215,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(feedback.CreatedOn, Is.Not.Null);
 
                 Assert.That(feedback.DimensionFilter, Is.Not.Null);
-                Assert.That(feedback.DimensionFilter.DimensionFilter, Is.Not.Null);
+                Assert.That(feedback.DimensionFilter.DimensionKey, Is.Not.Null);
 
-                ValidateGroupKey(feedback.DimensionFilter.DimensionFilter);
+                ValidateGroupKey(feedback.DimensionFilter.DimensionKey);
 
                 if (feedback.Kind == MetricFeedbackKind.Anomaly)
                 {
@@ -299,7 +299,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 Assert.That(feedback.DimensionFilter, Is.Not.Null);
 
-                DimensionKey dimensionKeyFilter = feedback.DimensionFilter.DimensionFilter;
+                DimensionKey dimensionKeyFilter = feedback.DimensionFilter.DimensionKey;
 
                 Assert.That(dimensionKeyFilter, Is.Not.Null);
 
@@ -336,7 +336,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(feedback.DimensionFilter, Is.Not.Null);
 
-            DimensionKey dimensionFilter = feedback.DimensionFilter.DimensionFilter;
+            DimensionKey dimensionFilter = feedback.DimensionFilter.DimensionKey;
 
             Assert.That(dimensionFilter, Is.Not.Null);
 
