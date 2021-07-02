@@ -71,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($" - {metric.Name}: {metric.Id}");
             }
 
-            Console.WriteLine($"Dimension columns:");
+            Console.WriteLine($"Dimensions:");
             foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
             {
                 Console.WriteLine($" - {dimension.Name}");
@@ -115,7 +115,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($" - {metric.Name}: {metric.Id}");
             }
 
-            Console.WriteLine($"Dimension columns:");
+            Console.WriteLine($"Dimensions:");
             foreach (DataFeedDimension dimension in dataFeed.Schema.DimensionColumns)
             {
                 Console.WriteLine($" - {dimension.Name}");

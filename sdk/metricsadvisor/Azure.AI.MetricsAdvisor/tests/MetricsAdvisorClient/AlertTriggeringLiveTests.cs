@@ -144,7 +144,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 // Service bug: https://github.com/Azure/azure-sdk-for-net/issues/16581
                 //Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(incident.RootDimensionKey);
+                ValidateSeriesKey(incident.RootSeriesKey);
 
                 if (++incidentCount >= MaximumSamplesCount)
                 {

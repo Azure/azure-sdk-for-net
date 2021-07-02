@@ -167,22 +167,22 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             // Only the two time series with the keys specified below will be returned.
 
-            var dimensionColumns = new Dictionary<string, string>()
+            var dimensions = new Dictionary<string, string>()
             {
                 { "city", "Belo Horizonte" },
                 { "category", "__SUM__" }
             };
-            var seriesKey1 = new DimensionKey(dimensionColumns);
+            var seriesKey1 = new DimensionKey(dimensions);
 
-            dimensionColumns = new Dictionary<string, string>()
+            dimensions = new Dictionary<string, string>()
             {
                 { "city", "Hong Kong" },
                 { "category", "Industrial & Scientific" }
             };
-            var seriesKey2 = new DimensionKey(dimensionColumns);
+            var seriesKey2 = new DimensionKey(dimensions);
 
-            options.SeriesToFilter.Add(seriesKey1);
-            options.SeriesToFilter.Add(seriesKey2);
+            options.SeriesKeys.Add(seriesKey1);
+            options.SeriesKeys.Add(seriesKey2);
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(metricId, options))
             {
@@ -222,19 +222,19 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             // Only the two time series with the keys specified below will be returned.
 
-            var dimensionColumns = new Dictionary<string, string>()
+            var dimensions = new Dictionary<string, string>()
             {
                 { "city", "Belo Horizonte" },
                 { "category", "__SUM__" }
             };
-            var seriesKey1 = new DimensionKey(dimensionColumns);
+            var seriesKey1 = new DimensionKey(dimensions);
 
-            dimensionColumns = new Dictionary<string, string>()
+            dimensions = new Dictionary<string, string>()
             {
                 { "city", "Hong Kong" },
                 { "category", "Industrial & Scientific" }
             };
-            var seriesKey2 = new DimensionKey(dimensionColumns);
+            var seriesKey2 = new DimensionKey(dimensions);
 
             var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
 

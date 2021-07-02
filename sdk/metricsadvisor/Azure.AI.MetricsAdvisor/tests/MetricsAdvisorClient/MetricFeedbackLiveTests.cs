@@ -31,8 +31,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var columns = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, dimensionKey, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect);
 
@@ -58,8 +58,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var columns = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, dimensionKey, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect)
             {
@@ -88,8 +88,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var columns = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             var feedbackToAdd = new MetricChangePointFeedback(MetricId, dimensionKey, CreatedFeedbackStartTime, CreatedFeedbackEndTime, ChangePointValue.AutoDetect);
 
@@ -118,8 +118,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var columns = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             var comment = "Feedback created in a .NET test.";
 
@@ -145,8 +145,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var columns = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             var comment = "Feedback created in a .NET test.";
 
@@ -176,8 +176,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var columns = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", ExpectedCity }, { "category", ExpectedCategory } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             var periodValue = 10;
 
@@ -275,9 +275,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DateTimeOffset feedbackSamplingStartTime = DateTimeOffset.Parse("2020-12-01T00:00:00Z");
             DateTimeOffset feedbackSamplingEndTime = DateTimeOffset.Parse("2020-12-31T00:00:00Z");
 
-            var columns = new Dictionary<string, string>() { { "city", "Delhi" } };
+            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" } };
             var options = new GetAllFeedbackOptions()
             {
+<<<<<<< HEAD
                 Filter = new FeedbackFilter()
                 {
                     DimensionKey = new DimensionKey(columns),
@@ -286,6 +287,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     EndTime = feedbackSamplingEndTime,
                     FeedbackKind = MetricFeedbackKind.Comment,
                 }
+=======
+                Filter = new DimensionKey(dimensions),
+                TimeMode = FeedbackQueryTimeMode.FeedbackCreatedOn,
+                StartTime = feedbackSamplingStartTime,
+                EndTime = feedbackSamplingEndTime,
+                FeedbackKind = MetricFeedbackKind.Comment,
+>>>>>>> camaiaor/ma-beta5
             };
 
             var feedbackCount = 0;

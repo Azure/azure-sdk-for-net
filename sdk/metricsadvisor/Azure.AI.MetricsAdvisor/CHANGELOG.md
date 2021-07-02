@@ -13,7 +13,7 @@
 ### Breaking Changes
 - Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
 - `DimensionKey` is not an `IEquatable` anymore. Equality will be calculated based on reference only.
-- `DimensionKey` constructor now takes the required `dimension` parameter.
+- `DimensionKey` constructor now takes the required `dimensions` parameter.
 - The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in methods, method parameters, and properties.
   - Renamed class `DatasourceCredential` to `DataSourceCredentialEntity`.
   - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataLakeSharedKeyCredentialEntity`.
@@ -56,10 +56,18 @@
 - Moved `GetAlertConfigurationsOptions`, `GetDatasourceCredentialsOptions`, and `GetDetectionConfigurationsOptions` to the `Azure.AI.MetricsAdvisor.Administration` namespace.
 - Moved `DatasourceCredential`, `DataFeedSource`, `NotificationHook`, and all of their concrete child types to the `Azure.AI.MetricsAdvisor.Administration` namespace.
 - Moved `MetricFeedback` and all of its concrete child types to the `Azure.AI.MetricsAdvisor` namespace.
-- In `GetAllFeedbackOptions`, moved all feedback filter properties to a new nested property `Filter` of type `GetAllFeedbackFilter`.
+- In `GetAllFeedbackOptions`, moved all feedback filter properties to a new nested property `Filter` of type `FeedbackFilter`.
 - Changed order of parameters of `MetricsAdvisorClient.GetMetricEnrichedSeriesData`. Now, `detectionConfigurationId` appears first.
-- Optional properties `GetAllFeedbackOptions.Filter`, `GetAnomalyDimensionValuesOptions.DimensionToFilter`, and `FeedbackDimensionFilter.DimensionFilter` must now be manually added with setters to be used.
+- Optional properties `FeedbackFilter.DimensionKey` and `GetAnomalyDimensionValuesOptions.DimensionToFilter` must now be manually added with setters to be used.
 - Moved property `DataFeed.SourceType` to `DataFeedSource.DataSourceType`.
+- In `GetAnomaliesForDetectionConfigurationFilter` (now named `AnomalyFilter`), renamed `SeriesGroupKeys` to `DimensionKeys`.
+- In `GetAnomalyDimensionValuesOptions`, renamed `DimensionToFilter` to `SeriesGroupKey`.
+- In `GetIncidentsForAlertOptions`, renamed `DimensionsToFilter` to `DimensionKeys`.
+- In `GetMetricDimensionValuesOptions`, renamed `DimensionValueToFilter` to `DimensionValueFilter`.
+- In `GetMetricSeriesDataOptions`, renamed `SeriesToFilter` to `SeriesKeys`.
+- In `GetMetricSeriesDefinitionsOptions`, renamed `DimensionCombinationsToFilter` to `DimensionCombinationsFilter`.
+- In `AnomalyIncident`, renamed `RootDimensionKey` to `RootSeriesKey`.
+- In `FeedbackDimensionFilter` (now named `FeedbackFilter`), renamed `DimensionFilter` to `DimensionKey`.
 - In `MetricsAdvisorKeyCredential`, merged `UpdateSubscriptionKey` and `UpdateApiKey` into a single method, `Update`, to make it an atomic operation.
 - Removed setters from `StartTime` and `EndTime`, both in `MetricAnomalyFeedback` and in `MetricChangePointFeedback`.
 - The class `NotificationHook` is now abstract.
