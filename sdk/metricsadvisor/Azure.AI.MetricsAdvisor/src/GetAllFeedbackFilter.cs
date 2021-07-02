@@ -49,13 +49,15 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary>
         /// Filters the result under the chosen <see cref="TimeMode"/>. Only results from this point in time,
-        /// in UTC, will be returned.
+        /// in UTC, will be returned. In order to filter by time, you also need to set the property
+        /// <see cref="TimeMode"/>.
         /// </summary>
         public DateTimeOffset? StartTime { get; set; }
 
         /// <summary>
         /// Filters the result under the chosen <see cref="TimeMode"/>. Only results up to this point in time,
-        /// in UTC, will be returned.
+        /// in UTC, will be returned. In order to filter by time, you also need to set the property
+        /// <see cref="TimeMode"/>.
         /// </summary>
         public DateTimeOffset? EndTime { get; set; }
 
@@ -63,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor
         /// Specifies to which time property of a <see cref="MetricFeedback"/> the filters <see cref="StartTime"/>
         /// and <see cref="EndTime"/> will be applied.
         /// </summary>
-        public FeedbackQueryTimeMode? TimeMode { get; set; }
+        public FeedbackQueryTimeMode TimeMode { get; set; }
 
         /// <summary>
         /// Used by CodeGen during serialization.

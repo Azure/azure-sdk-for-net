@@ -11,12 +11,6 @@ namespace Azure.AI.MetricsAdvisor
 {
     internal static partial class FeedbackQueryTimeModeExtensions
     {
-        public static string ToSerialString(this FeedbackQueryTimeMode value) => value switch
-        {
-            FeedbackQueryTimeMode.MetricTimestamp => "MetricTimestamp",
-            FeedbackQueryTimeMode.FeedbackCreatedOn => "FeedbackCreatedTime",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FeedbackQueryTimeMode value.")
-        };
 
         public static FeedbackQueryTimeMode ToFeedbackQueryTimeMode(this string value)
         {

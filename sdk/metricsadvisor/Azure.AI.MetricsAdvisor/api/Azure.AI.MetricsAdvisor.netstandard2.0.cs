@@ -1,41 +1,16 @@
 namespace Azure.AI.MetricsAdvisor
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AlertQueryTimeMode : System.IEquatable<Azure.AI.MetricsAdvisor.AlertQueryTimeMode>
+    public enum AlertQueryTimeMode
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AlertQueryTimeMode(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.AlertQueryTimeMode AnomalyDetectedOn { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.AlertQueryTimeMode CreatedOn { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.AlertQueryTimeMode LastModified { get { throw null; } }
-        public bool Equals(Azure.AI.MetricsAdvisor.AlertQueryTimeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.MetricsAdvisor.AlertQueryTimeMode left, Azure.AI.MetricsAdvisor.AlertQueryTimeMode right) { throw null; }
-        public static implicit operator Azure.AI.MetricsAdvisor.AlertQueryTimeMode (string value) { throw null; }
-        public static bool operator !=(Azure.AI.MetricsAdvisor.AlertQueryTimeMode left, Azure.AI.MetricsAdvisor.AlertQueryTimeMode right) { throw null; }
-        public override string ToString() { throw null; }
+        AnomalyDetectedOn = 0,
+        CreatedOn = 1,
+        LastModified = 2,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FeedbackQueryTimeMode : System.IEquatable<Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode>
+    public enum FeedbackQueryTimeMode
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FeedbackQueryTimeMode(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode FeedbackCreatedOn { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode MetricTimestamp { get { throw null; } }
-        public bool Equals(Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode left, Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode right) { throw null; }
-        public static implicit operator Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode (string value) { throw null; }
-        public static bool operator !=(Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode left, Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode right) { throw null; }
-        public override string ToString() { throw null; }
+        None = 0,
+        MetricTimestamp = 1,
+        FeedbackCreatedOn = 2,
     }
     public partial class GetAlertsOptions
     {
@@ -46,16 +21,21 @@ namespace Azure.AI.MetricsAdvisor
         public System.DateTimeOffset StartTime { get { throw null; } }
         public Azure.AI.MetricsAdvisor.AlertQueryTimeMode TimeMode { get { throw null; } }
     }
+    public partial class GetAllFeedbackFilter
+    {
+        public GetAllFeedbackFilter() { }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionKey { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind? FeedbackKind { get { throw null; } set { } }
+        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode TimeMode { get { throw null; } set { } }
+    }
     public partial class GetAllFeedbackOptions
     {
         public GetAllFeedbackOptions() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind? FeedbackKind { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.GetAllFeedbackFilter Filter { get { throw null; } set { } }
         public int? MaxPageSize { get { throw null; } set { } }
         public int? Skip { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
     }
     public partial class GetAnomaliesForAlertOptions
     {
@@ -1039,11 +1019,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Message { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset Timestamp { get { throw null; } }
-    }
-    public partial class FeedbackDimensionFilter
-    {
-        public FeedbackDimensionFilter() { }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionFilter { get { throw null; } set { } }
     }
     public partial class HardThresholdCondition
     {

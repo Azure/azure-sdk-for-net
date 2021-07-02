@@ -8,6 +8,7 @@
 - Added a property setter to `MetricSeriesGroupDetectionCondition.SeriesGroupKey` and to `MetricSingleSeriesDetectionCondition.SeriesKey`.
 - Added property `MeasureType` to `MetricBoundaryCondition` to control which measure should be used when checking boundaries for alert triggering. Current supported types are `Value` and `Mean`.
 - `NotificationHook.Administrators` is now a `IList` (not read-only anymore), and can be used to update the list of administrators or set it during creation.
+- Added value `None` to `FeedbackQueryTimeMode` to indicate that no time mode is set.
 
 ### Breaking Changes
 - Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
@@ -25,6 +26,7 @@
 - Renamed class `AzureDataLakeStorageGen2DataFeedSource` to `AzureDataLakeStorageDataFeedSource`. Similarly, `DataSourceType.AzureDataLakeStorageGen2` has been renamed to `AzureDataLakeStorage`.
 - Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` has been renamed to `Kind`.
 - Renamed class `PeriodType` to `MetricPeriodType`.
+- Renamed class `FeedbackDimensionFilter` to `GetAllFeedbackFilter`.
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - Removed the property `DimensionFilter` in `MetricFeedback`. It's now a property of type `DimensionKey` (named `DimensionKey` as well). Similarly, feedback constructors now require a `dimensionKey` parameter to be passed.
@@ -52,6 +54,7 @@
 - Moved `GetAlertConfigurationsOptions`, `GetDatasourceCredentialsOptions`, and `GetDetectionConfigurationsOptions` to the `Azure.AI.MetricsAdvisor.Administration` namespace.
 - Moved `DatasourceCredential`, `DataFeedSource`, `NotificationHook`, and all of their concrete child types to the `Azure.AI.MetricsAdvisor.Administration` namespace.
 - Moved `MetricFeedback` and all of its concrete child types to the `Azure.AI.MetricsAdvisor` namespace.
+- In `GetAllFeedbackOptions`, moved all feedback filter properties to a new nested property `Filter` of type `GetAllFeedbackFilter`.
 - Changed order of parameters of `MetricsAdvisorClient.GetMetricEnrichedSeriesData`. Now, `detectionConfigurationId` appears first.
 - Optional properties `GetAllFeedbackOptions.Filter`, `GetAnomalyDimensionValuesOptions.DimensionToFilter`, and `FeedbackDimensionFilter.DimensionFilter` must now be manually added with setters to be used.
 - Moved property `DataFeed.SourceType` to `DataFeedSource.DataSourceType`.
@@ -59,6 +62,7 @@
 - Removed setters from `StartTime` and `EndTime`, both in `MetricAnomalyFeedback` and in `MetricChangePointFeedback`.
 - The class `NotificationHook` is now abstract.
 - The class `DatasourceCredential` (now called `DataSourceCredentialEntity`) is now abstract.
+- `AlertQueryTimeMode` and `FeedbackQueryTimeMode` are now regular enums.
 
 ## 1.0.0-beta.4 (2021-06-07)
 
