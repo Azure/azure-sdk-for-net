@@ -1155,7 +1155,7 @@ schemas: !Schemas
           description: The URL to get the next set of operations.
       protocol: !Protocols {}
   choices:
-    - !ChoiceSchema &ref_6
+    - !ChoiceSchema &ref_7
       choices:
         - !ChoiceValue 
           value: A
@@ -1763,7 +1763,7 @@ schemas: !Schemas
           name: IdentityType
           description: The type of identity.
       protocol: !Protocols {}
-    - !ChoiceSchema &ref_133
+    - !ChoiceSchema &ref_134
       choices:
         - !ChoiceValue 
           value: B
@@ -1868,7 +1868,7 @@ schemas: !Schemas
           description: Control permission for data plane traffic coming from public networks while private endpoint is enabled.
       protocol: !Protocols {}
   sealedChoices:
-    - !SealedChoiceSchema &ref_7
+    - !SealedChoiceSchema &ref_6
       choices:
         - !ChoiceValue 
           value: standard
@@ -1970,7 +1970,7 @@ schemas: !Schemas
           name: Reason
           description: The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false.
       protocol: !Protocols {}
-    - !SealedChoiceSchema &ref_134
+    - !SealedChoiceSchema &ref_133
       choices:
         - !ChoiceValue 
           value: Standard_B1
@@ -2294,6 +2294,15 @@ schemas: !Schemas
                   properties:
                     - !Property 
                       schema: *ref_6
+                      required: true
+                      serializedName: name
+                      language: !Languages 
+                        default:
+                          name: name
+                          description: SKU name to specify whether the key vault is a standard vault or a premium vault.
+                      protocol: !Protocols {}
+                    - !Property 
+                      schema: *ref_7
                       clientDefaultValue: A
                       required: true
                       serializedName: family
@@ -2301,15 +2310,6 @@ schemas: !Schemas
                         default:
                           name: family
                           description: SKU family name
-                      protocol: !Protocols {}
-                    - !Property 
-                      schema: *ref_7
-                      required: true
-                      serializedName: name
-                      language: !Languages 
-                        default:
-                          name: name
-                          description: SKU name to specify whether the key vault is a standard vault or a premium vault.
                       protocol: !Protocols {}
                   serializationFormats:
                     - json
@@ -4622,6 +4622,15 @@ schemas: !Schemas
             properties:
               - !Property 
                 schema: *ref_133
+                required: true
+                serializedName: name
+                language: !Languages 
+                  default:
+                    name: name
+                    description: SKU of the managed HSM Pool
+                protocol: !Protocols {}
+              - !Property 
+                schema: *ref_134
                 clientDefaultValue: B
                 required: true
                 serializedName: family
@@ -4629,15 +4638,6 @@ schemas: !Schemas
                   default:
                     name: family
                     description: SKU Family of the managed HSM Pool
-                protocol: !Protocols {}
-              - !Property 
-                schema: *ref_134
-                required: true
-                serializedName: name
-                language: !Languages 
-                  default:
-                    name: name
-                    description: SKU of the managed HSM Pool
                 protocol: !Protocols {}
             serializationFormats:
               - json

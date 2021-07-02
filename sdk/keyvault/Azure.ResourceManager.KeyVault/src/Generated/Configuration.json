@@ -8,5 +8,16 @@
   ],
   "azure-arm": true,
   "public-clients": true,
-  "head-as-boolean": true
+  "head-as-boolean": true,
+  "OperationGroupToResourceType": {
+    "PrivateLinkResources": "Microsoft.KeyVault/vaults/privateLinkResources",
+    "MHSMPrivateLinkResources": "Microsoft.KeyVault/managedHSMs/privateLinkResources",
+    "Operations": "Microsoft.KeyVault/operations"
+  },
+  "OperationGroupToResource": {
+    "PrivateLinkResources": "PrivateLinkResource",
+    "MHSMPrivateLinkResources": "MHSMPrivateLinkResource",
+    "Operations": "NonResource",
+    "Vaults": "Vault"
+  }
 }
