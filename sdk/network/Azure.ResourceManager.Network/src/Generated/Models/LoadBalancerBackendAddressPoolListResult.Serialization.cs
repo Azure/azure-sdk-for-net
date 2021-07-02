@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerBackendAddressPoolListResult
+    internal partial class LoadBalancerBackendAddressPoolListResult
     {
         internal static LoadBalancerBackendAddressPoolListResult DeserializeLoadBalancerBackendAddressPoolListResult(JsonElement element)
         {

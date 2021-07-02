@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class WorkloadGroupListResult
+    internal partial class WorkloadGroupListResult
     {
         internal static WorkloadGroupListResult DeserializeWorkloadGroupListResult(JsonElement element)
         {

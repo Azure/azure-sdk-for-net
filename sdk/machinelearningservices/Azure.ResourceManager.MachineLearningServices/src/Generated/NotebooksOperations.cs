@@ -20,10 +20,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal NotebooksRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of NotebooksOperations for mocking. </summary>
         protected NotebooksOperations()
         {
         }
+
         /// <summary> Initializes a new instance of NotebooksOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

@@ -16,7 +16,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
         { }
 
         [RecordedTest]
-        [Ignore("Recording is out of date; requires service attention: https://github.com/Azure/azure-sdk-for-net/issues/18501")]
         public async Task BackupAndRestoreSampleAsync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
@@ -36,10 +35,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             RegisterKeyForCleanup(keyName);
 
             // Start the backup.
-            BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
+            KeyVaultBackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
-            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             await WaitForOperationAsync();
 
@@ -50,13 +49,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(backupOperation.HasValue, Is.True);
 
             #region Snippet:SelectiveRestoreAsync
-            //@@ string keyName = "<key name to restore>";
+#if SNIPPET
+            string keyName = "<key name to restore>";
+#endif
 
             // Start the restore for a specific key that was previously backed up using the backupBlobUri returned from a previous BackupOperation.
-            SelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, folderUri, sasToken);
+            KeyVaultSelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveKeyRestoreAsync(keyName, folderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
-            SelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+            KeyVaultSelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);

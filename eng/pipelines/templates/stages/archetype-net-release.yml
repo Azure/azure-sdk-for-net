@@ -56,16 +56,16 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - checkout: self
-                    - ${{if eq(parameters.TestPipeline, 'true')}}:
-                      - task: PowerShell@2
-                        displayName: Prep template pipeline for release
-                        condition: succeeded()
-                        inputs:
-                          pwsh: true
-                          workingDirectory: $(Build.SourcesDirectory)
-                          filePath: eng/scripts/SetTestPipelineVersion.ps1
-                          arguments: '-BuildID $(Build.BuildId)'
+                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                      parameters:
+                        Paths:
+                          - '${{ parameters.ServiceDirectory }}'
+                    - template: /eng/common/pipelines/templates/steps/retain-run.yml
+                    - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
+                      parameters:
+                        PackageName: "Azure.Template"
+                        ServiceDirectory: "template"
+                        TestPipeline: ${{ parameters.TestPipeline }}
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
@@ -153,7 +153,10 @@ stages:
                 runOnce:
                   deploy:
                     steps:
-                      - checkout: self
+                      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                        parameters:
+                          paths:
+                            - .github/CODEOWNERS
                       - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
                         parameters:
                           TargetVariable: "OwningGHUser"
@@ -175,6 +178,9 @@ stages:
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
+                          SparseCheckoutPaths:
+                            - api
+
 
           - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
             - deployment: PublishDocs
@@ -219,7 +225,7 @@ stages:
                     steps:
                       - checkout: self
                       - pwsh: |
-                          eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
+                          eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
                         displayName: Increment package version
                       - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                         parameters:
@@ -234,7 +240,7 @@ stages:
     - stage: SmokeTest_Release_Packages
       displayName: Smoke Test Release Packages
       jobs:
-        - template: /eng/pipelines/templates/jobs/smoke-tests.yml
+        - template: /eng/pipelines/templates/jobs/smoke.tests.yml
           parameters:
             Daily: false
             Artifacts: ${{ parameters.Artifacts }}

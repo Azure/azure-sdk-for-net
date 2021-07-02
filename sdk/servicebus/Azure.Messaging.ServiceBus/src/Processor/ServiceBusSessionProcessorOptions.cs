@@ -50,6 +50,9 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The maximum duration during which session locks are automatically renewed.</value>
         /// <remarks>The session lock renewal can continue for sometime in the background
         /// after completion of message and result in a few false SessionLockLost exceptions temporarily.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
@@ -74,6 +77,9 @@ namespace Azure.Messaging.ServiceBus
         /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
         /// However, it will still control the amount of time each receive call waits.
         /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public TimeSpan? SessionIdleTimeout
         {
             get => _sessionIdleTimeout;
@@ -96,6 +102,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent sessions to process.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentSessions
         {
             get => _maxConcurrentSessions;
@@ -115,6 +124,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the message handler for each session that is being processed.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentCallsPerSession
         {
             get => _maxConcurrentCallsPerSessions;
@@ -134,15 +146,6 @@ namespace Azure.Messaging.ServiceBus
         /// session IDs.
         /// </summary>
         public IList<string> SessionIds { get; } = new List<string>();
-
-        /// <summary>
-        /// Gets or sets the transaction group associated with the processor. This is an
-        /// arbitrary string that is used to all senders, receivers, and processors that you
-        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
-        /// If your transactions only involves a single queue, topic, or subscription, this property
-        /// should not be set.
-        /// </summary>
-        public string TransactionGroup { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -178,7 +181,6 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = SessionIdleTimeout,
-                TransactionGroup = TransactionGroup
             };
     }
 }

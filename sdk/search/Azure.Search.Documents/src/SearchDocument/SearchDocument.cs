@@ -7,10 +7,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 
 namespace Azure.Search.Documents.Models
 {
@@ -156,7 +153,6 @@ namespace Azure.Search.Documents.Models
         /// <returns>The value of the property.</returns>
         public IReadOnlyList<string> GetStringCollection(string key) => GetValue<string[]>(key);
 
-#if EXPERIMENTAL_SPATIAL
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
         /// <see cref="GeoPoint"/> property called
@@ -174,7 +170,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
         public IReadOnlyList<GeoPoint> GetPointCollection(string key) => GetValue<GeoPoint[]>(key);
-#endif
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s

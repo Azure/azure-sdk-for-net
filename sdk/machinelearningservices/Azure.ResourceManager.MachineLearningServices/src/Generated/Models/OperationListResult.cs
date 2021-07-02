@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> An array of operations supported by the resource provider. </summary>
-    public partial class OperationListResult
+    internal partial class OperationListResult
     {
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         internal OperationListResult()

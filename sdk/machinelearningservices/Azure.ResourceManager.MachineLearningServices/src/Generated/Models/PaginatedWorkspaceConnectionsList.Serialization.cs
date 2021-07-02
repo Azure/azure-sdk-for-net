@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class PaginatedWorkspaceConnectionsList
+    internal partial class PaginatedWorkspaceConnectionsList
     {
         internal static PaginatedWorkspaceConnectionsList DeserializePaginatedWorkspaceConnectionsList(JsonElement element)
         {

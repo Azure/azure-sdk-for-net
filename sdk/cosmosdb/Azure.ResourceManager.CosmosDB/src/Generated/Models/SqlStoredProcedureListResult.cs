@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the storedProcedures and their properties. </summary>
-    public partial class SqlStoredProcedureListResult
+    internal partial class SqlStoredProcedureListResult
     {
         /// <summary> Initializes a new instance of SqlStoredProcedureListResult. </summary>
         internal SqlStoredProcedureListResult()

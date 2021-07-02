@@ -1,505 +1,422 @@
-{
+﻿{
   "Entries": [
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-785a0557-e512-f80d-23ae-fbaf813de37b?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-86ee47ea-5326-076b-4e9d-57d0ca7e976c?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-0fe17769311be548aef53c98b110ec30-772f474809abd94b-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-195a1747600b4545ad972749873c8916-d3a9b5db07ff0448-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "f58415f7-ba28-db46-93a3-f1cfc6180b63",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:23 GMT",
+        "x-ms-client-request-id": "860e5696-cf27-229e-c21e-8da9dd7da8ea",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:23 GMT",
-        "ETag": "\u00220x8D8D39474B62B51\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:23 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "f58415f7-ba28-db46-93a3-f1cfc6180b63",
-        "x-ms-request-id": "4e49cf7f-801e-003b-737d-053afb000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "ETag": "\"0x8D909005E3BF711\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "860e5696-cf27-229e-c21e-8da9dd7da8ea",
+        "x-ms-request-id": "b09e721a-001e-000c-53e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-785a0557-e512-f80d-23ae-fbaf813de37b/test-file-8c3a251d-defd-e1db-8b5e-fc91b94ca28e?resource=file",
+      "RequestUri": "http://kasobolhnscanada.dfs.core.windows.net/test-filesystem-86ee47ea-5326-076b-4e9d-57d0ca7e976c/test-file-a138e989-fb58-4e3a-08fd-549c806c9e1f?resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2bd8e158db857b42b28919ab036c41a7-154177c2d66f8c47-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "30a3c875-5159-1997-3aa2-69c9bdb52247",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:24 GMT",
+        "traceparent": "00-30ebc142e273a4469a9c2dfd90ee734c-3addf8f6cc6aae49-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8075e8e1-39f6-9a56-1cbf-7d297a02a256",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:24 GMT",
-        "ETag": "\u00220x8D8D39474EED4F8\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:24 GMT",
-        "Server": [
-          "Windows-Azure-HDFS/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "30a3c875-5159-1997-3aa2-69c9bdb52247",
-        "x-ms-request-id": "8497b3bf-101f-0074-697d-054baf000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "ETag": "\"0x8D909005E4D9A7E\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "8075e8e1-39f6-9a56-1cbf-7d297a02a256",
+        "x-ms-request-id": "49647507-501f-0011-7ae9-3ae506000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-785a0557-e512-f80d-23ae-fbaf813de37b/test-file-8c3a251d-defd-e1db-8b5e-fc91b94ca28e?comp=properties",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-86ee47ea-5326-076b-4e9d-57d0ca7e976c/test-file-a138e989-fb58-4e3a-08fd-549c806c9e1f?comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "If-Modified-Since": "Thu, 18 Feb 2021 22:36:23 GMT",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-blob-cache-control": "mragpamrrytlooisuuyl",
-        "x-ms-blob-content-disposition": "iiwnaqevbbajquxhvrbm",
-        "x-ms-blob-content-encoding": "hfijsegdxputppfdtlfy",
-        "x-ms-blob-content-language": "uqpqxjttqavctmdcyntv",
-        "x-ms-blob-content-md5": "NBfmnANxxJ84lAjnt1IH4g==",
-        "x-ms-blob-content-type": "kaxkfftbptnjlcqqorkj",
-        "x-ms-client-request-id": "f01b9a29-71a8-7e34-ce9e-32168589e7cd",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:24 GMT",
+        "If-Modified-Since": "Tue, 27 Apr 2021 22:12:23 GMT",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-blob-cache-control": "hdnvgmgxrbvewnlwegmn",
+        "x-ms-blob-content-disposition": "hjwpoplyuakawooaxqfg",
+        "x-ms-blob-content-encoding": "bfixnxtgcwvrnoywfxhp",
+        "x-ms-blob-content-language": "ahdrpuhhykymagmbbycq",
+        "x-ms-blob-content-md5": "qFSH/kpwofRzGMzncYBmbQ==",
+        "x-ms-blob-content-type": "ufvwdrliprtajofscqhr",
+        "x-ms-client-request-id": "97bba1ea-1df7-8828-539f-57b0931a4365",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 412,
       "ResponseHeaders": {
         "Content-Length": "252",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 22:36:23 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "f01b9a29-71a8-7e34-ce9e-32168589e7cd",
+        "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "97bba1ea-1df7-8828-539f-57b0931a4365",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "4e49d0f6-801e-003b-477d-053afb000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-request-id": "b09e7226-001e-000c-5de9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
-        "RequestId:4e49d0f6-801e-003b-477d-053afb000000\n",
-        "Time:2021-02-17T22:36:24.4194696Z\u003C/Message\u003E\u003C/Error\u003E"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
+        "RequestId:b09e7226-001e-000c-5de9-3ae8ba000000\n",
+        "Time:2021-04-26T22:12:23.7115290Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-785a0557-e512-f80d-23ae-fbaf813de37b?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-86ee47ea-5326-076b-4e9d-57d0ca7e976c?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-518d2e5ed8cd45408216227bf2d6df12-bccdd867b1e7c447-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "239f8746-3199-8f9e-2e80-92c26d94a948",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:24 GMT",
+        "traceparent": "00-052ebe73700f0b428c45e462ad55edf5-0c115b054d6a0b4c-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d93f0981-0a47-625f-455e-e1a3ddcae489",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:23 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "239f8746-3199-8f9e-2e80-92c26d94a948",
-        "x-ms-request-id": "4e49d138-801e-003b-047d-053afb000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "d93f0981-0a47-625f-455e-e1a3ddcae489",
+        "x-ms-request-id": "b09e7229-001e-000c-60e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bff03cad-3a33-5537-9845-d233136f379c?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-a30ed438-9c49-0bc7-300f-29fa42ad885f?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-7e4c81e91513754cbedfc502d939da4d-39108de62c3bc245-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-89f0caad7e452742864e19d9cf62ea49-2673fa06445a494c-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "0a1715cb-ae41-0b7e-4f4a-8b545f6b7bbe",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:24 GMT",
+        "x-ms-client-request-id": "2b425217-d3e5-e450-4233-a838e1642097",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:24 GMT",
-        "ETag": "\u00220x8D8D39475407595\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:24 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "0a1715cb-ae41-0b7e-4f4a-8b545f6b7bbe",
-        "x-ms-request-id": "46e91965-401e-00b2-767d-05802e000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "ETag": "\"0x8D909005E6FE1A6\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "2b425217-d3e5-e450-4233-a838e1642097",
+        "x-ms-request-id": "b09e7244-001e-000c-67e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-bff03cad-3a33-5537-9845-d233136f379c/test-file-ee91f549-abc4-e85e-09ac-7270470e1358?resource=file",
+      "RequestUri": "http://kasobolhnscanada.dfs.core.windows.net/test-filesystem-a30ed438-9c49-0bc7-300f-29fa42ad885f/test-file-207a82d5-5a9b-ceae-b6c4-81733f780e63?resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ea04f84991ff9b44bf5e9b57c10f93c9-24cbeb569f5be247-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "4cdf3447-7aae-1fc5-b62e-01943c0ec341",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:25 GMT",
+        "traceparent": "00-0f2665982b799249abc57676c9c2b7bf-d65c9782dcd18a46-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "7b78c5b5-ad53-bd09-a374-752151dda5c9",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:25 GMT",
-        "ETag": "\u00220x8D8D39475778367\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:25 GMT",
-        "Server": [
-          "Windows-Azure-HDFS/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "4cdf3447-7aae-1fc5-b62e-01943c0ec341",
-        "x-ms-request-id": "fc494e8c-c01f-0015-287d-0568ec000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "ETag": "\"0x8D909005E7E604D\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "7b78c5b5-ad53-bd09-a374-752151dda5c9",
+        "x-ms-request-id": "49647508-501f-0011-7be9-3ae506000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bff03cad-3a33-5537-9845-d233136f379c/test-file-ee91f549-abc4-e85e-09ac-7270470e1358?comp=properties",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-a30ed438-9c49-0bc7-300f-29fa42ad885f/test-file-207a82d5-5a9b-ceae-b6c4-81733f780e63?comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "If-Unmodified-Since": "Tue, 16 Feb 2021 22:36:23 GMT",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-blob-cache-control": "mragpamrrytlooisuuyl",
-        "x-ms-blob-content-disposition": "iiwnaqevbbajquxhvrbm",
-        "x-ms-blob-content-encoding": "hfijsegdxputppfdtlfy",
-        "x-ms-blob-content-language": "uqpqxjttqavctmdcyntv",
-        "x-ms-blob-content-md5": "NBfmnANxxJ84lAjnt1IH4g==",
-        "x-ms-blob-content-type": "kaxkfftbptnjlcqqorkj",
-        "x-ms-client-request-id": "132890c9-c62f-61aa-8347-47292ac745f1",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:25 GMT",
+        "If-Unmodified-Since": "Sun, 25 Apr 2021 22:12:23 GMT",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-blob-cache-control": "hdnvgmgxrbvewnlwegmn",
+        "x-ms-blob-content-disposition": "hjwpoplyuakawooaxqfg",
+        "x-ms-blob-content-encoding": "bfixnxtgcwvrnoywfxhp",
+        "x-ms-blob-content-language": "ahdrpuhhykymagmbbycq",
+        "x-ms-blob-content-md5": "qFSH/kpwofRzGMzncYBmbQ==",
+        "x-ms-blob-content-type": "ufvwdrliprtajofscqhr",
+        "x-ms-client-request-id": "79bdc45c-9200-9410-7b25-4cf6e857048f",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 412,
       "ResponseHeaders": {
         "Content-Length": "252",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 22:36:24 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "132890c9-c62f-61aa-8347-47292ac745f1",
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "79bdc45c-9200-9410-7b25-4cf6e857048f",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "46e92047-401e-00b2-707d-05802e000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-request-id": "b09e7263-001e-000c-78e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
-        "RequestId:46e92047-401e-00b2-707d-05802e000000\n",
-        "Time:2021-02-17T22:36:25.3117659Z\u003C/Message\u003E\u003C/Error\u003E"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
+        "RequestId:b09e7263-001e-000c-78e9-3ae8ba000000\n",
+        "Time:2021-04-26T22:12:24.0347574Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bff03cad-3a33-5537-9845-d233136f379c?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-a30ed438-9c49-0bc7-300f-29fa42ad885f?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-90f204c1dc0b7c4f9efd40c29976059e-ddf0c23f10e73f45-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "abcbd77e-b0e6-7012-8817-94bc363df3d2",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:25 GMT",
+        "traceparent": "00-0f5a1c197c0d744488d0b72bab4c09c0-3438a8d2c22a4f46-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8dc4a467-2b1f-92c8-3561-e15de33590b1",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:24 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "abcbd77e-b0e6-7012-8817-94bc363df3d2",
-        "x-ms-request-id": "46e92165-401e-00b2-7c7d-05802e000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "8dc4a467-2b1f-92c8-3561-e15de33590b1",
+        "x-ms-request-id": "b09e726e-001e-000c-03e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-90fffcc9-aa56-fcc3-b25e-456d130bd4be?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-94ac2420-9083-51e1-8a38-e00020e19bc2?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-7541a6d25aac184e85065be7efda2b2d-a645ab16e5728b4a-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-776691313aa3fa4e92cbd20a32c85f34-850bc55405f55244-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "90d4e0ce-91c5-d4a1-13ce-f8886ba45d7c",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:25 GMT",
+        "x-ms-client-request-id": "d40ec16f-150b-d719-c273-03e74ac87253",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:24 GMT",
-        "ETag": "\u00220x8D8D39475C44DA2\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:25 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "90d4e0ce-91c5-d4a1-13ce-f8886ba45d7c",
-        "x-ms-request-id": "65e5f332-a01e-005e-367d-0594bf000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "ETag": "\"0x8D909005EA7C49A\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "d40ec16f-150b-d719-c273-03e74ac87253",
+        "x-ms-request-id": "b09e7282-001e-000c-12e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-90fffcc9-aa56-fcc3-b25e-456d130bd4be/test-file-e697d543-9f92-30d6-f1af-355e2d74c491?resource=file",
+      "RequestUri": "http://kasobolhnscanada.dfs.core.windows.net/test-filesystem-94ac2420-9083-51e1-8a38-e00020e19bc2/test-file-34e21ec6-4ca6-a91d-b433-de94495427ad?resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-febed57ba97dc14b87552ce1eef21606-52b8f795e0505440-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "620b009a-ad8a-2efe-0aa4-9f165c42a69e",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:25 GMT",
+        "traceparent": "00-f981a8530d7b4945b828c52a67765125-d684bc221b860c41-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "0bc7f37d-6df9-23bd-a365-1fd837858d6e",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:25 GMT",
-        "ETag": "\u00220x8D8D39476032F4C\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "Server": [
-          "Windows-Azure-HDFS/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "620b009a-ad8a-2efe-0aa4-9f165c42a69e",
-        "x-ms-request-id": "58a30bdf-c01f-003a-527d-056527000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:23 GMT",
+        "ETag": "\"0x8D909005EB5E390\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "0bc7f37d-6df9-23bd-a365-1fd837858d6e",
+        "x-ms-request-id": "49647509-501f-0011-7ce9-3ae506000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-90fffcc9-aa56-fcc3-b25e-456d130bd4be/test-file-e697d543-9f92-30d6-f1af-355e2d74c491?comp=properties",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-94ac2420-9083-51e1-8a38-e00020e19bc2/test-file-34e21ec6-4ca6-a91d-b433-de94495427ad?comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "If-Match": "\u0022garbage\u0022",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-blob-cache-control": "mragpamrrytlooisuuyl",
-        "x-ms-blob-content-disposition": "iiwnaqevbbajquxhvrbm",
-        "x-ms-blob-content-encoding": "hfijsegdxputppfdtlfy",
-        "x-ms-blob-content-language": "uqpqxjttqavctmdcyntv",
-        "x-ms-blob-content-md5": "NBfmnANxxJ84lAjnt1IH4g==",
-        "x-ms-blob-content-type": "kaxkfftbptnjlcqqorkj",
-        "x-ms-client-request-id": "2cc37fca-6168-1c07-b670-2792a3e2376b",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:26 GMT",
+        "If-Match": "\"garbage\"",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-blob-cache-control": "hdnvgmgxrbvewnlwegmn",
+        "x-ms-blob-content-disposition": "hjwpoplyuakawooaxqfg",
+        "x-ms-blob-content-encoding": "bfixnxtgcwvrnoywfxhp",
+        "x-ms-blob-content-language": "ahdrpuhhykymagmbbycq",
+        "x-ms-blob-content-md5": "qFSH/kpwofRzGMzncYBmbQ==",
+        "x-ms-blob-content-type": "ufvwdrliprtajofscqhr",
+        "x-ms-client-request-id": "5516f005-1b8c-28b3-c06d-bb6da7de2d0f",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 412,
       "ResponseHeaders": {
         "Content-Length": "252",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 22:36:25 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "2cc37fca-6168-1c07-b670-2792a3e2376b",
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "5516f005-1b8c-28b3-c06d-bb6da7de2d0f",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "65e5f3fd-a01e-005e-717d-0594bf000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-request-id": "b09e728d-001e-000c-1ae9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
-        "RequestId:65e5f3fd-a01e-005e-717d-0594bf000000\n",
-        "Time:2021-02-17T22:36:26.2188368Z\u003C/Message\u003E\u003C/Error\u003E"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
+        "RequestId:b09e728d-001e-000c-1ae9-3ae8ba000000\n",
+        "Time:2021-04-26T22:12:24.3960112Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-90fffcc9-aa56-fcc3-b25e-456d130bd4be?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-94ac2420-9083-51e1-8a38-e00020e19bc2?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-e163936aee177c4a82234ea41b2c4bab-1a98b4460a02fe4a-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "dd4c3114-7a7e-a835-5fa1-009503b35bfa",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:26 GMT",
+        "traceparent": "00-0dfcebc25115f84491125786b979eadd-df69afbecd46504f-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "46d2f430-386e-2fe1-a129-0dc956145688",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:25 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "dd4c3114-7a7e-a835-5fa1-009503b35bfa",
-        "x-ms-request-id": "65e5f433-a01e-005e-257d-0594bf000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "46d2f430-386e-2fe1-a129-0dc956145688",
+        "x-ms-request-id": "b09e7292-001e-000c-1ee9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bd8ccccc-5685-9ba8-ce54-725cdc81a674?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-b9c38f50-1728-a4f2-3aab-e3c477375af0?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-7e9f40d33b44a049a45ceb1e5cf64dc9-de51a1c6a3ec4f49-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-c6f3832d2087c943bbc92f9afd639f2b-b0d8be4df581594e-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "a9b98ab0-11b5-bedc-88b0-0e2a07d8cbde",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:26 GMT",
+        "x-ms-client-request-id": "3e2b1c71-9e0b-187e-022e-0cc2541db869",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:25 GMT",
-        "ETag": "\u00220x8D8D394764B7D61\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "a9b98ab0-11b5-bedc-88b0-0e2a07d8cbde",
-        "x-ms-request-id": "70d1270b-501e-0075-2a7d-051473000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "ETag": "\"0x8D909005ED8533C\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "3e2b1c71-9e0b-187e-022e-0cc2541db869",
+        "x-ms-request-id": "b09e729b-001e-000c-27e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-bd8ccccc-5685-9ba8-ce54-725cdc81a674/test-file-3df38bfa-e935-7264-dfd7-51097c856db2?resource=file",
+      "RequestUri": "http://kasobolhnscanada.dfs.core.windows.net/test-filesystem-b9c38f50-1728-a4f2-3aab-e3c477375af0/test-file-41b41cce-a4d7-6a7c-eed1-89839be3514d?resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fbc38b50fd49ff409e8d433ed0a0ea06-ae78b2877f84f24c-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "a228fbaf-2d27-c6d1-2547-caddbfd24203",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:26 GMT",
+        "traceparent": "00-2523cc9c8693c448a8f520305813fee2-6c8a78242e281e48-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "364012ec-d238-cd87-a0c0-4f3a15fa7d1e",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "ETag": "\u00220x8D8D3947681F756\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "Server": [
-          "Windows-Azure-HDFS/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "a228fbaf-2d27-c6d1-2547-caddbfd24203",
-        "x-ms-request-id": "fc494f7f-c01f-0015-1a7d-0568ec000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "ETag": "\"0x8D909005EE65234\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "364012ec-d238-cd87-a0c0-4f3a15fa7d1e",
+        "x-ms-request-id": "4964750a-501f-0011-7de9-3ae506000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bd8ccccc-5685-9ba8-ce54-725cdc81a674/test-file-3df38bfa-e935-7264-dfd7-51097c856db2",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-b9c38f50-1728-a4f2-3aab-e3c477375af0/test-file-41b41cce-a4d7-6a7c-eed1-89839be3514d",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "815abd29-ca5c-bb8a-9ae5-2c8032e1d016",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:27 GMT",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "89977634-1ba3-c514-fe85-ba4bccaa609c",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -507,247 +424,209 @@
         "Accept-Ranges": "bytes",
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
-        "Date": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "ETag": "\u00220x8D8D3947681F756\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "ETag": "\"0x8D909005EE65234\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-access-tier": "Hot",
         "x-ms-access-tier-inferred": "true",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "815abd29-ca5c-bb8a-9ae5-2c8032e1d016",
-        "x-ms-creation-time": "Wed, 17 Feb 2021 22:36:26 GMT",
+        "x-ms-client-request-id": "89977634-1ba3-c514-fe85-ba4bccaa609c",
+        "x-ms-creation-time": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-group": "$superuser",
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-owner": "$superuser",
         "x-ms-permissions": "rw-r-----",
-        "x-ms-request-id": "70d128d5-501e-0075-507d-051473000000",
+        "x-ms-request-id": "b09e72b9-001e-000c-3ce9-3ae8ba000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bd8ccccc-5685-9ba8-ce54-725cdc81a674/test-file-3df38bfa-e935-7264-dfd7-51097c856db2?comp=properties",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-b9c38f50-1728-a4f2-3aab-e3c477375af0/test-file-41b41cce-a4d7-6a7c-eed1-89839be3514d?comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "If-None-Match": "0x8D8D3947681F756",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-blob-cache-control": "mragpamrrytlooisuuyl",
-        "x-ms-blob-content-disposition": "iiwnaqevbbajquxhvrbm",
-        "x-ms-blob-content-encoding": "hfijsegdxputppfdtlfy",
-        "x-ms-blob-content-language": "uqpqxjttqavctmdcyntv",
-        "x-ms-blob-content-md5": "NBfmnANxxJ84lAjnt1IH4g==",
-        "x-ms-blob-content-type": "kaxkfftbptnjlcqqorkj",
-        "x-ms-client-request-id": "02b4ad20-c178-79a7-d085-02474c97cbeb",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:27 GMT",
+        "If-None-Match": "0x8D909005EE65234",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-blob-cache-control": "hdnvgmgxrbvewnlwegmn",
+        "x-ms-blob-content-disposition": "hjwpoplyuakawooaxqfg",
+        "x-ms-blob-content-encoding": "bfixnxtgcwvrnoywfxhp",
+        "x-ms-blob-content-language": "ahdrpuhhykymagmbbycq",
+        "x-ms-blob-content-md5": "qFSH/kpwofRzGMzncYBmbQ==",
+        "x-ms-blob-content-type": "ufvwdrliprtajofscqhr",
+        "x-ms-client-request-id": "9f063f30-f363-c07a-aa65-d145a311e68c",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 412,
       "ResponseHeaders": {
         "Content-Length": "252",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "02b4ad20-c178-79a7-d085-02474c97cbeb",
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "9f063f30-f363-c07a-aa65-d145a311e68c",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "70d1293f-501e-0075-317d-051473000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-request-id": "b09e72bd-001e-000c-40e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
-        "RequestId:70d1293f-501e-0075-317d-051473000000\n",
-        "Time:2021-02-17T22:36:27.1328196Z\u003C/Message\u003E\u003C/Error\u003E"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
+        "RequestId:b09e72bd-001e-000c-40e9-3ae8ba000000\n",
+        "Time:2021-04-26T22:12:24.8022975Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bd8ccccc-5685-9ba8-ce54-725cdc81a674?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-b9c38f50-1728-a4f2-3aab-e3c477375af0?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-28a2ec8229a951419b4afc0e833e8bbf-9f87a9afc12f9043-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "845f861e-ce2c-bb9d-3f28-1ffc0f20e94c",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:27 GMT",
+        "traceparent": "00-dbb6390eb45e244eaee600a3ae7f1cae-d5d8bde2cfd33d4d-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8d1bb8ab-c1a4-b339-1841-6f4efb02eba3",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "845f861e-ce2c-bb9d-3f28-1ffc0f20e94c",
-        "x-ms-request-id": "70d1299c-501e-0075-077d-051473000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "8d1bb8ab-c1a4-b339-1841-6f4efb02eba3",
+        "x-ms-request-id": "b09e72c1-001e-000c-43e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-9b32ea5f-ad5f-e9c8-129c-ab552475840a?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-191c72a6-79c9-ba65-e29f-705a1f63a390?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-60cf63dd129a9b40bd9a7b437b32ac10-704814dec4663b4a-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-01f30608a212be43a37285bb489297b0-9aa4f8257a1cb24f-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "09d2503a-4693-71df-bd76-7290224896c9",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:27 GMT",
+        "x-ms-client-request-id": "aa70301e-84fd-3260-5360-aa0550df94b4",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:26 GMT",
-        "ETag": "\u00220x8D8D39476DCF60B\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:27 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "09d2503a-4693-71df-bd76-7290224896c9",
-        "x-ms-request-id": "533cbc54-701e-003f-417d-05b7fc000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "ETag": "\"0x8D909005F1A230D\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "aa70301e-84fd-3260-5360-aa0550df94b4",
+        "x-ms-request-id": "b09e72c5-001e-000c-46e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-9b32ea5f-ad5f-e9c8-129c-ab552475840a/test-file-4c5815a3-22f7-1814-2c6e-fa20d213d273?resource=file",
+      "RequestUri": "http://kasobolhnscanada.dfs.core.windows.net/test-filesystem-191c72a6-79c9-ba65-e29f-705a1f63a390/test-file-5386df9d-0068-4dad-8a00-4471300ab4d3?resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0d987af152afe84585387c1612e462eb-47af0a2776e3bb47-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "011211a8-bb46-173f-3bba-dc254bbf9eaa",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:27 GMT",
+        "traceparent": "00-ec9cfbcd452df043928a4d006b1dac14-69f96646e7994040-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "27bd93c3-1788-1dc4-8223-20fd3fee0149",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:27 GMT",
-        "ETag": "\u00220x8D8D394771382CC\u0022",
-        "Last-Modified": "Wed, 17 Feb 2021 22:36:27 GMT",
-        "Server": [
-          "Windows-Azure-HDFS/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "011211a8-bb46-173f-3bba-dc254bbf9eaa",
-        "x-ms-request-id": "9916f1dc-001f-001a-807d-051e80000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:24 GMT",
+        "ETag": "\"0x8D909005F284EB4\"",
+        "Last-Modified": "Mon, 26 Apr 2021 22:12:25 GMT",
+        "Server": "Windows-Azure-HDFS/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "27bd93c3-1788-1dc4-8223-20fd3fee0149",
+        "x-ms-request-id": "4964750b-501f-0011-7ee9-3ae506000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-9b32ea5f-ad5f-e9c8-129c-ab552475840a/test-file-4c5815a3-22f7-1814-2c6e-fa20d213d273?comp=properties",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-191c72a6-79c9-ba65-e29f-705a1f63a390/test-file-5386df9d-0068-4dad-8a00-4471300ab4d3?comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-blob-cache-control": "mragpamrrytlooisuuyl",
-        "x-ms-blob-content-disposition": "iiwnaqevbbajquxhvrbm",
-        "x-ms-blob-content-encoding": "hfijsegdxputppfdtlfy",
-        "x-ms-blob-content-language": "uqpqxjttqavctmdcyntv",
-        "x-ms-blob-content-md5": "NBfmnANxxJ84lAjnt1IH4g==",
-        "x-ms-blob-content-type": "kaxkfftbptnjlcqqorkj",
-        "x-ms-client-request-id": "c178a2cc-d001-d82c-3603-97e99e501123",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:28 GMT",
-        "x-ms-lease-id": "149ba1c1-c17e-8dc8-a001-a19b5670a5d3",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-blob-cache-control": "hdnvgmgxrbvewnlwegmn",
+        "x-ms-blob-content-disposition": "hjwpoplyuakawooaxqfg",
+        "x-ms-blob-content-encoding": "bfixnxtgcwvrnoywfxhp",
+        "x-ms-blob-content-language": "ahdrpuhhykymagmbbycq",
+        "x-ms-blob-content-md5": "qFSH/kpwofRzGMzncYBmbQ==",
+        "x-ms-blob-content-type": "ufvwdrliprtajofscqhr",
+        "x-ms-client-request-id": "9cae4e33-8d4c-1d4b-801e-6ccfd8940459",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:25 GMT",
+        "x-ms-lease-id": "dc252e76-3547-734e-6821-55c5a7719512",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 412,
       "ResponseHeaders": {
         "Content-Length": "241",
         "Content-Type": "application/xml",
-        "Date": "Wed, 17 Feb 2021 22:36:27 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "c178a2cc-d001-d82c-3603-97e99e501123",
+        "Date": "Mon, 26 Apr 2021 22:12:25 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "9cae4e33-8d4c-1d4b-801e-6ccfd8940459",
         "x-ms-error-code": "LeaseNotPresentWithBlobOperation",
-        "x-ms-request-id": "533cbca6-701e-003f-067d-05b7fc000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-request-id": "b09e72ca-001e-000c-49e9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithBlobOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the blob.\n",
-        "RequestId:533cbca6-701e-003f-067d-05b7fc000000\n",
-        "Time:2021-02-17T22:36:28.0151308Z\u003C/Message\u003E\u003C/Error\u003E"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithBlobOperation</Code><Message>There is currently no lease on the blob.\n",
+        "RequestId:b09e72ca-001e-000c-49e9-3ae8ba000000\n",
+        "Time:2021-04-26T22:12:25.1525438Z</Message></Error>"
       ]
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-9b32ea5f-ad5f-e9c8-129c-ab552475840a?restype=container",
+      "RequestUri": "http://kasobolhnscanada.blob.core.windows.net/test-filesystem-191c72a6-79c9-ba65-e29f-705a1f63a390?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-476973d9ee0dfd4b87992a0e9bcd0d5d-fa5a13da172c7b46-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210217.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "a859de76-dc47-d3a9-d223-76292b3c894e",
-        "x-ms-date": "Wed, 17 Feb 2021 22:36:28 GMT",
+        "traceparent": "00-77da3e0bfe17fb4c83227a9e3fe1dd91-dc6db919b9f7e94a-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "f1c97885-6440-1ffc-8bb3-8b8438f1ccb8",
+        "x-ms-date": "Mon, 26 Apr 2021 22:12:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Feb 2021 22:36:27 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "a859de76-dc47-d3a9-d223-76292b3c894e",
-        "x-ms-request-id": "533cbcc0-701e-003f-1a7d-05b7fc000000",
-        "x-ms-version": "2020-06-12"
+        "Date": "Mon, 26 Apr 2021 22:12:25 GMT",
+        "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "f1c97885-6440-1ffc-8bb3-8b8438f1ccb8",
+        "x-ms-request-id": "b09e72cc-001e-000c-4be9-3ae8ba000000",
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-02-17T16:36:23.8161427-06:00",
-    "RandomSeed": "1038859437",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttps://seannse.blob.core.windows.net\nhttps://seannse.file.core.windows.net\nhttps://seannse.queue.core.windows.net\nhttps://seannse.table.core.windows.net\n\n\n\n\nhttps://seannse-secondary.blob.core.windows.net\nhttps://seannse-secondary.file.core.windows.net\nhttps://seannse-secondary.queue.core.windows.net\nhttps://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannse.blob.core.windows.net/;QueueEndpoint=https://seannse.queue.core.windows.net/;FileEndpoint=https://seannse.file.core.windows.net/;BlobSecondaryEndpoint=https://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannse-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n"
+    "DateTimeOffsetNow": "2021-04-26T17:12:23.5296229-05:00",
+    "RandomSeed": "1050652194",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nkasobolhnscanada\nU2FuaXRpemVk\nhttp://kasobolhnscanada.blob.core.windows.net\nhttp://kasobolhnscanada.file.core.windows.net\nhttp://kasobolhnscanada.queue.core.windows.net\nhttp://kasobolhnscanada.table.core.windows.net\n\n\n\n\nhttp://kasobolhnscanada-secondary.blob.core.windows.net\nhttp://kasobolhnscanada-secondary.file.core.windows.net\nhttp://kasobolhnscanada-secondary.queue.core.windows.net\nhttp://kasobolhnscanada-secondary.table.core.windows.net\nc6b5fe1a-9b59-4975-92c4-d9f728c3c371\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://kasobolhnscanada.blob.core.windows.net/;QueueEndpoint=http://kasobolhnscanada.queue.core.windows.net/;FileEndpoint=http://kasobolhnscanada.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolhnscanada-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolhnscanada-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolhnscanada-secondary.file.core.windows.net/;AccountName=kasobolhnscanada;AccountKey=Sanitized\n\n\n"
   }
 }

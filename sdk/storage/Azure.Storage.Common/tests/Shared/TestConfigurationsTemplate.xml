@@ -54,6 +54,8 @@
       <TenantType>Cloud</TenantType>
       <AccountName>[OAUTH-ACCOUNT]</AccountName>
       <AccountKey>[OAUTH-ACCOUNT-KEY]</AccountKey>
+      <ResourceGroupName>[OAUTH-RESOURCE-GROUP-NAME]</ResourceGroupName>
+      <SubscriptionId>[OAUTH-SUBSCRIPTION-ID]</SubscriptionId>
 
       <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
@@ -86,8 +88,8 @@
       <FileServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-    
-    <!-- A storge account with hierarchical namespace enabled and OAuth access -->
+
+    <!-- A storge account with hierarchical namespace enabled, OAuth access, and blob soft delete enabled -->
     <!-- Replace [NAMESPACE-ACCOUNT] and [NAMESPACE-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>

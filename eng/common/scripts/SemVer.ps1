@@ -13,7 +13,7 @@ Components: Major.Minor.Patch-PrereleaseLabel.PrereleaseNumber.BuildNumber
 Note: A builtin Powershell version of SemVer exists in 'System.Management.Automation'. At this time, it does not parsing of PrereleaseNumber. It's name is also type accelerated to 'SemVer'.
 #>
 
-class AzureEngSemanticVersion {
+class AzureEngSemanticVersion : IComparable {
   [int] $Major
   [int] $Minor
   [int] $Patch
@@ -178,6 +178,31 @@ class AzureEngSemanticVersion {
     $this.DefaultAlphaReleaseLabel = "alpha"
   }
 
+  [int] CompareTo($other)
+  {
+    if ($other -isnot [AzureEngSemanticVersion]) {
+      throw "Cannot compare $other with $this"
+    }
+
+    $ret = $this.Major.CompareTo($other.Major)
+    if ($ret) { return $ret }
+
+    $ret = $this.Minor.CompareTo($other.Minor)
+    if ($ret) { return $ret }
+
+    $ret = $this.Patch.CompareTo($other.Patch)
+    if ($ret) { return $ret }
+
+    # Mimic PowerShell that uses case-insensitive comparisons by default.
+    $ret = [string]::Compare($this.PrereleaseLabel, $other.PrereleaseLabel, $true)
+    if ($ret) { return $ret }
+
+    $ret = $this.PrereleaseNumber.CompareTo($other.PrereleaseNumber)
+    if ($ret) { return $ret }
+
+    return ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
+  }
+
   static [string[]] SortVersionStrings([string[]] $versionStrings)
   {
     $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
@@ -187,10 +212,7 @@ class AzureEngSemanticVersion {
 
   static [AzureEngSemanticVersion[]] SortVersions([AzureEngSemanticVersion[]] $versions)
   {
-    return ($versions | `
-            Sort-Object -Descending -Property `
-              Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber, `
-              @{ Expression = { [int]$_.BuildNumber }; Descending = $true })
+    return $versions | Sort-Object -Descending
   }
 
   static [void] QuickTests()

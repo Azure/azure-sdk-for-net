@@ -13,10 +13,12 @@ namespace Azure.Identity
     internal abstract class ManagedIdentitySource
     {
         internal const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
+        private ManagedIdentityResponseClassifier _responseClassifier;
 
         protected ManagedIdentitySource(CredentialPipeline pipeline)
         {
             Pipeline = pipeline;
+            _responseClassifier = new ManagedIdentityResponseClassifier();
         }
 
         protected internal CredentialPipeline Pipeline { get; }
@@ -25,30 +27,63 @@ namespace Azure.Identity
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             using Request request = CreateRequest(context.Scopes);
-            Response response = async
-                ? await Pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                : Pipeline.HttpPipeline.SendRequest(request, cancellationToken);
+            using HttpMessage message = new HttpMessage(request, _responseClassifier);
+            if (async)
+            {
+                await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                Pipeline.HttpPipeline.Send(message, cancellationToken);
+            }
 
-            return await HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+            return await HandleResponseAsync(async, context, message.Response, cancellationToken).ConfigureAwait(false);
         }
 
         protected virtual async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
+            using JsonDocument json = async
+                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                : JsonDocument.Parse(response.ContentStream);
             if (response.Status == 200)
             {
-                using JsonDocument json = async
-                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                    : JsonDocument.Parse(response.ContentStream);
-
                 return GetTokenFromResponse(json.RootElement);
             }
 
+            string message = GetMessageFromResponse(json.RootElement);
             throw async
-                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                : Pipeline.Diagnostics.CreateRequestFailedException(response);
+                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message).ConfigureAwait(false)
+                : Pipeline.Diagnostics.CreateRequestFailedException(response, message);
         }
 
         protected abstract Request CreateRequest(string[] scopes);
+
+        protected static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
+        {
+            if (response?.ContentStream == null)
+            {
+                return null;
+            }
+            response.ContentStream.Position = 0;
+            using JsonDocument json = async
+                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                : JsonDocument.Parse(response.ContentStream);
+
+            return GetMessageFromResponse(json.RootElement);
+        }
+
+        protected static string GetMessageFromResponse(in JsonElement root)
+        {
+            // Parse the error, if possible
+            foreach (var prop in root.EnumerateObject())
+            {
+                if (prop.Name == "Message")
+                {
+                    return prop.Value.GetString();
+                }
+            }
+            return null;
+        }
 
         private static AccessToken GetTokenFromResponse(in JsonElement root)
         {
@@ -89,6 +124,19 @@ namespace Azure.Identity
             }
 
             return null;
+        }
+
+        private class ManagedIdentityResponseClassifier : ResponseClassifier
+        {
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    404 => true,
+                    502 => false,
+                    _ => base.IsRetriableResponse(message)
+                };
+            }
         }
     }
 }

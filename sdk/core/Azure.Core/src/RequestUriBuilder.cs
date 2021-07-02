@@ -234,7 +234,7 @@ namespace Azure.Core
                     substring = Uri.EscapeDataString(substring);
                 }
                 _pathAndQuery.Insert(_queryIndex, substring);
-                _queryIndex += value.Length;
+                _queryIndex += substring.Length;
             }
             else
             {
@@ -257,7 +257,13 @@ namespace Azure.Core
         /// <returns>A string representation of this <see cref="RequestUriBuilder"/>.</returns>
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder(
+                (Scheme?.Length ?? 0) +
+                3 + // ://
+                (Host?.Length ?? 0) +
+                _pathAndQuery.Length +
+                10 // optimistic padding
+                );
             stringBuilder.Append(Scheme);
             stringBuilder.Append("://");
             stringBuilder.Append(Host);

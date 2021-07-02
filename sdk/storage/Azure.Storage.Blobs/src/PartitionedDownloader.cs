@@ -94,21 +94,21 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Task<Response<BlobDownloadInfo>> initialResponseTask =
-                    _client.DownloadAsync(
+                Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
+                    _client.DownloadStreamingAsync(
                         initialRange,
                         conditions,
                         rangeGetContentHash: false,
                         cancellationToken);
 
-                Response<BlobDownloadInfo> initialResponse = null;
+                Response<BlobDownloadStreamingResult> initialResponse = null;
                 try
                 {
                     initialResponse = await initialResponseTask.ConfigureAwait(false);
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
-                    initialResponse = await _client.DownloadAsync(
+                    initialResponse = await _client.DownloadStreamingAsync(
                         range: default,
                         conditions,
                         false,
@@ -125,7 +125,7 @@ namespace Azure.Storage.Blobs
 
                 // If the first segment was the entire blob, we'll copy that to
                 // the output stream and finish now
-                long initialLength = initialResponse.Value.ContentLength;
+                long initialLength = initialResponse.Value.Details.ContentLength;
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
@@ -141,14 +141,19 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Create a queue of tasks that will each download one segment
                 // of the blob.  The queue maintains the order of the segments
                 // so we can keep appending to the end of the destination
                 // stream when each segment finishes.
-                var runningTasks = new Queue<Task<Response<BlobDownloadInfo>>>();
+                var runningTasks = new Queue<Task<Response<BlobDownloadStreamingResult>>>();
                 runningTasks.Enqueue(initialResponseTask);
+                if (_maxWorkerCount <= 1)
+                {
+                    // consume initial task immediately if _maxWorkerCount is 1 (or less to be safe). Otherwise loop below would have 2 concurrent tasks.
+                    await ConsumeQueuedTask().ConfigureAwait(false);
+                }
 
                 // Fill the queue with tasks to download each of the remaining
                 // ranges in the blob
@@ -156,7 +161,7 @@ namespace Azure.Storage.Blobs
                 {
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
-                    runningTasks.Enqueue(_client.DownloadAsync(
+                    runningTasks.Enqueue(_client.DownloadStreamingAsync(
                         httpRange,
                         conditionsWithEtag,
                         rangeGetContentHash: false,
@@ -190,7 +195,7 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    using BlobDownloadInfo result =
+                    using BlobDownloadStreamingResult result =
                         await runningTasks.Dequeue().ConfigureAwait(false);
 
                     // Even though the BlobDownloadInfo is returned immediately,
@@ -231,11 +236,11 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Response<BlobDownloadInfo> initialResponse;
+                Response<BlobDownloadStreamingResult> initialResponse;
 
                 try
                 {
-                    initialResponse = _client.Download(
+                    initialResponse = _client.DownloadStreaming(
                         initialRange,
                         conditions,
                         rangeGetContentHash: false,
@@ -243,7 +248,7 @@ namespace Azure.Storage.Blobs
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
-                    initialResponse = _client.Download(
+                    initialResponse = _client.DownloadStreaming(
                     range: default,
                     conditions,
                     rangeGetContentHash: false,
@@ -261,7 +266,7 @@ namespace Azure.Storage.Blobs
                 CopyTo(initialResponse, destination, cancellationToken);
 
                 // If the first segment was the entire blob, we're finished now
-                long initialLength = initialResponse.Value.ContentLength;
+                long initialLength = initialResponse.Value.Details.ContentLength;
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
@@ -272,7 +277,7 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Download each of the remaining ranges in the blob
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
@@ -280,7 +285,7 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    Response<BlobDownloadInfo> result = _client.Download(
+                    Response<BlobDownloadStreamingResult> result = _client.DownloadStreaming(
                         httpRange,
                         conditionsWithEtag,
                         rangeGetContentHash: false,
@@ -315,18 +320,8 @@ namespace Azure.Storage.Blobs
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        private static BlobRequestConditions CreateConditionsWithEtag(BlobRequestConditions conditions, ETag etag) =>
-            new BlobRequestConditions
-            {
-                LeaseId = conditions?.LeaseId,
-                IfMatch = conditions?.IfMatch ?? etag,
-                IfNoneMatch = conditions?.IfNoneMatch,
-                IfModifiedSince = conditions?.IfModifiedSince,
-                IfUnmodifiedSince = conditions?.IfUnmodifiedSince
-            };
-
         private static async Task CopyToAsync(
-            BlobDownloadInfo result,
+            BlobDownloadStreamingResult result,
             Stream destination,
             CancellationToken cancellationToken)
         {
@@ -340,7 +335,7 @@ namespace Azure.Storage.Blobs
         }
 
         private static void CopyTo(
-            BlobDownloadInfo result,
+            BlobDownloadStreamingResult result,
             Stream destination,
             CancellationToken cancellationToken)
         {

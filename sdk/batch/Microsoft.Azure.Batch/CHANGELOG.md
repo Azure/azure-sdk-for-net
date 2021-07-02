@@ -1,6 +1,9 @@
 # Release History
+
 ## 14.1.0-beta.1 (Unreleased)
 
+### Bug fixes
+- Updated dependency versions.
 
 ## 14.0.0 (2020-09-10)
 ### Features

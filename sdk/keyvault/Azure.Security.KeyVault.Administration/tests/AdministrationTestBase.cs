@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
 
         protected AdministrationTestBase(bool isAsync, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
         }
 
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         /// </summary>
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero
-            : TimeSpan.FromSeconds(2);
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
 
         [TearDown]
         public virtual async Task Cleanup()
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await Task.Delay(delay ?? TimeSpan.FromSeconds(1));
+                await Task.Delay(delay ?? KeyVaultTestEnvironment.DefaultPollingInterval);
             }
             else if (playbackDelay != null)
             {

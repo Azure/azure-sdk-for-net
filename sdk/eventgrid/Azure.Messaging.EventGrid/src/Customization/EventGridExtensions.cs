@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System.Threading;
+using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
@@ -15,43 +15,27 @@ namespace Azure.Messaging.EventGrid
     public static class EventGridExtensions
     {
         /// <summary>
-        /// Given a single JSON-encoded event, parses the event envelope and returns an EventGridEvent.
+        /// Gets whether or not the event is a System defined event and returns the deserialized
+        /// system event data via out parameter.
         /// </summary>
-        /// <param name="binaryData"> Specifies the instance of <see cref="BinaryData"/>. </param>
-        /// <returns> An <see cref="EventGridEvent"/>. </returns>
-        public static EventGridEvent ToEventGridEvent(this BinaryData binaryData)
+        /// <param name="cloudEvent"></param>
+        /// <param name="eventData">If the event is a system event, this will be populated
+        /// with the deserialized system event data. Otherwise, this will be null.</param>
+        /// <returns> Whether or not the event is a system event.</returns>
+        public static bool TryGetSystemEventData(this CloudEvent cloudEvent, out object eventData)
         {
-            // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToMemory());
-            EventGridEventInternal egEventInternal = EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement);
-
-            EventGridEvent egEvent = new EventGridEvent(egEventInternal);
-
-            return egEvent;
-        }
-
-        /// <summary>
-        /// Given a single JSON-encoded event, parses the event envelope and returns a CloudEvent.
-        /// </summary>
-        /// <param name="binaryData"> Specifies the instance of <see cref="BinaryData"/>. </param>
-        /// <returns> A <see cref="CloudEvent"/>. </returns>
-        public static CloudEvent ToCloudEvent(this BinaryData binaryData)
-        {
-            // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToMemory());
-            CloudEventInternal cloudEventInternal = CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement);
-
-            CloudEvent cloudEvent = new CloudEvent(cloudEventInternal);
-
-            if (cloudEventInternal.AdditionalProperties != null)
+            BinaryData data = cloudEvent.Data;
+            try
             {
-                foreach (KeyValuePair<string, object> kvp in cloudEventInternal.AdditionalProperties)
-                {
-                    cloudEvent.ExtensionAttributes.Add(kvp.Key, kvp.Value);
-                }
+                JsonDocument requestDocument = JsonDocument.Parse(data.ToMemory());
+                eventData = SystemEventExtensions.AsSystemEventData(cloudEvent.Type, requestDocument.RootElement);
+                return eventData != null;
             }
-
-            return cloudEvent;
+            catch
+            {
+                eventData = null;
+                return false;
+            }
         }
     }
 }

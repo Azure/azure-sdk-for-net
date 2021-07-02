@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
 using System.Net.WebSockets;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -42,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new TestConnectionWithTransport(connectionString))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -61,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
 
-                await using (var connection = new TestConnectionWithTransport(connectionString, scope.EventHubName))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString, scope.EventHubName))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -79,12 +82,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var options = new EventHubConnectionOptions();
-                var audience = EventHubConnection.BuildConnectionAudience(options.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+                var audience = EventHubConnection.BuildConnectionSignatureAuthorizationResource(options.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
                 EventHubsTestEnvironment tempQualifier = EventHubsTestEnvironment.Instance;
                 var signature = new SharedAccessSignature(audience, tempQualifier.SharedAccessKeyName, tempQualifier.SharedAccessKey, TimeSpan.FromMinutes(30));
                 var connectionString = $"Endpoint=sb://{tempQualifier.FullyQualifiedNamespace };EntityPath={ scope.EventHubName };SharedAccessSignature={ signature.Value }";
 
-                await using (var connection = new TestConnectionWithTransport(connectionString, options))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString, options))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -101,9 +104,30 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var credential = new EventHubsSharedAccessKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+                var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
 
-                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
+                await using (var connection = new TestConnectionWithRetryPolicy(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
+                {
+                    Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConnectionCanConnectToEventHubsUsingSasCredential()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(EventHubsTransportType.AmqpTcp, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+                var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+                var credential = new AzureSasCredential(signature.Value);
+
+                await using (var connection = new TestConnectionWithRetryPolicy(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -122,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var options = new EventHubConnectionOptions();
 
-                var credential = new SharedAccessSignatureCredential
+                var credential = new SharedAccessCredential
                 (
                     new SharedAccessSignature
                     (
@@ -133,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     )
                 );
 
-                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
+                await using (var connection = new TestConnectionWithRetryPolicy(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -153,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var options = new EventHubConnectionOptions();
                 var credential = EventHubsTestEnvironment.Instance.Credential;
 
-                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
+                await using (var connection = new TestConnectionWithRetryPolicy(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -176,7 +200,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
 
-                await using (var connection = new TestConnectionWithTransport(connectionString, scope.EventHubName, new EventHubConnectionOptions { TransportType = transportType }))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString, scope.EventHubName, new EventHubConnectionOptions { TransportType = transportType }))
                 {
                     EventHubProperties properties = await connection.GetPropertiesAsync();
 
@@ -204,7 +228,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var options = new EventHubConnectionOptions();
 
-                var credential = new SharedAccessSignatureCredential
+                var credential = new SharedAccessCredential
                 (
                     new SharedAccessSignature
                     (
@@ -215,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     )
                 );
 
-                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential, new EventHubConnectionOptions { TransportType = transportType }))
+                await using (var connection = new TestConnectionWithRetryPolicy(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential, new EventHubConnectionOptions { TransportType = transportType }))
                 {
                     var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                     var properties = await connection.GetPropertiesAsync();
@@ -244,7 +268,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new TestConnectionWithTransport(connectionString))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString))
                 {
                     EventHubProperties properties = await connection.GetPropertiesAsync();
                     var partitions = await connection.GetPartitionIdsAsync();
@@ -269,7 +293,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new TestConnectionWithTransport(connectionString))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString))
                 {
                     var partition = (await connection.GetPartitionIdsAsync()).First();
 
@@ -302,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new TestConnectionWithTransport(connectionString))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString))
                 {
                     Assert.That(async () => await connection.GetPartitionPropertiesAsync(invalidPartition), Throws.TypeOf<ArgumentOutOfRangeException>());
                 }
@@ -328,8 +352,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     TransportType = EventHubsTransportType.AmqpWebSockets
                 };
 
-                await using (var connection = new TestConnectionWithTransport(connectionString))
-                await using (var invalidProxyConnection = new TestConnectionWithTransport(connectionString, clientOptions))
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString))
+                await using (var invalidProxyConnection = new TestConnectionWithRetryPolicy(connectionString, clientOptions))
                 {
                     connection.RetryPolicy = new BasicRetryPolicy(retryOptions);
                     invalidProxyConnection.RetryPolicy = new BasicRetryPolicy(retryOptions);
@@ -344,35 +368,104 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Provides a local implementation of the <see cref="EventHubsConnection" /> with an exposed
-        ///   transport client for testing purposes.
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
         /// </summary>
         ///
-        private class TestConnectionWithTransport : EventHubConnection
+        [Test]
+        public async Task ConnectionTransportCannotRetrieveMetadataWhenCustomValidationRejectsTheCertificate()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
+
+                var clientOptions = new EventHubConnectionOptions
+                {
+                    CertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => false
+                };
+
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString))
+                await using (var certificateRejectingConnection = new TestConnectionWithRetryPolicy(connectionString, clientOptions))
+                {
+                    connection.RetryPolicy = new BasicRetryPolicy(retryOptions);
+                    certificateRejectingConnection.RetryPolicy = new BasicRetryPolicy(retryOptions);
+
+                    var partition = (await connection.GetPartitionIdsAsync()).First();
+
+                    Assert.That(async () => await certificateRejectingConnection.GetPartitionIdsAsync(), Throws.InstanceOf<AuthenticationException>());
+                    Assert.That(async () => await certificateRejectingConnection.GetPropertiesAsync(), Throws.InstanceOf<AuthenticationException>());
+                    Assert.That(async () => await certificateRejectingConnection.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<AuthenticationException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConnectionTransportCanRetrieveMetadataWhenCustomValidationAcceptsTheCertificate()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
+
+                var clientOptions = new EventHubConnectionOptions
+                {
+                    CertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => true
+                };
+
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString, clientOptions))
+                {
+                    connection.RetryPolicy = new BasicRetryPolicy(retryOptions);
+
+                    var partition = (await connection.GetPartitionIdsAsync()).First();
+                    Assert.That(async () => await connection.GetPropertiesAsync(), Throws.Nothing);
+                    Assert.That(async () => await connection.GetPartitionPropertiesAsync(partition), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Provides a local implementation of the <see cref="EventHubsConnection" /> with an exposed
+        ///   retry policy for testing purposes.
+        /// </summary>
+        ///
+        private class TestConnectionWithRetryPolicy : EventHubConnection
         {
             public EventHubsRetryPolicy RetryPolicy { get; set; } = new BasicRetryPolicy(new EventHubsRetryOptions());
 
-            public TestConnectionWithTransport(string connectionString,
+            public TestConnectionWithRetryPolicy(string connectionString,
                                                EventHubConnectionOptions connectionOptions = default) : base(connectionString, connectionOptions)
             {
             }
 
-            public TestConnectionWithTransport(string connectionString,
+            public TestConnectionWithRetryPolicy(string connectionString,
                                                string eventHubName,
                                                EventHubConnectionOptions connectionOptions = default) : base(connectionString, eventHubName, connectionOptions)
             {
             }
 
-            public TestConnectionWithTransport(string fullyQualifiedNamespace,
+            public TestConnectionWithRetryPolicy(string fullyQualifiedNamespace,
                                                string eventHubName,
                                                TokenCredential credential,
                                                EventHubConnectionOptions connectionOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, connectionOptions)
             {
             }
 
-            public TestConnectionWithTransport(string fullyQualifiedNamespace,
+            public TestConnectionWithRetryPolicy(string fullyQualifiedNamespace,
                                                string eventHubName,
-                                               EventHubsSharedAccessKeyCredential credential,
+                                               AzureNamedKeyCredential credential,
+                                               EventHubConnectionOptions connectionOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, connectionOptions)
+            {
+            }
+
+            public TestConnectionWithRetryPolicy(string fullyQualifiedNamespace,
+                                               string eventHubName,
+                                               AzureSasCredential credential,
                                                EventHubConnectionOptions connectionOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, connectionOptions)
             {
             }

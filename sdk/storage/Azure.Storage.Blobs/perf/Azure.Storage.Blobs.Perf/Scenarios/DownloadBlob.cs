@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO;
@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
             using Stream stream = RandomStream.Create(Options.Size);
 
             // No need to delete file in GlobalCleanup(), since ContainerTest.GlobalCleanup() deletes the whole container
-            await _blobClient.UploadAsync(stream);
+            await _blobClient.UploadAsync(stream, overwrite: true);
         }
 
         public override void Run(CancellationToken cancellationToken)

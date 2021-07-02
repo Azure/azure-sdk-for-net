@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -23,12 +23,12 @@ namespace Azure.Storage.Blobs.Perf
         public override async Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
-            await BlobContainerClient.CreateAsync();
+            await BlobContainerClient.CreateIfNotExistsAsync();
         }
 
         public override async Task GlobalCleanupAsync()
         {
-            await BlobContainerClient.DeleteAsync();
+            await BlobContainerClient.DeleteIfExistsAsync();
             await base.GlobalCleanupAsync();
         }
     }

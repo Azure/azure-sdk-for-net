@@ -137,19 +137,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
                 var events = messages.ToArray();
+                EventData eventToCheckpoint = null;
 
                 var triggerInput = new EventHubTriggerInput
                 {
                     Events = events,
-                    PartitionContext = context
+                    ProcessorPartition = context
                 };
 
-                TriggeredFunctionData input = null;
                 if (_singleDispatch)
                 {
                     // Single dispatch
                     int eventCount = triggerInput.Events.Length;
-                    List<Task> invocationTasks = new List<Task>();
+
                     for (int i = 0; i < eventCount; i++)
                     {
                         if (_cts.IsCancellationRequested)
@@ -158,32 +158,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         }
 
                         EventHubTriggerInput eventHubTriggerInput = triggerInput.GetSingleEventTriggerInput(i);
-                        input = new TriggeredFunctionData
+                        TriggeredFunctionData input = new TriggeredFunctionData
                         {
                             TriggerValue = eventHubTriggerInput,
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        Task task = _executor.TryExecuteAsync(input, _cts.Token);
-                        invocationTasks.Add(task);
-                    }
-
-                    // Drain the whole batch before taking more work
-                    if (invocationTasks.Count > 0)
-                    {
-                        await Task.WhenAll(invocationTasks).ConfigureAwait(false);
+                        await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
+                        eventToCheckpoint = events[i];
                     }
                 }
                 else
                 {
                     // Batch dispatch
-                    input = new TriggeredFunctionData
+                    TriggeredFunctionData input = new TriggeredFunctionData
                     {
                         TriggerValue = triggerInput,
                         TriggerDetails = triggerInput.GetTriggerDetails(context)
                     };
 
                     await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
+                    eventToCheckpoint = events.LastOrDefault();
                 }
 
                 // Checkpoint if we processed any events.
@@ -193,9 +188,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // so that is the responsibility of the user's function currently. E.g.
                 // the function should have try/catch handling around all event processing
                 // code, and capture/log/persist failed events, since they won't be retried.
-                if (events.Any())
+                if (eventToCheckpoint != null)
                 {
-                    await CheckpointAsync(events.Last(), context).ConfigureAwait(false);
+                    await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                 }
             }
 
@@ -271,9 +266,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     {
                         writer.WritePropertyName("runtimeInformation");
                         writer.WriteStartObject();
-                        WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Value.Offset?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.Value.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.Value.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Offset?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
                         writer.WriteEndObject();
                     }
                     writer.WriteEndObject();

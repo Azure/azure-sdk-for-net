@@ -73,9 +73,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualRouterIps">VirtualRouter IPs.</param>
         /// <param name="allowBranchToBranchTraffic">Flag to control transit
         /// for VirtualRouter hub.</param>
+        /// <param name="preferredRoutingGateway">The preferred gateway to
+        /// route on-prem traffic. Possible values include: 'ExpressRoute',
+        /// 'VpnGateway', 'None'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? allowBranchToBranchTraffic = default(bool?), string etag = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? allowBranchToBranchTraffic = default(bool?), string preferredRoutingGateway = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -96,6 +99,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VirtualRouterAsn = virtualRouterAsn;
             VirtualRouterIps = virtualRouterIps;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
+            PreferredRoutingGateway = preferredRoutingGateway;
             Etag = etag;
             CustomInit();
         }
@@ -217,6 +221,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowBranchToBranchTraffic")]
         public bool? AllowBranchToBranchTraffic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the preferred gateway to route on-prem traffic.
+        /// Possible values include: 'ExpressRoute', 'VpnGateway', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.preferredRoutingGateway")]
+        public string PreferredRoutingGateway { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

@@ -23,8 +23,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         DataLakeClientOptions.ServiceVersion.V2019_12_12,
         DataLakeClientOptions.ServiceVersion.V2020_02_10,
         DataLakeClientOptions.ServiceVersion.V2020_04_08,
-        DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-    public abstract class DataLakeTestBase : StorageTestBase
+        DataLakeClientOptions.ServiceVersion.V2020_06_12,
+        DataLakeClientOptions.ServiceVersion.V2020_08_04,
+        DataLakeClientOptions.ServiceVersion.V2020_10_02,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
+        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+    public abstract class DataLakeTestBase : StorageTestBase<DataLakeTestEnvironment>
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
@@ -63,7 +69,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
         {
-            var options = new DataLakeClientOptions
+            var options = new DataLakeClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
@@ -373,6 +379,22 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             builder.SetPermissions(permissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
+
+        public string BlobEndpointToDfsEndpoint(string blobEndpoint = default)
+        {
+            if (String.IsNullOrEmpty(blobEndpoint))
+            {
+                blobEndpoint = TestConfigDefault.BlobServiceEndpoint;
+            }
+
+            int pos = blobEndpoint.IndexOf(Constants.DataLake.BlobUriSuffix);
+            if (pos < 0)
+            {
+                return blobEndpoint;
+            }
+            return blobEndpoint.Substring(0, pos) + Constants.DataLake.DfsUriSuffix +
+                blobEndpoint.Substring(pos + Constants.DataLake.BlobUriSuffix.Length);
         }
 
         //TODO consider removing this.

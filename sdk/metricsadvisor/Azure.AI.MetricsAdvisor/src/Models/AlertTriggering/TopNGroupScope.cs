@@ -31,17 +31,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The number of timestamps to take into account.
         /// </summary>
-        public int Top { get; }
+        public int Top { get; set; }
 
         /// <summary>
         /// The number of items a period contains.
         /// </summary>
-        public int Period { get; }
+        public int Period { get; set; }
 
         /// <summary>
         /// The number of anomalies that must be in the specified <see cref="Top"/> number of timestamps to send an alert.
         /// </summary>
         [CodeGenMember("MinTopCount")]
-        public int MinimumTopCount { get; }
+        public int MinimumTopCount { get; set; }
     }
 }

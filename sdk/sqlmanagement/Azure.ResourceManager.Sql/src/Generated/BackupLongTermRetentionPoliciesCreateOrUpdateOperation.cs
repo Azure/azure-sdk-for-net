@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class BackupLongTermRetentionPoliciesCreateOrUpdateOperation : Operation<BackupLongTermRetentionPolicy>, IOperationSource<BackupLongTermRetentionPolicy>
     {
         private readonly ArmOperationHelpers<BackupLongTermRetentionPolicy> _operation;
+
+        /// <summary> Initializes a new instance of BackupLongTermRetentionPoliciesCreateOrUpdateOperation for mocking. </summary>
+        protected BackupLongTermRetentionPoliciesCreateOrUpdateOperation()
+        {
+        }
+
         internal BackupLongTermRetentionPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<BackupLongTermRetentionPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "BackupLongTermRetentionPoliciesCreateOrUpdateOperation");

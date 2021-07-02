@@ -78,7 +78,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location, string publicNetworkAccess = null, string minimalTlsVersion = null)
+        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location, string publicNetworkAccess = null, string minimalTlsVersion = null, string restrictOutboundNetworkAccess = null)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
@@ -97,6 +97,11 @@ namespace Sql.Tests
             if (minimalTlsVersion != null)
             {
                 Assert.Equal(minimalTlsVersion, actual.MinimalTlsVersion);
+            }
+
+            if (restrictOutboundNetworkAccess != null)
+            {
+                Assert.Equal(restrictOutboundNetworkAccess, actual.RestrictOutboundNetworkAccess);
             }
         }
 
@@ -225,9 +230,9 @@ namespace Sql.Tests
                 Assert.Equal(expected.HighAvailabilityReplicaCount, actual.HighAvailabilityReplicaCount);
             }
 
-            if (!string.IsNullOrEmpty(expected.StorageAccountType))
+            if (!string.IsNullOrEmpty(expected.RequestedBackupStorageRedundancy))
             {
-                Assert.Equal(expected.StorageAccountType, actual.StorageAccountType);
+                Assert.Equal(expected.RequestedBackupStorageRedundancy, actual.RequestedBackupStorageRedundancy);
             }
 
             if (!string.IsNullOrEmpty(expected.MaintenanceConfigurationId))

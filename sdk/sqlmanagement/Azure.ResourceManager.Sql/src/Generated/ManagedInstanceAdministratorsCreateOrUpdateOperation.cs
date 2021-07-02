@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceAdministratorsCreateOrUpdateOperation : Operation<ManagedInstanceAdministrator>, IOperationSource<ManagedInstanceAdministrator>
     {
         private readonly ArmOperationHelpers<ManagedInstanceAdministrator> _operation;
+
+        /// <summary> Initializes a new instance of ManagedInstanceAdministratorsCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedInstanceAdministratorsCreateOrUpdateOperation()
+        {
+        }
+
         internal ManagedInstanceAdministratorsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ManagedInstanceAdministrator>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstanceAdministratorsCreateOrUpdateOperation");

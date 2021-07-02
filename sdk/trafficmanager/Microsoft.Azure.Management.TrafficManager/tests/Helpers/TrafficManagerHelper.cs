@@ -249,7 +249,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
             TrafficManagerManagementClient trafficManagerClient,
             string resourceGroupName,
             string profileName,
-            long? maxReturn = 2)
+            long? maxReturn = 2,
+            long? minChildEndpointsSeed = null,
+            long? minChildEndpointsIPv4Seed = null,
+            long? minChildEndpointsIPv6Seed = null)
         {
             Profile expectedProfile = CreateOrUpdateDefaultEmptyProfile(trafficManagerClient, resourceGroupName, profileName, "MultiValue", "Disabled", maxReturn);
 
@@ -259,6 +262,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 Endpoint endpoint = TrafficManagerHelper.GenerateDefaultEndpoint(
                     $"My external endpoint {ndx}",
                     $"1.2.3.{ndx}");
+
+                endpoint.MinChildEndpoints = minChildEndpointsSeed.HasValue ? minChildEndpointsSeed + ndx : null;
+                endpoint.MinChildEndpointsIPv4 = minChildEndpointsIPv4Seed.HasValue ? minChildEndpointsIPv4Seed + ndx : null;
+                endpoint.MinChildEndpointsIPv6 = minChildEndpointsIPv6Seed.HasValue ? minChildEndpointsIPv6Seed + ndx : null;
 
                 EndpointPropertiesSubnetsItem range = new EndpointPropertiesSubnetsItem($"1.2.{ndx}.0", $"1.2.{ndx}.250");
                 EndpointPropertiesSubnetsItem subnet = new EndpointPropertiesSubnetsItem($"3.4.{ndx}.0", null, 24);

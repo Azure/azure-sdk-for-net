@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Tests
 {
@@ -18,9 +20,19 @@ namespace Azure.Security.KeyVault.Tests
         private const string StorageUriFormat = "https://{0}.blob.core.windows.net";
 
         /// <summary>
+        /// Gets the default polling interval to use in tests.
+        /// </summary>
+        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(5);
+
+        /// <summary>
         /// Gets the URI to Key Vault.
         /// </summary>
         public string KeyVaultUrl => GetRecordedVariable("AZURE_KEYVAULT_URL");
+
+        /// <summary>
+        /// Gets a <see cref="Uri"/> to Key Vault.
+        /// </summary>
+        public Uri VaultUri => new Uri(KeyVaultUrl, UriKind.Absolute);
 
         /// <summary>
         /// Gets the URI to Managed HSM.
@@ -59,5 +71,17 @@ namespace Azure.Security.KeyVault.Tests
         /// Test preparation was previously successfully creating premium SKUs (not available in every cloud), so assume premium.
         /// </remarks>
         public string Sku => GetOptionalVariable("SKU") ?? "premium";
+
+        /// <summary>
+        /// Throws an <see cref="IgnoreException"/> if <see cref="ManagedHsmUrl"/> is not defined.
+        /// This should cause a test method to be ignored instead of failing.
+        /// </summary>
+        public void AssertManagedHsm()
+        {
+            if (string.IsNullOrEmpty(ManagedHsmUrl))
+            {
+                throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
+            }
+        }
     }
 }

@@ -7,8 +7,8 @@ using System.Threading;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/>
-    /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/>
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfiguration(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/>
+    /// or <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfigurationAsync(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/>
     /// to configure the behavior of the request.
     /// </summary>
     public class GetAnomaliesForDetectionConfigurationOptions
@@ -43,13 +43,13 @@ namespace Azure.AI.MetricsAdvisor
         /// If set, skips the first set of items returned. This property specifies the amount of items to
         /// be skipped.
         /// </summary>
-        public int? SkipCount { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
         /// unless the number of pages enumerated from the service is limited, the service will
         /// return an unlimited number of total items.
         /// </summary>
-        public int? TopCount { get; set; }
+        public int? MaxPageSize { get; set; }
     }
 }

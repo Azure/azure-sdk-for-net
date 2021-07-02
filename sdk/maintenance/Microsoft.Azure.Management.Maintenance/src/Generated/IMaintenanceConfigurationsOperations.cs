@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='configuration'>
         /// The configuration
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='configuration'>
         /// The configuration

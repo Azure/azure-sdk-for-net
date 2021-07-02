@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ListQueueResource
+    internal partial class ListQueueResource
     {
         internal static ListQueueResource DeserializeListQueueResource(JsonElement element)
         {

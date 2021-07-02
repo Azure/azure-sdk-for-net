@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The List WorkspaceQuotasByVMFamily operation response. </summary>
-    public partial class ListWorkspaceQuotas
+    internal partial class ListWorkspaceQuotas
     {
         /// <summary> Initializes a new instance of ListWorkspaceQuotas. </summary>
         internal ListWorkspaceQuotas()

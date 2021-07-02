@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Network
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal IpAllocationsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of IpAllocationsOperations for mocking. </summary>
         protected IpAllocationsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of IpAllocationsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

@@ -5,39 +5,36 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Columns that define the physical type schema of the dataset. </summary>
-    public partial class DatasetSchemaDataElement : IReadOnlyDictionary<string, object>
+    public partial class DatasetSchemaDataElement
     {
+        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
+        public DatasetSchemaDataElement()
+        {
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+        }
+
+        /// <summary> Initializes a new instance of DatasetSchemaDataElement. </summary>
+        /// <param name="name"> Name of the schema column. Type: string (or Expression with resultType string). </param>
+        /// <param name="type"> Type of the schema column. Type: string (or Expression with resultType string). </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal DatasetSchemaDataElement(object name, object type, IDictionary<string, object> additionalProperties)
+        {
+            Name = name;
+            Type = type;
+            AdditionalProperties = additionalProperties;
+        }
 
         /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
-        public object Name { get; }
+        public object Name { get; set; }
         /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
-        public object Type { get; }
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public IEnumerable<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-        }
+        public object Type { get; set; }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

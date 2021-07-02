@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationDefinitionListResult
+    internal partial class ApplicationDefinitionListResult
     {
         internal static ApplicationDefinitionListResult DeserializeApplicationDefinitionListResult(JsonElement element)
         {

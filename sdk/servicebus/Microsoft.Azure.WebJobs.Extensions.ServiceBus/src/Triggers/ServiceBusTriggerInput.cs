@@ -18,9 +18,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         private ServiceBusTriggerInput() { }
 
-        public ServiceBusReceiver Receiver { get; set; }
-
-        public ServiceBusSessionReceiver SessionReceiver { get; set; }
+        public ServiceBusMessageActions MessageActions { get; set; }
 
         public ServiceBusReceivedMessage[] Messages { get; set; }
 

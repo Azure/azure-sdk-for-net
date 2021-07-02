@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
             _shareRestClient = BuildShareRestClient(_uri);
         }
@@ -254,7 +254,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
             _shareRestClient = BuildShareRestClient(shareUri);
         }
@@ -281,14 +281,10 @@ namespace Azure.Storage.Files.Shares
 
         private ShareRestClient BuildShareRestClient(Uri uri)
         {
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri);
-            _name = uriBuilder.ShareName;
-            uriBuilder.ShareName = null;
             return new ShareRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: _name,
+                uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -3439,6 +3435,13 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = ShareSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ShareName and Path, if they are null.
+            builder.ShareName ??= Name;
+
             if (!builder.ShareName.Equals(Name, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(

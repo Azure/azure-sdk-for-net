@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
-            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
+            AmqpMessageBody amqpBody = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(body));
             AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
                 throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
             }
 
-            AmqpMessageBody body = new AmqpMessageBody(dataBody);
+            AmqpMessageBody body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(dataBody));
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { value });
+                AmqpMessage.Body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(value));
             }
         }
 

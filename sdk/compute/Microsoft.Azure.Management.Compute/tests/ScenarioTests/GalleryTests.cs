@@ -345,6 +345,76 @@ namespace Compute.Tests
             }
         }
 
+
+        [Fact]
+        public void Gallery_WithSharingProfile_CRUD_Tests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+                string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
+
+                m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = galleryHomeLocation });
+                Trace.TraceInformation("Created the resource group: " + rgName);
+
+                string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
+                Gallery galleryIn = GetTestInputSharedGallery();
+                m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, galleryIn);
+                Trace.TraceInformation(string.Format("Created the  shared gallery: {0} in resource group: {1} with sharing profile permission: {2}",
+                    galleryName, rgName, galleryIn.SharingProfile.Permissions));
+
+                Gallery galleryOut = m_CrpClient.Galleries.Get(rgName, galleryName);
+                Trace.TraceInformation("Got the gallery.");
+                Assert.NotNull(galleryOut);
+                ValidateGallery(galleryIn, galleryOut);
+
+                Trace.TraceInformation("Update the sharing profile via post, add the sharing profile groups.");
+                string newTenantId = "583d66a9-0041-4999-8838-75baece101d5";
+                SharingProfileGroup tenantGroups = new SharingProfileGroup()
+                {
+                    Type = "AADTenants",
+                    Ids = new List<string> { newTenantId }
+
+                };
+
+                string newSubId = "640c5810-13bf-4b82-b94d-f38c2565e3bc";
+                SharingProfileGroup subGroups = new SharingProfileGroup()
+                {
+                    Type = "Subscriptions",
+                    Ids = new List<string> { newSubId }
+
+                };
+
+                List<SharingProfileGroup> groups = new List<SharingProfileGroup> { tenantGroups, subGroups };
+                SharingUpdate sharingUpdate = new SharingUpdate()
+                {
+                    OperationType = SharingUpdateOperationTypes.Add,
+                    Groups = groups
+                };
+
+                m_CrpClient.GallerySharingProfile.Update(rgName, galleryName,sharingUpdate);
+
+                Gallery galleryOutWithSharingProfile = m_CrpClient.Galleries.Get(rgName, galleryName, SelectPermissions.Permissions);
+                Trace.TraceInformation("Got the gallery");
+                Assert.NotNull(galleryOut);
+
+                ValidateSharingProfile(galleryIn, galleryOutWithSharingProfile, groups);
+
+                Trace.TraceInformation("Reset this gallery to private before deleting it.");
+                SharingUpdate resetPrivateUpdate = new SharingUpdate()
+                {
+                    OperationType = SharingUpdateOperationTypes.Reset,
+                    Groups = null
+                };
+
+                m_CrpClient.GallerySharingProfile.Update(rgName, galleryName, resetPrivateUpdate);
+                
+                Trace.TraceInformation("Deleting this gallery.");
+                m_CrpClient.Galleries.Delete(rgName, galleryName);
+                // resource groups cleanup is taken cared by MockContext.Dispose() method.
+            }
+        }
+
         private void ValidateGallery(Gallery galleryIn, Gallery galleryOut)
         {
             Assert.False(string.IsNullOrEmpty(galleryOut.ProvisioningState));
@@ -363,6 +433,42 @@ namespace Compute.Tests
             }
 
             Assert.False(string.IsNullOrEmpty(galleryOut?.Identifier?.UniqueName));
+        }
+
+        private void ValidateSharingProfile(Gallery galleryIn, Gallery galleryOut, List<SharingProfileGroup> groups)
+        {
+            if(galleryIn.SharingProfile != null)
+            {
+                Assert.Equal(galleryIn.SharingProfile.Permissions, galleryOut.SharingProfile.Permissions);
+                Assert.Equal(groups.Count, galleryOut.SharingProfile.Groups.Count);
+
+                foreach (SharingProfileGroup sharingProfileGroup in galleryOut.SharingProfile.Groups)
+                {
+                    if (sharingProfileGroup.Ids != null)
+                    {
+                        List<string> outIds = sharingProfileGroup.Ids as List<string>;
+                        List<string> inIds = null;
+
+                        foreach(SharingProfileGroup inGroup in groups)
+                        {
+                            if(inGroup.Type == sharingProfileGroup.Type)
+                            {
+                                inIds = inGroup.Ids as List<string>;
+                                break;
+                            }
+                        }
+
+                        Assert.NotNull(inIds);
+                        Assert.Equal(inIds.Count, outIds.Count);
+
+                        for(int i = 0; i < inIds.Count; i++)
+                        {
+                            Assert.Equal(outIds[i], inIds[i]);
+                        }
+
+                    }
+                }
+            }
         }
 
         private void ValidateGalleryImage(GalleryImage imageIn, GalleryImage imageOut)
@@ -425,6 +531,19 @@ namespace Compute.Tests
             {
                 Location = galleryHomeLocation,
                 Description = "This is a sample gallery description"
+            };
+        }
+
+        private Gallery GetTestInputSharedGallery()
+        {
+            return new Gallery
+            {
+                Location = galleryHomeLocation,
+                Description = "This is a sample gallery description",
+                SharingProfile = new SharingProfile
+                {
+                    Permissions = "Groups"
+                }
             };
         }
 

@@ -3,13 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
-    /// Helps mock the types in Azure.Search.Documents.Models.
+    /// Helper class that acts as a factory for read-only models, to mock the types in <c>Azure.Search.Documents.Models</c>.
     /// </summary>
+    [CodeGenModel("SearchServiceModelFactory")]
+    [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
@@ -204,6 +208,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceCounters SearchServiceCounters(
             SearchResourceCounter documentCounter,
             SearchResourceCounter indexCounter,
@@ -211,7 +216,26 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter dataSourceCounter,
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter) =>
-            new SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter);
+                SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null);
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        public static SearchServiceCounters SearchServiceCounters(
+            SearchResourceCounter documentCounter,
+            SearchResourceCounter indexCounter,
+            SearchResourceCounter indexerCounter,
+            SearchResourceCounter dataSourceCounter,
+            SearchResourceCounter storageSizeCounter,
+            SearchResourceCounter synonymMapCounter,
+            SearchResourceCounter skillsetCounter) =>
+            new SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>

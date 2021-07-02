@@ -1,6 +1,7 @@
 # Release History
-## 1.0.3-beta.19 (Unreleased)
 
+## 1.0.3-beta.19 (2020-09-24)
+- Test Submit-PR
 
 ## 1.0.3-beta.18 (2020-09-24)
 - Test Submit-PR
@@ -34,24 +35,6 @@
 
 ## 1.0.3-beta.8 (2020-09-09)
 - Enable the master link replacement feature, attempt 1
-
-## 1.0.3-beta.7 (2020-09-04)
-- Test release tag replacement
-
-## 1.0.3-beta.6 (2020-09-03)
-- Test new alpha beta versioning
-
-## 1.0.3-beta.5 (2020-09-03)
-- Test new alpha beta versioning
-
-## 1.0.3-beta.4 (2020-09-01)
-- Test new alpha beta versioning
-
-## 1.0.3-beta.3 (2020-08-31)
-- Test new alpha beta versioning
-
-## 1.0.3-beta.2 (2020-08-30)
-- Test new alpha beta versioning
 
 ## 1.0.3-beta.7 (2020-09-04)
 - Test release tag replacement
@@ -107,13 +90,13 @@
 ## 1.0.2-preview.6 (2020-02-24)
 ### Added
 - Testing Changelog added section
-- Testing Links [Project Site](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md)
+- Testing Links [Project Site](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md)
 - Test `Highlighted Code`
 
 ## 1.0.2-preview.5 (2020-02-24)
 ### Added
 - Testing Changelog added section
-- Testing Links [Project Site](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md)
+- Testing Links [Project Site](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md)
 - Test `Highlighted Code`
 
 ## 1.0.2-preview.4 (2019-12-17)

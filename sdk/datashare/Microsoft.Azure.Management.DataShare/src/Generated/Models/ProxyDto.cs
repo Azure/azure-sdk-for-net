@@ -33,11 +33,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
-        public ProxyDto(string id = default(string), string name = default(string), string type = default(string))
+        public ProxyDto(string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string))
         {
             Id = id;
             Name = name;
+            SystemData = systemData;
             Type = type;
             CustomInit();
         }
@@ -58,6 +60,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets system Data of the Azure resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets type of the azure resource

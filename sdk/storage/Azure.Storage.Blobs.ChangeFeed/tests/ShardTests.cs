@@ -3,27 +3,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Core;
 using System.Threading;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ShardTests : ChangeFeedTestBase
     {
-        public ShardTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ShardTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         /// <summary>
         /// Tests creating a Shard with a ShardCursor, and then calling Shard.GetCursor().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetCursor()
         {
             // Arrange
@@ -124,7 +124,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_False()
         {
             // Arrange
@@ -223,7 +223,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_ChunksLeft()
         {
             // Arrange
@@ -318,7 +318,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_CurrentChunkHasNext()
         {
             // Arrange
@@ -419,7 +419,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We call ShardFactory.BuildShard() with a ShardCursor, to create the Shard,
         /// Shard.Next() 4 times, Shard.GetCursor(), and then Shard.Next 4 times.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task Next()
         {
             // Arrange

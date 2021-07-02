@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results. </summary>
-    public partial class ListVpnSitesResult
+    internal partial class ListVpnSitesResult
     {
         /// <summary> Initializes a new instance of ListVpnSitesResult. </summary>
         internal ListVpnSitesResult()

@@ -26,12 +26,19 @@ namespace Azure.Core.Amqp
         public Azure.Core.Amqp.AmqpMessageHeader Header { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } }
+        public bool HasSection(Azure.Core.Amqp.AmqpMessageSection section) { throw null; }
     }
     public partial class AmqpMessageBody
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AmqpMessageBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
         public Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
+        public static Azure.Core.Amqp.AmqpMessageBody FromData(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { throw null; }
+        public static Azure.Core.Amqp.AmqpMessageBody FromSequence(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<object>> sequence) { throw null; }
+        public static Azure.Core.Amqp.AmqpMessageBody FromValue(object value) { throw null; }
         public bool TryGetData(out System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>>? data) { throw null; }
+        public bool TryGetSequence(out System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<object>>? sequence) { throw null; }
+        public bool TryGetValue(out object? value) { throw null; }
     }
     public enum AmqpMessageBodyType
     {
@@ -80,5 +87,15 @@ namespace Azure.Core.Amqp
         public string? Subject { get { throw null; } set { } }
         public Azure.Core.Amqp.AmqpAddress? To { get { throw null; } set { } }
         public System.ReadOnlyMemory<byte>? UserId { get { throw null; } set { } }
+    }
+    public enum AmqpMessageSection
+    {
+        Header = 0,
+        DeliveryAnnotations = 1,
+        MessageAnnotations = 2,
+        Properties = 3,
+        ApplicationProperties = 4,
+        Body = 5,
+        Footer = 6,
     }
 }

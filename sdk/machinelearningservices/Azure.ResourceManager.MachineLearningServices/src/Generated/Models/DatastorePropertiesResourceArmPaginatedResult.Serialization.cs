@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class DatastorePropertiesResourceArmPaginatedResult
+    internal partial class DatastorePropertiesResourceArmPaginatedResult
     {
         internal static DatastorePropertiesResourceArmPaginatedResult DeserializeDatastorePropertiesResourceArmPaginatedResult(JsonElement element)
         {

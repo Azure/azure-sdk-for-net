@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class VaultListResult
+    internal partial class VaultListResult
     {
         internal static VaultListResult DeserializeVaultListResult(JsonElement element)
         {

@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Filters the result of the <see cref="MetricsAdvisorAdministrationClient.GetDataFeeds"/> and
@@ -25,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor
         public string Name { get; set; }
 
         /// <summary>
-        /// Filters the result by <see cref="DataFeed.Creator"/>.
+        /// Filters the result by <see cref="DataFeed.CreatorEmail"/>.
         /// </summary>
         public string Creator { get; set; }
 
@@ -35,9 +34,9 @@ namespace Azure.AI.MetricsAdvisor
         public DataFeedStatus? Status { get; set; }
 
         /// <summary>
-        /// Filters the result by <see cref="DataFeed.SourceType"/>.
+        /// Filters the result by the kind of the <see cref="DataFeedSource"/>.
         /// </summary>
-        public DataFeedSourceType? SourceType { get; set; }
+        public DataFeedSourceKind? SourceKind { get; set; }
 
         /// <summary>
         /// Filters the result by <see cref="DataFeedGranularity.GranularityType"/>.

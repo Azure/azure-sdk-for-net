@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of sync database ID properties. </summary>
-    public partial class SyncDatabaseIdListResult
+    internal partial class SyncDatabaseIdListResult
     {
         /// <summary> Initializes a new instance of SyncDatabaseIdListResult. </summary>
         internal SyncDatabaseIdListResult()

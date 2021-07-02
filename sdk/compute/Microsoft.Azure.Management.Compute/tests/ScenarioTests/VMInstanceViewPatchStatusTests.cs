@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Compute.Tests;
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
     public class VMInstanceViewPatchStatusTests : VMTestBase
     {
         private const string RgName = "RGforSDKtestResources";
-        private const string VmName = "VMforTest";
+        private const string VmName = "imageVM";
 
         //How to re-record this test:
         // 1. Manually create Resource group and VM

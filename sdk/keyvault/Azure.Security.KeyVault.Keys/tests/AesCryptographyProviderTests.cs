@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] ek = { 0x64, 0xE8, 0xC3, 0xF9, 0xCE, 0x0F, 0x5B, 0xA2, 0x63, 0xE9, 0x77, 0x79, 0x05, 0x81, 0x8A, 0x2A, 0x93, 0xC8, 0x19, 0x1E, 0x7D, 0x6E, 0x8A, 0xE7 };
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.WrapKey(KeyWrapAlgorithm.A128KW, ek, default));
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] ek = { 0x64, 0xE8, 0xC3, 0xF9, 0xCE, 0x0F, 0x5B, 0xA2, 0x63, 0xE9, 0x77, 0x79, 0x05, 0x81, 0x8A, 0x2A, 0x93, 0xC8, 0x19, 0x1E, 0x7D, 0x6E, 0x8A, 0xE7 };
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => provider.WrapKey(KeyWrapAlgorithm.A128KW, ek, default));
@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
             EncryptParameters options = EncryptParameters.A128CbcParameters(Encoding.UTF8.GetBytes("Single block msg"), iv);
@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key.Key, key.Properties, false);
 
             byte[] iv = { 0x3d, 0xaf, 0xba, 0x42, 0x9d, 0x9e, 0xb4, 0x30, 0xb4, 0x22, 0xda, 0x80, 0x2c, 0x9f, 0xac, 0x41 };
             EncryptParameters options = EncryptParameters.A128CbcParameters(Encoding.UTF8.GetBytes("Single block msg"), iv);
@@ -112,7 +112,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using Aes aes = Aes.Create();
             JsonWebKey key = new JsonWebKey(aes);
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
             Assert.IsNull(provider.Encrypt(new EncryptParameters(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
@@ -129,7 +129,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using Aes aes = Aes.Create();
             JsonWebKey key = new JsonWebKey(aes);
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
             Assert.IsNull(provider.Decrypt(new DecryptParameters(new EncryptionAlgorithm("invalid"), new byte[] { 0 })));
 
             EventWrittenEventArgs e = listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
@@ -151,7 +151,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 K = k,
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
@@ -238,7 +238,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 K = k,
             };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
@@ -270,7 +270,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] plaintext = Encoding.UTF8.GetBytes("plaintext");
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
             Assert.IsNull(provider.Encrypt(new EncryptParameters(algorithm, plaintext)));
         }
 
@@ -289,7 +289,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] ciphertext = new byte[] {0xed, 0x76, 0xc3, 0x94, 0xe7, 0xa3, 0xcb, 0xcc, 0x5f };
             byte[] tag = new byte[] { 0xeb, 0x2f, 0x3a, 0xd3, 0x87, 0xb0, 0x72, 0x68, 0xba, 0xcc, 0x04, 0x91 };
 
-            AesCryptographyProvider provider = new AesCryptographyProvider(key, null);
+            AesCryptographyProvider provider = new AesCryptographyProvider(key, null, false);
             Assert.IsNull(provider.Decrypt(new DecryptParameters(algorithm, ciphertext, iv, tag, null)));
         }
 

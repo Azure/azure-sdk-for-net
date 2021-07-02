@@ -84,6 +84,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Tag");
             }
+            if (Tag != null)
+            {
+                Tag.Validate();
+            }
+            if (Api != null)
+            {
+                Api.Validate();
+            }
             if (Product != null)
             {
                 Product.Validate();

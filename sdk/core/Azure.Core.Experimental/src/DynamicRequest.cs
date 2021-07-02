@@ -18,7 +18,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents an HTTP request with <see cref="JsonData"/> content.
     /// </summary>
-    [DebuggerDisplay("Body: {Body}")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DynamicRequest : Request
     {
         private Request Request { get; }
@@ -53,7 +53,7 @@ namespace Azure.Core
         /// </summary>
         public dynamic DynamicBody { get => Body; }
 
-        // TODO(matell): In Krzysztof's prototype we also took DiagnosticScope as a parameter, do we still need that?
+        // TODO(matell): In the prototype we also took DiagnosticScope as a parameter, do we still need that?
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps <see cref="JsonData"/> content.
         /// </summary>
@@ -153,5 +153,10 @@ namespace Azure.Core
 
         /// <inheritdoc />
         protected override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => Request.Headers.TryGetValues(name, out values);
+
+        private string DebuggerDisplay
+        {
+            get => $"{{Body: {((Body == null) ? "" : Body.ToJsonString())}}}";
+        }
     }
 }

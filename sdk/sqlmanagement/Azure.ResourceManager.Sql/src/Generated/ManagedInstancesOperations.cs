@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ManagedInstancesRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ManagedInstancesOperations for mocking. </summary>
         protected ManagedInstancesOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ManagedInstancesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

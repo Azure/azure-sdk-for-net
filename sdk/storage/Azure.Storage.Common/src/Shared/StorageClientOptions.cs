@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage
 {
@@ -18,6 +19,8 @@ namespace Azure.Storage
         /// The default scope used for token authentication with Storage.
         /// </summary>
         private const string StorageScope = "https://storage.azure.com/.default";
+
+        private static readonly HttpPipelinePolicy[] s_perCallPolicies = { StorageServerTimeoutPolicy.Shared };
 
         /// <summary>
         /// Set common ClientOptions defaults for Azure Storage.
@@ -63,18 +66,21 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
+        /// <param name="options"> The <see cref="ISupportsTenantIdChallenges"/> to apply to the credential. </param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
-            new BearerTokenAuthenticationPolicy(
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options) =>
+            new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
-                StorageScope);
+                StorageScope,
+                options is ISupportsTenantIdChallenges { EnableTenantDiscovery: true });
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credentials">Optional credentials to use.</param>
+        /// <param name="options"> The <see cref="ClientOptions"/> </param>
         /// <returns>An optional authentication policy.</returns>
-        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null)
+        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null, ClientOptions options = null)
         {
             // Use the credentials to decide on the authentication policy
             switch (credentials)
@@ -85,7 +91,7 @@ namespace Azure.Storage
                 case StorageSharedKeyCredential sharedKey:
                     return sharedKey.AsPolicy();
                 case TokenCredential token:
-                    return token.AsPolicy();
+                    return token.AsPolicy(options);
                 default:
                     throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
@@ -100,8 +106,8 @@ namespace Azure.Storage
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
         {
-            List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
-            StorageResponseClassifier classifier = new StorageResponseClassifier();
+            List<HttpPipelinePolicy> perRetryClientPolicies = new();
+            StorageResponseClassifier classifier = new();
             if (geoRedundantSecondaryStorageUri != null)
             {
                 perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
@@ -113,7 +119,7 @@ namespace Azure.Storage
 
             return HttpPipelineBuilder.Build(
                options,
-               Array.Empty<HttpPipelinePolicy>(),
+               s_perCallPolicies,
                perRetryClientPolicies.ToArray(),
                classifier);
         }

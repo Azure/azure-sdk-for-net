@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Compute
     public partial class SnapshotsRevokeAccessOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of SnapshotsRevokeAccessOperation for mocking. </summary>
+        protected SnapshotsRevokeAccessOperation()
+        {
+        }
+
         internal SnapshotsRevokeAccessOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotsRevokeAccessOperation");

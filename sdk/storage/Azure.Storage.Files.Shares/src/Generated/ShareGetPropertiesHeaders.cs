@@ -37,11 +37,11 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Returns the current share next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? value) ? value : null;
         /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
-        public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : (ShareLeaseDuration?)null;
+        public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : null;
         /// <summary> Lease state of the share. </summary>
-        public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToShareLeaseState() : (ShareLeaseState?)null;
+        public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToShareLeaseState() : null;
         /// <summary> The current lease status of the share. </summary>
-        public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToShareLeaseStatus() : (ShareLeaseStatus?)null;
+        public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToShareLeaseStatus() : null;
         /// <summary> Returns the access tier set on the share. </summary>
         public string AccessTier => _response.Headers.TryGetValue("x-ms-access-tier", out string value) ? value : null;
         /// <summary> Returns the last modified time (in UTC) of the access tier of the share. </summary>
@@ -51,6 +51,6 @@ namespace Azure.Storage.Files.Shares
         /// <summary> The protocols that have been enabled on the share. </summary>
         public string EnabledProtocols => _response.Headers.TryGetValue("x-ms-enabled-protocols", out string value) ? value : null;
         /// <summary> Valid for NFS shares only. </summary>
-        public ShareRootSquash? RootSquash => _response.Headers.TryGetValue("x-ms-root-squash", out string value) ? value.ToShareRootSquash() : (ShareRootSquash?)null;
+        public ShareRootSquash? RootSquash => _response.Headers.TryGetValue("x-ms-root-squash", out string value) ? value.ToShareRootSquash() : null;
     }
 }

@@ -19,11 +19,18 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Subscribe event trigger to events. </summary>
     public partial class TriggerSubscribeTriggerToEventsOperation : Operation<TriggerSubscriptionOperationStatus>, IOperationSource<TriggerSubscriptionOperationStatus>
     {
-        private readonly ArmOperationHelpers<TriggerSubscriptionOperationStatus> _operation;
+        private readonly OperationInternals<TriggerSubscriptionOperationStatus> _operation;
+
+        /// <summary> Initializes a new instance of TriggerSubscribeTriggerToEventsOperation for mocking. </summary>
+        protected TriggerSubscribeTriggerToEventsOperation()
+        {
+        }
+
         internal TriggerSubscribeTriggerToEventsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<TriggerSubscriptionOperationStatus>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerSubscribeTriggerToEventsOperation");
+            _operation = new OperationInternals<TriggerSubscriptionOperationStatus>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerSubscribeTriggerToEventsOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

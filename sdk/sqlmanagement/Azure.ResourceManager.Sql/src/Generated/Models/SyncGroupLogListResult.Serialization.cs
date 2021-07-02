@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncGroupLogListResult
+    internal partial class SyncGroupLogListResult
     {
         internal static SyncGroupLogListResult DeserializeSyncGroupLogListResult(JsonElement element)
         {

@@ -8,12 +8,32 @@ namespace Azure.Communication.Tests
 {
     public class CommunicationTestEnvironment : TestEnvironment
     {
-        public const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
+        public const string LiveTestDynamicConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING";
+        public const string LiveTestStaticConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING";
+        public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
+        private const string SkipIntSmsTestEnvironmentVariableName = "SKIP_INT_SMS_TEST";
+        private const string SkipIntPhoneNumbersTestEnvironmentVariableName = "SKIP_INT_PHONENUMBERS_TEST";
 
-        public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
+        public string LiveTestDynamicConnectionString => GetRecordedVariable(LiveTestDynamicConnectionStringEnvironmentVariableName);
 
-        public Uri Endpoint => new Uri(Core.ConnectionString.Parse(ConnectionString).GetRequired("endpoint"));
+        public Uri LiveTestDynamicEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
 
-        public string AccessKey => Core.ConnectionString.Parse(ConnectionString).GetRequired("accesskey");
+        public string LiveTestDynamicAccessKey => Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("accesskey");
+
+        public string LiveTestStaticConnectionString => GetRecordedVariable(LiveTestStaticConnectionStringEnvironmentVariableName);
+
+        public Uri LiveTestStaticEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("endpoint"));
+
+        public string LiveTestStaticAccessKey => Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("accesskey");
+
+        public string CommunicationTestPhoneNumber => GetVariable(AzurePhoneNumber);
+
+        public string SkipSmsTest => GetOptionalVariable(SkipIntSmsTestEnvironmentVariableName) ?? "False";
+
+        public string SkipPhoneNumbersTest => GetOptionalVariable(SkipIntPhoneNumbersTestEnvironmentVariableName) ?? "False";
+
+        public bool ShouldIgnoreSMSTests => bool.Parse(SkipSmsTest);
+
+        public bool ShouldIgnorePhoneNumbersTests => bool.Parse(SkipPhoneNumbersTest);
     }
 }

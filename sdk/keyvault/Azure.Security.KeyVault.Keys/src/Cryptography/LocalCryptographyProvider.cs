@@ -12,17 +12,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private readonly KeyProperties _keyProperties;
 
-        public LocalCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties)
+        public LocalCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties, bool localOnly)
         {
             KeyMaterial = keyMaterial ?? throw new ArgumentNullException(nameof(keyMaterial));
             _keyProperties = keyProperties;
+
+            CanRemote = !localOnly && KeyMaterial.Id != null;
         }
 
-        public bool ShouldRemote => KeyMaterial?.Id != null;
+        public bool CanRemote { get; }
 
         protected JsonWebKey KeyMaterial { get; set; }
 
-        protected bool MustRemote => ShouldRemote && !KeyMaterial.HasPrivateKey;
+        protected bool MustRemote => CanRemote && !KeyMaterial.HasPrivateKey;
 
         public abstract bool SupportsOperation(KeyOperation operation);
 
@@ -93,7 +95,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static NotSupportedException CreateOperationNotSupported(string name) => new NotSupportedException($"Operation {name} not supported with the given key");
+        internal static NotSupportedException CreateOperationNotSupported(string name, Exception innerException = null) =>
+            new NotSupportedException($"Operation {name} not supported with the given key", innerException);
 
         protected void ThrowIfTimeInvalid()
         {

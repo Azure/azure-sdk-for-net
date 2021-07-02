@@ -3,12 +3,13 @@
 trigger:
   branches:
     include:
-    - master
+    - main
     - hotfix/*
     - release/*
   paths:
     include:
     - sdk/eventhub/ci.data.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
@@ -16,13 +17,14 @@ trigger:
 pr:
   branches:
     include:
-    - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
     - sdk/eventhub/ci.data.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor

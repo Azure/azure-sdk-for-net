@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
             for (var i = 0; i < uploadTasks.Length; i++)
             {
                 var blobName = $"Azure.Storage.Blobs.Perf.Scenarios.DownloadBlob-{Guid.NewGuid()}";
-                uploadTasks[i] = BlobContainerClient.UploadBlobAsync(blobName, Stream.Null);
+                uploadTasks[i] = BlobContainerClient.GetBlobClient(blobName).UploadAsync(Stream.Null, overwrite: true);
             }
             await Task.WhenAll(uploadTasks);
         }

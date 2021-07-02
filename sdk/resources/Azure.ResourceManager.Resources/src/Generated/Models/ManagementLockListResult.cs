@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The list of locks. </summary>
-    public partial class ManagementLockListResult
+    internal partial class ManagementLockListResult
     {
         /// <summary> Initializes a new instance of ManagementLockListResult. </summary>
         internal ManagementLockListResult()

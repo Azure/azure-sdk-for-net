@@ -27,5 +27,15 @@ namespace Azure.AI.TextAnalytics
         /// KeyPhraseExtractionTasks
         /// </summary>
         internal IList<KeyPhrasesTask> KeyPhraseExtractionTasks { get; set; }
+
+        /// <summary>
+        /// EntityLinkingTasks
+        /// </summary>
+        internal IList<EntityLinkingTask> EntityLinkingTasks { get; set; }
+
+        /// <summary>
+        /// SentimentAnalysisTasks
+        /// </summary>
+        internal IList<SentimentAnalysisTask> SentimentAnalysisTasks { get; set; }
     }
 }

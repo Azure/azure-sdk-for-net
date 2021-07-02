@@ -69,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 MetricId = FakeGuid,
                 Name = "configName",
-                WholeSeriesDetectionConditions = new ()
+                WholeSeriesDetectionConditions = new()
             };
 
             using var cancellationSource = new CancellationTokenSource();
@@ -86,15 +86,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var config = new AnomalyDetectionConfiguration();
 
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(null, config), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync("", config), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync("configId", config), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDetectionConfiguration(null), Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => adminClient.UpdateDetectionConfiguration(null, config), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateDetectionConfiguration("", config), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateDetectionConfiguration("configId", config), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateDetectionConfiguration(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            var configurationWithNullId = new AnomalyDetectionConfiguration();
+
+            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(configurationWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDetectionConfiguration(configurationWithNullId), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -102,13 +100,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var config = new AnomalyDetectionConfiguration();
+            var config = new AnomalyDetectionConfiguration(FakeGuid, default, default, default, default, new List<MetricSeriesGroupDetectionCondition>(), new List<MetricSingleSeriesDetectionCondition>());
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(FakeGuid, config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
-            Assert.That(() => adminClient.UpdateDetectionConfiguration(FakeGuid, config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateDetectionConfiguration(config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]
@@ -159,10 +157,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<AnomalyDetectionConfiguration> asyncEnumerator = adminClient.GetDetectionConfigurationsAsync(FakeGuid, cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<AnomalyDetectionConfiguration> asyncEnumerator = adminClient.GetDetectionConfigurationsAsync(FakeGuid, default, cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<AnomalyDetectionConfiguration> enumerator = adminClient.GetDetectionConfigurations(FakeGuid, cancellationSource.Token).GetEnumerator();
+            IEnumerator<AnomalyDetectionConfiguration> enumerator = adminClient.GetDetectionConfigurations(FakeGuid, default, cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 

@@ -93,9 +93,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("sb://test.place.com")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             Assert.That(() => new EventHubProducerClient(constructorArgument, "dummy", credential.Object), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate.");
-            Assert.That(() => new EventHubProducerClient(constructorArgument, "dummy", new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubProducerClient(constructorArgument, "dummy", new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubProducerClient(constructorArgument, "dummy", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should validate.");
         }
 
         /// <summary>
@@ -107,9 +108,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             Assert.That(() => new EventHubProducerClient("namespace", constructorArgument, credential.Object), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate.");
-            Assert.That(() => new EventHubProducerClient("namespace", constructorArgument, new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubProducerClient("namespace", constructorArgument, new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubProducerClient("namespace", constructorArgument, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should validate.");
         }
 
         /// <summary>
@@ -120,7 +122,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheCredential()
         {
             Assert.That(() => new EventHubProducerClient("namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException, "The token credential constructor should validate.");
-            Assert.That(() => new EventHubProducerClient("namespace", "hubName", default(EventHubsSharedAccessKeyCredential)), Throws.ArgumentNullException, "The sharedKey credential constructor should validate.");
+            Assert.That(() => new EventHubProducerClient("namespace", "hubName", default(AzureNamedKeyCredential)), Throws.ArgumentNullException, "The shared key credential constructor should validate.");
+            Assert.That(() => new EventHubProducerClient("namespace", "hubName", default(AzureSasCredential)), Throws.InstanceOf<ArgumentException>(), "The SAS credential constructor should validate.");
         }
 
         /// <summary>
@@ -156,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TokenCredentialConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object, options);
 
@@ -171,7 +174,22 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SharedKeyCredentialConstructorSetsTheRetryPolicy()
         {
             var expected = Mock.Of<EventHubsRetryPolicy>();
-            var credential = new EventHubsSharedAccessKeyCredential("key", "value");
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential, options);
+
+            Assert.That(GetRetryPolicy(producer), Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheRetryPolicy()
+        {
+            var expected = Mock.Of<EventHubsRetryPolicy>();
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var producer = new EventHubProducerClient("namespace", "eventHub", credential, options);
 
@@ -217,9 +235,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void TokenCredentailsConstructorCreatesDefaultOptions()
+        public void TokenCredentialsConstructorCreatesDefaultOptions()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var expected = new EventHubProducerClientOptions().RetryOptions;
             var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object);
 
@@ -236,9 +254,28 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void SharedKeyCredentailsConstructorCreatesDefaultOptions()
+        public void SharedKeyCredentialsConstructorCreatesDefaultOptions()
         {
-            var credential = new EventHubsSharedAccessKeyCredential("key", "value");
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var expected = new EventHubProducerClientOptions().RetryOptions;
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential);
+
+            var policy = GetRetryPolicy(producer);
+            Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
+            Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The default retry policy should be a basic policy.");
+
+            var actual = ((BasicRetryPolicy)policy).Options;
+            Assert.That(actual.IsEquivalentTo(expected), Is.True, "The default retry policy should be based on the default retry options.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialsConstructorCreatesDefaultOptions()
+        {
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var expected = new EventHubProducerClientOptions().RetryOptions;
             var producer = new EventHubProducerClient("namespace", "eventHub", credential);
 
@@ -628,7 +665,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendWithoutOptionsInvokesTheTransportProducer()
         {
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
 
@@ -648,7 +685,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendInvokesTheTransportProducer()
         {
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var options = new SendEventOptions();
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
@@ -1766,15 +1803,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transport => transport.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
 
-            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+            Assert.That(batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Is.True, "The batch should not be locked before sending.");
             var sendTask = producer.SendAsync(batch);
 
-            Assert.That(() => batch.TryAdd(new EventData(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            Assert.That(() => batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
             completionSource.TrySetResult(true);
 
             await sendTask;
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+            Assert.That(batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Is.True, "The batch should not be locked after sending.");
 
             cancellationSource.Cancel();
         }
@@ -2012,7 +2049,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerClientShouldCloseAProducer()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new ObservableTransportProducerMock();
             var eventHubConnection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2040,7 +2077,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
             var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
 
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
@@ -2168,7 +2205,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDoesNotStartWhenPartitionIdIsNull()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2228,7 +2265,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task RetryLogicDoesNotWorkForClosedConnections()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2299,7 +2336,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDoesNotWorkForClosedEventHubProducerClients()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2370,7 +2407,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicShouldNotStartWhenCancellationTriggered()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2425,7 +2462,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDetectsAnEmbeddedAmqpErrorForOperationCanceled()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2572,7 +2609,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 (partition, features, options, retry) => Mock.Of<TransportProducer>();
 
             public MockConnection(string namespaceName = "fakeNamespace",
-                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object)
+                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>()).Object)
             {
             }
 

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class SyncGroupsCreateOrUpdateOperation : Operation<SyncGroup>, IOperationSource<SyncGroup>
     {
         private readonly ArmOperationHelpers<SyncGroup> _operation;
+
+        /// <summary> Initializes a new instance of SyncGroupsCreateOrUpdateOperation for mocking. </summary>
+        protected SyncGroupsCreateOrUpdateOperation()
+        {
+        }
+
         internal SyncGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SyncGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SyncGroupsCreateOrUpdateOperation");

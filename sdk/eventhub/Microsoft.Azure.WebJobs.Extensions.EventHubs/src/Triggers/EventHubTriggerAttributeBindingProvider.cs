@@ -54,9 +54,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
              (factoryContext, singleDispatch) =>
              {
+                 var options = _options.Value;
                  var checkpointStore = new BlobsCheckpointStore(
-                     _clientFactory.GetCheckpointStoreClient(attribute.EventHubName),
-                     _options.Value.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
+                     _clientFactory.GetCheckpointStoreClient(),
+                     options.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
                      factoryContext.Descriptor.Id,
                      _logger);
 
@@ -67,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                                                 singleDispatch,
                                                 _clientFactory.GetEventHubConsumerClient(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
                                                 checkpointStore,
-                                                _options.Value,
+                                                options,
                                                 _logger);
                  return Task.FromResult(listener);
              };

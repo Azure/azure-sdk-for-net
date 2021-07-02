@@ -5,18 +5,14 @@
     <!-- Disable everything by default -->
     <UseAzureCoreExperimental Condition="'$(UseAzureCoreExperimental)' == ''">false</UseAzureCoreExperimental>
 
-    <!-- Use Azure.Core.Experimental's Spatial features -->
-    <!-- (Note: a number of tests will need re-recording if you disable) -->
-    <UseAzureCoreExperimentalSpatial Condition="'$(UseAzureCoreExperimentalSpatial)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalSpatial>
-    <DefineConstants Condition="'$(UseAzureCoreExperimentalSpatial)' == 'true'">EXPERIMENTAL_SPATIAL;$(DefineConstants)</DefineConstants>
-
     <!-- Use Azure.Core.Experimental's DynamicData features (stubbed out in Search for now) -->
     <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalDynamic>
     <DefineConstants Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">EXPERIMENTAL_DYNAMIC;$(DefineConstants)</DefineConstants>
 
     <!-- Use a Package or Project reference to Azure.Core.Experimental -->
-    <AddExperimentalReference Condition="('$(UseAzureCoreExperimentalSpatial)' == 'true') OR ('$(UseAzureCoreExperimentalDynamic)' == 'true')">true</AddExperimentalReference>
-    <UseExperimentalProjectReference Condition="'$(UseExperimentalProjectReference)' == ''">$(UseProjectReferenceToAzureClients)</UseExperimentalProjectReference>
+    <AddExperimentalReference Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">true</AddExperimentalReference>
+    <!-- TODO: Revert to $(UseProjectReferenceToAzureClients) when Experimental ships -->
+    <UseExperimentalProjectReference Condition="'$(UseExperimentalProjectReference)' == ''">true</UseExperimentalProjectReference>
   </PropertyGroup>
 
   <!-- Add a reference to Azure.Core.Experimental -->

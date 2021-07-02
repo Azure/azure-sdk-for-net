@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// .
+    /// A model which contains information about the detected healthcare entity.
     /// </summary>
     public class HealthcareEntity
     {
@@ -19,7 +20,8 @@ namespace Azure.AI.TextAnalytics
             Offset = entity.Offset;
             Length = entity.Length;
             DataSources = entity.Links;
-            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
+            Assertion = entity.Assertion;
+            NormalizedText = entity.Name;
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
@@ -30,16 +32,16 @@ namespace Azure.AI.TextAnalytics
         /// Gets the entity category inferred by the Text Analytics service's
         /// healthcare model.  The list of available categories is
         /// described at
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
         /// </summary>
-        public string Category { get; }
+        public HealthcareEntityCategory Category { get; }
 
         /// <summary>
         /// Gets the sub category of the entity inferred by the Text Analytics service's
         /// healthcare model.  This property may not have a value if
         /// a sub category doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
         /// </summary>
         public string SubCategory { get; }
 
@@ -65,8 +67,13 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<EntityDataSource> DataSources { get; }
 
         /// <summary>
-        /// Gets the entities and the relationship between the entities.
+        /// Gets the healthcare assertions for the entity.
         /// </summary>
-        public IDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; internal set; }
+        public HealthcareEntityAssertion Assertion { get; }
+
+        /// <summary>
+        /// Gets the normalized text for the entity.
+        /// </summary>
+        public string NormalizedText { get; }
     }
 }

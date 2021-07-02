@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [LiveOnly] // Requires uploaded application on associated storage (wordcount.zip sample)
+    [Ignore("Requires upload of zip from https://github.com/Azure-Samples/Synapse/tree/main/Spark/DotNET as samples/net/wordcount/wordcount.zip to associated storage.")]
     public class SparkJobDefinitionClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
         internal class DisposableSparkJobDefinition : IAsyncDisposable
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             public async ValueTask DisposeAsync()
             {
                 SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await _client.StartDeleteSparkJobDefinitionAsync (Name);
-                await deleteOperation.WaitForCompletionAsync();
+                await deleteOperation.WaitForCompletionResponseAsync();
             }
         }
 
@@ -108,13 +108,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newSparkJobName = Recording.GenerateId("Pipeline2", 16);
 
             SparkJobDefinitionRenameSparkJobDefinitionOperation renameOperation = await client.StartRenameSparkJobDefinitionAsync (resource.Name, new ArtifactRenameRequest () { NewName = newSparkJobName } );
-            await renameOperation.WaitForCompletionAsync();
+            await renameOperation.WaitForCompletionResponseAsync();
 
             SparkJobDefinitionResource sparkJob = await client.GetSparkJobDefinitionAsync (newSparkJobName);
             Assert.AreEqual (newSparkJobName, sparkJob.Name);
 
             SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync (newSparkJobName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Parameter name: ClassName")]
