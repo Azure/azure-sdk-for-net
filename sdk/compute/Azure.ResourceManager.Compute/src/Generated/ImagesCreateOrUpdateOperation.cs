@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Create or update an image. </summary>
     public partial class ImagesCreateOrUpdateOperation : Operation<Image>, IOperationSource<Image>
     {
-        private readonly ArmOperationHelpers<Image> _operation;
+        private readonly OperationInternals<Image> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ImagesCreateOrUpdateOperation for mocking. </summary>
         protected ImagesCreateOrUpdateOperation()
         {
         }
 
-        internal ImagesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ImagesCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Image>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ImagesCreateOrUpdateOperation");
+            _operation = new OperationInternals<Image>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ImagesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         Image IOperationSource<Image>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Image.DeserializeImage(document.RootElement);
+            return new Image(_operationBase, ImageData.DeserializeImageData(document.RootElement));
         }
 
         async ValueTask<Image> IOperationSource<Image>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Image.DeserializeImage(document.RootElement);
+            return new Image(_operationBase, ImageData.DeserializeImageData(document.RootElement));
         }
     }
 }

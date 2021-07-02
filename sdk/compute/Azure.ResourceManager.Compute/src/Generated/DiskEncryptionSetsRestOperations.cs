@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSet diskEncryptionSet)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSetData diskEncryptionSet)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/diskEncryptionSets/", false);
             uri.AppendPath(diskEncryptionSetName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Put disk encryption set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskEncryptionSetName"/>, or <paramref name="diskEncryptionSet"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSet diskEncryptionSet, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSetData diskEncryptionSet, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Put disk encryption set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskEncryptionSetName"/>, or <paramref name="diskEncryptionSet"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSet diskEncryptionSet, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSetData diskEncryptionSet, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/diskEncryptionSets/", false);
             uri.AppendPath(diskEncryptionSetName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/diskEncryptionSets/", false);
             uri.AppendPath(diskEncryptionSetName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public async Task<Response<DiskEncryptionSet>> GetAsync(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskEncryptionSetData>> GetAsync(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -262,9 +262,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        DiskEncryptionSet value = default;
+                        DiskEncryptionSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiskEncryptionSet.DeserializeDiskEncryptionSet(document.RootElement);
+                        value = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public Response<DiskEncryptionSet> Get(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public Response<DiskEncryptionSetData> Get(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        DiskEncryptionSet value = default;
+                        DiskEncryptionSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiskEncryptionSet.DeserializeDiskEncryptionSet(document.RootElement);
+                        value = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/diskEncryptionSets/", false);
             uri.AppendPath(diskEncryptionSetName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/diskEncryptionSets", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/diskEncryptionSets", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -502,6 +502,90 @@ namespace Azure.ResourceManager.Compute
                         DiskEncryptionSetList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListAssociatedResourcesRequest(string resourceGroupName, string diskEncryptionSetName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/diskEncryptionSets/", false);
+            uri.AppendPath(diskEncryptionSetName, true);
+            uri.AppendPath("/associatedResources", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskEncryptionSetName"/> is null. </exception>
+        public async Task<Response<ResourceUriList>> ListAssociatedResourcesAsync(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
+            using var message = CreateListAssociatedResourcesRequest(resourceGroupName, diskEncryptionSetName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceUriList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskEncryptionSetName"/> is null. </exception>
+        public Response<ResourceUriList> ListAssociatedResources(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
+            using var message = CreateListAssociatedResourcesRequest(resourceGroupName, diskEncryptionSetName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceUriList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -646,6 +730,93 @@ namespace Azure.ResourceManager.Compute
                         DiskEncryptionSetList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DiskEncryptionSetList.DeserializeDiskEncryptionSetList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListAssociatedResourcesNextPageRequest(string nextLink, string resourceGroupName, string diskEncryptionSetName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="diskEncryptionSetName"/> is null. </exception>
+        public async Task<Response<ResourceUriList>> ListAssociatedResourcesNextPageAsync(string nextLink, string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
+            using var message = CreateListAssociatedResourcesNextPageRequest(nextLink, resourceGroupName, diskEncryptionSetName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceUriList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="diskEncryptionSetName"/> is null. </exception>
+        public Response<ResourceUriList> ListAssociatedResourcesNextPage(string nextLink, string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+
+            using var message = CreateListAssociatedResourcesNextPageRequest(nextLink, resourceGroupName, diskEncryptionSetName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceUriList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ResourceUriList.DeserializeResourceUriList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

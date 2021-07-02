@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/providers/Microsoft.Compute/operations", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string imageName, Image parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string imageName, ImageData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/images/", false);
             uri.AppendPath(imageName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="imageName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string imageName, Image parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string imageName, ImageData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="imageName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string imageName, Image parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string imageName, ImageData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/images/", false);
             uri.AppendPath(imageName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/images/", false);
             uri.AppendPath(imageName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="imageName"/> is null. </exception>
-        public async Task<Response<Image>> GetAsync(string resourceGroupName, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ImageData>> GetAsync(string resourceGroupName, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        Image value = default;
+                        ImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Image.DeserializeImage(document.RootElement);
+                        value = ImageData.DeserializeImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="imageName"/> is null. </exception>
-        public Response<Image> Get(string resourceGroupName, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ImageData> Get(string resourceGroupName, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        Image value = default;
+                        ImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Image.DeserializeImage(document.RootElement);
+                        value = ImageData.DeserializeImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/images", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/images", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

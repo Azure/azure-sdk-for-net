@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Update a VM scale set. </summary>
     public partial class VirtualMachineScaleSetsUpdateOperation : Operation<VirtualMachineScaleSet>, IOperationSource<VirtualMachineScaleSet>
     {
-        private readonly ArmOperationHelpers<VirtualMachineScaleSet> _operation;
+        private readonly OperationInternals<VirtualMachineScaleSet> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetsUpdateOperation for mocking. </summary>
         protected VirtualMachineScaleSetsUpdateOperation()
         {
         }
 
-        internal VirtualMachineScaleSetsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetsUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualMachineScaleSet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetsUpdateOperation");
+            _operation = new OperationInternals<VirtualMachineScaleSet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetsUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         VirtualMachineScaleSet IOperationSource<VirtualMachineScaleSet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
+            return new VirtualMachineScaleSet(_operationBase, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement));
         }
 
         async ValueTask<VirtualMachineScaleSet> IOperationSource<VirtualMachineScaleSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
+            return new VirtualMachineScaleSet(_operationBase, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement));
         }
     }
 }

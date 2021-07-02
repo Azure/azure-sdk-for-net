@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Update a gallery Image Definition. </summary>
+    /// <summary> Update a gallery image definition. </summary>
     public partial class GalleryImagesUpdateOperation : Operation<GalleryImage>, IOperationSource<GalleryImage>
     {
-        private readonly ArmOperationHelpers<GalleryImage> _operation;
+        private readonly OperationInternals<GalleryImage> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of GalleryImagesUpdateOperation for mocking. </summary>
         protected GalleryImagesUpdateOperation()
         {
         }
 
-        internal GalleryImagesUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal GalleryImagesUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<GalleryImage>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryImagesUpdateOperation");
+            _operation = new OperationInternals<GalleryImage>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryImagesUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         GalleryImage IOperationSource<GalleryImage>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return GalleryImage.DeserializeGalleryImage(document.RootElement);
+            return new GalleryImage(_operationBase, GalleryImageData.DeserializeGalleryImageData(document.RootElement));
         }
 
         async ValueTask<GalleryImage> IOperationSource<GalleryImage>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return GalleryImage.DeserializeGalleryImage(document.RootElement);
+            return new GalleryImage(_operationBase, GalleryImageData.DeserializeGalleryImageData(document.RootElement));
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersion galleryApplicationVersion)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersion"> Parameters supplied to the create or update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersion galleryApplicationVersion, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersion"> Parameters supplied to the create or update gallery Application Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, <paramref name="galleryApplicationVersionName"/>, or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersion galleryApplicationVersion, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public async Task<Response<GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryApplicationVersionData>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -329,9 +329,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryApplicationVersion value = default;
+                        GalleryApplicationVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
+                        value = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public Response<GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public Response<GalleryApplicationVersionData> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryApplicationVersion value = default;
+                        GalleryApplicationVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
+                        value = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/applications/", false);
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

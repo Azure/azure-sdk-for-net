@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Update a gallery Application Version. </summary>
     public partial class GalleryApplicationVersionsUpdateOperation : Operation<GalleryApplicationVersion>, IOperationSource<GalleryApplicationVersion>
     {
-        private readonly ArmOperationHelpers<GalleryApplicationVersion> _operation;
+        private readonly OperationInternals<GalleryApplicationVersion> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionsUpdateOperation for mocking. </summary>
         protected GalleryApplicationVersionsUpdateOperation()
         {
         }
 
-        internal GalleryApplicationVersionsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal GalleryApplicationVersionsUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<GalleryApplicationVersion>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryApplicationVersionsUpdateOperation");
+            _operation = new OperationInternals<GalleryApplicationVersion>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryApplicationVersionsUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         GalleryApplicationVersion IOperationSource<GalleryApplicationVersion>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
+            return new GalleryApplicationVersion(_operationBase, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement));
         }
 
         async ValueTask<GalleryApplicationVersion> IOperationSource<GalleryApplicationVersion>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
+            return new GalleryApplicationVersion(_operationBase, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement));
         }
     }
 }

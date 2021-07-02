@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryApplicationList. </summary>
         /// <param name="value"> A list of Gallery Applications. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GalleryApplicationList(IEnumerable<GalleryApplication> value)
+        internal GalleryApplicationList(IEnumerable<GalleryApplicationData> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryApplicationList. </summary>
         /// <param name="value"> A list of Gallery Applications. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application Definitions. </param>
-        internal GalleryApplicationList(IReadOnlyList<GalleryApplication> value, string nextLink)
+        internal GalleryApplicationList(IReadOnlyList<GalleryApplicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of Gallery Applications. </summary>
-        public IReadOnlyList<GalleryApplication> Value { get; }
+        public IReadOnlyList<GalleryApplicationData> Value { get; }
         /// <summary> The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application Definitions. </summary>
         public string NextLink { get; }
     }

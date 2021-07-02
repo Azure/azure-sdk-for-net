@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Create or update a dedicated host . </summary>
     public partial class DedicatedHostsCreateOrUpdateOperation : Operation<DedicatedHost>, IOperationSource<DedicatedHost>
     {
-        private readonly ArmOperationHelpers<DedicatedHost> _operation;
+        private readonly OperationInternals<DedicatedHost> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DedicatedHostsCreateOrUpdateOperation for mocking. </summary>
         protected DedicatedHostsCreateOrUpdateOperation()
         {
         }
 
-        internal DedicatedHostsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DedicatedHostsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DedicatedHost>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DedicatedHostsCreateOrUpdateOperation");
+            _operation = new OperationInternals<DedicatedHost>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DedicatedHostsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         DedicatedHost IOperationSource<DedicatedHost>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return DedicatedHost.DeserializeDedicatedHost(document.RootElement);
+            return new DedicatedHost(_operationBase, DedicatedHostData.DeserializeDedicatedHostData(document.RootElement));
         }
 
         async ValueTask<DedicatedHost> IOperationSource<DedicatedHost>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DedicatedHost.DeserializeDedicatedHost(document.RootElement);
+            return new DedicatedHost(_operationBase, DedicatedHostData.DeserializeDedicatedHostData(document.RootElement));
         }
     }
 }

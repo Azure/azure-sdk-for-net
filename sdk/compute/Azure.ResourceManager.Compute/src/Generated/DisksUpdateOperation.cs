@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Updates (patches) a disk. </summary>
     public partial class DisksUpdateOperation : Operation<Disk>, IOperationSource<Disk>
     {
-        private readonly ArmOperationHelpers<Disk> _operation;
+        private readonly OperationInternals<Disk> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DisksUpdateOperation for mocking. </summary>
         protected DisksUpdateOperation()
         {
         }
 
-        internal DisksUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DisksUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Disk>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksUpdateOperation");
+            _operation = new OperationInternals<Disk>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         Disk IOperationSource<Disk>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Disk.DeserializeDisk(document.RootElement);
+            return new Disk(_operationBase, DiskData.DeserializeDiskData(document.RootElement));
         }
 
         async ValueTask<Disk> IOperationSource<Disk>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Disk.DeserializeDisk(document.RootElement);
+            return new Disk(_operationBase, DiskData.DeserializeDiskData(document.RootElement));
         }
     }
 }

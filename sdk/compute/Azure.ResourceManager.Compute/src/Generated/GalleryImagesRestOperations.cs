@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryImageName, GalleryImage galleryImage)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/images/", false);
             uri.AppendPath(galleryImageName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> Create or update a gallery Image Definition. </summary>
+        /// <summary> Create or update a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be created. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, GalleryImage galleryImage, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Create or update a gallery Image Definition. </summary>
+        /// <summary> Create or update a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be created. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, GalleryImage galleryImage, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/images/", false);
             uri.AppendPath(galleryImageName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> Update a gallery Image Definition. </summary>
+        /// <summary> Update a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be updated. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Update a gallery Image Definition. </summary>
+        /// <summary> Update a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be updated. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImage"/> is null. </exception>
@@ -260,19 +260,19 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/images/", false);
             uri.AppendPath(galleryImageName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves information about a gallery Image Definition. </summary>
+        /// <summary> Retrieves information about a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which the Image Definitions are to be retrieved. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be retrieved. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public async Task<Response<GalleryImage>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryImageData>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -293,9 +293,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryImage value = default;
+                        GalleryImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GalleryImage.DeserializeGalleryImage(document.RootElement);
+                        value = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -303,13 +303,13 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Retrieves information about a gallery Image Definition. </summary>
+        /// <summary> Retrieves information about a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which the Image Definitions are to be retrieved. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be retrieved. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public Response<GalleryImage> Get(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public Response<GalleryImageData> Get(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryImage value = default;
+                        GalleryImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GalleryImage.DeserializeGalleryImage(document.RootElement);
+                        value = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/images/", false);
             uri.AppendPath(galleryImageName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Delete a gallery image. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be deleted. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be deleted. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Delete a gallery image. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition is to be deleted. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition to be deleted. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
@@ -443,13 +443,13 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/images", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List gallery Image Definitions in a gallery. </summary>
+        /// <summary> List gallery image definitions in a gallery. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> List gallery Image Definitions in a gallery. </summary>
+        /// <summary> List gallery image definitions in a gallery. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> List gallery Image Definitions in a gallery. </summary>
+        /// <summary> List gallery image definitions in a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> List gallery Image Definitions in a gallery. </summary>
+        /// <summary> List gallery image definitions in a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>

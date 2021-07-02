@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Updates (patches) a snapshot. </summary>
     public partial class SnapshotsUpdateOperation : Operation<Snapshot>, IOperationSource<Snapshot>
     {
-        private readonly ArmOperationHelpers<Snapshot> _operation;
+        private readonly OperationInternals<Snapshot> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of SnapshotsUpdateOperation for mocking. </summary>
         protected SnapshotsUpdateOperation()
         {
         }
 
-        internal SnapshotsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SnapshotsUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Snapshot>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotsUpdateOperation");
+            _operation = new OperationInternals<Snapshot>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotsUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         Snapshot IOperationSource<Snapshot>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Snapshot.DeserializeSnapshot(document.RootElement);
+            return new Snapshot(_operationBase, SnapshotData.DeserializeSnapshotData(document.RootElement));
         }
 
         async ValueTask<Snapshot> IOperationSource<Snapshot>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Snapshot.DeserializeSnapshot(document.RootElement);
+            return new Snapshot(_operationBase, SnapshotData.DeserializeSnapshotData(document.RootElement));
         }
     }
 }

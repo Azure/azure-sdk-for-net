@@ -14,10 +14,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications. </summary>
-    public partial class VirtualMachineScaleSetsPerformMaintenanceOperation : Operation<Response>, IOperationSource<Response>
+    /// <summary> Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications. </summary>
+    public partial class VirtualMachineScaleSetsPerformMaintenanceOperation : Operation
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals _operation;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetsPerformMaintenanceOperation for mocking. </summary>
         protected VirtualMachineScaleSetsPerformMaintenanceOperation()
@@ -26,19 +26,14 @@ namespace Azure.ResourceManager.Compute
 
         internal VirtualMachineScaleSetsPerformMaintenanceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetsPerformMaintenanceOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetsPerformMaintenanceOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Response Value => _operation.Value;
-
-        /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
-
-        /// <inheritdoc />
-        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.GetRawResponse();
@@ -50,19 +45,9 @@ namespace Azure.ResourceManager.Compute
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-
-        Response IOperationSource<Response>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            return response;
-        }
-
-        async ValueTask<Response> IOperationSource<Response>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            return await new ValueTask<Response>(response).ConfigureAwait(false);
-        }
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

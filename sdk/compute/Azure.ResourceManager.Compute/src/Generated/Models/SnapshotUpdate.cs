@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. </summary>
+        /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </summary>
         public SnapshotSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>
         public OperatingSystemTypes? OsType { get; set; }
@@ -31,5 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
         public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
         public Encryption Encryption { get; set; }
+        /// <summary> Policy for accessing the disk via network. </summary>
+        public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
+        /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
+        public string DiskAccessId { get; set; }
+        /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>
+        public bool? SupportsHibernation { get; set; }
     }
 }

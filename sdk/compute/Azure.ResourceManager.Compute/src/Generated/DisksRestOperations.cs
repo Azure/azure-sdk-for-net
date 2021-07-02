@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string diskName, Disk disk)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string diskName, DiskData disk)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/disks/", false);
             uri.AppendPath(diskName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="disk"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string diskName, Disk disk, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="disk"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string diskName, Disk disk, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/disks/", false);
             uri.AppendPath(diskName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/disks/", false);
             uri.AppendPath(diskName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
-        public async Task<Response<Disk>> GetAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskData>> GetAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -262,9 +262,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        Disk value = default;
+                        DiskData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Disk.DeserializeDisk(document.RootElement);
+                        value = DiskData.DeserializeDiskData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
-        public Response<Disk> Get(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
+        public Response<DiskData> Get(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        Disk value = default;
+                        DiskData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Disk.DeserializeDisk(document.RootElement);
+                        value = DiskData.DeserializeDiskData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/disks/", false);
             uri.AppendPath(diskName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             return message;
         }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/disks", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/disks", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/disks/", false);
             uri.AppendPath(diskName, true);
             uri.AppendPath("/beginGetAccess", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/disks/", false);
             uri.AppendPath(diskName, true);
             uri.AppendPath("/endGetAccess", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             return message;
         }

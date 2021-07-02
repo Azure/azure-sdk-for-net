@@ -13,28 +13,33 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> The operation to update the extension. </summary>
-    public partial class VirtualMachineExtensionsUpdateOperation : Operation<VirtualMachineExtension>, IOperationSource<VirtualMachineExtension>
+    public partial class VirtualMachineExtensionsUpdateOperation : Operation<VirtualMachineExtensionVirtualMachine>, IOperationSource<VirtualMachineExtensionVirtualMachine>
     {
-        private readonly ArmOperationHelpers<VirtualMachineExtension> _operation;
+        private readonly OperationInternals<VirtualMachineExtensionVirtualMachine> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionsUpdateOperation for mocking. </summary>
         protected VirtualMachineExtensionsUpdateOperation()
         {
         }
 
-        internal VirtualMachineExtensionsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineExtensionsUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualMachineExtension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineExtensionsUpdateOperation");
+            _operation = new OperationInternals<VirtualMachineExtensionVirtualMachine>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineExtensionsUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override VirtualMachineExtension Value => _operation.Value;
+        public override VirtualMachineExtensionVirtualMachine Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +57,21 @@ namespace Azure.ResourceManager.Compute
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualMachineExtension>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<VirtualMachineExtensionVirtualMachine>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualMachineExtension>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<VirtualMachineExtensionVirtualMachine>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        VirtualMachineExtension IOperationSource<VirtualMachineExtension>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineExtensionVirtualMachine IOperationSource<VirtualMachineExtensionVirtualMachine>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
+            return new VirtualMachineExtensionVirtualMachine(_operationBase, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement));
         }
 
-        async ValueTask<VirtualMachineExtension> IOperationSource<VirtualMachineExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineExtensionVirtualMachine> IOperationSource<VirtualMachineExtensionVirtualMachine>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
+            return new VirtualMachineExtensionVirtualMachine(_operationBase, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement));
         }
     }
 }

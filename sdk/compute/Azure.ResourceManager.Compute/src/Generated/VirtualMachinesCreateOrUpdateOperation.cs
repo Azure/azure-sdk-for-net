@@ -13,23 +13,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation. </summary>
     public partial class VirtualMachinesCreateOrUpdateOperation : Operation<VirtualMachine>, IOperationSource<VirtualMachine>
     {
-        private readonly ArmOperationHelpers<VirtualMachine> _operation;
+        private readonly OperationInternals<VirtualMachine> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualMachinesCreateOrUpdateOperation for mocking. </summary>
         protected VirtualMachinesCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualMachinesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachinesCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualMachine>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualMachine>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Compute
         VirtualMachine IOperationSource<VirtualMachine>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualMachine.DeserializeVirtualMachine(document.RootElement);
+            return new VirtualMachine(_operationBase, VirtualMachineData.DeserializeVirtualMachineData(document.RootElement));
         }
 
         async ValueTask<VirtualMachine> IOperationSource<VirtualMachine>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualMachine.DeserializeVirtualMachine(document.RootElement);
+            return new VirtualMachine(_operationBase, VirtualMachineData.DeserializeVirtualMachineData(document.RootElement));
         }
     }
 }

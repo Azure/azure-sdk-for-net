@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static GalleryApplicationVersionList DeserializeGalleryApplicationVersionList(JsonElement element)
         {
-            IReadOnlyList<GalleryApplicationVersion> value = default;
+            IReadOnlyList<GalleryApplicationVersionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<GalleryApplicationVersion> array = new List<GalleryApplicationVersion>();
+                    List<GalleryApplicationVersionData> array = new List<GalleryApplicationVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationVersion.DeserializeGalleryApplicationVersion(item));
+                        array.Add(GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(item));
                     }
                     value = array;
                     continue;

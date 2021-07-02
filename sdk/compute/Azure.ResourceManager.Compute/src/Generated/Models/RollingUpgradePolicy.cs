@@ -20,12 +20,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="maxUnhealthyInstancePercent"> The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The default value for this parameter is 20%. </param>
         /// <param name="maxUnhealthyUpgradedInstancePercent"> The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check will happen after each batch is upgraded. If this percentage is ever exceeded, the rolling update aborts. The default value for this parameter is 20%. </param>
         /// <param name="pauseTimeBetweenBatches"> The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time duration should be specified in ISO 8601 format. The default value is 0 seconds (PT0S). </param>
-        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches)
+        /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. </param>
+        /// <param name="prioritizeUnhealthyInstances"> Upgrade all unhealthy instances in a scale set before any healthy instances. </param>
+        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches, bool? enableCrossZoneUpgrade, bool? prioritizeUnhealthyInstances)
         {
             MaxBatchInstancePercent = maxBatchInstancePercent;
             MaxUnhealthyInstancePercent = maxUnhealthyInstancePercent;
             MaxUnhealthyUpgradedInstancePercent = maxUnhealthyUpgradedInstancePercent;
             PauseTimeBetweenBatches = pauseTimeBetweenBatches;
+            EnableCrossZoneUpgrade = enableCrossZoneUpgrade;
+            PrioritizeUnhealthyInstances = prioritizeUnhealthyInstances;
         }
 
         /// <summary> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The default value for this parameter is 20%. </summary>
@@ -36,5 +40,9 @@ namespace Azure.ResourceManager.Compute.Models
         public int? MaxUnhealthyUpgradedInstancePercent { get; set; }
         /// <summary> The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time duration should be specified in ISO 8601 format. The default value is 0 seconds (PT0S). </summary>
         public string PauseTimeBetweenBatches { get; set; }
+        /// <summary> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. </summary>
+        public bool? EnableCrossZoneUpgrade { get; set; }
+        /// <summary> Upgrade all unhealthy instances in a scale set before any healthy instances. </summary>
+        public bool? PrioritizeUnhealthyInstances { get; set; }
     }
 }
