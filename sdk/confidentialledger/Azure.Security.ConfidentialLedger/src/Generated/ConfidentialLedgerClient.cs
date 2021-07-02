@@ -22,36 +22,14 @@ namespace Azure.Security.ConfidentialLedger
         private readonly TokenCredential _tokenCredential;
         private Uri ledgerUri;
         private readonly string apiVersion;
-        private readonly ClientDiagnostics _clientDiagnostics;
+        internal readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient for mocking. </summary>
         protected ConfidentialLedgerClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
-        {
-            if (ledgerUri == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerUri));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
 
-            options ??= new ConfidentialLedgerClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.ledgerUri = ledgerUri;
-            apiVersion = options.Version;
-        }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="options"> The request options. </param>
@@ -484,7 +462,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestOptions options = null)
+        internal virtual async Task<Response> PostLedgerEntryInternalAsync(RequestContent content, string subLedgerId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -554,7 +532,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestOptions options = null)
+        internal virtual Response PostLedgerEntryInternal(RequestContent content, string subLedgerId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -590,7 +568,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Create Request for <see cref="PostLedgerEntry"/> and <see cref="PostLedgerEntryAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="PostLedgerEntryInternal(Azure.Core.RequestContent,string,Azure.RequestOptions)"/> and <see cref="PostLedgerEntryAsync"/> operations. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="options"> The request options. </param>

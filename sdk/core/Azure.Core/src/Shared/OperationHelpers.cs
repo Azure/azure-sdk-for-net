@@ -83,12 +83,12 @@ namespace Azure.Core
             }
         }
 
-        public static ValueTask<Response> DefaultWaitForCompletionAsyncResponse(this Operation operation, CancellationToken cancellationToken)
+        public static ValueTask<Response> DefaultWaitForCompletionResponseAsync(this Operation operation, CancellationToken cancellationToken)
         {
             return operation.WaitForCompletionResponseAsync(DefaultPollingInterval, cancellationToken);
         }
 
-        public static async ValueTask<Response> DefaultWaitForCompletionAsync(
+        public static async ValueTask<Response> DefaultWaitForCompletionResponseAsync(
             this Operation operation,
             TimeSpan pollingInterval,
             CancellationToken cancellationToken)

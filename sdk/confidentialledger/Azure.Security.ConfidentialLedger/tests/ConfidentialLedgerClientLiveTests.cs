@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -20,6 +21,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private ConfidentialLedgerClientOptions Options;
         private ConfidentialLedgerClient Client;
         private ConfidentialLedgerIdentityServiceClient IdentityClient;
+        private string transactionId;
+        private HashSet<string> TestsNotRequiringLedgerEntry = new() { "GetEnclaveQuotes", "GetConsortiumMembers", "GetConstitution" };
 
         public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -37,6 +40,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 return true;
             };
             Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+            {
+                Options.WaitForCompletionDefaultPollingInterval = TimeSpan.Zero;
+            }
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
@@ -47,6 +54,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 new ConfidentialLedgerIdentityServiceClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
                     InstrumentClientOptions(Options)));
+
+            if (!TestsNotRequiringLedgerEntry.Contains(TestContext.CurrentContext.Test.MethodName))
+            {
+                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") })).GetAwaiter().GetResult();
+                transactionId = operation.Id;
+            }
         }
 
         public async Task GetUser(string objId)
@@ -61,36 +74,31 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetLedgerEntries()
         {
-            await PostLedgerEntry();
-
             var result = await Client.GetLedgerEntriesAsync();
 
             var nextLinkDetails = GetNextLinkDetails(result);
-            while (nextLinkDetails != null)
+            int pageCount = 0;
+            while (nextLinkDetails != null && pageCount < 3)
             {
                 var fromId = nextLinkDetails["fromTransactionId"];
                 var subId = nextLinkDetails["subLedgerId"];
                 result = await Client.GetLedgerEntriesAsync(subId, fromId).ConfigureAwait(false);
                 Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
                 nextLinkDetails = GetNextLinkDetails(result);
+                pageCount++;
             }
         }
 
         [RecordedTest]
         public async Task GetLedgerEntry()
         {
-            await PostLedgerEntry();
-
-            var result = await Client.GetLedgerEntriesAsync();
+            var result = await Client.GetLedgerEntryAsync(transactionId).ConfigureAwait(false);
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
             while (stringResult.Contains("Loading"))
             {
-                result = await Client.GetLedgerEntriesAsync().ConfigureAwait(false);
+                result = await Client.GetLedgerEntryAsync(transactionId).ConfigureAwait(false);
                 stringResult = new StreamReader(result.ContentStream).ReadToEnd();
             }
-            var transactionId = GetFirstTransactionId(result);
-            result = await Client.GetLedgerEntryAsync(transactionId).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -99,19 +107,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetReceipt()
         {
-            await PostLedgerEntry();
+            var result = await Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
 
-            var result = await Client.GetLedgerEntriesAsync();
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
-            while (stringResult.Contains("Loading"))
+            while (GetStatus(result) == "Loading")
             {
-                result = await Client.GetLedgerEntriesAsync().ConfigureAwait(false);
-                stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+                result = await Client.GetLedgerEntryAsync(transactionId).ConfigureAwait(false);
             }
-            var transactionId = GetFirstTransactionId(result);
-            result = await Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
 
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
         }
@@ -119,20 +122,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetTransactionStatus()
         {
-            await PostLedgerEntry();
-
             var result = await Client.GetLedgerEntriesAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            while (stringResult.Contains("Loading"))
-            {
-                result = await Client.GetLedgerEntriesAsync().ConfigureAwait(false);
-                stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-            }
-            var transactionId = GetFirstTransactionId(result);
             result = await Client.GetTransactionStatusAsync(transactionId).ConfigureAwait(false);
+            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(stringResult, Does.Contain("Committed"));
             Assert.That(stringResult, Does.Contain(transactionId));
         }
 
@@ -169,20 +166,19 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task PostLedgerEntry()
         {
-            var result = await Client.PostLedgerEntryAsync(
-                RequestContent.Create(
-                    new { contents = Recording.GenerateAssetName("test") }));
+            var operation = await Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+            var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("subLedgerId"));
+            Assert.NotNull(operation.Id);
+            Assert.That(stringResult, Does.Contain("Committed"));
+            Assert.That(stringResult, Does.Contain(operation.Id));
         }
 
         [RecordedTest]
         public async Task GetCurrentLedgerEntry()
         {
-            await PostLedgerEntry();
-
             var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -231,22 +227,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             return result;
         }
 
-        private string GetFirstTransactionId(Response response)
+        private string GetStatus(Response statusResponse)
         {
-            response.ContentStream.Position = 0;
-            var stringResult = new StreamReader(response.ContentStream).ReadToEnd();
-            var doc = JsonDocument.Parse(stringResult);
-            if (doc.RootElement.TryGetProperty("entries", out var prop))
-            {
-                foreach (JsonElement entry in prop.EnumerateArray())
-                {
-                    if (entry.TryGetProperty("transactionId", out var tid))
-                    {
-                        return tid.GetString();
-                    }
-                }
-            }
-            return default;
+            return JsonDocument.Parse(statusResponse.Content)
+                .RootElement
+                .GetProperty("state")
+                .GetString();
         }
 
         private Dictionary<string, string> GetNextLinkDetails(Response response)
