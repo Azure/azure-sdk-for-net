@@ -89,7 +89,7 @@
 
     <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers" PrivateAssets="All" />
 
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
+    <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
 
   </ItemGroup>
 
