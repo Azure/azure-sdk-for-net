@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<BackupVaultResource> GetResourcesInSubscription(this IBackupVaultsOperations operations)
+            public static IPage<BackupVaultResource> GetInSubscription(this IBackupVaultsOperations operations)
             {
-                return operations.GetResourcesInSubscriptionAsync().GetAwaiter().GetResult();
+                return operations.GetInSubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BackupVaultResource>> GetResourcesInSubscriptionAsync(this IBackupVaultsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BackupVaultResource>> GetInSubscriptionAsync(this IBackupVaultsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourcesInSubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetInSubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
-            public static IPage<BackupVaultResource> GetResourcesInResourceGroup(this IBackupVaultsOperations operations, string resourceGroupName)
+            public static IPage<BackupVaultResource> GetInResourceGroup(this IBackupVaultsOperations operations, string resourceGroupName)
             {
-                return operations.GetResourcesInResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.GetInResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BackupVaultResource>> GetResourcesInResourceGroupAsync(this IBackupVaultsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BackupVaultResource>> GetInResourceGroupAsync(this IBackupVaultsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourcesInResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetInResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -222,9 +222,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static BackupVaultResource Patch(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters)
+            public static BackupVaultResource Update(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters)
             {
-                return operations.PatchAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -246,9 +246,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupVaultResource> PatchAsync(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupVaultResource> UpdateAsync(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -362,9 +362,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static BackupVaultResource BeginPatch(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters)
+            public static BackupVaultResource BeginUpdate(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters)
             {
-                return operations.BeginPatchAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -386,9 +386,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupVaultResource> BeginPatchAsync(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupVaultResource> BeginUpdateAsync(this IBackupVaultsOperations operations, string vaultName, string resourceGroupName, PatchResourceRequestInput parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginPatchWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -403,9 +403,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<BackupVaultResource> GetResourcesInSubscriptionNext(this IBackupVaultsOperations operations, string nextPageLink)
+            public static IPage<BackupVaultResource> GetInSubscriptionNext(this IBackupVaultsOperations operations, string nextPageLink)
             {
-                return operations.GetResourcesInSubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.GetInSubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -420,9 +420,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BackupVaultResource>> GetResourcesInSubscriptionNextAsync(this IBackupVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BackupVaultResource>> GetInSubscriptionNextAsync(this IBackupVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourcesInSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetInSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -437,9 +437,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<BackupVaultResource> GetResourcesInResourceGroupNext(this IBackupVaultsOperations operations, string nextPageLink)
+            public static IPage<BackupVaultResource> GetInResourceGroupNext(this IBackupVaultsOperations operations, string nextPageLink)
             {
-                return operations.GetResourcesInResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.GetInResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -454,9 +454,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BackupVaultResource>> GetResourcesInResourceGroupNextAsync(this IBackupVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BackupVaultResource>> GetInResourceGroupNextAsync(this IBackupVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourcesInResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetInResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

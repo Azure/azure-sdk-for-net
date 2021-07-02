@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Parameters for Operational-Tier DataStore
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureOperationalStoreParameters")]
     public partial class AzureOperationalStoreParameters : DataStoreParameters
     {
         /// <summary>

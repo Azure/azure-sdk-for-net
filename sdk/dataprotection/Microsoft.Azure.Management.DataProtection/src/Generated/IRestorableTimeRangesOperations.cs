@@ -19,13 +19,10 @@ namespace Microsoft.Azure.Management.DataProtection
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RecoveryPointOperations operations.
+    /// RestorableTimeRangesOperations operations.
     /// </summary>
-    public partial interface IRecoveryPointOperations
+    public partial interface IRestorableTimeRangesOperations
     {
-        /// <summary>
-        /// Gets a Recovery Point using recoveryPointId for a Datasource.
-        /// </summary>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
@@ -35,7 +32,8 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
         /// </param>
-        /// <param name='recoveryPointId'>
+        /// <param name='parameters'>
+        /// Request body for operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,6 +50,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureBackupRecoveryPointResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, string recoveryPointId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AzureBackupFindRestorableTimeRangesResponseResource>> FindWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

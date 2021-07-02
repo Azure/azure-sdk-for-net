@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// BackupCriteria base class
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("BackupCriteria")]
     public partial class BackupCriteria
     {
         /// <summary>

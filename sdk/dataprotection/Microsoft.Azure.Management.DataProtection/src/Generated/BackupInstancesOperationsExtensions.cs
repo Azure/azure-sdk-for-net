@@ -421,9 +421,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='restoreRequestObject'>
             /// Gets or sets the restore request object.
             /// </param>
-            public static OperationJobExtendedInfo ValidateRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
+            public static OperationJobExtendedInfo ValidateForRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
             {
-                return operations.ValidateRestoreAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
+                return operations.ValidateForRestoreAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -447,9 +447,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> ValidateRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> ValidateForRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ValidateRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateForRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -769,9 +769,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='restoreRequestObject'>
             /// Gets or sets the restore request object.
             /// </param>
-            public static OperationJobExtendedInfo BeginValidateRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
+            public static OperationJobExtendedInfo BeginValidateForRestore(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject)
             {
-                return operations.BeginValidateRestoreAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
+                return operations.BeginValidateForRestoreAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -795,9 +795,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationJobExtendedInfo> BeginValidateRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> BeginValidateForRestoreAsync(this IBackupInstancesOperations operations, string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginValidateRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginValidateForRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -49,6 +49,35 @@ namespace Microsoft.Azure.Management.DataProtection
         /// </exception>
         Task<AzureOperationResponse<IPage<AzureBackupJobResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets a job with id in a backup vault
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
+        /// </param>
+        /// <param name='jobId'>
+        /// The Job ID. This is a GUID-formatted string (e.g.
+        /// 00000000-0000-0000-0000-000000000000).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AzureBackupJobResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Returns list of jobs belonging to a backup vault
         /// </summary>
         /// <param name='nextPageLink'>

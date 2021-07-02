@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Class encapsulating restore as files target parameters
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RestoreFilesTargetInfo")]
     public partial class RestoreFilesTargetInfo : RestoreTargetInfoBase
     {
         /// <summary>

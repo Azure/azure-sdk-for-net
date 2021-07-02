@@ -632,10 +632,10 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders>> ValidateRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> ValidateForRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders> _response = await BeginValidateRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders> _response = await BeginValidateForRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, restoreRequestObject, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2035,7 +2035,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders>> BeginValidateRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>> BeginValidateForRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest restoreRequestObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -2082,7 +2082,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 tracingParameters.Add("backupInstanceName", backupInstanceName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginValidateRestore", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginValidateForRestore", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -2195,7 +2195,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders>();
+            var _result = new AzureOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForRestoreHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2222,7 +2222,7 @@ namespace Microsoft.Azure.Management.DataProtection
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BackupInstancesValidateRestoreHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BackupInstancesValidateForRestoreHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {

@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <summary>
     /// Restore target info for Item level restore operation
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ItemLevelRestoreTargetInfo")]
     public partial class ItemLevelRestoreTargetInfo : RestoreTargetInfoBase
     {
         /// <summary>

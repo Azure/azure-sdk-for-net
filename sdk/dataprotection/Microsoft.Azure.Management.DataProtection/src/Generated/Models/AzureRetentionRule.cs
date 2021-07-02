@@ -22,7 +22,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Azure retention rule
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("AzureRetentionRule")]
     public partial class AzureRetentionRule : BasePolicyRule
     {
         /// <summary>
