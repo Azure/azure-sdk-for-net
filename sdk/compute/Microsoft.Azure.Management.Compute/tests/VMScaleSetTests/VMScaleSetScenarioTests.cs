@@ -187,10 +187,10 @@ namespace Compute.Tests
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(
-                        context,
-                        hasManagedDisks: true,
-                        useVmssExtension: false,
-                        zones: new List<string> { "1", "3" },
+                        context, 
+                        hasManagedDisks: true, 
+                        useVmssExtension: false, 
+                        zones: new List<string> { "1", "3" }, 
                         osDiskSizeInGB: 175);
                 }
             }
@@ -511,8 +511,8 @@ namespace Compute.Tests
         }
 
 
-        private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true,
-            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false,
+        private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
+            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
@@ -587,7 +587,7 @@ namespace Compute.Tests
                         vmScaleSetCustomizer?.Invoke(vmScaleSet);
                     },
                     createWithManagedDisks: hasManagedDisks,
-                    hasDiffDisks: hasDiffDisks,
+                    hasDiffDisks : hasDiffDisks,
                     zones: zones,
                     osDiskSizeInGB: osDiskSizeInGB,
                     ppgId: ppgId,
@@ -632,9 +632,6 @@ namespace Compute.Tests
                     Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.VirtualMachinesAssociated.First().Id, StringComparison.OrdinalIgnoreCase),
                         "capacityReservation.VirtualMachinesAssociated are not matching");
 
-                    /// I need to add this implementation after CR Cache refresh code is checked in for VMSS
-                    /// PR: https://dev.azure.com/msazure/One/_git/Compute-CPlat-Core/pullrequest/4741496
-                    /// ADO: https://dev.azure.com/msazure/One/_workitems/edit/10225436/
                     /*
                     Assert.True(capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.Any(), "InstanceView.UtilizationInfo.VirtualMachinesAllocated is empty");
                     Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.First().Id),
@@ -644,7 +641,7 @@ namespace Compute.Tests
 
                 if (encryptionAtHostEnabled != null)
                 {
-                    Assert.True(getResponse.VirtualMachineProfile.SecurityProfile.EncryptionAtHost == encryptionAtHostEnabled.Value,
+                    Assert.True(getResponse.VirtualMachineProfile.SecurityProfile.EncryptionAtHost == encryptionAtHostEnabled.Value, 
                         "SecurityProfile.EncryptionAtHost is not same as expected");
                 }
 
