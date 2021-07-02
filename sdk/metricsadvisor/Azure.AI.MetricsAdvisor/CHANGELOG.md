@@ -38,8 +38,8 @@
 - Renamed `AlertQueryTimeMode.AnomalyTime` to `AnomalyDetectedOn`, and `FeedbackQueryTimeMode.FeedbackCreatedTime` to `FeedbackCreatedOn`.
 - Renamed `DataFeedRollupSettings.AlreadyRollupIdentificationValue` to `RollupIdentificationValue`.
 - In `DataFeedRollupType`, renamed `AlreadyRollup` to `AlreadyRolledUp`, `NeedRollup` to `RollupNeeded`, and `NoRollup` to `NoRollupNeeded`.
-- In `DataFeed`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ViewersEmails` to `ViewerEmails`.
-- In `NotificationHook`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ExternalLink` to `ExternalUri`.
+- In `DataFeed`, renamed `AdministratorsEmails` to `Administrators`, `ViewersEmails` to `Viewers`, and `CreatorEmail` to `Creator`.
+- In `NotificationHook`, renamed `AdministratorsEmails` to `Administrators`, and `ExternalLink` to `ExternalUri`.
 - In `MetricAnomalyFeedback`, renamed `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`, and `AnomalyDetectionConfigurationSnapshot` to `DetectionConfigurationSnapshot`.
 - In `ChangeThresholdCondition`, renamed `IsWithinRange` to `WithinRange`. Similarly, the constructor parameter `isWithinRange` has been renamed to `withinRange`.
 - In `MetricSeriesData`, removed the `Definition` property. Now, properties `MetricId` and `SeriesKey` can be accessed directly from `MetricSeriesData`.
