@@ -224,10 +224,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string BlobTemplate { get { throw null; } set { } }
         public string Container { get { throw null; } set { } }
         public void UpdateConnectionString(string connectionString) { }
-        public enum AuthenticationType
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct AuthenticationType : System.IEquatable<Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType>
         {
-            Basic = 0,
-            ManagedIdentity = 1,
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public static Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType Basic { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType ManagedIdentity { get { throw null; } }
+            public bool Equals(Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType other) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override bool Equals(object obj) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override int GetHashCode() { throw null; }
+            public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType right) { throw null; }
+            public static implicit operator Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType (string value) { throw null; }
+            public static bool operator !=(Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType right) { throw null; }
+            public override string ToString() { throw null; }
         }
     }
     public partial class AzureCosmosDbDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
@@ -245,12 +257,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string DataSourceCredentialId { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public void UpdateConnectionString(string connectionString) { }
-        public enum AuthenticationType
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct AuthenticationType : System.IEquatable<Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType>
         {
-            Basic = 0,
-            ManagedIdentity = 1,
-            ServicePrincipal = 2,
-            ServicePrincipalInKeyVault = 3,
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType Basic { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType ManagedIdentity { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType ServicePrincipal { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType ServicePrincipalInKeyVault { get { throw null; } }
+            public bool Equals(Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType other) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override bool Equals(object obj) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override int GetHashCode() { throw null; }
+            public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType right) { throw null; }
+            public static implicit operator Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType (string value) { throw null; }
+            public static bool operator !=(Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType right) { throw null; }
+            public override string ToString() { throw null; }
         }
     }
     public partial class AzureDataLakeStorageDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
@@ -263,12 +287,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string FileSystemName { get { throw null; } set { } }
         public string FileTemplate { get { throw null; } set { } }
         public void UpdateAccountKey(string accountKey) { }
-        public enum AuthenticationType
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct AuthenticationType : System.IEquatable<Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType>
         {
-            Basic = 0,
-            SharedKey = 1,
-            ServicePrincipal = 2,
-            ServicePrincipalInKeyVault = 3,
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType Basic { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType ServicePrincipal { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType ServicePrincipalInKeyVault { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType SharedKey { get { throw null; } }
+            public bool Equals(Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType other) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override bool Equals(object obj) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override int GetHashCode() { throw null; }
+            public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType right) { throw null; }
+            public static implicit operator Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType (string value) { throw null; }
+            public static bool operator !=(Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType right) { throw null; }
+            public override string ToString() { throw null; }
         }
     }
     public partial class AzureEventHubsDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
@@ -495,13 +531,25 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string DataSourceCredentialId { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public void UpdateConnectionString(string connectionString) { }
-        public enum AuthenticationType
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct AuthenticationType : System.IEquatable<Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType>
         {
-            Basic = 0,
-            ManagedIdentity = 1,
-            SqlConnectionString = 2,
-            ServicePrincipal = 3,
-            ServicePrincipalInKeyVault = 4,
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public static Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType Basic { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType ManagedIdentity { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType ServicePrincipal { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType ServicePrincipalInKeyVault { get { throw null; } }
+            public static Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType SqlConnectionString { get { throw null; } }
+            public bool Equals(Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType other) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override bool Equals(object obj) { throw null; }
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+            public override int GetHashCode() { throw null; }
+            public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType right) { throw null; }
+            public static implicit operator Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType (string value) { throw null; }
+            public static bool operator !=(Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType right) { throw null; }
+            public override string ToString() { throw null; }
         }
     }
     public partial class WebNotificationHook : Azure.AI.MetricsAdvisor.Administration.NotificationHook

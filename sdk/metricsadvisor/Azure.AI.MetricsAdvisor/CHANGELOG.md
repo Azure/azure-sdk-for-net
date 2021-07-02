@@ -63,6 +63,7 @@
 - The class `NotificationHook` is now abstract.
 - The class `DatasourceCredential` (now called `DataSourceCredentialEntity`) is now abstract.
 - `AlertQueryTimeMode` and `FeedbackQueryTimeMode` are now regular enums.
+- The enum `AuthenticationType` present in some `DataFeedSource` subtypes is now an extensible enum.
 
 ## 1.0.0-beta.4 (2021-06-07)
 

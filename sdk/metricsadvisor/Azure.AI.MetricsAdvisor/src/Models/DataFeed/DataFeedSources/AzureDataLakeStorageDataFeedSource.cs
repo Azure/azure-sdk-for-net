@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
@@ -76,43 +77,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             DirectoryTemplate = parameter.DirectoryTemplate;
             FileTemplate = parameter.FileTemplate;
 
-            SetAuthentication(authentication);
+            Authentication = (authentication == null) ? default(AuthenticationType?) : new AuthenticationType(authentication.ToString());
             DataSourceCredentialId = credentialId;
         }
-
-        /// <summary>
-        /// The different ways of authenticating to an <see cref="AzureDataLakeStorageDataFeedSource"/>. Be aware that
-        /// some authentication types require you to have a <see cref="DataSourceCredentialEntity"/> in the service. In this
-        /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
-        /// to use. Defaults to <see cref="Basic"/>.
-        /// </summary>
-        public enum AuthenticationType
-        {
-            /// <summary>
-            /// Only uses the <see cref="AccountKey"/> present in this <see cref="AzureDataLakeStorageDataFeedSource"/>
-            /// instance for authentication.
-            /// </summary>
-            Basic,
-
-            /// <summary>
-            /// Uses a Data Lake Storage Gen 2 shared key for authentication. You need to have a
-            /// <see cref="DataLakeSharedKeyCredentialEntity"/> in the server in order to use this type of authentication.
-            /// </summary>
-            SharedKey,
-
-            /// <summary>
-            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalCredentialEntity"/>
-            /// in the server in order to use this type of authentication.
-            /// </summary>
-            ServicePrincipal,
-
-            /// <summary>
-            /// Uses Service Principal authentication, but the client ID and the client secret must be
-            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultCredentialEntity"/>
-            /// in the server in order to use this type of authentication.
-            /// </summary>
-            ServicePrincipalInKeyVault
-        };
 
         /// <summary>
         /// The method used to authenticate to this <see cref="AzureDataLakeStorageDataFeedSource"/>. Be aware that some
@@ -191,34 +158,80 @@ namespace Azure.AI.MetricsAdvisor.Administration
             AccountKey = accountKey;
         }
 
-        internal AuthenticationTypeEnum? GetAuthenticationTypeEnum() => Authentication switch
+        /// <summary>
+        /// The different ways of authenticating to an <see cref="AzureDataLakeStorageDataFeedSource"/>. Be aware that
+        /// some authentication types require you to have a <see cref="DataSourceCredentialEntity"/> in the service. In this
+        /// case, you also need to set the property <see cref="DataSourceCredentialId"/> to specify which credential
+        /// to use. Defaults to <see cref="Basic"/>.
+        /// </summary>
+#pragma warning disable CA1034 // Nested types should not be visible
+        public readonly partial struct AuthenticationType : IEquatable<AuthenticationType>
+#pragma warning restore CA1034 // Nested types should not be visible
         {
-            null => default(AuthenticationTypeEnum?),
-            AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
-            AuthenticationType.SharedKey => AuthenticationTypeEnum.DataLakeGen2SharedKey,
-            AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
-            AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
-            _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
-        };
+            private readonly string _value;
 
-        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
-        {
-            if (authentication == AuthenticationTypeEnum.Basic)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="AuthenticationType"/> structure.
+            /// </summary>
+            /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+            internal AuthenticationType(string value)
             {
-                Authentication = AuthenticationType.Basic;
+                _value = value ?? throw new ArgumentNullException(nameof(value));
             }
-            else if (authentication == AuthenticationTypeEnum.DataLakeGen2SharedKey)
-            {
-                Authentication = AuthenticationType.SharedKey;
-            }
-            else if (authentication == AuthenticationTypeEnum.ServicePrincipal)
-            {
-                Authentication = AuthenticationType.ServicePrincipal;
-            }
-            else if (authentication == AuthenticationTypeEnum.ServicePrincipalInKV)
-            {
-                Authentication = AuthenticationType.ServicePrincipalInKeyVault;
-            }
+
+            /// <summary>
+            /// Only uses the <see cref="AccountKey"/> present in this <see cref="AzureDataLakeStorageDataFeedSource"/>
+            /// instance for authentication.
+            /// </summary>
+            public static AuthenticationType Basic => new AuthenticationType(AuthenticationTypeEnum.Basic.ToString());
+
+            /// <summary>
+            /// Uses a Data Lake Storage Gen 2 shared key for authentication. You need to have a
+            /// <see cref="DataLakeSharedKeyCredentialEntity"/> in the server in order to use this type of authentication.
+            /// </summary>
+            public static AuthenticationType SharedKey => new AuthenticationType(AuthenticationTypeEnum.DataLakeGen2SharedKey.ToString());
+
+            /// <summary>
+            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalCredentialEntity"/>
+            /// in the server in order to use this type of authentication.
+            /// </summary>
+            public static AuthenticationType ServicePrincipal => new AuthenticationType(AuthenticationTypeEnum.ServicePrincipal.ToString());
+
+            /// <summary>
+            /// Uses Service Principal authentication, but the client ID and the client secret must be
+            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultCredentialEntity"/>
+            /// in the server in order to use this type of authentication.
+            /// </summary>
+            public static AuthenticationType ServicePrincipalInKeyVault => new AuthenticationType(AuthenticationTypeEnum.ServicePrincipalInKV.ToString());
+
+            /// <summary>
+            /// Determines if two <see cref="AuthenticationType"/> values are the same.
+            /// </summary>
+            public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
+
+            /// <summary>
+            /// Determines if two <see cref="AuthenticationType"/> values are not the same.
+            /// </summary>
+            public static bool operator !=(AuthenticationType left, AuthenticationType right) => !left.Equals(right);
+
+            /// <summary>
+            /// Converts a <c>string</c> to an <see cref="AuthenticationType"/>.
+            /// </summary>
+            public static implicit operator AuthenticationType(string value) => new AuthenticationType(value);
+
+            /// <inheritdoc/>
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public override bool Equals(object obj) => obj is AuthenticationType other && Equals(other);
+
+            /// <inheritdoc/>
+            public bool Equals(AuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+            /// <inheritdoc/>
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+            /// <inheritdoc/>
+            public override string ToString() => _value;
         }
     }
 }
