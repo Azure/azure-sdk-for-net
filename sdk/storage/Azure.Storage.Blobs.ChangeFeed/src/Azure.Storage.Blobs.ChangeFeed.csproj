@@ -13,6 +13,7 @@
       in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.ChangeFeed/BreakingChanges.txt
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
