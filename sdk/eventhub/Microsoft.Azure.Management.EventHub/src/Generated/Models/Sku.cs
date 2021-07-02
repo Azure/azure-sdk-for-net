@@ -82,10 +82,6 @@ namespace Microsoft.Azure.Management.EventHub.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Capacity > 20)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Capacity", 20);
-            }
             if (Capacity < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "Capacity", 0);

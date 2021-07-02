@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.EventHub
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -496,12 +498,12 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='virtualNetworkRuleName'>
             /// The Virtual Network Rule name.
             /// </param>
-            /// <param name='parameters'>
-            /// The Namespace VirtualNetworkRule.
+            /// <param name='virtualNetworkSubnetId'>
+            /// ARM ID of Virtual Network Subnet
             /// </param>
-            public static VirtualNetworkRule CreateOrUpdateVirtualNetworkRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters)
+            public static VirtualNetworkRule CreateOrUpdateVirtualNetworkRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, string virtualNetworkSubnetId = default(string))
             {
-                return operations.CreateOrUpdateVirtualNetworkRuleAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateVirtualNetworkRuleAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, virtualNetworkSubnetId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -519,15 +521,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='virtualNetworkRuleName'>
             /// The Virtual Network Rule name.
             /// </param>
-            /// <param name='parameters'>
-            /// The Namespace VirtualNetworkRule.
+            /// <param name='virtualNetworkSubnetId'>
+            /// ARM ID of Virtual Network Subnet
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkRule> CreateOrUpdateVirtualNetworkRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkRule> CreateOrUpdateVirtualNetworkRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, string virtualNetworkSubnetId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateVirtualNetworkRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateVirtualNetworkRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, virtualNetworkSubnetId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -763,12 +765,12 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='authorizationRuleName'>
             /// The authorization rule name.
             /// </param>
-            /// <param name='parameters'>
-            /// The shared access AuthorizationRule.
+            /// <param name='rights'>
+            /// The rights associated with the rule.
             /// </param>
-            public static AuthorizationRule CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, AuthorizationRule parameters)
+            public static AuthorizationRule CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, IList<string> rights)
             {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, rights).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -786,15 +788,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='authorizationRuleName'>
             /// The authorization rule name.
             /// </param>
-            /// <param name='parameters'>
-            /// The shared access AuthorizationRule.
+            /// <param name='rights'>
+            /// The rights associated with the rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AuthorizationRule> CreateOrUpdateAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, AuthorizationRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthorizationRule> CreateOrUpdateAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, IList<string> rights, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, rights, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -951,12 +953,17 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='authorizationRuleName'>
             /// The authorization rule name.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters required to regenerate the connection string.
+            /// <param name='keyType'>
+            /// The access key to regenerate. Possible values include: 'PrimaryKey',
+            /// 'SecondaryKey'
             /// </param>
-            public static AccessKeys RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
+            /// <param name='key'>
+            /// Optional, if the key value provided, is set for KeyType or autogenerated
+            /// Key value set for keyType
+            /// </param>
+            public static AccessKeys RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, KeyType keyType, string key = default(string))
             {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters).GetAwaiter().GetResult();
+                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, authorizationRuleName, keyType, key).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -975,15 +982,20 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='authorizationRuleName'>
             /// The authorization rule name.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters required to regenerate the connection string.
+            /// <param name='keyType'>
+            /// The access key to regenerate. Possible values include: 'PrimaryKey',
+            /// 'SecondaryKey'
+            /// </param>
+            /// <param name='key'>
+            /// Optional, if the key value provided, is set for KeyType or autogenerated
+            /// Key value set for keyType
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessKeys> RegenerateKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessKeys> RegenerateKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, KeyType keyType, string key = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, keyType, key, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -995,12 +1007,12 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given Namespace name
+            /// <param name='name'>
+            /// Name to check the namespace name availability
             /// </param>
-            public static CheckNameAvailabilityResult CheckNameAvailability(this INamespacesOperations operations, CheckNameAvailabilityParameter parameters)
+            public static CheckNameAvailabilityResult CheckNameAvailability(this INamespacesOperations operations, string name)
             {
-                return operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1009,15 +1021,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given Namespace name
+            /// <param name='name'>
+            /// Name to check the namespace name availability
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this INamespacesOperations operations, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this INamespacesOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

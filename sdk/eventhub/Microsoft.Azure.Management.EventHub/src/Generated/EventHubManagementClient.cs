@@ -44,6 +44,11 @@ namespace Microsoft.Azure.Management.EventHub
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// Subscription credentials that uniquely identify a Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
@@ -77,6 +82,16 @@ namespace Microsoft.Azure.Management.EventHub
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Gets the IConfigurationOperations.
@@ -351,6 +366,8 @@ namespace Microsoft.Azure.Management.EventHub
         {
             Clusters = new ClustersOperations(this);
             Namespaces = new NamespacesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             Configuration = new ConfigurationOperations(this);
             DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
             EventHubs = new EventHubsOperations(this);
@@ -358,6 +375,7 @@ namespace Microsoft.Azure.Management.EventHub
             Operations = new Operations(this);
             Regions = new RegionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2018-01-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

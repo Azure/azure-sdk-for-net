@@ -130,11 +130,14 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -145,7 +148,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAuthorizationRules", tracingParameters);
             }
@@ -157,9 +159,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -298,8 +300,8 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='authorizationRuleName'>
         /// The authorization rule name.
         /// </param>
-        /// <param name='parameters'>
-        /// The shared access AuthorizationRule.
+        /// <param name='rights'>
+        /// The rights associated with the rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -322,7 +324,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AuthorizationRule>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, AuthorizationRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AuthorizationRule>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, IList<string> rights, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -380,19 +382,23 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
                 }
             }
-            if (parameters == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
+            if (rights == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "rights");
+            }
+            AuthorizationRule parameters = new AuthorizationRule();
+            if (rights != null)
+            {
+                parameters.Rights = rights;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -405,7 +411,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("eventHubName", eventHubName);
                 tracingParameters.Add("authorizationRuleName", authorizationRuleName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateAuthorizationRule", tracingParameters);
             }
@@ -418,9 +423,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{authorizationRuleName}", System.Uri.EscapeDataString(authorizationRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -642,11 +647,14 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -658,7 +666,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
                 tracingParameters.Add("authorizationRuleName", authorizationRuleName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAuthorizationRule", tracingParameters);
             }
@@ -671,9 +678,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{authorizationRuleName}", System.Uri.EscapeDataString(authorizationRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -886,11 +893,14 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -902,7 +912,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
                 tracingParameters.Add("authorizationRuleName", authorizationRuleName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAuthorizationRule", tracingParameters);
             }
@@ -915,9 +924,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{authorizationRuleName}", System.Uri.EscapeDataString(authorizationRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1115,11 +1124,14 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1131,7 +1143,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
                 tracingParameters.Add("authorizationRuleName", authorizationRuleName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListKeys", tracingParameters);
             }
@@ -1144,9 +1155,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{authorizationRuleName}", System.Uri.EscapeDataString(authorizationRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1283,9 +1294,13 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='authorizationRuleName'>
         /// The authorization rule name.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to regenerate the AuthorizationRule Keys
-        /// (PrimaryKey/SecondaryKey).
+        /// <param name='keyType'>
+        /// The access key to regenerate. Possible values include: 'PrimaryKey',
+        /// 'SecondaryKey'
+        /// </param>
+        /// <param name='key'>
+        /// Optional, if the key value provided, is set for KeyType or autogenerated
+        /// Key value set for keyType
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1308,7 +1323,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AccessKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AccessKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, KeyType keyType, string key = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1366,19 +1381,20 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
                 }
             }
-            if (parameters == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
+            RegenerateAccessKeyParameters parameters = new RegenerateAccessKeyParameters();
+            if (key != null)
+            {
+                parameters.KeyType = keyType;
+                parameters.Key = key;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1391,7 +1407,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("eventHubName", eventHubName);
                 tracingParameters.Add("authorizationRuleName", authorizationRuleName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegenerateKeys", tracingParameters);
             }
@@ -1404,9 +1419,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{authorizationRuleName}", System.Uri.EscapeDataString(authorizationRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1606,6 +1621,10 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1626,7 +1645,6 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1636,7 +1654,6 @@ namespace Microsoft.Azure.Management.EventHub
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1649,9 +1666,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{namespaceName}", System.Uri.EscapeDataString(namespaceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (skip != null)
             {
@@ -1872,11 +1889,14 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 parameters.Validate();
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1888,7 +1908,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -1900,9 +1919,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2107,11 +2126,14 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2122,7 +2144,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -2134,9 +2155,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2320,11 +2341,14 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2335,7 +2359,6 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -2347,9 +2370,9 @@ namespace Microsoft.Azure.Management.EventHub
             _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

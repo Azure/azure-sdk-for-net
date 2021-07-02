@@ -183,12 +183,12 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='namespaceName'>
             /// The Namespace name
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given Alias name
+            /// <param name='name'>
+            /// Name to check the namespace name availability
             /// </param>
-            public static CheckNameAvailabilityResult CheckNameAvailability(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters)
+            public static CheckNameAvailabilityResult CheckNameAvailability(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string name)
             {
-                return operations.CheckNameAvailabilityAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(resourceGroupName, namespaceName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,15 +203,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='namespaceName'>
             /// The Namespace name
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given Alias name
+            /// <param name='name'>
+            /// Name to check the namespace name availability
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, namespaceName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -272,12 +272,16 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters required to create an Alias(Disaster Recovery configuration)
+            /// <param name='partnerNamespace'>
+            /// ARM Id of the Primary/Secondary eventhub namespace name, which is part of
+            /// GEO DR pairing
             /// </param>
-            public static ArmDisasterRecovery CreateOrUpdate(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters)
+            /// <param name='alternateName'>
+            /// Alternate name specified when alias and namespace names are same.
+            /// </param>
+            public static ArmDisasterRecovery CreateOrUpdate(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string partnerNamespace = default(string), string alternateName = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, alias, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, alias, partnerNamespace, alternateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -295,15 +299,19 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters required to create an Alias(Disaster Recovery configuration)
+            /// <param name='partnerNamespace'>
+            /// ARM Id of the Primary/Secondary eventhub namespace name, which is part of
+            /// GEO DR pairing
+            /// </param>
+            /// <param name='alternateName'>
+            /// Alternate name specified when alias and namespace names are same.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ArmDisasterRecovery> CreateOrUpdateAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ArmDisasterRecovery> CreateOrUpdateAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string partnerNamespace = default(string), string alternateName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, partnerNamespace, alternateName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

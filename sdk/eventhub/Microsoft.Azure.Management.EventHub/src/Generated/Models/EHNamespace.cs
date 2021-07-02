@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// description</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Namespace.</param>
+        /// <param name="status">Status of the Namespace.</param>
         /// <param name="createdAt">The time the Namespace was created.</param>
         /// <param name="updatedAt">The time the Namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
@@ -63,12 +64,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// zones.</param>
         /// <param name="encryption">Properties of BYOK Encryption
         /// description</param>
-        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Identity identity = default(Identity), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string clusterArmId = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption))
+        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Identity identity = default(Identity), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string clusterArmId = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
             Identity = identity;
             ProvisioningState = provisioningState;
+            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
@@ -104,6 +106,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets status of the Namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets the time the Namespace was created.

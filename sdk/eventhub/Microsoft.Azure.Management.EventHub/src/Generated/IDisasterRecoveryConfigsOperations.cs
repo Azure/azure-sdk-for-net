@@ -123,8 +123,8 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters to check availability of the given Alias name
+        /// <param name='name'>
+        /// Name to check the namespace name availability
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all Alias(Disaster Recovery configurations)
         /// </summary>
@@ -179,9 +179,12 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='alias'>
         /// The Disaster Recovery configuration name
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters required to create an Alias(Disaster Recovery
-        /// configuration)
+        /// <param name='partnerNamespace'>
+        /// ARM Id of the Primary/Secondary eventhub namespace name, which is
+        /// part of GEO DR pairing
+        /// </param>
+        /// <param name='alternateName'>
+        /// Alternate name specified when alias and namespace names are same.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -198,7 +201,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ArmDisasterRecovery>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ArmDisasterRecovery>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, string partnerNamespace = default(string), string alternateName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an Alias(Disaster Recovery configuration)
         /// </summary>

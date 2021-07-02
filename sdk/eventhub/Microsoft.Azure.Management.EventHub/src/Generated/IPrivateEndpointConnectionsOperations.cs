@@ -19,31 +19,19 @@ namespace Microsoft.Azure.Management.EventHub
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ConsumerGroupsOperations operations.
+    /// PrivateEndpointConnectionsOperations operations.
     /// </summary>
-    public partial interface IConsumerGroupsOperations
+    public partial interface IPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Creates or updates an Event Hubs consumer group as a nested
-        /// resource within a Namespace.
+        /// Gets the available PrivateEndpointConnections within a namespace.
+        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group within the azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
-        /// </param>
-        /// <param name='eventHubName'>
-        /// The Event Hub name
-        /// </param>
-        /// <param name='consumerGroupName'>
-        /// The consumer group name
-        /// </param>
-        /// <param name='userMetadata'>
-        /// User Metadata is a placeholder to store user-defined string data
-        /// with maximum length 1024. e.g. it can be used to store descriptive
-        /// data, such as list of teams and their contact information also
-        /// user-defined configuration settings can be stored.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -60,10 +48,10 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConsumerGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, string userMetadata = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a consumer group from the specified Event Hub and resource
-        /// group.
+        /// Creates or updates PrivateEndpointConnections of service namespace.
+        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group within the azure subscription.
@@ -71,39 +59,12 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='eventHubName'>
-        /// The Event Hub name
+        /// <param name='privateEndpointConnectionName'>
+        /// The PrivateEndpointConnection name
         /// </param>
-        /// <param name='consumerGroupName'>
-        /// The consumer group name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a description for the specified consumer group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The Namespace name
-        /// </param>
-        /// <param name='eventHubName'>
-        /// The Event Hub name
-        /// </param>
-        /// <param name='consumerGroupName'>
-        /// The consumer group name
+        /// <param name='parameters'>
+        /// Parameters supplied to update Status of PrivateEndPoint Connection
+        /// to namespace resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -120,10 +81,11 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConsumerGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the consumer groups in a Namespace. An empty feed is
-        /// returned if no consumer group exists in the Namespace.
+        /// Deletes an existing namespace. This operation also removes all
+        /// associated resources under the namespace.
+        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group within the azure subscription.
@@ -131,18 +93,35 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='eventHubName'>
-        /// The Event Hub name
+        /// <param name='privateEndpointConnectionName'>
+        /// The PrivateEndpointConnection name
         /// </param>
-        /// <param name='skip'>
-        /// Skip is only used if a previous operation returned a partial
-        /// result. If a previous response contains a nextLink element, the
-        /// value of the nextLink element will include a skip parameter that
-        /// specifies a starting point to use for subsequent calls.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        /// <param name='top'>
-        /// May be used to limit the number of results to the most recent N
-        /// usageDetails.
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a description for the specified Private Endpoint Connection
+        /// name.
+        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639379.aspx" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The PrivateEndpointConnection name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -159,10 +138,37 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ConsumerGroup>>> ListByEventHubWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, int? skip = default(int?), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the consumer groups in a Namespace. An empty feed is
-        /// returned if no consumer group exists in the Namespace.
+        /// Deletes an existing namespace. This operation also removes all
+        /// associated resources under the namespace.
+        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The PrivateEndpointConnection name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the available PrivateEndpointConnections within a namespace.
+        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -182,6 +188,6 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ConsumerGroup>>> ListByEventHubNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
