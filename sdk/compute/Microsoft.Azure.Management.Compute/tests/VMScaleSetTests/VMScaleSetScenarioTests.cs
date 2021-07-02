@@ -187,10 +187,10 @@ namespace Compute.Tests
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(
-                        context, 
-                        hasManagedDisks: true, 
-                        useVmssExtension: false, 
-                        zones: new List<string> { "1", "3" }, 
+                        context,
+                        hasManagedDisks: true,
+                        useVmssExtension: false,
+                        zones: new List<string> { "1", "3" },
                         osDiskSizeInGB: 175);
                 }
             }
@@ -250,6 +250,28 @@ namespace Compute.Tests
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
                         vmSize: VirtualMachineSizeTypes.StandardD2sV3, faultDomainCount: 1, capacity: 1, shouldOverProvision: false,
                         validateVmssVMInstanceView: true, validateListSku: false, deleteAsPartOfTest: false);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_UsingCapacityReservationGroup")]
+        public void TestVMScaleSetScenarioOperations_UsingCapacityReservationGroup()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, associateWithCapacityReservationGroup: true,
+                        vmSize: VirtualMachineSizeTypes.StandardDS1V2, faultDomainCount: 1, shouldOverProvision: false,
+                        validateVmssVMInstanceView: true, capacity: 1, validateListSku: false, deleteAsPartOfTest: false);
                 }
             }
             finally
@@ -489,12 +511,13 @@ namespace Compute.Tests
         }
 
 
-        private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
-            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
+        private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true,
+            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
-            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true)
+            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true,
+            bool associateWithCapacityReservationGroup = false)
         {
             EnsureClientsInitialized(context);
 
@@ -536,6 +559,18 @@ namespace Compute.Tests
                     dedicatedHostReferenceId = Helpers.GetDedicatedHostRef(m_subId, rgName, dedicatedHostGroupName, dedicatedHostName);
                 }
 
+                bool singlePlacementGroup = true;
+                string capacityReservationGroupName = null, capacityReservationGroupReferenceId = null, capacityReservationName = null;
+                if (associateWithCapacityReservationGroup)
+                {
+                    capacityReservationGroupName = ComputeManagementTestUtilities.GenerateName("crgtest");
+                    capacityReservationName = ComputeManagementTestUtilities.GenerateName("crtest");
+                    CreateCapacityReservationGroup(rgName, capacityReservationGroupName);
+                    CreateCapacityReservation(rgName, capacityReservationGroupName, capacityReservationName, VirtualMachineSizeTypes.StandardDS1V2, reservedCount: 1);
+                    capacityReservationGroupReferenceId = Helpers.GetCapacityReservationGroupRef(m_subId, rgName, capacityReservationGroupName);
+                    singlePlacementGroup = false;
+                }
+
                 VirtualMachineScaleSet getResponse = CreateVMScaleSet_NoAsyncTracking(
                     rgName,
                     vmssName,
@@ -552,7 +587,7 @@ namespace Compute.Tests
                         vmScaleSetCustomizer?.Invoke(vmScaleSet);
                     },
                     createWithManagedDisks: hasManagedDisks,
-                    hasDiffDisks : hasDiffDisks,
+                    hasDiffDisks: hasDiffDisks,
                     zones: zones,
                     osDiskSizeInGB: osDiskSizeInGB,
                     ppgId: ppgId,
@@ -563,7 +598,9 @@ namespace Compute.Tests
                     capacity: capacity,
                     dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                     dedicatedHostGroupName: dedicatedHostGroupName,
-                    dedicatedHostName: dedicatedHostName);
+                    dedicatedHostName: dedicatedHostName,
+                    capacityReservationGroupReferenceId: capacityReservationGroupReferenceId,
+                    singlePlacementGroup: singlePlacementGroup);
 
                 if (diskEncryptionSetId != null)
                 {
@@ -577,9 +614,37 @@ namespace Compute.Tests
                         "DataDisks.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
                 }
 
+                if (!string.IsNullOrEmpty(capacityReservationGroupReferenceId))
+                {
+                    Assert.True(getResponse.VirtualMachineProfile.CapacityReservation.CapacityReservationGroup != null, "CapacityReservation.CapacityReservationGroup is null");
+                    Assert.True(string.Equals(capacityReservationGroupReferenceId, getResponse.VirtualMachineProfile.CapacityReservation.CapacityReservationGroup.Id, StringComparison.OrdinalIgnoreCase),
+                        "CapacityReservation.CapacityReservationGroup.Id is not matching with expected CapacityReservationGroup resource");
+
+                    CapacityReservation capacityReservation =
+                         m_CrpClient.CapacityReservations.Get(rgName, capacityReservationGroupName, capacityReservationName, CapacityReservationInstanceViewTypes.InstanceView);
+
+                    var queryForVmssVM = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineScaleSetVM>();
+                    queryForVmssVM.SetFilter(vm => vm.LatestModelApplied == true);
+                    var listVmssVMsResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, queryForVmssVM);
+                    string expectedVMReferenceId = Helpers.GetVMScaleSetVMReferenceId(m_subId, rgName, vmssName, listVmssVMsResponse.First().InstanceId);
+
+                    Assert.True(capacityReservation.VirtualMachinesAssociated.Any(), "capacityReservation.VirtualMachinesAssociated is not empty");
+                    Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.VirtualMachinesAssociated.First().Id, StringComparison.OrdinalIgnoreCase),
+                        "capacityReservation.VirtualMachinesAssociated are not matching");
+
+                    /// I need to add this implementation after CR Cache refresh code is checked in for VMSS
+                    /// PR: https://dev.azure.com/msazure/One/_git/Compute-CPlat-Core/pullrequest/4741496
+                    /// ADO: https://dev.azure.com/msazure/One/_workitems/edit/10225436/
+                    /*
+                    Assert.True(capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.Any(), "InstanceView.UtilizationInfo.VirtualMachinesAllocated is empty");
+                    Assert.True(string.Equals(expectedVMReferenceId, capacityReservation.InstanceView.UtilizationInfo.VirtualMachinesAllocated.First().Id),
+                        "InstanceView.UtilizationInfo.VirtualMachinesAllocated are not matching");
+                    */
+                }
+
                 if (encryptionAtHostEnabled != null)
                 {
-                    Assert.True(getResponse.VirtualMachineProfile.SecurityProfile.EncryptionAtHost == encryptionAtHostEnabled.Value, 
+                    Assert.True(getResponse.VirtualMachineProfile.SecurityProfile.EncryptionAtHost == encryptionAtHostEnabled.Value,
                         "SecurityProfile.EncryptionAtHost is not same as expected");
                 }
 
