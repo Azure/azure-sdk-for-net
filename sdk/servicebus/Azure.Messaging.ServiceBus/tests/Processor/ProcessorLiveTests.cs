@@ -285,9 +285,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     var message = args.Message;
-                    // wait 2x lock duration in case the
-                    // lock was renewed already
-                    await Task.Delay(lockDuration.Add(lockDuration));
+                    // wait until 5 seconds past the locked until time
+                    await Task.Delay(message.LockedUntil.Subtract(DateTimeOffset.UtcNow).Add(TimeSpan.FromSeconds(5)));
                     var lockedUntil = message.LockedUntil;
                     if (!args.CancellationToken.IsCancellationRequested)
                     {
@@ -834,7 +833,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public async Task AutoLockRenewalContinuesUntilProcessingCompletes()
         {
-            var lockDuration = TimeSpan.FromSeconds(10);
+            var lockDuration = ShortLockDuration;
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
             {
                 await using var client = CreateClient();

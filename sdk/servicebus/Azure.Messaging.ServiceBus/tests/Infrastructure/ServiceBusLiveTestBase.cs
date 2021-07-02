@@ -14,8 +14,8 @@ namespace Azure.Messaging.ServiceBus.Tests
     {
         private const int DefaultTryTimeout = 10;
 
-        // for tests that use short lock durations, don't go below 5 seconds to avoid flakiness.
-        protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(5);
+        // for tests that use short lock durations, don't go below 10 seconds to avoid flakiness.
+        protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
 
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 
