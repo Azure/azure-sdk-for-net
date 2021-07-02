@@ -19,8 +19,9 @@ namespace Azure.Data.Tables
                 return dictEntity.ToOdataAnnotatedDictionary();
             }
 
-            var dictionary = new Dictionary<string, object>();
-            TablesTypeBinder.Shared.Serialize(entity, entity.GetType(), dictionary);
+            var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(entity.GetType());
+            var dictionary = new Dictionary<string, object>(typeInfo.MemberCount * 2);
+            typeInfo.Serialize(entity, dictionary);
             return dictionary;
         }
     }

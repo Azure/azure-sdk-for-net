@@ -4,10 +4,8 @@
 #nullable enable
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
 
 namespace Azure.Data.Tables
 {
@@ -117,10 +115,11 @@ namespace Azure.Data.Tables
         internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : class, ITableEntity, new()
         {
             var result = new List<T>(entityList.Count);
+            var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(typeof(T));
 
             foreach (var entity in entityList)
             {
-                var tableEntity = entity.ToTableEntity<T>();
+                var tableEntity = entity.ToTableEntity<T>(typeInfo);
 
                 result.Add(tableEntity);
             }
@@ -131,7 +130,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static T ToTableEntity<T>(this IDictionary<string, object> entity) where T : class, ITableEntity, new()
+        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, TablesTypeBinder.BoundTypeInfo? typeInfo = null) where T : class, ITableEntity, new()
         {
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
             {
@@ -147,7 +146,8 @@ namespace Azure.Data.Tables
                 return result;
             }
 
-            return TablesTypeBinder.Shared.Deserialize<T>(entity);
+            typeInfo ??= TablesTypeBinder.Shared.GetBinderInfo(typeof(T));
+            return typeInfo.Deserialize<T>(entity);
         }
     }
 }
