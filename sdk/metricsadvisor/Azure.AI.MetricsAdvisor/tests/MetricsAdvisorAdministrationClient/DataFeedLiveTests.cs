@@ -2175,9 +2175,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private T GetAuthenticationInstance<T>(string authenticationType)
         {
             Type dataSourceType = typeof(T);
-            PropertyInfo staticAuthenticationProperty = dataSourceType.GetProperty(authenticationType);
+            PropertyInfo staticProperty = dataSourceType.GetProperty(authenticationType);
 
-            return (T)staticAuthenticationProperty.GetValue(null);
+            return (T)staticProperty.GetValue(null);
         }
     }
 }
