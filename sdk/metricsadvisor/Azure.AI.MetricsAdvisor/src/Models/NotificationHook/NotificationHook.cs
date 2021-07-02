@@ -20,17 +20,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Name = name;
-            AdministratorEmails = new ChangeTrackingList<string>();
+            Administrators = new ChangeTrackingList<string>();
         }
 
-        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
+        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
         {
             HookType = hookType;
             Id = id;
             Name = name;
             Description = description;
             ExternalUri = string.IsNullOrEmpty(internalExternalLink) ? null : new Uri(internalExternalLink);
-            AdministratorEmails = administrators;
+            Administrators = administrators;
         }
 
         /// <summary>
@@ -46,10 +46,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string Name { get; set; }
 
         /// <summary>
-        /// The list of user e-mails with administrative rights to manage this hook.
+        /// The list of users with administrative rights to manage this hook. Each element in this list represents a user with
+        /// administrator access, but the value of each <c>string</c> element depends on the type of authentication to be used by
+        /// this administrator when communicating with the service. If <see cref="MetricsAdvisorKeyCredential"/> authentication will
+        /// be used, the <c>string</c> must be the user's email address. If AAD authentication will be used instead, the <c>string</c>
+        /// must uniquely identify the user's principal. For instance, for a <c>ClientSecretCredential</c>, the <c>string</c> must be
+        /// the client ID.
         /// </summary>
         [CodeGenMember("Admins")]
-        public IReadOnlyList<string> AdministratorEmails { get; }
+        public IList<string> Administrators { get; }
 
         /// <summary> The hook type. </summary>
         internal HookType HookType { get; set; }
@@ -93,7 +98,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             patch.HookName = hook.Name;
             patch.Description = hook.Description;
             patch.ExternalLink = hook.ExternalUri?.AbsoluteUri;
-            patch.Admins = hook.AdministratorEmails;
+            patch.Admins = hook.Administrators;
 
             return patch;
         }
@@ -115,7 +120,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             string hookName = default;
             Optional<string> description = default;
             Optional<string> externalLink = default;
-            Optional<IReadOnlyList<string>> admins = default;
+            Optional<IList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookType"))
@@ -164,7 +169,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         private class UnknownNotificationHook : NotificationHook
         {
-            public UnknownNotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
+            public UnknownNotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
                 : base(hookType, id, name, description, internalExternalLink, administrators)
             {
             }

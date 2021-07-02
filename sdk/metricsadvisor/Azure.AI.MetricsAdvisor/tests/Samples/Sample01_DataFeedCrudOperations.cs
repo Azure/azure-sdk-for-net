@@ -60,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedOn.Value}");
 
             Console.WriteLine($"Data feed administrators:");
-            foreach (string admin in createdDataFeed.AdministratorEmails)
+            foreach (string admin in createdDataFeed.Administrators)
             {
                 Console.WriteLine($" - {admin}");
             }
@@ -103,8 +103,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
             Console.WriteLine($"Data feed created time: {dataFeed.CreatedOn.Value}");
 
-            Console.WriteLine($"Data feed administrators emails:");
-            foreach (string admin in dataFeed.AdministratorEmails)
+            Console.WriteLine($"Data feed administrators:");
+            foreach (string admin in dataFeed.Administrators)
             {
                 Console.WriteLine($" - {admin}");
             }

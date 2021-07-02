@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string Name { get; set; }
 
         /// <summary>
-        /// Filters the result by <see cref="DataFeed.CreatorEmail"/>.
+        /// Filters the result by <see cref="DataFeed.Creator"/>.
         /// </summary>
         public string Creator { get; set; }
 

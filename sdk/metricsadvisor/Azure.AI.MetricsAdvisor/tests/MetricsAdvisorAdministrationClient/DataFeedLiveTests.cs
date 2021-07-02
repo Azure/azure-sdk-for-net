@@ -1439,9 +1439,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.AccessMode, Is.Not.Null);
                 Assert.That(dataFeed.AccessMode, Is.Not.EqualTo(default(DataFeedAccessMode)));
                 Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null);
-                Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
-                Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
-                Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
+                Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.Administrators, Is.Not.Null);
+                Assert.That(dataFeed.Viewers, Is.Not.Null);
                 Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
                 Assert.That(dataFeed.CreatedOn, Is.Not.Null);
                 Assert.That(dataFeed.CreatedOn, Is.Not.EqualTo(default(DateTimeOffset)));
@@ -1583,8 +1583,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 MissingDataPointFillSettings = new(DataFeedMissingDataPointFillType.CustomValue) { CustomFillValue = 45.0 }
             };
 
-            dataFeed.AdministratorEmails.Add("fake@admin.com");
-            dataFeed.ViewerEmails.Add("fake@viewer.com");
+            dataFeed.Administrators.Add("fake@admin.com");
+            dataFeed.Viewers.Add("fake@viewer.com");
 
             dataFeed.Schema.MetricColumns.Add(new("cost") { DisplayName = "costDisplayName", Description = "costDescription" });
             dataFeed.Schema.MetricColumns.Add(new("revenue") { DisplayName = "revenueDisplayName", Description = "revenueDescription" });
@@ -1612,12 +1612,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // For this reason, we do a conditional validation in the ValidateUpdatedDataFeedWithOptionalMembersSet
             // method.
 
-            if (dataFeed.AdministratorEmails.Count > 0)
+            if (dataFeed.Administrators.Count > 0)
             {
-                dataFeed.AdministratorEmails.Add("fake@admin.com");
+                dataFeed.Administrators.Add("fake@admin.com");
             }
 
-            dataFeed.ViewerEmails.Add("fake@viewer.com");
+            dataFeed.Viewers.Add("fake@viewer.com");
 
             dataFeed.Schema = new DataFeedSchema();
             dataFeed.Schema.TimestampColumn = "updatedTimestampColumn";
@@ -1642,10 +1642,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
             Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null.And.Empty);
-            Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
-            Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
-            Assert.That(dataFeed.AdministratorEmails.Single(), Is.EqualTo(dataFeed.CreatorEmail));
-            Assert.That(dataFeed.ViewerEmails, Is.Not.Null.And.Empty);
+            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.Administrators, Is.Not.Null);
+            Assert.That(dataFeed.Administrators.Single(), Is.EqualTo(dataFeed.Creator));
+            Assert.That(dataFeed.Viewers, Is.Not.Null.And.Empty);
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             if (expectedId != null)
@@ -1697,15 +1697,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%metric/%datafeed"));
-            Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
-            Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
-            Assert.That(dataFeed.AdministratorEmails.Count, Is.EqualTo(2));
-            Assert.That(dataFeed.AdministratorEmails, Contains.Item(dataFeed.CreatorEmail));
-            Assert.That(dataFeed.AdministratorEmails, Contains.Item("fake@admin.com"));
-            Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
-            Assert.That(dataFeed.ViewerEmails.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.ViewerEmails, Contains.Item("fake@viewer.com"));
+            Assert.That(dataFeed.Administrators, Is.Not.Null);
+            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(2));
+            Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
+            Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
+            Assert.That(dataFeed.Viewers, Is.Not.Null);
+            Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
@@ -1767,25 +1767,25 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%datafeed/%metric"));
-            Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
 
             // In the SetOptionalMembers method, we may or may not add a new admin (fake@admin.com) depending on whether
             // the data feed instance used for the Update call was created from scratch or from a GetDataFeed operation:
             // - If the data feed to update was created from scratch, we didn't update the admins list (count = 1).
             // - If the data feed to update was created from a GetDataFeed operation, we added a new fake admin (count = 2).
 
-            Assert.That(dataFeed.AdministratorEmails, Is.Not.Null);
-            Assert.That(dataFeed.AdministratorEmails.Count, Is.EqualTo(1).Or.EqualTo(2));
-            Assert.That(dataFeed.AdministratorEmails, Contains.Item(dataFeed.CreatorEmail));
+            Assert.That(dataFeed.Administrators, Is.Not.Null);
+            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1).Or.EqualTo(2));
+            Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
 
-            if (dataFeed.AdministratorEmails.Count == 2)
+            if (dataFeed.Administrators.Count == 2)
             {
-                Assert.That(dataFeed.AdministratorEmails, Contains.Item("fake@admin.com"));
+                Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
             }
 
-            Assert.That(dataFeed.ViewerEmails, Is.Not.Null);
-            Assert.That(dataFeed.ViewerEmails.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.ViewerEmails, Contains.Item("fake@viewer.com"));
+            Assert.That(dataFeed.Viewers, Is.Not.Null);
+            Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
             Assert.That(dataFeed.CreatedOn, Is.GreaterThan(justNow));
