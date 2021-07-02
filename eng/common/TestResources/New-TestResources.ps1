@@ -120,15 +120,20 @@ function MergeHashes([hashtable] $source, [psvariable] $dest) {
 }
 
 function BuildBicepFile([System.IO.FileSystemInfo] $file) {
+    if (!(Get-Command bicep -ErrorAction Ignore)) {
+        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
+        throw
+    }
+
     $tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
     $prefix = ($file | Resolve-Path -Relative) -replace '\.|/', '_'
     $templateFilePath = Join-Path $tmp ($prefix + '.test-resources.compiled.json')
 
     # Az can deploy bicep files natively, but by compiling here it becomes easier to parse the
     # outputted json for mismatched parameter declarations.
-    bicep build $templateFileObject.FullName --outfile $templateFilePath
+    bicep build $file.FullName --outfile $templateFilePath
     if ($LASTEXITCODE) {
-        Write-Error "Failure building bicep file '$($templateFileObject.FullName)'"
+        Write-Error "Failure building bicep file '$($file.FullName)'"
         throw
     }
 
@@ -162,11 +167,11 @@ try {
         Write-Verbose "Checking for '$_' files under '$root'"
         Get-ChildItem -Path $root -Filter "$_" -Recurse | ForEach-Object {
             Write-Verbose "Found template '$($_.FullName)'"
-            if ($_.Extension -eq '.bicep' -and !(Get-Command bicep -ErrorAction Ignore)) {
-                Write-Error "A bicep file was found at '$($_.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
-                throw
+            if ($_.Extension -eq '.bicep') {
+                $templateFiles += (BuildBicepFile $_)
+            } else {
+                $templateFiles += $_.FullName
             }
-            $templateFiles += $_
         }
     }
 
@@ -451,13 +456,7 @@ try {
     }
 
     # Deploy the templates
-    foreach ($templateFileObject in $templateFiles) {
-        if ($templateFileObject.Extension -eq '.bicep') {
-            $templateFile = BuildBicepFile $templateFileObject
-        } else {
-            $templateFile = $templateFileObject.FullName
-        }
-
+    foreach ($templateFile in $templateFiles) {
         # Deployment fails if we pass in more parameters than are defined.
         Write-Verbose "Removing unnecessary parameters from template '$templateFile'"
         $templateJson = Get-Content -LiteralPath $templateFile | ConvertFrom-Json
