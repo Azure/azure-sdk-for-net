@@ -736,20 +736,13 @@ namespace Azure.Storage.Blobs.Samples
                 #region Snippet:SampleSnippetsBlobMigration_GenerateSas
                 // Create a BlobClient with a shared key credential
                 BlobClient blobClient = new BlobClient(blobUri, sharedKeyCredential);
-                // Create BlobSasBuilder and specify parameters
-                BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
-                {
-                    // Since we are generating from the client, the client will have the container and blob name
-                    // Specify any optional paremeters here
-                    StartsOn = DateTimeOffset.UtcNow.AddHours(-1)
-                };
 
                 Uri sasUri;
                 // Ensure our client has the credentials required to generate a SAS
                 if (blobClient.CanGenerateSasUri)
                 {
                     // Create full, self-authenticating URI to the resource from the BlobClient
-                    sasUri = blobClient.GenerateSasUri(sasBuilder);
+                    sasUri = blobClient.GenerateSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1));
 
                     // Use newly made as SAS URI to download the blob
                     await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
@@ -759,6 +752,49 @@ namespace Azure.Storage.Blobs.Samples
                 {
                     Assert.Fail("Unable to create SAS URI");
                 }
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task GenerateSas_Builder()
+        {
+            string accountName = StorageAccountName;
+            string accountKey = StorageAccountKey;
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-blob");
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
+
+            // setup blob
+            var container = new BlobContainerClient(ConnectionString, containerName);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(container.Uri) { BlobName = blobName };
+            Uri blobUri = uriBuilder.ToUri();
+
+            try
+            {
+                await container.CreateAsync();
+                await container.GetBlobClient(blobName).UploadAsync(BinaryData.FromString("hello world"));
+
+                // Create a BlobClient with a shared key credential
+                BlobClient blobClient = new BlobClient(blobUri, sharedKeyCredential);
+                // Create BlobSasBuilder and specify parameters
+                #region Snippet:SampleSnippetsBlobMigration_GenerateSas_Builder
+                BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+                {
+                    // Since we are generating from the client, the client will have the container and blob name
+                    // Specify any optional paremeters here
+                    StartsOn = DateTimeOffset.UtcNow.AddHours(-1)
+                };
+
+                // Create full, self-authenticating URI to the resource from the BlobClient
+                Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
+                #endregion
+
+                // Use newly made as SAS URI to download the blob
+                await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
             }
             finally
             {

@@ -548,10 +548,27 @@ v12
 
 The modern SDK uses a builder pattern for constructing a SAS token. Similar to the pattern to create a SAS in v11, you can generate a SAS URI from the client. This is the preferred method in order to prevent passing the key to more than one place. It also is more convenient to generate from the client in the case of authenticating with a connection string, as you would not have to parse the connection string to grab the storage account name and key.
 
+To create a simple SAS with any optional parameters, use the convenience overload of GenerateSas which only requires taking in permissions and the expiry time.
+
 ```C# Snippet:SampleSnippetsBlobMigration_GenerateSas
 // Create a BlobClient with a shared key credential
 BlobClient blobClient = new BlobClient(blobUri, sharedKeyCredential);
-// Create BlobSasBuilder and specify parameters
+
+Uri sasUri;
+// Ensure our client has the credentials required to generate a SAS
+if (blobClient.CanGenerateSasUri)
+{
+    // Create full, self-authenticating URI to the resource from the BlobClient
+    sasUri = blobClient.GenerateSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1));
+
+    // Use newly made as SAS URI to download the blob
+    await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
+}
+```
+
+To create a more complex SAS pass the SAS builder to the GenerateSas method.
+
+```C# Snippet:SampleSnippetsBlobMigration_GenerateSas_Builder
 BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
 {
     // Since we are generating from the client, the client will have the container and blob name
@@ -559,19 +576,11 @@ BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTime
     StartsOn = DateTimeOffset.UtcNow.AddHours(-1)
 };
 
-Uri sasUri;
-// Ensure our client has the credentials required to generate a SAS
-if (blobClient.CanGenerateSasUri)
-{
-    // Create full, self-authenticating URI to the resource from the BlobClient
-    sasUri = blobClient.GenerateSasUri(sasBuilder);
-
-    // Use newly made as SAS URI to download the blob
-    await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
-}
+// Create full, self-authenticating URI to the resource from the BlobClient
+Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
 ```
 
-You can also create a SAS from the SasBuilder.
+You can also generate a SAS without use of the client.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilder
 // Create BlobSasBuilder and specify parameters
