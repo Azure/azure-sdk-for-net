@@ -613,7 +613,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContent</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadTo</term>
@@ -650,7 +650,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContentAsync</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadToAsync</term>
@@ -691,7 +691,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContent</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadTo</term>
@@ -736,7 +736,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContentAsync</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadToAsync</term>
@@ -798,7 +798,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContent</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadTo</term>
@@ -866,7 +866,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContentAsync</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadToAsync</term>
@@ -1005,7 +1005,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContent</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadTo</term>
@@ -1070,7 +1070,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <list type="bullet">
         ///     <item>
         ///         <term>DownloadContentAsync</term>
-        ///         <description>to download relatively small blobs</description>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
         ///     </item>
         ///     <item>
         ///         <term>DownloadToAsync</term>
