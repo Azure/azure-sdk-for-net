@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId">The identifier of the metric to which the <see cref="MetricChangePointFeedback"/> applies.</param>
         /// <param name="dimensionKey">
         /// A key that identifies a set of time series to which the <see cref="MetricChangePointFeedback"/> applies.
-        /// If all possible dimension columns are set, this key uniquely identifies a single time series
-        /// for the specified <paramref name="metricId"/>. If only a subset of dimension columns are set, this
+        /// If all possible dimensions are set, this key uniquely identifies a single time series
+        /// for the specified <paramref name="metricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </param>
         /// <param name="startTime">The start timestamp of feedback time range.</param>
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
         /// <param name="value"> The <see cref="Models.ChangePointFeedbackValue"/> for the feedback. </param>
         internal MetricChangePointFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value)
-            : base(metricId, dimensionFilter.DimensionFilter)
+            : base(metricId, dimensionFilter.DimensionKey)
         {
             Argument.AssertNotNull(value, nameof(value));
 

@@ -27,25 +27,25 @@ namespace Azure.AI.MetricsAdvisor.Samples
             // Only incidents from time series that are part of one of the groups specified
             // will be returned.
 
-            var dimensionColumns = new Dictionary<string, string>()
+            var dimensions = new Dictionary<string, string>()
             {
                 { "city", "Bengaluru" }
             };
-            var groupKey1 = new DimensionKey(dimensionColumns);
+            var groupKey1 = new DimensionKey(dimensions);
 
-            dimensionColumns = new Dictionary<string, string>()
+            dimensions = new Dictionary<string, string>()
             {
                 { "city", "Hong Kong" },
                 { "category", "Industrial & Scientific" }
             };
-            var groupKey2 = new DimensionKey(dimensionColumns);
+            var groupKey2 = new DimensionKey(dimensions);
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
             var options = new GetIncidentsForDetectionConfigurationOptions(startTime, endTime) { MaxPageSize = 3 };
 
-            options.DimensionsToFilter.Add(groupKey1);
-            options.DimensionsToFilter.Add(groupKey2);
+            options.DimensionKeys.Add(groupKey1);
+            options.DimensionKeys.Add(groupKey2);
 
             int incidentCount = 0;
 
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootSeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootSeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }

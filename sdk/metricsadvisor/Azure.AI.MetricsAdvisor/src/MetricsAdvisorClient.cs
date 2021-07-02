@@ -114,7 +114,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
             {
-                DimensionValueFilter = options?.DimensionValueToFilter
+                DimensionValueFilter = options?.DimensionValueFilter
             };
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
@@ -174,7 +174,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
             {
-                DimensionValueFilter = options?.DimensionValueToFilter
+                DimensionValueFilter = options?.DimensionValueFilter
             };
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
@@ -238,7 +238,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }
@@ -302,7 +302,7 @@ namespace Azure.AI.MetricsAdvisor
 
             // Deep copy filter contents from options to queryOptions.
 
-            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsToFilter)
+            foreach (KeyValuePair<string, IList<string>> kvp in options.DimensionCombinationsFilter)
             {
                 queryOptions.DimensionFilter.Add(kvp.Key, new List<string>(kvp.Value));
             }
@@ -360,7 +360,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options)); // TODO: add validation for options.SeriesToFilter?
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            IEnumerable<IDictionary<string, string>> series = options.SeriesToFilter.Select(key => key.Dimension);
+            IEnumerable<IDictionary<string, string>> series = options.SeriesKeys.Select(key => key.Dimension);
             MetricDataQueryOptions queryOptions = new MetricDataQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), series);
 
             async Task<Page<MetricSeriesData>> FirstPageFunc(int? pageSizeHint)
@@ -399,7 +399,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options)); // TODO: add validation for options.SeriesToFilter?
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            IEnumerable<IDictionary<string, string>> series = options.SeriesToFilter.Select(key => key.Dimension);
+            IEnumerable<IDictionary<string, string>> series = options.SeriesKeys.Select(key => key.Dimension);
             MetricDataQueryOptions queryOptions = new MetricDataQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), series);
 
             Page<MetricSeriesData> FirstPageFunc(int? pageSizeHint)
@@ -1202,7 +1202,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
             {
-                DimensionFilter = options.DimensionToFilter?.Clone()
+                DimensionFilter = options.SeriesGroupKey?.Clone()
             };
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
@@ -1264,7 +1264,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
             {
-                DimensionFilter = options.DimensionToFilter?.Clone()
+                DimensionFilter = options.SeriesGroupKey?.Clone()
             };
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
@@ -1310,7 +1310,11 @@ namespace Azure.AI.MetricsAdvisor
         /// Query series enriched by anomaly detection.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
-        /// <param name="seriesKeys">The detection series keys.</param>
+        /// <param name="seriesKeys">
+        /// Filters the result by time series. Each element in this enumerable represents a single time series, and only
+        /// anomalies detected in one of these series will be returned. For every element, all possible dimensions must
+        /// be set.
+        /// </param>
         /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1350,7 +1354,11 @@ namespace Azure.AI.MetricsAdvisor
         /// Query series enriched by anomaly detection.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
-        /// <param name="seriesKeys">The detection series keys.</param>
+        /// <param name="seriesKeys">
+        /// Filters the result by time series. Each element in this enumerable represents a single time series, and only
+        /// anomalies detected in one of these series will be returned. For every element, all possible dimensions must
+        /// be set.
+        /// </param>
         /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

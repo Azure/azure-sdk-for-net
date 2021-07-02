@@ -29,8 +29,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId">The identifier of the metric to which the <see cref="MetricFeedback"/> applies.</param>
         /// <param name="dimensionKey">
         /// A key that identifies a set of time series to which the <see cref="MetricFeedback"/> applies.
-        /// If all possible dimension columns are set, this key uniquely identifies a single time series
-        /// for the specified <paramref name="metricId"/>. If only a subset of dimension columns are set, this
+        /// If all possible dimensions are set, this key uniquely identifies a single time series
+        /// for the specified <paramref name="metricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionKey"/> is <c>null</c>.</exception>
@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor
             CreatedOn = createdOn;
             UserPrincipal = userPrincipal;
             MetricId = metricId;
-            DimensionKey = dimensionFilter.DimensionFilter;
+            DimensionKey = dimensionFilter.DimensionKey;
         }
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary>
         /// A key that identifies a set of time series to which the <see cref="MetricFeedback"/> applies.
-        /// If all possible dimension columns are set, this key uniquely identifies a single time series
-        /// for the specified <see cref="MetricId"/>. If only a subset of dimension columns are set, this
+        /// If all possible dimensions are set, this key uniquely identifies a single time series
+        /// for the specified <see cref="MetricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </summary>
         public DimensionKey DimensionKey { get; }

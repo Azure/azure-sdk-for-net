@@ -18,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId">The identifier of the metric to which the <see cref="MetricCommentFeedback"/> applies.</param>
         /// <param name="dimensionKey">
         /// A key that identifies a set of time series to which the <see cref="MetricCommentFeedback"/> applies.
-        /// If all possible dimension columns are set, this key uniquely identifies a single time series
-        /// for the specified <paramref name="metricId"/>. If only a subset of dimension columns are set, this
+        /// If all possible dimensions are set, this key uniquely identifies a single time series
+        /// for the specified <paramref name="metricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </param>
         /// <param name="comment">The comment content for the feedback.</param>
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="comment"> The comment content for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="comment"/> is null. </exception>
         internal MetricCommentFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, CommentFeedbackValue comment)
-            : base(metricId, dimensionFilter.DimensionFilter)
+            : base(metricId, dimensionFilter.DimensionKey)
         {
             Argument.AssertNotNullOrEmpty(comment?.CommentValue, nameof(comment.CommentValue));
 

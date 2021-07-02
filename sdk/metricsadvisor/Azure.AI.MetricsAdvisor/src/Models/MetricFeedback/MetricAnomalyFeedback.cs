@@ -21,8 +21,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId">The identifier of the metric to which the <see cref="MetricAnomalyFeedback"/> applies.</param>
         /// <param name="dimensionKey">
         /// A key that identifies a set of time series to which the <see cref="MetricAnomalyFeedback"/> applies.
-        /// If all possible dimension columns are set, this key uniquely identifies a single time series
-        /// for the specified <paramref name="metricId"/>. If only a subset of dimension columns are set, this
+        /// If all possible dimensions are set, this key uniquely identifies a single time series
+        /// for the specified <paramref name="metricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </param>
         /// <param name="startTime">The start timestamp of feedback time range.</param>
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="value"> The <see cref="AnomalyFeedbackValue"/> for the feedback. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionFilter"/> or <paramref name="value"/> is null. </exception>
         internal MetricAnomalyFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue value)
-            : base(metricId, dimensionFilter.DimensionFilter)
+            : base(metricId, dimensionFilter.DimensionKey)
         {
             if (value == null)
             {

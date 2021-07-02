@@ -24,11 +24,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            var dimensionColumns = new Dictionary<string, string>()
+            var dimensions = new Dictionary<string, string>()
             {
                 { "city", "Belo Horizonte" }
             };
-            var dimensionKey = new DimensionKey(dimensionColumns);
+            var dimensionKey = new DimensionKey(dimensions);
 
             var startTime = DateTimeOffset.Parse("2020-02-01T00:00:00Z");
             var endTime = DateTimeOffset.Parse("2020-02-03T00:00:00Z");

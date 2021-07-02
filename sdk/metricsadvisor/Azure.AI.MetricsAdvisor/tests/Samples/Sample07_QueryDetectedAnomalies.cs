@@ -46,9 +46,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Severity: {anomaly.Severity}");
                 Console.WriteLine("Series key:");
 
-                foreach (KeyValuePair<string, string> dimensionColumn in anomaly.SeriesKey)
+                foreach (KeyValuePair<string, string> dimension in anomaly.SeriesKey)
                 {
-                    Console.WriteLine($"  Dimension '{dimensionColumn.Key}': {dimensionColumn.Value}");
+                    Console.WriteLine($"  Dimension '{dimension.Key}': {dimension.Value}");
                 }
 
                 Console.WriteLine();
@@ -102,9 +102,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Severity: {anomaly.Severity}");
                 Console.WriteLine("Series key:");
 
-                foreach (KeyValuePair<string, string> dimensionColumn in anomaly.SeriesKey)
+                foreach (KeyValuePair<string, string> dimension in anomaly.SeriesKey)
                 {
-                    Console.WriteLine($"  Dimension '{dimensionColumn.Key}': {dimensionColumn.Value}");
+                    Console.WriteLine($"  Dimension '{dimension.Key}': {dimension.Value}");
                 }
 
                 Console.WriteLine();
