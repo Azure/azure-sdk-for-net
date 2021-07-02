@@ -142,11 +142,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var columns = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
-            var seriesKey1 = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var seriesKey1 = new DimensionKey(dimensions);
 
-            columns = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
-            var seriesKey2 = new DimensionKey(columns);
+            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            var seriesKey2 = new DimensionKey(dimensions);
 
             var returnedKey1 = false;
             var returnedKey2 = false;

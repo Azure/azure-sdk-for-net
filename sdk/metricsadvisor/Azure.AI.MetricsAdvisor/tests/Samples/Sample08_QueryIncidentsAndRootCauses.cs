@@ -27,18 +27,18 @@ namespace Azure.AI.MetricsAdvisor.Samples
             // Only incidents from time series that are part of one of the groups specified
             // will be returned.
 
-            var dimensionColumns = new Dictionary<string, string>()
+            var dimensions = new Dictionary<string, string>()
             {
                 { "city", "Bengaluru" }
             };
-            var groupKey1 = new DimensionKey(dimensionColumns);
+            var groupKey1 = new DimensionKey(dimensions);
 
-            dimensionColumns = new Dictionary<string, string>()
+            dimensions = new Dictionary<string, string>()
             {
                 { "city", "Hong Kong" },
                 { "category", "Industrial & Scientific" }
             };
-            var groupKey2 = new DimensionKey(dimensionColumns);
+            var groupKey2 = new DimensionKey(dimensions);
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;

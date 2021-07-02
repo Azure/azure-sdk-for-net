@@ -76,8 +76,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
 
-            var columns = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" } };
-            DimensionKey groupKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" } };
+            DimensionKey groupKey = new DimensionKey(dimensions);
 
             var detectionConfigId = disposableDetectionConfig.Configuration.Id;
             var scope = MetricAnomalyAlertScope.CreateScopeForSeriesGroup(groupKey);
