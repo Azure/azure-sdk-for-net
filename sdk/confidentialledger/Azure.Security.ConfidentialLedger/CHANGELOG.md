@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.3 (Unreleased)
 
+### Breaking Changes
+
+- The `PostLedgerEntry` and `PostLedgerEntryAsync` methods on `ConfidentialLedgerClient` now return a long-running operation of type `PostLedgerEntryOperation`.
 
 ## 1.0.0-beta.2 (2021-06-08)
 

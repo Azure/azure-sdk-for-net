@@ -127,8 +127,10 @@ namespace Azure.Security.ConfidentialLedger
         /// </remarks>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/> will not be returned until the ledger entry is committed.
-        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponse(System.Threading.CancellationToken)"/> must be called to ensure the operation has completed.</param>
+        /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/>
+        /// will automatically poll for status until the ledger entry is committed before it is returned.
+        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponse(System.Threading.CancellationToken)"/>
+        /// must be called to ensure the operation has completed.</param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
         public virtual async Task<PostLedgerEntryOperation> PostLedgerEntryAsync(

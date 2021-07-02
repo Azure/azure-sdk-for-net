@@ -39,10 +39,7 @@ namespace Azure.Core
             return operation.WaitForCompletionAsync(DefaultPollingInterval, cancellationToken);
         }
 
-        public static async ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(
-            this Operation<TResult> operation,
-            TimeSpan pollingInterval,
-            CancellationToken cancellationToken)
+        public static async ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(this Operation<TResult> operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
             where TResult : notnull
         {
             while (true)
