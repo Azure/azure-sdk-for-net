@@ -1437,7 +1437,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = 1,
-                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30),
+                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(45),
                     SessionIds = { sessionId }
                 };
 
