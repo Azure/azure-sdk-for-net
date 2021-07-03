@@ -14,5 +14,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Anomaly alerting configurations. </summary>
         public IList<MetricAlertConfiguration> MetricAlertingConfigurations { get; internal set; }
+
+        /// <summary> dimensions used to split alert. </summary>
+        public IList<string> SplitAlertByDimensions { get; internal set; }
     }
 }

@@ -84,7 +84,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 Description = Description,
                 Name = Name,
                 HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),
-                MetricAlertingConfigurations = MetricAlertConfigurations
+                MetricAlertingConfigurations = MetricAlertConfigurations,
+                SplitAlertByDimensions = DimensionsToSplitAlert
             };
         }
     }

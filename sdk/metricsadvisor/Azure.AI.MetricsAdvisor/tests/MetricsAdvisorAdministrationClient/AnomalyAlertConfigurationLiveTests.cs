@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class AnomalyAlertConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
-        public AnomalyAlertConfigurationLiveTests(bool isAsync) : base(isAsync)
+        public AnomalyAlertConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -37,6 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
+                DimensionsToSplitAlert = { TempDataFeedDimensionNameA },
                 MetricAlertConfigurations = { metricAlertConfig }
             };
 
@@ -49,6 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.ConditionOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+            Assert.That(createdConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
@@ -100,6 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.ConditionOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+            Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
@@ -149,6 +152,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.ConditionOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+            Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
@@ -233,6 +237,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.IdsOfHooksToAlert.Count, Is.EqualTo(2));
             Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook0.Hook.Id));
             Assert.That(createdConfig.IdsOfHooksToAlert.Contains(disposableHook1.Hook.Id));
+            Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();
@@ -314,6 +319,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Xor));
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+            Assert.That(createdConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
             Assert.That(createdConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
 
@@ -435,6 +441,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedConfig.Description, Is.Empty);
             Assert.That(updatedConfig.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Or));
             Assert.That(updatedConfig.IdsOfHooksToAlert, Is.EqualTo(hookIds));
+            Assert.That(updatedConfig.DimensionsToSplitAlert, Is.Not.Null.And.Empty);
             Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
             Assert.That(updatedConfig.MetricAlertConfigurations.Count, Is.EqualTo(2));
 
@@ -546,6 +553,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.Description = description;
             configToUpdate.IdsOfHooksToAlert.Clear();
+            configToUpdate.DimensionsToSplitAlert.Add(TempDataFeedDimensionNameA);
             configToUpdate.ConditionOperator = DetectionConditionOperator.And;
             configToUpdate.MetricAlertConfigurations.RemoveAt(1);
 
@@ -578,6 +586,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
             Assert.That(updatedConfig.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
             Assert.That(updatedConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
+            Assert.That(updatedConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
             Assert.That(updatedConfig.MetricAlertConfigurations, Is.Not.Null);
 
             // Validate the first Metric Alert Configuration.
@@ -647,6 +656,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(config.Name, Is.Not.Null.And.Not.Empty);
                 Assert.That(config.Description, Is.Not.Null);
                 Assert.That(config.IdsOfHooksToAlert, Is.Not.Null);
+                Assert.That(config.DimensionsToSplitAlert, Is.Not.Null);
                 Assert.That(config.MetricAlertConfigurations, Is.Not.Null.And.Not.Empty);
 
                 if (config.MetricAlertConfigurations.Count == 1)
