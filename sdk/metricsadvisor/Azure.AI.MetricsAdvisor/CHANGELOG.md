@@ -6,6 +6,7 @@
 - `DimensionKey` now implements the `IEnumerable<KeyValuePair<string, string>>` interface. Dimension columns can now be enumerated.
 - Added method `Contains` to `DimensionKey` to check whether or not a dimension column is present.
 - Added a property setter to `MetricSeriesGroupDetectionCondition.SeriesGroupKey` and to `MetricSingleSeriesDetectionCondition.SeriesKey`.
+- Added property `DimensionsToSplitAlert` to `AnomalyAlertConfiguration` to allow splitting an alert into multiple ones.
 - Added property `MeasureType` to `MetricBoundaryCondition` to control which measure should be used when checking boundaries for alert triggering. Current supported types are `Value` and `Mean`.
 - `NotificationHook.Administrators` is now a `IList` (not read-only anymore), and can be used to update the list of administrators or set it during creation.
 - Added value `None` to `FeedbackQueryTimeMode` to indicate that no time mode is set.
