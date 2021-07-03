@@ -64,6 +64,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Description { get; set; }
 
         /// <summary>
+        /// By default, an incident only triggers a single alert, regardless of how many anomalies
+        /// it contains. This property allows this alert to be split into multiple ones. Each element
+        /// in this list must hold a dimension name, and it creates a new alert from the original one
+        /// if the corresponding dimension is part of current incident.
         /// </summary>
         [CodeGenMember("SplitAlertByDimensions")]
         public IList<string> DimensionsToSplitAlert { get; }
