@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 return new ArmClient(
                         TestEnvironment.SubscriptionId,
+                        new Uri(TestEnvironment.ResourceManagerUrl),
                         TestEnvironment.Credential,
                         new ArmClientOptions());
             }
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.TestFramework
 
             return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
+                new Uri(TestEnvironment.ResourceManagerUrl),
                 TestEnvironment.Credential,
                 options);
         }
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public virtual void OneTimeSetUp()
         {
             if (!HasOneTimeSetup())
                 return;
@@ -159,6 +161,7 @@ namespace Azure.ResourceManager.TestFramework
 
             GlobalClient = CreateClient<ArmClient>(
                 SessionEnvironment.SubscriptionId,
+                new Uri(SessionEnvironment.ResourceManagerUrl),
                 SessionEnvironment.Credential,
                 options);
         }
@@ -187,7 +190,7 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         [OneTimeTearDown]
-        public void OneTimeCleanupResourceGroups()
+        public virtual void OneTimeCleanupResourceGroups()
         {
             if (Mode != RecordedTestMode.Playback)
             {
