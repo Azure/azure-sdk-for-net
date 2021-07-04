@@ -1,0 +1,379 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "cf95251b6fbdfb7d529d02ff4bb35b1a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:43 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-af77f3356934434e8175ec909fbd94b2-3ec78adf21ae344c-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "1e1984180807cca1e3398f6db2e8a606",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "403",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:43 GMT",
+        "ETag": "W/\u0022193-XMviJqaGXohjOV1XjmYhUY8VLpk\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "0000000-0000-0000-0000-000000000000",
+        "displayName": "Name of the subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/mockResourceGroup?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "32",
+        "Content-Type": "application/json",
+        "traceparent": "00-bb5e6253f008d84db95e4fc3ac36adfe-3f32aa7ff4d6ab4c-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ba79d91ab96d4e05b3bfb8e191192fab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "West US",
+        "tags": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "258",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:43 GMT",
+        "ETag": "W/\u0022102-PQYXMz2VTejoquJN9k\u002BjrMOf1\u002BM\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/mockResourceGroup",
+        "location": "eastus",
+        "managedBy": null,
+        "name": "mockResourceGroup",
+        "properties": {
+          "provisioningState": "Succeeded"
+        },
+        "tags": {},
+        "type": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet?api-version=2021-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "48",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "e2a8d5c297bf138384c8eb84df10496a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "West US",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "895",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:44 GMT",
+        "ETag": "W/\u002237f-X7FQqk\u002BgkLyQi6HriCTRjj\u002Bi7VA\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet",
+        "name": "mockAvailabilitySet",
+        "type": "aaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key2796": "aaaaaaaaa"
+        },
+        "properties": {
+          "platformUpdateDomainCount": 9,
+          "platformFaultDomainCount": 4,
+          "virtualMachines": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+            }
+          ],
+          "proximityPlacementGroup": {
+            "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+          },
+          "statuses": [
+            {
+              "code": "aaaaaaaaaaaaaa",
+              "level": "Info",
+              "displayStatus": "aaaa",
+              "message": "aaaaaaaaa",
+              "time": "2021-07-09T05:26:44.498Z"
+            }
+          ]
+        },
+        "sku": {
+          "name": "mockAvailabilitySet",
+          "tier": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "capacity": 12
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet?api-version=2021-03-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "40",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "71e4fcf7a1395fac7eca6a4850bf3bc9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "key": "value"
+        },
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "895",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:44 GMT",
+        "ETag": "W/\u002237f-X7FQqk\u002BgkLyQi6HriCTRjj\u002Bi7VA\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet",
+        "name": "mockAvailabilitySet",
+        "type": "aaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key2796": "aaaaaaaaa"
+        },
+        "properties": {
+          "platformUpdateDomainCount": 9,
+          "platformFaultDomainCount": 4,
+          "virtualMachines": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+            }
+          ],
+          "proximityPlacementGroup": {
+            "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+          },
+          "statuses": [
+            {
+              "code": "aaaaaaaaaaaaaa",
+              "level": "Info",
+              "displayStatus": "aaaa",
+              "message": "aaaaaaaaa",
+              "time": "2021-07-09T05:26:44.498Z"
+            }
+          ]
+        },
+        "sku": {
+          "name": "mockAvailabilitySet",
+          "tier": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "capacity": 12
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet?api-version=2021-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ddaae409c33f8347556636a5cd816fa3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "895",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:44 GMT",
+        "ETag": "W/\u002237f-X7FQqk\u002BgkLyQi6HriCTRjj\u002Bi7VA\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet",
+        "name": "mockAvailabilitySet",
+        "type": "aaaaaaaaaaaaaa",
+        "location": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": {
+          "key2796": "aaaaaaaaa"
+        },
+        "properties": {
+          "platformUpdateDomainCount": 9,
+          "platformFaultDomainCount": 4,
+          "virtualMachines": [
+            {
+              "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+            }
+          ],
+          "proximityPlacementGroup": {
+            "id": "/subscriptions/a9cbceed-cd54-47f1-b7a2-bad149218603/resourceGroups/mockRg/providers/Microsoft.Resources/mockResource/mockName"
+          },
+          "statuses": [
+            {
+              "code": "aaaaaaaaaaaaaa",
+              "level": "Info",
+              "displayStatus": "aaaa",
+              "message": "aaaaaaaaa",
+              "time": "2021-07-09T05:26:44.498Z"
+            }
+          ]
+        },
+        "sku": {
+          "name": "mockAvailabilitySet",
+          "tier": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "capacity": 12
+        }
+      }
+    },
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet?api-version=2021-03-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "94ea4e76bd352071284963f42c3bc2c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:44 GMT",
+        "ETag": "W/\u00222-vyGp6PvFo4RvsFtPoIWeCReyIC8\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {}
+    },
+    {
+      "RequestUri": "https://localhost:8441/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mockResourceGroup/providers/Microsoft.Compute/availabilitySets/mockAvailabilitySet?api-version=2021-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210709.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "fa7a228d6c65332ab5611cd36b0791fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "55",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Jul 2021 05:26:44 GMT",
+        "ETag": "W/\u002237-e67/RE5D5J2efnge4rs\u002Bkf1VAAo\u0022",
+        "Keep-Alive": "timeout=5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "404",
+          "message": "Resource Not Found"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1425293482",
+    "RESOURCE_MANAGER_URL": "https://localhost:8441",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}
