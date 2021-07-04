@@ -72,7 +72,12 @@ namespace Azure.Identity
                 }
             }
 
+            var data = exception.Data;
             exception = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}", exception);
+            foreach (string key in data.Keys)
+            {
+                exception.Data.Add(key, data[key]);
+            }
             return true;
         }
 
