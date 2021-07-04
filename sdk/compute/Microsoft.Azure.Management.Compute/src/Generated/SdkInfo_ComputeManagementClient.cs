@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "LogAnalytics", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "Operations", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "ProximityPlacementGroups", "2021-07-01"),
-                new Tuple<string, string, string>("Compute", "ResourceSkus", "2019-04-01"),
+                new Tuple<string, string, string>("Compute", "ResourceSkus", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "RestorePointCollections", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "RestorePoints", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "SharedGalleries", "2020-09-30"),
