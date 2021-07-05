@@ -69,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             ""dataFeedName"": ""unknownDataFeedName"",
             ""dataSourceType"": ""unknownType"",
             ""fillMissingPointType"": ""NoFilling"",
-            ""description"": ""unknown data feed description"",
+            ""dataFeedDescription"": ""unknown data feed description"",
             ""metrics"": [
                 {{
                     ""metricId"": ""{FakeGuid}"",
@@ -186,7 +186,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(content, ContainsJsonString("dataFeedName", "newDataFeedName"));
             Assert.That(content, ContainsJsonString("dataSourceType", "unknownType"));
             Assert.That(content, ContainsJsonString("fillMissingPointType", "PreviousValue"));
-            Assert.That(content, ContainsJsonString("description", "new description"));
+            Assert.That(content, ContainsJsonString("dataFeedDescription", "new description"));
         }
 
         private void UpdateSecret(DataFeedSource dataSource, string secretPropertyName)
