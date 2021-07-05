@@ -235,7 +235,7 @@ namespace Azure.Storage.Files.Shares
             => new ServiceRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                _uri.ToString(),
+                _uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
