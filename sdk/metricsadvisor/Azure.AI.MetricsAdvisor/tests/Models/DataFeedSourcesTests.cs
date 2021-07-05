@@ -63,6 +63,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
         ";
 
+        private string UnknownDataFeedContent => $@"
+        {{
+            ""dataFeedId"": ""{FakeGuid}"",
+            ""dataFeedName"": ""unknownDataFeedName"",
+            ""dataSourceType"": ""unknownType"",
+            ""fillMissingPointType"": ""NoFilling"",
+            ""description"": ""unknown data feed description"",
+            ""metrics"": [
+                {{
+                    ""metricId"": ""{FakeGuid}"",
+                    ""metricName"": ""cost""
+                }}
+            ]
+        }}
+        ";
+
         [Test]
         [TestCaseSource(nameof(CreateDataSourceTestCases))]
         public async Task DataFeedSourceSendsSecretDuringCreation(DataFeedSource dataSource, string secretPropertyName)
@@ -122,6 +138,55 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string content = ReadContent(request);
 
             Assert.That(content, ContainsJsonString(secretPropertyName, "new_secret"));
+        }
+
+        [Test]
+        public async Task DataFeedSourceGetsUnknownDataFeed()
+        {
+            MockResponse getResponse = new MockResponse(200);
+            getResponse.SetContent(UnknownDataFeedContent);
+
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(getResponse);
+            DataFeed dataFeed = await adminClient.GetDataFeedAsync(FakeGuid);
+
+            Assert.That(dataFeed.Id, Is.EqualTo(FakeGuid));
+            Assert.That(dataFeed.Name, Is.EqualTo("unknownDataFeedName"));
+            Assert.That(dataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.NoFilling));
+            Assert.That(dataFeed.Description, Is.EqualTo("unknown data feed description"));
+
+            DataFeedMetric metric = dataFeed.Schema.MetricColumns.Single();
+
+            Assert.That(metric.Id, Is.EqualTo(FakeGuid));
+            Assert.That(metric.Name, Is.EqualTo("cost"));
+        }
+
+        [Test]
+        public async Task DataFeedSourceUpdatesUnknownDataFeed()
+        {
+            MockResponse getResponse = new MockResponse(200);
+            getResponse.SetContent(UnknownDataFeedContent);
+
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(UnknownDataFeedContent);
+
+            MockTransport mockTransport = new MockTransport(getResponse, updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+            DataFeed dataFeed = await adminClient.GetDataFeedAsync(FakeGuid);
+
+            dataFeed.Name = "newDataFeedName";
+            dataFeed.MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(DataFeedMissingDataPointFillType.PreviousValue);
+            dataFeed.Description = "new description";
+
+            await adminClient.UpdateDataFeedAsync(dataFeed);
+
+            MockRequest request = mockTransport.Requests.Last();
+            string content = ReadContent(request);
+
+            Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
+            Assert.That(content, ContainsJsonString("dataFeedName", "newDataFeedName"));
+            Assert.That(content, ContainsJsonString("dataSourceType", "unknownType"));
+            Assert.That(content, ContainsJsonString("fillMissingPointType", "PreviousValue"));
+            Assert.That(content, ContainsJsonString("description", "new description"));
         }
 
         private void UpdateSecret(DataFeedSource dataSource, string secretPropertyName)
