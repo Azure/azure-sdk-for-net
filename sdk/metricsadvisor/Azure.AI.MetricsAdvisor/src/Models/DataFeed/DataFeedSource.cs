@@ -12,9 +12,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// </summary>
     public abstract class DataFeedSource
     {
-        internal DataFeedSource(DataFeedSourceKind dataFeedSourceType)
+        internal DataFeedSource(DataFeedSourceKind dataFeedSourceKind)
         {
-            DataSourceKind = dataFeedSourceType;
+            DataSourceKind = dataFeedSourceKind;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
                 PostgreSqlDataFeed d => new PostgreSqlDataFeedSource(d.DataSourceParameter),
                 SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
-                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
+                _ => new UnknownDataFeedSource(dataFeedDetail.DataSourceType)
             };
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
                 SqlServerDataFeedSource d => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
+                _ => new DataFeedDetail(name, granularityType, metricColumns, ingestionStartTime) { DataSourceType = DataSourceKind }
             };
         }
 
@@ -111,7 +111,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             SqlServerDataFeedSource d => new SQLServerDataFeedPatch()
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
-            _ => throw new InvalidOperationException("Invalid DataFeedDetailPatch type")
+            _ => new DataFeedDetailPatch() { DataSourceType = DataSourceKind }
         };
+
+        private class UnknownDataFeedSource : DataFeedSource
+        {
+            public UnknownDataFeedSource(DataFeedSourceKind dataFeedSourceKind)
+                : base(dataFeedSourceKind)
+            {
+            }
+        }
     }
 }
