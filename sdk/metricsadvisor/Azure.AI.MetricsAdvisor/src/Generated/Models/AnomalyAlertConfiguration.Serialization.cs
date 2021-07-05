@@ -28,11 +28,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("crossMetricsOperator");
                 writer.WriteStringValue(ConditionOperator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SplitAlertByDimensions))
+            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
             {
                 writer.WritePropertyName("splitAlertByDimensions");
                 writer.WriteStartArray();
-                foreach (var item in SplitAlertByDimensions)
+                foreach (var item in DimensionsToSplitAlert)
                 {
                     writer.WriteStringValue(item);
                 }

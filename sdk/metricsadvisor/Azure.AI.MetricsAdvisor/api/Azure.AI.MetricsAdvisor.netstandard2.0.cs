@@ -580,6 +580,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalyAlertConfiguration() { }
         public Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator? ConditionOperator { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DimensionsToSplitAlert { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IList<string> IdsOfHooksToAlert { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.MetricAlertConfiguration> MetricAlertConfigurations { get { throw null; } }

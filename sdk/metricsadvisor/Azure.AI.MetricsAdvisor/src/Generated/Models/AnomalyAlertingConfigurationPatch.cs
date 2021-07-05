@@ -28,7 +28,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Description { get; set; }
         /// <summary> cross metrics operator. </summary>
         public DetectionConditionOperator? CrossMetricsOperator { get; set; }
-        /// <summary> dimensions used to split alert. </summary>
-        public IList<string> SplitAlertByDimensions { get; }
     }
 }
