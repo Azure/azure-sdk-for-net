@@ -4,6 +4,7 @@
 - Added support for service version 2020-10-02.
 - Added support for OAuth copy sources in ShareFileClient.UploadRangeFromUri()
 - Added support for including additional information in ShareDirectoryClient.GetFilesAndDirectories().
+- Fixed bug where ShareDirectoryClient.SetMetadataAsync() would not property parse Last-Modified response header.
 
 ## 12.7.0 (2021-06-08)
 - Includes all features from 12.7.0-beta.4.

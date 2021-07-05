@@ -45,7 +45,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Gets or sets the authentication scope to use for authentication with Azure Active Directory. The default scope would be used if the property is null.
+        /// Gets or sets the authentication scope to use for authentication with Azure Active Directory. The default scope will be used if the property is null.
         /// </summary>
         public string AuthenticationScope { get; set; }
 

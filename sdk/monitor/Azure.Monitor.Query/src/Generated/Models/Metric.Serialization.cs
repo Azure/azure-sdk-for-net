@@ -18,6 +18,9 @@ namespace Azure.Monitor.Query.Models
             string id = default;
             string type = default;
             LocalizableString name = default;
+            Optional<string> displayDescription = default;
+            Optional<string> errorCode = default;
+            Optional<string> errorMessage = default;
             MetricUnit unit = default;
             IReadOnlyList<TimeSeriesElement> timeseries = default;
             foreach (var property in element.EnumerateObject())
@@ -37,6 +40,21 @@ namespace Azure.Monitor.Query.Models
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
+                if (property.NameEquals("displayDescription"))
+                {
+                    displayDescription = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("errorCode"))
+                {
+                    errorCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("errorMessage"))
+                {
+                    errorMessage = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("unit"))
                 {
                     unit = new MetricUnit(property.Value.GetString());
@@ -53,7 +71,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new Metric(id, type, name, unit, timeseries);
+            return new Metric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries);
         }
     }
 }

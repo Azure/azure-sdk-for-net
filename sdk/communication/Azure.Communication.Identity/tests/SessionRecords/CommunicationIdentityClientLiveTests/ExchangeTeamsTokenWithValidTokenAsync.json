@@ -8,7 +8,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "Date": "Fri, 28 May 2021 18:52:15 GMT",
         "traceparent": "00-4ce5a977c7d06b47afe308e38407cd63-214f8eb960c44f49-00",
         "User-Agent": [
           "azsdk-net-Communication.Identity/1.1.0-alpha.20210528.1",
