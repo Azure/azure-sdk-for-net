@@ -25,18 +25,18 @@ namespace Azure.Messaging.WebPubSub
 
         public abstract string Name { get; }
 
-        public ServiceRequest(bool isPreflight, bool valid, bool unauthorized, bool badRequest, string error = null)
+        public ServiceRequest(bool isValidationRequest, bool valid, bool unauthorized, bool badRequest, string error = null)
         {
-            IsValidationRequest = isPreflight;
+            IsValidationRequest = isValidationRequest;
             Valid = valid;
             Unauthorized = unauthorized;
             BadRequest = badRequest;
             ErrorMessage = error;
         }
 
-        internal ServiceRequest(bool isPreflight, bool valid)
+        internal ServiceRequest(bool isValidationRequest, bool valid)
         {
-            IsValidationRequest = isPreflight;
+            IsValidationRequest = isValidationRequest;
             Valid = valid;
         }
 
