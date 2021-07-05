@@ -49,7 +49,7 @@ namespace Azure.Messaging.WebPubSub
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public abstract partial class ServiceRequest
     {
-        public ServiceRequest(bool isPreflight, bool valid, bool unauthorized, bool badRequest, string error = null) { }
+        public ServiceRequest(bool isValidationRequest, bool valid, bool unauthorized, bool badRequest, string error = null) { }
         public bool BadRequest { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public bool IsValidationRequest { get { throw null; } }
