@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // Build abuse response
             if (Utilities.RespondToServiceAbuseCheck(httpContext.Request, _options.AllowedHosts, out var abuseResponse))
             {
-                var abuseRequest = new WebPubSubRequest(null, new PreflightRequest(abuseResponse.StatusCode == HttpStatusCode.OK), abuseResponse);
+                var abuseRequest = new WebPubSubRequest(null, new ValidationRequest(abuseResponse.StatusCode == HttpStatusCode.OK), abuseResponse);
                 return new WebPubSubRequestValueProvider(abuseRequest, _userType);
             }
 

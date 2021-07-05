@@ -3,11 +3,11 @@
 
 namespace Azure.Messaging.WebPubSub
 {
-    public sealed class PreflightRequest : ServiceRequest
+    public sealed class ValidationRequest : ServiceRequest
     {
-        public override string Name => nameof(PreflightRequest);
+        public override string Name => nameof(ValidationRequest);
 
-        public PreflightRequest(bool valid)
+        public ValidationRequest(bool valid)
             :base(true, valid)
         {
         }

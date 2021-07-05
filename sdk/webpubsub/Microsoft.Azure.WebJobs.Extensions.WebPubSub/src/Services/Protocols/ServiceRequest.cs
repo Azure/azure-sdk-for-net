@@ -13,7 +13,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// Flag to indicate whether it's an <see href="https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection">Abuse Protection</see> request.
         /// </summary>
-        public bool IsPreflight { get; }
+        public bool IsValidationRequest { get; }
 
         public bool Valid { get; }
 
@@ -27,7 +27,7 @@ namespace Azure.Messaging.WebPubSub
 
         public ServiceRequest(bool isPreflight, bool valid, bool unauthorized, bool badRequest, string error = null)
         {
-            IsPreflight = isPreflight;
+            IsValidationRequest = isPreflight;
             Valid = valid;
             Unauthorized = unauthorized;
             BadRequest = badRequest;
@@ -36,7 +36,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal ServiceRequest(bool isPreflight, bool valid)
         {
-            IsPreflight = isPreflight;
+            IsValidationRequest = isPreflight;
             Valid = valid;
         }
 

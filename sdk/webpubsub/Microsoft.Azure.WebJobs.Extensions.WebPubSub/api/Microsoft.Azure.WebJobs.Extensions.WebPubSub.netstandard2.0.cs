@@ -46,21 +46,21 @@ namespace Azure.Messaging.WebPubSub
         public System.BinaryData Message { get { throw null; } }
         public override string Name { get { throw null; } }
     }
-    public sealed partial class PreflightRequest : Azure.Messaging.WebPubSub.ServiceRequest
-    {
-        public PreflightRequest(bool valid) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
-        public override string Name { get { throw null; } }
-    }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public abstract partial class ServiceRequest
     {
         public ServiceRequest(bool isPreflight, bool valid, bool unauthorized, bool badRequest, string error = null) { }
         public bool BadRequest { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
-        public bool IsPreflight { get { throw null; } }
+        public bool IsValidationRequest { get { throw null; } }
         public abstract string Name { get; }
         public bool Unauthorized { get { throw null; } }
         public bool Valid { get { throw null; } }
+    }
+    public sealed partial class ValidationRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    {
+        public ValidationRequest(bool valid) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
+        public override string Name { get { throw null; } }
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
