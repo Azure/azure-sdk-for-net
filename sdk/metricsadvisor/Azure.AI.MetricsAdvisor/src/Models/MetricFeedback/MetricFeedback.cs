@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     [CodeGenModel("MetricFeedback")]
     [CodeGenSuppress(nameof(MetricFeedback), typeof(string), typeof(FeedbackFilter))]
-    public abstract partial class MetricFeedback : IUtf8JsonSerializable
+    public abstract partial class MetricFeedback
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricFeedback"/> class.
@@ -103,9 +103,7 @@ namespace Azure.AI.MetricsAdvisor
         {
             if (element.TryGetProperty("feedbackType", out JsonElement discriminator))
             {
-                var discriminatorString = discriminator.GetString();
-
-                switch (discriminatorString)
+                switch (discriminator.GetString())
                 {
                     case "Anomaly":
                         return MetricAnomalyFeedback.DeserializeMetricAnomalyFeedback(element);
@@ -115,13 +113,60 @@ namespace Azure.AI.MetricsAdvisor
                         return MetricCommentFeedback.DeserializeMetricCommentFeedback(element);
                     case "Period":
                         return MetricPeriodFeedback.DeserializeMetricPeriodFeedback(element);
-                    default:
-                        throw new ArgumentException($"Unknown feedback type returned by the service: {discriminatorString}");
                 }
             }
-            else
+            MetricFeedbackKind feedbackType = default;
+            Optional<string> feedbackId = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<string> userPrincipal = default;
+            string metricId = default;
+            FeedbackFilter dimensionFilter = default;
+            foreach (var property in element.EnumerateObject())
             {
-                throw new ArgumentException("The feedback type was not returned by the service");
+                if (property.NameEquals("feedbackType"))
+                {
+                    feedbackType = new MetricFeedbackKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("feedbackId"))
+                {
+                    feedbackId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createdTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("userPrincipal"))
+                {
+                    userPrincipal = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("metricId"))
+                {
+                    metricId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dimensionFilter"))
+                {
+                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    continue;
+                }
+            }
+            return new UnknownMetricFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
+        }
+
+        private class UnknownMetricFeedback : MetricFeedback
+        {
+            public UnknownMetricFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter)
+                : base(kind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+            {
             }
         }
     }
