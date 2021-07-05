@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateMetricFeedback(addedFeedback);
 
-            Assert.That(addedFeedback.Kind, Is.EqualTo(MetricFeedbackKind.Anomaly));
+            Assert.That(addedFeedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Anomaly));
 
             var anomalyFeedback = addedFeedback as MetricAnomalyFeedback;
 
@@ -70,7 +70,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateMetricFeedback(addedFeedback);
 
-            Assert.That(addedFeedback.Kind, Is.EqualTo(MetricFeedbackKind.Anomaly));
+            Assert.That(addedFeedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Anomaly));
 
             var anomalyFeedback = addedFeedback as MetricAnomalyFeedback;
 
@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateMetricFeedback(addedFeedback);
 
-            Assert.That(addedFeedback.Kind, Is.EqualTo(MetricFeedbackKind.ChangePoint));
+            Assert.That(addedFeedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.ChangePoint));
 
             var changePointFeedback = addedFeedback as MetricChangePointFeedback;
 
@@ -129,7 +129,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateMetricFeedback(addedFeedback);
 
-            Assert.That(addedFeedback.Kind, Is.EqualTo(MetricFeedbackKind.Comment));
+            Assert.That(addedFeedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Comment));
 
             var commentFeedback = addedFeedback as MetricCommentFeedback;
 
@@ -160,7 +160,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateMetricFeedback(addedFeedback);
 
-            Assert.That(addedFeedback.Kind, Is.EqualTo(MetricFeedbackKind.Comment));
+            Assert.That(addedFeedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Comment));
 
             var commentFeedback = addedFeedback as MetricCommentFeedback;
 
@@ -187,7 +187,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateMetricFeedback(addedFeedback);
 
-            Assert.That(addedFeedback.Kind, Is.EqualTo(MetricFeedbackKind.Period));
+            Assert.That(addedFeedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Period));
 
             var periodFeedback = addedFeedback as MetricPeriodFeedback;
 
@@ -219,7 +219,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateGroupKey(feedback.DimensionFilter.DimensionKey);
 
-                if (feedback.Kind == MetricFeedbackKind.Anomaly)
+                if (feedback.FeedbackKind == MetricFeedbackKind.Anomaly)
                 {
                     var anomalyFeedback = feedback as MetricAnomalyFeedback;
 
@@ -231,14 +231,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         // TODO: Add snapshot validation (https://github.com/azure/azure-sdk-for-net/issues/15915).
                     }
                 }
-                else if (feedback.Kind == MetricFeedbackKind.ChangePoint)
+                else if (feedback.FeedbackKind == MetricFeedbackKind.ChangePoint)
                 {
                     var changePointFeedback = feedback as MetricChangePointFeedback;
 
                     Assert.That(changePointFeedback, Is.Not.Null);
                     Assert.That(changePointFeedback.ChangePointValue, Is.Not.EqualTo(default(ChangePointValue)));
                 }
-                else if (feedback.Kind == MetricFeedbackKind.Comment)
+                else if (feedback.FeedbackKind == MetricFeedbackKind.Comment)
                 {
                     var commentFeedback = feedback as MetricCommentFeedback;
 
@@ -247,7 +247,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 }
                 else
                 {
-                    Assert.That(feedback.Kind, Is.EqualTo(MetricFeedbackKind.Period));
+                    Assert.That(feedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Period));
 
                     var periodFeedback = feedback as MetricPeriodFeedback;
 
@@ -311,7 +311,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dimensionKeyFilter.TryGetValue("city", out string city));
                 Assert.That(city, Is.EqualTo("Delhi"));
 
-                Assert.That(feedback.Kind, Is.EqualTo(MetricFeedbackKind.Comment));
+                Assert.That(feedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Comment));
 
                 var commentFeedback = feedback as MetricCommentFeedback;
 

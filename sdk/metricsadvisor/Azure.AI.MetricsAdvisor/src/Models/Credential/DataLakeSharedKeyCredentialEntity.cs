@@ -27,14 +27,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
 
-            DataSourceCredentialType = DataSourceCredentialType.DataLakeGen2SharedKey;
+            CredentialKind = DataSourceCredentialKind.DataLakeSharedKey;
             AccountKey = accountKey;
         }
 
-        internal DataLakeSharedKeyCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
+        internal DataLakeSharedKeyCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
-            DataSourceCredentialType = dataSourceCredentialType;
+            CredentialKind = dataSourceCredentialType;
             AccountKey = parameters.AccountKey;
         }
 

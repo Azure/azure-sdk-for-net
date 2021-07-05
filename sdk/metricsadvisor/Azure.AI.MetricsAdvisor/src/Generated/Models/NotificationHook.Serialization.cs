@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookType");
-            writer.WriteStringValue(HookType.ToString());
+            writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName");
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))

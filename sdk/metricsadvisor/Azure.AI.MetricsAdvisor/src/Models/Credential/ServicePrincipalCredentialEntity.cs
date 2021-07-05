@@ -31,16 +31,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
             Argument.AssertNotNullOrEmpty(tenantId, nameof(tenantId));
 
-            DataSourceCredentialType = DataSourceCredentialType.ServicePrincipal;
+            CredentialKind = DataSourceCredentialKind.ServicePrincipal;
             ClientId = clientId;
             ClientSecret = clientSecret;
             TenantId = tenantId;
         }
 
-        internal ServicePrincipalCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
+        internal ServicePrincipalCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
-            DataSourceCredentialType = dataSourceCredentialType;
+            CredentialKind = dataSourceCredentialType;
             ClientId = parameters.ClientId;
             ClientSecret = parameters.ClientSecret;
             TenantId = parameters.TenantId;

@@ -21,14 +21,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="name">The name of the hook.</param>
         public EmailNotificationHook(string name) : base(name)
         {
-            HookType = HookType.Email;
+            HookKind = NotificationHookKind.Email;
             EmailsToAlert = new ChangeTrackingList<string>();
         }
 
-        internal EmailNotificationHook(HookType hookType, string id, string name, string description, string externalLink, IList<string> administrators, EmailHookParameter hookParameter)
+        internal EmailNotificationHook(NotificationHookKind hookType, string id, string name, string description, string externalLink, IList<string> administrators, EmailHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
-            HookType = hookType;
+            HookKind = hookType;
             EmailsToAlert = hookParameter.ToList;
         }
 

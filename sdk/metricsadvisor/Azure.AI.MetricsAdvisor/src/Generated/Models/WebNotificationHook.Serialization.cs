@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WritePropertyName("hookParameter");
             writer.WriteObjectValue(HookParameter);
             writer.WritePropertyName("hookType");
-            writer.WriteStringValue(HookType.ToString());
+            writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName");
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         internal static WebNotificationHook DeserializeWebNotificationHook(JsonElement element)
         {
             WebhookHookParameter hookParameter = default;
-            HookType hookType = default;
+            NotificationHookKind hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
             Optional<string> description = default;
@@ -64,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
                 if (property.NameEquals("hookType"))
                 {
-                    hookType = new HookType(property.Value.GetString());
+                    hookType = new NotificationHookKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hookId"))

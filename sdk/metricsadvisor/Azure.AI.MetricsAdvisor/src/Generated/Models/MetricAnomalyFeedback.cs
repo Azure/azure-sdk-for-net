@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor
     {
 
         /// <summary> Initializes a new instance of MetricAnomalyFeedback. </summary>
-        /// <param name="kind"> feedback type. </param>
+        /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdOn"> feedback created time. </param>
         /// <param name="userPrincipal"> user who gives this feedback. </param>
@@ -26,14 +26,14 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="valueInternal"> . </param>
         /// <param name="detectionConfigurationId"> the corresponding anomaly detection configuration of this feedback. </param>
         /// <param name="detectionConfigurationSnapshot"> . </param>
-        internal MetricAnomalyFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(kind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        internal MetricAnomalyFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = valueInternal;
             DetectionConfigurationId = detectionConfigurationId;
             DetectionConfigurationSnapshot = detectionConfigurationSnapshot;
-            Kind = kind;
+            FeedbackKind = feedbackKind;
         }
     }
 }

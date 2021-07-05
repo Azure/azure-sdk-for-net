@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = new ChangePointFeedbackValue(value);
-            Kind = MetricFeedbackKind.ChangePoint;
+            FeedbackKind = MetricFeedbackKind.ChangePoint;
         }
 
         /// <summary> Initializes a new <see cref="MetricChangePointFeedback"/> instance. </summary>
@@ -52,7 +52,7 @@ namespace Azure.AI.MetricsAdvisor
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = value;
-            Kind = MetricFeedbackKind.ChangePoint;
+            FeedbackKind = MetricFeedbackKind.ChangePoint;
         }
 
         /// <summary>

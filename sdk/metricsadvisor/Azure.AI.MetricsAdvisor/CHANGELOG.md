@@ -8,6 +8,8 @@
 - Added a property setter to `MetricSeriesGroupDetectionCondition.SeriesGroupKey` and to `MetricSingleSeriesDetectionCondition.SeriesKey`.
 - Added property `MeasureType` to `MetricBoundaryCondition` to control which measure should be used when checking boundaries for alert triggering. Current supported types are `Value` and `Mean`.
 - `NotificationHook.Administrators` is now a `IList` (not read-only anymore), and can be used to update the list of administrators or set it during creation.
+- Added property `HookKind` to `NotificationHook`.
+- Added property `CredentialKind` to `DataSourceCredentialEntity`.
 - Added value `None` to `FeedbackQueryTimeMode` to indicate that no time mode is set.
 
 ### Breaking Changes
@@ -24,7 +26,7 @@
 - Renamed class `MetricAnomalyAlertConfigurationsOperator` to `DetectionConditionOperator`. Similarly, `MetricAnomalyAlertConfiguration.CrossMetricsOperator` has been renamed to `ConditionOperator`.
 - Renamed class `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
 - Renamed class `AzureDataLakeStorageGen2DataFeedSource` to `AzureDataLakeStorageDataFeedSource`. Similarly, `DataSourceType.AzureDataLakeStorageGen2` has been renamed to `AzureDataLakeStorage`.
-- Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` has been renamed to `Kind`.
+- Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` to `FeedbackKind` as well.
 - Renamed class `PeriodType` to `MetricPeriodType`.
 - Renamed class `FeedbackDimensionFilter` to `FeedbackFilter` and moved it to the namespace `Azure.AI.MetricsAdvisor`.
 - Renamed class `GetAnomaliesForDetectionConfigurationFilter` to `AnomalyFilter`.

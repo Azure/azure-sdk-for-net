@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(comment, nameof(comment));
 
             ValueInternal = new CommentFeedbackValue(comment);
-            Kind = MetricFeedbackKind.Comment;
+            FeedbackKind = MetricFeedbackKind.Comment;
         }
 
         /// <summary> Initializes a new <see cref="MetricCommentFeedback"/> instance. </summary>
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(comment?.CommentValue, nameof(comment.CommentValue));
 
             ValueInternal = comment;
-            Kind = MetricFeedbackKind.Comment;
+            FeedbackKind = MetricFeedbackKind.Comment;
         }
 
         /// <summary>

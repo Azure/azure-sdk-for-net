@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -41,6 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.ExternalUri, Is.Null);
             Assert.That(createdHook.Administrators, Is.Not.Null);
             Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.HookKind, Is.EqualTo(NotificationHookKind.Email));
 
             var createdEmailHook = createdHook as EmailNotificationHook;
 
@@ -75,6 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.ExternalUri.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
             Assert.That(createdHook.Administrators, Is.Not.Null);
             Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.HookKind, Is.EqualTo(NotificationHookKind.Email));
 
             var createdEmailHook = createdHook as EmailNotificationHook;
 
@@ -104,6 +107,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.ExternalUri, Is.Null);
             Assert.That(createdHook.Administrators, Is.Not.Null);
             Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.HookKind, Is.EqualTo(NotificationHookKind.Webhook));
 
             var createdWebHook = createdHook as WebNotificationHook;
 
@@ -156,6 +160,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.ExternalUri.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
             Assert.That(createdHook.Administrators, Is.Not.Null);
             Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.HookKind, Is.EqualTo(NotificationHookKind.Webhook));
 
             var createdWebHook = createdHook as WebNotificationHook;
 
