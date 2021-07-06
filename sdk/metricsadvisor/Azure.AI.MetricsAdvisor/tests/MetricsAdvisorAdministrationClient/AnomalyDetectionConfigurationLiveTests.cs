@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
             Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
             Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
 
@@ -79,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
-                CrossConditionsOperator = DetectionConditionsOperator.And,
+                ConditionOperator = DetectionConditionOperator.And,
                 ChangeThresholdCondition = new(90.0, 5, true, AnomalyDetectorDirection.Both, new(1, 2.0)),
                 SmartDetectionCondition = new(23.0, AnomalyDetectorDirection.Down, new(3, 4.0))
             };
@@ -105,7 +105,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.And));
+            Assert.That(createdWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
             Assert.That(createdWholeConditions.HardThresholdCondition, Is.Null);
 
             ValidateChangeThresholdCondition(createdWholeConditions.ChangeThresholdCondition, 90.0, 5, true, AnomalyDetectorDirection.Both, 1, 2.0);
@@ -172,7 +172,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
             Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
             Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
 
@@ -191,7 +191,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdGroupConditions0.SeriesGroupKey, "Delhi");
 
-            Assert.That(createdGroupConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(createdGroupConditions0.ConditionOperator, Is.Null);
             Assert.That(createdGroupConditions0.HardThresholdCondition, Is.Null);
             Assert.That(createdGroupConditions0.ChangeThresholdCondition, Is.Null);
 
@@ -205,7 +205,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdGroupConditions1.SeriesGroupKey, "Kolkata");
 
-            Assert.That(createdGroupConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(createdGroupConditions1.ConditionOperator, Is.Null);
             Assert.That(createdGroupConditions1.HardThresholdCondition, Is.Null);
             Assert.That(createdGroupConditions1.SmartDetectionCondition, Is.Null);
 
@@ -273,7 +273,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
             Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
             Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
 
@@ -292,7 +292,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdSeriesConditions0.SeriesKey, "Delhi", "Handmade");
 
-            Assert.That(createdSeriesConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(createdSeriesConditions0.ConditionOperator, Is.Null);
             Assert.That(createdSeriesConditions0.HardThresholdCondition, Is.Null);
             Assert.That(createdSeriesConditions0.ChangeThresholdCondition, Is.Null);
 
@@ -306,7 +306,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(createdSeriesConditions1.SeriesKey, "Kolkata", "Grocery & Gourmet Food");
 
-            Assert.That(createdSeriesConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(createdSeriesConditions1.ConditionOperator, Is.Null);
             Assert.That(createdSeriesConditions1.HardThresholdCondition, Is.Null);
             Assert.That(createdSeriesConditions1.SmartDetectionCondition, Is.Null);
 
@@ -328,7 +328,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
-                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                ConditionOperator = DetectionConditionOperator.Or,
                 HardThresholdCondition = new(AnomalyDetectorDirection.Down, new(1, 2.0))
                 {
                     LowerBound = 10.0
@@ -385,7 +385,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
 
             Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.Or));
+            Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Or));
             Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
 
             ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Down, null, 12.0, 1, 2.0);
@@ -401,7 +401,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(updatedGroupConditions.SeriesGroupKey, "Kolkata");
 
-            Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions.ConditionOperator, Is.Null);
             Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
             Assert.That(updatedGroupConditions.SmartDetectionCondition, Is.Null);
 
@@ -416,7 +416,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             ValidateTempDataFeedDimensionKey(updatedSeriesConditions.SeriesKey, "Delhi", "Handmade");
 
             Assert.That(updatedSeriesConditions, Is.Not.Null);
-            Assert.That(updatedSeriesConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedSeriesConditions.ConditionOperator, Is.Null);
             Assert.That(updatedSeriesConditions.HardThresholdCondition, Is.Null);
             Assert.That(updatedSeriesConditions.ChangeThresholdCondition, Is.Null);
 
@@ -438,7 +438,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
-                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                ConditionOperator = DetectionConditionOperator.Or,
                 HardThresholdCondition = new(AnomalyDetectorDirection.Down, new(1, 2.0))
                 {
                     LowerBound = 10.0
@@ -482,7 +482,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.Description = description;
 
-            configToUpdate.WholeSeriesDetectionConditions.CrossConditionsOperator = DetectionConditionsOperator.And;
+            configToUpdate.WholeSeriesDetectionConditions.ConditionOperator = DetectionConditionOperator.And;
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition = new(AnomalyDetectorDirection.Up, new(11, 12.0)) { UpperBound = 9.0 };
             configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
             configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new(75.0, AnomalyDetectorDirection.Both, new(15, 16.0));
@@ -512,7 +512,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
 
             Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.And));
+            Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
             Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
 
             ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Up, 9.0, null, 11, 12.0);
@@ -531,7 +531,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Kolkata");
 
-            Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions0.ConditionOperator, Is.Null);
             Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
             Assert.That(updatedGroupConditions0.SmartDetectionCondition, Is.Null);
 
@@ -545,7 +545,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateTempDataFeedDimensionKey(updatedGroupConditions1.SeriesGroupKey, "Delhi");
 
-            Assert.That(updatedGroupConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions1.ConditionOperator, Is.Null);
             Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
             Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
 
@@ -729,11 +729,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             if (conditionsCount > 1)
             {
-                Assert.That(conditions.CrossConditionsOperator, Is.Not.Null);
+                Assert.That(conditions.ConditionOperator, Is.Not.Null);
             }
             else
             {
-                Assert.That(conditions.CrossConditionsOperator, Is.Null);
+                Assert.That(conditions.ConditionOperator, Is.Null);
             }
         }
     }

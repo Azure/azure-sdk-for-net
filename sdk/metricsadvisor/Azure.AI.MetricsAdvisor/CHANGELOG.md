@@ -23,12 +23,13 @@
   - Renamed class `ServicePrincipalDatasourceCredential` to `ServicePrincipalCredentialEntity`.
   - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `ServicePrincipalInKeyVaultCredentialEntity`.
   - Renamed class `SqlConnectionStringDatasourceCredential` to `SqlConnectionStringCredentialEntity`.
+- Renamed type `DetectionConditionsOperator` to `DetectionConditionOperator`. Also, `MetricWholeSeriesDetectionCondition.CrossConditionsOperator` has been renamed to `ConditionOperator`.
 - Renamed class `MetricAnomalyAlertConfiguration` to `MetricAlertConfiguration`.
-- Renamed class `MetricAnomalyAlertConfigurationsOperator` to `DetectionConditionOperator`. Similarly, `MetricAnomalyAlertConfiguration.CrossMetricsOperator` has been renamed to `ConditionOperator`.
-- Renamed class `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
+- Renamed type `MetricAnomalyAlertConfigurationsOperator` to `MetricAlertConfigurationsOperator`.
+- Renamed type `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
 - Renamed class `AzureDataLakeStorageGen2DataFeedSource` to `AzureDataLakeStorageDataFeedSource`. Similarly, `DataSourceType.AzureDataLakeStorageGen2` has been renamed to `AzureDataLakeStorage`.
-- Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` to `FeedbackKind` as well.
-- Renamed class `PeriodType` to `MetricPeriodType`.
+- Renamed type `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` to `FeedbackKind` as well.
+- Renamed type `PeriodType` to `MetricPeriodType`.
 - Renamed class `FeedbackDimensionFilter` to `FeedbackFilter` and moved it to the namespace `Azure.AI.MetricsAdvisor`.
 - Renamed class `GetAnomaliesForDetectionConfigurationFilter` to `AnomalyFilter`.
 - Renamed class `GetDataFeedsFilter` to `DataFeedFilter`, and the property `GetDataFeedsOptions.GetDataFeedsFilter` to `Filter`.
