@@ -19,6 +19,9 @@ namespace Azure.Monitor.Query.Models
             Optional<string> resourceId = default;
             Optional<string> @namespace = default;
             Optional<LocalizableString> name = default;
+            Optional<string> displayDescription = default;
+            Optional<string> category = default;
+            Optional<MetricClass> metricClass = default;
             Optional<MetricUnit> unit = default;
             Optional<MetricAggregationType> primaryAggregationType = default;
             Optional<IReadOnlyList<MetricAggregationType>> supportedAggregationTypes = default;
@@ -57,6 +60,26 @@ namespace Azure.Monitor.Query.Models
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
+                if (property.NameEquals("displayDescription"))
+                {
+                    displayDescription = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("category"))
+                {
+                    category = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("metricClass"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    metricClass = new MetricClass(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("unit"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -64,7 +87,7 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = property.Value.GetString().ToMetricUnit();
+                    unit = new MetricUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryAggregationType"))
@@ -128,7 +151,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions));
+            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions));
         }
     }
 }

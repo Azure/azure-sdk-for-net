@@ -8,7 +8,7 @@ The Azure Event Hubs client library makes use of new features that were introduc
   
   ## Publish a batch of events using C# 7
   
-  This example illustrates publishing a batch with a single event, allowing the Event Hubs service to assign the partition to which it will be published.  For more information on publishing, see:  [Sample04_PublishingEvents](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md).
+  This example illustrates publishing a batch with a single event, allowing the Event Hubs service to assign the partition to which it will be published.  For more information on publishing, see:  [Sample04_PublishingEvents](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md).
   
   ```C# Snippet:EventHubs_Sample07_Publish
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -37,9 +37,9 @@ finally
   
 ## Read events from all partitions using C# 7
 
-The `ReadEventsAsync` method of the `EventHubConsumerClient` allows events to be read from each partition for prototyping and exploring, but is not a recommended approach for production scenarios.  For reading events from all partitions in a production scenario, we strongly recommend using the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package.
+The `ReadEventsAsync` method of the `EventHubConsumerClient` allows events to be read from each partition for prototyping and exploring, but is not a recommended approach for production scenarios.  For reading events from all partitions in a production scenario, we strongly recommend using the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package.
 
-This example illustrates reading either 50 events or stopping after 30 seconds has elapsed, whichever occurs first.  For more information on publishing, see:  [Sample05_ReadingEvents](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md).
+This example illustrates reading either 50 events or stopping after 30 seconds has elapsed, whichever occurs first.  For more information on publishing, see:  [Sample05_ReadingEvents](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md).
 
   ```C# Snippet:EventHubs_Sample07_ReadAllPartitions
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";

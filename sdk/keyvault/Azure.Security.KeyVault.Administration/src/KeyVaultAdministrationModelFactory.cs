@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
@@ -10,8 +12,25 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// A factory class which constructs model classes for mocking purposes.
     /// </summary>
-    public static class KeyVaultAdministrationModelFactory
+    [CodeGenType("AzureSecurityKeyVaultAdministrationModelFactory")]
+    public static partial class KeyVaultAdministrationModelFactory
     {
+        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
+        /// <param name="id"> The role definition ID. </param>
+        /// <param name="name"> The role definition name. </param>
+        /// <param name="type"> The role definition type. </param>
+        /// <param name="roleName"> The role name. </param>
+        /// <param name="description"> The role definition description. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultRoleDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KeyVaultRoleDefinition KeyVaultRoleDefinition(string id = default, string name = default, KeyVaultRoleDefinitionType? type = default, string roleName = default, string description = default, KeyVaultRoleType? roleType = default, IList<KeyVaultPermission> permissions = default, IList<KeyVaultRoleScope> assignableScopes = default)
+        {
+            return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
+        }
+
         /// <summary>
         /// Initializes a new instance of RoleDefinition.
         /// </summary>

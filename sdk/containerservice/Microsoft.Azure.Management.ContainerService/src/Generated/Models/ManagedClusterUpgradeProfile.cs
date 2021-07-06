@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// versions for the control plane.</param>
         /// <param name="agentPoolProfiles">The list of available upgrade
         /// versions for agent pools.</param>
-        /// <param name="id">Id of upgrade profile.</param>
-        /// <param name="name">Name of upgrade profile.</param>
-        /// <param name="type">Type of upgrade profile.</param>
+        /// <param name="id">The ID of the upgrade profile.</param>
+        /// <param name="name">The name of the upgrade profile.</param>
+        /// <param name="type">The type of the upgrade profile.</param>
         public ManagedClusterUpgradeProfile(ManagedClusterPoolUpgradeProfile controlPlaneProfile, IList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles, string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
@@ -59,19 +59,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of upgrade profile.
+        /// Gets the ID of the upgrade profile.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of upgrade profile.
+        /// Gets the name of the upgrade profile.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of upgrade profile.
+        /// Gets the type of the upgrade profile.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

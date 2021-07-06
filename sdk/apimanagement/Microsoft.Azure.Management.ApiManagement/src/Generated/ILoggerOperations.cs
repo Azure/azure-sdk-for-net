@@ -175,10 +175,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoggerContract,LoggerUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified logger.
         /// </summary>
@@ -197,9 +200,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the header response of the GET request or it should be * for
         /// unconditional update.
         /// </param>
-        /// <param name='force'>
-        /// Force deletion even if diagnostic is attached.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, string ifMatch, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists a collection of loggers in the specified service instance.
         /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-log-event-hubs" />

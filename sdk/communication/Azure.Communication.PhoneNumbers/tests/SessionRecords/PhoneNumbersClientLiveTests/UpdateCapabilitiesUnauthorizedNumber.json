@@ -1,0 +1,47 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/Sanitized/capabilities?api-version=2021-03-07",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-dda3413713bcc34b98b122a02d4c17fb-72d63b050a868142-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "00c7ab476812b2f120ea8960906289f6",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:21 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-03-07",
+        "Content-Type": "application/json",
+        "Date": "Tue, 22 Jun 2021 22:03:21 GMT",
+        "MS-CV": "/5QS4e0ftEyGAHK\u002B43yBDg.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KV7SYAAAAADhh1mFgmLvTYrPlJWYHutwWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "49ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "MissingInput",
+          "message": "At least one of Sms or Calling must exist.",
+          "target": "phonenumbercapabilitiesrequest"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "942212928"
+  }
+}

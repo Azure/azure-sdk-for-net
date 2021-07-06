@@ -1,7 +1,15 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
+
+## 1.2.1 (2021-05-18)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Fixes an issues where keys returned from `AzureKeyVaultConfigurationProvider` were case sensitive. 
 
 ## 1.1.0 (2021-05-14)
 

@@ -34,12 +34,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Initializes a new instance of the ManagedClusterPoolUpgradeProfile
         /// class.
         /// </summary>
-        /// <param name="kubernetesVersion">Kubernetes version (major, minor,
-        /// patch).</param>
-        /// <param name="osType">OsType to be used to specify os type. Choose
-        /// from Linux and Windows. Default to Linux. Possible values include:
-        /// 'Linux', 'Windows'</param>
-        /// <param name="name">Pool name.</param>
+        /// <param name="kubernetesVersion">The Kubernetes version
+        /// (major.minor.patch).</param>
+        /// <param name="osType">Possible values include: 'Linux',
+        /// 'Windows'</param>
+        /// <param name="name">The Agent Pool name.</param>
         /// <param name="upgrades">List of orchestrator types and versions
         /// available for upgrade.</param>
         public ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string osType, string name = default(string), IList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default(IList<ManagedClusterPoolUpgradeProfileUpgradesItem>))
@@ -57,21 +56,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets kubernetes version (major, minor, patch).
+        /// Gets or sets the Kubernetes version (major.minor.patch).
         /// </summary>
         [JsonProperty(PropertyName = "kubernetesVersion")]
         public string KubernetesVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets pool name.
+        /// Gets or sets the Agent Pool name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets osType to be used to specify os type. Choose from
-        /// Linux and Windows. Default to Linux. Possible values include:
-        /// 'Linux', 'Windows'
+        /// Gets or sets possible values include: 'Linux', 'Windows'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public string OsType { get; set; }

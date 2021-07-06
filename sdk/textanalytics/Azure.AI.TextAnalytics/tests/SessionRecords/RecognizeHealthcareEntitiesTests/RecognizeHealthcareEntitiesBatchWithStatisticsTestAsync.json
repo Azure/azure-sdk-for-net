@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/entities/health/jobs?stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "223",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c97831a534d29047b7518431447e2b28-cfe5b22a23e7694e-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-5ce410b613bd4642a75f615877da3be5-37891006616e8f43-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "cb820fc464b79dcc9212329646bf509a",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,72 +29,72 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "2ea2328e-bf3b-45b0-97d8-7470e300ab6f",
-        "Date": "Wed, 24 Feb 2021 16:57:24 GMT",
-        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/b765b2f8-d2fc-4412-b02f-790e7f715ba0",
+        "apim-request-id": "92de0172-c55c-4a09-9477-0d4db0372cc0",
+        "Date": "Tue, 29 Jun 2021 19:11:18 GMT",
+        "operation-location": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/entities/health/jobs/2b8ee14a-8711-4f0c-94c7-6d95b9713d84",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "85"
+        "x-envoy-upstream-service-time": "156"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/b765b2f8-d2fc-4412-b02f-790e7f715ba0?showStats=true",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/entities/health/jobs/2b8ee14a-8711-4f0c-94c7-6d95b9713d84?showStats=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "08d18cd76fa1ba75ad5e5758b7de00e4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "684ea447-f653-46ee-8098-5fdb22f2bf3a",
+        "apim-request-id": "83d7a958-4d31-4051-8789-336bca3c1f83",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 24 Feb 2021 16:57:24 GMT",
+        "Date": "Tue, 29 Jun 2021 19:11:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "x-envoy-upstream-service-time": "6"
       },
       "ResponseBody": {
-        "jobId": "b765b2f8-d2fc-4412-b02f-790e7f715ba0",
-        "lastUpdateDateTime": "2021-02-24T16:57:24Z",
-        "createdDateTime": "2021-02-24T16:57:24Z",
-        "expirationDateTime": "2021-02-25T16:57:24Z",
+        "jobId": "2b8ee14a-8711-4f0c-94c7-6d95b9713d84",
+        "lastUpdateDateTime": "2021-06-29T19:11:18Z",
+        "createdDateTime": "2021-06-29T19:11:18Z",
+        "expirationDateTime": "2021-06-30T19:11:18Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/b765b2f8-d2fc-4412-b02f-790e7f715ba0?showStats=true",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/entities/health/jobs/2b8ee14a-8711-4f0c-94c7-6d95b9713d84?showStats=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "2ac480b3f6758c758bf3f8f60a589915",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9a02fd37-d958-4790-90c8-01ad4af5319c",
+        "apim-request-id": "7a9fc35b-9fef-49f5-86a9-05d2d615295f",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 24 Feb 2021 16:57:26 GMT",
+        "Date": "Tue, 29 Jun 2021 19:11:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "69"
+        "x-envoy-upstream-service-time": "72"
       },
       "ResponseBody": {
-        "jobId": "b765b2f8-d2fc-4412-b02f-790e7f715ba0",
-        "lastUpdateDateTime": "2021-02-24T16:57:25Z",
-        "createdDateTime": "2021-02-24T16:57:24Z",
-        "expirationDateTime": "2021-02-25T16:57:24Z",
+        "jobId": "2b8ee14a-8711-4f0c-94c7-6d95b9713d84",
+        "lastUpdateDateTime": "2021-06-29T19:11:19Z",
+        "createdDateTime": "2021-06-29T19:11:18Z",
+        "expirationDateTime": "2021-06-30T19:11:18Z",
         "status": "succeeded",
         "errors": [],
         "results": {
@@ -117,7 +117,7 @@
                   "length": 5,
                   "text": "100mg",
                   "category": "Dosage",
-                  "confidenceScore": 0.99
+                  "confidenceScore": 1.0
                 },
                 {
                   "offset": 27,
@@ -125,6 +125,7 @@
                   "text": "ibuprofen",
                   "category": "MedicationName",
                   "confidenceScore": 1.0,
+                  "name": "ibuprofen",
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -262,11 +263,11 @@
                   "entities": [
                     {
                       "ref": "#/results/documents/0/entities/0",
-                      "role": "Attribute"
+                      "role": "Dosage"
                     },
                     {
                       "ref": "#/results/documents/0/entities/1",
-                      "role": "Entity"
+                      "role": "Medication"
                     }
                   ]
                 },
@@ -275,11 +276,11 @@
                   "entities": [
                     {
                       "ref": "#/results/documents/0/entities/1",
-                      "role": "Entity"
+                      "role": "Medication"
                     },
                     {
                       "ref": "#/results/documents/0/entities/2",
-                      "role": "Attribute"
+                      "role": "Frequency"
                     }
                   ]
                 }
@@ -294,25 +295,50 @@
               },
               "entities": [
                 {
-                  "offset": 0,
-                  "length": 9,
-                  "text": "Can cause",
-                  "category": "Diagnosis",
-                  "confidenceScore": 0.92
-                },
-                {
                   "offset": 10,
                   "length": 5,
                   "text": "rapid",
-                  "category": "ConditionQualifier",
-                  "confidenceScore": 0.82
+                  "category": "SymptomOrSign",
+                  "confidenceScore": 0.93,
+                  "name": "Rapid",
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0456962"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000002744"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000034666"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LA24868-4"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C65069"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "X78xZ"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "255358001"
+                    }
+                  ]
                 },
                 {
                   "offset": 19,
                   "length": 19,
                   "text": "irregular heartbeat",
                   "category": "SymptomOrSign",
-                  "confidenceScore": 0.89,
+                  "confidenceScore": 1.0,
+                  "name": "Cardiac Arrhythmia",
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -485,7 +511,8 @@
                   "length": 8,
                   "text": "delirium",
                   "category": "Diagnosis",
-                  "confidenceScore": 1.0,
+                  "confidenceScore": 0.97,
+                  "name": "Delirium",
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -646,7 +673,8 @@
                   "length": 5,
                   "text": "panic",
                   "category": "Diagnosis",
-                  "confidenceScore": 0.98,
+                  "confidenceScore": 1.0,
+                  "name": "Panic",
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -739,7 +767,8 @@
                   "length": 9,
                   "text": "psychosis",
                   "category": "Diagnosis",
-                  "confidenceScore": 0.97,
+                  "confidenceScore": 0.91,
+                  "name": "Psychotic Disorders",
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -897,6 +926,7 @@
                   "text": "heart failure",
                   "category": "Diagnosis",
                   "confidenceScore": 1.0,
+                  "name": "Heart failure",
                   "links": [
                     {
                       "dataSource": "UMLS",
@@ -1049,26 +1079,12 @@
                   ]
                 }
               ],
-              "relations": [
-                {
-                  "relationType": "QualifierOfCondition",
-                  "entities": [
-                    {
-                      "ref": "#/results/documents/1/entities/0",
-                      "role": "Entity"
-                    },
-                    {
-                      "ref": "#/results/documents/1/entities/1",
-                      "role": "Attribute"
-                    }
-                  ]
-                }
-              ],
+              "relations": [],
               "warnings": []
             }
           ],
           "errors": [],
-          "modelVersion": "2021-01-11"
+          "modelVersion": "2021-05-15"
         }
       }
     }
@@ -1076,6 +1092,6 @@
   "Variables": {
     "RandomSeed": "1450670554",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }
 }

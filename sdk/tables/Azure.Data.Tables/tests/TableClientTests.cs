@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Sas;
+using Azure.Identity;
 using NUnit.Framework;
 using Parms = Azure.Data.Tables.TableConstants.Sas.Parameters;
 
@@ -38,7 +39,10 @@ namespace Azure.Data.Tables.Tests
         {
             _transport = new MockTransport(request => new MockResponse(204));
             var service_Instrumented = InstrumentClient(
-                new TableServiceClient(new Uri($"https://example.com?{signature}"), new AzureSasCredential("sig"), new TablesClientOptions { Transport = _transport }));
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    new TableClientOptions { Transport = _transport }));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -58,7 +62,7 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should validate the url.");
 
             Assert.That(
-                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions()),
+                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions()),
                 Throws.Nothing,
                 "The constructor should accept valid arguments.");
 
@@ -78,6 +82,11 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should not accept a null credential");
 
             Assert.That(
+                () => new TableClient(_urlHttp, TableName, default(TokenCredential)),
+                Throws.InstanceOf<ArgumentException>(),
+                "The constructor should not accept a null credential");
+
+            Assert.That(
                 () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept valid arguments.");
@@ -86,6 +95,11 @@ namespace Azure.Data.Tables.Tests
                 () => new TableClient(_urlHttp, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept an http url.");
+
+            Assert.That(
+                () => new TableClient(_urlHttp, TableName, new DefaultAzureCredential(), new TableClientOptions()),
+                Throws.Nothing,
+                "The constructor should accept valid arguments.");
         }
 
         public static IEnumerable<object[]> ValidConnStrings()
@@ -105,7 +119,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidConnStrings))]
         public void AccountNameAndNameForConnStringCtor(string connString)
         {
-            var client = new TableClient(connString, TableName, new TablesClientOptions());
+            var client = new TableClient(connString, TableName, new TableClientOptions());
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);
@@ -114,7 +128,16 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void AccountNameAndNameForUriCtor()
         {
-            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions());
+            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions());
+
+            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(TableName, client.Name);
+        }
+
+        [Test]
+        public void NoCredCtor()
+        {
+            var client = new TableClient(new Uri($"{_url}/{TableName}?{signature}"));
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);
@@ -209,9 +232,8 @@ namespace Azure.Data.Tables.Tests
             string token = sas.Sign(new TableSharedKeyCredential("foo", "Kg=="));
 
             Assert.That(
-                token,
-                Is.EqualTo(
-                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}=nUfFBSzJ7NckYoHxSeX5nKcVbqJDBJQfPpGffr5Ui2M%3D"));
+                token.StartsWith(
+                    $"{Parms.TableName}={TableName.ToLowerInvariant()}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
         }
 
         /// <summary>
@@ -348,7 +370,24 @@ namespace Azure.Data.Tables.Tests
         public async Task ValidateUri()
         {
             await client.UpdateEntityAsync(new TableEntity("pkā", "rk"), ETag.All).ConfigureAwait(false);
-            Assert.AreEqual($"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata", _transport.Requests[0].Uri.ToString());
+            Assert.AreEqual(
+                $"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+                _transport.Requests[0].Uri.ToString());
+        }
+
+        [Test]
+        public void GenerateSasUri()
+        {
+            TableSasPermissions permissions = TableSasPermissions.Add;
+            var expires = DateTime.Now.AddDays(1);
+            var cred = new TableSharedKeyCredential(AccountName, Secret);
+            var client = new TableClient(_url, TableName, cred);
+
+            var expectedSas = new TableSasBuilder(TableName, permissions, expires).Sign(cred);
+
+            var actualSas = client.GenerateSasUri(permissions, expires);
+
+            Assert.AreEqual("?" + expectedSas, actualSas.Query);
         }
 
         public class EnumEntity : ITableEntity

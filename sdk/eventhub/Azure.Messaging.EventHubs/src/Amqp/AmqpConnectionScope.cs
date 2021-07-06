@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -169,6 +170,25 @@ namespace Azure.Messaging.EventHubs.Amqp
         private IWebProxy Proxy { get; }
 
         /// <summary>
+        ///   The size of the buffer used for sending information via the active transport.
+        /// </summary>
+        ///
+        private int SendBufferSizeInBytes { get; }
+
+        /// <summary>
+        ///   The size of the buffer used for receiving information via the active transport.
+        /// </summary>
+        ///
+        private int ReceiveBufferSizeInBytes { get; }
+
+        /// <summary>
+        ///   A <see cref="RemoteCertificateValidationCallback" /> delegate allowing custom logic to be considered for
+        ///   validation of the remote certificate responsible for encrypting communication.
+        /// </summary>
+        ///
+        private RemoteCertificateValidationCallback CertificateValidationCallback { get; }
+
+        /// <summary>
         ///   The AMQP connection that is active for the current scope.
         /// </summary>
         ///
@@ -185,6 +205,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="identifier">The identifier to assign this scope; if not provided, one will be generated.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         ///
         public AmqpConnectionScope(Uri serviceEndpoint,
                                    Uri connectionEndpoint,
@@ -192,7 +215,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                                    EventHubTokenCredential credential,
                                    EventHubsTransportType transport,
                                    IWebProxy proxy,
-                                   string identifier = default)
+                                   string identifier = default,
+                                   int sendBufferSizeBytes = AmqpConstants.TransportBufferSize,
+                                   int receiveBufferSizeBytes = AmqpConstants.TransportBufferSize,
+                                   RemoteCertificateValidationCallback certificateValidationCallback = default)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(connectionEndpoint, nameof(connectionEndpoint));
@@ -205,10 +231,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             Transport = transport;
             Proxy = proxy;
+            SendBufferSizeInBytes = sendBufferSizeBytes;
+            ReceiveBufferSizeInBytes = receiveBufferSizeBytes;
+            CertificateValidationCallback = certificateValidationCallback;
             TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential), OperationCancellationSource.Token);
             Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
 
-            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, ConnectionEndpoint, Transport, Proxy, Id, timeout);
+            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, ConnectionEndpoint, Transport, Proxy, SendBufferSizeInBytes, ReceiveBufferSizeInBytes, CertificateValidationCallback, Id, timeout);
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(connectionFactory, CloseConnection);
         }
 
@@ -240,17 +269,31 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var stopWatch = ValueStopwatch.StartNew();
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            try
+            {
+                EventHubsEventSource.Log.AmqpManagementLinkCreateStart(EventHubName);
 
-            var link = await CreateManagementLinkAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var stopWatch = ValueStopwatch.StartNew();
+                var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var link = await CreateManagementLinkAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            return link;
+                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                return link;
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.AmqpManagementLinkCreateError(EventHubName, ex.Message);
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.AmqpManagementLinkCreateComplete(EventHubName);
+            }
         }
 
         /// <summary>
@@ -285,30 +328,47 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var stopWatch = ValueStopwatch.StartNew();
-            var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(CultureInfo.InvariantCulture, ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
+            var ownerLevelLog = ownerLevel?.ToString(CultureInfo.InvariantCulture);
+            var eventPositionLog = eventPosition.ToString();
 
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            try
+            {
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateStart(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog);
 
-            var link = await CreateReceivingLinkAsync(
-                connection,
-                consumerEndpoint,
-                eventPosition,
-                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
-                prefetchCount,
-                prefetchSizeInBytes,
-                ownerLevel,
-                trackLastEnqueuedEventProperties,
-                cancellationToken
-            ).ConfigureAwait(false);
+                var stopWatch = ValueStopwatch.StartNew();
+                var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(CultureInfo.InvariantCulture, ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var link = await CreateReceivingLinkAsync(
+                    connection,
+                    consumerEndpoint,
+                    eventPosition,
+                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                    prefetchCount,
+                    prefetchSizeInBytes,
+                    ownerLevel,
+                    trackLastEnqueuedEventProperties,
+                    cancellationToken
+                ).ConfigureAwait(false);
 
-            return link;
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                return link;
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateError(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog, ex.Message);
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateComplete(EventHubName, consumerGroup, partitionId, ownerLevelLog, eventPositionLog);
+            }
         }
 
         /// <summary>
@@ -332,20 +392,36 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var stopWatch = ValueStopwatch.StartNew();
-            var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(CultureInfo.InvariantCulture, PartitionProducerPathSuffixMask, EventHubName, partitionId);
-            var producerEndpoint = new Uri(ServiceEndpoint, path);
+            var featuresLog = features.ToString();
 
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            try
+            {
+                EventHubsEventSource.Log.AmqpProducerLinkCreateStart(EventHubName, partitionId, featuresLog);
 
-            var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var stopWatch = ValueStopwatch.StartNew();
+                var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(CultureInfo.InvariantCulture, PartitionProducerPathSuffixMask, EventHubName, partitionId);
+                var producerEndpoint = new Uri(ServiceEndpoint, path);
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            return link;
+                var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                return link;
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.AmqpProducerLinkCreateError(EventHubName, partitionId, featuresLog, ex.Message);
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.AmqpProducerLinkCreateComplete(EventHubName, partitionId, featuresLog);
+            }
         }
 
         /// <summary>
@@ -376,6 +452,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="connectionEndpoint">The endpoint to used establishing a connection to the Event Hubs service to which the scope is associated.</param>
         /// <param name="transportType">The type of transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         /// <param name="scopeIdentifier">The unique identifier for the associated scope.</param>
         /// <param name="timeout">The timeout to consider when creating the connection.</param>
         ///
@@ -386,48 +465,68 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                   Uri connectionEndpoint,
                                                                                   EventHubsTransportType transportType,
                                                                                   IWebProxy proxy,
+                                                                                  int sendBufferSizeBytes,
+                                                                                  int receiveBufferSizeBytes,
+                                                                                  RemoteCertificateValidationCallback certificateValidationCallback,
                                                                                   string scopeIdentifier,
                                                                                   TimeSpan timeout)
         {
-            var amqpSettings = CreateAmpqSettings(AmqpVersion);
-            var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier);
+            var serviceEndpointLog = serviceEndpoint.AbsoluteUri;
+            var transportTypeLog = transportType.ToString();
 
-            var transportSettings = transportType.IsWebSocketTransport()
-                ? CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy)
-                : CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port);
+            EventHubsEventSource.Log.AmqpConnectionCreateStart(serviceEndpointLog, transportTypeLog);
 
-            // Create and open the connection, respecting the timeout constraint
-            // that was received.
-
-            var stopWatch = ValueStopwatch.StartNew();
-
-            var initiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
-            var transport = await initiator.ConnectTaskAsync(timeout).ConfigureAwait(false);
-
-            var connection = new AmqpConnection(transport, amqpSettings, connectionSetings);
-            await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-
-            // Create the CBS link that will be used for authorization.  The act of creating the link will associate
-            // it with the connection.
-
-            _ = new AmqpCbsLink(connection);
-
-            // When the connection is closed, close each of the links associated with it.
-
-            EventHandler closeHandler = null;
-
-            closeHandler = (snd, args) =>
+            try
             {
-                foreach (var link in ActiveLinks.Keys)
+                var amqpSettings = CreateAmpqSettings(AmqpVersion);
+                var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier);
+
+                var transportSettings = transportType.IsWebSocketTransport()
+                    ? CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes)
+                    : CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback);
+
+                // Create and open the connection, respecting the timeout constraint
+                // that was received.
+
+                var stopWatch = ValueStopwatch.StartNew();
+
+                var initiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
+                var transport = await initiator.ConnectTaskAsync(timeout).ConfigureAwait(false);
+
+                var connection = new AmqpConnection(transport, amqpSettings, connectionSetings);
+                await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+
+                // Create the CBS link that will be used for authorization.  The act of creating the link will associate
+                // it with the connection.
+
+                _ = new AmqpCbsLink(connection);
+
+                // When the connection is closed, close each of the links associated with it.
+
+                EventHandler closeHandler = null;
+
+                closeHandler = (snd, args) =>
                 {
-                    link.SafeClose();
-                }
+                    foreach (var link in ActiveLinks.Keys)
+                    {
+                        link.SafeClose();
+                    }
 
-                connection.Closed -= closeHandler;
-            };
+                    connection.Closed -= closeHandler;
+                };
 
-            connection.Closed += closeHandler;
-            return connection;
+                connection.Closed += closeHandler;
+                return connection;
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.AmqpConnectionCreateStartError(serviceEndpointLog, transportTypeLog, ex.Message);
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.AmqpConnectionCreateComplete(serviceEndpointLog, transportTypeLog);
+            }
         }
 
         /// <summary>
@@ -755,7 +854,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="connection">The connection to close.</param>
         ///
-        protected virtual void CloseConnection(AmqpConnection connection) => connection.SafeClose();
+        protected virtual void CloseConnection(AmqpConnection connection)
+        {
+            connection.SafeClose();
+            EventHubsEventSource.Log.FaultTolerantAmqpObjectClose(nameof(AmqpConnection), "", EventHubName, "", "", connection.TerminalException?.Message);
+        }
 
         /// <summary>
         ///   Calculates the interval after which authorization for an AMQP link should be
@@ -994,23 +1097,30 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
         /// <param name="port">The port to use for connecting to the endpoint.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         ///
         private static TransportSettings CreateTransportSettingsforTcp(string hostName,
-                                                                       int port)
+                                                                       int port,
+                                                                       int sendBufferSizeBytes,
+                                                                       int receiveBufferSizeBytes,
+                                                                       RemoteCertificateValidationCallback certificateValidationCallback)
         {
             var tcpSettings = new TcpTransportSettings
             {
                 Host = hostName,
                 Port = port < 0 ? AmqpConstants.DefaultSecurePort : port,
-                ReceiveBufferSize = AmqpConstants.TransportBufferSize,
-                SendBufferSize = AmqpConstants.TransportBufferSize
+                SendBufferSize = sendBufferSizeBytes,
+                ReceiveBufferSize = receiveBufferSizeBytes,
             };
 
             return new TlsTransportSettings(tcpSettings)
             {
                 TargetHost = hostName,
+                CertificateValidationCallback = certificateValidationCallback
             };
         }
 
@@ -1020,11 +1130,15 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
         /// <param name="proxy">The proxy to use for connecting to the endpoint.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         ///
         private static TransportSettings CreateTransportSettingsForWebSockets(string hostName,
-                                                                              IWebProxy proxy)
+                                                                              IWebProxy proxy,
+                                                                              int sendBufferSizeBytes,
+                                                                              int receiveBufferSizeBytes)
         {
             var uriBuilder = new UriBuilder(hostName)
             {
@@ -1036,7 +1150,9 @@ namespace Azure.Messaging.EventHubs.Amqp
             return new WebSocketTransportSettings
             {
                 Uri = uriBuilder.Uri,
-                Proxy = proxy ?? (default)
+                Proxy = proxy,
+                SendBufferSize = sendBufferSizeBytes,
+                ReceiveBufferSize = receiveBufferSizeBytes
             };
         }
 

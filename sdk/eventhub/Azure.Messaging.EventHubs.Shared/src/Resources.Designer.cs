@@ -747,5 +747,60 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("ListCheckpointsAsyncObsolete", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The type of AMQP body for the message could not be determined..
+        /// </summary>
+        internal static string UnknownAmqpBodyType
+        {
+            get
+            {
+                return ResourceManager.GetString("UnknownAmqpBodyType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event body cannot be retrieved using the {1} property of {0}.  A body of type {2} can be accessed using the {3} method of {0} and inspecting the underlying AMQP message..
+        /// </summary>
+        internal static string RawAmqpBodyTypeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("RawAmqpBodyTypeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The given key '{0}' was not present in the dictionary..
+        /// </summary>
+        internal static string DictionaryKeyNotFoundMask
+        {
+            get
+            {
+                return ResourceManager.GetString("DictionaryKeyNotFoundMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported value body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageValueBodyMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageValueBodyMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} key `{1}` has a value of type `{2}` which is not supported for AMQP transport..
+        /// </summary>
+        internal static string InvalidAmqpMessageDictionaryTypeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageDictionaryTypeMask", resourceCulture);
+            }
+        }
     }
 }

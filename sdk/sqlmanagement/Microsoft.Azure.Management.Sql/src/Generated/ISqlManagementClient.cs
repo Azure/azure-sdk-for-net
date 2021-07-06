@@ -143,11 +143,6 @@ namespace Microsoft.Azure.Management.Sql
         IServerUsagesOperations ServerUsages { get; }
 
         /// <summary>
-        /// Gets the IBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
-
-        /// <summary>
         /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
         /// </summary>
         IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; }
@@ -553,11 +548,6 @@ namespace Microsoft.Azure.Management.Sql
         IServerOperations ServerOperations { get; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
-
-        /// <summary>
         /// Gets the IServerSecurityAlertPoliciesOperations.
         /// </summary>
         IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
@@ -628,6 +618,11 @@ namespace Microsoft.Azure.Management.Sql
         IWorkloadGroupsOperations WorkloadGroups { get; }
 
         /// <summary>
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
+
+        /// <summary>
         /// Gets the IDatabaseExtensionsOperations.
         /// </summary>
         IDatabaseExtensionsOperations DatabaseExtensions { get; }
@@ -661,6 +656,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRestorableDroppedManagedDatabasesOperations.
         /// </summary>
         IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
 
         /// <summary>
         /// Gets the IUsagesOperations.

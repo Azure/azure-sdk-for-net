@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/keyPhrases?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/keyPhrases?showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "188",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-53b1c67903a1d245be0bf78e7844930c-5392d097cd40f34f-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-8b91707588f1f54a90680476d07ca3e8-968b00c8fd9dbb48-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f8376358e18a19e0b7e6f893926ac745",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "edac979c-44bd-4457-a0dd-1a987cf5154a",
+        "apim-request-id": "5340e73a-904b-4b4f-b9c5-e8e8ac28a45e",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Tue, 11 May 2021 16:08:29 GMT",
+        "Date": "Tue, 29 Jun 2021 19:10:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "11"
+        "x-envoy-upstream-service-time": "7524"
       },
       "ResponseBody": {
         "documents": [
@@ -52,15 +52,16 @@
           {
             "id": "2",
             "keyPhrases": [
-              "gato",
+              "Mi",
               "perro",
+              "gato",
               "veterinario"
             ],
             "warnings": []
           }
         ],
         "errors": [],
-        "modelVersion": "2020-07-01"
+        "modelVersion": "2021-06-01"
       }
     }
   ],

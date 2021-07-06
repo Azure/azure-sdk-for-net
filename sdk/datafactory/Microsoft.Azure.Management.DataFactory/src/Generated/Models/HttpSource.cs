@@ -41,13 +41,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="httpRequestTimeout">Specifies the timeout for a HTTP
         /// client to get HTTP response from HTTP server. The default value is
         /// equivalent to System.Net.HttpWebRequest.Timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public HttpSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object httpRequestTimeout = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public HttpSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object httpRequestTimeout = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             HttpRequestTimeout = httpRequestTimeout;
             CustomInit();
