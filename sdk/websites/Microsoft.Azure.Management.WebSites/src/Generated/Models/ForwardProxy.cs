@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of a forward proxy used to make the
+    /// requests.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ForwardProxy : ProxyOnlyResource
     {
@@ -33,8 +37,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="convention">Possible values include: 'NoProxy',
+        /// <param name="convention">The convention used to determine the url
+        /// of the request made. Possible values include: 'NoProxy',
         /// 'Standard', 'Custom'</param>
+        /// <param name="customHostHeaderName">The name of the header
+        /// containing the host of the request.</param>
+        /// <param name="customProtoHeaderName">The name of the header
+        /// containing the scheme of the request.</param>
         public ForwardProxy(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ForwardProxyConvention? convention = default(ForwardProxyConvention?), string customHostHeaderName = default(string), string customProtoHeaderName = default(string))
             : base(id, name, kind, type)
         {
@@ -50,18 +59,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'NoProxy', 'Standard',
+        /// Gets or sets the convention used to determine the url of the
+        /// request made. Possible values include: 'NoProxy', 'Standard',
         /// 'Custom'
         /// </summary>
         [JsonProperty(PropertyName = "properties.convention")]
         public ForwardProxyConvention? Convention { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the header containing the host of the
+        /// request.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customHostHeaderName")]
         public string CustomHostHeaderName { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the header containing the scheme of the
+        /// request.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customProtoHeaderName")]
         public string CustomProtoHeaderName { get; set; }

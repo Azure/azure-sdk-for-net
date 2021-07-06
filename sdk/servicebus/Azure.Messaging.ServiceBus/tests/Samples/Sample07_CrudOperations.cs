@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -10,6 +11,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
     public class Sample07_CrudOperations : ServiceBusLiveTestBase
     {
+        /// <summary>
+        /// Authenticate with a connection string/>.
+        /// </summary>
+        public void AuthenticateWithConnectionString()
+        {
+            #region Snippet:ServiceBusAdministrationClientConnectionString
+            // Create a ServiceBusAdministrationClient that will authenticate using a connection string
+            string connectionString = "<connection_string>";
+            ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
+            #endregion
+        }
+
+        /// <summary>
+        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// </summary>
+        public void AuthenticateWithAAD()
+        {
+            #region Snippet:ServiceBusAdministrationClientAAD
+            // Create a ServiceBusAdministrationClient that will authenticate using default credentials
+            string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+            ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+            #endregion
+        }
+
         [Test]
         public async Task CreateQueue()
         {

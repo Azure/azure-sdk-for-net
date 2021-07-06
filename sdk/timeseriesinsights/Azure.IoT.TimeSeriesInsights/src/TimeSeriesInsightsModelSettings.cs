@@ -42,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
         /// </returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetModelSettings">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetModelSettings" language="csharp">
         /// TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
         /// TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
         /// Response&lt;TimeSeriesModelSettings&gt; getModelSettingsResponse = await modelSettingsClient.GetAsync();
@@ -51,7 +51,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// IReadOnlyList&lt;TimeSeriesIdProperty&gt; timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
         /// foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
         /// {
-        ///     Console.WriteLine($&quot;Time Series Id property name : &apos;{property.Name}&apos;, type : &apos;{property.Type}&apos;.&quot;);
+        ///     Console.WriteLine($&quot;Time Series Id property name : &apos;{property.Name}&apos;, type : &apos;{property.PropertyType}&apos;.&quot;);
         /// }
         /// </code>
         /// </example>
@@ -105,7 +105,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName" language="csharp">
         /// Response&lt;TimeSeriesModelSettings&gt; updateModelSettingsNameResponse = await modelSettingsClient.UpdateNameAsync(&quot;NewModelSettingsName&quot;);
         /// Console.WriteLine($&quot;Updated Time Series Insights model settings name: &quot; +
         ///     $&quot;{updateModelSettingsNameResponse.Value.Name}&quot;);
@@ -162,7 +162,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType" language="csharp">
         /// Response&lt;TimeSeriesModelSettings&gt; updateDefaultTypeIdResponse = await modelSettingsClient
         ///     .UpdateDefaultTypeIdAsync(tsiTypeId);
         /// Console.WriteLine($&quot;Updated Time Series Insights model settings default type Id: &quot; +

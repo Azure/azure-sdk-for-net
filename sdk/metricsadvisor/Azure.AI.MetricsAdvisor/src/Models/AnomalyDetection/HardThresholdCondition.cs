@@ -31,12 +31,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The direction of the specified boundaries. Depending on its value, <see cref="LowerBound"/>
         /// and/or <see cref="UpperBound"/> may be required.
         /// </summary>
-        public AnomalyDetectorDirection AnomalyDetectorDirection { get; }
+        public AnomalyDetectorDirection AnomalyDetectorDirection { get; set; }
 
         /// <summary>
         /// The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.
         /// </summary>
-        public SuppressCondition SuppressCondition { get; }
+        public SuppressCondition SuppressCondition { get; set; }
 
         /// <summary>
         /// The minimum value a data point is expected to assume. Must be set if <see cref="AnomalyDetectorDirection"/>
@@ -49,5 +49,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// is <see cref="AnomalyDetectorDirection.Up"/> or <see cref="AnomalyDetectorDirection.Both"/>.
         /// </summary>
         public double? UpperBound { get; set; }
+
+        internal HardThresholdConditionPatch GetPatchModel() => new HardThresholdConditionPatch()
+        {
+            AnomalyDetectorDirection = AnomalyDetectorDirection,
+            SuppressCondition = SuppressCondition?.GetPatchModel(),
+            LowerBound = LowerBound,
+            UpperBound = UpperBound
+        };
     }
 }

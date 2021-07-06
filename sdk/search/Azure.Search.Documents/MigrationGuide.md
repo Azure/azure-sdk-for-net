@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to version 11 of the Azure Cognitive Search client library [`Azure.Search.Documents`](https://www.nuget.org/packages/Azure.Search.Documents/) from version 10 of [`Microsoft.Azure.Search`](https://www.nuget.org/packages/Microsoft.Azure.Search/).
 
-To learn more about the Azure Cognitive Search client library for .NET, please refer to the [`Azure.Search.Documents` README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/README.md) and [`Azure.Search.Documents` samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Azure.Search.Documents/samples) for the `Azure.Search.Documents` library.
+To learn more about the Azure Cognitive Search client library for .NET, please refer to the [`Azure.Search.Documents` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/README.md) and [`Azure.Search.Documents` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Azure.Search.Documents/samples) for the `Azure.Search.Documents` library.
 
 ## Migration Guide
 Details about the migration can be found in the [upgrade document](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-11). It describes the API differences, code changes involved in the upgrade and the breaking changes.

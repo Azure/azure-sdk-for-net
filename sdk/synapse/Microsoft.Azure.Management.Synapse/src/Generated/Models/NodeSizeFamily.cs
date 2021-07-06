@@ -18,5 +18,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     {
         public const string None = "None";
         public const string MemoryOptimized = "MemoryOptimized";
+        public const string HardwareAcceleratedFPGA = "HardwareAcceleratedFPGA";
+        public const string HardwareAcceleratedGPU = "HardwareAcceleratedGPU";
     }
 }

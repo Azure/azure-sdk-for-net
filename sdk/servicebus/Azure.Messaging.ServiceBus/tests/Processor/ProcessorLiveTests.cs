@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(5));
+                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
 
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.
@@ -820,6 +820,45 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         tcs.SetResult(true);
                     }
                     return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task AutoLockRenewalContinuesUntilProcessingCompletes()
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                await sender.SendMessagesAsync(GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 10
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    await Task.Delay(lockDuration.Add(lockDuration));
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;

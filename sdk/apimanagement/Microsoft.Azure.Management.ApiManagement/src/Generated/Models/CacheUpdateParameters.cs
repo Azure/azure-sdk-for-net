@@ -35,12 +35,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="description">Cache description</param>
         /// <param name="connectionString">Runtime connection string to
         /// cache</param>
+        /// <param name="useFromLocation">Location identifier to use cache from
+        /// (should be either 'default' or valid Azure region
+        /// identifier)</param>
         /// <param name="resourceId">Original uri of entity in external system
         /// cache points to</param>
-        public CacheUpdateParameters(string description = default(string), string connectionString = default(string), string resourceId = default(string))
+        public CacheUpdateParameters(string description = default(string), string connectionString = default(string), string useFromLocation = default(string), string resourceId = default(string))
         {
             Description = description;
             ConnectionString = connectionString;
+            UseFromLocation = useFromLocation;
             ResourceId = resourceId;
             CustomInit();
         }
@@ -63,11 +67,55 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets location identifier to use cache from (should be
+        /// either 'default' or valid Azure region identifier)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useFromLocation")]
+        public string UseFromLocation { get; set; }
+
+        /// <summary>
         /// Gets or sets original uri of entity in external system cache points
         /// to
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceId")]
         public string ResourceId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Description != null)
+            {
+                if (Description.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 2000);
+                }
+            }
+            if (ConnectionString != null)
+            {
+                if (ConnectionString.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ConnectionString", 300);
+                }
+            }
+            if (UseFromLocation != null)
+            {
+                if (UseFromLocation.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UseFromLocation", 256);
+                }
+            }
+            if (ResourceId != null)
+            {
+                if (ResourceId.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ResourceId", 2000);
+                }
+            }
+        }
     }
 }

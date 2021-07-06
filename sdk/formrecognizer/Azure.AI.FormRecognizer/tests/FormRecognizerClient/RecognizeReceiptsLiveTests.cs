@@ -27,7 +27,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20997")]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeReceiptsCanAuthenticateWithTokenCredential()
         {

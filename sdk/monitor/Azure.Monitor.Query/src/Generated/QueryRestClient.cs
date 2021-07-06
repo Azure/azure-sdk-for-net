@@ -147,7 +147,7 @@ namespace Azure.Monitor.Query
         /// <summary> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </summary>
         /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
-        /// <param name="prefer"> Optional. The prefer header to set server timeout,. </param>
+        /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
         public async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
@@ -180,7 +180,7 @@ namespace Azure.Monitor.Query
         /// <summary> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </summary>
         /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
-        /// <param name="prefer"> Optional. The prefer header to set server timeout,. </param>
+        /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
         public Response<LogsQueryResult> Execute(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
@@ -231,7 +231,7 @@ namespace Azure.Monitor.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<LogsBatchQueryResult>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsBatchQueryResults>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -244,9 +244,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        LogsBatchQueryResult value = default;
+                        LogsBatchQueryResults value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(document.RootElement);
+                        value = LogsBatchQueryResults.DeserializeLogsBatchQueryResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,7 +258,7 @@ namespace Azure.Monitor.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<LogsBatchQueryResult> Batch(BatchRequest body, CancellationToken cancellationToken = default)
+        public Response<LogsBatchQueryResults> Batch(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -271,9 +271,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        LogsBatchQueryResult value = default;
+                        LogsBatchQueryResults value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(document.RootElement);
+                        value = LogsBatchQueryResults.DeserializeLogsBatchQueryResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

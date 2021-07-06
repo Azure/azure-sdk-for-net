@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
         /// <param name="timeToLive"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>

@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Tests
 {
@@ -70,5 +71,17 @@ namespace Azure.Security.KeyVault.Tests
         /// Test preparation was previously successfully creating premium SKUs (not available in every cloud), so assume premium.
         /// </remarks>
         public string Sku => GetOptionalVariable("SKU") ?? "premium";
+
+        /// <summary>
+        /// Throws an <see cref="IgnoreException"/> if <see cref="ManagedHsmUrl"/> is not defined.
+        /// This should cause a test method to be ignored instead of failing.
+        /// </summary>
+        public void AssertManagedHsm()
+        {
+            if (string.IsNullOrEmpty(ManagedHsmUrl))
+            {
+                throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
+            }
+        }
     }
 }

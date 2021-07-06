@@ -3,53 +3,33 @@ $LanguageShort = "net"
 $LanguageDisplayName = ".NET"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
-$MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
+$MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory)
+function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
-  $projDirPath = (Join-Path $pkgPath "src")
+  $allPackageProps = @()
+  $msbuildOutput = dotnet msbuild /nologo /t:GetPackageInfo $EngDir/service.proj /p:ServiceDirectory=$serviceDirectory
 
-  if (!(Test-Path $projDirPath))
+  foreach ($projectOutput in $msbuildOutput)
   {
-    return $null
-  }
+    if (!$projectOutput) { continue }
 
-  $projectPaths = @(Resolve-Path (Join-Path $projDirPath "*.csproj"))
-  
-  if ($projectpaths.Count -ge 1) {
-    $projectPath = $projectPaths[0].path
-    if ($projectPaths.Count -gt 1) {
-      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
-    }
-  }
-  else {
-    return $null
-  }
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
 
-  if ($projectPath -and (Test-Path $projectPath))
-  {
-    $pkgName = Split-Path -Path $projectPath -LeafBase 
-    $projectData = New-Object -TypeName XML
-    $projectData.load($projectPath)
-    $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    $sdkType = "client"
-    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
-    {
-      $sdkType = "mgmt"
-    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
-    $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
-    return $pkgProp
+
+    $allPackageProps += $pkgProp
   }
 
-  return $null
+  return $allPackageProps
 }
 
 # Returns the nuget publish status of a package id and version.
-function IsNugetPackageVersionPublished ($pkgId, $pkgVersion) 
+function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 {
   $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
 
@@ -76,7 +56,7 @@ function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
-function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory) 
+function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 {
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $origFolder = Get-Location
@@ -94,13 +74,13 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   $pkgVersion = $packageXML.package.metadata.version
 
   $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
-  if ($changeLogLoc) 
+  if ($changeLogLoc)
   {
     $releaseNotes = Get-ChangeLogEntryAsString -ChangeLogLocation $changeLogLoc -VersionString $pkgVersion
   }
 
   $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md")[0]
-  if ($readmeContentLoc) 
+  if ($readmeContentLoc)
   {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
@@ -190,7 +170,7 @@ function Get-dotnet-GithubIoDocIndex()
 function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$null)
 {
   $csvLoc = (Join-Path -Path $ciRepo -ChildPath $locationInDocRepo)
-  
+
   if (-not (Test-Path $csvLoc)) {
     Write-Error "Unable to locate package csv at location $csvLoc, exiting."
     exit(1)

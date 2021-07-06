@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="deploymentType"> The deployment type of the Dynamics CRM instance. &apos;Online&apos; for Dynamics CRM Online and &apos;OnPremisesWithIfd&apos; for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="hostName"> The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </param>
         /// <param name="port"> The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </param>

@@ -1,4 +1,7 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="Versioning.targets" />
+
   <Target Name="ValidateTargetFrameworks" BeforeTargets="Build">
     <ItemGroup>
       <RequiredTargetFrameworks Include="$(RequiredTargetFrameworks)" />
@@ -43,6 +46,32 @@
     <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
+  <PropertyGroup>
+    <OriginalReadmeMdPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</OriginalReadmeMdPath>
+    <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
+    <EnableNuGetReadmeMd Condition="'$(HasReleaseVersion)' == 'false' and Exists('$(OriginalReadmeMdPath)')">true</EnableNuGetReadmeMd>
+    <PackageReadmeFile Condition="'$(EnableNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Condition="'$(EnableNuGetReadmeMd)' != 'true' and Exists('$(OriginalReadmeMdPath)')" Include="$(OriginalReadmeMdPath)" Pack="true" PackagePath="/"/>
+    <None Condition="'$(EnableNuGetReadmeMd)' == 'true'" Include="$(ProcessedReadmeMdPath)" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+
+  <!-- Process and pack README.md  -->
+  <Target Name="ProcessReadmeMd" BeforeTargets="GenerateNuspec" Condition="'$(EnableNuGetReadmeMd)' == 'true'" >
+    <PropertyGroup>
+      <_ReadmeMdLines>$([System.IO.File]::ReadAllText($(OriginalReadmeMdPath)))</_ReadmeMdLines>
+
+      <!-- remove comments https://github.com/NuGet/NuGetGallery/issues/8627 -->
+      <_ReadmeMdLines><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace('$(_ReadmeMdLines)', '\<\!--.*?-->', ''))]]></_ReadmeMdLines>
+      <!-- remove impressions image -->
+      <_ReadmeMdLines><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace('$(_ReadmeMdLines)', '\!\[Impressions\]\(.*?\)', ''))]]></_ReadmeMdLines>
+    </PropertyGroup>
+
+    <WriteLinesToFile File="$(ProcessedReadmeMdPath)" Lines="$(_ReadmeMdLines)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+  </Target>
+
   <!-- This allows us to build .NET Framework targets on non-windows
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
@@ -58,17 +87,16 @@
 
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
 
-    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers" PrivateAssets="All" />
+
+    <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
+
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
-    <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <!-- Add App.config to enable server GC in net461 perf and stress projects -->
@@ -77,12 +105,18 @@
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
-  <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
+  <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'" >
     <PackageReference Include="StyleCop.Analyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <AdditionalFiles Include="$(RepoEngPath)\stylecop.json">
+      <Visible>false</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <AdditionalFiles Include="$(RepoEngPath)\BannedSymbols.txt">
       <Visible>false</Visible>
     </AdditionalFiles>
   </ItemGroup>
@@ -102,8 +136,6 @@
   </PropertyGroup>
 
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
-
-  <Import Project="Versioning.targets" />
 
   <Import Project="ApiListing.targets" />
 
@@ -236,6 +268,24 @@
   </Target>
 
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+  </Target>
+
+  <Target Name="GetPackageInfo">
+    <PropertyGroup>
+      <PackageIsNewSdk>false</PackageIsNewSdk>
+      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true'">true</PackageIsNewSdk>
+
+      <PackageSdkType>data</PackageSdkType>
+      <PackageSdkType Condition="'$(IsClientLibrary)' == 'true'">client</PackageSdkType>
+      <PackageSdkType Condition="'$(IsMgmtLibrary)' == 'true'">mgmt</PackageSdkType>
+
+      <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).Trim("/").Trim("\\"))</PackageRootDirectory>
+
+      <!-- Parse out the service directory based on the relative path to the sdk folder -->
+      <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
+    </PropertyGroup>
+
+    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(_VersionInProject)' '$(PackageSdkType)' '$(PackageIsNewSdk)'" Importance="High" />
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />

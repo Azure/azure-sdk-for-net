@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using Xunit;
 using CM=Microsoft.Azure.Management.Compute.Models;
 using NM=Microsoft.Azure.Management.Network.Models;
@@ -28,6 +29,9 @@ namespace Compute.Tests
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
+        
+        protected static readonly string DummyUserData1 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some User Data"));
+        protected static readonly string DummyUserData2 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some new User Data"));
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
@@ -164,7 +168,7 @@ namespace Compute.Tests
 
         protected string getDefaultDiskEncryptionSetId()
         {
-            return "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/diskEncryptionSets/EncryptionSetforTest";
+            return "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/diskEncryptionSets/DESforTest";
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -214,9 +218,10 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            string userData = null)
         {
-            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
+            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, userData: userData);
         }
 
         protected VirtualMachine CreateVM(
@@ -238,7 +243,8 @@ namespace Compute.Tests
             string securityType = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string userData = null)
         {
             try
             {
@@ -302,6 +308,7 @@ namespace Compute.Tests
                 {
                     if(inputVM.SecurityProfile != null)
                     {
+                        inputVM.SecurityProfile.SecurityType = SecurityTypes.TrustedLaunch;
                         inputVM.SecurityProfile.UefiSettings = new UefiSettings
                         {
                             VTpmEnabled = true,
@@ -312,6 +319,7 @@ namespace Compute.Tests
                     {
                         inputVM.SecurityProfile = new SecurityProfile
                         {
+                            SecurityType = SecurityTypes.TrustedLaunch,
                             UefiSettings = new UefiSettings
                             {
                                 VTpmEnabled = true,
@@ -333,6 +341,8 @@ namespace Compute.Tests
                     inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
                 }
+                
+                inputVM.UserData = userData;
 
                 if (vmCustomizer != null)
                 {
@@ -595,6 +605,22 @@ namespace Compute.Tests
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
             var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicname);
             return getNicResponse;
+        }
+        
+        protected static VirtualMachineNetworkInterfaceConfiguration CreateNICConfig(Subnet subnetResponse)
+        {
+            List<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigs = new List<VirtualMachineNetworkInterfaceIPConfiguration>()
+                    {
+                        new VirtualMachineNetworkInterfaceIPConfiguration()
+                        {
+                            Name = ComputeManagementTestUtilities.GenerateName("ipConfig"),
+                            Primary = true,
+                            Subnet = new Microsoft.Azure.Management.Compute.Models.SubResource(subnetResponse.Id),
+                            PublicIPAddressConfiguration = new VirtualMachinePublicIPAddressConfiguration(ComputeManagementTestUtilities.GenerateName("ip"), deleteOption: DeleteOptions.Detach.ToString())
+                        }
+                    };
+            VirtualMachineNetworkInterfaceConfiguration vmNicConfig = new VirtualMachineNetworkInterfaceConfiguration(ComputeManagementTestUtilities.GenerateName("nicConfig"), primary: true, deleteOption: DeleteOptions.Delete.ToString(), ipConfigurations: ipConfigs);
+            return vmNicConfig;
         }
 
         private static string GetChildAppGwResourceId(string subscriptionId,
@@ -870,9 +896,9 @@ namespace Compute.Tests
             return CreateProximityPlacementGroup(m_subId, rgName, ppgName, m_CrpClient, m_location);
         }
 
-        protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
+        protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId = null, bool hasManagedDisks = false,
             string vmSize = "Standard_A1_v2", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null, VirtualMachineNetworkInterfaceConfiguration vmNicConfig = null, string networkApiVersion = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -890,7 +916,6 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId },
                 HardwareProfile = new HardwareProfile
                 {
                     VmSize = vmSize
@@ -939,16 +964,6 @@ namespace Compute.Tests
                         }
                     },
                 },
-                NetworkProfile = new CM.NetworkProfile
-                {
-                    NetworkInterfaces = new List<NetworkInterfaceReference>
-                        {
-                            new NetworkInterfaceReference
-                            {
-                                Id = nicId
-                            }
-                        }
-                },
                 OsProfile = new OSProfile
                 {
                     AdminUsername = "Foo12",
@@ -956,6 +971,36 @@ namespace Compute.Tests
                     ComputerName = ComputerName
                 }
             };
+            
+            if (!string.IsNullOrEmpty(asetId))
+            {
+                vm.AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId };
+            }
+
+            CM.NetworkProfile vmNetworkProfile = new CM.NetworkProfile();
+            if (!string.IsNullOrEmpty(nicId))
+            {
+                vmNetworkProfile.NetworkInterfaces = new List<NetworkInterfaceReference>
+                        {
+                            new NetworkInterfaceReference
+                            {
+                                Id = nicId
+                            }
+                        };
+            }
+            if (vmNicConfig != null)
+            {
+                vmNetworkProfile.NetworkInterfaceConfigurations = new List<VirtualMachineNetworkInterfaceConfiguration>
+                        {
+                            vmNicConfig
+                        };
+            }
+            if (!string.IsNullOrEmpty(networkApiVersion))
+            {
+                vmNetworkProfile.NetworkApiVersion = networkApiVersion;
+            }
+
+            vm.NetworkProfile = vmNetworkProfile;
 
             if(dataDiskStorageAccountType == StorageAccountTypes.UltraSSDLRS)
             {
