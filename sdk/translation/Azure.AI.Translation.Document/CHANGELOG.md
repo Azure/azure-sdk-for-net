@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2021-07-07)
 ### Breaking changes
 
 - Renamed property `DocumentId` to `Id`in `DocumentStatusResult`.
