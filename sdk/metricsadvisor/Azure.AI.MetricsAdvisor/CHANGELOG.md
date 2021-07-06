@@ -12,6 +12,7 @@
 - Added property `HookKind` to `NotificationHook`.
 - Added property `CredentialKind` to `DataSourceCredentialEntity`.
 - Added value `None` to `FeedbackQueryTimeMode` to indicate that no time mode is set.
+- Some properties can now be set to their default value if set to null during an Update operation. For example, `DataFeedIngestionSettings.IngestionStartOffset`, or `MetricWholeSeriesDetectionCondition.SmartDetectionCondition`.
 
 ### Breaking Changes
 - Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
