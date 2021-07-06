@@ -19,12 +19,12 @@ using Mono.Unix.Native;
 
 namespace Azure.Storage.Tests
 {
-    public class FilesystemScannerTests
+    public class PathScannerTests
     {
         private readonly string _temp = Path.GetTempPath();
         private readonly FileSystemAccessRule _winAcl;
 
-        public FilesystemScannerTests()
+        public PathScannerTests()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -50,17 +50,21 @@ namespace Azure.Storage.Tests
             AllowReadData(lockedChild, false, false);
             AllowReadData(lockedSubfolder, true, false);
 
-            FilesystemScanner scanner = new FilesystemScanner(folder);
+            PathScannerFactory scannerFactory = new PathScannerFactory(folder);
+            PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
-            IEnumerable<string> result = scanner.Scan();
+            IEnumerable<string> result = scanner.Scan(); // Conversion to list is necessary because results from Scan() disappear once read
 
             // Assert
             Assert.Multiple(() =>
             {
-                CollectionAssert.Contains(result, openChild);
-                CollectionAssert.Contains(result, openSubchild);
-                CollectionAssert.Contains(result, lockedChild); // No permissions on file, but that should be dealt with by caller
+                CollectionAssert.Contains(result, folder, "Missing entry for the working folder.");
+                CollectionAssert.Contains(result, openSubfolder, "Missing entry for the readable subfolder.");
+                CollectionAssert.Contains(result, lockedSubfolder, "Missing entry for the unreadable subfolder.");
+                CollectionAssert.Contains(result, openChild, "Missing entry for the readable child.");
+                CollectionAssert.Contains(result, openSubchild, "Missing entry for the readable subchild.");
+                CollectionAssert.Contains(result, lockedChild, "Missing entry for the unreadable child."); // No permissions on file, but that should be dealt with by caller
                 CollectionAssert.DoesNotContain(result, lockedSubchild); // No permissions to enumerate folder, children not returned
             });
 
@@ -80,15 +84,14 @@ namespace Azure.Storage.Tests
 
             AllowReadData(folder, true, false);
 
-            FilesystemScanner scanner = new FilesystemScanner(folder);
+            PathScannerFactory scannerFactory = new PathScannerFactory(folder);
+            PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
             IEnumerable<string> result = scanner.Scan();
 
-            // Assert
-            Assert.Throws<UnauthorizedAccessException>(() => {
-                result.GetEnumerator().MoveNext();
-            });
+            // Act/Assert
+            CollectionAssert.Contains(result, folder);
 
             // Cleanup
             AllowReadData(folder, true, true);
@@ -102,72 +105,54 @@ namespace Azure.Storage.Tests
             // Arrange
             string file = CreateRandomFile(_temp);
 
-            FilesystemScanner scanner = new FilesystemScanner(file);
+            PathScannerFactory scannerFactory = new PathScannerFactory(file);
+            PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
             IEnumerable<string> result = scanner.Scan();
 
             // Assert
-            CollectionAssert.IsNotEmpty(result);
+            CollectionAssert.Contains(result, file);
 
             // Cleanup
             File.Delete(file);
         }
 
         [Test]
-        public void ScanNonexistantItem()
+        public void ScanUnreadableFilePath()
+        {
+            // Arrange
+            string file = CreateRandomFile(_temp);
+
+            AllowReadData(file, false, false);
+
+            PathScannerFactory scannerFactory = new PathScannerFactory(file);
+            PathScanner scanner = scannerFactory.BuildPathScanner();
+
+            // Act
+            IEnumerable<string> result = scanner.Scan();
+
+            // Assert
+            CollectionAssert.Contains(result, file);
+
+            // Cleanup
+            AllowReadData(file, true, true);
+
+            File.Delete(file);
+        }
+
+        [Test]
+        public void ScanNonexistentItem()
         {
             // Arrange
             string file = Path.Combine(_temp, Path.GetRandomFileName());
 
             // Act/Assert
             Assert.IsFalse(File.Exists(file));
-            Assert.Throws<FileNotFoundException>(() => {
-                FilesystemScanner scanner = new FilesystemScanner(file);
+            Assert.Throws<ArgumentException>(() => {
+                PathScannerFactory scannerFactory = new PathScannerFactory(file);
+                PathScanner scanner = scannerFactory.BuildPathScanner();
             });
-        }
-
-        [Test]
-        public void ScanMultiplePaths()
-        {
-            // Arrange
-            string folder = CreateRandomDirectory(_temp);
-            string openChild = CreateRandomFile(folder);
-            string lockedChild = CreateRandomFile(folder);
-
-            string openSubfolder = CreateRandomDirectory(folder);
-            string openSubchild = CreateRandomFile(openSubfolder);
-
-            string lockedSubfolder = CreateRandomDirectory(folder);
-            string lockedSubchild = CreateRandomFile(lockedSubfolder);
-
-            AllowReadData(lockedChild, false, false);
-            AllowReadData(lockedSubfolder, true, false);
-
-            string file = CreateRandomFile(_temp);
-
-            FilesystemScanner scanFolder = new FilesystemScanner(folder);
-            FilesystemScanner scanFile = new FilesystemScanner(file);
-
-            // Act
-            IEnumerable<string> result = scanFolder.Scan().Concat(scanFile.Scan());
-
-            // Assert
-            Assert.Multiple(() =>
-            {
-                CollectionAssert.Contains(result, openChild);
-                CollectionAssert.Contains(result, openSubchild);
-                CollectionAssert.Contains(result, lockedChild); // No permissions on file, but that should be dealt with by caller
-                CollectionAssert.DoesNotContain(result, lockedSubchild); // No permissions to enumerate folder, children not returned
-                CollectionAssert.Contains(result, file);
-            });
-
-            // Cleanup
-            AllowReadData(lockedChild, false, true);
-            AllowReadData(lockedSubfolder, true, true);
-
-            File.Delete(file);
-            Directory.Delete(folder, true);
         }
 
         private static string CreateRandomDirectory(string parentPath)

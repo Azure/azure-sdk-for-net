@@ -1,10 +1,14 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Blobs.Models
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
+
+namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// BlobDirectoryUploadOptions for
@@ -61,4 +65,5 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
         /// This is after retry attempts fail.
         /// </summary>
         public bool? ContinueOnFailure { get; set; }
+    }
 }
