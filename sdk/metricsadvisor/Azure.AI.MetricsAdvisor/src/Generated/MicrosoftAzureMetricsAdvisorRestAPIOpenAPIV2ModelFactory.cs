@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> Model factory for read-only models. </summary>
-    internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
+    public static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
         /// <summary> Initializes a new instance of AnomalyAlert. </summary>
         /// <param name="id"> alert id. </param>

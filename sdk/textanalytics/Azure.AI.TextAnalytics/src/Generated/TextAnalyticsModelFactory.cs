@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class TextAnalyticsModelFactory

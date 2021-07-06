@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Analytics.Synapse.Spark.Models;
 
-namespace Azure.Analytics.Synapse.Spark
+namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class SparkModelFactory

@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
     /// Model factory that enables mocking for the Text Analytics library.

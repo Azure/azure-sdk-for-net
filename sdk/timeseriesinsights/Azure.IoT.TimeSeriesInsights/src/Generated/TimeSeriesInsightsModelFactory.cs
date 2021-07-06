@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.IoT.TimeSeriesInsights;
 
-namespace Azure.IoT.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class TimeSeriesInsightsModelFactory
