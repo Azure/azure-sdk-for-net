@@ -29,8 +29,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // If you use a strongly typed model here, the model properties will be serialized into XML. Since JSON is more commonly used, we will use it in our example, and
                 // and specify the type as string, since we will provide a JSON string.
                 var serializer = new DataContractSerializer(typeof(string));
-                var stream = new MemoryStream();
-                var writer = XmlDictionaryWriter.CreateBinaryWriter(stream);
+                using var stream = new MemoryStream();
+                XmlDictionaryWriter writer = XmlDictionaryWriter.CreateBinaryWriter(stream);
 
                 // serialize an instance of our type into a JSON string
                 string json = JsonSerializer.Serialize(new TestModel {A = "Hello world", B = 5, C = true});

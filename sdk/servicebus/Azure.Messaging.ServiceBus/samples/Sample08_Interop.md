@@ -1,6 +1,6 @@
-## CRUD operations
+## Interop with `WindowsAzure.ServiceBus`
 
-This sample demonstrates how to interoperate with messages that are sent or received using the `WindowsAzure.ServiceBus` library. The `WindowsAzure.ServiceBus` library uses the DataContractSerializer to serialize the BrokeredMessage body. Because of this, when attempting to interoperate with this library, there a few additional steps that are needed.
+This sample demonstrates how to interoperate with messages that are sent or received using the `WindowsAzure.ServiceBus` library. The `WindowsAzure.ServiceBus` library uses the `DataContractSerializer` to serialize the `BrokeredMessage` body. Because of this, when attempting to interoperate with this library, there a few additional steps that are needed.
 
 ### Sending a message using `Azure.Messaging.ServiceBus` that will be received with `WindowsAzure.ServiceBus`
 
@@ -10,8 +10,8 @@ ServiceBusSender sender = client.CreateSender(queueName);
 // If you use a strongly typed model here, the model properties will be serialized into XML. Since JSON is more commonly used, we will use it in our example, and
 // and specify the type as string, since we will provide a JSON string.
 var serializer = new DataContractSerializer(typeof(string));
-var stream = new MemoryStream();
-var writer = XmlDictionaryWriter.CreateBinaryWriter(stream);
+using var stream = new MemoryStream();
+XmlDictionaryWriter writer = XmlDictionaryWriter.CreateBinaryWriter(stream);
 
 // serialize an instance of our type into a JSON string
 string json = JsonSerializer.Serialize(new TestModel {A = "Hello world", B = 5, C = true});
