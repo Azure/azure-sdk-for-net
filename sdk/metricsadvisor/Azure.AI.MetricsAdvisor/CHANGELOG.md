@@ -1,14 +1,90 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### New Features
-- Added properties `Value` and `ExpectedValue` to `DataPointAnomaly` to provide more information about the anomalous data point.
-- Added properties `ValueOfRootNode` and `ExpectedValueOfRootNode` to `AnomalyIncident` to provide more information about the anomalous data point at the root node of the indicent.
+- `DimensionKey` now implements the `IEnumerable<KeyValuePair<string, string>>` interface. Dimension columns can now be enumerated.
+- Added method `Contains` to `DimensionKey` to check whether or not a dimension column is present.
+- Added a property setter to `MetricSeriesGroupDetectionCondition.SeriesGroupKey` and to `MetricSingleSeriesDetectionCondition.SeriesKey`.
+- Added property `MeasureType` to `MetricBoundaryCondition` to control which measure should be used when checking boundaries for alert triggering. Current supported types are `Value` and `Mean`.
 
 ### Breaking Changes
+- Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
+- `DimensionKey` is not an `IEquatable` anymore. Equality will be calculated based on reference only.
+- `DimensionKey` constructor now takes the required `dimension` parameter.
+- The whole `DatasourceCredential` API has been renamed to `DataSourceCredential`. This includes renames in methods, method parameters, and properties.
+  - Renamed class `DatasourceCredential` to `DataSourceCredentialEntity`.
+  - Renamed class `DataLakeGen2SharedKeyDatasourceCredential` to `DataLakeSharedKeyCredentialEntity`.
+  - Renamed class `ServicePrincipalDatasourceCredential` to `ServicePrincipalCredentialEntity`.
+  - Renamed class `ServicePrincipalInKeyVaultDatasourceCredential` to `ServicePrincipalInKeyVaultCredentialEntity`.
+  - Renamed class `SqlConnectionStringDatasourceCredential` to `SqlConnectionStringCredentialEntity`.
+- Renamed class `MetricAnomalyAlertConfiguration` to `MetricAlertConfiguration`.
+- Renamed class `MetricAnomalyAlertConfigurationsOperator` to `DetectionConditionOperator`. Similarly, `MetricAnomalyAlertConfiguration.CrossMetricsOperator` has been renamed to `ConditionOperator`.
+- Renamed class `DataSourceType` to `DataSourceKind`. Similarly, `GetDataFeedsFilter.SourceType` has been renamed to `SourceKind`, and `DataFeedSource.DataSourceType` has been renamed to `DataSourceKind`.
+- Renamed class `AzureDataLakeStorageGen2DataFeedSource` to `AzureDataLakeStorageDataFeedSource`. Similarly, `DataSourceType.AzureDataLakeStorageGen2` has been renamed to `AzureDataLakeStorage`.
+- Renamed class `FeedbackType` to `MetricFeedbackKind`. Similarly, `GetAllFeedbackOptions.FeedbackType` has been renamed to `FeedbackKind`, and `MetricFeedback.Type` has been renamed to `Kind`.
+- Renamed class `PeriodType` to `MetricPeriodType`.
+- Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
+- Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
+- `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
+- `DataFeedMissingDataPointFillSettings` constructor now takes the required `fillType` parameter. For this reason, the property `FillType` is not nullable anymore.
+- `EmailNotificationHook` constructor now takes the required `name` parameter.
+- `WebNotificationHook` constructor now takes the required `name` and `endpoint` parameters.
+- `MetricSeriesGroupDetectionCondition` constructor now takes the required `seriesGroupKey` parameter.
+- `MetricSingleSeriesDetectionCondition` constructor now takes the required `seriesKey` parameter.
+- In `DataFeed`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ViewersEmails` to `ViewerEmails`.
+- In `NotificationHook`, renamed `AdministratorsEmails` to `AdministratorEmails`, and `ExternalLink` to `ExternalUri`.
+- In `MetricAnomalyFeedback`, renamed `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`, and `AnomalyDetectionConfigurationSnapshot` to `DetectionConfigurationSnapshot`.
+- In `ChangeThresholdCondition`, renamed `IsWithinRange` to `WithinRange`. Similarly, the constructor parameter `isWithinRange` has been renamed to `withinRange`.
+- In `MetricSeriesData`, removed the `Definition` property. Now, properties `MetricId` and `SeriesKey` can be accessed directly from `MetricSeriesData`.
+- In `DataPointAnomaly`, renamed property `AnomalyDetectionConfigurationId` to `DetectionConfigurationId`.
+- In `DataFeedMetric`, renamed constructor parameter `metricName` to `name` only.
+- In `DataFeedDimension`, renamed constructor parameter `dimensionName` to `name` only.
+- Moved `GetAlertConfigurationsOptions`, `GetDatasourceCredentialsOptions`, and `GetDetectionConfigurationsOptions` to the `Azure.AI.MetricsAdvisor.Administration` namespace.
+- Moved `DatasourceCredential`, `DataFeedSource`, `NotificationHook`, and all of their concrete child types to the `Azure.AI.MetricsAdvisor.Administration` namespace.
+- Moved `MetricFeedback` and all of its concrete child types to the `Azure.AI.MetricsAdvisor` namespace.
+- Changed order of parameters of `MetricsAdvisorClient.GetMetricEnrichedSeriesData`. Now, `detectionConfigurationId` appears first.
+- Optional properties `GetAllFeedbackOptions.Filter`, `GetAnomalyDimensionValuesOptions.DimensionToFilter`, and `FeedbackDimensionFilter.DimensionFilter` must now be manually added with setters to be used.
+- Moved property `DataFeed.SourceType` to `DataFeedSource.DataSourceType`.
+- In `MetricsAdvisorKeyCredential`, merged `UpdateSubscriptionKey` and `UpdateApiKey` into a single method, `Update`, to make it an atomic operation.
+- The class `NotificationHook` is now abstract.
+
+## 1.0.0-beta.4 (2021-06-07)
+
+### New Features
+- Added `DatasourceCredential` CRUD operations to the `MetricsAdvisorAdministrationClient`. This API provides new ways of authenticating to a `DataFeedSource`.
+- Added property `Authentication` to data sources `AzureBlobDataFeedSource`, `AzureDataExplorerDataFeedSource`, `AzureDataLakeStorageGen2DataFeedSource`, and `SqlServerDataFeedSource` to specify the authentication type to use.
+- Added property `DatasourceCredentialId` to data sources `AzureDataExplorerDataFeedSource`, `AzureDataLakeStorageGen2DataFeedSource`, and `SqlServerDataFeedSource` to specify the datasource credential to use for authentication.
+- Added properties `Value` and `ExpectedValue` to `DataPointAnomaly` to provide more information about the anomalous data point.
+- Added properties `ValueOfRootNode` and `ExpectedValueOfRootNode` to `AnomalyIncident` to provide more information about the anomalous data point at the root node of the indicent.
+- Response headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
+- `GetDetectionConfigurations` and `GetAlertConfigurations` in the `MetricsAdvisorAdministrationClient` can now take a set of options with `Skip` and `MaxPageSize` properties to configure paging behavior.
+- Added setters to models that use the Update APIs to make updating easier.
+- Added property `DataFeedId` to `DataPointAnomaly` and `AnomalyIncident`.
+- Added two new data feed sources: `AzureEventHubsDataFeedSource` and `LogAnalyticsDataFeedSource`.
+
+### Breaking Changes
+- Update methods will now return the updated entity instead of an empty response. For example, `UpdateDataFeed` now returns a `Response<DataFeed>`.
+- `NotificationHook.ExternalLink` and `WebNotificationHook.Endpoint` are now of type `Uri`.
+- Removed setter from `GetIncidentsForDetectionConfigurationOptions.DimensionsToFilter`. Elements can be added directly to it without user instantiation.
 - Renamed all `SkipCount` listing options to `Skip`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Renamed all `TopCount` listing options to `MaxPageSize`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
+- Removed data feed sources `ElasticsearchDataFeedSource` and `HttpRequestDataFeedSource` as they are not supported by the service anymore. A different type of data feed source must be used for data ingestion instead.
+- Removed getters for secrets in data feed sources, such as `AzureBlobDataFeedSource.ConnectionString` and `InfluxDbDataFeedSource.Password`.
+- Removed granularity type `DataFeedGranularityType.PerSecond` as it's not supported by the service anymore.
+- Renamed method `GetDimensionValues` to `GetMetricDimensionValues` in `MetricsAdvisorClient`. The associated options type `GetDimensionValuesOptions` has been renamed as well.
+- Renamed method `GetValuesOfDimensionWithAnomalies` to `GetAnomalyDimensionValues` in `MetricsAdvisorClient`. The associated options type `GetValuesOfDimensionWithAnomaliesOptions` has been renamed as well.
+- In `MetricsAdvisorAdministrationClient`, Update operations such as `UpdateDataFeed` don't take the ID as a method parameter anymore. You now need to pass an instance that has been returned from another CRUD operation and has its `Id` property populated.
+- In `AnomalyIncident`, renamed `DimensionKey` to `RootDimensionKey`.
+- In `DataFeed`, renamed `Administrators` to `AdministratorsEmails`, `Creator` to `CreatorEmail`, and `Viewers` to `ViewersEmails`.
+- In `DataFeedDimension`, renamed `DimensionName` to `Name`, and `DimensionDisplayName` to `DisplayName`.
+- In `DataFeedMetric`, renamed `MetricId` to `Id`, `MetricName` to `Name`, `MetricDisplayName` to `DisplayName`, and `MetricDescription` to `Description`.
+- In `DataFeedAutoRollupMethod`, renamed `RollupMethod` to `AutoRollupMethod`.
+- In `IncidentRootCause`, renamed `DimensionKey` to `SeriesKey`, and `Score` to `ContributionScore`.
+- In `MetricBoundaryCondition`, renamed `TriggerForMissing` to `ShouldAlertIfDataPointMissing`.
+- In `MetricEnrichedSeriesData`, renamed `Values` to `MetricValues`, `ExpectedValues` to `ExpectedMetricValues`, `LowerBoundaries` to `LowerBoundaryValues`, and `UpperBoundaries` to `UpperBoundaryValues`.
+- In `MetricSeriesData`, renamed `Values` to `MetricValues`.
+- In `NotificationHook`, renamed `Administrators` to `AdministratorsEmails`.
 
 ## 1.0.0-beta.3 (2021-02-09)
 
@@ -115,5 +191,5 @@ This is the first beta of the `Azure.AI.MetricsAdvisor` client library.
 
 This package's [documentation][readme] and [samples][samples] demonstrate the new API.
 
-[readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/README.md
-[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md
+[readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/README.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/samples/README.md

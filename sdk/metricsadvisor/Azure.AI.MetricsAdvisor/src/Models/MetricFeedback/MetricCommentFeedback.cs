@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The CommentFeedback. </summary>
     [CodeGenModel("CommentFeedback")]
@@ -21,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(comment, nameof(comment));
 
             ValueInternal = new CommentFeedbackValue(comment);
-            Type = FeedbackType.Comment;
+            Kind = MetricFeedbackKind.Comment;
         }
 
         /// <summary> Initializes a new <see cref="MetricCommentFeedback"/> instance. </summary>
@@ -34,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(comment?.CommentValue, nameof(comment.CommentValue));
 
             ValueInternal = comment;
-            Type = FeedbackType.Comment;
+            Kind = MetricFeedbackKind.Comment;
         }
 
         /// <summary>

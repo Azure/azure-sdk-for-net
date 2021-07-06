@@ -2,7 +2,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -13,7 +12,6 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -28,5 +26,5 @@ extends:
     ServiceDirectory: confidentialledger
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Storage.ConfidentialLedger
+    - name: Azure.Security.ConfidentialLedger
       safeName: AzureConfidentialLedger

@@ -29,13 +29,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Must include the most recent point, so value must be at least 1.
         /// </summary>
         [CodeGenMember("MinNumber")]
-        public int MinimumNumber { get; }
+        public int MinimumNumber { get; set; }
 
         /// <summary>
         /// The minimum percentage of unexpected values that must be present in the latest ingested
         /// data points to detect an anomaly. Value is between (0, 100].
         /// </summary>
         [CodeGenMember("MinRatio")]
-        public double MinimumRatio { get; }
+        public double MinimumRatio { get; set; }
+
+        internal SuppressConditionPatch GetPatchModel() => new SuppressConditionPatch()
+        {
+            MinNumber = MinimumNumber,
+            MinRatio = MinimumRatio
+        };
     }
 }

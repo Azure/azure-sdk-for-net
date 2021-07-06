@@ -28,11 +28,10 @@ namespace Azure.AI.TextAnalytics.Models
             EntityRecognitionPiiTasks = new ChangeTrackingList<EntityRecognitionPiiTasksItem>();
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhraseExtractionTasksItem>();
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
-            SentimentAnalysisTasks = new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>();
+            SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTasksItem>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
-        /// <param name="details"> . </param>
         /// <param name="completed"> . </param>
         /// <param name="failed"> . </param>
         /// <param name="inProgress"> . </param>
@@ -42,9 +41,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="keyPhraseExtractionTasks"> . </param>
         /// <param name="entityLinkingTasks"> . </param>
         /// <param name="sentimentAnalysisTasks"> . </param>
-        internal AnalyzeTasks(TasksStateTasksDetails details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks)
+        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks)
         {
-            Details = details;
             Completed = completed;
             Failed = failed;
             InProgress = inProgress;
@@ -56,7 +54,6 @@ namespace Azure.AI.TextAnalytics.Models
             SentimentAnalysisTasks = sentimentAnalysisTasks;
         }
 
-        public TasksStateTasksDetails Details { get; }
         public int Completed { get; }
         public int Failed { get; }
         public int InProgress { get; }
@@ -65,6 +62,6 @@ namespace Azure.AI.TextAnalytics.Models
         public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; }
         public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
         public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
-        public IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
+        public IReadOnlyList<SentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
     }
 }

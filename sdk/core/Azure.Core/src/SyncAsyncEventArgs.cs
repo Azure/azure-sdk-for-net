@@ -35,7 +35,7 @@ namespace Azure
         /// how the event is being raised and implement your handler
         /// accordingly.  Here's an example handler that's safe to invoke from
         /// both sync and async code paths.
-        /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_CombinedHandler">
+        /// <code snippet="Snippet:Azure_Core_Samples_EventSamples_CombinedHandler" language="csharp">
         /// var client = new AlarmClient();
         /// client.Ring += async (SyncAsyncEventArgs e) =&gt;
         /// {

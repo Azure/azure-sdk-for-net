@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
-using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 using Microsoft.Spatial;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -330,7 +330,6 @@ namespace Azure.Search.Documents.Tests
         public int? Rating { get; set; }
 
         [JsonPropertyName("geoLocation")]
-        [JsonConverter(typeof(GeoJsonConverter))]
         public GeoPoint GeoLocation { get; set; }
 
         [JsonPropertyName("location")]

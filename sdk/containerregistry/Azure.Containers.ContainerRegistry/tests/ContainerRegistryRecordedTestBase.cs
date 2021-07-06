@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
-        public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
+        public ContainerRegistryClient CreateClient(bool anonymousAccess = false, string authenticationScope = null)
         {
             return anonymousAccess ?
 
@@ -42,12 +42,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
-        public async Task ImportImage(string registry, string repository, string tag)
+        public async Task ImportImageAsync(string registry, string repository, string tag)
         {
-            await ImportImage(registry, repository, new List<string>() { tag });
+            await ImportImageAsync(registry, repository, new List<string>() { tag });
         }
 
-        public async Task ImportImage(string registry, string repository, List<string> tags)
+        public async Task ImportImageAsync(string registry, string repository, List<string> tags)
         {
             var credential = new AzureCredentials(
                 new ServicePrincipalLoginInformation

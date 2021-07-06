@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
 
@@ -90,11 +91,18 @@ namespace Azure.Monitor.Query.Tests
 
             _initialized = true;
 
-            var count = await QueryCount();
+            await Task.WhenAll(
+                InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
+                InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
+        }
+
+        private async Task InitializeData(string workspaceId, string workspaceKey)
+        {
+            var count = await QueryCount(workspaceId);
 
             if (count == 0)
             {
-                var senderClient = new LogSenderClient(_testEnvironment.WorkspaceId, _testEnvironment.MonitorIngestionEndpoint, _testEnvironment.WorkspaceKey);
+                var senderClient = new LogSenderClient(workspaceId, _testEnvironment.MonitorIngestionEndpoint, workspaceKey);
                 await senderClient.SendAsync(TableANameSent, TableA);
             }
             else
@@ -105,16 +113,16 @@ namespace Azure.Monitor.Query.Tests
             while (count == 0)
             {
                 await Task.Delay(TimeSpan.FromSeconds(30));
-                count = await QueryCount();
+                count = await QueryCount(workspaceId);
             }
         }
 
-        private async Task<int> QueryCount()
+        private async Task<int> QueryCount(string workspaceId)
         {
-            var logsClient = new LogsClient(_testEnvironment.Credential);
+            var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
-                var countResponse = await logsClient.QueryAsync<int>(_testEnvironment.WorkspaceId, $"{TableAName} | count", DataTimeRange);
+                var countResponse = await logsClient.QueryAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
                 var count = countResponse.Value.Single();
                 return count;
             }

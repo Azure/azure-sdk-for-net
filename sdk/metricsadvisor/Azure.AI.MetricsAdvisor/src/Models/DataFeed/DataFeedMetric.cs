@@ -17,35 +17,39 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedMetric"/> class.
         /// </summary>
-        /// <param name="metricName">The name of the data source's column with numeric values to be used as a metric. Values of this metric will be read only from the specified column.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="metricName"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metricName"/> is empty.</exception>
-        public DataFeedMetric(string metricName)
+        /// <param name="name">The name of the data source's column with numeric values to be used as a metric. Values of this metric will be read only from the specified column.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        public DataFeedMetric(string name)
         {
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            MetricName = metricName;
+            Name = name;
         }
 
         /// <summary>
         /// The unique identifier of this <see cref="DataFeedMetric"/>. Set by the service.
         /// </summary>
-        public string MetricId { get; }
+        [CodeGenMember("MetricId")]
+        public string Id { get; }
 
         /// <summary>
         /// The name of the data source's column with numeric values to be used as a metric. Values
         /// of this metric will be read only from the specified column.
         /// </summary>
-        public string MetricName { get; }
+        [CodeGenMember("MetricName")]
+        public string Name { get; }
 
         /// <summary>
         /// The name to be displayed on the web portal instead of the original column name.
         /// </summary>
-        public string MetricDisplayName { get; set; }
+        [CodeGenMember("MetricDisplayName")]
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// A description of what the values in this <see cref="DataFeedMetric"/> represent.
         /// </summary>
-        public string MetricDescription { get; set; }
+        [CodeGenMember("MetricDescription")]
+        public string Description { get; set; }
     }
 }

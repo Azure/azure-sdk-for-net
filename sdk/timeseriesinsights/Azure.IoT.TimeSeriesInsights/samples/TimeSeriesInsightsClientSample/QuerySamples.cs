@@ -4,11 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Devices.Client;
 using static Azure.IoT.TimeSeriesInsights.Samples.SampleLogger;
 
 namespace Azure.IoT.TimeSeriesInsights.Samples
@@ -22,22 +18,11 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         /// The Query APIs make use Time Series Expressions (TSX) to build filters, value and aggregation expressions. Visit
         /// <see href="https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax"/> to learn more about TSX.
         /// </remarks>
-        public async Task RunSamplesAsync(TimeSeriesInsightsClient client, DeviceClient deviceClient)
+        public async Task RunSamplesAsync(TimeSeriesInsightsClient client, TimeSeriesId tsId)
         {
             PrintHeader("TIME SERIES INSIGHTS QUERY SAMPLE");
 
-            // Figure out what keys make up the Time Series Id
-            TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
-            TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
-
-            TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
             TimeSeriesInsightsQueries queriesClient = client.GetQueriesClient();
-
-            // In order to query for data, let's first send events to the IoT Hub
-            await SendEventsToIotHubAsync(deviceClient, tsId, modelSettings.TimeSeriesIdProperties.ToArray());
-
-            // Sleeping for a few seconds to allow data to fully propagate in the Time Series Insights service
-            Thread.Sleep(TimeSpan.FromSeconds(3));
 
             await RunQueryEventsSample(queriesClient, tsId);
 
@@ -57,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-            QueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
+            TimeSeriesQueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
             await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
             {
                 TimeSeriesValue temperatureValue = point.GetValue("Temperature");
@@ -85,7 +70,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
             Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-            QueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+            TimeSeriesQueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
             await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
             {
                 TimeSeriesValue humidityValue = point.GetValue("Humidity");
@@ -150,7 +135,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             // Get the Time Series instance and replace its type with the one we just created
             Response<InstancesOperationResult[]> getInstanceResult = await instancesClient
-                .GetAsync(new List<TimeSeriesId> { tsId });
+                .GetByIdAsync(new List<TimeSeriesId> { tsId });
             if (getInstanceResult.Value.First().Error != null)
             {
                 Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
@@ -159,7 +144,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             }
 
             TimeSeriesInstance instanceToReplace = getInstanceResult.Value.First().Instance;
-            instanceToReplace.TypeId = createTypesResult.Value.First().TimeSeriesType.Id;
+            instanceToReplace.TimeSeriesTypeId = createTypesResult.Value.First().TimeSeriesType.Id;
             Response<InstancesOperationResult[]> replaceInstanceResult = await instancesClient
                 .ReplaceAsync(new List<TimeSeriesInstance> { instanceToReplace });
             if (replaceInstanceResult.Value.First().Error != null)
@@ -177,7 +162,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
-            QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
+            TimeSeriesQueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
                 tsId,
                 startTime,
                 endTime);
@@ -210,7 +195,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
             querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-            QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
+            TimeSeriesQueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
                 tsId,
                 TimeSpan.FromMinutes(10),
                 null,
@@ -239,7 +224,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             requestOptions.InlineVariables["Temperature"] = numericVariable;
             requestOptions.ProjectedVariableNames.Add("Temperature");
 
-            QueryAnalyzer aggregateSeriesQuery = queriesClient.CreateAggregateSeriesQuery(
+            TimeSeriesQueryAnalyzer aggregateSeriesQuery = queriesClient.CreateAggregateSeriesQuery(
                 tsId,
                 TimeSpan.FromSeconds(2),
                 TimeSpan.FromSeconds(30),
@@ -272,7 +257,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
             aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
 
-            QueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
+            TimeSeriesQueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
                 tsId,
                 startTime,
                 endTime,
@@ -285,55 +270,6 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 Console.WriteLine($"{point.Timestamp} - Temperature count: {temperatureCount}");
             }
             #endregion Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable
-        }
-
-        private static async Task SendEventsToIotHubAsync(
-            DeviceClient deviceClient,
-            TimeSeriesId tsId,
-            TimeSeriesIdProperty[] timeSeriesIdProperties)
-        {
-            IDictionary<string, object> messageBase = BuildMessageBase(timeSeriesIdProperties, tsId);
-            double minTemperature = 20;
-            double minHumidity = 60;
-            var rand = new Random();
-
-            Console.WriteLine("\n\nSending temperature and humidity events to the IoT Hub.\n");
-
-            // Build the message base that is used as the base for every event going out
-            for (int i = 0; i < 10; i++)
-            {
-                double currentTemperature = minTemperature + rand.NextDouble() * 15;
-                double currentHumidity = minHumidity + rand.NextDouble() * 20;
-                messageBase["Temperature"] = currentTemperature;
-                messageBase["Humidity"] = currentHumidity;
-                string messageBody = JsonSerializer.Serialize(messageBase);
-                var message = new Message(Encoding.ASCII.GetBytes(messageBody))
-                {
-                    ContentType = "application/json",
-                    ContentEncoding = "utf-8",
-                };
-
-                await deviceClient.SendEventAsync(message);
-
-                Console.WriteLine($"{DateTime.UtcNow} - Temperature: {currentTemperature}. " +
-                    $"Humidity: {currentHumidity}.");
-
-                await Task.Delay(TimeSpan.FromSeconds(1));
-            }
-        }
-
-        private static IDictionary<string, object> BuildMessageBase(TimeSeriesIdProperty[] timeSeriesIdProperties, TimeSeriesId tsiId)
-        {
-            var messageBase = new Dictionary<string, object>();
-            string[] tsiIdArray = tsiId.ToArray();
-            for (int i = 0; i < timeSeriesIdProperties.Count(); i++)
-            {
-                TimeSeriesIdProperty idProperty = timeSeriesIdProperties[i];
-                string tsiIdValue = tsiIdArray[i];
-                messageBase[idProperty.Name] = tsiIdValue;
-            }
-
-            return messageBase;
         }
     }
 }

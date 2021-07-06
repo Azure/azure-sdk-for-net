@@ -174,7 +174,18 @@ namespace Azure.Messaging.EventHubs.Amqp
                 EventHubName = eventHubName;
                 Credential = credential;
                 MessageConverter = messageConverter ?? new AmqpMessageConverter();
-                ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, ConnectionEndpoint, eventHubName, credential, clientOptions.TransportType, clientOptions.Proxy);
+
+                ConnectionScope = connectionScope ?? new AmqpConnectionScope(
+                    ServiceEndpoint,
+                    ConnectionEndpoint,
+                    eventHubName,
+                    credential,
+                    clientOptions.TransportType,
+                    clientOptions.Proxy,
+                    null,
+                    clientOptions.SendBufferSizeInBytes,
+                    clientOptions.ReceiveBufferSizeInBytes,
+                    clientOptions.CertificateValidationCallback);
 
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                     timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None),
@@ -182,6 +193,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     {
                         link.Session?.SafeClose();
                         link.SafeClose();
+                        EventHubsEventSource.Log.FaultTolerantAmqpObjectClose(nameof(RequestResponseAmqpLink), "", EventHubName, "", "", link.TerminalException?.Message);
                     });
             }
             finally
@@ -438,6 +450,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="invalidateConsumerWhenPartitionStolen">Indicates whether or not the consumer should consider itself invalid when a partition is stolen.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
@@ -449,6 +462,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                          EventPosition eventPosition,
                                                          EventHubsRetryPolicy retryPolicy,
                                                          bool trackLastEnqueuedEventProperties,
+                                                         bool invalidateConsumerWhenPartitionStolen,
                                                          long? ownerLevel,
                                                          uint? prefetchCount,
                                                          long? prefetchSizeInBytes)
@@ -462,6 +476,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 partitionId,
                 eventPosition,
                 trackLastEnqueuedEventProperties,
+                invalidateConsumerWhenPartitionStolen,
                 ownerLevel,
                 prefetchCount,
                 prefetchSizeInBytes,
