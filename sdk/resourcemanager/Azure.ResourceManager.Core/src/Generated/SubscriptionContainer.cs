@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="Response{Subscription}"/> operation for this subscription. </returns>
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
-        public Subscription Get(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
             scope.Start();
             try
             {
-                SubscriptionData result = RestClient.Get(subscriptionGuid, cancellationToken).Value;
-                return Converter().Invoke(result);
+                var response = RestClient.Get(subscriptionGuid, cancellationToken);
+                return Response.FromValue(Converter().Invoke(response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this subscription. </returns>
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
-        public virtual async Task<Subscription> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
             scope.Start();
             try
             {
-                SubscriptionData result = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
-                return Converter().Invoke(result);
+                var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(Converter().Invoke(response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
