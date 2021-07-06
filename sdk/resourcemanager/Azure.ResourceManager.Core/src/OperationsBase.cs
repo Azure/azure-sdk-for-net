@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.Core
     public abstract class OperationsBase
     {
         private ProviderContainer _providerContainer;
+        private TagResourceContainer _tagContainer;
+        private TagResourceOperations _tagResourceOperations;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationsBase"/> class for mocking.
@@ -91,13 +93,16 @@ namespace Azure.ResourceManager.Core
         /// <returns> A valid Azure resource type. </returns>
         protected abstract ResourceType ValidResourceType { get; }
 
-        private TagResourceOperations _tagResourceOperations;
-
         /// <summary>
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
         protected internal TagResourceOperations TagResourceOperations => _tagResourceOperations ??= new TagResourceOperations(this, Id);
+
+        /// <summary>
+        /// Gets the TagsOperations.
+        /// </summary>
+        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(ClientOptions, Credential, BaseUri, Pipeline);
 
         /// <summary>
         /// Validate the resource identifier against current operations.

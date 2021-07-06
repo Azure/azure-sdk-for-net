@@ -77,8 +77,6 @@ namespace Azure.ResourceManager.Core
 
         private ResourcesRestOperations GenericRestClient => new ResourcesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
-        private TagResourceContainer _tagContainer => new TagResourceContainer(this);
-
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
@@ -314,9 +312,9 @@ namespace Azure.ResourceManager.Core
             {
                 var originalTags = TagResourceOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
-                _tagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
-                return Response.FromValue<ResourceGroup>(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -344,9 +342,9 @@ namespace Azure.ResourceManager.Core
             {
                 var originalTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await _tagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue<ResourceGroup>(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -434,9 +432,9 @@ namespace Azure.ResourceManager.Core
                 TagResourceOperations.Delete(cancellationToken);
                 var newTags = TagResourceOperations.Get(cancellationToken);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                _tagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
+                TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
-                return Response.FromValue<ResourceGroup>(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -464,9 +462,9 @@ namespace Azure.ResourceManager.Core
                 await TagResourceOperations.DeleteAsync(cancellationToken).ConfigureAwait(false);
                 var newTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await _tagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue<ResourceGroup>(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -493,9 +491,9 @@ namespace Azure.ResourceManager.Core
             {
                 var originalTags = TagResourceOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
-                _tagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = RestClient.Get(Id.Name, cancellationToken);
-                return Response.FromValue<ResourceGroup>(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -522,9 +520,9 @@ namespace Azure.ResourceManager.Core
             {
                 var originalTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await _tagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue<ResourceGroup>(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

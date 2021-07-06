@@ -22,11 +22,6 @@ namespace Azure.ResourceManager.Core
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
 
-        internal TagResourceContainer(OperationsBase parent) : base(parent)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-        }
-
         private readonly ClientDiagnostics _clientDiagnostics;
 
         private string _subscriptionId
