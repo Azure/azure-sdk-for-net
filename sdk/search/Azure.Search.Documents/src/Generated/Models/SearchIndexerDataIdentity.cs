@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for data identities. </summary>
+    /// <summary> Abstract base type for data identities. </summary>
     public partial class SearchIndexerDataIdentity
     {
         /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>

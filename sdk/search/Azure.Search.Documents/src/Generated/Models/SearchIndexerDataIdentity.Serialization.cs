@@ -22,6 +22,14 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerDataIdentity DeserializeSearchIndexerDataIdentity(JsonElement element)
         {
+            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "#Microsoft.Azure.Search.SearchIndexerDataNoneIdentity": return SearchIndexerDataNoneIdentity.DeserializeSearchIndexerDataNoneIdentity(element);
+                    case "#Microsoft.Azure.Search.SearchIndexerDataUserAssignedIdentity": return SearchIndexerDataUserAssignedIdentity.DeserializeSearchIndexerDataUserAssignedIdentity(element);
+                }
+            }
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {

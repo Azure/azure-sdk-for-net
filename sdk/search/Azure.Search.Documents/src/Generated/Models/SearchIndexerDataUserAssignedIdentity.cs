@@ -10,7 +10,7 @@ using System;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the identity for a datasource to use. </summary>
-    public partial class SearchIndexerDataUserAssignedIdentity : DataChangeDetectionPolicy
+    public partial class SearchIndexerDataUserAssignedIdentity : SearchIndexerDataIdentity
     {
         /// <summary> Initializes a new instance of SearchIndexerDataUserAssignedIdentity. </summary>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form &quot;/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId&quot; that should have been assigned to the search service. </param>
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of SearchIndexerDataUserAssignedIdentity. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form &quot;/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId&quot; that should have been assigned to the search service. </param>
         internal SearchIndexerDataUserAssignedIdentity(string oDataType, string userAssignedIdentity) : base(oDataType)
         {
