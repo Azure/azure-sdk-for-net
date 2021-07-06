@@ -219,7 +219,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string extensionPath = "AzureWebJobs:Extensions:EventHubs";
             var values = new Dictionary<string, string>
             {
-                { $"{extensionPath}:MaxBatchSize", "123" },
+                { $"{extensionPath}:MaxEventBatchSize", "123" },
                 { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
                 { $"{extensionPath}:PrefetchCount", "123" },
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
