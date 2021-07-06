@@ -15,8 +15,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of FilterBlobItem. </summary>
         /// <param name="name"> . </param>
         /// <param name="containerName"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="containerName"/> is null. </exception>
-        internal FilterBlobItem(string name, string containerName)
+        /// <param name="tags"> Blob tags. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="containerName"/>, or <paramref name="tags"/> is null. </exception>
+        internal FilterBlobItem(string name, string containerName, BlobTags tags)
         {
             if (name == null)
             {
@@ -26,17 +27,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 throw new ArgumentNullException(nameof(containerName));
             }
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
-            Name = name;
-            ContainerName = containerName;
-        }
-
-        /// <summary> Initializes a new instance of FilterBlobItem. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="containerName"> . </param>
-        /// <param name="tags"> Blob tags. </param>
-        internal FilterBlobItem(string name, string containerName, BlobTags tags)
-        {
             Name = name;
             ContainerName = containerName;
             Tags = tags;
