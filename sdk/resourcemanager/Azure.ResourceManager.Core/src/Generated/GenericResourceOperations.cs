@@ -161,8 +161,12 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var operation = StartAddTag(key, value, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
+                var apiVersion = GetApiVersion(cancellationToken);
+                var originalTags = TagResourceOperations.Get(cancellationToken).Value;
+                originalTags.Data.Properties.TagsValue[key] = value;
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                var originalResponse = RestClient.GetById(Id, apiVersion, cancellationToken);
+                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,66 +188,12 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var operation = await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual ResourcesUpdateByIdOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartAddTag");
-            scope.Start();
-            try
-            {
-                GenericResource resource = GetResource(cancellationToken);
-                resource.Data.Tags[key] = value;
-                var apiVersion = GetApiVersion(cancellationToken);
-                var originalResponse = RestClient.UpdateById(Id, apiVersion, resource.Data, cancellationToken);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, resource.Data).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<ResourcesUpdateByIdOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartAddTag");
-            scope.Start();
-            try
-            {
-                GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                resource.Data.Tags[key] = value;
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.UpdateByIdAsync(Id, apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, resource.Data).Request, originalResponse);
+                var originalTags = (await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
+                originalTags.Data.Properties.TagsValue[key] = value;
+                await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -307,8 +257,13 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var operation = StartSetTags(tags, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
+                var apiVersion = GetApiVersion(cancellationToken);
+                TagResourceOperations.Delete(cancellationToken);
+                var newTags = TagResourceOperations.Get(cancellationToken);
+                newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
+                var originalResponse = RestClient.GetById(Id, apiVersion, cancellationToken);
+                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -329,64 +284,13 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var operation = await StartSetTagsAsync(tags, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual ResourcesUpdateByIdOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartSetTags");
-            scope.Start();
-            try
-            {
-                GenericResource resource = GetResource(cancellationToken);
-                resource.Data.Tags.ReplaceWith(tags);
-                var apiVersion = GetApiVersion(cancellationToken);
-                var originalResponse = RestClient.UpdateById(Id, apiVersion, resource.Data, cancellationToken);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, resource.Data).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<ResourcesUpdateByIdOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartSetTags");
-            scope.Start();
-            try
-            {
-                GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                resource.Data.Tags.ReplaceWith(tags);
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.UpdateByIdAsync(Id, apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, resource.Data).Request, originalResponse);
+                await TagResourceOperations.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                var newTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
+                newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -407,8 +311,12 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var operation = StartRemoveTag(key, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
+                var apiVersion = GetApiVersion(cancellationToken);
+                var originalTags = TagResourceOperations.Get(cancellationToken).Value;
+                originalTags.Data.Properties.TagsValue.Remove(key);
+                TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
+                var originalResponse = RestClient.GetById(Id, apiVersion, cancellationToken);
+                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -429,64 +337,12 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var operation = await StartRemoveTagAsync(key, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual ResourcesUpdateByIdOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartRemoveTag");
-            scope.Start();
-            try
-            {
-                GenericResource resource = GetResource(cancellationToken);
-                resource.Data.Tags.Remove(key);
-                var apiVersion = GetApiVersion(cancellationToken);
-                var originalResponse = RestClient.UpdateById(Id, apiVersion, resource.Data, cancellationToken);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, resource.Data).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        public virtual async Task<ResourcesUpdateByIdOperation> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartRemoveTag");
-            scope.Start();
-            try
-            {
-                GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                resource.Data.Tags.Remove(key);
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.UpdateByIdAsync(Id, apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, resource.Data).Request, originalResponse);
+                var originalTags = (await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
+                originalTags.Data.Properties.TagsValue.Remove(key);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

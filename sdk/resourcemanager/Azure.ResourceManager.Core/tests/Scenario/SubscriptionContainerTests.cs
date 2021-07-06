@@ -57,6 +57,5 @@ namespace Azure.ResourceManager.Core.Tests
             var expectTrue = await Client.GetSubscriptions().DoesExistAsync("/subscriptions/" + subscriptionId).ConfigureAwait(false);
             Assert.IsTrue(expectTrue);
         }
-
     }
 }
