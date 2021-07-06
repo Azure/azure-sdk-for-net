@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -293,9 +294,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // only do the assertion if cancellation wasn't requested as otherwise
                         // the exception we would get is a TaskCanceledException rather than ServiceBusException
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
-                        Assert.That(
-                            async () => await args.CompleteMessageAsync(message, args.CancellationToken),
-                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageLockLost));
+                        var exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
+                            async () => await args.CompleteMessageAsync(message, args.CancellationToken));
+                        Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, ((ServiceBusException) exception).Reason);
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         if (setIndex < numThreads)
