@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -31,7 +28,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            var foo = await Client.GetSubscriptions().TryGetAsync("/subscriptions/"+ new Guid().ToString()).ConfigureAwait(false);
+            var foo = await Client.GetSubscriptions().TryGetAsync("/subscriptions/" + new Guid().ToString()).ConfigureAwait(false);
             Assert.IsNull(foo);
             string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
             var subscription = await Client.GetSubscriptions().TryGetAsync("/subscriptions/" + subscriptionId).ConfigureAwait(false);
@@ -41,7 +38,16 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist() 
+        public async Task Get()
+        {
+            string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
+            Subscription result = await Client.GetSubscriptions().GetAsync(subscriptionId).ConfigureAwait(false);
+            Assert.AreEqual(subscriptionId, result.Id.SubscriptionId);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task DoesExist()
         {
             var expectFalse = await Client.GetSubscriptions().DoesExistAsync("/subscriptions/" + new Guid().ToString()).ConfigureAwait(false);
             Assert.IsFalse(expectFalse);
