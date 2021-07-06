@@ -63,7 +63,7 @@ namespace Compute.Tests
                     Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         {"RG", "rg"},
-                        {"testTag", "1"},
+                        {"testTag", "testTagValue"},
                     };
                     RestorePointCollection createdRpc = CreateRpc(createdVM.Id, rpcName, rgName, location, tags);
                     VerifyRpc(createdRpc, rpcName, location, vmId);
