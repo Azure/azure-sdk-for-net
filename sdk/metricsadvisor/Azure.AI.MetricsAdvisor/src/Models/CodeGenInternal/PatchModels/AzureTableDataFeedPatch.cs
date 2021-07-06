@@ -13,11 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSourceParameter))
-            {
-                writer.WritePropertyName("dataSourceParameter");
-                writer.WriteObjectValue(DataSourceParameter);
-            }
+            writer.WriteNullObjectValue("dataSourceParameter", DataSourceParameter);
             SerializeCommonProperties(writer);
             writer.WriteEndObject();
         }

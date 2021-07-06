@@ -86,5 +86,18 @@ namespace Azure.AI.MetricsAdvisor
                 writer.WriteNull(propertyName);
             }
         }
+
+        public static void WriteNullObjectValue(this Utf8JsonWriter writer, string propertyName, IUtf8JsonSerializable value)
+        {
+            if (value != null)
+            {
+                writer.WritePropertyName(propertyName);
+                writer.WriteObjectValue(value);
+            }
+            else
+            {
+                writer.WriteNull(propertyName);
+            }
+        }
     }
 }
