@@ -578,7 +578,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AnomalyAlertConfiguration
     {
         public AnomalyAlertConfiguration() { }
-        public Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator? ConditionOperator { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator? CrossMetricsOperator { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DimensionsToSplitAlert { get { throw null; } }
         public string Id { get { throw null; } }
@@ -1047,7 +1047,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DetectionConditionOperator(string value) { throw null; }
         public static Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator And { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator Or { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator Xor { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1056,24 +1055,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator left, Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator (string value) { throw null; }
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator left, Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DetectionConditionsOperator : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DetectionConditionsOperator(string value) { throw null; }
-        public static Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator And { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator Or { get { throw null; } }
-        public bool Equals(Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator left, Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator right) { throw null; }
-        public static implicit operator Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator (string value) { throw null; }
-        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator left, Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DimensionKey : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
@@ -1139,6 +1120,25 @@ namespace Azure.AI.MetricsAdvisor.Models
         public Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertSnoozeCondition AlertSnoozeCondition { get { throw null; } set { } }
         public string DetectionConfigurationId { get { throw null; } set { } }
         public bool? UseDetectionResultToFilterAnomalies { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetricAlertConfigurationsOperator : System.IEquatable<Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetricAlertConfigurationsOperator(string value) { throw null; }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator And { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator Or { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator Xor { get { throw null; } }
+        public bool Equals(Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator left, Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator right) { throw null; }
+        public static implicit operator Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator (string value) { throw null; }
+        public static bool operator !=(Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator left, Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MetricAnomalyAlertConditions
     {
@@ -1270,7 +1270,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         public MetricWholeSeriesDetectionCondition() { }
         public Azure.AI.MetricsAdvisor.Models.ChangeThresholdCondition ChangeThresholdCondition { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator? CrossConditionsOperator { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator? ConditionOperator { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.HardThresholdCondition HardThresholdCondition { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.SmartDetectionCondition SmartDetectionCondition { get { throw null; } set { } }
     }

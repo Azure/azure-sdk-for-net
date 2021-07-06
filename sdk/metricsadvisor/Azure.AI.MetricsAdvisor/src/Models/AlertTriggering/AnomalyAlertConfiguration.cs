@@ -55,8 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <see cref="AnomalyAlertConfiguration"/> instance. This property must be set if more than one
         /// configuration is defined in <see cref="MetricAlertConfigurations"/>.
         /// </summary>
-        [CodeGenMember("CrossMetricsOperator")]
-        public DetectionConditionOperator? ConditionOperator { get; set; }
+        public MetricAlertConfigurationsOperator? CrossMetricsOperator { get; set; }
 
         /// <summary>
         /// A description of the <see cref="AnomalyAlertConfiguration"/>.
@@ -80,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return new AnomalyAlertingConfigurationPatch()
             {
-                CrossMetricsOperator = ConditionOperator,
+                CrossMetricsOperator = CrossMetricsOperator,
                 Description = Description,
                 Name = Name,
                 HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),

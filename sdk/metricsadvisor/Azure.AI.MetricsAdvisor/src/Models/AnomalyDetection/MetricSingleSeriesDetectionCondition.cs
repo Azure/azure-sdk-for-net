@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             SeriesKey = seriesKey;
         }
 
-        internal MetricSingleSeriesDetectionCondition(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, SeriesIdentity series)
+        internal MetricSingleSeriesDetectionCondition(DetectionConditionOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, SeriesIdentity series)
             : base(crossConditionsOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
         {
             SeriesKey = new DimensionKey(series.Dimension);
