@@ -144,9 +144,18 @@ namespace Azure.ResourceManager.Core
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
         public Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionOperations(
-                    new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
-                    subscriptionGuid).Get(cancellationToken);
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            scope.Start();
+            try
+            {
+                var response = RestClient.Get(subscriptionGuid, cancellationToken);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -156,11 +165,20 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this subscription. </returns>
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
-        public virtual Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionOperations(
-                new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
-                subscriptionGuid).GetAsync(cancellationToken);
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -171,12 +189,6 @@ namespace Azure.ResourceManager.Core
         protected override ResourceOperationsBase<SubscriptionResourceIdentifier, Subscription> GetOperation(string subscriptionGuid)
         {
             return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), subscriptionGuid);
-        }
-
-        //TODO: can make static?
-        private Func<SubscriptionData, Subscription> Converter()
-        {
-            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), s.Id), s);
         }
     }
 }
