@@ -1551,9 +1551,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Search.Documents.Indexes.Models.PhoneticEncoder? Encoder { get { throw null; } set { } }
         public bool? ReplaceOriginalTokens { get { throw null; } set { } }
     }
-    public partial class PIIDetectionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
+    public partial class PiiDetectionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
-        public PIIDetectionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
+        public PiiDetectionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
         public string DefaultLanguageCode { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }
         public string MaskingCharacter { get { throw null; } set { } }
