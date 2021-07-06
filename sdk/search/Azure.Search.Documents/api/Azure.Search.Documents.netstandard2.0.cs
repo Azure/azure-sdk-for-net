@@ -1739,7 +1739,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public SearchIndexerDataIdentity() { }
     }
-    public partial class SearchIndexerDataNoneIdentity : Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy
+    public partial class SearchIndexerDataNoneIdentity : Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity
     {
         public SearchIndexerDataNoneIdentity() { }
     }
@@ -1779,7 +1779,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType left, Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SearchIndexerDataUserAssignedIdentity : Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy
+    public partial class SearchIndexerDataUserAssignedIdentity : Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity
     {
         public SearchIndexerDataUserAssignedIdentity(string userAssignedIdentity) { }
         public string UserAssignedIdentity { get { throw null; } set { } }
