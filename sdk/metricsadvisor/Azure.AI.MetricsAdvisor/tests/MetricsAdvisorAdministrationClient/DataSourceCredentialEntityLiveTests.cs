@@ -144,6 +144,29 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeSharedKeyCredentialEntity))]
+        [TestCase(nameof(ServicePrincipalCredentialEntity))]
+        [TestCase(nameof(ServicePrincipalInKeyVaultCredentialEntity))]
+        [TestCase(nameof(SqlConnectionStringCredentialEntity))]
+        public async Task UpdateCommonPropertiesWithNullSetsToDefault(string credentialKind)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string credentialName = Recording.GenerateAlphaNumericId("credential");
+
+            DataSourceCredentialEntity credentialToCreate = GetDataSourceCredentialEntityTestCase(credentialKind, credentialName);
+
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialToCreate);
+            DataSourceCredentialEntity credentialToUpdate = disposableCredential.Credential;
+
+            credentialToUpdate.Description = null;
+
+            DataSourceCredentialEntity updatedCredential = await adminClient.UpdateDataSourceCredentialAsync(credentialToUpdate);
+
+            Assert.That(updatedCredential.Description, Is.Empty);
+        }
+
+        [RecordedTest]
         public async Task GetDataSourceCredentials()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
