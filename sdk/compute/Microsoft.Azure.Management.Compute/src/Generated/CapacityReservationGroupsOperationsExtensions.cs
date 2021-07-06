@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class CapacityReservationGroupsOperationsExtensions
     {
             /// <summary>
-            /// The operation to create or update a capacity reservation group. Please
-            /// refer to https://aka.ms/CapacityReservation for more details. When updating
-            /// a capacity reservation group, only tags may be modified.
+            /// The operation to create or update a capacity reservation group. When
+            /// updating a capacity reservation group, only tags may be modified. Please
+            /// refer to https://aka.ms/CapacityReservation for more details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a capacity reservation group. Please
-            /// refer to https://aka.ms/CapacityReservation for more details. When updating
-            /// a capacity reservation group, only tags may be modified.
+            /// The operation to create or update a capacity reservation group. When
+            /// updating a capacity reservation group, only tags may be modified. Please
+            /// refer to https://aka.ms/CapacityReservation for more details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
