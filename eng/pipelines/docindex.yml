@@ -11,10 +11,14 @@ jobs:
       DocRepoOwner: Azure
       DocRepoName: azure-docs-sdk-dotnet
     steps:
-      # Sync docs repo
+      # Checkout the eng folder from the SDK repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
           SkipDefaultCheckout: true
+      
+      # Sync docs repo
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
           Paths:
             - bundlepackages
           Repositories:
