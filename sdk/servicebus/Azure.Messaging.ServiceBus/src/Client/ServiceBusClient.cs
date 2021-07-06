@@ -67,8 +67,8 @@ namespace Azure.Messaging.ServiceBus
         internal IList<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
-        ///   including ensuring that the connection itself has been closed.
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusClient" />,
+        ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>

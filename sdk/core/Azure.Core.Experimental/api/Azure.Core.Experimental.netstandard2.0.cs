@@ -191,4 +191,22 @@ namespace Azure.Core
     {
         public ProtocolClientOptions() { }
     }
+    public sealed partial class ResponseError
+    {
+        public ResponseError(string? code, string? message, Azure.Core.ResponseInnerError? innerError, string? target, System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError>? details) { }
+        public string? Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResponseError> Details { get { throw null; } }
+        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
+        public string? Message { get { throw null; } }
+        public string? Target { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+    public sealed partial class ResponseInnerError
+    {
+        internal ResponseInnerError() { }
+        public string? Code { get { throw null; } }
+        public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
+        public string? Message { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
 }

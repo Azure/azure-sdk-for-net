@@ -15,12 +15,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResourceExpanded> ListAtContext(
             ResourceGroupOperations resourceGroup,
             ResourceFilterCollection resourceFilters = null,
+            string expand = null,
             int? top = null,
             CancellationToken cancellationToken = default)
         {
@@ -28,6 +30,7 @@ namespace Azure.ResourceManager.Core
                 resourceGroup,
                 resourceGroup.Id.Name,
                 resourceFilters,
+                expand,
                 top,
                 cancellationToken);
         }
@@ -37,12 +40,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResourceExpanded> ListAtContextAsync(
             ResourceGroupOperations resourceGroup,
             ResourceFilterCollection resourceFilters = null,
+            string expand = null,
             int? top = null,
             CancellationToken cancellationToken = default)
         {
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.Core
                 resourceGroup,
                 resourceGroup.Id.Name,
                 resourceFilters,
+                expand,
                 top,
                 cancellationToken);
         }
@@ -59,12 +65,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResourceExpanded> ListAtContext(
             SubscriptionOperations subscription,
             ResourceFilterCollection resourceFilters = null,
+            string expand = null,
             int? top = null,
             CancellationToken cancellationToken = default)
         {
@@ -72,6 +80,7 @@ namespace Azure.ResourceManager.Core
                 subscription,
                 null,
                 resourceFilters,
+                expand,
                 top,
                 cancellationToken);
         }
@@ -81,12 +90,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResourceExpanded> ListAtContextAsync(
             SubscriptionOperations subscription,
             ResourceFilterCollection resourceFilters = null,
+            string expand = null,
             int? top = null,
             CancellationToken cancellationToken = default)
         {
@@ -94,6 +105,7 @@ namespace Azure.ResourceManager.Core
                 subscription,
                 null,
                 resourceFilters,
+                expand,
                 top,
                 cancellationToken);
         }
@@ -108,6 +120,7 @@ namespace Azure.ResourceManager.Core
             ResourceOperationsBase resourceOperations,
             string scopeFilter,
             ResourceFilterCollection resourceFilters = null,
+            string expand = null,
             int? top = null,
             CancellationToken cancellationToken = default)
         {
@@ -115,14 +128,14 @@ namespace Azure.ResourceManager.Core
             AsyncPageable<GenericResourceExpanded> result;
             if (scopeFilter == null)
             {
-                result = restClient.ListAsync(resourceFilters?.ToString(), null, top, cancellationToken);
+                result = restClient.ListAsync(resourceFilters?.ToString(), expand, top, cancellationToken);
             }
             else
             {
                 result = restClient.ListByResourceGroupAsync(
                     scopeFilter,
                     resourceFilters?.ToString(),
-                    null,
+                    expand,
                     top,
                     cancellationToken);
             }
@@ -134,6 +147,7 @@ namespace Azure.ResourceManager.Core
             ResourceOperationsBase resourceOperations,
             string scopeFilter = null,
             ResourceFilterCollection resourceFilters = null,
+            string expand = null,
             int? top = null,
             CancellationToken cancellationToken = default)
         {
@@ -141,14 +155,14 @@ namespace Azure.ResourceManager.Core
             Pageable<GenericResourceExpanded> result;
             if (scopeFilter == null)
             {
-                result = restClient.List(resourceFilters?.ToString(), null, top, cancellationToken);
+                result = restClient.List(resourceFilters?.ToString(), expand, top, cancellationToken);
             }
             else
             {
                 result = restClient.ListByResourceGroup(
                     scopeFilter,
                     resourceFilters?.ToString(),
-                    null,
+                    expand,
                     top,
                     cancellationToken);
             }

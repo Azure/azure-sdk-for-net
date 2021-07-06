@@ -682,7 +682,7 @@ namespace Microsoft.Azure.Management.Synapse
             WorkspaceManagedIdentitySqlControlSettings = new WorkspaceManagedIdentitySqlControlSettingsOperations(this);
             RestorableDroppedSqlPools = new RestorableDroppedSqlPoolsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-03-01";
+            ApiVersion = "2021-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

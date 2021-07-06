@@ -15,6 +15,7 @@
     <ProjectReference Include="..\src\Azure.Communication.CallingServer.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\tests.yml" Link="\tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample1_CreateCall.md" Link="samples\Sample1_CreateCall.md" />
     <None Include="..\samples\Sample1_CreateCallAsync.md" Link="samples\Sample1_CreateCallAsync.md" />
