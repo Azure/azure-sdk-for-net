@@ -7,7 +7,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 tag: release_2_1
-model-namespace: false
 require:
     - https://github.com/Azure/azure-rest-api-specs/blob/7043b48f4be1fdd40757b9ef372b65f054daf48f/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 ```
@@ -100,4 +99,14 @@ directive:
   where: $.definitions.FieldValue
   transform: >
     $.properties.valueObject.additionalProperties["x-nullable"] = true;
+```
+
+### Make generated models internal by default
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.*
+  transform: >
+    $["x-accessibility"] = "internal"
 ```
