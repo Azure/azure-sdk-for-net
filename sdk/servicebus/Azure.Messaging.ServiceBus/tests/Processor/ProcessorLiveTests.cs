@@ -296,7 +296,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
                         var exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
                             async () => await args.CompleteMessageAsync(message, args.CancellationToken));
-                        Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, ((ServiceBusException) exception).Reason);
+                        Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         if (setIndex < numThreads)
