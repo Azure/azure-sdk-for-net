@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class AnomalyDetectionConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
-        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync)
+        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -550,6 +550,146 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
 
             ValidateSmartDetectionCondition(updatedGroupConditions1.SmartDetectionCondition, 95.0, AnomalyDetectorDirection.Both, 25, 26.0);
+        }
+
+        [RecordedTest]
+        public async Task UpdateRootLevelMembersWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0))
+                },
+                Description = "description"
+            };
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
+
+            configToUpdate.Description = null;
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
+
+            Assert.That(updatedConfig.Description, Is.Empty);
+        }
+
+        [RecordedTest]
+        public async Task UpdateSmartDetectionConditionWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0))
+                    {
+                        LowerBound = 1.0
+                    },
+                    CrossConditionsOperator = DetectionConditionsOperator.And
+                }
+            };
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
+
+            configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = null;
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
+
+            Assert.That(updatedConfig.WholeSeriesDetectionConditions.SmartDetectionCondition, Is.Null);
+        }
+
+        [RecordedTest]
+        public async Task UpdateHardThresholdConditionWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0))
+                    {
+                        LowerBound = 1.0
+                    },
+                    CrossConditionsOperator = DetectionConditionsOperator.And
+                }
+            };
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
+
+            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition = null;
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
+
+            Assert.That(updatedConfig.WholeSeriesDetectionConditions.HardThresholdCondition, Is.Null);
+        }
+
+        [RecordedTest]
+        public async Task UpdateChangeThresholdConditionWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    ChangeThresholdCondition = new ChangeThresholdCondition(1.0, 1, false, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    CrossConditionsOperator = DetectionConditionsOperator.And
+                }
+            };
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
+
+            configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
+
+            Assert.That(updatedConfig.WholeSeriesDetectionConditions.ChangeThresholdCondition, Is.Null);
         }
 
         [RecordedTest]
