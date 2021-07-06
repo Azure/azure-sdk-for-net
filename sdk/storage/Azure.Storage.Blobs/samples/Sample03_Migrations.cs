@@ -994,7 +994,7 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-file");
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
-            
+
             try
             {
                 await containerClient.CreateIfNotExistsAsync();
@@ -1015,7 +1015,7 @@ namespace Azure.Storage.Blobs.Samples
             {
                 await containerClient.DeleteIfExistsAsync();
             }
-            
+
             Assert.Pass();
         }
 
