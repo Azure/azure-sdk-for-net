@@ -90,5 +90,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.clientSecret")]
         public string ClientSecret { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 50);
+                }
+            }
+        }
     }
 }

@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public FeedbackDimensionFilter()
         {
-            DimensionFilter = new DimensionKey();
         }
 
         /// <summary> Initializes a new instance of FeedbackDimensionFilter. </summary>
@@ -36,14 +35,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Filters the result by series. Only feedbacks for the series in the time series group specified will
         /// be returned.
         /// </summary>
-        public DimensionKey DimensionFilter { get; private set; }
+        public DimensionKey DimensionFilter { get; set; }
 
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
         internal IDictionary<string, string> Dimension
         {
-            get => DimensionFilter.Dimension;
+            get => DimensionFilter?.Dimension ?? new Dictionary<string, string>();
             set => DimensionFilter = new DimensionKey(value);
         }
     }

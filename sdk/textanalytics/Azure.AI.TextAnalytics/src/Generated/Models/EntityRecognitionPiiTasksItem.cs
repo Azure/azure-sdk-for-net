@@ -22,10 +22,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
+        /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, taskName, status)
         {
             Results = results;
         }

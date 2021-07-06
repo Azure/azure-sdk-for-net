@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BackupsList>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Backup>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.NetApp
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BackupsList>();
+            var _result = new AzureOperationResponse<IEnumerable<Backup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.NetApp
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BackupsList>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Backup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Get Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Get Backup for a Netapp Account
+        /// Gets the specified backup for a Netapp Account
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -491,7 +491,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Delete Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Delete Backup for a Netapp Account
+        /// Delete the specified Backup for a Netapp Account
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Delete Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Delete Backup for a Netapp Account
+        /// Delete the specified Backup for a Netapp Account
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

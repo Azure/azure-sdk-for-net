@@ -32,10 +32,17 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="name">Name of the dimension</param>
         /// <param name="displayName">Localized friendly display name of the
         /// dimension</param>
-        public MetricDimension(string name = default(string), string displayName = default(string))
+        /// <param name="internalName">Name of the dimension as it appears in
+        /// MDM</param>
+        /// <param name="toBeExportedForShoebox">A boolean flag indicating
+        /// whether this dimension should be included for the shoebox export
+        /// scenario</param>
+        public MetricDimension(string name = default(string), string displayName = default(string), string internalName = default(string), bool? toBeExportedForShoebox = default(bool?))
         {
             Name = name;
             DisplayName = displayName;
+            InternalName = internalName;
+            ToBeExportedForShoebox = toBeExportedForShoebox;
             CustomInit();
         }
 
@@ -55,6 +62,19 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the dimension as it appears in MDM
+        /// </summary>
+        [JsonProperty(PropertyName = "internalName")]
+        public string InternalName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean flag indicating whether this dimension
+        /// should be included for the shoebox export scenario
+        /// </summary>
+        [JsonProperty(PropertyName = "toBeExportedForShoebox")]
+        public bool? ToBeExportedForShoebox { get; set; }
 
     }
 }

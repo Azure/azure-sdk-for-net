@@ -1,7 +1,23 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 1.1.0 (2021-06-09)
+
+### Changes
+
+#### Breaking changes
+
+- The factory parameters to `AddClient` method were reordered.
 
 ## 1.1.0-beta.3 (2021-05-11)
 

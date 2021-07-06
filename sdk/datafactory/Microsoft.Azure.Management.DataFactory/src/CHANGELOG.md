@@ -1,5 +1,15 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.20.0
+###  Feature Additions
+- Added disableMetricsCollection in read/wirte properties
+
+## Version 4.19.0
+###  Feature Additions
+- Support sheetIndex in excel and set sheetName from required to optional
+- Set filePattern to object type to allow expressions
+- Support user-assigned managed identity in SSIS-IR
+
 ## Version 4.18.0
 ###  Feature Additions
 - Added MongoDB/MongoDBAtlas sink

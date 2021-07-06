@@ -55,9 +55,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// an alert should be triggered if the targeted metric is missing for the current timestamp.
         /// If <c>false</c>, no action is taken in this scenario.
         /// </summary>
-        public bool? TriggerForMissing { get; set; }
+        [CodeGenMember("TriggerForMissing")]
+        public bool? ShouldAlertIfDataPointMissing { get; set; }
 
-        // TODO: expose it as part of 1.0.0-beta.4
-        internal ValueType? Type { get; set; }
+        /// <summary>
+        /// Specifies which measure type should be used when checking boundaries. Defaults to
+        /// <see cref="BoundaryMeasureType.Value"/>.
+        /// </summary>
+        [CodeGenMember("Type")]
+        public BoundaryMeasureType? MeasureType { get; set; }
     }
 }
