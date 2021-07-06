@@ -385,6 +385,38 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
+        public async Task UpdateWebHookWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string hookName = Recording.GenerateAlphaNumericId("hook");
+            var hookToCreate = new WebNotificationHook(hookName, new Uri("https://fakeuri.com/"))
+            {
+                Username = "username",
+                Password = "password",
+                CertificateKey = "certKey",
+                CertificatePassword = "certPass"
+            };
+
+            await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
+
+            var hookToUpdate = disposableHook.Hook as WebNotificationHook;
+
+            hookToUpdate.Username = "username";
+            hookToUpdate.Password = "password";
+            hookToUpdate.CertificateKey = "certKey";
+            hookToUpdate.CertificatePassword = "certPass";
+
+            var updatedHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as WebNotificationHook;
+
+            Assert.That(updatedHook.Username, Is.Empty);
+            Assert.That(updatedHook.Password, Is.Empty);
+            Assert.That(updatedHook.CertificateKey, Is.Empty);
+            Assert.That(updatedHook.CertificatePassword, Is.Empty);
+        }
+
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetHooksWithMinimumSetup(bool useTokenCredential)
