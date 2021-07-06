@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var smartSuppress = new SuppressCondition(4, 50);
             detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartSuppress);
 
-            detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
+            detectCondition.ConditionOperator = DetectionConditionOperator.Or;
 
             Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 

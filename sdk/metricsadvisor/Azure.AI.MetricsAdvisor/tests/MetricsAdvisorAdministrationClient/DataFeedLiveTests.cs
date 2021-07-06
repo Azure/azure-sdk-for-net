@@ -37,6 +37,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceUsername = "username";
         private const string DataSourceWorkspaceId = "workspaceId";
 
+        private static string[] DataFeedSourceTestCases =
+        {
+            nameof(DataFeedSourceKind.AzureApplicationInsights),
+            nameof(DataFeedSourceKind.AzureBlob),
+            nameof(DataFeedSourceKind.AzureCosmosDb),
+            nameof(DataFeedSourceKind.AzureDataExplorer),
+            nameof(DataFeedSourceKind.AzureDataLakeStorage),
+            nameof(DataFeedSourceKind.AzureEventHubs),
+            nameof(DataFeedSourceKind.AzureTable),
+            nameof(DataFeedSourceKind.InfluxDb),
+            nameof(DataFeedSourceKind.LogAnalytics),
+            nameof(DataFeedSourceKind.MongoDb),
+            nameof(DataFeedSourceKind.MySql),
+            nameof(DataFeedSourceKind.PostgreSql),
+            nameof(DataFeedSourceKind.SqlServer)
+        };
+
         public DataFeedLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -1446,6 +1463,204 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCaseSource(nameof(DataFeedSourceTestCases))]
+        public async Task UpdateCommonMembersWithNullSetsToDefault(string dataSourceKind)
+        {
+            // https://github.com/Azure/azure-sdk-for-net/issues/21623
+            if (dataSourceKind == nameof(DataFeedSourceKind.AzureEventHubs))
+            {
+                Assert.Ignore();
+            }
+
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            DataFeedSource dataSource = CreateMockDataFeedSource(dataSourceKind);
+            var dataFeedToCreate = new DataFeed()
+            {
+                Name = dataFeedName,
+                DataSource = dataSource,
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.Parse("2021-01-01T00:00:00Z"))
+                {
+                    IngestionStartOffset = TimeSpan.FromMinutes(1),
+                    IngestionRetryDelay = TimeSpan.FromMinutes(1),
+                    StopRetryAfter = TimeSpan.FromMinutes(1),
+                    DataSourceRequestConcurrency = 1
+                },
+                Schema = new DataFeedSchema()
+                {
+                    MetricColumns = { new DataFeedMetric("metric") },
+                    DimensionColumns = { new DataFeedDimension("dimension") },
+                    TimestampColumn = "timestamp"
+                },
+                Description = "description",
+                RollupSettings = new DataFeedRollupSettings()
+                {
+                    RollupType = DataFeedRollupType.RollupNeeded,
+                    AutoRollupMethod = DataFeedAutoRollupMethod.Sum,
+                    RollupIdentificationValue = "dimension"
+                },
+                MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(DataFeedMissingDataPointFillType.NoFilling),
+                AccessMode = DataFeedAccessMode.Public,
+                ActionLinkTemplate = "https://fakeurl.com/%datafeed/%metric"
+            };
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+
+            dataFeedToUpdate.IngestionSettings.IngestionStartOffset = null;
+            dataFeedToUpdate.IngestionSettings.IngestionRetryDelay = null;
+            dataFeedToUpdate.IngestionSettings.StopRetryAfter = null;
+            dataFeedToUpdate.IngestionSettings.DataSourceRequestConcurrency = null;
+            dataFeedToUpdate.Schema.TimestampColumn = null;
+            dataFeedToUpdate.Description = null;
+            dataFeedToUpdate.RollupSettings.RollupType = null;
+            dataFeedToUpdate.RollupSettings.AutoRollupMethod = null;
+            dataFeedToUpdate.RollupSettings.RollupIdentificationValue = null;
+            dataFeedToUpdate.MissingDataPointFillSettings = null;
+            dataFeedToUpdate.AccessMode = null;
+            dataFeedToUpdate.ActionLinkTemplate = null;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+
+            Assert.That(updatedDataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.Zero));
+            Assert.That(updatedDataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(-1)));
+            Assert.That(updatedDataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromSeconds(-1)));
+            Assert.That(updatedDataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(-1));
+            Assert.That(updatedDataFeed.Schema.TimestampColumn, Is.Empty);
+            Assert.That(updatedDataFeed.Description, Is.Empty);
+            Assert.That(updatedDataFeed.RollupSettings.RollupType, Is.EqualTo(DataFeedRollupType.NoRollupNeeded));
+            Assert.That(updatedDataFeed.RollupSettings.AutoRollupMethod, Is.EqualTo(DataFeedAutoRollupMethod.None));
+            Assert.That(updatedDataFeed.RollupSettings.RollupIdentificationValue, Is.Null);
+            Assert.That(updatedDataFeed.MissingDataPointFillSettings.FillType, Is.EqualTo(DataFeedMissingDataPointFillType.SmartFilling));
+            Assert.That(updatedDataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
+            Assert.That(updatedDataFeed.ActionLinkTemplate, Is.Empty);
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureBlobDataFeedAuthenticationWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock")
+            {
+                Authentication = AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureBlobDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureBlobDataFeedSource;
+
+            dataSourceToUpdate.Authentication = null;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureBlobDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureBlobDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureBlobDataFeedSource.AuthenticationType.Basic));
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureDataExplorerDataFeedAuthenticationWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, "ServicePrincipal");
+            string credentialId = disposableCredential.Credential.Id;
+
+            string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataExplorerDataFeedSource("mock", "mock")
+            {
+                Authentication = AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipal,
+                DataSourceCredentialId = credentialId
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureDataExplorerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataExplorerDataFeedSource;
+
+            dataSourceToUpdate.Authentication = null;
+            dataSourceToUpdate.DataSourceCredentialId = null;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureDataExplorerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataExplorerDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataExplorerDataFeedSource.AuthenticationType.Basic));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureDataLakeStorageDataFeedAuthenticationWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, "ServicePrincipal");
+            string credentialId = disposableCredential.Credential.Id;
+
+            string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock")
+            {
+                Authentication = AzureDataLakeStorageDataFeedSource.AuthenticationType.ServicePrincipal,
+                DataSourceCredentialId = credentialId
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            AzureDataLakeStorageDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as AzureDataLakeStorageDataFeedSource;
+
+            dataSourceToUpdate.Authentication = null;
+            dataSourceToUpdate.DataSourceCredentialId = null;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            AzureDataLakeStorageDataFeedSource updatedDataSource = updatedDataFeed.DataSource as AzureDataLakeStorageDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(AzureDataLakeStorageDataFeedSource.AuthenticationType.Basic));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+        }
+
+        [RecordedTest]
+        public async Task UpdateSqlServerDataFeedAuthenticationWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialName = Recording.GenerateAlphaNumericId("credential");
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialName, "ServicePrincipal");
+            string credentialId = disposableCredential.Credential.Id;
+
+            string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new SqlServerDataFeedSource("mock", "mock")
+            {
+                Authentication = SqlServerDataFeedSource.AuthenticationType.ServicePrincipal,
+                DataSourceCredentialId = credentialId
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+            SqlServerDataFeedSource dataSourceToUpdate = dataFeedToUpdate.DataSource as SqlServerDataFeedSource;
+
+            dataSourceToUpdate.Authentication = null;
+            dataSourceToUpdate.DataSourceCredentialId = null;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+            SqlServerDataFeedSource updatedDataSource = updatedDataFeed.DataSource as SqlServerDataFeedSource;
+
+            Assert.That(updatedDataSource.Authentication, Is.EqualTo(SqlServerDataFeedSource.AuthenticationType.Basic));
+            Assert.That(updatedDataSource.DataSourceCredentialId, Is.Null);
+        }
+
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetDataFeeds(bool useTokenCredential)
@@ -2183,6 +2398,24 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 }
             }
         }
+
+        private DataFeedSource CreateMockDataFeedSource(string kind) => kind switch
+        {
+            nameof(DataFeedSourceKind.AzureApplicationInsights) => new AzureApplicationInsightsDataFeedSource("mock", "mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.AzureBlob) => new AzureBlobDataFeedSource("mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.AzureCosmosDb) => new AzureCosmosDbDataFeedSource("mock", "mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.AzureDataExplorer) => new AzureDataExplorerDataFeedSource("mock", "mock"),
+            nameof(DataFeedSourceKind.AzureDataLakeStorage) => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.AzureEventHubs) => new AzureEventHubsDataFeedSource("mock", "mock"),
+            nameof(DataFeedSourceKind.AzureTable) => new AzureTableDataFeedSource("mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.InfluxDb) => new InfluxDbDataFeedSource("mock", "mock", "mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.LogAnalytics) => new LogAnalyticsDataFeedSource("mock", "mock", "mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.MongoDb) => new MongoDbDataFeedSource("mock", "mock", "mock"),
+            nameof(DataFeedSourceKind.MySql) => new MySqlDataFeedSource("mock", "mock"),
+            nameof(DataFeedSourceKind.PostgreSql) => new PostgreSqlDataFeedSource("mock", "mock"),
+            nameof(DataFeedSourceKind.SqlServer) => new SqlServerDataFeedSource("mock", "mock"),
+            _ => throw new ArgumentOutOfRangeException("Invalid data feed source kind.")
+        };
 
         private T GetAuthenticationInstance<T>(string authenticationType)
         {

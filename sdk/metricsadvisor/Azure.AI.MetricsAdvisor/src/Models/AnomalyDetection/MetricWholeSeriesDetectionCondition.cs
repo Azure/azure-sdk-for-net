@@ -22,8 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The operator to be applied between conditions in this <see cref="MetricWholeSeriesDetectionCondition"/>
         /// instance. This property must be set if at least two conditions properties in this instance are defined.
         /// </summary>
-        [CodeGenMember("ConditionOperator")]
-        public DetectionConditionsOperator? CrossConditionsOperator { get; set; }
+        public DetectionConditionOperator? ConditionOperator { get; set; }
 
         /// <summary>
         /// Configures anomaly detection using multiple machine learning algorithms.
@@ -44,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal WholeMetricConfigurationPatch GetPatchModel() => new WholeMetricConfigurationPatch()
         {
-            ConditionOperator = CrossConditionsOperator,
+            ConditionOperator = ConditionOperator,
             SmartDetectionCondition = SmartDetectionCondition?.GetPatchModel(),
             HardThresholdCondition = HardThresholdCondition?.GetPatchModel(),
             ChangeThresholdCondition = ChangeThresholdCondition?.GetPatchModel()

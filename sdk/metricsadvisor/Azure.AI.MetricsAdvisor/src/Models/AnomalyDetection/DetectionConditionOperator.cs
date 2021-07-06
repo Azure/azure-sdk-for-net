@@ -10,20 +10,20 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// instance.
     /// </summary>
     [CodeGenModel("AnomalyDetectionConfigurationLogicType")]
-    public readonly partial struct DetectionConditionsOperator
+    public readonly partial struct DetectionConditionOperator
     {
         /// <summary>
         /// The data point is considered an anomaly if all conditions defined in <see cref="MetricWholeSeriesDetectionCondition"/>
         /// are satisfied.
         /// </summary>
         [CodeGenMember("AND")]
-        public static DetectionConditionsOperator And { get; } = new DetectionConditionsOperator(AndValue);
+        public static DetectionConditionOperator And { get; } = new DetectionConditionOperator(AndValue);
 
         /// <summary>
         /// The data point is considered an anomaly if at least one of the conditions defined in
         /// <see cref="MetricWholeSeriesDetectionCondition"/> is satisfied.
         /// </summary>
         [CodeGenMember("OR")]
-        public static DetectionConditionsOperator Or { get; } = new DetectionConditionsOperator(OrValue);
+        public static DetectionConditionOperator Or { get; } = new DetectionConditionOperator(OrValue);
     }
 }
