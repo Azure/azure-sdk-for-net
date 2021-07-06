@@ -107,8 +107,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<DataFeed>> GetDataFeedAsync(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
-
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeed)}");
@@ -139,8 +137,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response<DataFeed> GetDataFeed(string dataFeedId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
-
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeed)}");
@@ -275,7 +271,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
         /// containing information about the created data feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, <paramref name="dataFeed"/>.IngestionSettings, or <paramref name="dataFeed"/>.IngestionSettings.IngestionStartTime is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, or <paramref name="dataFeed"/>.IngestionSettings is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual async Task<Response<DataFeed>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
@@ -317,7 +313,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
         /// containing information about the created data feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, <paramref name="dataFeed"/>.IngestionSettings, or <paramref name="dataFeed"/>.IngestionSettings.IngestionStartTime is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/>, <paramref name="dataFeed"/>.Name, <paramref name="dataFeed"/>.DataSource, <paramref name="dataFeed"/>.Granularity, <paramref name="dataFeed"/>.Schema, or <paramref name="dataFeed"/>.IngestionSettings is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataFeed"/>.Name is empty.</exception>
         public virtual Response<DataFeed> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
@@ -486,6 +482,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeedIngestionProgress"/> instance.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response<DataFeedIngestionProgress>> GetDataFeedIngestionProgressAsync(string dataFeedId, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -511,6 +509,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeedIngestionProgress"/> instance.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response<DataFeedIngestionProgress> GetDataFeedIngestionProgress(string dataFeedId, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -539,6 +539,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> RefreshDataFeedIngestionAsync(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -569,6 +571,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response RefreshDataFeedIngestion(string dataFeedId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -592,9 +596,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets the ingestion status for data being ingested to a given data feed.
         /// </summary>
         /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
-        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeedIngestionStatus"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<DataFeedIngestionStatus> GetDataFeedIngestionStatusesAsync(string dataFeedId, GetDataFeedIngestionStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -645,9 +651,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets the ingestion status for data being ingested to a given data feed.
         /// </summary>
         /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
-        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeedIngestionStatus"/>.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeedIngestionStatus"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<DataFeedIngestionStatus> GetDataFeedIngestionStatuses(string dataFeedId, GetDataFeedIngestionStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
@@ -1511,7 +1519,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
         public virtual async Task<Response<NotificationHook>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            ValidateHookToCreate(hook, nameof(hook));
+            Argument.AssertNotNull(hook, nameof(hook));
+            Argument.AssertNotNullOrEmpty(hook.Name, $"{nameof(hook)}.{nameof(hook.Name)}");
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateHook)}");
             scope.Start();
@@ -1552,7 +1561,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
         public virtual Response<NotificationHook> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            ValidateHookToCreate(hook, nameof(hook));
+            Argument.AssertNotNull(hook, nameof(hook));
+            Argument.AssertNotNullOrEmpty(hook.Name, $"{nameof(hook)}.{nameof(hook.Name)}");
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateHook)}");
             scope.Start();
@@ -1858,25 +1868,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        private static void ValidateHookToCreate(NotificationHook hook, string paramName)
-        {
-            Argument.AssertNotNull(hook, paramName);
-            Argument.AssertNotNullOrEmpty(hook.Name, $"{paramName}.{nameof(hook.Name)}");
-
-            if (hook is EmailNotificationHook emailHook)
-            {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, $"{paramName}.{nameof(EmailNotificationHook.EmailsToAlert)}");
-            }
-            else if (hook is WebNotificationHook webHook)
-            {
-                Argument.AssertNotNull(webHook.Endpoint, $"{paramName}.{nameof(WebNotificationHook.Endpoint)}");
-            }
-            else
-            {
-                throw new ArgumentException($"Invalid hook type. A hook must be created from an ${nameof(EmailNotificationHook)} or a {nameof(WebNotificationHook)} instance.");
-            }
         }
 
         #endregion NotificationHook

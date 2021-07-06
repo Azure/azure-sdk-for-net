@@ -108,7 +108,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
@@ -168,7 +167,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
         public virtual Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
@@ -227,7 +225,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<MetricSeriesDefinition> GetMetricSeriesDefinitionsAsync(string metricId, GetMetricSeriesDefinitionsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
@@ -291,7 +288,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<MetricSeriesDefinition> GetMetricSeriesDefinitions(string metricId, GetMetricSeriesDefinitionsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
@@ -356,8 +352,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<MetricSeriesData> GetMetricSeriesDataAsync(string metricId, GetMetricSeriesDataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-            Argument.AssertNotNull(options, nameof(options)); // TODO: add validation for options.SeriesToFilter?
+            Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             IEnumerable<IDictionary<string, string>> series = options.SeriesKeys.Select(key => key.Dimension);
@@ -395,8 +390,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<MetricSeriesData> GetMetricSeriesData(string metricId, GetMetricSeriesDataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-            Argument.AssertNotNull(options, nameof(options)); // TODO: add validation for options.SeriesToFilter?
+            Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             IEnumerable<IDictionary<string, string>> series = options.SeriesKeys.Select(key => key.Dimension);
@@ -431,7 +425,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <returns></returns>
         public virtual AsyncPageable<EnrichmentStatus> GetMetricEnrichmentStatusesAsync(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
@@ -485,7 +478,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <returns></returns>
         public virtual Pageable<EnrichmentStatus> GetMetricEnrichmentStatuses(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
@@ -547,8 +539,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<MetricFeedback> GetAllFeedbackAsync(string metricId, GetAllFeedbackOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             FeedbackFilter filter = options?.Filter;
 
@@ -618,8 +608,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<MetricFeedback> GetAllFeedback(string metricId, GetAllFeedbackOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
-
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             FeedbackFilter filter = options?.Filter;
 
@@ -827,7 +815,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<DataPointAnomaly> GetAnomaliesForDetectionConfigurationAsync(string detectionConfigurationId, GetAnomaliesForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -886,7 +873,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<DataPointAnomaly> GetAnomaliesForDetectionConfiguration(string detectionConfigurationId, GetAnomaliesForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -945,7 +931,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<AnomalyIncident> GetIncidentsForDetectionConfigurationAsync(string detectionConfigurationId, GetIncidentsForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -1005,7 +990,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<AnomalyIncident> GetIncidentsForDetectionConfiguration(string detectionConfigurationId, GetIncidentsForDetectionConfigurationOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -1065,7 +1049,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> or <paramref name="incidentId"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<IncidentRootCause> GetIncidentRootCausesAsync(string detectionConfigurationId, string incidentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -1101,7 +1084,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> or <paramref name="incidentId"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
         public virtual Pageable<IncidentRootCause> GetIncidentRootCauses(string detectionConfigurationId, string incidentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
@@ -1137,27 +1119,7 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(incident, nameof(incident));
 
-            Guid detectionConfigurationGuid = new Guid(incident.DetectionConfigurationId);
-            string incidentId = incident.Id;
-
-            async Task<Page<IncidentRootCause>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetIncidentRootCauses)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RootCauseList> response = await _serviceRestClient.GetRootCauseOfIncidentByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, incidentId, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            return GetIncidentRootCausesAsync(incident.DetectionConfigurationId, incident.Id, cancellationToken);
         }
 
         /// <summary>
@@ -1171,27 +1133,7 @@ namespace Azure.AI.MetricsAdvisor
         {
             Argument.AssertNotNull(incident, nameof(incident));
 
-            Guid detectionConfigurationGuid = new Guid(incident.DetectionConfigurationId);
-            string incidentId = incident.Id;
-
-            Page<IncidentRootCause> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetIncidentRootCauses)}");
-                scope.Start();
-
-                try
-                {
-                    Response<RootCauseList> response = _serviceRestClient.GetRootCauseOfIncidentByAnomalyDetectionConfiguration(detectionConfigurationGuid, incidentId, cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            return GetIncidentRootCauses(incident.DetectionConfigurationId, incident.Id, cancellationToken);
         }
 
         /// <summary>
@@ -1207,7 +1149,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<string> GetAnomalyDimensionValuesAsync(string detectionConfigurationId, string dimensionName, GetAnomalyDimensionValuesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
             Argument.AssertNotNull(options, nameof(options));
 
@@ -1269,7 +1210,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
         public virtual Pageable<string> GetAnomalyDimensionValues(string detectionConfigurationId, string dimensionName, GetAnomalyDimensionValuesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
             Argument.AssertNotNull(options, nameof(options));
 
@@ -1332,14 +1272,13 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="MetricEnrichedSeriesData"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="seriesKeys"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> or <paramref name="seriesKeys"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<MetricEnrichedSeriesData> GetMetricEnrichedSeriesDataAsync(string detectionConfigurationId, IEnumerable<DimensionKey> seriesKeys, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-            Argument.AssertNotNullOrEmpty(seriesKeys, nameof(seriesKeys)); // TODO: add validation for seriesKeys.Dimension?
+            Argument.AssertNotNull(seriesKeys, nameof(seriesKeys));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            IEnumerable<SeriesIdentity> seriesIdentities = seriesKeys.Select(key => key.ConvertToSeriesIdentity());
+            IEnumerable<SeriesIdentity> seriesIdentities = seriesKeys.Select(key => key?.ConvertToSeriesIdentity());
             DetectionSeriesQuery queryOptions = new DetectionSeriesQuery(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime), seriesIdentities);
 
             async Task<Page<MetricEnrichedSeriesData>> FirstPageFunc(int? pageSizeHint)
@@ -1376,14 +1315,13 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="Pageable{T}"/> containing the collection of <see cref="MetricEnrichedSeriesData"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="seriesKeys"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> or <paramref name="seriesKeys"/> is empty; or <paramref name="detectionConfigurationId"/> is not a valid GUID.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<MetricEnrichedSeriesData> GetMetricEnrichedSeriesData(string detectionConfigurationId, IEnumerable<DimensionKey> seriesKeys, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectionConfigurationId, nameof(detectionConfigurationId));
-            Argument.AssertNotNullOrEmpty(seriesKeys, nameof(seriesKeys)); // TODO: add validation for seriesKeys.Dimension?
+            Argument.AssertNotNull(seriesKeys, nameof(seriesKeys));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            IEnumerable<SeriesIdentity> seriesIdentities = seriesKeys.Select(key => key.ConvertToSeriesIdentity());
+            IEnumerable<SeriesIdentity> seriesIdentities = seriesKeys.Select(key => key?.ConvertToSeriesIdentity());
             DetectionSeriesQuery queryOptions = new DetectionSeriesQuery(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime), seriesIdentities);
 
             Page<MetricEnrichedSeriesData> FirstPageFunc(int? pageSizeHint)
@@ -1429,7 +1367,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<AnomalyAlert> GetAlertsAsync(string alertConfigurationId, GetAlertsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
@@ -1485,7 +1422,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<AnomalyAlert> GetAlerts(string alertConfigurationId, GetAlertsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(options, nameof(options));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
@@ -1543,7 +1479,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is empty; or <paramref name="alertConfigurationId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<DataPointAnomaly> GetAnomaliesForAlertAsync(string alertConfigurationId, string alertId, GetAnomaliesForAlertOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
@@ -1600,7 +1535,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is empty; or <paramref name="alertConfigurationId"/> is not a valid GUID.</exception>
         public virtual Pageable<DataPointAnomaly> GetAnomaliesForAlert(string alertConfigurationId, string alertId, GetAnomaliesForAlertOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
@@ -1657,7 +1591,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is empty; or <paramref name="alertConfigurationId"/> is not a valid GUID.</exception>
         public virtual AsyncPageable<AnomalyIncident> GetIncidentsForAlertAsync(string alertConfigurationId, string alertId, GetIncidentsForAlertOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
@@ -1714,7 +1647,6 @@ namespace Azure.AI.MetricsAdvisor
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> or <paramref name="alertId"/> is empty; or <paramref name="alertConfigurationId"/> is not a valid GUID.</exception>
         public virtual Pageable<AnomalyIncident> GetIncidentsForAlert(string alertConfigurationId, string alertId, GetIncidentsForAlertOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
