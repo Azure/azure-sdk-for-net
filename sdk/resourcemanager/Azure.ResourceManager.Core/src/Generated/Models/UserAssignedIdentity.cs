@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Core
 {
-    using System;
-    using System.Text.Json;
-    using Azure.Core;
-
     /// <summary>
     /// A class representing an Identity assigned by the user.
     /// </summary>
-    public sealed class UserAssignedIdentity : IEquatable<UserAssignedIdentity>
+    public sealed partial class UserAssignedIdentity : IEquatable<UserAssignedIdentity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAssignedIdentity"/> class.
@@ -32,69 +31,6 @@ namespace Azure.ResourceManager.Core
         /// Gets or sets the Principal ID.
         /// </summary>
         public Guid PrincipalId { get; }
-
-        /// <summary>
-        /// Converts a <see cref="JsonElement"/> into an <see cref="UserAssignedIdentity"/> object.
-        /// </summary>
-        /// <param name="element"> A <see cref="JsonElement"/> containing an identity. </param>
-        /// <returns> New <see cref="UserAssignedIdentity"/> object with JSON values. </returns>
-        internal static UserAssignedIdentity Deserialize(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Undefined)
-            {
-                throw new ArgumentException("JsonElement is undefined " + nameof(element));
-            }
-
-            Guid principalId = default;
-            Guid clientId = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("principalId"))
-                {
-                    if (property.Value.ValueKind != JsonValueKind.Null)
-                        principalId = Guid.Parse(property.Value.GetString());
-                }
-
-                if (property.NameEquals("clientId"))
-                {
-                    if (property.Value.ValueKind != JsonValueKind.Null)
-                        clientId = Guid.Parse(property.Value.GetString());
-                }
-            }
-
-            if (principalId == default(Guid) && clientId == default(Guid))
-                return null;
-
-            if (principalId == default(Guid) || clientId == default(Guid))
-                throw new InvalidOperationException("Either ClientId or PrincipalId were null");
-
-            return new UserAssignedIdentity(clientId, principalId);
-        }
-
-        /// <summary>
-        /// Converts an <see cref="UserAssignedIdentity"/> object into a <see cref="JsonElement"/>.
-        /// </summary>
-        /// <param name="writer"> Utf8JsonWriter object to which the output is going to be written. </param>
-        /// <param name="userAssignedIdentity"> <see cref="UserAssignedIdentity"/> object to be converted. </param>
-        internal static void Serialize(Utf8JsonWriter writer, UserAssignedIdentity userAssignedIdentity)
-        {
-            if (userAssignedIdentity == null)
-                throw new ArgumentNullException(nameof(userAssignedIdentity));
-
-            if (writer == null)
-                throw new ArgumentNullException(nameof(writer));
-
-            writer.WriteStartObject();
-
-            writer.WritePropertyName("clientId");
-            writer.WriteStringValue(userAssignedIdentity.ClientId.ToString());
-
-            writer.WritePropertyName("principalId");
-            writer.WriteStringValue(userAssignedIdentity.PrincipalId.ToString());
-
-            writer.WriteEndObject();
-            writer.Flush();
-        }
 
         /// <summary>
         /// Compares two <see cref="UserAssignedIdentity"/> objects to determine if they are equal.
