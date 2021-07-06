@@ -7,7 +7,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Health care entity class.
+    /// A model which contains information about the detected healthcare entity.
     /// </summary>
     public class HealthcareEntity
     {
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
         /// described at
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
         /// </summary>
-        public string Category { get; }
+        public HealthcareEntityCategory Category { get; }
 
         /// <summary>
         /// Gets the sub category of the entity inferred by the Text Analytics service's

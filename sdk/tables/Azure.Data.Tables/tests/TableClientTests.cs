@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Sas;
+using Azure.Identity;
 using NUnit.Framework;
 using Parms = Azure.Data.Tables.TableConstants.Sas.Parameters;
 
@@ -41,7 +42,7 @@ namespace Azure.Data.Tables.Tests
                 new TableServiceClient(
                     new Uri($"https://example.com?{signature}"),
                     new AzureSasCredential("sig"),
-                    new TablesClientOptions { Transport = _transport }));
+                    new TableClientOptions { Transport = _transport }));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -61,7 +62,7 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should validate the url.");
 
             Assert.That(
-                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions()),
+                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions()),
                 Throws.Nothing,
                 "The constructor should accept valid arguments.");
 
@@ -81,6 +82,11 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should not accept a null credential");
 
             Assert.That(
+                () => new TableClient(_urlHttp, TableName, default(TokenCredential)),
+                Throws.InstanceOf<ArgumentException>(),
+                "The constructor should not accept a null credential");
+
+            Assert.That(
                 () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept valid arguments.");
@@ -89,6 +95,11 @@ namespace Azure.Data.Tables.Tests
                 () => new TableClient(_urlHttp, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept an http url.");
+
+            Assert.That(
+                () => new TableClient(_urlHttp, TableName, new DefaultAzureCredential(), new TableClientOptions()),
+                Throws.Nothing,
+                "The constructor should accept valid arguments.");
         }
 
         public static IEnumerable<object[]> ValidConnStrings()
@@ -108,7 +119,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidConnStrings))]
         public void AccountNameAndNameForConnStringCtor(string connString)
         {
-            var client = new TableClient(connString, TableName, new TablesClientOptions());
+            var client = new TableClient(connString, TableName, new TableClientOptions());
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);
@@ -117,7 +128,16 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void AccountNameAndNameForUriCtor()
         {
-            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions());
+            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions());
+
+            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(TableName, client.Name);
+        }
+
+        [Test]
+        public void NoCredCtor()
+        {
+            var client = new TableClient(new Uri($"{_url}/{TableName}?{signature}"));
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);

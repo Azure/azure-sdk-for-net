@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
     /// Feedback indicating that this is the start of a trend change.
@@ -30,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = new ChangePointFeedbackValue(value);
-            Type = FeedbackType.ChangePoint;
+            Kind = MetricFeedbackKind.ChangePoint;
         }
 
         /// <summary> Initializes a new <see cref="MetricChangePointFeedback"/> instance. </summary>
@@ -46,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = value;
-            Type = Models.FeedbackType.ChangePoint;
+            Kind = Models.MetricFeedbackKind.ChangePoint;
         }
 
         /// <summary>

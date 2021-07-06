@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes a PostgreSQL data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -22,23 +23,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="query"/> is empty.</exception>
         public PostgreSqlDataFeedSource(string connectionString, string query)
-            : base(DataFeedSourceType.PostgreSql)
+            : base(DataFeedSourceKind.PostgreSql)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
-
-            Parameter = new SqlSourceParameter(connectionString, query);
 
             ConnectionString = connectionString;
             Query = query;
         }
 
         internal PostgreSqlDataFeedSource(SqlSourceParameter parameter)
-            : base(DataFeedSourceType.PostgreSql)
+            : base(DataFeedSourceKind.PostgreSql)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             Query = parameter.Query;
@@ -47,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
 
         /// <summary>
         /// The connection string.
@@ -56,6 +53,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             get => Volatile.Read(ref _connectionString);
             private set => Volatile.Write(ref _connectionString, value);
+        }
+
+        /// <summary>
+        /// Updates the connection string.
+        /// </summary>
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            ConnectionString = connectionString;
         }
     }
 }

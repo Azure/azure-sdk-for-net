@@ -135,6 +135,44 @@ namespace Azure.Core.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => Argument.AssertInRange(value, minimum, maximum, "value"));
         }
 
+        [Test]
+        public void CheckNotNull()
+        {
+            var value = "test";
+            var checkedValue = Argument.CheckNotNull(value, "value");
+
+            Assert.AreEqual(value, checkedValue);
+        }
+
+        [Test]
+        public void CheckNotNullThrowsOnNull()
+        {
+            object? value = null;
+            Assert.Throws<ArgumentNullException>(() => Argument.CheckNotNull<object>(value, "value"));
+        }
+
+        [Test]
+        public void CheckNotNullOrEmptyString()
+        {
+            string value = "test";
+            var checkedValue = Argument.CheckNotNullOrEmpty(value, "value");
+
+            Assert.AreEqual(value, checkedValue);
+        }
+
+        [Test]
+        public void CheckNotNullOrEmptyStringThrowsOnNull()
+        {
+            string? value = null;
+            Assert.Throws<ArgumentNullException>(() => Argument.CheckNotNullOrEmpty(value, "value"));
+        }
+
+        [Test]
+        public void CheckNotNullOrEmptyStringThrowsOnEmpty()
+        {
+            Assert.Throws<ArgumentException>(() => Argument.CheckNotNullOrEmpty(string.Empty, "value"));
+        }
+
         private readonly struct TestStructure : IEquatable<TestStructure>
         {
             internal readonly string A;

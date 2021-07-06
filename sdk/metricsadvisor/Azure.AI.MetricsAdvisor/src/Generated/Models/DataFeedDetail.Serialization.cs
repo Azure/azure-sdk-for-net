@@ -183,7 +183,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     case "SqlServer": return SQLServerDataFeed.DeserializeSQLServerDataFeed(element);
                 }
             }
-            DataFeedSourceType dataSourceType = default;
+            DataFeedSourceKind dataSourceType = default;
             Optional<string> dataFeedId = default;
             string dataFeedName = default;
             Optional<string> dataFeedDescription = default;
@@ -217,7 +217,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("dataSourceType"))
                 {
-                    dataSourceType = new DataFeedSourceType(property.Value.GetString());
+                    dataSourceType = new DataFeedSourceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataFeedId"))

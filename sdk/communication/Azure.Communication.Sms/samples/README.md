@@ -22,5 +22,5 @@ This client library allows to do following operations:
  - Send SMS Messages [synchronously][sample_sms] or [asynchronously][sample_sms_async]
  
 <!-- LINKS -->
-[sample_sms]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSms.md
-[sample_sms_async]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSmsAsync.md
+[sample_sms]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSms.md
+[sample_sms_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSmsAsync.md

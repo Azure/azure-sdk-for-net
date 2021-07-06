@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -33,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EntitiesDefinitionUri != null)
                 {
                     writer.WritePropertyName("entitiesDefinitionUri");
-                    writer.WriteStringValue(EntitiesDefinitionUri);
+                    writer.WriteStringValue(EntitiesDefinitionUri.AbsoluteUri);
                 }
                 else
                 {
@@ -130,7 +131,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static CustomEntityLookupSkill DeserializeCustomEntityLookupSkill(JsonElement element)
         {
             Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
-            Optional<string> entitiesDefinitionUri = default;
+            Optional<Uri> entitiesDefinitionUri = default;
             Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;
             Optional<bool?> globalDefaultCaseSensitive = default;
             Optional<bool?> globalDefaultAccentSensitive = default;
@@ -160,7 +161,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         entitiesDefinitionUri = null;
                         continue;
                     }
-                    entitiesDefinitionUri = property.Value.GetString();
+                    entitiesDefinitionUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inlineEntitiesDefinition"))

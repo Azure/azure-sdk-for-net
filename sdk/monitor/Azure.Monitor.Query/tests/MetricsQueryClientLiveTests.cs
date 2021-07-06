@@ -19,19 +19,19 @@ namespace Azure.Monitor.Query.Tests
         {
         }
 
-        private MetricsClient CreateClient()
+        private MetricsQueryClient CreateClient()
         {
-            return InstrumentClient(new MetricsClient(
+            return InstrumentClient(new MetricsQueryClient(
                 TestEnvironment.MetricsEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsClientOptions())
+                InstrumentClientOptions(new MetricsQueryClientOptions())
             ));
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _testData = new MetricsTestData(this);
+            _testData = new MetricsTestData(TestEnvironment, Recording.UtcNow);
             await _testData.InitializeAsync();
         }
 
@@ -65,6 +65,8 @@ namespace Azure.Monitor.Query.Tests
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=> d.Average != null));
             Assert.AreEqual(new DateTimeRange(_testData.StartTime, _testData.StartTime + duration), results.Value.TimeSpan);
+
+            Assert.Null(results.Value.Metrics[0].Error);
         }
 
         [RecordedTest]

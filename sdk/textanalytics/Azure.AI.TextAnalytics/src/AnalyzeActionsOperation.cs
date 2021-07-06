@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary> Pageable operation class for analyzing multiple actions using long running operation. </summary>
     public class AnalyzeActionsOperation : PageableOperation<AnalyzeActionsResult>, IOperation<AsyncPageable<AnalyzeActionsResult>>
     {
-        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
+        /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
         private readonly TextAnalyticsRestClient _serviceClient;
 
         private readonly OperationInternal<AsyncPageable<AnalyzeActionsResult>> _operationInternal;
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics
         private string _displayName;
 
         /// <summary>
-        /// Returns true if the long-running operation completed.
+        /// Returns true if the long-running operation has completed.
         /// </summary>
         public override bool HasCompleted => _operationInternal.HasCompleted;
 
@@ -128,7 +128,6 @@ namespace Azure.AI.TextAnalytics
         public AnalyzeActionsOperation(string operationId, TextAnalyticsClient client)
         {
             // TODO: Add argument validation here.
-
             Id = operationId;
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
@@ -301,10 +300,16 @@ namespace Azure.AI.TextAnalytics
 
             Response rawResponse = response.GetRawResponse();
 
-            // TODO - Remove PartiallySucceeded once service deploys this to WestUS2
+            if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            {
+                if (CheckIfGenericError(response.Value))
+                {
+                    RequestFailedException requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors).ConfigureAwait(false);
+                    return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
+                }
+            }
+
             if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
-                response.Value.Status == TextAnalyticsOperationStatus.PartiallySucceeded ||
-                response.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted ||
                 response.Value.Status == TextAnalyticsOperationStatus.Failed)
             {
                 string nextLink = response.Value.NextLink;
@@ -315,6 +320,16 @@ namespace Azure.AI.TextAnalytics
             }
 
             return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
+        }
+
+        private static bool CheckIfGenericError(AnalyzeJobState jobState)
+        {
+            foreach (TextAnalyticsErrorInternal error in jobState.Errors)
+            {
+                if (string.IsNullOrEmpty(error.Target))
+                    return true;
+            }
+            return false;
         }
     }
 }

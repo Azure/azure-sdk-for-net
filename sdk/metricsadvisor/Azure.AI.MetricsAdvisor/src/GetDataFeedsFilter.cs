@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public string Name { get; set; }
 
         /// <summary>
-        /// Filters the result by <see cref="DataFeed.Creator"/>.
+        /// Filters the result by <see cref="DataFeed.CreatorEmail"/>.
         /// </summary>
         public string Creator { get; set; }
 
@@ -34,9 +34,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public DataFeedStatus? Status { get; set; }
 
         /// <summary>
-        /// Filters the result by <see cref="DataFeed.SourceType"/>.
+        /// Filters the result by the kind of the <see cref="DataFeedSource"/>.
         /// </summary>
-        public DataFeedSourceType? SourceType { get; set; }
+        public DataFeedSourceKind? SourceKind { get; set; }
 
         /// <summary>
         /// Filters the result by <see cref="DataFeedGranularity.GranularityType"/>.

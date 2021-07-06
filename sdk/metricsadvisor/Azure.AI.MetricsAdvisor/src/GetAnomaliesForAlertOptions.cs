@@ -6,8 +6,8 @@ using System.Threading;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
-    /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomaliesForAlert(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
+    /// or <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> to configure the behavior of the request.
     /// </summary>
     public class GetAnomaliesForAlertOptions
     {

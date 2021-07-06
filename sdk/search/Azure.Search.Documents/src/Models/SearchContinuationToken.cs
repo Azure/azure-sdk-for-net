@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WriteStartObject();
                 writer.WriteString(s_apiVersionEncodedName, SearchClientOptions.ContinuationTokenVersion.ToVersionString());
-                writer.WriteString(s_nextLinkEncodedName, nextPageUri.ToString());
+                writer.WriteString(s_nextLinkEncodedName, nextPageUri.AbsoluteUri);
                 writer.WritePropertyName(s_nextPageParametersEncodedName);
                 writer.WriteObjectValue(nextPageOptions);
                 writer.WriteEndObject();
