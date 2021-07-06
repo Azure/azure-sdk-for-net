@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response = RestClient.Get(subscriptionGuid, cancellationToken);
-                return Response.FromValue(Converter().Invoke(response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(Converter().Invoke(response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,12 +189,6 @@ namespace Azure.ResourceManager.Core
         protected override ResourceOperationsBase<SubscriptionResourceIdentifier, Subscription> GetOperation(string subscriptionGuid)
         {
             return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), subscriptionGuid);
-        }
-
-        //TODO: can make static?
-        private Func<SubscriptionData, Subscription> Converter()
-        {
-            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), s.Id), s);
         }
     }
 }
