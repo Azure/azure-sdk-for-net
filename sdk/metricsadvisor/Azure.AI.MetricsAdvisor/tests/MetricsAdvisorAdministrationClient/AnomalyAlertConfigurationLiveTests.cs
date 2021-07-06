@@ -643,6 +643,38 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task UpdateRootLevelMembersWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
+            await using DisposableDetectionConfiguration disposableDetectionConfig = await CreateTempDetectionConfigurationAsync(adminClient, metricId);
+            var detectionConfigId = disposableDetectionConfig.Configuration.Id;
+
+            string configName = Recording.GenerateAlphaNumericId("config");
+
+            var configToCreate = new AnomalyAlertConfiguration()
+            {
+                Name = configName,
+                Description = "description",
+                MetricAlertConfigurations =
+                {
+                    new MetricAlertConfiguration(detectionConfigId, MetricAnomalyAlertScope.CreateScopeForWholeSeries())
+                }
+            };
+
+            await using var disposableConfig = await DisposableAlertConfiguration.CreateAlertConfigurationAsync(adminClient, configToCreate);
+
+            AnomalyAlertConfiguration configToUpdate = disposableConfig.Configuration;
+
+            configToUpdate.Description = null;
+
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
+
+            Assert.That(updatedConfig.Description, Is.Empty);
+        }
+
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task GetAlertConfigurations(bool useTokenCredential)
