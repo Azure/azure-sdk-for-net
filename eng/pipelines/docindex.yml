@@ -11,14 +11,10 @@ jobs:
       DocRepoOwner: Azure
       DocRepoName: azure-docs-sdk-dotnet
     steps:
-      # Checkout the eng folder from the SDK repo
-      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-        parameters:
-          SkipDefaultCheckout: true
-      
       # Sync docs repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
+          SkipDefaultCheckout: true
           Paths:
             - bundlepackages
           Repositories:
@@ -37,7 +33,8 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
-          BaseRepoBranch: $(DefaultBranch)
+          # TODO: This should be $(DefaultBranch)
+          BaseRepoBranch: 'djurek/validate-onboarding-changes'
           BaseRepoOwner: $(DocRepoOwner)
           CommitMsg: "Update docs CI configuration"
           TargetRepoName: $(DocRepoName)

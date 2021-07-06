@@ -162,6 +162,9 @@ stages:
                   deploy:
                     steps:
                       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                        parameters:
+                          paths:
+                            - .github/CODEOWNERS
 
                       - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
                         parameters:
