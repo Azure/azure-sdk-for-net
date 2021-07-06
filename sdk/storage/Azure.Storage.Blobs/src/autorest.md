@@ -9,6 +9,7 @@ input-file:
 skip-semantics-validation: true
 ```
 
+### Don't include container name or blob in path - we have direct URIs.
 ``` yaml
 directive:
 - from: swagger-document
