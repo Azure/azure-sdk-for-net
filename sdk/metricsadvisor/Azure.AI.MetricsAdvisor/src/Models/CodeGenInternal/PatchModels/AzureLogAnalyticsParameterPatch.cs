@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -14,7 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WriteNullStringValue("tenantId", TenantId);
             writer.WriteNullStringValue("clientId", ClientId);
-            writer.WriteNullStringValue("clientSecret", ClientSecret);
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret");
+                writer.WriteStringValue(ClientSecret);
+            }
             writer.WriteNullStringValue("workspaceId", WorkspaceId);
             writer.WriteNullStringValue("query", Query);
             writer.WriteEndObject();

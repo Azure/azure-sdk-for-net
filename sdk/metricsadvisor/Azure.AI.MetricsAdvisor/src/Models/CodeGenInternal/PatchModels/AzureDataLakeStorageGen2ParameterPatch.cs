@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -13,7 +14,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WriteNullStringValue("accountName", AccountName);
-            writer.WriteNullStringValue("accountKey", AccountKey);
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey");
+                writer.WriteStringValue(AccountKey);
+            }
             writer.WriteNullStringValue("fileSystemName", FileSystemName);
             writer.WriteNullStringValue("directoryTemplate", DirectoryTemplate);
             writer.WriteNullStringValue("fileTemplate", FileTemplate);

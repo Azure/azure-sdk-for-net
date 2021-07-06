@@ -1466,6 +1466,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCaseSource(nameof(DataFeedSourceTestCases))]
         public async Task UpdateCommonMembersWithNullSetsToDefault(string dataSourceKind)
         {
+            // https://github.com/Azure/azure-sdk-for-net/issues/21623
+            if (dataSourceKind == nameof(DataFeedSourceKind.AzureEventHubs))
+            {
+                Assert.Ignore();
+            }
+
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");

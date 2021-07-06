@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -12,10 +13,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteNullStringValue("connectionString", ConnectionString);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString");
+                writer.WriteStringValue(ConnectionString);
+            }
             writer.WriteNullStringValue("database", Database);
             writer.WriteNullStringValue("userName", UserName);
             writer.WriteNullStringValue("password", Password);
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password");
+                writer.WriteStringValue(Password);
+            }
             writer.WriteNullStringValue("query", Query);
             writer.WriteEndObject();
         }
