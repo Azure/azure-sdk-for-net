@@ -3,14 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary>
     /// Model factory that enables mocking for the Azure.Communication.PhoneNumbers library.
     /// </summary>
-    [CodeGenType(nameof(PhoneNumbersModelFactory))]
     public static partial class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
