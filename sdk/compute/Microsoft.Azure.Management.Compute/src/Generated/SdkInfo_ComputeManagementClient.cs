@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.Compute
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Compute", "AvailabilitySets", "2021-04-01"),
+                new Tuple<string, string, string>("Compute", "CapacityReservationGroups", "2021-04-01"),
+                new Tuple<string, string, string>("Compute", "CapacityReservations", "2021-04-01"),
                 new Tuple<string, string, string>("Compute", "CloudServiceOperatingSystems", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "CloudServiceRoleInstances", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "CloudServiceRoles", "2021-03-01"),
