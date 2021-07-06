@@ -4,9 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 
-namespace Azure.Communication.Chat.Models
+namespace Azure.Communication.Chat
 {
     /// <summary>
     /// Model factory that enables mocking for the Chat library.

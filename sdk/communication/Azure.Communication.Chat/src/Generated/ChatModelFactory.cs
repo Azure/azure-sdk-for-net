@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Chat;
 
-namespace Azure.Communication.Chat.Models
+namespace Azure.Communication.Chat
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ChatModelFactory

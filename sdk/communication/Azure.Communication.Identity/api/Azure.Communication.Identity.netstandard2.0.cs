@@ -29,6 +29,10 @@ namespace Azure.Communication.Identity
             V2021_03_31_preview1 = 2,
         }
     }
+    public static partial class CommunicationIdentityModelFactory
+    {
+        public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommunicationTokenScope : System.IEquatable<Azure.Communication.Identity.CommunicationTokenScope>
     {
@@ -54,12 +58,5 @@ namespace Azure.Communication.Identity
         public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Deconstruct(out Azure.Communication.CommunicationUserIdentifier user, out Azure.Core.AccessToken accessToken) { throw null; }
-    }
-}
-namespace Azure.Communication.Identity.Models
-{
-    public static partial class CommunicationIdentityModelFactory
-    {
-        public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken) { throw null; }
     }
 }

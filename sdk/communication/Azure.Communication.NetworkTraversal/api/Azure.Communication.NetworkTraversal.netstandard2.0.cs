@@ -31,10 +31,7 @@ namespace Azure.Communication.NetworkTraversal
         public System.Collections.Generic.IReadOnlyList<string> Urls { get { throw null; } }
         public string Username { get { throw null; } }
     }
-}
-namespace Azure.Communication.NetworkTraversal.Models
-{
-    public static partial class AzureCommunicationServicesModelFactory
+    public static partial class NetworkTraversalModelFactory
     {
         public static Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration CommunicationRelayConfiguration(System.DateTimeOffset expiresOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.Communication.NetworkTraversal.CommunicationTurnServer> turnServers = null) { throw null; }
         public static Azure.Communication.NetworkTraversal.CommunicationTurnServer CommunicationTurnServer(System.Collections.Generic.IEnumerable<string> urls = null, string username = null, string credential = null) { throw null; }
