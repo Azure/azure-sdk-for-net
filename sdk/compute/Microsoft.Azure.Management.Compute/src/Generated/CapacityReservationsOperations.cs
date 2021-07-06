@@ -52,7 +52,8 @@ namespace Microsoft.Azure.Management.Compute
 
         /// <summary>
         /// The operation to create or update a capacity reservation. Please note some
-        /// properties can be set only during capacity reservation creation.
+        /// properties can be set only during capacity reservation creation. Please
+        /// refer to https://aka.ms/CapacityReservation for more details.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -547,7 +548,8 @@ namespace Microsoft.Azure.Management.Compute
 
         /// <summary>
         /// The operation to create or update a capacity reservation. Please note some
-        /// properties can be set only during capacity reservation creation.
+        /// properties can be set only during capacity reservation creation. Please
+        /// refer to https://aka.ms/CapacityReservation for more details.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
