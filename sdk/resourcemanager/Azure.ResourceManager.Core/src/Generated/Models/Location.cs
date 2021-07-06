@@ -330,13 +330,12 @@ namespace Azure.ResourceManager.Core
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
         /// <param name="canonicalName"> The canonical name of the location. </param>
-        internal Location(string name, string displayName, string regionalDisplayName, string canonicalName)//, LocationMetadata metadata)
+        internal Location(string name, string displayName, string regionalDisplayName, string canonicalName)
         {
             Name = name;
             DisplayName = displayName;
             RegionalDisplayName = regionalDisplayName;
             CanonicalName = canonicalName;
-            //Metadata = metadata;
         }
 
         /// <summary>

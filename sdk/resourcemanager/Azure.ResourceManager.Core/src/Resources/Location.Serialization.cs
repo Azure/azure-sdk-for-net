@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new Location(name.Value, displayName.Value, regionalDisplayName.Value, canonicalName.Value, metadata.Value);
+            return new Location(name.Value, displayName.Value, regionalDisplayName.Value, canonicalName.Value);
         }
     }
 }

@@ -77,15 +77,6 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the location group container under this subscription.
-        /// </summary>
-        /// <returns> The resource group container. </returns>
-        public virtual LocationContainer GetLocations()
-        {
-            return new LocationContainer(this);
-        }
-
-        /// <summary>
         /// Gets the provider container under this subscription.
         /// </summary>
         /// <returns> The provider container. </returns>
