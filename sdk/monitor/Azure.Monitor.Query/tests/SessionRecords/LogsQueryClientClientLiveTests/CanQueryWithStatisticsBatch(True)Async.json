@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "235",
+        "Content-Type": "application/json",
+        "traceparent": "00-3de6f8156ce8b8499cdc55a1e755a343-c45d6cc5a363d944-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210614.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "e7225792ee0fb81fc825b0c62e8c1f59",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "requests": [
+          {
+            "id": "0",
+            "headers": {
+              "prefer": "include-statistics=true"
+            },
+            "body": {
+              "query": "TableA1_158_CL",
+              "timespan": "2021-06-07T00:00:00.0000000Z/P7D"
+            },
+            "path": "/query",
+            "method": "POST",
+            "workspace": "e7bf7412-576d-4978-b47c-2edf669e3e2a"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 14 Jun 2021 21:19:38 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "Via": "1.1 draft-oms-6476548b75-ql257",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "responses": [
+          {
+            "id": "0",
+            "status": 200,
+            "headers": {
+              "Age": "0",
+              "request-context": "appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297"
+            },
+            "body": "{\u0022tables\u0022:[{\u0022name\u0022:\u0022PrimaryResult\u0022,\u0022columns\u0022:[{\u0022name\u0022:\u0022TenantId\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022SourceSystem\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022MG\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022ManagementGroupName\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022TimeGenerated\u0022,\u0022type\u0022:\u0022datetime\u0022},{\u0022name\u0022:\u0022Computer\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022RawData\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022IntColumn_d\u0022,\u0022type\u0022:\u0022real\u0022},{\u0022name\u0022:\u0022StringColumn_s\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022BoolColumn_b\u0022,\u0022type\u0022:\u0022bool\u0022},{\u0022name\u0022:\u0022FloatColumn_d\u0022,\u0022type\u0022:\u0022real\u0022},{\u0022name\u0022:\u0022Type\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022_ResourceId\u0022,\u0022type\u0022:\u0022string\u0022}],\u0022rows\u0022:[[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-07T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,1,\u0022a\u0022,false,0,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-09T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,3,\u0022b\u0022,true,1.2,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-12T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,1,\u0022c\u0022,false,1.1,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-07T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,1,\u0022a\u0022,false,0,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-09T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,3,\u0022b\u0022,true,1.2,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-12T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,1,\u0022c\u0022,false,1.1,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-07T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,1,\u0022a\u0022,false,0,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-09T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,3,\u0022b\u0022,true,1.2,\u0022TableA1_158_CL\u0022,\u0022\u0022],[\u0022e7bf7412-576d-4978-b47c-2edf669e3e2a\u0022,\u0022RestAPI\u0022,\u0022\u0022,\u0022\u0022,\u00222021-06-12T00:00:00Z\u0022,\u0022\u0022,\u0022\u0022,1,\u0022c\u0022,false,1.1,\u0022TableA1_158_CL\u0022,\u0022\u0022]]}],\u0022statistics\u0022:{\u0022query\u0022:{\u0022executionTime\u0022:0.0156478,\u0022resourceUsage\u0022:{\u0022cache\u0022:{\u0022memory\u0022:{\u0022hits\u0022:32,\u0022misses\u0022:0,\u0022total\u0022:32},\u0022disk\u0022:{\u0022hits\u0022:0,\u0022misses\u0022:0,\u0022total\u0022:0},\u0022shards\u0022:{\u0022hot\u0022:{\u0022hitbytes\u0022:0,\u0022missbytes\u0022:0,\u0022retrievebytes\u0022:0},\u0022cold\u0022:{\u0022hitbytes\u0022:0,\u0022missbytes\u0022:0,\u0022retrievebytes\u0022:0},\u0022bypassbytes\u0022:0}},\u0022cpu\u0022:{\u0022user\u0022:\u002200:00:00\u0022,\u0022kernel\u0022:\u002200:00:00\u0022,\u0022totalCpu\u0022:\u002200:00:00\u0022},\u0022memory\u0022:{\u0022peakPerNode\u0022:4719840}},\u0022inputDatasetStatistics\u0022:{\u0022extents\u0022:{\u0022total\u0022:1,\u0022scanned\u0022:1,\u0022scannedMinDatetime\u0022:\u00222021-06-14T18:46:27.9041943Z\u0022,\u0022scannedMaxDatetime\u0022:\u00222021-06-14T18:46:57.2820366Z\u0022},\u0022rows\u0022:{\u0022total\u0022:9,\u0022scanned\u0022:9},\u0022rowstores\u0022:{\u0022scannedRows\u0022:0,\u0022scannedValuesSize\u0022:0},\u0022shards\u0022:{\u0022queriesGeneric\u0022:0,\u0022queriesSpecialized\u0022:0}},\u0022datasetStatistics\u0022:[{\u0022tableRowCount\u0022:9,\u0022tableSize\u0022:788}]}}}"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-06-14T14:19:37.5249139-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
+    "RandomSeed": "1838021031",
+    "WORKSPACE_ID": "e7bf7412-576d-4978-b47c-2edf669e3e2a"
+  }
+}

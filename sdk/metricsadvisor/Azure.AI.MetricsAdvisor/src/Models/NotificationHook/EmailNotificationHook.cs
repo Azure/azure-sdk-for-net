@@ -2,22 +2,24 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// An email hook is the channel for anomaly alerts to be sent to email addresses specified in the Email to section.
     /// Two types of alert emails will be sent: Data feed not available alerts, and Incident reports which contain one or multiple anomalies.
     /// </summary>
     [CodeGenModel("EmailHookInfo")]
-    [CodeGenSuppress(nameof(EmailNotificationHook), typeof(string))]
+    [CodeGenSuppress(nameof(EmailNotificationHook), typeof(string), typeof(EmailHookParameter))]
     public partial class EmailNotificationHook : NotificationHook
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailNotificationHook"/> class.
         /// </summary>
-        public EmailNotificationHook()
+        /// <param name="name">The name of the hook.</param>
+        public EmailNotificationHook(string name) : base(name)
         {
             HookType = HookType.Email;
             EmailsToAlert = new ChangeTrackingList<string>();

@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="connectionProperties"> Properties used to connect to Xero. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="host"> The endpoint of the Xero server. (i.e. api.xero.com). </param>
         /// <param name="consumerKey"> The consumer key associated with the Xero application. </param>

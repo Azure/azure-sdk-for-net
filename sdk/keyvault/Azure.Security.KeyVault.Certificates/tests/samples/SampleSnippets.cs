@@ -186,8 +186,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                     Transport = new HttpClientTransport(httpClient)
                 };
 
-                //@@CertificateClient client = new CertificateClient(
-                /*@@*/ CertificateClient _ = new CertificateClient(
+#if SNIPPET
+                CertificateClient client = new CertificateClient(
+#else
+                CertificateClient _ = new CertificateClient(
+#endif
                     new Uri("https://myvault.vault.azure.net"),
                     new DefaultAzureCredential(),
                     options);
@@ -221,8 +224,11 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
 
             #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
-            //@@CertificatePolicy policy = CertificatePolicy.Default;
-            /*@@*/ policy = CertificatePolicy.Default;
+#if SNIPPET
+            CertificatePolicy policy = CertificatePolicy.Default;
+#else
+            policy = CertificatePolicy.Default;
+#endif
             #endregion Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
             {
                 #region Snippet:Azure_Security_KeyVault_Certificates_Snippets_MigrationGuide_CreateCertificate

@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     {
         public const string IntegrationRuntimeReference = "IntegrationRuntimeReference";
         public const string LinkedServiceReference = "LinkedServiceReference";
+        public const string CredentialReference = "CredentialReference";
     }
 }

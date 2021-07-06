@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Indexes
         private DataSourcesRestClient DataSourcesClient => LazyInitializer.EnsureInitialized(ref _dataSourcesClient, () => new DataSourcesRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Indexes
         private IndexersRestClient IndexersClient => LazyInitializer.EnsureInitialized(ref _indexersClient, () => new IndexersRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -117,7 +117,7 @@ namespace Azure.Search.Documents.Indexes
         private SkillsetsRestClient SkillsetsClient => LazyInitializer.EnsureInitialized(ref _skillsetsClient, () => new SkillsetsRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );

@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(5));
+                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
 
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.
@@ -667,6 +667,205 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     Assert.IsNull(msg);
                 }
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public async Task ProcessorStopsWhenClientIsClosed(int maxConcurrent)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var messageCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                var errorCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                // Create the client and seed the queue with some messages to process.
+
+                await using var client = CreateClient(60);
+                await SendMessagesAsync(client, scope.QueueName, 100);
+
+                // Create the processor and define the message handlers.
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = maxConcurrent,
+                    AutoCompleteMessages = true,
+                    PrefetchCount = 20
+                });
+
+                Task processMessageAsync(ProcessMessageEventArgs args)
+                {
+                    // If any message is dispatched for processing, then the
+                    // processor is actively reading from the Service Bus
+                    // service and should react to the client being closed.
+
+                    messageCompletionSource.TrySetResult(true);
+                    return Task.CompletedTask;
+                }
+
+                Task processErrorAsync(ProcessErrorEventArgs args)
+                {
+                    // If the client is closed, an exception should be thrown
+                    // for the disposed connection.  This is the condition that
+                    // should set the completion source.
+
+                    if ((args.Exception is ObjectDisposedException ex)
+                        && ex.ObjectName == nameof(ServiceBusConnection)
+                        && ex.Message.StartsWith(Resources.DisposedConnectionMessageProcessorMustStop))
+                    {
+                        errorCompletionSource.TrySetResult(true);
+                    }
+
+                    return Task.CompletedTask;
+                }
+
+                try
+                {
+                    processor.ProcessMessageAsync += processMessageAsync;
+                    processor.ProcessErrorAsync += processErrorAsync;
+
+                    // Set a cancellation source to use as a safety timer to prevent a
+                    // potential test hang; this should not trigger if things are
+                    // working correctly.
+
+                    using var cancellationSource = new CancellationTokenSource();
+                    cancellationSource.CancelAfter(TimeSpan.FromMinutes(10));
+
+                    // Start processing and wait for a message.
+
+                    await processor.StartProcessingAsync(cancellationSource.Token);
+                    await messageCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+
+                    // Now that it's been confirmed that the processor is interacting with the
+                    // Service Bus service close the client.
+
+                    await client.DisposeAsync();
+                    await errorCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+
+                    // The processor surfaced the expected exception.  Verify that it has stopped
+                    // processing and cancellation wasn't triggered.  This is a non-deterministic
+                    // operation, so allow for a few attempts.
+
+                    var attemptsRemaining = 5;
+
+                    while ((attemptsRemaining > 0) && (processor.IsProcessing))
+                    {
+                        --attemptsRemaining;
+                        await Task.Delay(500, cancellationSource.Token);
+                    }
+
+                    Assert.IsFalse(processor.IsProcessing, "The processor should have stopped when the client was closed.");
+                }
+                catch (OperationCanceledException)
+                {
+                    Assert.Fail("The cancellation token should not have been triggered.");
+                }
+                finally
+                {
+                    if (processor.IsProcessing)
+                    {
+                        await processor.StopProcessingAsync();
+                    }
+
+                    processor.ProcessMessageAsync -= processMessageAsync;
+                    processor.ProcessErrorAsync -= processErrorAsync;
+                }
+            }
+        }
+
+        [Test]
+        public async Task ProcessDlq()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                // send some messages
+                await sender.SendMessagesAsync(GetMessages(messageCount));
+
+                // receive the messages
+                var receiver = client.CreateReceiver(scope.QueueName);
+                int remaining = messageCount;
+
+                // move the messages to the DLQ
+                while (remaining > 0)
+                {
+                    var messages = await receiver.ReceiveMessagesAsync(remaining);
+                    remaining -= messages.Count;
+                    foreach (ServiceBusReceivedMessage message in messages)
+                    {
+                        await receiver.DeadLetterMessageAsync(message);
+                    }
+                }
+
+                // process the DLQ
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task AutoLockRenewalContinuesUntilProcessingCompletes()
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                await sender.SendMessagesAsync(GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 10
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
             }
         }
     }

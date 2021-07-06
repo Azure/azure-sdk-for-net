@@ -23,8 +23,8 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
         [AsyncOnly]
         public async Task PurchaseAndReleaseAsync()
         {
-            if (!IncludePhoneNumberLiveTests)
-                Assert.Ignore("Include phone number live tests flag is off.");
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
 
             var client = CreateClient(AuthMethod.ConnectionString, false);
 
@@ -97,10 +97,10 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
         [SyncOnly]
         public void PurchaseAndRelease()
         {
-            if (!IncludePhoneNumberLiveTests)
-                Assert.Ignore("Include phone number live tests flag is off.");
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
 
-            var connectionString = TestEnvironment.LiveTestConnectionString;
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
             #region Snippet:CreatePhoneNumbersClient
             // Get a connection string to our Azure Communication resource.

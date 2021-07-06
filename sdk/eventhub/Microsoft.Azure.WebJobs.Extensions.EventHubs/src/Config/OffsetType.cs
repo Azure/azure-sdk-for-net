@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         FromEnd = 1,
 
         /// <summary>
-        /// Will process events that were enqueued by Event Hubs on or after the specified time.Note that this applies
+        /// Will process events that were enqueued by Event Hubs on or after the specified time. Note that this applies
         /// to all Event Hubs partitions and there is no support for specifying a per-partition value.
         /// </summary>
         FromEnqueuedTime = 2

@@ -1,7 +1,31 @@
 # Release History
 
-## 0.1.0-preview.12 (Unreleased)
+## 0.1.0-preview.15 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 0.1.0-preview.14 (2021-06-30)
+
+### New Features
+- Added `ResponseError` type to represent the standard Azure error response.
+
+
+## 0.1.0-preview.13 (2021-06-08)
+
+### New Features
+- Added `DateTimeRange` type to represent ISO 8601 time interval.
+
+## 0.1.0-preview.12 (2021-05-11)
+
+### New Features
+- Added `RequestOptions`.
 
 ## 0.1.0-preview.11 (2021-03-22)
 

@@ -21,13 +21,9 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:PollIndividualDocumentsAsync
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
-
-            #region Snippet:PollIndividualDocumentsAsync
-
-            //@@ Uri sourceUri = <source SAS URI>;
-            //@@ Uri targetUri = <target SAS URI>;
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
@@ -35,13 +31,14 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            await foreach (DocumentStatusResult document in operation.GetAllDocumentStatusesAsync())
+            await foreach (DocumentStatus document in operation.GetAllDocumentStatusesAsync())
             {
                 Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-                Response<DocumentStatusResult> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
+                Response<DocumentStatus> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
 
-                while (!responseDocumentStatus.Value.HasCompleted)
+                while (responseDocumentStatus.Value.Status != DocumentTranslationStatus.Failed &&
+                          responseDocumentStatus.Value.Status != DocumentTranslationStatus.Succeeded)
                 {
                     if (responseDocumentStatus.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
                     {
@@ -49,13 +46,13 @@ namespace Azure.AI.Translation.Document.Samples
                     }
 
                     await Task.Delay(pollingInterval);
-                    responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
+                    responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
                 }
 
-                if (responseDocumentStatus.Value.Status == TranslationStatus.Succeeded)
+                if (responseDocumentStatus.Value.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else

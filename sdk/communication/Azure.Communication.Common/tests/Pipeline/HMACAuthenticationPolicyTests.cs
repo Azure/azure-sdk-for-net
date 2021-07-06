@@ -22,13 +22,13 @@ namespace Azure.Communication.Pipeline
             await SendGetRequest(transport, authPolicy);
             var headers = transport.SingleRequest.Headers;
 
-            Assert.True(headers.Contains("Date"));
+            Assert.True(headers.Contains("x-ms-date"));
             Assert.True(headers.Contains("Authorization"));
 
             Assert.True(headers.TryGetValue("x-ms-content-sha256", out var shaValue));
             Assert.AreEqual(expectedShaValue, shaValue);
 
-            var expectedAuthHeader = "HMAC-SHA256 SignedHeaders=date;host;x-ms-content-sha256";
+            var expectedAuthHeader = "HMAC-SHA256 SignedHeaders=x-ms-date;host;x-ms-content-sha256";
             Assert.True(headers.TryGetValue("Authorization", out var authValue));
             Assert.NotNull(authValue);
             Assert.True(authValue!.Contains(expectedAuthHeader));

@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "3541",
+        "Content-Length": "3715",
         "Content-Type": "application/json",
-        "traceparent": "00-3786bf6405fe7146889c4019b6dae311-54fa83c404e47f4d-00",
+        "traceparent": "00-ce9b115cff82154889a05a8702ec2de0-607a4d5d1f67084d-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210402.1",
-          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210610.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "5d016cb905478992346230c9ebac18e1",
         "x-ms-return-client-request-id": "true"
@@ -43,7 +43,7 @@
             ]
           },
           {
-            "entitiesDefinitionUri": "https://microsoft.com",
+            "entitiesDefinitionUri": "https://microsoft.com/",
             "@odata.type": "#Microsoft.Skills.Text.CustomEntityLookupSkill",
             "inputs": [
               {
@@ -304,19 +304,23 @@
         ],
         "cognitiveServices": {
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
+        },
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net",
+          "projections": []
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "5d016cb9-0547-8992-3462-30c9ebac18e1",
-        "Content-Length": "6085",
+        "Content-Length": "6255",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 02 Apr 2021 19:02:41 GMT",
-        "elapsed-time": "191",
-        "ETag": "W/\u00220x8D8F609E3F387FC\u0022",
+        "Date": "Thu, 10 Jun 2021 21:22:39 GMT",
+        "elapsed-time": "2162",
+        "ETag": "W/\u00220x8D92C55E0318BDC\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -326,7 +330,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D8F609E3F387FC\u0022",
+        "@odata.etag": "\u00220x8D92C55E0318BDC\u0022",
         "name": "fpmjeogx",
         "description": null,
         "skills": [
@@ -368,7 +372,7 @@
             "description": null,
             "context": null,
             "defaultLanguageCode": null,
-            "entitiesDefinitionUri": "https://microsoft.com",
+            "entitiesDefinitionUri": "https://microsoft.com/",
             "globalDefaultCaseSensitive": null,
             "globalDefaultAccentSensitive": null,
             "globalDefaultFuzzyEditDistance": null,
@@ -745,7 +749,11 @@
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
           "description": null
         },
-        "knowledgeStore": null,
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net",
+          "projections": [],
+          "parameters": null
+        },
         "encryptionKey": null
       }
     }
@@ -755,6 +763,9 @@
     "SearchIndexName": null,
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_SERVICE_NAME": "mohitc-acs",
+    "SEARCH_STORAGE_KEY": "Sanitized",
+    "SEARCH_STORAGE_NAME": "mohitcsablob",
+    "STORAGE_ENDPOINT_SUFFIX": null
   }
 }

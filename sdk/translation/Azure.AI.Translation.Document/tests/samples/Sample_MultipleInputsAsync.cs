@@ -22,6 +22,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:MultipleInputsAsync
             Uri source1SasUriUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
@@ -29,14 +30,6 @@ namespace Azure.AI.Translation.Document.Samples
             Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
 
-            #region Snippet:MultipleInputsAsync
-
-            //@@ Uri source1SasUriUri = <source1 SAS URI>;
-            //@@ Uri source2SasUri = <source2 SAS URI>;
-            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
-            //@@ Uri arabicTargetSasUri = <arabic target SAS URI>;
-            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
-            //@@ Uri frenchGlossarySasUri = <french glossary SAS URI>;
             var glossaryFormat = "TSV";
 
             var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
@@ -55,14 +48,14 @@ namespace Azure.AI.Translation.Document.Samples
 
             await operation.WaitForCompletionAsync();
 
-            await foreach (DocumentStatusResult document in operation.GetValuesAsync())
+            await foreach (DocumentStatus document in operation.GetValuesAsync())
             {
-                Console.WriteLine($"Document with Id: {document.DocumentId}");
+                Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
-                if (document.Status == TranslationStatus.Succeeded)
+                if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else

@@ -114,6 +114,64 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string MongoDbV2SinkCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""MongoDbV2Sink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",
@@ -7166,6 +7224,78 @@ namespace DataFactory.Tests.JsonSamples
                         writeBatchSize: 1000,
                         writeBatchTimeout: ""01:00:00"",
                         httpCompressionType: ""gzip""
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSqlDA"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputRestDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample(version: "Copy")]
+        public const string CopySqlToRestWithDisableMetricsCollection = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQL to Rest"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: 2,
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""CopyTestSrcStoredProcedureWithParameters"",
+                        storedProcedureParameters: {
+                            ""stringData"": { value: ""test"", type: ""String""},
+                            ""id"": { value: ""3"", type: ""Int""}
+                        },
+                        isolationLevel: ""ReadCommitted"",
+                        disableMetricsCollection: true
+                    },
+                    sink:
+                    {
+                        type: ""RestSink"",
+                        requestMethod: ""POST"",
+                        requestInterval: ""00:01:40"",
+                        httpRequestTimeout: ""00:01:40"",
+                        additionalHeaders:{
+                            ""Key"":""Value""
+                        },
+                        writeBatchSize: 1000,
+                        writeBatchTimeout: ""01:00:00"",
+                        httpCompressionType: ""gzip"",
+                        disableMetricsCollection: true
                     },
                     translator:
                     {

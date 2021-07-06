@@ -16,5 +16,6 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         public KeyPhrasesTaskParameters Parameters { get; set; }
+        public string TaskName { get; set; }
     }
 }

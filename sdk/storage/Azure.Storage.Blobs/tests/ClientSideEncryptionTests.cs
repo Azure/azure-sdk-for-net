@@ -100,11 +100,23 @@ namespace Azure.Storage.Blobs.Test
             {
                 keyMock.Setup(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
-                keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
+                keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, wrappedKey.ToArray()));
             }
 
             return keyMock;
+        }
+
+        private void VerifyUnwrappedKeyWasCached(Mock<IKeyEncryptionKey> keyMock)
+        {
+            if (IsAsync)
+            {
+                keyMock.Verify(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+            }
+            else
+            {
+                keyMock.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()), Times.Once);
+            }
         }
 
         private Mock<IKeyEncryptionKeyResolver> GetAlwaysFailsKeyResolver(bool throws)
@@ -288,20 +300,21 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestCase(16)] // a single cipher block
-        [TestCase(14)] // a single unalligned cipher block
-        [TestCase(Constants.KB)] // multiple blocks
-        [TestCase(Constants.KB - 4)] // multiple unalligned blocks
+        [TestCase(16, null)] // a single cipher block
+        [TestCase(14, null)] // a single unalligned cipher block
+        [TestCase(Constants.KB, null)] // multiple blocks
+        [TestCase(Constants.KB - 4, null)] // multiple unalligned blocks
+        [TestCase(Constants.MB, 64*Constants.KB)] // make sure we cache unwrapped key for large downloads
         [LiveOnly] // cannot seed content encryption key
-        public async Task RoundtripAsync(long dataSize)
+        public async Task RoundtripAsync(long dataSize, long? initialDownloadRequestSize)
         {
             var data = GetRandomBuffer(dataSize);
-            var mockKey = GetIKeyEncryptionKey().Object;
-            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
                 new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                 {
-                    KeyEncryptionKey = mockKey,
+                    KeyEncryptionKey = mockKey.Object,
                     KeyResolver = mockKeyResolver,
                     KeyWrapAlgorithm = s_algorithmName
                 }))
@@ -315,12 +328,58 @@ namespace Azure.Storage.Blobs.Test
                 byte[] downloadData;
                 using (var stream = new MemoryStream())
                 {
-                    await blob.DownloadToAsync(stream, cancellationToken: s_cancellationToken);
+                    await blob.DownloadToAsync(stream,
+                        transferOptions: new StorageTransferOptions() { InitialTransferSize = initialDownloadRequestSize },
+                        cancellationToken: s_cancellationToken);
                     downloadData = stream.ToArray();
                 }
 
                 // compare data
                 Assert.AreEqual(data, downloadData);
+                VerifyUnwrappedKeyWasCached(mockKey);
+            }
+        }
+
+        [TestCase(Constants.MB, 64*Constants.KB)]
+        [TestCase(Constants.MB, Constants.MB)]
+        [TestCase(Constants.MB, 4*Constants.MB)]
+        [LiveOnly] // cannot seed content encryption key
+        public async Task RoundtripAsyncWithOpenRead(long dataSize, int bufferSize)
+        {
+            var data = GetRandomBuffer(dataSize);
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey.Object,
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+
+                // upload with encryption
+                await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+
+                // download with decryption
+                byte[] downloadData;
+                using (var stream = new MemoryStream())
+                {
+                    using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize }, cancellationToken: s_cancellationToken);
+                    if (IsAsync)
+                    {
+                        await blobStream.CopyToAsync(stream, bufferSize, s_cancellationToken);
+                    } else
+                    {
+                        blobStream.CopyTo(stream, bufferSize);
+                    }
+                    downloadData = stream.ToArray();
+                }
+
+                // compare data
+                Assert.AreEqual(data, downloadData);
+                VerifyUnwrappedKeyWasCached(mockKey);
             }
         }
 
@@ -534,6 +593,31 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [TestCase(Constants.MB, 64*Constants.KB)]
+        [LiveOnly] // need access to keyvault service && cannot seed content encryption key
+        public async Task RoundtripWithKeyvaultProviderOpenRead(long dataSize, int bufferSize)
+        {
+            var data = GetRandomBuffer(dataSize);
+            IKeyEncryptionKey key = await GetKeyvaultIKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = key,
+                    KeyWrapAlgorithm = "RSA-OAEP-256"
+                }))
+            {
+                var blob = disposable.Container.GetBlobClient(GetNewBlobName());
+
+                await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+
+                var downloadStream = new MemoryStream();
+                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize});
+                await blobStream.CopyToAsync(downloadStream);
+
+                Assert.AreEqual(data, downloadStream.ToArray());
+            }
+        }
+
         [TestCase(true)]
         [TestCase(false)]
         [LiveOnly]
@@ -727,7 +811,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -758,7 +842,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_WithClientSideEncryptionOptions_False()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
@@ -779,6 +863,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(blobEncrypted.CanGenerateSasUri);
+        }
+        [Test]
+        public void CanParseLargeContentRange()
+        {
+            long compareValue = (long)Int32.MaxValue + 1; //Increase max int32 by one
+            ContentRange contentRange = ContentRange.Parse($"bytes 0 {compareValue} {compareValue}");
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.Size);
+            Assert.AreEqual(0, contentRange.Start);
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
         }
     }
 }

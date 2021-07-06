@@ -2,25 +2,47 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// RecognizeEntitiesActionResult
+    /// The result of the execution of a <see cref="RecognizeEntitiesAction"/> on the input documents.
     /// </summary>
-    public class RecognizeEntitiesActionResult : TextAnalyticsActionDetails
+    public class RecognizeEntitiesActionResult : TextAnalyticsActionResult
     {
-        internal RecognizeEntitiesActionResult(RecognizeEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error) : base(completedOn, error)
+        private readonly RecognizeEntitiesResultCollection _documentsResults;
+
+        /// <summary>
+        /// Successful action.
+        /// </summary>
+        internal RecognizeEntitiesActionResult(RecognizeEntitiesResultCollection result, DateTimeOffset completedOn)
+            : base(completedOn)
         {
-            Result = result;
+            _documentsResults = result;
         }
 
         /// <summary>
-        /// Results
+        /// Action with an error.
         /// </summary>
-        public RecognizeEntitiesResultCollection Result { get; }
+        internal RecognizeEntitiesActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+            : base(completedOn, error) { }
+
+        /// <summary>
+        /// Gets the result of the execution of a <see cref="RecognizeEntitiesAction"/> per each input document.
+        /// </summary>
+        public RecognizeEntitiesResultCollection DocumentsResults
+        {
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access the results of this action, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _documentsResults;
+            }
+        }
     }
 }

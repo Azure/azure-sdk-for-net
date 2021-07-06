@@ -8,12 +8,16 @@ namespace Azure.Messaging.EventHubs
         public EventData(System.ReadOnlyMemory<byte> eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.ReadOnlyMemory<byte> eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
+        public EventData(string eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.IO.Stream BodyAsStream { get { throw null; } }
+        public string ContentType { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } set { } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.BinaryData EventBody { get { throw null; } }
+        public string MessageId { get { throw null; } set { } }
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
@@ -23,6 +27,7 @@ namespace Azure.Messaging.EventHubs
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -51,8 +56,11 @@ namespace Azure.Messaging.EventHubs
     public partial class EventHubConnectionOptions
     {
         public EventHubConnectionOptions() { }
+        public System.Net.Security.RemoteCertificateValidationCallback CertificateValidationCallback { get { throw null; } set { } }
         public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public System.Net.IWebProxy Proxy { get { throw null; } set { } }
+        public int ReceiveBufferSizeInBytes { get { throw null; } set { } }
+        public int SendBufferSizeInBytes { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -367,6 +375,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public override int GetHashCode() { throw null; }
         protected abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint>> ListCheckpointsAsync(System.Threading.CancellationToken cancellationToken);
         protected abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(System.Threading.CancellationToken cancellationToken);
+        protected virtual System.Threading.Tasks.Task<string[]> ListPartitionIdsAsync(Azure.Messaging.EventHubs.EventHubConnection connection, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnInitializingPartitionAsync(TPartition partition, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnPartitionProcessingStoppedAsync(TPartition partition, Azure.Messaging.EventHubs.Processor.ProcessingStoppedReason reason, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected abstract System.Threading.Tasks.Task OnProcessingErrorAsync(System.Exception exception, TPartition partition, string operationDescription, System.Threading.CancellationToken cancellationToken);

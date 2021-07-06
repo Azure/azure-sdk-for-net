@@ -1,79 +1,75 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/d188dc378a78c819bfb8b1f07eba2c15511e1788c41ba27792d9433fc6a4e087/replicationNetworks/c41eda86-96d5-4541-a6f8-c47d4b75a24a/replicationNetworkMappings?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25GYWJyaWNzL2QxODhkYzM3OGE3OGM4MTliZmI4YjFmMDdlYmEyYzE1NTExZTE3ODhjNDFiYTI3NzkyZDk0MzNmYzZhNGUwODcvcmVwbGljYXRpb25OZXR3b3Jrcy9jNDFlZGE4Ni05NmQ1LTQ1NDEtYTZmOC1jNDdkNGI3NWEyNGEvcmVwbGljYXRpb25OZXR3b3JrTWFwcGluZ3M/YXBpLXZlcnNpb249MjAxOC0wNy0xMA==",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings?api-version=2021-02-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9jYTY2N2QyNTM2ZjU0MGNjNTdhNTY2YWU2MzkwODFiMTIzYWQ1MDhkOTNjYWVmMjg1OTIzN2NhMjJmMjY1ODY2L3JlcGxpY2F0aW9uTmV0d29ya3MvNGY3MDRiOGYtOTQ2Yy00NzA1LTk4NDQtMTExNjdlOTAxMDJmL3JlcGxpY2F0aW9uTmV0d29ya01hcHBpbmdzP2FwaS12ZXJzaW9uPTIwMjEtMDItMTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0ae12e0a-6090-4125-ab55-974e52cc3cea"
+          "37ef0077-2b31-40aa-97e6-c11e914405a4"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.4.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings\",\r\n      \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/d188dc378a78c819bfb8b1f07eba2c15511e1788c41ba27792d9433fc6a4e087/replicationNetworks/c41eda86-96d5-4541-a6f8-c47d4b75a24a/replicationNetworkMappings/NWMapping\",\r\n      \"name\": \"NWMapping\",\r\n      \"properties\": {\r\n        \"state\": \"Paired\",\r\n        \"primaryNetworkFriendlyName\": \"corp\",\r\n        \"primaryNetworkId\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/d49858f157601230a6ac5862fbbc6e63bf38d23ecd96cf953767945d457fe9d5/replicationNetworks/c41eda86-96d5-4541-a6f8-c47d4b75a24a\",\r\n        \"primaryFabricFriendlyName\": \"CP-B3L40405-03.fareast.corp.microsoft.com\",\r\n        \"recoveryNetworkFriendlyName\": \"vnetavrai\",\r\n        \"recoveryNetworkId\": \"/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai\",\r\n        \"recoveryFabricArmId\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/d49858f157601230a6ac5862fbbc6e63bf38d23ecd96cf953767945d457fe9d5\",\r\n        \"recoveryFabricFriendlyName\": \"Microsoft Azure\",\r\n        \"fabricSpecificSettings\": {\r\n          \"instanceType\": \"VmmToAzure\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11876"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "37ef0077-2b31-40aa-97e6-c11e914405a4 3/18/2021 6:28:37 PM"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "37ef0077-2b31-40aa-97e6-c11e914405a4"
+        ],
+        "x-ms-correlation-request-id": [
+          "e94cbf07-2e37-4774-84e4-fd5212730bcc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210318T182837Z:e94cbf07-2e37-4774-84e4-fd5212730bcc"
+        ],
+        "Date": [
+          "Thu, 18 Mar 2021 18:28:36 GMT"
+        ],
+        "Content-Length": [
+          "1437"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 06:32:50 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "0ae12e0a-6090-4125-ab55-974e52cc3cea 5/15/2017 6:32:51 AM"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "0ae12e0a-6090-4125-ab55-974e52cc3cea"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14418"
-        ],
-        "x-ms-correlation-request-id": [
-          "059eb117-b485-41e9-ba54-99de1f326ec2"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T063250Z:059eb117-b485-41e9-ba54-99de1f326ec2"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings\",\r\n      \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f/replicationNetworkMappings/NWMapping\",\r\n      \"name\": \"NWMapping\",\r\n      \"properties\": {\r\n        \"state\": \"Paired\",\r\n        \"primaryNetworkFriendlyName\": \"corp\",\r\n        \"primaryNetworkId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/ca667d2536f540cc57a566ae639081b123ad508d93caef2859237ca22f265866/replicationNetworks/4f704b8f-946c-4705-9844-11167e90102f\",\r\n        \"primaryFabricFriendlyName\": \"IDCLAB-A495.fareast.corp.microsoft.com\",\r\n        \"recoveryNetworkFriendlyName\": \"vnh2atest\",\r\n        \"recoveryNetworkId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.Network/virtualNetworks/vnh2atest\",\r\n        \"recoveryFabricArmId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/d49858f157601230a6ac5862fbbc6e63bf38d23ecd96cf953767945d457fe9d5\",\r\n        \"recoveryFabricFriendlyName\": \"Microsoft Azure\",\r\n        \"fabricSpecificSettings\": {\r\n          \"instanceType\": \"VmmToAzure\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "c183865e-6077-46f2-a3b1-deb0f4f4650a"
+    "SubscriptionId": "b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c"
   }
 }

@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// account.</param>
         /// <param name="keyPolicy">KeyPolicy assigned to the storage
         /// account.</param>
-        /// <param name="keyCreationTime">Gets the list of storage account keys
-        /// creation time.</param>
+        /// <param name="keyCreationTime">Storage account keys creation
+        /// time.</param>
         /// <param name="secondaryEndpoints">Gets the URLs that are used to
         /// perform a retrieval of a public blob, queue, or table object from
         /// the secondary location of the storage account. Only available if
@@ -128,7 +128,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// true.</param>
         /// <param name="enableNfsV3">NFS 3.0 protocol support enabled if set
         /// to true.</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ExtendedLocation extendedLocation = default(ExtendedLocation), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), IDictionary<string, System.DateTime?> keyCreationTime = default(IDictionary<string, System.DateTime?>), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference), BlobRestoreStatus blobRestoreStatus = default(BlobRestoreStatus), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?))
+        /// <param name="allowCrossTenantReplication">Allow or disallow cross
+        /// AAD tenant object replication. The default interpretation is true
+        /// for this property.</param>
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ExtendedLocation extendedLocation = default(ExtendedLocation), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), KeyCreationTime keyCreationTime = default(KeyCreationTime), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference), BlobRestoreStatus blobRestoreStatus = default(BlobRestoreStatus), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -164,6 +167,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             MinimumTlsVersion = minimumTlsVersion;
             AllowSharedKeyAccess = allowSharedKeyAccess;
             EnableNfsV3 = enableNfsV3;
+            AllowCrossTenantReplication = allowCrossTenantReplication;
             CustomInit();
         }
 
@@ -280,10 +284,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         public KeyPolicy KeyPolicy { get; private set; }
 
         /// <summary>
-        /// Gets the list of storage account keys creation time.
+        /// Gets storage account keys creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyCreationTime")]
-        public IDictionary<string, System.DateTime?> KeyCreationTime { get; private set; }
+        public KeyCreationTime KeyCreationTime { get; private set; }
 
         /// <summary>
         /// Gets the URLs that are used to perform a retrieval of a public
@@ -406,6 +410,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isNfsV3Enabled")]
         public bool? EnableNfsV3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow cross AAD tenant object replication.
+        /// The default interpretation is true for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowCrossTenantReplication")]
+        public bool? AllowCrossTenantReplication { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -3,13 +3,15 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> <see cref="MetricFeedback"/>s are used to describe feedback on unsatisfactory anomaly detection results.
     /// When feedback is created for a given metric, it is applied to future anomaly detection processing of the same series.
     /// The processed points will not be re-calculated. </summary>
+    [CodeGenModel("MetricFeedback")]
     public abstract partial class MetricFeedback : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of the <see cref="MetricFeedback"/> class. </summary>
@@ -25,9 +27,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionFilter = dimensionFilter;
         }
 
-        /// <summary> The <see cref="FeedbackType"/> of this feedback.</summary>
+        /// <summary> The <see cref="MetricFeedbackKind"/> of this feedback.</summary>
         [CodeGenMember("FeedbackType")]
-        public FeedbackType Type { get; internal set; }
+        public MetricFeedbackKind Kind { get; internal set; }
 
         /// <summary> feedback unique id. </summary>
         [CodeGenMember("FeedbackId")]

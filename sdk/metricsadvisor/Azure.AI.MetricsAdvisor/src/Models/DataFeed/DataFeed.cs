@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -19,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeed()
         {
-            Administrators = new ChangeTrackingList<string>();
-            Viewers = new ChangeTrackingList<string>();
+            AdministratorEmails = new ChangeTrackingList<string>();
+            ViewerEmails = new ChangeTrackingList<string>();
         }
 
         internal DataFeed(DataFeedDetail dataFeedDetail)
@@ -28,9 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
             CreatedTime = dataFeedDetail.CreatedTime;
-            Creator = dataFeedDetail.Creator;
+            CreatorEmail = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
-            MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.MetricName, metric => metric.MetricId);
+            MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.Name, metric => metric.Id);
             Name = dataFeedDetail.DataFeedName;
             DataSource = DataFeedSource.GetDataFeedSource(dataFeedDetail);
             Schema = new DataFeedSchema(dataFeedDetail);
@@ -41,8 +42,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccessMode = dataFeedDetail.ViewMode;
             RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
             MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
-            Administrators = dataFeedDetail.Admins;
-            Viewers = dataFeedDetail.Viewers;
+            AdministratorEmails = dataFeedDetail.Admins;
+            ViewerEmails = dataFeedDetail.Viewers;
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The e-mail address of creator of this <see cref="DataFeed"/>.
         /// </summary>
-        public string Creator { get; }
+        public string CreatorEmail { get; }
 
         /// <summary>
         /// Whether or not the user who queried the information about this <see cref="DataFeed"/>
@@ -86,11 +87,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The source from which data is consumed.
         /// </summary>
         public DataFeedSource DataSource { get; set; }
-
-        /// <summary>
-        /// The type of data source that ingests this <see cref="DataFeed"/> with data.
-        /// </summary>
-        public DataFeedSourceType? SourceType => DataSource?.Type;
 
         /// <summary>
         /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
@@ -142,17 +138,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// data feed, being allowed to update, delete or pause them. They also have access to the
         /// credentials used to authenticate to the data source.
         /// </summary>
-        public IList<string> Administrators { get; }
+        public IList<string> AdministratorEmails { get; }
 
         /// <summary>
         /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
         /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
-        public IList<string> Viewers { get; }
+        public IList<string> ViewerEmails { get; }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
-            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime.Value);
+            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime);
 
             foreach (var column in Schema.DimensionColumns)
             {
@@ -175,7 +171,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 detail.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
                 detail.NeedRollup = RollupSettings.RollupType;
-                detail.RollUpMethod = RollupSettings.RollupMethod;
+                detail.RollUpMethod = RollupSettings.AutoRollupMethod;
                 foreach (string columnName in RollupSettings.AutoRollupGroupByColumnNames)
                 {
                     detail.RollUpColumns.Add(columnName);
@@ -188,15 +184,17 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            foreach (var admin in Administrators)
+            foreach (var admin in AdministratorEmails)
             {
                 detail.Admins.Add(admin);
             }
 
-            foreach (var viewer in Viewers)
+            foreach (var viewer in ViewerEmails)
             {
                 detail.Viewers.Add(viewer);
             }
+
+            SetAuthenticationProperties(detail, DataSource);
 
             return detail;
         }
@@ -219,7 +217,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (IngestionSettings != null)
             {
-                patch.DataStartFrom = IngestionSettings.IngestionStartTime.HasValue ? ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime.Value) : null;
+                patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime);
                 patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
                 patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
                 patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
@@ -234,7 +232,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
                 patch.NeedRollup = RollupSettings.RollupType;
-                patch.RollUpMethod = RollupSettings.RollupMethod;
+                patch.RollUpMethod = RollupSettings.AutoRollupMethod;
                 patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
             }
 
@@ -244,10 +242,56 @@ namespace Azure.AI.MetricsAdvisor.Models
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            patch.Admins = Administrators;
-            patch.Viewers = Viewers;
+            patch.Admins = AdministratorEmails;
+            patch.Viewers = ViewerEmails;
+
+            SetAuthenticationProperties(patch, DataSource);
 
             return patch;
+        }
+
+        private static void SetAuthenticationProperties(DataFeedDetail detail, DataFeedSource dataSource)
+        {
+            switch (dataSource)
+            {
+                case AzureBlobDataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    break;
+                case AzureDataExplorerDataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    detail.CredentialId = s.DataSourceCredentialId;
+                    break;
+                case AzureDataLakeStorageDataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    detail.CredentialId = s.DataSourceCredentialId;
+                    break;
+                case SqlServerDataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    detail.CredentialId = s.DataSourceCredentialId;
+                    break;
+            }
+        }
+
+        private static void SetAuthenticationProperties(DataFeedDetailPatch patch, DataFeedSource dataSource)
+        {
+            switch (dataSource)
+            {
+                case AzureBlobDataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    break;
+                case AzureDataExplorerDataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    patch.CredentialId = s.DataSourceCredentialId;
+                    break;
+                case AzureDataLakeStorageDataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    patch.CredentialId = s.DataSourceCredentialId;
+                    break;
+                case SqlServerDataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    patch.CredentialId = s.DataSourceCredentialId;
+                    break;
+            }
         }
     }
 }

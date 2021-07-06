@@ -1,24 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// A web hook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided API when an alert is triggered.
     /// All alerts can be sent through a web hook.
     /// </summary>
     [CodeGenModel("WebhookHookInfo")]
-    [CodeGenSuppress(nameof(WebNotificationHook), typeof(string))]
+    [CodeGenSuppress(nameof(WebNotificationHook), typeof(string), typeof(WebhookHookParameter))]
     public partial class WebNotificationHook : NotificationHook
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WebNotificationHook"/> class.
         /// </summary>
-        public WebNotificationHook()
+        /// <param name="name">The name of the hook.</param>
+        /// <param name="endpoint">The API address to be called when an alert is triggered.</param>
+        public WebNotificationHook(string name, Uri endpoint) : base(name)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            Endpoint = endpoint;
             HookType = HookType.Webhook;
             Headers = new ChangeTrackingDictionary<string, string>();
         }
@@ -27,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(hookType, id, name, description, externalLink, administrators)
         {
             HookType = hookType;
-            Endpoint = hookParameter.Endpoint;
+            Endpoint = new Uri(hookParameter.Endpoint);
             Username = hookParameter.Username;
             Password = hookParameter.Password;
             CertificateKey = hookParameter.CertificateKey;
@@ -38,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The API address to be called when an alert is triggered.
         /// </summary>
-        public string Endpoint { get; set; }
+        public Uri Endpoint { get; set; }
 
         /// <summary>
         /// The username for authenticating to the API address. Leave this blank if authentication isn't needed.
@@ -68,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal WebhookHookParameter HookParameter => new WebhookHookParameter(Endpoint)
+        internal WebhookHookParameter HookParameter => new WebhookHookParameter(Endpoint.AbsoluteUri)
         {
             Username = Username,
             Password = Password,
