@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor
     {
 
         /// <summary> Initializes a new instance of MetricCommentFeedback. </summary>
-        /// <param name="type"> feedback type. </param>
+        /// <param name="kind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdTime"> feedback created time. </param>
         /// <param name="userPrincipal"> user who gives this feedback. </param>
@@ -24,12 +24,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="startTime"> the start timestamp of feedback time range. </param>
         /// <param name="endTime"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
         /// <param name="valueInternal"> . </param>
-        internal MetricCommentFeedback(FeedbackType type, string id, DateTimeOffset? createdTime, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset? startTime, DateTimeOffset? endTime, CommentFeedbackValue valueInternal) : base(type, id, createdTime, userPrincipal, metricId, dimensionFilter)
+        internal MetricCommentFeedback(MetricFeedbackKind kind, string id, DateTimeOffset? createdTime, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset? startTime, DateTimeOffset? endTime, CommentFeedbackValue valueInternal) : base(kind, id, createdTime, userPrincipal, metricId, dimensionFilter)
         {
             StartTime = startTime;
             EndTime = endTime;
             ValueInternal = valueInternal;
-            Type = type;
+            Kind = kind;
         }
     }
 }

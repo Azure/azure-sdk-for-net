@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="workspaceId"/> or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="workspaceId"/> or <paramref name="query"/> is empty.</exception>
         public LogAnalyticsDataFeedSource(string workspaceId, string query)
-            : base(DataFeedSourceType.LogAnalytics)
+            : base(DataFeedSourceKind.LogAnalytics)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="workspaceId"/>, <paramref name="query"/>, <paramref name="clientId"/>, <paramref name="clientSecret"/>, or <paramref name="tenantId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="workspaceId"/>, <paramref name="query"/>, <paramref name="clientId"/>, <paramref name="clientSecret"/>, or <paramref name="tenantId"/> is empty.</exception>
         public LogAnalyticsDataFeedSource(string workspaceId, string query, string clientId, string clientSecret, string tenantId)
-            : base(DataFeedSourceType.LogAnalytics)
+            : base(DataFeedSourceKind.LogAnalytics)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal LogAnalyticsDataFeedSource(AzureLogAnalyticsParameter parameter)
-            : base(DataFeedSourceType.LogAnalytics)
+            : base(DataFeedSourceKind.LogAnalytics)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

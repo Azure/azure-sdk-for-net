@@ -12,7 +12,6 @@
     </Description>
     <PackageTags>Azure Cognitive Search;Azure Search Documents;Azure Search;Search;Cognitive;Search Engine;Azure</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
     <!-- These are still firing but not valid -->
     <NoWarn>$(NoWarn);AZC0007;AZC0004;AZC0001</NoWarn>
   </PropertyGroup>

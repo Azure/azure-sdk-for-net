@@ -170,7 +170,6 @@ namespace Azure.Storage.Test.Shared
                     }
                     Recording.GetVariable(name, text);
                     break;
-                case RecordedTestMode.Live:
                 default:
                     config = getTenant();
                     break;

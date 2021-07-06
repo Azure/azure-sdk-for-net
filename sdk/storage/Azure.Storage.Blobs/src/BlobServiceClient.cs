@@ -244,7 +244,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy(options), options ?? new BlobClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -368,7 +368,7 @@ namespace Azure.Storage.Blobs
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uri.ToString(),
+                url: uri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 

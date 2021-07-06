@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeed()
         {
-            AdministratorsEmails = new ChangeTrackingList<string>();
-            ViewersEmails = new ChangeTrackingList<string>();
+            AdministratorEmails = new ChangeTrackingList<string>();
+            ViewerEmails = new ChangeTrackingList<string>();
         }
 
         internal DataFeed(DataFeedDetail dataFeedDetail)
@@ -42,8 +42,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccessMode = dataFeedDetail.ViewMode;
             RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
             MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
-            AdministratorsEmails = dataFeedDetail.Admins;
-            ViewersEmails = dataFeedDetail.Viewers;
+            AdministratorEmails = dataFeedDetail.Admins;
+            ViewerEmails = dataFeedDetail.Viewers;
         }
 
         /// <summary>
@@ -87,11 +87,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The source from which data is consumed.
         /// </summary>
         public DataFeedSource DataSource { get; set; }
-
-        /// <summary>
-        /// The type of data source that ingests this <see cref="DataFeed"/> with data.
-        /// </summary>
-        public DataFeedSourceType? SourceType => DataSource?.Type;
 
         /// <summary>
         /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
@@ -143,13 +138,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// data feed, being allowed to update, delete or pause them. They also have access to the
         /// credentials used to authenticate to the data source.
         /// </summary>
-        public IList<string> AdministratorsEmails { get; }
+        public IList<string> AdministratorEmails { get; }
 
         /// <summary>
         /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
         /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
-        public IList<string> ViewersEmails { get; }
+        public IList<string> ViewerEmails { get; }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
@@ -189,12 +184,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            foreach (var admin in AdministratorsEmails)
+            foreach (var admin in AdministratorEmails)
             {
                 detail.Admins.Add(admin);
             }
 
-            foreach (var viewer in ViewersEmails)
+            foreach (var viewer in ViewerEmails)
             {
                 detail.Viewers.Add(viewer);
             }
@@ -247,8 +242,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            patch.Admins = AdministratorsEmails;
-            patch.Viewers = ViewersEmails;
+            patch.Admins = AdministratorEmails;
+            patch.Viewers = ViewerEmails;
 
             SetAuthenticationProperties(patch, DataSource);
 
@@ -266,7 +261,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
-                case AzureDataLakeStorageGen2DataFeedSource s:
+                case AzureDataLakeStorageDataFeedSource s:
                     detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
@@ -288,7 +283,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
-                case AzureDataLakeStorageGen2DataFeedSource s:
+                case AzureDataLakeStorageDataFeedSource s:
                     patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;

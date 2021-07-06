@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="thresholdOperator">Evaluation operation for Metric
         /// -'GreaterThan' or 'LessThan' or 'Equal'. Possible values include:
-        /// 'GreaterThan', 'LessThan', 'Equal'</param>
+        /// 'GreaterThanOrEqual', 'LessThanOrEqual', 'GreaterThan', 'LessThan',
+        /// 'Equal'</param>
         /// <param name="threshold">The threshold of the metric
         /// trigger.</param>
         /// <param name="metricTriggerType">Metric Trigger Type - 'Consecutive'
@@ -54,8 +55,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets evaluation operation for Metric -'GreaterThan' or
-        /// 'LessThan' or 'Equal'. Possible values include: 'GreaterThan',
-        /// 'LessThan', 'Equal'
+        /// 'LessThan' or 'Equal'. Possible values include:
+        /// 'GreaterThanOrEqual', 'LessThanOrEqual', 'GreaterThan', 'LessThan',
+        /// 'Equal'
         /// </summary>
         [JsonProperty(PropertyName = "thresholdOperator")]
         public string ThresholdOperator { get; set; }
