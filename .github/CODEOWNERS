@@ -291,7 +291,7 @@
 /sdk/eventhub/                                  @serkantkaraca @jsquire
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/ @pakrym @JoshLove-msft @jsquire
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/ @pakrym @JoshLove-msft @jsquire
 
 # ServiceLabel: %Event Hubs %Service Attention
 /sdk/eventhub/Microsoft.Azure.EventHubs/   @serkantkaraca @sjkwak @kasun04
