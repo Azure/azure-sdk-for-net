@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Core
         /// Get the operations for a list of specific resources.
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
-        /// <returns></returns>
+        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
         public virtual IList<GenericResourceOperations> GetGenericResourceOperations(IEnumerable<string> ids)
         {
             if (ids == null)
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Core
         /// Get the operations for an specific resource.
         /// </summary>
         /// <param name="id"> The id of the resource to retrieve. </param>
-        /// <returns></returns>
+        /// <returns> The operations that can be performed over a specific GenericResource. </returns>
         public virtual GenericResourceOperations GetGenericResourceOperations(string id)
         {
             if (id == null)
@@ -208,6 +208,16 @@ namespace Azure.ResourceManager.Core
             }
 
             return new GenericResourceOperations(DefaultSubscription, id);
+        }
+
+        /// <summary>
+        /// Gets the RestApi definition for a given Azure namespace.
+        /// </summary>
+        /// <param name="nameSpace"> The namespace to get the rest API for. </param>
+        /// <returns> A container representing the rest apis for the namespace. </returns>
+        public virtual RestApiContainer GetRestApis(string nameSpace)
+        {
+            return new RestApiContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), nameSpace);
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Core
 
         private ConcurrentDictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>();
         private ConcurrentDictionary<string, string> _nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>();
+        private ConcurrentDictionary<string, string> _apiForNamespaceCache = new ConcurrentDictionary<string, string>();
 
         private void BuildApiTable(ArmClientOptions clientOptions)
         {
@@ -63,12 +65,37 @@ namespace Azure.ResourceManager.Core
             }
         }
 
+        internal string GetApiVersionForNamespace(string nameSpace)
+        {
+            string version;
+            if (!_apiForNamespaceCache.TryGetValue(nameSpace, out version))
+            {
+                DateTime maxVersion = new DateTime(1, 1, 1);
+                Provider results = _armClient.DefaultSubscription.GetProviders().Get(nameSpace, null);
+                foreach (var type in results.Data.ResourceTypes)
+                {
+                    string[] parts = type.ApiVersions[0].Split('-');
+                    DateTime current = new DateTime(
+                        Convert.ToInt32(parts[0], CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToInt32(parts[1], CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToInt32(parts[2], CultureInfo.InvariantCulture.NumberFormat));
+                    maxVersion = current > maxVersion ? current : maxVersion;
+                }
+                string month = maxVersion.Month < 10 ? "0" : string.Empty;
+                month += maxVersion.Month;
+                string day = maxVersion.Day < 10 ? "0" : string.Empty;
+                day += maxVersion.Day;
+                version = $"{maxVersion.Year}-{month}-{day}";
+                _apiForNamespaceCache[nameSpace] = version;
+            }
+            return version;
+        }
+
         private static IEnumerable<MethodInfo> GetExtensionMethods()
         {
-            // See TODO ADO #5692
             var results =
                         from assembly in AppDomain.CurrentDomain.GetAssemblies()
-                        where assembly.GetName().ToString().StartsWith("Azure.", StringComparison.Ordinal) || assembly.GetName().ToString().StartsWith("Proto.", StringComparison.Ordinal)
+                        where assembly.GetName().ToString().StartsWith("Azure.", StringComparison.Ordinal)
                         from type in assembly.GetTypes()
                         where type.IsSealed && !type.IsGenericType && !type.IsNested && type.Name.Equals("AzureResourceManagerClientOptionsExtensions", StringComparison.Ordinal)
                         from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
