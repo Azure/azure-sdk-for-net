@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill": return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element);
                     case "#Microsoft.Skills.Text.LanguageDetectionSkill": return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element);
                     case "#Microsoft.Skills.Text.MergeSkill": return MergeSkill.DeserializeMergeSkill(element);
-                    case "#Microsoft.Skills.Text.PIIDetectionSkill": return PIIDetectionSkill.DeserializePIIDetectionSkill(element);
+                    case "#Microsoft.Skills.Text.PIIDetectionSkill": return PiiDetectionSkill.DeserializePiiDetectionSkill(element);
                     case "#Microsoft.Skills.Text.SentimentSkill": return SentimentSkill.DeserializeSentimentSkill(element);
                     case "#Microsoft.Skills.Text.SplitSkill": return SplitSkill.DeserializeSplitSkill(element);
                     case "#Microsoft.Skills.Text.TranslationSkill": return TextTranslationSkill.DeserializeTextTranslationSkill(element);

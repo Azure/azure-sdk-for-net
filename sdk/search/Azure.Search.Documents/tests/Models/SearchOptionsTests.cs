@@ -130,11 +130,11 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaption = QueryCaption.None;
-            Assert.AreEqual($"{QueryCaption.None}|highlight-true", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaptionHighlight);
 
             searchOptions.QueryCaption = QueryCaption.Extractive;
-            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-true", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-True", searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaptionHighlight);
 
             searchOptions.QueryCaptionRaw = "none";
@@ -158,10 +158,6 @@ namespace Azure.Search.Documents.Tests.Models
             searchOptions.QueryCaptionHighlight = false;
             Assert.IsNull(searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaption);
-
-            searchOptions.QueryCaptionRaw = "|highlight-true";
-            Assert.IsTrue(searchOptions.QueryCaptionHighlight);
-            Assert.IsNull(searchOptions.QueryCaption);
         }
 
         [Test]
@@ -171,31 +167,33 @@ namespace Azure.Search.Documents.Tests.Models
 
             // We can set `QueryCaption` to one of the known values, using either a string or a predefined value.
             searchOptions.QueryCaption = "none";
-            Assert.AreEqual($"{QueryCaption.None}|highlight-true", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaption = QueryCaption.None;
-            Assert.AreEqual($"{QueryCaption.None}|highlight-true", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaptionHighlight = false;
 
             searchOptions.QueryCaption = "extractive";
-            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-false", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaption = QueryCaption.Extractive;
-            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-false", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
+
+            searchOptions.QueryCaptionHighlight = true;
 
             // We can also set `QueryCaption` to a value unknown to the SDK.
             searchOptions.QueryCaption = "unknown";
-            Assert.AreEqual($"unknown|highlight-true", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"unknown|highlight-True", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryAnswer = new QueryAnswer("unknown");
-            Assert.AreEqual($"unknown|highlight-true", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"unknown|highlight-True", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaptionRaw = "unknown";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
             Assert.IsNull(searchOptions.QueryCaptionHighlight);
 
-            searchOptions.QueryCaptionRaw = "unknown|highlight-false";
+            searchOptions.QueryCaptionRaw = "unknown|highlight-False";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
             Assert.AreEqual(false, searchOptions.QueryCaptionHighlight);
         }
@@ -213,7 +211,7 @@ namespace Azure.Search.Documents.Tests.Models
             };
 
             Assert.AreEqual("extractive|count-5", semanticSearchOptions.QueryAnswerRaw);
-            Assert.AreEqual("extractive|highlight-true", semanticSearchOptions.QueryCaptionRaw);
+            Assert.AreEqual("extractive|highlight-True", semanticSearchOptions.QueryCaptionRaw);
         }
     }
 }

@@ -48,12 +48,5 @@ namespace Azure.Search.Documents.Indexes.Models
             LineEnding = lineEnding;
             ODataType = oDataType ?? "#Microsoft.Skills.Vision.OcrSkill";
         }
-
-        /// <summary> A value indicating which language code to use. Default is en. </summary>
-        public OcrSkillLanguage? DefaultLanguageCode { get; set; }
-        /// <summary> A value indicating to turn orientation detection on or not. Default is false. </summary>
-        public bool? ShouldDetectOrientation { get; set; }
-        /// <summary> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is &quot;space&quot;. </summary>
-        public LineEnding? LineEnding { get; set; }
     }
 }

@@ -658,18 +658,22 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(ConditionalSkill) => CreateSkill(t, new[] { "condition", "whenTrue", "whenFalse" }, new[] { "output" }),
                     Type _ when t == typeof(CustomEntityLookupSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "entities" }),
                     Type _ when t == typeof(DocumentExtractionSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "content", "normalized_images" }),
+                    Type _ when t == typeof(EntityLinkingSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "entities" }),
                     Type _ when t == typeof(EntityRecognitionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "persons" }),
+                    Type _ when t == typeof(EntityRecognitionSkillV3) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "persons" }),
                     Type _ when t == typeof(ImageAnalysisSkill) => CreateSkill(t, new[] { "image" }, new[] { "categories" }),
                     Type _ when t == typeof(KeyPhraseExtractionSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "keyPhrases" }),
                     Type _ when t == typeof(LanguageDetectionSkill) => CreateSkill(t, new[] { "text" }, new[] { "languageCode", "languageName", "score" }),
                     Type _ when t == typeof(MergeSkill) => CreateSkill(t, new[] { "text", "itemsToInsert", "offsets" }, new[] { "mergedText" }),
                     Type _ when t == typeof(OcrSkill) => CreateSkill(t, new[] { "image" }, new[] { "text", "layoutText" }),
+                    Type _ when t == typeof(PiiDetectionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "piiEntities", "maskedText" }),
                     Type _ when t == typeof(SentimentSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "score" }),
+                    Type _ when t == typeof(SentimentSkillV3) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "sentiment", "confidenceScores", "sentences" }),
                     Type _ when t == typeof(ShaperSkill) => CreateSkill(t, new[] { "text" }, new[] { "output" }),
                     Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
-                    _ => throw new NotSupportedException(),
+                    _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .ToList();
 

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PIIDetectionSkill : IUtf8JsonSerializable
+    public partial class PiiDetectionSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static PIIDetectionSkill DeserializePIIDetectionSkill(JsonElement element)
+        internal static PiiDetectionSkill DeserializePiiDetectionSkill(JsonElement element)
         {
             Optional<string> defaultLanguageCode = default;
             Optional<double?> minimumPrecision = default;
@@ -258,7 +258,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PIIDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
         }
     }
 }
