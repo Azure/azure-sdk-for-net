@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core
         {
         }
 
-        internal TagResourceContainer(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline) : base(options, credential, baseUri, pipeline)
+        internal TagResourceContainer(OperationsBase operationsBase) : base(operationsBase)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

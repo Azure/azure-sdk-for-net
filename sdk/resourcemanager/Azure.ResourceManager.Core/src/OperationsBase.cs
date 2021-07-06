@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the TagsOperations.
         /// </summary>
-        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(ClientOptions, Credential, BaseUri, Pipeline);
+        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(this);
 
         /// <summary>
         /// Validate the resource identifier against current operations.
