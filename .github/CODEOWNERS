@@ -177,7 +177,8 @@
 #/<NotInRepo>/            @ms-premp @qiaozha
 
 # PRLabel: %Communication
-/sdk/communication/                             @acsdevx-msft
+/sdk/communication/                              @acsdevx-msft
+/sdk/communication/Azure.Communication.Identity/ @petrsvihlik @martinbarnas-ms
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
