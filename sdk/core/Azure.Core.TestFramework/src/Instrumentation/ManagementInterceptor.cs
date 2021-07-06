@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
@@ -39,11 +40,25 @@ namespace Azure.Core.TestFramework
                 var taskResultType = type.GetGenericArguments()[0];
                 if (taskResultType.Name.StartsWith("Response"))
                 {
-                    var taskResult = result.GetType().GetProperty("Result").GetValue(result);
-                    var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
-                    invocation.ReturnValue = type.Name.StartsWith("ValueTask")
-                        ? GetValueFromValueTask(taskResultType, instrumentedResult)
-                        : GetValueFromOther(taskResultType, instrumentedResult);
+                    try
+                    {
+                        var taskResult = result.GetType().GetProperty("Result").GetValue(result);
+                        var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                        invocation.ReturnValue = type.Name.StartsWith("ValueTask")
+                            ? GetValueFromValueTask(taskResultType, instrumentedResult)
+                            : GetValueFromOther(taskResultType, instrumentedResult);
+                    }
+                    catch (TargetInvocationException e)
+                    {
+                        if (e.InnerException is AggregateException aggException)
+                        {
+                            throw aggException.InnerExceptions.First();
+                        }
+                        else
+                        {
+                            throw e.InnerException;
+                        }
+                    }
                 }
             }
             else if (invocation.Method.Name.EndsWith("Value") && type.BaseType.Name.EndsWith("Operations"))
@@ -54,7 +69,10 @@ namespace Azure.Core.TestFramework
             {
                 invocation.ReturnValue = s_proxyGenerator.CreateClassProxyWithTarget(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }
-            else if (invocation.Method.Name.StartsWith("Get") && invocation.Method.Name.EndsWith("Enumerator"))
+            else if (invocation.Method.Name.StartsWith("Get") &&
+                invocation.Method.Name.EndsWith("Enumerator") &&
+                type.IsGenericType &&
+                type.GenericTypeArguments.FirstOrDefault(t => t.Name == "RestApi") == null)
             {
                 var wrapperType = typeof(AsyncPageableInterceptor<>);
                 var genericType = wrapperType.MakeGenericType(type.GetGenericArguments()[0]);

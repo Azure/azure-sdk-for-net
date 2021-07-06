@@ -44,6 +44,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             await host.GetJobHost().CallAsync(functionName, args);
             Assert.AreEqual(_functionOut, expectOut);
+
+            var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
             _functionOut = null;
         }
 
@@ -354,7 +357,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             });
 
             ILoggerFactory loggerFactory = new LoggerFactory();
-            loggerFactory.AddProvider(new TestLoggerProvider());
+            var provider = new TestLoggerProvider();
+            loggerFactory.AddProvider(provider);
             // use moq eventgridclient for test extension
             var customExtension = new EventGridExtensionConfigProvider(eventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
@@ -367,6 +371,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<OutputCloudEventBindingParams>(customExtension, configuration: configuration);
 
             await host.GetJobHost().CallAsync($"OutputCloudEventBindingParams.{functionName}");
+
+            var categories = provider.GetAllLogMessages().Select(p => p.Category);
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
 
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (CloudEvent eve in cloudEvents)

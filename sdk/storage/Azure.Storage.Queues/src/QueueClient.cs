@@ -13,6 +13,7 @@ using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -303,7 +304,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options, null)
+            : this(queueUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
