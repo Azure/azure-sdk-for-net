@@ -245,3 +245,178 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
     return $null
   }
 }
+
+function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
+  $suffix = ''
+  $parsedVersion = [AzureEngSemanticVersion]::ParseVersionString($PackageInfo.Version)
+  if ($parsedVersion.IsPrerelease) { 
+    $suffix = '-pre'
+  }
+
+  New-Object PSObject -Property @{ 
+    DocsMsReadMeName = $PackageInfo.Name.ToLower() -replace "." , ""
+    LatestReadMeLocation = 'api/overview/azure'
+    PreviewReadMeLocation = 'api/overview/azure'
+    Suffix = $suffix
+  }
+}
+
+
+# Details on CSV schema:
+# https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
+function Get-DocsCiConfig($configPath) {
+  Write-Host "Loading csv from $configPath"
+  $output = @()
+  foreach ($row in Get-Content $configPath) { 
+      $fields = $row.Split(',')
+
+      $rawProperties = ''
+      $packageProperties = [ordered]@{}
+      if ($fields[1] -match '\[(.*)\]') { 
+          $rawProperties = $Matches[1] 
+          foreach ($propertyExpression in $rawProperties.Split(';')) {
+              $propertyParts = $propertyExpression.Split('=')
+              $packageProperties[$propertyParts[0]] = $propertyParts[1]
+          }
+      }
+
+      $packageName = '' 
+      if ($fields[1] -match '(\[.*\])?(.*)') { 
+          $packageName = $Matches[2] 
+      } else { 
+          Write-Error "Could not find package id in row: $row" 
+      }
+
+      # Remaining entries in the row are versions, add them to the package 
+      # properties
+      $outputVersions = @()
+      if ($fields[2]) {
+        $outputVersions = $fields[2..($fields.Count - 1)]
+      }
+
+      $output += [PSCustomObject]@{
+          Id = $fields[0];
+          Name = $packageName;
+          Properties = $packageProperties;
+          Versions = $outputVersions
+      }
+  }
+
+  return $output
+}
+
+function Get-DocsCiLine ($item) { 
+  $line = ''
+  if ($item.Properties.Count) {
+    $propertyPairs = @()
+    foreach ($key in $item.Properties.Keys) { 
+      $propertyPairs += "$key=$($item.Properties[$key])"
+    }
+    $packageProperties = $propertyPairs -join ';'
+
+    $line = "$($item.Id),[$packageProperties]$($item.Name)"
+  } else { 
+    $line = "$($item.Id),$($item.Name)"
+  }
+
+  if ($item.Versions) {
+    $joinedVersions = $item.Versions -join ','
+    $line += ",$joinedVersions"
+  }
+
+  return $line
+}
+
+function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+  UpdateDocsMsPackages `
+    (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
+    'preview' `
+    $DocsMetadata 
+
+  UpdateDocsMsPackages `
+    (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
+    'latest' `
+    $DocsMetadata
+}
+
+function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
+  Write-Host "Updating configuration: $DocConfigFile with mode: $Mode"
+  $packageConfig = Get-DocsCiConfig $DocConfigFile
+
+  $outputPackages = @()
+  foreach ($package in $packageConfig) {
+    # Do not filter by GA/Preview status because we want differentiate between
+    # tracked and non-tracked packages
+    $matchingPublishedPackageArray = $DocsMetadata.Where({ $_.Package -eq $package.Name })
+
+    # If this package does not match any published packages keep it in the list.
+    # This handles packages which are not tracked in metadata but still need to
+    # be built in Docs CI.
+    if ($matchingPublishedPackageArray.Count -eq 0) {
+      Write-Host "Keep non-tracked preview package: $($package.Name)"
+      $outputPackages += $package
+      continue
+    }
+
+    if ($matchingPublishedPackageArray.Count -gt 1) { 
+      LogWarning "Found more than one matching published package in metadata for $($package.Name); only updating first entry"
+    }
+    $matchingPublishedPackage = $matchingPublishedPackageArray[0]
+
+    if ($Mode -eq 'preview' -and !$matchingPublishedPackage.VersionPreview.Trim()) { 
+      # If we are in preview mode and the package does not have a superseding
+      # preview version, remove the package from the list. 
+      Write-Host "Remove superseded preview package: $($package.Name)"
+      continue
+    }
+
+    Write-Host "Keep tracked package: $($package.Name)"
+    $package.Versions = @($matchingPublishedPackage.VersionGA.Trim())
+    if ($Mode -eq 'preview') {
+      $package.Versions = @($matchingPublishedPackage.VersionPreview.Trim())
+    }
+    $outputPackages += $package
+  }
+
+  $outputPackagesHash = @{}
+  foreach ($package in $outputPackages) {
+    $outputPackagesHash[$package.Name] = $true
+  }
+
+  $remainingPackages = @() 
+  if ($Mode -eq 'preview') { 
+    $remainingPackages = $DocsMetadata.Where({ 
+      $_.VersionPreview.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
+    })
+  } else { 
+    $remainingPackages = $DocsMetadata.Where({ 
+      $_.VersionGA.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
+    })
+  }
+
+  # Add packages that exist in the metadata but are not onboarded in docs config
+  $newPackageProperties = [ordered]@{ tfm = 'netstandard2.0' }
+  if ($Mode -eq 'preview') {
+    $newPackageProperties['isPrerelease'] = 'true'
+  }
+
+  foreach ($package in $remainingPackages) {
+    Write-Host "Add new package from metadata: $($package.Package)"
+    $versions = @($package.VersionGA.Trim())
+    if ($Mode -eq 'preview') {
+      $versions = @($package.VersionPreview.Trim())
+    }
+    $outputPackages += [PSCustomObject]@{
+      Id = $package.Package.Replace('.', '').ToLower();
+      Name = $package.Package;
+      Properties = $newPackageProperties;
+      Versions = $versions
+    }
+  }
+
+  $outputLines = @() 
+  foreach ($package in $outputPackages) { 
+    $outputLines += Get-DocsCiLine $package
+  }
+  Set-Content -Path $DocConfigFile -Value $outputLines
+}

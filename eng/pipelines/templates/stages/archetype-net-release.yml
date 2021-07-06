@@ -157,10 +157,7 @@ stages:
                         parameters:
                           paths:
                             - .github/CODEOWNERS
-                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
-                        parameters:
-                          TargetVariable: "OwningGHUser"
-                          ServiceDirectory: ${{parameters.ServiceDirectory}}
+
                       - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
                         parameters:
                           ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
