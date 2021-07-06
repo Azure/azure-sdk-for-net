@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.NetworkTraversal;
 
-namespace Azure.Communication.NetworkTraversal.Models
+namespace Azure.Communication.NetworkTraversal
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AzureCommunicationServicesModelFactory
