@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class AnomalyDetectionConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
-        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
