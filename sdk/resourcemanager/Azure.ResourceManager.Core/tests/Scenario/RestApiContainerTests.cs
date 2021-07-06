@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Core.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task ListComputeTest()
         {
@@ -28,7 +27,6 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsTrue(foundVirtualMachine);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task ListNetworkTest()
         {
